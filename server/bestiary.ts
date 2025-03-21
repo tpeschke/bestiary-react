@@ -4,7 +4,7 @@ import cors from 'cors'
 import massive from 'massive'
 import path from 'path'
 
-import { Response } from './interfaces'
+import { Response } from './apiInterfaces'
 
 import { sendErrorForwardNoFile } from './helpers/sendingFunctions'
 

@@ -1,4 +1,4 @@
-import { Error, Response } from '../interfaces'
+import { Error, Response } from '../apiInterfaces'
 
 export const sendErrorForwardNoFile = ( fileName : string ) => {
     return (location : string, error : Error, response : Response) => {

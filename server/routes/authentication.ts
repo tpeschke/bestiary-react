@@ -5,7 +5,10 @@ import Auth0Strategy from 'passport-auth0'
 
 import { secret, domain, clientID, clientSecret, callbackURL, fakeAuth } from '../server-config'
 
-import { Profile } from '../interfaces'
+export interface Profile {
+    displayName: string,
+    user_id: string
+}
 
 const authRoutes = express.Router()
 
