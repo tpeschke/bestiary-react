@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { checkIfPlayerView, canEditMonster } from '../controllers/accessController'
+import { checkIfPlayerView, canEditMonster } from '../controllers/access'
 
 const accessRoutes = express.Router()
 

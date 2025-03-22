@@ -1,5 +1,5 @@
 import express from 'express'
-import { getPlayerVersionOfBeast } from '../controllers/playerController'
+import { getPlayerVersionOfBeast } from '../controllers/player'
 
 const playerRoutes = express.Router()
 
