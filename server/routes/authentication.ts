@@ -3,7 +3,7 @@ import session from 'express-session'
 import passport from 'passport'
 import Auth0Strategy from 'passport-auth0'
 
-import { secret, domain, clientID, clientSecret, callbackURL, fakeAuth } from '../server-config'
+import { secret, domain, clientID, clientSecret, callbackURL } from '../server-config'
 
 export interface Profile {
     displayName: string,
@@ -35,8 +35,6 @@ passport.use(new Auth0Strategy({
     }
     return finishingCallback(null, user.id)
 }))
-
-authRoutes.use(fakeAuth)
 
 authRoutes.get('/auth', passport.authenticate('auth0'));
 authRoutes.get('/auth/callback', passport.authenticate('auth0', {

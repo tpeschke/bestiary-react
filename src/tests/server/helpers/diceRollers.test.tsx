@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import rollDice, { getRandomValueByMaxNumber, convertDiceStringToArray, parseAndRollAnyDice } from '../../../../server/helpers/diceRoller'
+import rollDice, { getRandomValueByMaxNumber, convertDiceStringToArray, parseAndRollAnyDice } from '../../../../server/utilities/diceRoller'
 
 describe('getRandomValueByMaxNumber', () => {
     test('Returns 0', () => {

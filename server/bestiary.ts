@@ -6,13 +6,11 @@ import path from 'path'
 
 import { Response } from './apiInterfaces'
 
-import { sendErrorForwardNoFile } from './helpers/sendingFunctions'
-
-import { server, databaseCredentials } from './server-config'
+import { server, databaseCredentials, fakeAuth } from './server-config'
 
 import authRoutes from './routes/authentication'
-
-const sendErrorForward = sendErrorForwardNoFile('main server')
+import accessRoutes from './routes/access'
+import playerRoutes from './routes/player'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -21,8 +19,11 @@ app.use(cors())
 // app.use(express.static(__dirname + `/../dist/bestiary`));
 
 // ================================== \\
+app.use(fakeAuth)
 
 app.use('/', authRoutes)
+app.use('/access', accessRoutes)
+app.use('/player', playerRoutes)
 
 // ================================== \\
 
