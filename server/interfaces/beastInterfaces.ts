@@ -52,7 +52,7 @@ export interface ClimateEditObject {
     beast: Climate[]
 }
 
-interface Climate {
+export interface Climate {
     beastid: number,
     climate: string,
     code: string,
