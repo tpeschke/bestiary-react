@@ -1,5 +1,5 @@
 import { Response, Error } from '../interfaces/apiInterfaces'
-import { Role, UpdateParameters } from '../interfaces/beastInterfaces'
+import { ClimateEditObject, Climate, Role, Type, UpdateParameters } from '../interfaces/beastInterfaces'
 
 import createHash from '../routes/hashGeneration'
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
@@ -7,13 +7,13 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 const sendErrorForward = sendErrorForwardNoFile('upsert beast')
 
 export default async function upsertBeast(databaseConnection: any, beastId: number, response: Response, updateParameters: UpdateParameters) {
-    const { roles } = updateParameters
+    const { roles, types, climates } = updateParameters
 
     let promiseArray: any[] = []
 
     upsertRoles(promiseArray, databaseConnection, beastId, response, roles)
-    // upsertHelper.upsertTypes(promiseArray, databaseConnection, id, response, types)
-    // upsertHelper.upsertClimates(promiseArray, databaseConnection, id, response, climates)
+    upsertTypes(promiseArray, databaseConnection, beastId, response, types)
+    upsertClimates(promiseArray, databaseConnection, beastId, response, climates)
     // upsertHelper.upsertCombats(promiseArray, databaseConnection, id, response, combatStatArray)
     // upsertHelper.upsertConflict(promiseArray, databaseConnection, id, response, conflict)
     // upsertHelper.upsertSkills(promiseArray, databaseConnection, id, response, skills)
@@ -60,10 +60,10 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     // upsertHelper.upsertChallenges(promiseArray, databaseConnection, id, response, challenges)
     // upsertHelper.upsertFolklore(promiseArray, databaseConnection, id, response, folklore)
 
-    // Promise.all(promiseArray).then(_ => {
-    //     catalogCtrl.collectCatalog(app)
-    //     checkForContentTypeBeforeSending(res, { id })
-    // }).catch(e => sendErrorForward('add beast final array', e, res))
+    Promise.all(promiseArray).then(() => {
+        //     catalogCtrl.collectCatalog(app)
+        checkForContentTypeBeforeSending(response, { id: beastId })
+    }).catch((error: Error) => sendErrorForward('final promise', error, response))
 }
 
 async function upsertRoles(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, roles: Role[]) {
@@ -84,24 +84,26 @@ async function upsertRoles(promiseArray: any[], databaseConnection: any, beastId
     })
 }
 
-// upsertTypes: (promiseArray, db, id, res, types) => {
-//     types.forEach(val => {
-//         if (!val.id) {
-//             promiseArray.push(db.add.type(id, val.typeid).catch(e => sendErrorForward('update beast add types', e, res)))
-//         } else if (val.deleted) {
-//             promiseArray.push(db.delete.type(val.id).catch(e => sendErrorForward('update beast delete types', e, res)))
-//         }
-//     })
-// },
-//     upsertClimates: (promiseArray, db, id, res, climates) => {
-//         climates.beast.forEach(val => {
-//             if (val.deleted) {
-//                 promiseArray.push(db.delete.climate.climate(val.uniqueid).catch(e => sendErrorForward('update beast delete climate', e, res)))
-//             } else if (!val.uniqueid) {
-//                 promiseArray.push(db.add.climate(id, val.climateid).catch(e => sendErrorForward('update beast add climate', e, res)))
-//             }
-//         })
-//     },
+async function upsertTypes(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, types: Type[]) {
+    types.forEach((type: Type) => {
+        if (!type.id) {
+            promiseArray.push(databaseConnection.beast.type.add(beastId, type.typeid).catch((error: Error) => sendErrorForward('add types', error, response)))
+        } else if (type.deleted) {
+            promiseArray.push(databaseConnection.beast.type.delete(type.id).catch((error: Error) => sendErrorForward('delete types', error, response)))
+        }
+    })
+}
+
+async function upsertClimates(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, climates : ClimateEditObject) {
+    climates.beast.forEach((climate : Climate) => {
+        if (climate.deleted) {
+            promiseArray.push(databaseConnection.beast.climate.delete(climate.uniqueid).catch((error : Error) => sendErrorForward('delete climate', error, response)))
+        } else if (!climate.uniqueid) {
+            promiseArray.push(databaseConnection.beast.climate.add(beastId, climate.climateid).catch((error : Error) => sendErrorForward('add climate', error, response)))
+        }
+    })
+}
+
 //         upsertLocations: (promiseArray, db, id, res, locations) => {
 //             locations.forEach(({ deleted, id: uniqueid, locationid, location, link }) => {
 //                 if (deleted) {

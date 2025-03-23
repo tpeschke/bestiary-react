@@ -1,5 +1,5 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { Role, UpdateParameters } from "../interfaces/beastInterfaces"
+import { ClimateEditObject, Role, Type, UpdateParameters } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
@@ -63,7 +63,9 @@ interface Body {
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
     skillsecondary: string,
-    roles: Role[]
+    roles: Role[],
+    types: Type[]
+    climates: ClimateEditObject
 }
 
 export async function addBeast(request: beastRequest, response: Response) {
@@ -84,14 +86,14 @@ export async function addBeast(request: beastRequest, response: Response) {
     const effectiveFlawLimit = flawlimit > 0 ? flawlimit : null
     const effectivePassionLimit = passionlimit > 0 ? passionlimit : null
 
-    const beastId = await databaseConnection.add.mainInfo(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
+    const beastId = await databaseConnection.beast.add(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
         vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
         effectivePassionLimit, plural, thumbnail, rarity, caution, role, combatpoints, socialrole, socialpoints, secondaryrole, skillrole, skillpoints, fatigue,
         defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
         imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary)
         .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
 
-    const updateParameters : UpdateParameters = { roles }
+    const updateParameters : UpdateParameters = { roles, types, climates }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 
     // send
