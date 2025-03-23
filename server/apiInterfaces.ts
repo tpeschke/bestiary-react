@@ -1,7 +1,10 @@
 export interface Request {
     app: App,
     params: Parameters,
-    user: User
+    user: User,
+    body: Body,
+    sendStatus: Function,
+    status: Function
 }
 
 interface App {
@@ -15,6 +18,12 @@ interface Parameters {
 interface User {
     id: number,
     patreon: number
+}
+
+interface Body {
+    beastId: number, 
+    noteId: number, 
+    notes: string
 }
 
 export interface Response {
