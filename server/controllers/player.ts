@@ -1,9 +1,19 @@
-import { Response, Request } from "../apiInterfaces"
+import { Response, Request } from "../interfaces/apiInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
+
+interface noteRequest extends Request {
+    body: Body
+}
+
+interface Body {
+    beastId?: number,
+    noteId?: number,
+    notes?: string
+}
 
 export async function getPlayerVersionOfBeast(request: Request, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
@@ -20,7 +30,7 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     }
 }
 
-export async function addPlayerNotes(request: Request, response: Response) {
+export async function addPlayerNotes(request: noteRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { user } = request
     const { beastId, noteId, notes } = request.body

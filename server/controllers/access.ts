@@ -1,8 +1,8 @@
-import { Response, Request, Error } from '../apiInterfaces'
+import { Response, Request, Error } from '../interfaces/apiInterfaces'
 
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import getDatabaseConnection from '../utilities/databaseConnection'
-import { ownerId, jeremyId } from '../server-config'
+import { isOwner, isJustMainOwner } from '../utilities/ownerAccess'
+import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
 const sendErrorForward = sendErrorForwardNoFile('access controller')
 
@@ -14,7 +14,7 @@ export async function checkIfPlayerView(request: Request, response: Response) {
     const { canplayerview } = await databaseConnection.beast.canView(beastid).catch((error: Error) => sendErrorForward('player can view', error, response))[0]
     
     const body = {
-        canView: userid === ownerId || patreon >= 3 || canplayerview
+        canView: isJustMainOwner(userid) || patreon >= 3 || canplayerview
     }
     checkForContentTypeBeforeSending(response, body)
 }
@@ -47,8 +47,4 @@ export async function canEditMonster(request: Request, response: Response) {
     } else {
         checkForContentTypeBeforeSending(response, { canEdit: false })
     }
-}
-
-function isOwner(userId: number) : boolean {
-    return userId === ownerId || userId === jeremyId
 }

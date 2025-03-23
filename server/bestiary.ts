@@ -4,7 +4,7 @@ import cors from 'cors'
 import massive from 'massive'
 import path from 'path'
 
-import { Response } from './apiInterfaces'
+import { Response } from './interfaces/apiInterfaces'
 
 import { server, databaseCredentials, fakeAuth } from './server-config'
 
