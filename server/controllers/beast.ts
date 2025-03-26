@@ -1,9 +1,9 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateEditObject, Role, Type, UpdateParameters } from "../interfaces/beastInterfaces"
+import { ClimateEditObject, CombatStat, Conflict, Loot, Movement, Role, Skill, Type, UpdateParameters, Variant } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
-import createHash from "../routes/hashGeneration"
+import createHash from "../utilities/hashGeneration"
 import upsertBeast from "../utilities/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
@@ -65,7 +65,13 @@ interface Body {
     skillsecondary: string,
     roles: Role[],
     types: Type[]
-    climates: ClimateEditObject
+    climates: ClimateEditObject,
+    combatStatArray: CombatStat[],
+    conflict: Conflict[],
+    skills: Skill[],
+    movement: Movement[]
+    variants: Variant[],
+    loot: Loot[]
 }
 
 export async function addBeast(request: beastRequest, response: Response) {
@@ -93,7 +99,7 @@ export async function addBeast(request: beastRequest, response: Response) {
         imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary)
         .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
 
-    const updateParameters : UpdateParameters = { roles, types, climates }
+    const updateParameters: UpdateParameters = { roles, types, climates, combatStats: combatStatArray, conflicts: conflict, skills, movements: movement, variants, loots: loot }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 
     // send
