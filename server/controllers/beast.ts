@@ -1,5 +1,5 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateEditObject, CombatStat, Conflict, Loot, Movement, Role, Skill, Type, UpdateParameters, Variant } from "../interfaces/beastInterfaces"
+import { upsertParameters } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
@@ -13,7 +13,7 @@ interface beastRequest extends Request {
     body: Body
 }
 
-interface Body {
+interface Body extends upsertParameters {
     name: string,
     intro: string,
     habitat: string,
@@ -62,16 +62,7 @@ interface Body {
     weaponbreakagevitality: boolean,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
-    skillsecondary: string,
-    roles: Role[],
-    types: Type[]
-    climates: ClimateEditObject,
-    combatStatArray: CombatStat[],
-    conflict: Conflict[],
-    skills: Skill[],
-    movement: Movement[]
-    variants: Variant[],
-    loot: Loot[]
+    skillsecondary: string
 }
 
 export async function addBeast(request: beastRequest, response: Response) {
@@ -79,9 +70,9 @@ export async function addBeast(request: beastRequest, response: Response) {
     const { body, user } = request
 
     let { name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress,
-        types, movement, conflict, skills, variants, loot, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounter, plural, thumbnail, rarity,
-        locationalvitality, lairloot, roles, casting, spells, deletedSpellList, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
-        skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedloot, folklore, combatStatArray, knockback, singledievitality, noknockback,
+        types, movements, conflicts, skills, variants, loots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounter, plural, thumbnail, rarity,
+        locationalVitalities, lairloot, roles, casting, spells, deletedSpellList, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
+        skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedloot, folklores, combatStats, knockback, singledievitality, noknockback,
         tables, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma, imagesource, locations, scenarios, isincorporeal, weaponbreakagevitality,
         hasarchetypes, hasmonsterarchetypes, skillsecondary } = body
 
@@ -99,7 +90,9 @@ export async function addBeast(request: beastRequest, response: Response) {
         imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary)
         .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
 
-    const updateParameters: UpdateParameters = { roles, types, climates, combatStats: combatStatArray, conflicts: conflict, skills, movements: movement, variants, loots: loot }
+    const updateParameters: upsertParameters = {
+        roles, types, climates, combatStats, conflicts, skills, movements, variants,loots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores
+    }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 
     // send

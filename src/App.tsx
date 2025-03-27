@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import './App.css'
 
+// to do
+// add/update Beast needs to be updated
+//  movement > movements
+//  conflict > conflicts
+//  locationalvitality > locationalVitalities
+//  loot > loots
+//  combatStatArray > combatStats
+//  folklore > folklores
+
 function App() {
   const [count, setCount] = useState(0)
 

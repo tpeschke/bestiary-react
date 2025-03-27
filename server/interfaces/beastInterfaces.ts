@@ -1,4 +1,4 @@
-export interface UpdateParameters {
+export interface upsertParameters {
     roles: Role[],
     types: Type[],
     climates: ClimateEditObject,
@@ -7,7 +7,13 @@ export interface UpdateParameters {
     skills: Skill[],
     movements: Movement[],
     variants: Variant[],
-    loots: Loot[]
+    loots: Loot[],
+    reagents: Reagent[],
+    locationalVitalities: LocationVitality[],
+    locations: Location[],
+    artistInfo: ArtistEditObject,
+    scenarios: Scenario[],
+    folklores: Folklore[]
 }
 
 export interface Role {
@@ -168,4 +174,69 @@ export interface Loot {
     loot: string,
     price: string,
     deleted: boolean
+}
+
+export interface Reagent {
+    id: number,
+    beastid: number,
+    name: string,
+    spell: string,
+    difficulty: string,
+    harvest: string,
+    deleted: boolean
+}
+
+export interface LocationVitality {
+    id: number,
+    location: string,
+    vitality: string,
+    beastid: number,
+    deleted: boolean,
+    roleid: string,
+    allroles: boolean
+}
+
+export interface Location {
+    id: number,
+    beastid: number,
+    locationid: number,
+    location: string,
+    link: string,
+    deleted: boolean
+}
+
+export interface ArtistInfo {
+    id: number,
+    artistid: number,
+    artist: string,
+    tooltip: string,
+    link: string,
+    roleid: string
+}
+
+export interface ArtistEditObject {
+    allartists: ArtistInfo[],
+    roleartists: ArtistInfo[]
+}
+
+export interface ArtistInfo {
+    id: number,
+    artistid: number,
+    artist: string,
+    tooltip: string,
+    link: string,
+    roleid: string
+}
+
+export interface Scenario {
+    id: number,
+    beastid: number,
+    scenario: string
+}
+
+export interface Folklore {
+    id: number,
+    beastid: number,
+    belief: string,
+    truth: string
 }
