@@ -70,9 +70,9 @@ export async function addBeast(request: BeastRequest, response: Response) {
     const { body, user } = request
 
     let { name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress,
-        types, movements, conflicts, skills, variants, loots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounters, plural, thumbnail, rarity,
-        locationalVitalities, lairloot, roles, casting, spells, deletedSpells, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
-        skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedloot, folklores, combatStats, knockback, singledievitality, noknockback,
+        types, movements, conflicts, skills, variants, specificLoots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounters, plural, thumbnail, rarity,
+        locationalVitalities, lairLoot, roles, casting, spells, deletedSpells, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
+        skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedLoot, folklores, combatStats, knockback, singledievitality, noknockback,
         tables, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma, imagesource, locations, scenarios, isincorporeal, weaponbreakagevitality,
         hasarchetypes, hasmonsterarchetypes, skillsecondary } = body
 
@@ -91,8 +91,8 @@ export async function addBeast(request: BeastRequest, response: Response) {
         .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
 
     const updateParameters: upsertParameters = {
-        roles, types, climates, combatStats, conflicts, skills, movements, variants,loots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
-        casting, deletedSpells, spells, obstacles, challenges, tables, encounters
+        roles, types, climates, combatStats, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
+        casting, deletedSpells, spells, obstacles, challenges, tables, encounters, lairLoot, carriedLoot
     }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 

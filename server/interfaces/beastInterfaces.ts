@@ -1,3 +1,7 @@
+import { Encounter } from "./encounterInterfaces"
+import { SpecificLoot, Loot } from "./lootInterfaces"
+import { Obstacle, Challenge } from "./skillInterfaces"
+
 export interface upsertParameters {
     roles: Role[],
     types: Type[],
@@ -7,7 +11,7 @@ export interface upsertParameters {
     skills: Skill[],
     movements: Movement[],
     variants: Variant[],
-    loots: Loot[],
+    specificLoots: SpecificLoot[],
     reagents: Reagent[],
     locationalVitalities: LocationVitality[],
     locations: Location[],
@@ -20,7 +24,9 @@ export interface upsertParameters {
     obstacles: Obstacle[],
     challenges: Challenge[],
     tables: TablesObject,
-    encounters: Encounter
+    encounters: Encounter,
+    lairLoot: Loot,
+    carriedLoot: Loot
 }
 
 export interface Role {
@@ -175,14 +181,6 @@ export interface Variant {
     deleted: boolean
 }
 
-export interface Loot {
-    id: number,
-    beastid: number,
-    loot: string,
-    price: string,
-    deleted: boolean
-}
-
 export interface Reagent {
     id: number,
     beastid: number,
@@ -274,19 +272,6 @@ export interface Spell {
     resist: string
 }
 
-export interface Obstacle {
-    id: number,
-    beastid: number,
-    obstacleid: number,
-    notes: string
-}
-
-export interface Challenge {
-    id: number,
-    challengeid: number,
-    beastid: number
-}
-
 export interface TablesObject {
     appearance: Table[],
     habitat: Table[],
@@ -305,89 +290,4 @@ export interface Row {
     id: number,
     weight: number,
     value: string
-}
-
-export interface Encounter {
-    temperaments: TemperamentObject,
-    signs: SignObject,
-    nouns: NounObject,
-    verbs: VerbObject,
-    groups: Group[],
-    numbers: Number[]
-}
-
-export interface TemperamentObject {
-    beastTemperaments: Temperament[],
-    allTemperaments: Temperament[]
-}
-
-export interface Temperament {
-    beastid: number,
-    temperament: string,
-    weight: number,
-    id: number,
-    tooltip: string,
-    deleted: boolean
-}
-
-export interface Group {
-    id: number,
-    beastid: number,
-    deleted: boolean,
-    label: string,
-    weights: GroupWeight[],
-    weight: number
-}
-
-export interface GroupWeight {
-    id: number,
-    weight: number,
-    role: number,
-    deleted: boolean
-}
-
-export interface Number {
-    id: number,
-    beastid: number,
-    deleted: boolean,
-    numbers: string,
-    miles: string,
-    weight: number
-}
-
-export interface SignObject {
-    beastSigns: Sign[],
-    allSigns: Sign[]
-}
-
-export interface Sign {
-    sign: string,
-    weight: number,
-    id: number,
-    beastid: number,
-    deleted: boolean
-}
-
-export interface VerbObject {
-    beastVerbs: Verb[],
-    allVerbs: Verb[] 
-}
-
-export interface Verb {
-    verb: string, 
-    id: number, 
-    beastid: number, 
-    deleted: boolean
-}
-
-export interface NounObject {
-    beastNouns: Noun[],
-    allNouns: Noun[]
-}
-
-export interface Noun {
-    noun: string, 
-    id: number, 
-    beastid: number, 
-    deleted: boolean
 }

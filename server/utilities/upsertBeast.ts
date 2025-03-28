@@ -1,18 +1,20 @@
 import { Response, Error } from '../interfaces/apiInterfaces'
 import {
-    ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject,
-    upsertParameters, Scenario, Folklore, Spell, Obstacle, Challenge, Table, TablesObject, Row, Temperament, Encounter, TemperamentObject, Group, GroupWeight, Number,
-    SignObject, Sign, VerbObject, Verb, Noun, NounObject
+    ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject,
+    upsertParameters, Scenario, Folklore, Spell, Table, TablesObject, Row
 } from '../interfaces/beastInterfaces'
+import { Encounter, TemperamentObject, Temperament, Group, GroupWeight, SignObject, Sign, Number, VerbObject, Verb, NounObject, Noun } from '../interfaces/encounterInterfaces'
+import { SpecificLoot, Loot, Scroll, Alm, Item } from '../interfaces/lootInterfaces'
 
 import createHash from './hashGeneration'
 import { sendErrorForwardNoFile } from '../utilities/sendingFunctions'
+import { Obstacle, Challenge } from '../interfaces/skillInterfaces'
 
 const sendErrorForward = sendErrorForwardNoFile('upsert beast')
 
 export default async function upsertBeast(databaseConnection: any, beastId: number, response: Response, upsertParameters: upsertParameters) {
-    const { roles, types, climates, combatStats, conflicts, skills, movements, variants, loots, reagents, locationalVitalities, locations, artistInfo, scenarios,
-        folklores, casting, deletedSpells, spells, obstacles, challenges, tables, encounters } = upsertParameters
+    const { roles, types, climates, combatStats, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios,
+        folklores, casting, deletedSpells, spells, obstacles, challenges, tables, encounters, lairLoot, carriedLoot } = upsertParameters
 
     let promiseArray: any[] = []
 
@@ -24,7 +26,7 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     upsertSkills(promiseArray, databaseConnection, beastId, response, skills)
     upsertMovement(promiseArray, databaseConnection, beastId, response, movements)
     upsertVariants(promiseArray, databaseConnection, beastId, response, variants)
-    upsertLoot(promiseArray, databaseConnection, beastId, response, loots)
+    upsertLoot(promiseArray, databaseConnection, beastId, response, specificLoots)
     upsertReagents(promiseArray, databaseConnection, beastId, response, reagents)
     upsertLocationalVitality(promiseArray, databaseConnection, beastId, response, locationalVitalities)
     upsertLocations(promiseArray, databaseConnection, beastId, response, locations)
@@ -39,21 +41,12 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     upsertObstacles(promiseArray, databaseConnection, beastId, response, obstacles)
     upsertChallenges(promiseArray, databaseConnection, beastId, response, challenges)
 
-    updateTables(promiseArray, databaseConnection, beastId, response, tables)
+    upsertTables(promiseArray, databaseConnection, beastId, response, tables)
 
     upsertEncounters(promiseArray, databaseConnection, beastId, response, encounters)
 
-    // let { copper, silver, gold, potion, relic, enchanted, scrolls, alms, talisman, items } = lairloot
-    // upsertHelper.upsertLairBasic(promiseArray, databaseConnection, id, response, beastid, copper, silver, gold, potion, relic, enchanted, talisman)
-    // upsertHelper.upsertScrollsLair(promiseArray, databaseConnection, id, response, scrolls)
-    // upsertHelper.upsertAlmsLair(promiseArray, databaseConnection, id, response, alms)
-    // upsertHelper.upsertItemsLair(promiseArray, databaseConnection, id, response, items)
-
-    // let { copper: ccopper, silver: csilver, gold: cgold, potion: cpotion, relic: crelic, enchanted: cenchanted, scrolls: cscrolls, alms: calms, items: citems, talisman: ctalisman } = carriedloot
-    // upsertHelper.upsertBasicCarried(promiseArray, databaseConnection, id, response, beastid, ccopper, csilver, cgold, cpotion, crelic, cenchanted, ctalisman)
-    // upsertHelper.upsertScrollsCarried(promiseArray, databaseConnection, id, response, cscrolls)
-    // upsertHelper.upsertAlmsCarried(promiseArray, databaseConnection, id, response, calms)
-    // upsertHelper.upsertItemsCarried(promiseArray, databaseConnection, id, response, citems)
+    upsertLairLoot(promiseArray, databaseConnection, beastId, response, lairLoot)
+    upsertCarriedLoot(promiseArray, databaseConnection, beastId, response, carriedLoot)
 
     return Promise.all(promiseArray).then(() => {
         //     catalogCtrl.collectCatalog(app)
@@ -178,8 +171,8 @@ async function upsertVariants(promiseArray: any[], databaseConnection: any, beas
     })
 }
 
-async function upsertLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loot: Loot[]) {
-    loot.forEach((singleLoot: Loot) => {
+async function upsertLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loot: SpecificLoot[]) {
+    loot.forEach((singleLoot: SpecificLoot) => {
         const { loot, price, id, deleted } = singleLoot
         if (deleted) {
             promiseArray.push(databaseConnection.beast.loot.delete(id).catch((error: Error) => sendErrorForward('delete loot', error, response)))
@@ -334,7 +327,7 @@ async function upsertChallenges(promiseArray: any[], databaseConnection: any, be
     })
 }
 
-async function updateTables(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, tables: TablesObject) {
+async function upsertTables(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, tables: TablesObject) {
     const { appearance, habitat, attack, defense } = tables
     await deleteTables(databaseConnection, beastId, response, appearance, habitat, attack, defense)
     upsertTable(promiseArray, databaseConnection, beastId, response, appearance, 'ap')
@@ -502,94 +495,120 @@ async function upsertNouns(promiseArray: any[], databaseConnection: any, beastId
     })
 }
 
-//                                                                                                 upsertLairBasic: (promiseArray, db, id, res, beastid, copper, silver, gold, potion, relic, enchanted, talisman) => {
-//                                                                                                     if (!beastid) {
-//                                                                                                         promiseArray.push(db.add.loot.lairbasic(id, copper, silver, gold, potion, relic, enchanted, talisman).catch(e => sendErrorForward('update beast add basic lair', e, res)))
-//                                                                                                     } else {
-//                                                                                                         promiseArray.push(db.update.loot.lairbasic(id, copper, silver, gold, potion, relic, enchanted, talisman).catch(e => sendErrorForward('update beast update basic lair', e, res)))
-//                                                                                                     }
-//                                                                                                 },
-//                                                                                                     upsertScrollsLair: (promiseArray, db, id, res, scrolls = []) => {
-//                                                                                                         scrolls.forEach(({ id: scrollid, beastid, number, power, deleted }) => {
-//                                                                                                             if (deleted) {
-//                                                                                                                 promiseArray.push(db.delete.loot.lairscrolls(beastid, scrollid).catch(e => sendErrorForward('update beast delete lair scrolls', e, res)))
-//                                                                                                             } else if (scrollid && beastid) {
-//                                                                                                                 promiseArray.push(db.update.loot.lairscrolls(scrollid, number, power).catch(e => sendErrorForward('update beast update lair scrolls', e, res)))
-//                                                                                                             } else {
-//                                                                                                                 promiseArray.push(db.add.loot.lairscrolls(id, number, power).catch(e => sendErrorForward('update beast add lair scrolls', e, res)))
-//                                                                                                             }
-//                                                                                                         })
-//                                                                                                     },
-//                                                                                                         upsertAlmsLair: (promiseArray, db, id, res, alms = []) => {
-//                                                                                                             alms.forEach(({ id: almid, beastid, number, favor, deleted }) => {
-//                                                                                                                 if (deleted) {
-//                                                                                                                     promiseArray.push(db.delete.loot.lairalms(beastid, almid).catch(e => sendErrorForward('update beast delete lair alms', e, res)))
-//                                                                                                                 } else if (almid && beastid) {
-//                                                                                                                     promiseArray.push(db.update.loot.lairalms(almid, number, favor).catch(e => sendErrorForward('update beast update lair alms', e, res)))
-//                                                                                                                 } else {
-//                                                                                                                     promiseArray.push(db.add.loot.lairalms(id, number, favor).catch(e => sendErrorForward('update beast add lair alms', e, res)))
-//                                                                                                                 }
-//                                                                                                             })
-//                                                                                                         },
-//                                                                                                             upsertItemsLair: (promiseArray, db, id, res, items) => {
-//                                                                                                                 let keyArray = []
-//                                                                                                                 let itemPromise = []
-//                                                                                                                 for (let key in items) {
-//                                                                                                                     const { id: itemid, beastid: cbeastid, itemcategory, materialrarity, detailing, wear, chance, number } = items[key]
-//                                                                                                                     itemid ? keyArray.push(itemid) : null
-//                                                                                                                     if (itemid && cbeastid) {
-//                                                                                                                         itemPromise.push(db.update.loot.lairitems(itemid, itemcategory, materialrarity, detailing, wear, chance, number).catch(e => sendErrorForward('update beast update lair items', e, res)))
-//                                                                                                                     } else {
-//                                                                                                                         itemPromise.push(db.add.loot.lairitems(id, itemcategory, materialrarity, detailing, wear, chance, number).then(result => { keyArray.push(result[0].id); return true }).catch(e => sendErrorForward('update beast add lair items', e, res)))
-//                                                                                                                     }
-//                                                                                                                 }
+async function upsertLairLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loots: Loot) {
+    let { copper, silver, gold, potion, relic, enchanted, scrolls, alms, talisman, items } = loots
+    upsertLairBasic(promiseArray, databaseConnection, beastId, response, copper, silver, gold, potion, relic, enchanted, talisman)
+    upsertScrollsLair(promiseArray, databaseConnection, beastId, response, scrolls)
+    upsertAlmsLair(promiseArray, databaseConnection, beastId, response, alms)
+    await upsertItemsLair(databaseConnection, beastId, response, items)
+}
 
-//                                                                                                                 promiseArray.push(Promise.all(itemPromise).then(_ => {
-//                                                                                                                     return db.delete.loot.lairitems([id, [0, ...keyArray]]).catch(e => sendErrorForward('update beast delete lair items', e, res))
-//                                                                                                                 }))
-//                                                                                                             },
-//                                                                                                                 upsertBasicCarried: (promiseArray, db, id, res, cbeastid, ccopper, csilver, cgold, cpotion, crelic, cenchanted, ctalisman) => {
-//                                                                                                                     if (!cbeastid) {
-//                                                                                                                         promiseArray.push(db.add.loot.carriedbasic(id, ccopper, csilver, cgold, cpotion, crelic, cenchanted, ctalisman).catch(e => sendErrorForward('update beast add carried basic', e, res)))
-//                                                                                                                     } else {
-//                                                                                                                         promiseArray.push(db.update.loot.carriedbasic(cbeastid, ccopper, csilver, cgold, cpotion, crelic, cenchanted, ctalisman).catch(e => sendErrorForward('update beast update carried basic', e, res)))
-//                                                                                                                     }
-//                                                                                                                 },
-//                                                                                                                     upsertScrollsCarried: (promiseArray, db, id, res, cscrolls = []) => {
-//                                                                                                                         cscrolls.forEach(({ id: scrollid, beastid: cbeastid, number, power, deleted }) => {
-//                                                                                                                             if (deleted) {
-//                                                                                                                                 promiseArray.push(db.delete.loot.carriedscrolls(cbeastid, scrollid).catch(e => sendErrorForward('update beast delete carried scrolls', e, res)))
-//                                                                                                                             } else if (scrollid && cbeastid) {
-//                                                                                                                                 promiseArray.push(db.update.loot.carriedscrolls(scrollid, number, power).catch(e => sendErrorForward('update beast update carried scrolls', e, res)))
-//                                                                                                                             } else {
-//                                                                                                                                 promiseArray.push(db.add.loot.carriedscrolls(id, number, power).catch(e => sendErrorForward('update beast add carried scrolls', e, res)))
-//                                                                                                                             }
-//                                                                                                                         })
-//                                                                                                                     },
-//                                                                                                                         upsertItemsCarried: (promiseArray, db, id, res, citems) => {
-//                                                                                                                             let keyArray = []
-//                                                                                                                             let itemPromise = []
-//                                                                                                                             for (let key in citems) {
-//                                                                                                                                 const { id: itemid, beastid: cbeastid, itemcategory, materialrarity, detailing, wear, chance, number } = citems[key]
-//                                                                                                                                 itemid ? keyArray.push(itemid) : null
-//                                                                                                                                 if (itemid && cbeastid) {
-//                                                                                                                                     itemPromise.push(db.update.loot.carrieditems(itemid, itemcategory, materialrarity, detailing, wear, chance, number).catch(e => sendErrorForward('update beast update carried items', e, res)))
-//                                                                                                                                 } else {
-//                                                                                                                                     itemPromise.push(db.add.loot.carrieditems(id, itemcategory, materialrarity, detailing, wear, chance, number).then(result => { keyArray.push(result[0].id) }).catch(e => sendErrorForward('update beast add carried items', e, res)))
-//                                                                                                                                 }
-//                                                                                                                             }
-//                                                                                                                             promiseArray.push(Promise.all(itemPromise).then(_ => {
-//                                                                                                                                 return db.delete.loot.carrieditems([id, [0, ...keyArray]]).catch(e => sendErrorForward('update beast delete carried items', e, res))
-//                                                                                                                             }))
-//                                                                                                                         },
-//                                                                                                                             upsertAlmsCarried: (promiseArray, db, id, res, calms = []) => {
-//                                                                                                                                 calms.forEach(({ id: almid, beastid: cbeastid, number, favor, deleted }) => {
-//                                                                                                                                     if (deleted) {
-//                                                                                                                                         promiseArray.push(db.delete.loot.carriedalms(cbeastid, almid).catch(e => sendErrorForward('update beast delete carried alms', e, res)))
-//                                                                                                                                     } else if (almid && cbeastid) {
-//                                                                                                                                         promiseArray.push(db.update.loot.carriedalms(almid, number, favor).catch(e => sendErrorForward('update beast update carried alms', e, res)))
-//                                                                                                                                     } else {
-//                                                                                                                                         promiseArray.push(db.add.loot.carriedalms(id, number, favor).catch(e => sendErrorForward('update beast add carried alms', e, res)))
-//                                                                                                                                     }
-//                                                                                                                                 })
-//                                                                                                                             },
+async function upsertLairBasic(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, copper: string, silver: string, gold: string, potion: string, relic: string, enchanted: string, talisman: string) {
+    if (!beastId) {
+        promiseArray.push(databaseConnection.loot.lair.addBasic(beastId, copper, silver, gold, potion, relic, enchanted, talisman).catch((error: Error) => sendErrorForward('add basic lair', error, response)))
+    } else {
+        promiseArray.push(databaseConnection.loot.lair.updateBasic(beastId, copper, silver, gold, potion, relic, enchanted, talisman).catch((error: Error) => sendErrorForward('update basic lair', error, response)))
+    }
+}
+
+async function upsertScrollsLair(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, scrolls: Scroll[]) {
+    scrolls.forEach((scroll: Scroll) => {
+        const { id, number, power, deleted } = scroll
+        if (deleted) {
+            promiseArray.push(databaseConnection.loot.lair.deleteScroll(beastId, id).catch((error: Error) => sendErrorForward('delete lair scrolls', error, response)))
+        } else if (id) {
+            promiseArray.push(databaseConnection.loot.lair.updateScroll(id, number, power).catch((error: Error) => sendErrorForward('update lair scrolls', error, response)))
+        } else {
+            promiseArray.push(databaseConnection.loot.lair.addScroll(beastId, number, power).catch((error: Error) => sendErrorForward('add lair scrolls', error, response)))
+        }
+    })
+}
+
+async function upsertAlmsLair(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, alms: Alm[]) {
+    alms.forEach((alm: Alm) => {
+        const { id, number, favor, deleted } = alm
+        if (deleted) {
+            promiseArray.push(databaseConnection.loot.lair.deleteAlm(beastId, id).catch((error: Error) => sendErrorForward('delete lair alms', error, response)))
+        } else if (id) {
+            promiseArray.push(databaseConnection.loot.lair.updateAlm(id, number, favor).catch((error: Error) => sendErrorForward('update lair alms', error, response)))
+        } else {
+            promiseArray.push(databaseConnection.loot.lair.addAlm(beastId, number, favor).catch((error: Error) => sendErrorForward('add lair alms', error, response)))
+        }
+    })
+}
+
+async function upsertItemsLair(databaseConnection: any, beastId: number, response: Response, items: any) {
+    let idArray: number[] = []
+    for (let key in items) {
+        const { id, itemcategory, materialrarity, detailing, wear, chance, number }: Item = items[key]
+
+        let idToPush: number = id ? id : 0
+        if (idToPush) {
+            await databaseConnection.loot.lair.updateItem(id, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('update lair items', error, response))
+        } else {
+            idToPush = await databaseConnection.loot.lair.addItem(beastId, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('add lair items', error, response))[0].id
+        }
+
+        idArray.push(idToPush)
+    }
+    databaseConnection.delete.loot.lairitems([beastId, [0, ...idArray]]).catch((error: Error) => sendErrorForward('delete lair items', error, response))
+}
+
+async function upsertCarriedLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loots: Loot) {
+    let { copper, silver, gold, potion, relic, enchanted, scrolls, alms, items, talisman } = loots
+    upsertBasicCarried(promiseArray, databaseConnection, beastId, response, copper, silver, gold, potion, relic, enchanted, talisman)
+    upsertScrollsCarried(promiseArray, databaseConnection, beastId, response, scrolls)
+    upsertAlmsCarried(promiseArray, databaseConnection, beastId, response, alms)
+    await upsertItemsCarried(databaseConnection, beastId, response, items)
+}
+
+async function upsertBasicCarried(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, copper: string, silver: string, gold: string, potion: string, relic: string, enchanted: string, talisman: string) {
+    if (!beastId) {
+        promiseArray.push(databaseConnection.loot.carried.addBasic(beastId, copper, silver, gold, potion, relic, enchanted, talisman).catch((error: Error) => sendErrorForward('add basic carried', error, response)))
+    } else {
+        promiseArray.push(databaseConnection.loot.carried.updateBasic(beastId, copper, silver, gold, potion, relic, enchanted, talisman).catch((error: Error) => sendErrorForward('update basic carried', error, response)))
+    }
+}
+
+async function upsertScrollsCarried(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, scrolls: Scroll[]) {
+    scrolls.forEach((scroll: Scroll) => {
+        const { id, number, power, deleted } = scroll
+        if (deleted) {
+            promiseArray.push(databaseConnection.loot.carried.deleteScroll(beastId, id).catch((error: Error) => sendErrorForward('delete carried scrolls', error, response)))
+        } else if (id) {
+            promiseArray.push(databaseConnection.loot.carried.updateScroll(id, number, power).catch((error: Error) => sendErrorForward('update carried scrolls', error, response)))
+        } else {
+            promiseArray.push(databaseConnection.loot.carried.addScroll(beastId, number, power).catch((error: Error) => sendErrorForward('add carried scrolls', error, response)))
+        }
+    })
+}
+
+async function upsertAlmsCarried(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, alms: Alm[]) {
+    alms.forEach((alm: Alm) => {
+        const { id, number, favor, deleted } = alm
+        if (deleted) {
+            promiseArray.push(databaseConnection.loot.carried.deleteAlm(beastId, id).catch((error: Error) => sendErrorForward('delete carried alms', error, response)))
+        } else if (id) {
+            promiseArray.push(databaseConnection.loot.carried.updateAlm(id, number, favor).catch((error: Error) => sendErrorForward('update carried alms', error, response)))
+        } else {
+            promiseArray.push(databaseConnection.loot.carried.addAlm(beastId, number, favor).catch((error: Error) => sendErrorForward('add carried alms', error, response)))
+        }
+    })
+}
+
+async function upsertItemsCarried(databaseConnection: any, beastId: number, response: Response, items: any) {
+    let idArray: number[] = []
+    for (let key in items) {
+        const { id, itemcategory, materialrarity, detailing, wear, chance, number }: Item = items[key]
+
+        let idToPush: number = id ? id : 0
+        if (idToPush) {
+            await databaseConnection.loot.carried.updateItem(id, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('update carried items', error, response))
+        } else {
+            idToPush = await databaseConnection.loot.carried.addItem(beastId, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('add carried items', error, response))[0].id
+        }
+
+        idArray.push(idToPush)
+    }
+    databaseConnection.delete.loot.carrieditems([beastId, [0, ...idArray]]).catch((error: Error) => sendErrorForward('delete carried items', error, response))
+}

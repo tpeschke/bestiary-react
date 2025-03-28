@@ -6,7 +6,7 @@ import './App.css'
 //  movement > movements
 //  conflict > conflicts
 //  locationalvitality > locationalVitalities
-//  loot > loots
+//  loot > specificLoots
 //  combatStatArray > combatStats
 //  folklore > folklores
 //  deletedSpellsList > deletedSpells
@@ -15,6 +15,8 @@ import './App.css'
 //    signs > beastSigns
 //    verb > beastVerbs
 //    noun > beastNouns
+//  lairloot > lairLoot
+//  carriedloot > carriedLoot
 
 function App() {
   const [count, setCount] = useState(0)
