@@ -6,6 +6,7 @@ import {
 
 import createHash from '../hashGeneration'
 import { sendErrorForwardNoFile } from '../sendingFunctions'
+import { collectCatalog } from '../../controllers/catalog'
 import upsertAllLoot from './upsertLoot'
 import upsertEncounters from './upsertEncounter'
 import upsertSkillChallenge from './upsertSkillChallenge'
@@ -42,7 +43,7 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     upsertAllLoot(promiseArray, databaseConnection, beastId, response, specificLoots, carriedLoot, lairLoot)
 
     return Promise.all(promiseArray).then(() => {
-        //     catalogCtrl.collectCatalog(app)
+        collectCatalog(databaseConnection)
         return true
     }).catch((error: Error) => sendErrorForward('final promise', error, response))
 }

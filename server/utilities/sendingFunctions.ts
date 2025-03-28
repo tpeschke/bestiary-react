@@ -15,3 +15,9 @@ export const checkForContentTypeBeforeSending = (response : Response, body : Obj
         response.send(body)
     }
 }
+
+export const consoleLogErrorNoFile = (file) => {
+    return (location, error) => {
+        console.log(file + ' ' + location + ' ~ ', error.message)
+    }
+}
