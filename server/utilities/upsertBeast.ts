@@ -1,5 +1,5 @@
 import { Response, Error } from '../interfaces/apiInterfaces'
-import { ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject, upsertParameters, Scenario, Folklore } from '../interfaces/beastInterfaces'
+import { ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject, upsertParameters, Scenario, Folklore, Spell, Obstacle, Challenge } from '../interfaces/beastInterfaces'
 
 import createHash from './hashGeneration'
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
@@ -7,8 +7,8 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 const sendErrorForward = sendErrorForwardNoFile('upsert beast')
 
 export default async function upsertBeast(databaseConnection: any, beastId: number, response: Response, upsertParameters: upsertParameters) {
-    const { roles, types, climates, combatStats, conflicts, skills, movements, variants, loots, reagents, locationalVitalities, locations, artistInfo, scenarios, 
-        folklores } = upsertParameters
+    const { roles, types, climates, combatStats, conflicts, skills, movements, variants, loots, reagents, locationalVitalities, locations, artistInfo, scenarios,
+        folklores, casting, deletedSpells, spells, obstacles, challenges } = upsertParameters
 
     let promiseArray: any[] = []
 
@@ -28,12 +28,12 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     upsertScenarios(promiseArray, databaseConnection, beastId, response, scenarios)
     upsertFolklore(promiseArray, databaseConnection, beastId, response, folklores)
 
-    // upsertHelper.upsertCasting(promiseArray, databaseConnection, beastId, response, casting)
-    // upsertHelper.deleteFromSpellList(promiseArray, databaseConnection, beastId, response, deletedSpellList)
-    // upsertHelper.upsertSpells(promiseArray, databaseConnection, beastId, response, spells)
+    upsertCasting(promiseArray, databaseConnection, beastId, response, casting)
+    deleteFromSpellList(promiseArray, databaseConnection, beastId, response, deletedSpells)
+    upsertSpells(promiseArray, databaseConnection, beastId, response, spells)
 
-    // upsertHelper.upsertObstacles(promiseArray, databaseConnection, beastId, response, obstacles)
-    // upsertHelper.upsertChallenges(promiseArray, databaseConnection, beastId, response, challenges)
+    upsertObstacles(promiseArray, databaseConnection, beastId, response, obstacles)
+    upsertChallenges(promiseArray, databaseConnection, beastId, response, challenges)
 
     // let { appearance, habitat, attack, defense } = tables
     // upsertHelper.deleteTables(promiseArray, databaseConnection, beastId, response, appearance, habitat, attack, defense)
@@ -78,7 +78,7 @@ async function upsertRoles(promiseArray: any[], databaseConnection: any, beastId
         let { hash = createHash() } = roleInfo
 
         promiseArray.push(
-            databaseConnection.role.upsert(roleid, beastId, vitality, hash, name, role, attack, defense, secondaryrole, combatpoints, stress, panic, socialrole, socialpoints,
+            databaseConnection.beast.role.upsert(roleid, beastId, vitality, hash, name, role, attack, defense, secondaryrole, combatpoints, stress, panic, socialrole, socialpoints,
                 skillrole, skillpoints, socialsecondary, size, fatigue, largeweapons, mental, knockback, singledievitality, noknockback, rollundertrauma, attack_skill, defense_skill,
                 attack_conf, defense_conf, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary)
                 .catch((error: Error) => sendErrorForward('upsert roles', error, response))
@@ -107,7 +107,7 @@ async function upsertClimates(promiseArray: any[], databaseConnection: any, beas
 }
 
 async function upsertCombats(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, combatStats: CombatStat[]) {
-    await databaseConnection.combatStat.delete([beastId, [0, ...combatStats.map(combatStat => combatStat.id)]]).catch((error: Error) => sendErrorForward('delete combat', error, response))
+    await databaseConnection.combatStat.beast.delete([beastId, [0, ...combatStats.map(combatStat => combatStat.id)]]).catch((error: Error) => sendErrorForward('delete combat', error, response))
 
     combatStats.forEach((combatStat: CombatStat) => {
         const { id, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
@@ -116,14 +116,14 @@ async function upsertCombats(promiseArray: any[], databaseConnection: any, beast
             weapontype, rangedistance, swarmbonus, adjustment, tdr, info } = combatStat
         if (!id) {
             promiseArray.push(
-                databaseConnection.combatStat.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+                databaseConnection.combatStat.beast.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
                     weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
                     unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
                     weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('add combat', error, response))
             )
         } else {
             promiseArray.push(
-                databaseConnection.combatStat.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+                databaseConnection.combatStat.beast.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
                     weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
                     unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
                     weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('update combat', error, response))
@@ -138,11 +138,11 @@ async function upsertConflict(promiseArray: any[], databaseConnection: any, beas
     newConflict.forEach((conflict: Conflict) => {
         const { trait, value, type, id, deleted, socialroleid, allroles, severity, strength, adjustment } = conflict
         if (deleted) {
-            promiseArray.push(databaseConnection.conflict.delete(id).catch((error: Error) => sendErrorForward('delete confrontation', error, response)))
+            promiseArray.push(databaseConnection.beast.conflict.delete(id).catch((error: Error) => sendErrorForward('delete confrontation', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.conflict.add(beastId, trait, value, type, socialroleid, allroles, severity, strength, adjustment).catch((error: Error) => sendErrorForward('add confrontation', error, response)))
+            promiseArray.push(databaseConnection.beast.conflict.add(beastId, trait, value, type, socialroleid, allroles, severity, strength, adjustment).catch((error: Error) => sendErrorForward('add confrontation', error, response)))
         } else {
-            promiseArray.push(databaseConnection.conflict.update(beastId, trait, value, type, id, socialroleid, allroles, severity, strength, adjustment).catch((error: Error) => sendErrorForward('update roles', error, response)))
+            promiseArray.push(databaseConnection.beast.conflict.update(beastId, trait, value, type, id, socialroleid, allroles, severity, strength, adjustment).catch((error: Error) => sendErrorForward('update roles', error, response)))
         }
     })
 }
@@ -151,11 +151,11 @@ async function upsertSkills(promiseArray: any[], databaseConnection: any, beastI
     skills.forEach((singleSkill: Skill) => {
         const { skill, rank, id, deleted, skillroleid, allroles, strength, adjustment } = singleSkill
         if (deleted) {
-            promiseArray.push(databaseConnection.skill.delete(id).catch((error: Error) => sendErrorForward('delete skills', error, response)))
+            promiseArray.push(databaseConnection.beast.skill.delete(id).catch((error: Error) => sendErrorForward('delete skills', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.skill.add(beastId, skill, rank, skillroleid, allroles, strength, adjustment).catch((error: Error) => sendErrorForward('add skills', error, response)))
+            promiseArray.push(databaseConnection.beast.skill.add(beastId, skill, rank, skillroleid, allroles, strength, adjustment).catch((error: Error) => sendErrorForward('add skills', error, response)))
         } else {
-            promiseArray.push(databaseConnection.skill.update(beastId, skill, rank, id, skillroleid, allroles, strength, adjustment).catch((error: Error) => sendErrorForward('update skills', error, response)))
+            promiseArray.push(databaseConnection.beast.skill.update(beastId, skill, rank, id, skillroleid, allroles, strength, adjustment).catch((error: Error) => sendErrorForward('update skills', error, response)))
         }
     })
 }
@@ -164,11 +164,11 @@ async function upsertMovement(promiseArray: any[], databaseConnection: any, beas
     movements.forEach((movement: Movement) => {
         const { stroll, walk, jog, run, sprint, type, id, deleted, roleid, allroles, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, adjustment } = movement
         if (deleted) {
-            promiseArray.push(databaseConnection.movement.delete(id).catch((error: Error) => sendErrorForward('delete movement', error, response)))
+            promiseArray.push(databaseConnection.beast.movement.delete(id).catch((error: Error) => sendErrorForward('delete movement', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.movement.add(beastId, stroll, walk, jog, run, sprint, type, roleid, allroles, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, adjustment).catch((error: Error) => sendErrorForward('add movement', error, response)))
+            promiseArray.push(databaseConnection.beast.movement.add(beastId, stroll, walk, jog, run, sprint, type, roleid, allroles, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, adjustment).catch((error: Error) => sendErrorForward('add movement', error, response)))
         } else {
-            promiseArray.push(databaseConnection.movement.update(beastId, stroll, walk, jog, run, sprint, type, id, roleid, allroles, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, adjustment).catch((error: Error) => sendErrorForward('update movement', error, response)))
+            promiseArray.push(databaseConnection.beast.movement.update(beastId, stroll, walk, jog, run, sprint, type, id, roleid, allroles, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, adjustment).catch((error: Error) => sendErrorForward('update movement', error, response)))
         }
     })
 }
@@ -176,11 +176,11 @@ async function upsertMovement(promiseArray: any[], databaseConnection: any, beas
 async function upsertVariants(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, variants: Variant[]) {
     variants.forEach(({ id, variantid, deleted }) => {
         if (deleted) {
-            promiseArray.push(databaseConnection.variant.delete(beastId, variantid).catch((error: Error) => sendErrorForward('delete variant 1', error, response)))
-            promiseArray.push(databaseConnection.variant.delete(variantid, beastId).catch((error: Error) => sendErrorForward('delete variant 2', error, response)))
+            promiseArray.push(databaseConnection.beast.variant.delete(beastId, variantid).catch((error: Error) => sendErrorForward('delete variant 1', error, response)))
+            promiseArray.push(databaseConnection.beast.variant.delete(variantid, beastId).catch((error: Error) => sendErrorForward('delete variant 2', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.variant.add(beastId, variantid).catch((error: Error) => sendErrorForward('add variant 1', error, response)))
-            promiseArray.push(databaseConnection.variant.add(variantid, beastId).catch((error: Error) => sendErrorForward('add variant 2', error, response)))
+            promiseArray.push(databaseConnection.beast.variant.add(beastId, variantid).catch((error: Error) => sendErrorForward('add variant 1', error, response)))
+            promiseArray.push(databaseConnection.beast.variant.add(variantid, beastId).catch((error: Error) => sendErrorForward('add variant 2', error, response)))
         }
     })
 }
@@ -189,11 +189,11 @@ async function upsertLoot(promiseArray: any[], databaseConnection: any, beastId:
     loot.forEach((singleLoot: Loot) => {
         const { loot, price, id, deleted } = singleLoot
         if (deleted) {
-            promiseArray.push(databaseConnection.loot.delete(id).catch((error: Error) => sendErrorForward('delete loot', error, response)))
+            promiseArray.push(databaseConnection.beast.loot.delete(id).catch((error: Error) => sendErrorForward('delete loot', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.loot.add(beastId, loot, price).catch((error: Error) => sendErrorForward('add loot', error, response)))
+            promiseArray.push(databaseConnection.beast.loot.add(beastId, loot, price).catch((error: Error) => sendErrorForward('add loot', error, response)))
         } else {
-            promiseArray.push(databaseConnection.loot.update(beastId, loot, price, id).catch((error: Error) => sendErrorForward('update loot', error, response)))
+            promiseArray.push(databaseConnection.beast.loot.update(beastId, loot, price, id).catch((error: Error) => sendErrorForward('update loot', error, response)))
         }
     })
 }
@@ -202,11 +202,11 @@ async function upsertReagents(promiseArray: any[], databaseConnection: any, beas
     reagents.forEach((reagent: Reagent) => {
         const { name, spell, difficulty, harvest, id: reagentId, deleted } = reagent
         if (deleted) {
-            promiseArray.push(databaseConnection.reagent.delete(reagentId).catch((error: Error) => sendErrorForward('delete pleroma', error, response)))
+            promiseArray.push(databaseConnection.beast.reagent.delete(reagentId).catch((error: Error) => sendErrorForward('delete pleroma', error, response)))
         } else if (!reagentId) {
-            promiseArray.push(databaseConnection.reagent.add(beastId, name, spell, difficulty, harvest).catch((error: Error) => sendErrorForward('add pleroma', error, response)))
+            promiseArray.push(databaseConnection.beast.reagent.add(beastId, name, spell, difficulty, harvest).catch((error: Error) => sendErrorForward('add pleroma', error, response)))
         } else {
-            promiseArray.push(databaseConnection.reagent.update(beastId, name, spell, difficulty, harvest, reagentId).catch((error: Error) => sendErrorForward('update pleroma', error, response)))
+            promiseArray.push(databaseConnection.beast.reagent.update(beastId, name, spell, difficulty, harvest, reagentId).catch((error: Error) => sendErrorForward('update pleroma', error, response)))
         }
     })
 }
@@ -214,11 +214,11 @@ async function upsertLocationalVitality(promiseArray: any[], databaseConnection:
     locationalVitalities.forEach((locationalVitality: LocationVitality) => {
         const { id, location, vitality, beastid, deleted, roleid, allroles } = locationalVitality
         if (deleted) {
-            promiseArray.push(databaseConnection.locationalVitality.delete(id).catch((error: Error) => sendErrorForward('delete locational vitality', error, response)))
+            promiseArray.push(databaseConnection.beast.locationalVitality.delete(id).catch((error: Error) => sendErrorForward('delete locational vitality', error, response)))
         } else if (id && beastid) {
-            promiseArray.push(databaseConnection.locationalVitality.update(beastid, location, vitality, id, roleid, allroles).catch((error: Error) => sendErrorForward('update locational vitality', error, response)))
+            promiseArray.push(databaseConnection.beast.locationalVitality.update(beastid, location, vitality, id, roleid, allroles).catch((error: Error) => sendErrorForward('update locational vitality', error, response)))
         } else {
-            promiseArray.push(databaseConnection.locationalVitality.add(beastId, location, vitality, allroles, roleid).catch((error: Error) => sendErrorForward('add locational vitality', error, response)))
+            promiseArray.push(databaseConnection.beast.locationalVitality.add(beastId, location, vitality, allroles, roleid).catch((error: Error) => sendErrorForward('add locational vitality', error, response)))
         }
     })
 }
@@ -227,13 +227,13 @@ async function upsertLocations(promiseArray: any[], databaseConnection: any, bea
     locations.forEach((singleLocation: Location) => {
         const { deleted, id, locationid, location, link } = singleLocation
         if (deleted) {
-            promiseArray.push(databaseConnection.location.delete(id).catch((error: Error) => sendErrorForward('delete location', error, response)))
+            promiseArray.push(databaseConnection.beast.location.delete(id).catch((error: Error) => sendErrorForward('delete location', error, response)))
         } else {
             if (!locationid) {
-                promiseArray.push(databaseConnection.location.addToAll(location, link).catch((error: Error) => sendErrorForward('add location to list', error, response)))
+                promiseArray.push(databaseConnection.beast.location.addToAll(location, link).catch((error: Error) => sendErrorForward('add location to list', error, response)))
             }
             if (!id) {
-                promiseArray.push(databaseConnection.location.add(beastId, locationid).catch((error: Error) => sendErrorForward('add location', error, response)))
+                promiseArray.push(databaseConnection.beast.location.add(beastId, locationid).catch((error: Error) => sendErrorForward('add location', error, response)))
             }
         }
     })
@@ -245,7 +245,7 @@ async function upsertArtist(promiseArray: any[], databaseConnection: any, beastI
         let { id, artistid, artist, tooltip, link, roleid } = artistInfo;
         if (artist) {
             if (!artistid) {
-                const newArtistId = await databaseConnection.artist.addToAll(artist, tooltip, link).catch((error: Error) => sendErrorForward('add all artists', error, response))[0].id
+                const newArtistId = await databaseConnection.beast.artist.addToAll(artist, tooltip, link).catch((error: Error) => sendErrorForward('add all artists', error, response))[0].id
                 addOrUpdateBeastArtistInfo(id, beastId, newArtistId, roleid)
             } else {
                 addOrUpdateBeastArtistInfo(id, beastId, artistid, roleid)
@@ -255,9 +255,9 @@ async function upsertArtist(promiseArray: any[], databaseConnection: any, beastI
 
     function addOrUpdateBeastArtistInfo(id: number, beastId: number, artistId: number, roleId: string) {
         if (id) {
-            promiseArray.push(databaseConnection.update.artist(id, artistId).catch((error: Error) => sendErrorForward('update artist', error, response)))
+            promiseArray.push(databaseConnection.beast.update.artist(id, artistId).catch((error: Error) => sendErrorForward('update artist', error, response)))
         } else {
-            promiseArray.push(databaseConnection.add.artist(beastId, artistId, roleId).catch((error: Error) => sendErrorForward('add artist', error, response)))
+            promiseArray.push(databaseConnection.beast.add.artist(beastId, artistId, roleId).catch((error: Error) => sendErrorForward('add artist', error, response)))
         }
     }
 
@@ -274,9 +274,9 @@ async function upsertScenarios(promiseArray: any[], databaseConnection: any, bea
     scenarios.forEach((singleScenario: Scenario) => {
         const { id, scenario } = singleScenario
         if (!id) {
-            promiseArray.push(databaseConnection.scenario.add(beastId, scenario).catch((error: Error) => sendErrorForward('add scenario', error, response)))
+            promiseArray.push(databaseConnection.beast.scenario.add(beastId, scenario).catch((error: Error) => sendErrorForward('add scenario', error, response)))
         } else {
-            promiseArray.push(databaseConnection.scenario.update(id, scenario).catch((error: Error) => sendErrorForward('update scenario', error, response)))
+            promiseArray.push(databaseConnection.beast.scenario.update(id, scenario).catch((error: Error) => sendErrorForward('update scenario', error, response)))
         }
     })
 }
@@ -286,9 +286,57 @@ async function upsertFolklore(promiseArray: any[], databaseConnection: any, beas
     folklore.forEach((folklore: Folklore) => {
         const { id, belief, truth } = folklore
         if (!id) {
-            promiseArray.push(databaseConnection.folklore.add(beastId, belief, truth).catch((error: Error) => sendErrorForward('add folklore', error, response)))
+            promiseArray.push(databaseConnection.beast.folklore.add(beastId, belief, truth).catch((error: Error) => sendErrorForward('add folklore', error, response)))
         } else {
-            promiseArray.push(databaseConnection.folklore.update(id, beastId, belief, truth).catch((error: Error) => sendErrorForward('update folklore', error, response))) 
+            promiseArray.push(databaseConnection.beast.folklore.update(id, beastId, belief, truth).catch((error: Error) => sendErrorForward('update folklore', error, response)))
+        }
+    })
+}
+
+async function upsertCasting(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, casting) {
+    if (casting.beastid) {
+        const { augur, wild, vancian, spellnumberdie, manifesting, commanding, bloodpact, defaulttype } = casting
+        promiseArray.push(databaseConnection.beast.casting.update(augur, wild, vancian, spellnumberdie, manifesting, commanding, bloodpact, defaulttype, beastId).catch((error: Error) => sendErrorForward('update casting', error, response)))
+    } else {
+        promiseArray.push(databaseConnection.beast.casting.update(null, null, null, 'd4', null, null, null, null, beastId).catch((error: Error) => sendErrorForward('update casting 2', error, response)))
+    }
+}
+
+async function deleteFromSpellList(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, deletedSpellList: number[]) {
+    deletedSpellList.forEach((spellId: number) => {
+        promiseArray.push(databaseConnection.beast.spell.delete(spellId, beastId).catch((error: Error) => sendErrorForward('delete spell', error, response)))
+    })
+}
+
+async function upsertSpells(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, spells: Spell[]) {
+    spells.forEach((spell: Spell) => {
+        const { id, name, origin, shape, range, interval, effect, allroles, roleid, resist } = spell
+        if (id) {
+            promiseArray.push(databaseConnection.beast.spell.update(id, name, origin, shape, range, interval, effect, beastId, allroles, roleid, resist).catch((error: Error) => sendErrorForward('update spell', error, response)))
+        } else {
+            promiseArray.push(databaseConnection.beast.spell.add(id, name, origin, shape, range, interval, effect, beastId, allroles, roleid, resist).catch((error: Error) => sendErrorForward('add spell', error, response)))
+        }
+    })
+}
+
+async function upsertObstacles(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, obstacles: Obstacle[]) {
+    await databaseConnection.skill.obstacle.delete([beastId, [0, ...obstacles.map(obstacles => obstacles.id)]]).catch(e => sendErrorForward('delete obstacles', e, response))
+
+    obstacles.forEach((obstacle) => {
+        const { id, obstacleid, notes } = obstacle
+        if (!id) {
+            promiseArray.push(databaseConnection.skill.obstacle.add(beastId, obstacleid, notes).catch(e => sendErrorForward('add obstacles', e, response)))
+        }
+    })
+}
+
+async function upsertChallenges(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, challenges: Challenge[]) {
+    await databaseConnection.skill.challenge.delete([beastId, [0, ...challenges.map(challenges => challenges.id)]]).catch((error: Error) => sendErrorForward('delete challenges', error, response))
+
+    challenges.forEach((challenge: Challenge) => {
+        const { id, challengeid } = challenge
+        if (!id) {
+            promiseArray.push(databaseConnection.skill.challenge.add(beastId, challengeid).catch((error: Error) => sendErrorForward('add challenges', error, response)))
         }
     })
 }
@@ -572,47 +620,3 @@ async function upsertFolklore(promiseArray: any[], databaseConnection: any, beas
 //                                                                                                                                     }
 //                                                                                                                                 })
 //                                                                                                                             },
-//                                                                                                                                 upsertCasting: (promiseArray, db, id, res, casting) => {
-//                                                                                                                                     if (casting.beastid) {
-//                                                                                                                                         let { augur, wild, vancian, spellnumberdie, manifesting, commanding, bloodpact, defaulttype } = casting
-//                                                                                                                                         promiseArray.push(db.update.casting(augur, wild, vancian, spellnumberdie, manifesting, commanding, bloodpact, defaulttype, id).catch(e => sendErrorForward('update beast update casting', e, res)))
-//                                                                                                                                     } else {
-//                                                                                                                                         promiseArray.push(db.update.casting(null, null, null, 'd4', null, null, null, null, id).catch(e => sendErrorForward('update beast update casting 2', e, res)))
-//                                                                                                                                     }
-//                                                                                                                                 },
-//                                                                                                                                     upsertSpells: (promiseArray, db, id, res, spells = []) => {
-//                                                                                                                                         spells.forEach(({ id: spellid, name, origin, shape, range, interval, effect, beastid, allroles, roleid, resist }) => {
-//                                                                                                                                             if (beastid) {
-//                                                                                                                                                 promiseArray.push(db.update.spell(spellid, name, origin, shape, range, interval, effect, beastid, allroles, roleid, resist).catch(e => sendErrorForward('update beast update spell', e, res)))
-//                                                                                                                                             } else {
-//                                                                                                                                                 promiseArray.push(db.add.spell(spellid, name, origin, shape, range, interval, effect, id, allroles, roleid, resist).catch(e => sendErrorForward('update beast add spell', e, res)))
-//                                                                                                                                             }
-//                                                                                                                                         })
-//                                                                                                                                     },
-//                                                                                                                                         deleteFromSpellList: (promiseArray, db, id, res, deletedSpellList = []) => {
-//                                                                                                                                             deletedSpellList.forEach(val => {
-//                                                                                                                                                 promiseArray.push(db.delete.spell(val, id).catch(e => sendErrorForward('update beast delete spell', e, res)))
-//                                                                                                                                             })
-//                                                                                                                                         },
-//                                                                                                                                             upsertObstacles: (promiseArray, db, id, res, obstacles) => {
-//                                                                                                                                                 promiseArray.push(db.delete.obstacles([id, [0, ...obstacles.map(obstacles => obstacles.id)]]).then(_ => {
-//                                                                                                                                                     return obstacles.map(({ id: uniqueid, obstacleid, notes }) => {
-//                                                                                                                                                         if (!uniqueid) {
-//                                                                                                                                                             return db.add.obstacles(id, obstacleid, notes).catch(e => sendErrorForward('update beast add obstacles', e, res))
-//                                                                                                                                                         } else {
-//                                                                                                                                                             return true
-//                                                                                                                                                         }
-//                                                                                                                                                     })
-//                                                                                                                                                 }).catch(e => sendErrorForward('update beast delete obstacles', e, res)))
-//                                                                                                                                             },
-//                                                                                                                                                 upsertChallenges: (promiseArray, db, id, res, challenges) => {
-//                                                                                                                                                     promiseArray.push(db.delete.challenges([id, [0, ...challenges.map(challenges => challenges.id)]]).then(_ => {
-//                                                                                                                                                         return challenges.map(({ id: uniqueid, challengeid }) => {
-//                                                                                                                                                             if (!uniqueid) {
-//                                                                                                                                                                 return db.add.challenges(id, challengeid).catch(e => sendErrorForward('update beast add challenges', e, res))
-//                                                                                                                                                             } else {
-//                                                                                                                                                                 return true
-//                                                                                                                                                             }
-//                                                                                                                                                         })
-//                                                                                                                                                     }).catch(e => sendErrorForward('update beast delete challenges', e, res)))
-//                                                                                                                                                 },

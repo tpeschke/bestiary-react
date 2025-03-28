@@ -9,11 +9,11 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
-interface beastRequest extends Request {
-    body: Body
+interface BeastRequest extends Request {
+    body: BeastRequestBody
 }
 
-interface Body extends upsertParameters {
+interface BeastRequestBody extends upsertParameters {
     name: string,
     intro: string,
     habitat: string,
@@ -65,13 +65,13 @@ interface Body extends upsertParameters {
     skillsecondary: string
 }
 
-export async function addBeast(request: beastRequest, response: Response) {
+export async function addBeast(request: BeastRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { body, user } = request
 
     let { name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress,
         types, movements, conflicts, skills, variants, loots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounter, plural, thumbnail, rarity,
-        locationalVitalities, lairloot, roles, casting, spells, deletedSpellList, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
+        locationalVitalities, lairloot, roles, casting, spells, deletedSpells, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
         skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedloot, folklores, combatStats, knockback, singledievitality, noknockback,
         tables, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma, imagesource, locations, scenarios, isincorporeal, weaponbreakagevitality,
         hasarchetypes, hasmonsterarchetypes, skillsecondary } = body
@@ -91,7 +91,8 @@ export async function addBeast(request: beastRequest, response: Response) {
         .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
 
     const updateParameters: upsertParameters = {
-        roles, types, climates, combatStats, conflicts, skills, movements, variants,loots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores
+        roles, types, climates, combatStats, conflicts, skills, movements, variants,loots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
+        casting, deletedSpells, spells, obstacles, challenges
     }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 

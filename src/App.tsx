@@ -9,6 +9,7 @@ import './App.css'
 //  loot > loots
 //  combatStatArray > combatStats
 //  folklore > folklores
+// deletedSpellsList > deletedSpells
 
 function App() {
   const [count, setCount] = useState(0)

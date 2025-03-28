@@ -13,7 +13,12 @@ export interface upsertParameters {
     locations: Location[],
     artistInfo: ArtistEditObject,
     scenarios: Scenario[],
-    folklores: Folklore[]
+    folklores: Folklore[],
+    casting: Casting,
+    deletedSpells: number[],
+    spells: Spell[],
+    obstacles: Obstacle[],
+    challenges: Challenge[]
 }
 
 export interface Role {
@@ -239,4 +244,43 @@ export interface Folklore {
     beastid: number,
     belief: string,
     truth: string
+}
+
+export interface Casting {
+    augur: string,
+    wild: string,
+    vancian: string,
+    spellnumberdie: string,
+    manifesting: string,
+    commanding: string,
+    bloodpact: string,
+    defaulttype: string,
+    beastid: number
+}
+
+export interface Spell {
+    id: number,
+    name: string,
+    origin: string,
+    shape: string,
+    range: string,
+    interval: string,
+    effect: string,
+    beastid: number,
+    allroles: boolean,
+    roleid: string,
+    resist: string
+}
+
+export interface Obstacle {
+    id: number,
+    beastid: number,
+    obstacleid: number,
+    notes: string
+}
+
+export interface Challenge {
+    id: number,
+    challengeid: number,
+    beastid: number
 }
