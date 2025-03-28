@@ -2,11 +2,7 @@ import { Response, Error } from '../interfaces/apiInterfaces'
 import {
     ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject,
     upsertParameters, Scenario, Folklore, Spell, Obstacle, Challenge, Table, TablesObject, Row, Temperament, Encounter, TemperamentObject, Group, GroupWeight, Number,
-    SignObject, Sign,
-    VerbObject,
-    Verb,
-    Noun,
-    NounObject
+    SignObject, Sign, VerbObject, Verb, Noun, NounObject
 } from '../interfaces/beastInterfaces'
 
 import createHash from './hashGeneration'
@@ -59,9 +55,9 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     // upsertHelper.upsertAlmsCarried(promiseArray, databaseConnection, id, response, calms)
     // upsertHelper.upsertItemsCarried(promiseArray, databaseConnection, id, response, citems)
 
-    Promise.all(promiseArray).then(() => {
+    return Promise.all(promiseArray).then(() => {
         //     catalogCtrl.collectCatalog(app)
-        checkForContentTypeBeforeSending(response, { id: beastId })
+        return true
     }).catch((error: Error) => sendErrorForward('final promise', error, response))
 }
 
