@@ -97,6 +97,4 @@ export async function addBeast(request: BeastRequest, response: Response) {
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 
     checkForContentTypeBeforeSending(response, { id: beastId })
-
-    // also: don't forget endpoint
 }

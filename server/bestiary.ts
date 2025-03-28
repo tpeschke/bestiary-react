@@ -11,6 +11,7 @@ import { server, databaseCredentials, fakeAuth } from './server-config'
 import authRoutes from './routes/authentication'
 import accessRoutes from './routes/access'
 import playerRoutes from './routes/player'
+import ownerEditRoutes from './routes/ownerEdit'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -24,6 +25,8 @@ app.use(fakeAuth)
 app.use('/', authRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
+
+app.user('/ownerEdit', ownerEditRoutes)
 
 // ================================== \\
 

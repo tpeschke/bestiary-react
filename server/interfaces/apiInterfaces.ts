@@ -11,6 +11,7 @@ interface App {
 }
 
 interface Parameters {
+    id: number,
     beastid: string
 }
 
