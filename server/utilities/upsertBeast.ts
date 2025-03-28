@@ -6,7 +6,7 @@ import {
 } from '../interfaces/beastInterfaces'
 
 import createHash from './hashGeneration'
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
+import { sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
 const sendErrorForward = sendErrorForwardNoFile('upsert beast')
 
