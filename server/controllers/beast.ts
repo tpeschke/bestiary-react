@@ -4,7 +4,7 @@ import { upsertParameters } from "../interfaces/beastInterfaces"
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
 import createHash from "../utilities/hashGeneration"
-import upsertBeast from "../utilities/upsertBeast"
+import upsertBeast from "../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
