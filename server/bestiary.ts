@@ -32,7 +32,7 @@ app.use('/ownerEdit', ownerEditRoutes)
 
 // ================================== \\
 
-app.get('/*', (_, response : Response) => {
+app.get('/*', (request: Request, response : Response) => {
     // response.sendFile(path.join(__dirname + '/../dist/bestiary/index.html'))
 })
 

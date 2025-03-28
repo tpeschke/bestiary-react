@@ -14,6 +14,7 @@ interface BeastRequest extends Request {
 }
 
 interface BeastRequestBody extends upsertParameters {
+    id: number,
     name: string,
     intro: string,
     habitat: string,
@@ -62,19 +63,23 @@ interface BeastRequestBody extends upsertParameters {
     weaponbreakagevitality: boolean,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
-    skillsecondary: string
+    skillsecondary: string,
+    atk_skill: string, 
+    def_skill: string, 
+    atk_conf: string, 
+    def_conf: string
 }
 
 export async function addBeast(request: BeastRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { body, user } = request
 
-    let { name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress,
-        types, movements, conflicts, skills, variants, specificLoots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounters, plural, thumbnail, rarity,
+    let { id, name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress, types, movements, conflicts, 
+        skills, variants, specificLoots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounters, plural, thumbnail, rarity,
         locationalVitalities, lairLoot, roles, casting, spells, deletedSpells, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
         skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedLoot, folklores, combatStats, knockback, singledievitality, noknockback,
         tables, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma, imagesource, locations, scenarios, isincorporeal, weaponbreakagevitality,
-        hasarchetypes, hasmonsterarchetypes, skillsecondary } = body
+        hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf } = body
 
     const userid = isOwner(user.id) ? null : user.id
 
@@ -83,18 +88,31 @@ export async function addBeast(request: BeastRequest, response: Response) {
     const effectiveFlawLimit = flawlimit > 0 ? flawlimit : null
     const effectivePassionLimit = passionlimit > 0 ? passionlimit : null
 
-    const beastId = await databaseConnection.beast.add(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
-        vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
-        effectivePassionLimit, plural, thumbnail, rarity, caution, role, combatpoints, socialrole, socialpoints, secondaryrole, skillrole, skillpoints, fatigue,
-        defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
-        imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary)
-        .catch((error: Error) => sendErrorForward('add beast main', error, response))[0].id
+    let beastId = id ? id : null
+    if (beastId) {
+        await databaseConnection.beast.update(beastId, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
+            vitality, panic, stress, lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
+            effectivePassionLimit, plural, thumbnail, rarity, caution, role, combatpoints, socialrole, socialpoints, secondaryrole, skillrole, skillpoints, fatigue,
+            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
+            imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf)
+            .catch((error: Error) => sendErrorForward('update main', error, response))
+    } else {
+        beastId = await databaseConnection.beast.add(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
+            vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
+            effectivePassionLimit, plural, thumbnail, rarity, caution, role, combatpoints, socialrole, socialpoints, secondaryrole, skillrole, skillpoints, fatigue,
+            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
+            imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf)
+            .catch((error: Error) => sendErrorForward('add main', error, response))[0].id
+    }
 
     const updateParameters: upsertParameters = {
         roles, types, climates, combatStats, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
         casting, deletedSpells, spells, obstacles, challenges, tables, encounters, lairLoot, carriedLoot
     }
-    await upsertBeast(databaseConnection, beastId, response, updateParameters)
+
+    if (beastId) {
+        await upsertBeast(databaseConnection, beastId, response, updateParameters)
+    }
 
     checkForContentTypeBeforeSending(response, { id: beastId })
 }

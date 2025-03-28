@@ -43,6 +43,6 @@ async function checkIfOwnsBeast(request: ownAuthRequest, response: Response, nex
     }
 }
 
-ownerEditRoutes.post('/add', checkIfOwnsBeast, upsertBeast)
+ownerEditRoutes.post('/upsert', checkIfOwnsBeast, upsertBeast)
 
 export default ownerEditRoutes
