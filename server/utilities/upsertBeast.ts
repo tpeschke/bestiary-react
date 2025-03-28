@@ -1,5 +1,13 @@
 import { Response, Error } from '../interfaces/apiInterfaces'
-import { ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject, upsertParameters, Scenario, Folklore, Spell, Obstacle, Challenge } from '../interfaces/beastInterfaces'
+import {
+    ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Loot, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject,
+    upsertParameters, Scenario, Folklore, Spell, Obstacle, Challenge, Table, TablesObject, Row, Temperament, Encounter, TemperamentObject, Group, GroupWeight, Number,
+    SignObject, Sign,
+    VerbObject,
+    Verb,
+    Noun,
+    NounObject
+} from '../interfaces/beastInterfaces'
 
 import createHash from './hashGeneration'
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
@@ -8,7 +16,7 @@ const sendErrorForward = sendErrorForwardNoFile('upsert beast')
 
 export default async function upsertBeast(databaseConnection: any, beastId: number, response: Response, upsertParameters: upsertParameters) {
     const { roles, types, climates, combatStats, conflicts, skills, movements, variants, loots, reagents, locationalVitalities, locations, artistInfo, scenarios,
-        folklores, casting, deletedSpells, spells, obstacles, challenges } = upsertParameters
+        folklores, casting, deletedSpells, spells, obstacles, challenges, tables, encounters } = upsertParameters
 
     let promiseArray: any[] = []
 
@@ -35,20 +43,9 @@ export default async function upsertBeast(databaseConnection: any, beastId: numb
     upsertObstacles(promiseArray, databaseConnection, beastId, response, obstacles)
     upsertChallenges(promiseArray, databaseConnection, beastId, response, challenges)
 
-    // let { appearance, habitat, attack, defense } = tables
-    // upsertHelper.deleteTables(promiseArray, databaseConnection, beastId, response, appearance, habitat, attack, defense)
-    // upsertHelper.upsertApperanceTable(promiseArray, databaseConnection, beastId, response, appearance)
-    // upsertHelper.upsertHabitatTable(promiseArray, databaseConnection, beastId, response, habitat)
-    // upsertHelper.upsertAttackTable(promiseArray, databaseConnection, beastId, response, attack)
-    // upsertHelper.upsertDefenseTable(promiseArray, databaseConnection, beastId, response, defense)
+    updateTables(promiseArray, databaseConnection, beastId, response, tables)
 
-    // let { temperament, signs, rank, noun, verb, groups, numbers } = encounter;
-    // upsertHelper.upsertTemperament(promiseArray, databaseConnection, beastId, response, temperament)
-    // upsertHelper.upsertGroups(promiseArray, databaseConnection, beastId, response, groups)
-    // upsertHelper.upsertNumbers(promiseArray, databaseConnection, beastId, response, numbers)
-    // upsertHelper.upsertSigns(promiseArray, databaseConnection, beastId, response, signs)
-    // upsertHelper.upsertVerb(promiseArray, databaseConnection, beastId, response, verb)
-    // upsertHelper.upsertNoun(promiseArray, databaseConnection, beastId, response, noun)
+    upsertEncounters(promiseArray, databaseConnection, beastId, response, encounters)
 
     // let { copper, silver, gold, potion, relic, enchanted, scrolls, alms, talisman, items } = lairloot
     // upsertHelper.upsertLairBasic(promiseArray, databaseConnection, id, response, beastid, copper, silver, gold, potion, relic, enchanted, talisman)
@@ -341,194 +338,174 @@ async function upsertChallenges(promiseArray: any[], databaseConnection: any, be
     })
 }
 
-//                                                     deleteTables: (promiseArray, db, id, res, appearance, habitat, attack, defense) => {
-//                                                         promiseArray.push(db.delete.table(id, [0, ...appearance.map(table => table.id), ...habitat.map(table => table.id), ...attack.map(table => table.id), ...defense.map(table => table.id)]))
-//                                                     },
-//                                                         upsertApperanceTable: (promiseArray, db, id, res, appearance) => {
-//                                                             appearance.forEach(table => {
-//                                                                 if (table.id) {
-//                                                                     promiseArray.push(db.update.all.tables(table.id, table.label).catch(e => sendErrorForward('update beast appearance all tables', e, res)))
-//                                                                     db.delete.rows([table.id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                         table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                             promiseArray.push(db.add.row(rowid, table.id, weight, value).catch(e => sendErrorForward('update beast appearance add rows', e, res)))
-//                                                                         })
-//                                                                     }).catch(e => sendErrorForward('update beast appearance delete row', e, res))
-//                                                                 } else {
-//                                                                     promiseArray.push(db.add.all.tables(table.label, 'ap').then(result => {
-//                                                                         promiseArray.push(db.add.table(id, result[0].id).catch(e => sendErrorForward('update beast appearance add table2 ', e, res)))
-//                                                                         db.delete.rows([result[0].id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                             table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                 promiseArray.push(db.add.row(rowid, result[0].id, weight, value).catch(e => sendErrorForward('update beast appearance add rows 2', e, res)))
-//                                                                             })
-//                                                                         }).catch(e => sendErrorForward('update beast appearance delete rows 2', e, res))
-//                                                                     }).catch(e => sendErrorForward('update beast appearance all tables 2', e, res)))
-//                                                                 }
-//                                                             })
-//                                                         },
-//                                                             upsertHabitatTable: (promiseArray, db, id, res, habitat) => {
-//                                                                 habitat.forEach(table => {
-//                                                                     if (table.id) {
-//                                                                         promiseArray.push(db.update.all.tables(table.id, table.label).catch(e => sendErrorForward('update beast habitat all tables', e, res)))
-//                                                                         db.delete.rows([table.id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                             table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                 promiseArray.push(db.add.row(rowid, table.id, weight, value).catch(e => sendErrorForward('update beast habitat add rows', e, res)))
-//                                                                             })
-//                                                                         }).catch(e => sendErrorForward('update beast habitat delete rows', e, res))
-//                                                                     } else {
-//                                                                         promiseArray.push(db.add.all.tables(table.label, 'ha').then(result => {
-//                                                                             promiseArray.push(db.add.table(id, result[0].id))
-//                                                                             db.delete.rows([result[0].id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                                 table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                     promiseArray.push(db.add.row(rowid, result[0].id, weight, value).catch(e => sendErrorForward('update beast habitat add rows 2', e, res)))
-//                                                                                 })
-//                                                                             }).catch(e => sendErrorForward('update beast habitat delete rows 2', e, res))
-//                                                                         }).catch(e => sendErrorForward('update beast habitat all tables 2', e, res)))
-//                                                                     }
-//                                                                 })
-//                                                             },
-//                                                                 upsertAttackTable: (promiseArray, db, id, res, attack) => {
-//                                                                     attack.forEach(table => {
-//                                                                         if (table.id) {
-//                                                                             promiseArray.push(db.update.all.tables(table.id, table.label).catch(e => sendErrorForward('update beast attack all tables', e, res)))
-//                                                                             db.delete.rows([table.id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                                 table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                     promiseArray.push(db.add.row(rowid, table.id, weight, value).catch(e => sendErrorForward('update beast attack add rows', e, res)))
-//                                                                                 })
-//                                                                             }).catch(e => sendErrorForward('update beast attack delete rows', e, res))
-//                                                                         } else {
-//                                                                             promiseArray.push(db.add.all.tables(table.label, 'at').then(result => {
-//                                                                                 promiseArray.push(db.add.table(id, result[0].id))
-//                                                                                 db.delete.rows([result[0].id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                                     table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                         promiseArray.push(db.add.row(rowid, result[0].id, weight, value).catch(e => sendErrorForward('update beast attack add rows 2', e, res)))
-//                                                                                     })
-//                                                                                 }).catch(e => sendErrorForward('update beast attack delete rows 2', e, res))
-//                                                                             }).catch(e => sendErrorForward('update beast attack all tables 2', e, res)))
-//                                                                         }
-//                                                                     })
-//                                                                 },
-//                                                                     upsertDefenseTable: (promiseArray, db, id, res, defense) => {
-//                                                                         defense.forEach(table => {
-//                                                                             if (table.id) {
-//                                                                                 promiseArray.push(db.update.all.tables(table.id, table.label).catch(e => sendErrorForward('update beast defense all tables', e, res)))
-//                                                                                 db.delete.rows([table.id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                                     table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                         promiseArray.push(db.add.row(rowid, table.id, weight, value).catch(e => sendErrorForward('update beast defense add rows', e, res)))
-//                                                                                     })
-//                                                                                 }).catch(e => sendErrorForward('update beast defense delete rows', e, res))
-//                                                                             } else {
-//                                                                                 promiseArray.push(db.add.all.tables(table.label, 'de').then(result => {
-//                                                                                     promiseArray.push(db.add.table(id, result[0].id).catch(e => sendErrorForward('update beast defense all tables 2', e, res)))
-//                                                                                     db.delete.rows([result[0].id, [0, ...table.rows.map(row => row.id)]]).then(_ => {
-//                                                                                         table.rows.forEach(({ weight, value, id: rowid }) => {
-//                                                                                             promiseArray.push(db.add.row(rowid, result[0].id, weight, value).catch(e => sendErrorForward('update beast defense add rows', e, res)))
-//                                                                                         })
-//                                                                                     }).catch(e => sendErrorForward('update beast defense delete rows ', e, res))
-//                                                                                 }).catch(e => sendErrorForward('update beast defense all tables 2', e, res)))
-//                                                                             }
-//                                                                         })
-//                                                                     },
-//                                                                         upsertTemperament: (promiseArray, db, id, res, temperament) => {
-//                                                                             temperament.temperament.forEach(({ temperament: temp, weight, id: tempid, beastid, tooltip, deleted }) => {
-//                                                                                 if (deleted) {
-//                                                                                     promiseArray.push(db.delete.encounter.temperament(beastid, tempid).catch(e => sendErrorForward('update beast delete temp', e, res)))
-//                                                                                 } else if ((tempid && !beastid) || (tempid && beastid !== id)) {
-//                                                                                     promiseArray.push(db.add.encounter.temperament(id, tempid, weight).catch(e => sendErrorForward('update beast add temp', e, res)))
-//                                                                                 } else if (tempid && beastid) {
-//                                                                                     promiseArray.push(db.update.encounter.temperament(weight, beastid, tempid).catch(e => sendErrorForward('update beast update temp', e, res)))
-//                                                                                 } else if (!tempid) {
-//                                                                                     db.add.encounter.allTemp(temp, tooltip).then(result => {
-//                                                                                         promiseArray.push(db.add.encounter.temperament(id, result[0].id, weight).catch(e => sendErrorForward('update beast add temp 2', e, res)))
-//                                                                                     }).catch(e => sendErrorForward('update beast add all temp', e, res))
-//                                                                                 }
-//                                                                             })
-//                                                                         },
-//                                                                             upsertGroups: (promiseArray, db, id, res, groups) => {
-//                                                                                 groups.forEach(({ id: groupid, beastid, deleted, label, weights, weight }) => {
-//                                                                                     if (deleted) {
-//                                                                                         promiseArray.push(db.delete.encounter.groups(id, groupid).then(_ => db.delete.encounter.groupRoles(beastid, groupid).catch(e => sendErrorForward('update beast delete group roles', e, res))).catch(e => sendErrorForward('update beast delete groups', e, res)))
-//                                                                                     } else if (groupid && beastid) {
-//                                                                                         promiseArray.push(db.update.encounter.groups(beastid, groupid, label, +weight).then(_ => {
-//                                                                                             let groupPromises = []
-//                                                                                             weights.forEach(({ id: roleid, weight: roleweight, role, deleted }) => {
-//                                                                                                 if (deleted && roleid) {
-//                                                                                                     groupPromises.push(db.delete.encounter.groupRoles(id, roleid).catch(e => sendErrorForward('update beast delete groups role', e, res)))
-//                                                                                                 } else if (roleid) {
-//                                                                                                     groupPromises.push(db.update.encounter.groupRoles(id, roleid, groupid, +roleweight, role).catch(e => sendErrorForward('update beast update groups role', e, res)))
-//                                                                                                 } else {
-//                                                                                                     groupPromises.push(db.add.encounter.groupRoles(id, groupid, +roleweight, role).catch(e => sendErrorForward('update beast add groups role', e, res)))
-//                                                                                                 }
-//                                                                                             })
-//                                                                                             return Promise.all(groupPromises)
-//                                                                                         }).catch(e => sendErrorForward('update beast update groups', e, res)))
-//                                                                                     } else if (!groupid) {
-//                                                                                         promiseArray.push(db.add.encounter.groups(id, label, +weight).then(result => {
-//                                                                                             let groupPromises = []
-//                                                                                             groupid = result[0].id
-//                                                                                             weights.forEach(({ id: roleid, weight: roleweight, role }) => {
-//                                                                                                 if (roleid) {
-//                                                                                                     groupPromises.push(db.update.encounter.groupRoles(id, roleid, groupid, +roleweight, role).catch(e => sendErrorForward('update beast update groups role 2', e, res)))
-//                                                                                                 } else {
-//                                                                                                     groupPromises.push(db.add.encounter.groupRoles(id, groupid, +roleweight, role).catch(e => sendErrorForward('update beast add groups role 2', e, res)))
-//                                                                                                 }
-//                                                                                             })
-//                                                                                             return Promise.all(groupPromises)
-//                                                                                         }).catch(e => sendErrorForward('update beast add groups 2', e, res)))
-//                                                                                     }
-//                                                                                 })
-//                                                                             },
-//                                                                                 upsertNumbers: (promiseArray, db, id, res, numbers) => {
-//                                                                                     numbers.forEach(({ id: numberid, beastid, deleted, numbers, miles, weight }) => {
-//                                                                                         if (deleted) {
-//                                                                                             promiseArray.push(db.delete.encounter.numbers(id, numberid).catch(e => sendErrorForward('update beast delete numbers', e, res)))
-//                                                                                         } else if (numberid) {
-//                                                                                             promiseArray.push(db.update.encounter.numbers(id, numberid, numbers, miles, +weight).catch(e => sendErrorForward('update beast update numbers', e, res)))
-//                                                                                         } else if (!numberid) {
-//                                                                                             promiseArray.push(db.add.encounter.numbers(id, numbers, miles, +weight).catch(e => sendErrorForward('update beast add numbers', e, res)))
-//                                                                                         }
-//                                                                                     })
-//                                                                                 },
-//                                                                                     upsertSigns: (promiseArray, db, id, res, signs) => {
-//                                                                                         signs.signs.forEach(({ sign, weight, id: signid, beastid, deleted }) => {
-//                                                                                             if (deleted) {
-//                                                                                                 promiseArray.push(db.delete.encounter.sign(beastid, signid).catch(e => sendErrorForward('update beast delete sign', e, res)))
-//                                                                                             } else if ((signid && !beastid) || (signid && beastid !== id)) {
-//                                                                                                 promiseArray.push(db.add.encounter.sign(id, signid, weight).catch(e => sendErrorForward('update beast add sign', e, res)))
-//                                                                                             } else if (signid && beastid) {
-//                                                                                                 promiseArray.push(db.update.encounter.signs(weight, beastid, signid).catch(e => sendErrorForward('update beast update sign', e, res)))
-//                                                                                             } else if (!signid) {
-//                                                                                                 db.add.encounter.allSigns(sign).then(result => {
-//                                                                                                     promiseArray.push(db.add.encounter.sign(id, result[0].id, weight).catch(e => sendErrorForward('update beast add sign w/ weight', e, res)))
-//                                                                                                 }).catch(e => sendErrorForward('update beast all signs', e, res))
-//                                                                                             }
-//                                                                                         })
-//                                                                                     },
-//                                                                                         upsertVerb: (promiseArray, db, id, res, verb) => {
-//                                                                                             verb.verb.forEach(({ verb, id: verbid, beastid, deleted }) => {
-//                                                                                                 if (deleted) {
-//                                                                                                     promiseArray.push(db.delete.encounter.verb(beastid, verbid).catch(e => sendErrorForward('update beast delete verb', e, res)))
-//                                                                                                 } else if ((verbid && !beastid) || (verbid && beastid !== id)) {
-//                                                                                                     promiseArray.push(db.add.encounter.verb(verbid, id).catch(e => sendErrorForward('update beast add add', e, res)))
-//                                                                                                 } else if (!verbid) {
-//                                                                                                     db.add.encounter.allVerb(verb).then(result => {
-//                                                                                                         promiseArray.push(db.add.encounter.verb(result[0].id, id).catch(e => sendErrorForward('update beast add verb 2', e, res)))
-//                                                                                                     }).catch(e => sendErrorForward('update beast add all verbs', e, res))
-//                                                                                                 }
-//                                                                                             })
-//                                                                                         },
-//                                                                                             upsertNoun: (promiseArray, db, id, res, noun) => {
-//                                                                                                 noun.noun.forEach(({ noun, id: nounid, beastid, deleted }) => {
-//                                                                                                     if (deleted) {
-//                                                                                                         promiseArray.push(db.delete.encounter.noun(beastid, nounid).catch(e => sendErrorForward('update beast delete noun', e, res)))
-//                                                                                                     } else if ((nounid && !beastid) || (nounid && beastid !== id)) {
-//                                                                                                         promiseArray.push(db.add.encounter.noun(nounid, id).catch(e => sendErrorForward('update beast add noun', e, res)))
-//                                                                                                     } else if (!nounid) {
-//                                                                                                         db.add.encounter.allNoun(noun).then(result => {
-//                                                                                                             promiseArray.push(db.add.encounter.noun(result[0].id, id).catch(e => sendErrorForward('update beast add noun 2', e, res)))
-//                                                                                                         }).catch(e => sendErrorForward('update beast all nouns', e, res))
-//                                                                                                     }
-//                                                                                                 })
-//                                                                                             },
+async function updateTables(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, tables: TablesObject) {
+    const { appearance, habitat, attack, defense } = tables
+    await deleteTables(databaseConnection, beastId, response, appearance, habitat, attack, defense)
+    upsertTable(promiseArray, databaseConnection, beastId, response, appearance, 'ap')
+    upsertTable(promiseArray, databaseConnection, beastId, response, habitat, 'ha')
+    upsertTable(promiseArray, databaseConnection, beastId, response, attack, 'at')
+    upsertTable(promiseArray, databaseConnection, beastId, response, defense, 'de')
+}
+
+async function deleteTables(databaseConnection: any, beastId: number, response: Response, appearance: Table[], habitat: Table[], attack: Table[], defense: Table[]) {
+    await databaseConnection.beast.table.delete(beastId, [0, ...appearance.map(table => table.id), ...habitat.map(table => table.id), ...attack.map(table => table.id), ...defense.map(table => table.id)])
+        .catch((error: Error) => sendErrorForward('delete tables', error, response))
+}
+
+async function upsertTable(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, table: Table[], tableShortName: string) {
+    table.forEach(async (table: Table) => {
+        const { id, label, rows } = table
+        let tableIdToUpdate = id ? id : null
+
+        if (tableIdToUpdate) {
+            promiseArray.push(databaseConnection.beast.table.updateAll(tableIdToUpdate, label).catch((error: Error) => sendErrorForward('update all tables', error, response)))
+        } else {
+            tableIdToUpdate = await databaseConnection.beast.table.addAll(label, tableShortName).catch((error: Error) => sendErrorForward('add to all tables', error, response))
+            promiseArray.push(databaseConnection.beast.table.add(beastId, tableIdToUpdate).catch((error: Error) => sendErrorForward('add table ', error, response)))
+        }
+
+        await databaseConnection.beast.table.deleteRow([tableIdToUpdate, [0, ...rows.map(row => row.id)]]).catch((error: Error) => sendErrorForward('delete rows', error, response))
+
+        rows.forEach((row: Row) => {
+            const { weight, value, id: rowid } = row
+            promiseArray.push(databaseConnection.beast.add.row(rowid, tableIdToUpdate, weight, value).catch((error: Error) => sendErrorForward('add rows', error, response)))
+        })
+    })
+}
+
+async function upsertEncounters(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, encounters: Encounter) {
+    const { temperaments, signs, nouns, verbs, groups, numbers } = encounters;
+    upsertTemperaments(promiseArray, databaseConnection, beastId, response, temperaments)
+    upsertGroups(promiseArray, databaseConnection, beastId, response, groups)
+    upsertNumbers(promiseArray, databaseConnection, beastId, response, numbers)
+    upsertSigns(promiseArray, databaseConnection, beastId, response, signs)
+    upsertVerbs(promiseArray, databaseConnection, beastId, response, verbs)
+    upsertNouns(promiseArray, databaseConnection, beastId, response, nouns)
+}
+
+async function upsertTemperaments(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, temperaments: TemperamentObject) {
+    temperaments.beastTemperaments.forEach(async (temperament: Temperament) => {
+        const { temperament: label, weight, id, beastid: owningBeastId, tooltip, deleted } = temperament
+
+        const itIsInDatabaseButNotConnectedToAnyBeast = id && !beastId
+        const itIsInDatabaseButNotConnectedToThisBeast = id && beastId !== owningBeastId
+        const itIsInDatabaseAndBelongsToBeast = id && beastId
+        const itIsntInDatabase = !id
+
+        if (deleted) {
+            promiseArray.push(databaseConnection.encounter.temperament.delete(beastId, id).catch((error: Error) => sendErrorForward('delete temp', error, response)))
+        } else if (itIsInDatabaseButNotConnectedToAnyBeast || itIsInDatabaseButNotConnectedToThisBeast) {
+            promiseArray.push(databaseConnection.encounter.temperament.add(owningBeastId, id, weight).catch((error: Error) => sendErrorForward('add temp', error, response)))
+        } else if (itIsInDatabaseAndBelongsToBeast) {
+            promiseArray.push(databaseConnection.encounter.temperament.update(weight, beastId, id).catch((error: Error) => sendErrorForward('update temp', error, response)))
+        } else if (itIsntInDatabase) {
+            const newTempId = await databaseConnection.encounter.temperament.addAll(label, tooltip).catch((error: Error) => sendErrorForward('add all temp', error, response))[0].id
+            promiseArray.push(databaseConnection.encounter.temperament.add(owningBeastId, newTempId, weight).catch((error: Error) => sendErrorForward('add temp 2', error, response)))
+        }
+    })
+}
+
+async function upsertGroups(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, groups: Group[]) {
+    groups.forEach(async (group: Group) => {
+        const { id: groupid, deleted, label, weights, weight } = group
+        if (deleted) {
+            await promiseArray.push(databaseConnection.encounter.group.delete(beastId, groupid).catch((error: Error) => sendErrorForward('delete groups', error, response)))
+            databaseConnection.encounter.group.deleteRole(beastId, groupid).catch((error: Error) => sendErrorForward('delete group roles', error, response))
+        } else {
+            let groupIdToUpdate = groupid ? groupid : null
+            if (groupIdToUpdate) {
+                await databaseConnection.encounter.groups.update(beastId, groupid, label, weight).catch((error: Error) => sendErrorForward('update groups', error, response))
+            } else {
+                groupIdToUpdate = await databaseConnection.encounter.group.add(beastId, label, weight).catch((error: Error) => sendErrorForward('add groups', error, response))
+            }
+
+            weights.forEach((weight: GroupWeight) => {
+                const { id: roleid, weight: roleweight, role, deleted } = weight
+                if (deleted && roleid) {
+                    promiseArray.push(databaseConnection.encounter.group.deleteRole(beastId, roleid).catch((error: Error) => sendErrorForward('delete groups role', error, response)))
+                } else if (roleid) {
+                    promiseArray.push(databaseConnection.encounter.group.updateRole(beastId, roleid, groupIdToUpdate, roleweight, role).catch((error: Error) => sendErrorForward('update groups role', error, response)))
+                } else {
+                    promiseArray.push(databaseConnection.encounter.group.addRole(beastId, groupIdToUpdate, roleweight, role).catch((error: Error) => sendErrorForward('add groups role', error, response)))
+                }
+            })
+        }
+    })
+}
+
+async function upsertNumbers(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, numbers: Number[]) {
+    numbers.forEach((number: Number) => {
+        const { id, deleted, numbers, miles, weight } = number
+        if (deleted) {
+            promiseArray.push(databaseConnection.encounter.number.delete(beastId, id).catch((error: Error) => sendErrorForward('delete numbers', error, response)))
+        } else if (id) {
+            promiseArray.push(databaseConnection.encounter.number.update(beastId, id, numbers, miles, weight).catch((error: Error) => sendErrorForward('update numbers', error, response)))
+        } else if (!id) {
+            promiseArray.push(databaseConnection.encounter.number.add(beastId, numbers, miles, weight).catch((error: Error) => sendErrorForward('add numbers', error, response)))
+        }
+    })
+}
+
+async function upsertSigns(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, signs: SignObject) {
+    signs.beastSigns.forEach(async (sign: Sign) => {
+        const { sign: label, weight, id: signid, beastid: owningBeastId, deleted } = sign
+
+        const itIsInDatabaseButNotConnectedToAnyBeast = signid && !beastId
+        const itIsInDatabaseButNotConnectedToThisBeast = signid && beastId !== owningBeastId
+        const itIsInDatabaseAndBelongsToBeast = signid && beastId
+        const itIsntInDatabase = !signid
+
+        if (deleted) {
+            promiseArray.push(databaseConnection.encounter.sign.delete(beastId, signid).catch((error: Error) => sendErrorForward('delete sign', error, response)))
+        } else if (itIsInDatabaseButNotConnectedToAnyBeast || itIsInDatabaseButNotConnectedToThisBeast) {
+            promiseArray.push(databaseConnection.encounter.sign.add(beastId, signid, weight).catch((error: Error) => sendErrorForward('add sign', error, response)))
+        } else if (itIsInDatabaseAndBelongsToBeast) {
+            promiseArray.push(databaseConnection.encounter.sign.update(weight, beastId, signid).catch((error: Error) => sendErrorForward('update sign', error, response)))
+        } else if (itIsntInDatabase) {
+            const newSignId = await databaseConnection.encounter.signs.addAll(label).catch((error: Error) => sendErrorForward('all signs', error, response))[0].id
+            promiseArray.push(databaseConnection.encounter.sign.add(beastId, newSignId, weight).catch((error: Error) => sendErrorForward('add sign w/ weight', error, response)))
+        }
+    })
+}
+
+async function upsertVerbs(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, verbs: VerbObject) {
+    verbs.beastVerbs.forEach(async (verb: Verb) => {
+        const { verb: label, id, beastid: owningBeastId, deleted } = verb
+
+        const itIsInDatabaseButNotConnectedToAnyBeast = id && !beastId
+        const itIsInDatabaseButNotConnectedToThisBeast = id && beastId !== owningBeastId
+        const itIsntInDatabase = !id
+
+        if (deleted) {
+            promiseArray.push(databaseConnection.encounter.verb.delete(beastId, id).catch((error: Error) => sendErrorForward('delete verb', error, response)))
+        } else if (itIsInDatabaseButNotConnectedToAnyBeast || itIsInDatabaseButNotConnectedToThisBeast) {
+            promiseArray.push(databaseConnection.encounter.verb.add(id, beastId).catch((error: Error) => sendErrorForward('add add', error, response)))
+        } else if (itIsntInDatabase) {
+            const newVerbId = await databaseConnection.encounter.verb.addAll(label).catch((error: Error) => sendErrorForward('add all verbs', error, response))[0].id
+            promiseArray.push(databaseConnection.encounter.verb.add(newVerbId, beastId).catch((error: Error) => sendErrorForward('add verb 2', error, response)))
+        }
+    })
+}
+
+async function upsertNouns(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, nouns: NounObject) {
+    nouns.beastNouns.forEach(async (noun: Noun) => {
+        const { noun: label, id, beastid: owningBeastId, deleted } = noun
+
+        const itIsInDatabaseButNotConnectedToAnyBeast = id && !beastId
+        const itIsInDatabaseButNotConnectedToThisBeast = id && beastId !== owningBeastId
+        const itIsntInDatabase = !id
+
+        if (deleted) {
+            promiseArray.push(databaseConnection.encounter.noun.delete(beastId, id).catch((error: Error) => sendErrorForward('delete noun', error, response)))
+        } else if (itIsInDatabaseButNotConnectedToAnyBeast || itIsInDatabaseButNotConnectedToThisBeast) {
+            promiseArray.push(databaseConnection.encounter.noun.add(id, beastId).catch((error: Error) => sendErrorForward('add noun', error, response)))
+        } else if (itIsntInDatabase) {
+            const newNounId = await databaseConnection.encounter.addAll(label).catch((error: Error) => sendErrorForward('all nouns', error, response))[0].id
+            promiseArray.push(databaseConnection.add.encounter.noun(newNounId, beastId).catch((error: Error) => sendErrorForward('add noun 2', error, response)))
+        }
+    })
+}
+
 //                                                                                                 upsertLairBasic: (promiseArray, db, id, res, beastid, copper, silver, gold, potion, relic, enchanted, talisman) => {
 //                                                                                                     if (!beastid) {
 //                                                                                                         promiseArray.push(db.add.loot.lairbasic(id, copper, silver, gold, potion, relic, enchanted, talisman).catch(e => sendErrorForward('update beast add basic lair', e, res)))

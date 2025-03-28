@@ -70,7 +70,7 @@ export async function addBeast(request: BeastRequest, response: Response) {
     const { body, user } = request
 
     let { name, intro, climates, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon, vitality, panic, stress,
-        types, movements, conflicts, skills, variants, loots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounter, plural, thumbnail, rarity,
+        types, movements, conflicts, skills, variants, loots, reagents, lootnotes, traitlimit, devotionlimit, flawlimit, passionlimit, encounters, plural, thumbnail, rarity,
         locationalVitalities, lairloot, roles, casting, spells, deletedSpells, challenges, obstacles, caution, role, combatpoints, socialrole, socialpoints, secondaryrole,
         skillrole, skillpoints, fatigue, artistInfo, defaultrole, socialsecondary, notrauma, carriedloot, folklores, combatStats, knockback, singledievitality, noknockback,
         tables, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma, imagesource, locations, scenarios, isincorporeal, weaponbreakagevitality,
@@ -92,7 +92,7 @@ export async function addBeast(request: BeastRequest, response: Response) {
 
     const updateParameters: upsertParameters = {
         roles, types, climates, combatStats, conflicts, skills, movements, variants,loots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
-        casting, deletedSpells, spells, obstacles, challenges
+        casting, deletedSpells, spells, obstacles, challenges, tables, encounters
     }
     await upsertBeast(databaseConnection, beastId, response, updateParameters)
 

@@ -9,7 +9,12 @@ import './App.css'
 //  loot > loots
 //  combatStatArray > combatStats
 //  folklore > folklores
-// deletedSpellsList > deletedSpells
+//  deletedSpellsList > deletedSpells
+//  encounter > encounters
+//    temperament > beastTemperaments
+//    signs > beastSigns
+//    verb > beastVerbs
+//    noun > beastNouns
 
 function App() {
   const [count, setCount] = useState(0)
