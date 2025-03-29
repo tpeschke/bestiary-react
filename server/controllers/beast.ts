@@ -1,75 +1,23 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, upsertParameters, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore } from "../interfaces/beastInterfaces"
+import { ClimateObject, Type, upsertParameters, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
 import createHash from "../utilities/hashGeneration"
 import upsertBeast from "../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
-import { getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents, getLocationalVitalities, getFolklore } from "../utilities/gets/getBeast"
-import { SpecificLoot } from "../interfaces/lootInterfaces"
+import {
+    getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
+    getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
+    getScenarios
+} from "../utilities/gets/getBeast"
+import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
+import { sortOutAnyToTheBottom } from "../utilities/sorts"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
 interface BeastRequest extends Request {
-    body: BeastRequestBody
-}
-
-interface BeastRequestBody extends upsertParameters {
-    id: number,
-    name: string,
-    intro: string,
-    habitat: string,
-    ecology: string,
-    senses: string,
-    diet: string,
-    meta: string,
-    sp_atk: string,
-    sp_def: string,
-    tactics: string,
-    size: string,
-    patreon: number,
-    vitality: string,
-    panic: number,
-    stress: number,
-    lootnotes: string,
-    traitlimit: number,
-    devotionlimit: number,
-    flawlimit: number,
-    passionlimit: number,
-    plural: string,
-    thumbnail: string,
-    rarity: number,
-    caution: number,
-    role: string,
-    combatpoints: number,
-    socialrole: string,
-    socialpoints: number,
-    secondaryrole: string,
-    skillrole: string,
-    skillpoints: number,
-    fatigue: string,
-    defaultrole: string,
-    socialsecondary: string,
-    notrauma: boolean,
-    knockback: number,
-    singledievitality: boolean,
-    noknockback: boolean,
-    rolenameorder: number,
-    descriptionshare: number,
-    convictionshare: number,
-    devotionshare: number,
-    rollundertrauma: number,
-    imagesource: number,
-    isincorporeal: boolean,
-    weaponbreakagevitality: boolean,
-    hasarchetypes: boolean,
-    hasmonsterarchetypes: boolean,
-    skillsecondary: string,
-    atk_skill: string,
-    def_skill: string,
-    atk_conf: string,
-    def_conf: string
+    body: Beast
 }
 
 export async function addBeast(request: BeastRequest, response: Response) {
@@ -131,7 +79,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const beastId = +request.params.id
     const databaseConnection = getDatabaseConnection(request)
 
-    let beast = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))[0]
+    let beast: Beast = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))[0]
 
     beast.panic = beast.panicstrength
     beast.fatigue = beast.fatiguestrength
@@ -150,81 +98,27 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.reagents = reagents))
         promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.locationalVitalities = locationalVitalities))
         promiseArray.push(getFolklore(databaseConnection, response, beast.id).then((folklores: Folklore[]) => beast.folklores = folklores))
-        
+        promiseArray.push(getScenarios(databaseConnection, response, beast.id).then((scenarios: Scenario[]) => beast.scenarios = scenarios))
+
         promiseArray.push(getSkills(databaseConnection, response, beast.id).then((skills: Skill[]) => beast.skills = skills))
-        
+
         promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, beast.traitlimit, beast.devotionlimit, beast.flawlimit).then((conflict: ConflictObject) => beast.conflict = conflict))
 
         promiseArray.push(getSpecificLoots(databaseConnection, response, beast.id).then((specificLoots: SpecificLoot[]) => beast.specificLoots = specificLoots))
-        
+        beast.lairLoot = {};
+        promiseArray.push(getLairBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.lairLoot = { ...beast.lairLoot, basicLoot }))
+        promiseArray.push(getLairAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.lairLoot = { ...beast.lairLoot, alms }))
+        promiseArray.push(getLairItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.lairLoot = { ...beast.lairLoot, items }))
+        promiseArray.push(getLairScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.lairLoot = { ...beast.lairLoot, scrolls }))
+        beast.carriedLoot = {}
+        promiseArray.push(getCarriedBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.carriedLoot = { ...beast.carriedLoot, basicLoot }))
+        promiseArray.push(getCarriedAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.carriedLoot = { ...beast.carriedLoot, alms }))
+        promiseArray.push(getCarriedItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.carriedLoot = { ...beast.carriedLoot, items }))
+        promiseArray.push(getCarriedScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.carriedLoot = { ...beast.carriedLoot, scrolls }))
+
         promiseArray.push(getFavorite(databaseConnection, response, beast.id, request.user.id).then((favorite: boolean) => beast.favorite = favorite))
         promiseArray.push(getNotes(databaseConnection, response, beast.id, request.user.id).then((notes: string) => beast.notes = notes))
-    
 
-
-
-
-// LOOT
-        beast.lairloot = {};
-        promiseArray.push(db.get.loot.lairbasic(id).then(result => {
-            beast.lairloot = { ...result[0], ...beast.lairloot }
-            return result
-        }).catch(e => sendErrorForward('beast basic', e, res)))
-
-        promiseArray.push(db.get.loot.lairalms(id).then(result => {
-            beast.lairloot = { alms: result, ...beast.lairloot }
-            return result
-        }).catch(e => sendErrorForward('beast alms', e, res)))
-
-        promiseArray.push(db.get.loot.lairitems(id).then(result => {
-            if (req.query.edit === 'true') {
-                beast.lairloot = { items: objectifyItemArray(result), ...beast.lairloot }
-            } else {
-                beast.lairloot = { items: result, ...beast.lairloot }
-            }
-            return result
-        }).catch(e => sendErrorForward('beast items', e, res)))
-
-        promiseArray.push(db.get.loot.lairscrolls(id).then(result => {
-            beast.lairloot = { scrolls: result, ...beast.lairloot }
-            return result
-        }).catch(e => sendErrorForward('beast scrolls', e, res)))
-
-        promiseArray.push(db.get.loot.carriedbasic(id).then(result => {
-            beast.carriedloot = { ...result[0], ...beast.carriedloot }
-            return result
-        }).catch(e => sendErrorForward('beast carried basic', e, res)))
-
-        promiseArray.push(db.get.loot.carriedalms(id).then(result => {
-            beast.carriedloot = { alms: result, ...beast.carriedloot }
-            return result
-        }).catch(e => sendErrorForward('beast carried alms', e, res)))
-
-        promiseArray.push(db.get.loot.carrieditems(id).then(result => {
-            if (req.query.edit === 'true') {
-                beast.carriedloot = { items: objectifyItemArray(result), ...beast.carriedloot }
-            } else {
-                beast.carriedloot = { items: result, ...beast.carriedloot }
-            }
-            return result
-        }).catch(e => sendErrorForward('beast carried items', e, res)))
-
-
-        /// ENCOUNTER
-        promiseArray.push(db.get.loot.carriedscrolls(id).then(result => {
-            beast.carriedloot = { scrolls: result, ...beast.carriedloot }
-            return result
-        }).catch(e => sendErrorForward('beast carried scrolls', e, res)))
-
-        promiseArray.push(db.get.ranks(id).then(result => {
-            beast.ranks = result
-            return result
-        }).catch(e => sendErrorForward('beast carried ranks', e, res)))
-
-        promiseArray.push(db.get.scenarios(id).then(result => {
-            beast.scenarios = result
-            return result
-        }).catch(e => sendErrorForward('beast carried scenarios', e, res)))
 
         // Tables
         beast.tables = {

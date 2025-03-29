@@ -1,10 +1,10 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
-import { ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore } from "../../interfaces/beastInterfaces";
-import { SpecificLoot } from "../../interfaces/lootInterfaces";
+import { ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario } from "../../interfaces/beastInterfaces";
+import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces";
 
 import { isOwner } from "../ownerAccess";
 import { sendErrorForwardNoFile } from "../sendingFunctions";
-import { sortByStrength, sortOutAnyToTheBottom } from "../sorts";
+import { objectifyItemArray, sortByStrength, sortOutAnyToTheBottom } from "../sorts";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -123,7 +123,7 @@ export async function getConflict(databaseConnection: any, response: Response, b
 }
 
 export async function getSkills(databaseConnection: any, response: Response, beastId: number): Promise<Skill[]> {
-    return databaseConnection.beast.skill.get(beastId).then( (skills: Skill[]) => skills.sort((a, b) => +b.rank - +a.rank) ).catch((error: Error)=> sendErrorForward('skills', error, response))
+    return databaseConnection.beast.skill.get(beastId).then((skills: Skill[]) => skills.sort((a, b) => +b.rank - +a.rank)).catch((error: Error) => sendErrorForward('skills', error, response))
 }
 
 export async function getVariants(databaseConnection: any, response: Response, beastId: number): Promise<Variant[]> {
@@ -132,6 +132,50 @@ export async function getVariants(databaseConnection: any, response: Response, b
 
 export async function getSpecificLoots(databaseConnection: any, response: Response, beastId: number): Promise<SpecificLoot[]> {
     return databaseConnection.loot.specific.get(beastId).catch((error: Error) => sendErrorForward('specific loot', error, response))
+}
+
+export async function getLairBasic(databaseConnection: any, response: Response, beastId: number): Promise<Loot> {
+    return databaseConnection.loot.lair.getBasic(beastId).catch((error: Error) => sendErrorForward('lair basic', error, response))
+}
+
+export async function getLairAlms(databaseConnection: any, response: Response, beastId: number): Promise<Alm[]> {
+    return databaseConnection.loot.lair.getAlm(beastId).catch(e => sendErrorForward('lair alms', e, response))
+}
+
+export async function getLairItems(databaseConnection: any, response: Response, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
+    return databaseConnection.loot.lair.getItem(beastId).then((items: Item[]) => {
+        if (isEditing) {
+            return objectifyItemArray(items)
+        } else {
+            return items
+        }
+    }).catch((error: Error) => sendErrorForward('lair items', error, response))
+}
+
+export async function getLairScrolls(databaseConnection: any, response: Response, beastId: number): Promise<Scroll[]> {
+    return databaseConnection.loot.lair.getScroll(beastId).catch((error: Error)=> sendErrorForward('lair scrolls', error, response))
+}
+
+export async function getCarriedBasic(databaseConnection: any, response: Response, beastId: number): Promise<Loot> {
+    return databaseConnection.loot.carried.getBasic(beastId).catch((error: Error) => sendErrorForward('carried basic', error, response))
+}
+
+export async function getCarriedAlms(databaseConnection: any, response: Response, beastId: number): Promise<Alm[]> {
+    return databaseConnection.loot.carried.getAlm(beastId).catch(e => sendErrorForward('carried alms', e, response))
+}
+
+export async function getCarriedItems(databaseConnection: any, response: Response, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
+    return databaseConnection.loot.carried.getItem(beastId).then((items: Item[]) => {
+        if (isEditing) {
+            return objectifyItemArray(items)
+        } else {
+            return items
+        }
+    }).catch((error: Error) => sendErrorForward('carried items', error, response))
+}
+
+export async function getCarriedScrolls(databaseConnection: any, response: Response, beastId: number): Promise<Scroll[]> {
+    return databaseConnection.loot.carried.getScroll(beastId).catch((error: Error)=> sendErrorForward('carried scrolls', error, response))
 }
 
 export async function getReagents(databaseConnection: any, response: Response, beastId: number): Promise<Reagent[]> {
@@ -146,9 +190,13 @@ export async function getFolklore(databaseConnection: any, response: Response, b
     return databaseConnection.beast.folklore.get(beastId).catch((error: Error) => sendErrorForward('folklore', error, response))
 }
 
+export async function getScenarios(databaseConnection: any, response: Response, beastId: number): Promise<Scenario[]> {
+    return databaseConnection.get.scenarios(beastId).catch((error: Error) => sendErrorForward('scenarios', error, response))
+}
+
 export async function getFavorite(databaseConnection: any, response: Response, beastId: number, userId: number): Promise<boolean> {
     if (userId) {
-        return databaseConnection.user.favorite.get(userId, beastId).then(result => result.length > 0 ).catch((error: Error) => sendErrorForward('favorite', error, response))
+        return databaseConnection.user.favorite.get(userId, beastId).then(result => result.length > 0).catch((error: Error) => sendErrorForward('favorite', error, response))
     } else {
         return false
     }

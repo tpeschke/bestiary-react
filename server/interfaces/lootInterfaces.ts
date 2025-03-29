@@ -7,16 +7,16 @@ export interface SpecificLoot {
 }
 
 export interface Loot {
-    copper: string,
-    silver: string,
-    gold: string,
-    potion: string,
-    relic: string,
-    enchanted: string,
-    scrolls: Scroll[],
-    alms: Alm[],
-    talisman: string,
-    items: any
+    copper?: string,
+    silver?: string,
+    gold?: string,
+    potion?: string,
+    relic?: string,
+    enchanted?: string,
+    scrolls?: Scroll[],
+    alms?: Alm[],
+    talisman?: string,
+    items?: any
 }
 
 export interface Scroll {
