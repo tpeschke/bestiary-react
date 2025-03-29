@@ -1,5 +1,5 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
-import { ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario } from "../../interfaces/beastInterfaces";
+import { ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Table, Row, TablesObject, ArchetypeInfo } from "../../interfaces/beastInterfaces";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces";
 
 import { isOwner } from "../ownerAccess";
@@ -153,7 +153,7 @@ export async function getLairItems(databaseConnection: any, response: Response, 
 }
 
 export async function getLairScrolls(databaseConnection: any, response: Response, beastId: number): Promise<Scroll[]> {
-    return databaseConnection.loot.lair.getScroll(beastId).catch((error: Error)=> sendErrorForward('lair scrolls', error, response))
+    return databaseConnection.loot.lair.getScroll(beastId).catch((error: Error) => sendErrorForward('lair scrolls', error, response))
 }
 
 export async function getCarriedBasic(databaseConnection: any, response: Response, beastId: number): Promise<Loot> {
@@ -175,7 +175,7 @@ export async function getCarriedItems(databaseConnection: any, response: Respons
 }
 
 export async function getCarriedScrolls(databaseConnection: any, response: Response, beastId: number): Promise<Scroll[]> {
-    return databaseConnection.loot.carried.getScroll(beastId).catch((error: Error)=> sendErrorForward('carried scrolls', error, response))
+    return databaseConnection.loot.carried.getScroll(beastId).catch((error: Error) => sendErrorForward('carried scrolls', error, response))
 }
 
 export async function getReagents(databaseConnection: any, response: Response, beastId: number): Promise<Reagent[]> {
@@ -194,6 +194,27 @@ export async function getScenarios(databaseConnection: any, response: Response, 
     return databaseConnection.get.scenarios(beastId).catch((error: Error) => sendErrorForward('scenarios', error, response))
 }
 
+interface archetypeInfo {
+    archetype: string
+}
+
+export async function getArchetypes(databaseConnection: any, response: Response, isEditing: boolean, hasarchetypes: boolean, hasmonsterarchetypes: boolean): Promise<ArchetypeInfo | string[] | null> {
+    if (isEditing && hasarchetypes) {
+        return databaseConnection.beast.archetype.get().then((archetypeInfo: archetypeInfo[]) => {
+            const chance = Math.floor(Math.random() * 100)
+            return {
+                archetype: archetypeInfo[0].archetype,
+                deviation: chance > 51 && chance < 75,
+                reverse: chance > 75
+            }
+        }).catch((error: Error) => sendErrorForward('archetypes', error, response))
+    } else if (isEditing && hasmonsterarchetypes) {
+        return databaseConnection.beast.archetype.getMonster().catch((error: Error) => sendErrorForward('monster archetypes', error, response))
+    }
+    
+    return null
+}
+
 export async function getFavorite(databaseConnection: any, response: Response, beastId: number, userId: number): Promise<boolean> {
     if (userId) {
         return databaseConnection.user.favorite.get(userId, beastId).then(result => result.length > 0).catch((error: Error) => sendErrorForward('favorite', error, response))
@@ -204,4 +225,35 @@ export async function getFavorite(databaseConnection: any, response: Response, b
 
 export async function getNotes(databaseConnection: any, response: Response, beastId: number, userId: number): Promise<string> {
     return databaseConnection.user.notes.get(beastId, userId).then(result => result[0]).catch((error: Error) => sendErrorForward('notes', error, response))
+}
+
+export async function getTables(databaseConnection: any, response: Response, beastId: number, tables: TablesObject, promiseArray: any[]) {
+    const basicTableInfo: Table[] = await databaseConnection.get.tableinfo(beastId).catch((error: Error) => sendErrorForward('tables', error, response))
+
+    basicTableInfo.forEach(async (table: Table) => {
+        promiseArray.push(databaseConnection.get.rows(table.id).then((rows: Row[]) => {
+            if (table.section === 'ap') {
+                tables.appearance.push({
+                    ...table,
+                    rows
+                })
+            } else if (table.section === 'ha') {
+                tables.habitat.push({
+                    ...table,
+                    rows
+                })
+            } else if (table.section === 'at') {
+                tables.attack.push({
+                    ...table,
+                    rows
+                })
+            } else if (table.section === 'de') {
+                tables.defense.push({
+                    ...table,
+                    rows
+                })
+            }
+            return true
+        }).catch((error: Error) => sendErrorForward('table rows', error, response)))
+    })
 }

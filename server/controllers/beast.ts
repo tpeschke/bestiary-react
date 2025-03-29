@@ -1,5 +1,5 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters } from "../interfaces/beastInterfaces"
+import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters, ArchetypeInfo } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
@@ -9,7 +9,9 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import {
     getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
-    getScenarios
+    getScenarios,
+    getTables,
+    getArchetypes
 } from "../utilities/gets/getBeast"
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
 import { sortOutAnyToTheBottom } from "../utilities/sorts"
@@ -106,12 +108,12 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
 
         promiseArray.push(getSpecificLoots(databaseConnection, response, beast.id).then((specificLoots: SpecificLoot[]) => beast.specificLoots = specificLoots))
         beast.lairLoot = {};
-        promiseArray.push(getLairBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.lairLoot = { ...beast.lairLoot, basicLoot }))
+        promiseArray.push(getLairBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.lairLoot = { ...beast.lairLoot, ...basicLoot }))
         promiseArray.push(getLairAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.lairLoot = { ...beast.lairLoot, alms }))
         promiseArray.push(getLairItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.lairLoot = { ...beast.lairLoot, items }))
         promiseArray.push(getLairScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.lairLoot = { ...beast.lairLoot, scrolls }))
         beast.carriedLoot = {}
-        promiseArray.push(getCarriedBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.carriedLoot = { ...beast.carriedLoot, basicLoot }))
+        promiseArray.push(getCarriedBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.carriedLoot = { ...beast.carriedLoot, ...basicLoot }))
         promiseArray.push(getCarriedAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.carriedLoot = { ...beast.carriedLoot, alms }))
         promiseArray.push(getCarriedItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.carriedLoot = { ...beast.carriedLoot, items }))
         promiseArray.push(getCarriedScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.carriedLoot = { ...beast.carriedLoot, scrolls }))
@@ -119,63 +121,33 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         promiseArray.push(getFavorite(databaseConnection, response, beast.id, request.user.id).then((favorite: boolean) => beast.favorite = favorite))
         promiseArray.push(getNotes(databaseConnection, response, beast.id, request.user.id).then((notes: string) => beast.notes = notes))
 
+        promiseArray.push(getArchetypes(databaseConnection, response, isEditing, beast.hasarchetypes, beast.hasmonsterarchetypes).then((archetypeInfo: ArchetypeInfo | string[] | null) => beast.archetype = archetypeInfo))
 
-        // Tables
         beast.tables = {
             habitat: [],
             attack: [],
             defense: [],
             appearance: []
         }
+        getTables(databaseConnection, response, beast.id, beast.tables, promiseArray)
+        
+        // CASTING
+        promiseArray.push(db.get.casting(id).then(result => {
+            beast.casting = result[0]
+        }).catch(e => sendErrorForward('beast casting', e, res)))
 
-        promiseArray.push(db.get.tableinfo(id).then(result => {
-            let tablePromiseArray = []
-            result.map(table => {
-                tablePromiseArray.push(db.get.rows(table.id).then(rows => {
-                    if (table.section === 'ap') {
-                        beast.tables.appearance.push({
-                            ...table,
-                            rows
-                        })
-                    } else if (table.section === 'ha') {
-                        beast.tables.habitat.push({
-                            ...table,
-                            rows
-                        })
-                    } else if (table.section === 'at') {
-                        beast.tables.attack.push({
-                            ...table,
-                            rows
-                        })
-                    } else if (table.section === 'de') {
-                        beast.tables.defense.push({
-                            ...table,
-                            rows
-                        })
-                    }
-                    return true
-                }).catch(e => sendErrorForward('beast table rows', e, res)))
-            })
-            return Promise.all(tablePromiseArray).then(finalArray => {
-                return true
-            }).catch(e => sendErrorForward('beast tables final promise', e, res))
-        }).catch(e => sendErrorForward('beast tables', e, res)))
+        promiseArray.push(db.get.spells(id).then(result => {
+            beast.spells = result
+        }).catch(e => sendErrorForward('beast spells', e, res)))
 
-        // Basic Social
-        if (req.query.edit !== 'true') {
-            promiseArray.push(db.get.archetype().then(result => {
-                const chance = Math.floor(Math.random() * 100)
-                beast.archetype = {
-                    archetype: result[0].archetype,
-                    deviation: chance > 51 && chance < 75,
-                    reverse: chance > 75
-                }
-            }))
+        // SKILL CHALLENGES
+        promiseArray.push(db.get.challenges(id).then(result => {
+            beast.challenges = result
+        }).catch(e => sendErrorForward('beast challenges', e, res)))
 
-            promiseArray.push(db.get.monsterArchetype().then(result => {
-                beast.archetypemonster = result
-            }))
-        }
+        promiseArray.push(db.get.obstacles(id).then(result => {
+            beast.obstacles = result
+        }).catch(e => sendErrorForward('beast obstalces view', e, res)))
 
         // Roles
         promiseArray.push(db.get.roles(id).then(result => {
@@ -230,24 +202,6 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             }
             return result
         }).catch(e => sendErrorForward('beast roles', e, res)))
-
-        // CASTING
-        promiseArray.push(db.get.casting(id).then(result => {
-            beast.casting = result[0]
-        }).catch(e => sendErrorForward('beast casting', e, res)))
-
-        promiseArray.push(db.get.spells(id).then(result => {
-            beast.spells = result
-        }).catch(e => sendErrorForward('beast spells', e, res)))
-
-        // SKILL CHALLENGES
-        promiseArray.push(db.get.challenges(id).then(result => {
-            beast.challenges = result
-        }).catch(e => sendErrorForward('beast challenges', e, res)))
-
-        promiseArray.push(db.get.obstacles(id).then(result => {
-            beast.obstacles = result
-        }).catch(e => sendErrorForward('beast obstalces view', e, res)))
 
         // PROMISE ARRAY
         Promise.all(promiseArray).then(finalArray => {

@@ -24,6 +24,9 @@ export interface Beast {
     size: string,
     rarity: number,
     tables: TablesObject,
+// Player Specific Info
+    favorite: boolean,
+    notes: string,
 // Image Info
     thumbnail: string,
     imagesource: number,
@@ -82,11 +85,13 @@ export interface Beast {
     descriptionshare: number,
     convictionshare: number,
     devotionshare: number,
-    hasarchetypes: boolean,
-    hasmonsterarchetypes: boolean,
     atk_conf: string,
     def_conf: string,
     conflicts: ConflictObject,
+    // Archetypes
+    hasarchetypes: boolean,
+    hasmonsterarchetypes: boolean,
+    archetype: ArchetypeInfo | string[] | null,
 // Loot Info
     lootnotes: string,
     specificLoots: SpecificLoot[],
@@ -124,6 +129,12 @@ export interface upsertParameters {
     encounters: Encounter,
     lairLoot: Loot,
     carriedLoot: Loot
+}
+
+export interface ArchetypeInfo {
+    archetype: string,
+    deviation: boolean,
+    reverse: boolean
 }
 
 export interface Role {
@@ -394,7 +405,8 @@ export interface Table {
     id: number,
     beastid: number,
     label: string,
-    rows: Row[]
+    rows: Row[],
+    section: string
 }
 
 export interface Row {
