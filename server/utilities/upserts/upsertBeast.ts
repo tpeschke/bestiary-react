@@ -1,7 +1,7 @@
 import { Response, Error } from '../../interfaces/apiInterfaces'
 import {
     ClimateObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistObject,
-    upsertParameters, Scenario, Folklore, Spell, Table, TablesObject, Row, LocationObject, ConflictObject
+    Scenario, Folklore, Table, TablesObject, Row, LocationObject, ConflictObject, upsertParameters
 } from '../../interfaces/beastInterfaces'
 
 import createHash from '../hashGeneration'

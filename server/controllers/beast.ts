@@ -1,5 +1,5 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, upsertParameters, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast } from "../interfaces/beastInterfaces"
+import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
