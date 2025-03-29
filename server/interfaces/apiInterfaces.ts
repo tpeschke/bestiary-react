@@ -12,10 +12,11 @@ interface App {
 
 interface Parameters {
     id: number,
-    beastid: string
+    beastid: string,
+    
 }
 
-interface User {
+export interface User {
     id: number,
     patreon: number
 }

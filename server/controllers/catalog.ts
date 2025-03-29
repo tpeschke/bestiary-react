@@ -1,12 +1,16 @@
-import { Error } from "../interfaces/apiInterfaces"
+import { Request, Response, Error } from "../interfaces/apiInterfaces"
 import { BeastTile, Role } from "../interfaces/catalogInterfaces"
 
-import { consoleLogErrorNoFile, sendErrorForwardNoFile, checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
+import { consoleLogErrorNoFile, checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
 
 const consoleLogError = consoleLogErrorNoFile('catalog')
 
 let catalogCache: BeastTile[][] = []
 let newCache: BeastTile[][] = []
+
+export async function getCatalog(request: Request, response: Response) {
+    checkForContentTypeBeforeSending(response, catalogCache)
+}
 
 export async function collectCatalog(databaseConnection: any) {
     let freeBeasts: BeastTile[] = await databaseConnection.catalog.get.free().catch((error: Error) => consoleLogError('get free beasts', error))

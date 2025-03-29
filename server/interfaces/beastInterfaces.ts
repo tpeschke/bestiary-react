@@ -5,17 +5,17 @@ import { Obstacle, Challenge } from "./skillInterfaces"
 export interface upsertParameters {
     roles: Role[],
     types: Type[],
-    climates: ClimateEditObject,
+    climates: ClimateObject,
     combatStats: CombatStat[],
-    conflicts: Conflict[],
+    conflicts: ConflictObject,
     skills: Skill[],
     movements: Movement[],
     variants: Variant[],
     specificLoots: SpecificLoot[],
     reagents: Reagent[],
     locationalVitalities: LocationVitality[],
-    locations: Location[],
-    artistInfo: ArtistEditObject,
+    locations: LocationObject,
+    artistInfo: ArtistObject,
     scenarios: Scenario[],
     folklores: Folklore[],
     casting: Casting,
@@ -72,7 +72,12 @@ export interface Type {
     deleted: boolean
 }
 
-export interface ClimateEditObject {
+export interface LocationObject {
+    alllocations: Location[],
+    beast: Location[]
+}
+
+export interface ClimateObject {
     allclimates: Climate[],
     beast: Climate[]
 }
@@ -126,6 +131,14 @@ export interface CombatStat {
     adjustment: number,
     tdr: boolean,
     info: string
+}
+
+export interface ConflictObject {
+    descriptions: Conflict[],
+    convictions: Conflict[],
+    devotions: Conflict[],
+    flaws: Conflict[],
+    burdens: Conflict[]
 }
 
 export interface Conflict {
@@ -219,8 +232,9 @@ export interface ArtistInfo {
     roleid: string
 }
 
-export interface ArtistEditObject {
-    allartists: ArtistInfo[],
+export interface ArtistObject {
+    genericArtistInfo: ArtistInfo,
+    allartists?: ArtistInfo[],
     roleartists: ArtistInfo[]
 }
 

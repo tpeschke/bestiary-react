@@ -14,6 +14,7 @@ import playerRoutes from './routes/player'
 import ownerEditRoutes from './routes/ownerEdit'
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
+import catalogRoutes from './routes/catalog'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -25,6 +26,7 @@ app.use(cors())
 app.use(fakeAuth)
 
 app.use('/', authRoutes)
+app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 

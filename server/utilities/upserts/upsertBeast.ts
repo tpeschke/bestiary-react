@@ -1,7 +1,9 @@
 import { Response, Error } from '../../interfaces/apiInterfaces'
 import {
-    ClimateEditObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistEditObject,
-    upsertParameters, Scenario, Folklore, Spell, Table, TablesObject, Row
+    ClimateObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistObject,
+    upsertParameters, Scenario, Folklore, Spell, Table, TablesObject, Row,
+    LocationObject,
+    ConflictObject
 } from '../../interfaces/beastInterfaces'
 
 import createHash from '../hashGeneration'
@@ -76,7 +78,7 @@ async function upsertTypes(promiseArray: any[], databaseConnection: any, beastId
     })
 }
 
-async function upsertClimates(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, climates: ClimateEditObject) {
+async function upsertClimates(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, climates: ClimateObject) {
     climates.beast.forEach((climate: Climate) => {
         if (climate.deleted) {
             promiseArray.push(databaseConnection.beast.climate.delete(climate.uniqueid).catch((error: Error) => sendErrorForward('delete climate', error, response)))
@@ -112,7 +114,7 @@ async function upsertCombats(promiseArray: any[], databaseConnection: any, beast
     })
 }
 
-async function upsertConflict(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, conflicts: Conflict[]) {
+async function upsertConflict(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, conflicts: ConflictObject) {
     let newConflict: Conflict[] = []
     Object.keys(conflicts).forEach(key => newConflict = [...newConflict, ...conflicts[key]])
     newConflict.forEach((conflict: Conflict) => {
@@ -190,8 +192,8 @@ async function upsertLocationalVitality(promiseArray: any[], databaseConnection:
     })
 }
 
-async function upsertLocations(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, locations: Location[]) {
-    locations.forEach((singleLocation: Location) => {
+async function upsertLocations(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, locations: LocationObject) {
+    locations.beast.forEach((singleLocation: Location) => {
         const { deleted, id, locationid, location, link } = singleLocation
         if (deleted) {
             promiseArray.push(databaseConnection.beast.location.delete(id).catch((error: Error) => sendErrorForward('delete location', error, response)))
@@ -206,7 +208,7 @@ async function upsertLocations(promiseArray: any[], databaseConnection: any, bea
     })
 }
 
-async function upsertArtist(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, artistInfo: ArtistEditObject) {
+async function upsertArtist(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, artistInfo: ArtistObject) {
 
     async function updateArtist(artistInfo: ArtistInfo) {
         let { id, artistid, artist, tooltip, link, roleid } = artistInfo;
@@ -228,6 +230,7 @@ async function upsertArtist(promiseArray: any[], databaseConnection: any, beastI
         }
     }
 
+    updateArtist(artistInfo.genericArtistInfo)
     const { roleartists } = artistInfo
     if (roleartists && roleartists.length > 0) {
         roleartists.forEach((role: ArtistInfo) => {
