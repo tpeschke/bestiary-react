@@ -6,7 +6,7 @@ import { sendErrorForwardNoFile } from "../sendingFunctions"
 const sendErrorForward = sendErrorForwardNoFile('upsert loot')
 
 export default async function upsertAllLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, specificLoots: SpecificLoot[], carriedLoot: Loot, lairLoot: Loot) {
-    upsertLoot(promiseArray, databaseConnection, beastId, response, specificLoots)
+    upsertSpecificLoot(promiseArray, databaseConnection, beastId, response, specificLoots)
 
     upsertLairLoot(promiseArray, databaseConnection, beastId, response, lairLoot)
     upsertCarriedLoot(promiseArray, databaseConnection, beastId, response, carriedLoot)
@@ -20,15 +20,15 @@ async function upsertLairLoot(promiseArray: any[], databaseConnection: any, beas
     await upsertItemsLair(databaseConnection, beastId, response, items)
 }
 
-async function upsertLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loot: SpecificLoot[]) {
+async function upsertSpecificLoot(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, loot: SpecificLoot[]) {
     loot.forEach((singleLoot: SpecificLoot) => {
         const { loot, price, id, deleted } = singleLoot
         if (deleted) {
-            promiseArray.push(databaseConnection.beast.loot.delete(id).catch((error: Error) => sendErrorForward('delete loot', error, response)))
+            promiseArray.push(databaseConnection.loot.specific.delete(id).catch((error: Error) => sendErrorForward('delete specific loot', error, response)))
         } else if (!id) {
-            promiseArray.push(databaseConnection.beast.loot.add(beastId, loot, price).catch((error: Error) => sendErrorForward('add loot', error, response)))
+            promiseArray.push(databaseConnection.loot.specific.add(beastId, loot, price).catch((error: Error) => sendErrorForward('add specific loot', error, response)))
         } else {
-            promiseArray.push(databaseConnection.beast.loot.update(beastId, loot, price, id).catch((error: Error) => sendErrorForward('update loot', error, response)))
+            promiseArray.push(databaseConnection.loot.specific.update(beastId, loot, price, id).catch((error: Error) => sendErrorForward('update specific loot', error, response)))
         }
     })
 }

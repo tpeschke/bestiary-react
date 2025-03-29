@@ -1,12 +1,13 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, upsertParameters, ArtistObject, LocationObject, ConflictObject } from "../interfaces/beastInterfaces"
+import { ClimateObject, Type, upsertParameters, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
 import createHash from "../utilities/hashGeneration"
 import upsertBeast from "../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
-import { getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel } from "../utilities/gets/getBeast"
+import { getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents, getLocationalVitalities, getFolklore } from "../utilities/gets/getBeast"
+import { SpecificLoot } from "../interfaces/lootInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -145,60 +146,25 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         promiseArray.push(getClimates(databaseConnection, response, beast.id).then((climates: ClimateObject) => beast.climates = climates))
         promiseArray.push(getArtistInfo(databaseConnection, response, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.artistInfo = artistInfo))
         promiseArray.push(getLocations(databaseConnection, response, beast.id, isEditing).then((locations: LocationObject) => beast.locations = locations))
+        promiseArray.push(getVariants(databaseConnection, response, beast.id).then((variants: Variant[]) => beast.variants = variants))
+        promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.reagents = reagents))
+        promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.locationalVitalities = locationalVitalities))
+        promiseArray.push(getFolklore(databaseConnection, response, beast.id).then((folklores: Folklore[]) => beast.folklores = folklores))
+        
+        promiseArray.push(getSkills(databaseConnection, response, beast.id).then((skills: Skill[]) => beast.skills = skills))
+        
         promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, beast.traitlimit, beast.devotionlimit, beast.flawlimit).then((conflict: ConflictObject) => beast.conflict = conflict))
 
+        promiseArray.push(getSpecificLoots(databaseConnection, response, beast.id).then((specificLoots: SpecificLoot[]) => beast.specificLoots = specificLoots))
         
-
-        promiseArray.push(db.get.skill(id).then(result => {
-            beast.skills = result.sort((a, b) => +b.rank - +a.rank)
-            return result
-        }).catch(e => sendErrorForward('beast skills', e, res)))
-
-        if (req.user && req.user.id) {
-            promiseArray.push(db.get.favorite(req.user.id, id).then(result => {
-                if (result.length > 0) {
-                    beast.favorite = true
-                } else {
-                    beast.favorite = false
-                }
-            }).catch(e => sendErrorForward('beast favorite', e, res)))
-        } else {
-            beast.favorite = false
-        }
-
-        if (req.user) {
-            promiseArray.push(db.get.notes(id, req.user.id).then(result => {
-                beast.notes = result[0] || {}
-                return result
-            }).catch(e => sendErrorForward('beast notes', e, res)))
-        }
-
-        promiseArray.push(db.get.variants(id).then(result => {
-            beast.variants = result
-            return result
-        }).catch(e => sendErrorForward('beast variants', e, res)))
-
-        promiseArray.push(db.get.loot(id).then(result => {
-            beast.loot = result
-            return result
-        }).catch(e => sendErrorForward('beast loot', e, res)))
-
-        promiseArray.push(db.get.reagents(id).then(result => {
-            beast.reagents = result
-            return result
-        }).catch(e => sendErrorForward('beast pleroma', e, res)))
-
-        promiseArray.push(db.get.locationalvitality(id).then(result => {
-            beast.locationalvitality = result
-            return result
-        }).catch(e => sendErrorForward('beast locational vitality', e, res)))
-
-        promiseArray.push(db.get.folklore(id).then(result => {
-            beast.folklore = result
-            return result
-        }).catch(e => sendErrorForward('beast folklore', e, res)))
+        promiseArray.push(getFavorite(databaseConnection, response, beast.id, request.user.id).then((favorite: boolean) => beast.favorite = favorite))
+        promiseArray.push(getNotes(databaseConnection, response, beast.id, request.user.id).then((notes: string) => beast.notes = notes))
+    
 
 
+
+
+// LOOT
         beast.lairloot = {};
         promiseArray.push(db.get.loot.lairbasic(id).then(result => {
             beast.lairloot = { ...result[0], ...beast.lairloot }
@@ -243,6 +209,8 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             return result
         }).catch(e => sendErrorForward('beast carried items', e, res)))
 
+
+        /// ENCOUNTER
         promiseArray.push(db.get.loot.carriedscrolls(id).then(result => {
             beast.carriedloot = { scrolls: result, ...beast.carriedloot }
             return result
@@ -258,6 +226,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             return result
         }).catch(e => sendErrorForward('beast carried scenarios', e, res)))
 
+        // Tables
         beast.tables = {
             habitat: [],
             attack: [],
@@ -298,6 +267,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             }).catch(e => sendErrorForward('beast tables final promise', e, res))
         }).catch(e => sendErrorForward('beast tables', e, res)))
 
+        // Basic Social
         if (req.query.edit !== 'true') {
             promiseArray.push(db.get.archetype().then(result => {
                 const chance = Math.floor(Math.random() * 100)
@@ -313,6 +283,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             }))
         }
 
+        // Roles
         promiseArray.push(db.get.roles(id).then(result => {
             beast.roles = result
 
@@ -366,6 +337,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             return result
         }).catch(e => sendErrorForward('beast roles', e, res)))
 
+        // CASTING
         promiseArray.push(db.get.casting(id).then(result => {
             beast.casting = result[0]
         }).catch(e => sendErrorForward('beast casting', e, res)))
@@ -374,6 +346,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             beast.spells = result
         }).catch(e => sendErrorForward('beast spells', e, res)))
 
+        // SKILL CHALLENGES
         promiseArray.push(db.get.challenges(id).then(result => {
             beast.challenges = result
         }).catch(e => sendErrorForward('beast challenges', e, res)))
@@ -382,6 +355,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             beast.obstacles = result
         }).catch(e => sendErrorForward('beast obstalces view', e, res)))
 
+        // PROMISE ARRAY
         Promise.all(promiseArray).then(finalArray => {
             finalPromise = [];
 
