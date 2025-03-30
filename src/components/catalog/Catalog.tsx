@@ -1,3 +1,5 @@
+import './Catalog.css'
+
 import { useEffect } from 'react';
 import axios from 'axios';
 import { RootState } from '../../redux/store';
@@ -5,11 +7,11 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { catalogURL } from '../../frontend-config'
 
-import './Catalog.css'
+
 import Row from './Row';
 import { CatalogTile } from './catalogInterfaces';
 
-import { saveCatalog } from '../../redux/catalogSlice';
+import { saveCatalog } from '../../redux/slices/catalogSlice';
 
 export default function Catalog() {
     const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)

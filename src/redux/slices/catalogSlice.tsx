@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { CatalogState } from '../components/catalog/catalogInterfaces'
+import { CatalogState } from '../../components/catalog/catalogInterfaces'
 
 const initialState: CatalogState = {
   catalogItems: [],
@@ -13,7 +13,7 @@ export const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
   reducers: {
-    saveCatalog: (state, action: PayloadAction<CatalogState>) => {
+    saveCatalog: (state: any, action: PayloadAction<CatalogState>) => {
       const { templates, freeBeasts, catalogItems } = action.payload
       state.templates = templates
       state.freeBeasts = freeBeasts

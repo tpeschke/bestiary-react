@@ -6,13 +6,17 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 
 const sendErrorForward = sendErrorForwardNoFile('access controller')
 
+export async function checkIfLoggedIn(request: Request, response: Response) {
+    checkForContentTypeBeforeSending(response, { isLoggedIn: (request.user && request.user.id) })
+}
+
 export async function checkIfPlayerView(request: Request, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
-    const beastid : number = +request.params.beastid
+    const beastid: number = +request.params.beastid
     const { id: userid, patreon } = request.user
 
     const { canplayerview } = await databaseConnection.beast.canView(beastid).catch((error: Error) => sendErrorForward('player can view', error, response))[0]
-    
+
     const body = {
         canView: isJustMainOwner(userid) || patreon >= 3 || canplayerview
     }
