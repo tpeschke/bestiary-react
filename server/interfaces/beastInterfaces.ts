@@ -9,7 +9,19 @@ export interface Beast {
     id: number,
     patreon: number,
     canplayerview: boolean,
-// General Info
+    generalInfo: GeneralInfo,
+    playerSpecificInfo: PlayerSpecificInfo,
+    imageInfo: ImageInfo,
+    linkedInfo : LinkedInfo,
+    roleInfo: RoleInfo,
+    combatInfo: CombatInfo,
+    skillInfo: SkillInfo,
+    socialInfo: socialInfo,
+    lootInfo: LootInfo,
+    castingInfo: CastingInfo
+}
+
+export interface GeneralInfo {
     name: string,
     plural: string,
     intro: string,
@@ -17,43 +29,54 @@ export interface Beast {
     ecology: string,
     scenarios: Scenario[],
     folklores: Folklore[],
-    encounters: Encounter,
+    encounters?: Encounter,
     senses: string,
     diet: string,
     meta: string,
     size: string,
     rarity: number,
     tables: TablesObject,
-// Player Specific Info
+}
+
+export interface PlayerSpecificInfo {
     favorite: boolean,
-    notes: string,
-// Image Info
+    notes?: string
+}
+
+export interface ImageInfo {
     thumbnail: string,
     imagesource: number,
-    artistInfo: ArtistObject,
-// Linked Info
-    variants: Variant[],
-    locations: LocationObject,
-    types: Type[],
-    climates: ClimateObject,
-// Role Info
+    artistInfo?: ArtistObject,
+}
+
+export interface LinkedInfo {
+    variants?: Variant[],
+    locations?: LocationObject,
+    types?: Type[],
+    climates?: ClimateObject,
+}
+
+export interface RoleInfo {
     rolenameorder: number,
-    roles: Role[],
     defaultrole: string,
-// Combat Info
+    roles?: Role[],
+}
+
+export interface CombatInfo {
     sp_atk: string,
     sp_def: string,
     tactics: string,
-    caution: number, // remove
     combatpoints: number,
-    role: string,
-    secondaryrole: string,
-    combatStats: CombatStat[],
-    movements: Movement[],
-    // Vitality Info (sub folder)
-    locationalVitalities: LocationVitality[],
+    combatrole: string,
+    combatsecondary: string,
+    vitalityInfo: VitalityInfo
+    combatStats?: CombatStat[],
+    movements?: Movement[],
+}
+
+export interface VitalityInfo {
+    locationalVitalities?: LocationVitality[],
     fatigue: string,
-    fatiguestrength: string,
     notrauma: boolean,
     knockback: number,
     singledievitality: boolean,
@@ -62,19 +85,22 @@ export interface Beast {
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
     vitality: string,
-// Skill Info
+}
+
+export interface SkillInfo {
     panic: number,
-    panicstrength: number,
     stress: number,
     skillrole: string,
     skillsecondary: string,
     skillpoints: number,
     atk_skill: string,
     def_skill: string,
-    skills: Skill[],
-    obstacles: Obstacle[],
-    challenges: Challenge[],
-// Confrontation Info
+    skills?: Skill[],
+    obstacles?: Obstacle[],
+    challenges?: Challenge[],
+}
+
+export interface socialInfo {
     traitlimit: number,
     devotionlimit: number,
     flawlimit: number,
@@ -87,54 +113,55 @@ export interface Beast {
     devotionshare: number,
     atk_conf: string,
     def_conf: string,
-    conflicts: ConflictObject,
-    // Archetypes
-    hasarchetypes: boolean,
-    hasmonsterarchetypes: boolean,
-    archetype: ArchetypeInfo | string[] | null,
-// Loot Info
-    lootnotes: string,
-    specificLoots: SpecificLoot[],
-    reagents: Reagent[],
-    lairLoot: Loot,
-    carriedLoot: Loot
-// Spellcasting Info
-    casting: Casting,
-    deletedSpells: number[],
-    spells: Spell[], 
-}
-
-export interface upsertParameters {
-    roles: Role[],
-    types: Type[],
-    climates: ClimateObject,
-    combatStats: CombatStat[],
-    conflicts: ConflictObject,
-    skills: Skill[],
-    movements: Movement[],
-    variants: Variant[],
-    specificLoots: SpecificLoot[],
-    reagents: Reagent[],
-    locationalVitalities: LocationVitality[],
-    locations: LocationObject,
-    artistInfo: ArtistObject,
-    scenarios: Scenario[],
-    folklores: Folklore[],
-    casting: Casting,
-    deletedSpells: number[],
-    spells: Spell[],
-    obstacles: Obstacle[],
-    challenges: Challenge[],
-    tables: TablesObject,
-    encounters: Encounter,
-    lairLoot: Loot,
-    carriedLoot: Loot
+    archetypeInfo: ArchetypeInfo,
+    conflicts?: ConflictObject,
 }
 
 export interface ArchetypeInfo {
-    archetype: string,
-    deviation: boolean,
-    reverse: boolean
+    hasarchetypes: boolean,
+    hasmonsterarchetypes: boolean,
+    archetypes?: ArchetypeObject | string[] | null,
+}
+
+export interface LootInfo {
+    lootnotes: string,
+    lairLoot: Loot,
+    carriedLoot: Loot
+    reagents?: Reagent[],
+    specificLoots?: SpecificLoot[],
+}
+
+export interface CastingInfo {
+    casting?: Casting,
+    deletedSpells?: number[],
+    spells?: Spell[], 
+}
+
+export interface upsertParameters {
+    roles?: Role[],
+    types?: Type[],
+    climates?: ClimateObject,
+    combatStats?: CombatStat[],
+    conflicts?: ConflictObject,
+    skills?: Skill[],
+    movements?: Movement[],
+    variants?: Variant[],
+    specificLoots?: SpecificLoot[],
+    reagents?: Reagent[],
+    locationalVitalities?: LocationVitality[],
+    locations?: LocationObject,
+    artistInfo?: ArtistObject,
+    scenarios?: Scenario[],
+    folklores?: Folklore[],
+    casting?: Casting,
+    deletedSpells?: number[],
+    spells?: Spell[],
+    obstacles?: Obstacle[],
+    challenges?: Challenge[],
+    tables?: TablesObject,
+    encounters?: Encounter,
+    lairLoot: Loot,
+    carriedLoot: Loot
 }
 
 export interface Role {
@@ -171,6 +198,12 @@ export interface Role {
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
     skillsecondary: string
+}
+
+export interface ArchetypeObject {
+    archetype: string,
+    deviation: boolean,
+    reverse: boolean
 }
 
 export interface Type {
