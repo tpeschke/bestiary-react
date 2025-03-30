@@ -1,11 +1,13 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
-import {
-    ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore,
-    Scenario, Table, Row, TablesObject, ArchetypeInfo, Casting, Spell,
-    Role,
-    Movement,
-    CombatStat
-} from "../../interfaces/beastInterfaces";
+import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
+import { LocationVitality, Movement, CombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Folklore, Scenario, TablesObject, Table, Row } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
+import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
+import { Type, ClimateObject, Climate, LocationObject, Variant } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
+import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
+import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
+import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
+import { ConflictObject, Conflict, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces";
 import { Challenge, Obstacle } from "../../interfaces/skillInterfaces";
 
@@ -213,7 +215,7 @@ interface archetypeInfo {
     archetype: string
 }
 
-export async function getArchetypes(databaseConnection: any, response: Response, isEditing: boolean, hasarchetypes: boolean, hasmonsterarchetypes: boolean): Promise<ArchetypeInfo | string[] | null> {
+export async function getArchetypes(databaseConnection: any, response: Response, isEditing: boolean, hasarchetypes: boolean, hasmonsterarchetypes: boolean): Promise<Archetype> {
     if (isEditing && hasarchetypes) {
         return databaseConnection.beast.archetype.get().then((archetypeInfo: archetypeInfo[]) => {
             const chance = Math.floor(Math.random() * 100)

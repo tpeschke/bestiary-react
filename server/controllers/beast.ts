@@ -1,5 +1,16 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters, ArchetypeInfo, Casting, Spell, Role, Movement, CombatStat } from "../interfaces/beastInterfaces"
+import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
+import { Challenge, Obstacle } from "../interfaces/skillInterfaces"
+import { Beast, upsertParameters } from "../interfaces/beastInterfaces/beastInterfaces"
+import { Casting, Spell } from "../interfaces/beastInterfaces/infoInterfaces/castingInfo"
+import { Role } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
+import { Movement, CombatStat, LocationVitality } from "../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
+import { Scenario, Folklore } from "../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
+import { ArtistObject } from "../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
+import { Variant, LocationObject, Type, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
+import { Reagent } from "../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
+import { Skill } from "../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
+import { ConflictObject, Archetype } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
@@ -9,12 +20,8 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import {
     getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
-    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles,
-    getMovement,
-    getCombatStats
+    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats
 } from "../utilities/gets/getBeast"
-import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
-import { Challenge, Obstacle } from "../interfaces/skillInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -172,7 +179,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
         promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, devotionlimit, flawlimit).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
-        promiseArray.push(getArchetypes(databaseConnection, response, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: ArchetypeInfo | string[] | null) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
+        promiseArray.push(getArchetypes(databaseConnection, response, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
 
         promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents)) 
         promiseArray.push(getSpecificLoots(databaseConnection, response, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))

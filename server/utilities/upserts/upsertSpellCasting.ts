@@ -1,5 +1,5 @@
 import { Response, Error } from '../../interfaces/apiInterfaces'
-import { Casting, Spell } from '../../interfaces/beastInterfaces'
+import { Casting, Spell } from '../../interfaces/beastInterfaces/beastInterfaces'
 
 import { sendErrorForwardNoFile } from "../sendingFunctions"
 

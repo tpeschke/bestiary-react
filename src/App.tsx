@@ -1,23 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 
-// to do
-// add/update Beast needs to be updated
-//  movement > movements
-//  conflict > conflicts
-//  locationalvitality > locationalVitalities
-//  loot > specificLoots
-//  combatStatArray > combatStats
-//  folklore > folklores
-//  deletedSpellsList > deletedSpells
-//  encounter > encounters
-//    temperament > beastTemperaments
-//    signs > beastSigns
-//    verb > beastVerbs
-//    noun > beastNouns
-//  lairloot > lairLoot
-//  carriedloot > carriedLoot
-
 function App() {
   const [count, setCount] = useState(0)
 

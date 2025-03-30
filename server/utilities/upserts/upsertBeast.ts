@@ -2,7 +2,7 @@ import { Response, Error } from '../../interfaces/apiInterfaces'
 import {
     ClimateObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistObject,
     Scenario, Folklore, Table, TablesObject, Row, LocationObject, ConflictObject, upsertParameters
-} from '../../interfaces/beastInterfaces'
+} from '../../interfaces/beastInterfaces/beastInterfaces'
 
 import createHash from '../hashGeneration'
 import { sendErrorForwardNoFile } from '../sendingFunctions'
