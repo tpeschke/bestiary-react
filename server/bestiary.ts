@@ -15,6 +15,7 @@ import ownerEditRoutes from './routes/ownerEdit'
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import catalogRoutes from './routes/catalog'
+import GMRoutes from './routes/gameMaster'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -29,6 +30,8 @@ app.use('/', authRoutes)
 app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
+
+app.use('/gm', GMRoutes)
 
 app.use('/ownerEdit', ownerEditRoutes)
 

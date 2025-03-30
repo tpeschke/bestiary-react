@@ -2,11 +2,10 @@ import express from 'express'
 
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
 
-import upsertBeast from '../utilities/upserts/upsertBeast'
-
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
+import { updateBeast } from '../controllers/beast'
 import { isOwner } from '../utilities/ownerAccess'
 
+import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 const sendErrorForward = sendErrorForwardNoFile('edit route')
 
 const ownerEditRoutes = express.Router()
@@ -43,6 +42,6 @@ async function checkIfOwnsBeast(request: ownAuthRequest, response: Response, nex
     }
 }
 
-ownerEditRoutes.post('/upsert', checkIfOwnsBeast, upsertBeast)
+ownerEditRoutes.post('/upsert', checkIfOwnsBeast, updateBeast)
 
 export default ownerEditRoutes

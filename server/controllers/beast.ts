@@ -29,7 +29,7 @@ interface BeastRequest extends Request {
     body: Beast
 }
 
-export async function addBeast(request: BeastRequest, response: Response) {
+export async function updateBeast(request: BeastRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { body, user } = request
 
