@@ -8,11 +8,11 @@ const consoleLogError = consoleLogErrorNoFile('catalog')
 interface Catalog {
     freeBeasts: BeastTile[],
     templates: BeastTile[],
-    catalog: BeastTile[][]
+    catalogItems: BeastTile[][]
 }
 
-let catalogCache: Catalog = { freeBeasts: [], templates: [], catalog: [] }
-let newCache: Catalog = { freeBeasts: [], templates: [], catalog: [] }
+let catalogCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [] }
+let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [] }
 
 export async function getCatalog(request: Request, response: Response) {
     checkForContentTypeBeforeSending(response, catalogCache)
@@ -65,7 +65,7 @@ async function collectCache(databaseConnection: any, index: number) {
 
     if (alphabet[index]) {
         let beasts: BeastTile[] = await databaseConnection.catalog.get.byLetter(alphabet[index]).catch((error: Error) => consoleLogError('get by letter', error))
-        if (beasts.length > 0) { newCache.catalog.push(beasts) }
+        if (beasts.length > 0) { newCache.catalogItems.push(beasts) }
 
         beasts.forEach(async (beast: BeastTile, index: number) => {
             beast.roles = await databaseConnection.catalog.get.role(beast.id)
@@ -89,7 +89,7 @@ async function collectCache(databaseConnection: any, index: number) {
         collectCache(databaseConnection, ++index)
     } else {
         catalogCache = newCache
-        newCache = { freeBeasts: [], templates: [], catalog: []  }
+        newCache = { freeBeasts: [], templates: [], catalogItems: []  }
         console.log('bestiary catalog collected')
     }
 }

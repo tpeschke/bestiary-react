@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
+import { RootState } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux'
 
 import { catalogURL } from '../../frontend-config'
 
@@ -7,25 +9,28 @@ import './Catalog.css'
 import Row from './Row';
 import { CatalogTile } from './catalogInterfaces';
 
+import { saveCatalog } from '../../redux/catalogSlice';
+
 export default function Catalog() {
-    const [catalogItems, setCatalogItems] = useState([]);
-    const [templates, setTemplates] = useState([]);
-    const [freeBeasts, setfreeBeasts] = useState([]);
+    const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)
+    const freeBeasts: CatalogTile[] = useSelector((state: RootState) => state.catalog.freeBeasts)
+    const catalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.catalogItems)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        axios.get(catalogURL + '/').then(({ data }) => {
-            setTemplates(data.templates)
-            setfreeBeasts(data.freeBeasts)
-            setCatalogItems(data.catalog);
-        })
+        if (catalogItems.length === 0) {
+            axios.get(catalogURL + '/').then(({ data }) => {
+                dispatch(saveCatalog(data))
+            })
+        }
     }, []);
 
     return (
         <div className='card-background catalog'>
-            <Row catalogTiles={freeBeasts} title={'Free Entries'}/>
-            <Row catalogTiles={templates} title={'Templates'}/>
+            <Row catalogTiles={freeBeasts} title={'Free Entries'} />
+            <Row catalogTiles={templates} title={'Templates'} />
             {catalogItems.map((catalogItem: CatalogTile[], index: number) => {
-                return <Row key={index} catalogTiles={catalogItem}/>
+                return <Row key={index} catalogTiles={catalogItem} />
             })}
         </div>
     )

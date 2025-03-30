@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from './components/header/Header'
 import Catalog from './components/catalog/Catalog'
-import GMView from './components/beast-view/GmView';
+import GMView from './components/beast-view/GMView';
 import PlayerView from './components/beast-view/PlayerView';
 
 export default function App() {
