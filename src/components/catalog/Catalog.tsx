@@ -21,7 +21,7 @@ export default function Catalog() {
     }, []);
 
     return (
-        <div className='card-background'>
+        <div className='card-background catalog'>
             <Row catalogTiles={freeBeasts} title={'Free Entries'}/>
             <Row catalogTiles={templates} title={'Templates'}/>
             {catalogItems.map((catalogItem: CatalogTile[], index: number) => {

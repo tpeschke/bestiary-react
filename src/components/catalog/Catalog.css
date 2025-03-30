@@ -1,4 +1,38 @@
+div {
+    scrollbar-color: grey transparent;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent
+}
+
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: grey;
+    border-radius: 4px;
+}
+
 .tile-row {
     display: flex;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.catalog h1 {
+    color: #795548;
+    border-bottom: 1px solid lightgray;
+    margin-top: 15px;
+    font-family: 'Hamletornot';
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
 }

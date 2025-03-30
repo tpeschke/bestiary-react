@@ -1,3 +1,20 @@
+.tile {
+    padding: 10px;
+    cursor: pointer;
+    transition: .6s;
+}
+
+.tile:hover {
+    background: whitesmoke;
+}
+
+.tile h2 {
+    margin-top: 5px;
+    font-family: 'oldClaude';
+    font-size: 14px;
+    text-align: center;
+}
+
 .image-frame {
     height: 100px;
     width: 100px;
@@ -5,9 +22,8 @@
     border-radius: 5px;
 }
 
-.image-frame > img {
+.image-frame>img {
     height: 100%;
     width: 100%;
-    background: white;
     object-fit: cover;
 }
