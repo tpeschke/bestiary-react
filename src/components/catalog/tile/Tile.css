@@ -1,0 +1,13 @@
+.image-frame {
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.image-frame > img {
+    height: 100%;
+    width: 100%;
+    background: white;
+    object-fit: cover;
+}

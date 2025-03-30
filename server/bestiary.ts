@@ -12,10 +12,11 @@ import authRoutes from './routes/authentication'
 import accessRoutes from './routes/access'
 import playerRoutes from './routes/player'
 import ownerEditRoutes from './routes/ownerEdit'
-import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
-import { collectCatalog } from './controllers/catalog'
 import catalogRoutes from './routes/catalog'
 import GMRoutes from './routes/gameMaster'
+
+import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
+import { collectCatalog } from './controllers/catalog'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
