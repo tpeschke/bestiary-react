@@ -13,7 +13,7 @@ import accessRoutes from './routes/access'
 import playerRoutes from './routes/player'
 import ownerEditRoutes from './routes/ownerEdit'
 import catalogRoutes from './routes/catalog'
-import GMRoutes from './routes/gameMaster'
+import BeastRoutes from './routes/beast'
 
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
@@ -32,7 +32,7 @@ app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 
-app.use('/gm', GMRoutes)
+app.use('/info', BeastRoutes)
 
 app.use('/ownerEdit', ownerEditRoutes)
 

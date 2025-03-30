@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import Header from './components/header/Header'
 import Catalog from './components/catalog/Catalog'
-import GMView from './components/beast-view/GMView';
-import PlayerView from './components/beast-view/PlayerView';
+import View from './components/beast/View'
 
 import { accessURL } from './frontend-config'
 import { setUser } from './redux/slices/userSlice';
@@ -31,8 +30,9 @@ export default function App() {
           <Route index element={<Catalog />} />
           <Route path='beast'>
             <Route index element={<Catalog />} />
-            <Route path=':beastId/gm' element={<GMView />} />
-            <Route path=':beastId/player' element={<PlayerView />} />
+            <Route path=':beastId/gm' element={<View />} />
+            <Route path=':beastId/player' element={<View />} />
+            <Route path=':beastId' element={<View />} />
           </Route>
         </Routes>
         <br />

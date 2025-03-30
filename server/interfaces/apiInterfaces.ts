@@ -18,7 +18,7 @@ interface Parameters {
 
 export interface User {
     id: number,
-    patreon: number
+    patreon?: number
 }
 
 export interface Response {

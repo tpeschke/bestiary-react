@@ -7,7 +7,6 @@ import { isUserLoggedOn } from '../../redux/slices/userSlice';
 
 export default function Header() {
     const userIsLoggedIn = useSelector(isUserLoggedOn)
-    console.log(userIsLoggedIn)
 
     return (
         <div className='header-background'>

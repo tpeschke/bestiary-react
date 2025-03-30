@@ -17,15 +17,20 @@ import { objectifyItemArray, sortByStrength, sortOutAnyToTheBottom, sortTemplate
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
-export function hasAppropriatePateronLevel(user: User, beastPatron: number, canPlayerView: boolean) {
+export function hasAppropriatePateronLevel(user: User, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {
-        return true
+        return 'gm'
     } else if (user && user.patreon) {
         let effectivePatreon = beastPatron === 0 ? beastPatron + 3 : beastPatron
-        return effectivePatreon >= user.patreon
+        if (effectivePatreon >= user.patreon) {
+            return 'gm'
+        } else {
+            return 'player'
+        }
+    } else if (user) {
+        return 'player'
     }
-
-    return false
+    return 'viewer'
 }
 
 export async function getTypes(databaseConnection: any, response: Response, beastId: number): Promise<Type[]> {

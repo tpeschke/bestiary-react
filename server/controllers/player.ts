@@ -20,13 +20,17 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     const beastid: number = +request.params.beastid
     const { user } = request
 
-    let result = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))[0]
-    if (user) {
-        const notes = await databaseConnection.beast.player.getNotes(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))[0]
-        result.notes = notes || {}
-        checkForContentTypeBeforeSending(response, result)
+    if ( user && user.patreon && user.patreon > 3 ) {
+        checkForContentTypeBeforeSending(response, {color: 'green', message: 'You\'re a GM'})
     } else {
-        checkForContentTypeBeforeSending(response, result)
+        let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
+        if (user) {
+            const [notes] = await databaseConnection.beast.player.getNotes(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
+            playerInfo.notes = notes || {}
+            checkForContentTypeBeforeSending(response, playerInfo)
+        } else {
+            checkForContentTypeBeforeSending(response, playerInfo)
+        }
     }
 }
 
@@ -38,7 +42,7 @@ export async function addPlayerNotes(request: noteRequest, response: Response) {
     if (user && noteId) {
         const result = await databaseConnection.beast.player.updateNotes(noteId, notes).catch((error: Error) => sendErrorForward('update beast notes', error, response))[0]
         checkForContentTypeBeforeSending(response, result)
-    } else if (user) {
+    } else if (user && user.patreon) {
         const count = await databaseConnection.beast.player.numberOfNotes(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))[0]
         const isAboveDefaultNumberOfNotes = count >= 50
         const isAboveNumberOfNotesForPatrons = count >= (user.patreon * 30) + 50

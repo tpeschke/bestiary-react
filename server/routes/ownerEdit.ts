@@ -2,7 +2,7 @@ import express from 'express'
 
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
 
-import { updateBeast } from '../controllers/beast'
+import { updateBeast } from '../controllers/gameMaster'
 import { isOwner } from '../utilities/ownerAccess'
 
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'

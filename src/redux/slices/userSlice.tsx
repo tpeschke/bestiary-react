@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface User {
-    isLoggedIn?: boolean
+    isUserLoggedIn?: boolean,
+    patreon?: number
 }
 
 const initialState: User = {}
@@ -12,13 +13,15 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state: any, action: PayloadAction<User>) => {
-      const { isLoggedIn } = action.payload
-      state.isLoggedIn = isLoggedIn
+      const { isUserLoggedIn, patreon } = action.payload
+      state.isUserLoggedIn = isUserLoggedIn
+      state.patreon = patreon
     }
   },
 })
 
 export const { setUser } = userSlice.actions
-export const isUserLoggedOn = (state: any): boolean => state.user.isLoggedIn
+export const isUserLoggedOn = (state: any): boolean => state.user.isUserLoggedIn
+export const getUserPatreon = (state: any): number => state.user.patreon
 
 export default userSlice.reducer
