@@ -1,10 +1,17 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
-import { ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Table, Row, TablesObject, ArchetypeInfo } from "../../interfaces/beastInterfaces";
+import {
+    ArtistObject, ArtistInfo, Climate, ClimateObject, Type, LocationObject, Location, Conflict, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore,
+    Scenario, Table, Row, TablesObject, ArchetypeInfo, Casting, Spell,
+    Role,
+    Movement,
+    CombatStat
+} from "../../interfaces/beastInterfaces";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces";
+import { Challenge, Obstacle } from "../../interfaces/skillInterfaces";
 
 import { isOwner } from "../ownerAccess";
 import { sendErrorForwardNoFile } from "../sendingFunctions";
-import { objectifyItemArray, sortByStrength, sortOutAnyToTheBottom } from "../sorts";
+import { objectifyItemArray, sortByStrength, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -126,6 +133,14 @@ export async function getSkills(databaseConnection: any, response: Response, bea
     return databaseConnection.beast.skill.get(beastId).then((skills: Skill[]) => skills.sort((a, b) => +b.rank - +a.rank)).catch((error: Error) => sendErrorForward('skills', error, response))
 }
 
+export async function getChallenges(databaseConnection: any, response: Response, beastId: number): Promise<Challenge[]> {
+    return databaseConnection.skill.challenge.get(beastId).catch((error: Error) => sendErrorForward('challenges', error, response))
+}
+
+export async function getObstacles(databaseConnection: any, response: Response, beastId: number): Promise<Obstacle[]> {
+    return databaseConnection.skill.obstacle.get(beastId).catch((error: Error) => sendErrorForward('obstalces', error, response))
+}
+
 export async function getVariants(databaseConnection: any, response: Response, beastId: number): Promise<Variant[]> {
     return databaseConnection.beast.variant.get(beastId).catch((error: Error) => sendErrorForward('variants', error, response))
 }
@@ -211,7 +226,7 @@ export async function getArchetypes(databaseConnection: any, response: Response,
     } else if (isEditing && hasmonsterarchetypes) {
         return databaseConnection.beast.archetype.getMonster().catch((error: Error) => sendErrorForward('monster archetypes', error, response))
     }
-    
+
     return null
 }
 
@@ -256,4 +271,30 @@ export async function getTables(databaseConnection: any, response: Response, bea
             return true
         }).catch((error: Error) => sendErrorForward('table rows', error, response)))
     })
+}
+
+export async function getCasting(databaseConnection: any, response: Response, beastId: number): Promise<Casting> {
+    return databaseConnection.beast.casting.get(beastId).catch((error: Error) => sendErrorForward('casting', error, response))[0]
+}
+
+export async function getSpells(databaseConnection: any, response: Response, beastId: number): Promise<Spell[]> {
+    return databaseConnection.beast.spell.get(beastId).catch((error: Error) => sendErrorForward('spells', error, response))
+}
+
+export async function getRoles(databaseConnection: any, response: Response, beastId: number, beastName: string): Promise<Role[]> {
+    return databaseConnection.role.get(beastId).then((roles: Role[]) => {
+        if (beastName.includes('Template')) {
+            roles = roles.sort(sortTemplateRoles)
+        }
+
+        return roles
+    }).catch((error: Error) => sendErrorForward('roles', error, response))
+}
+
+export async function getMovement(databaseConnection: any, response: Response, beastId: number): Promise<Movement[]> {
+    return databaseConnection.beast.movement.get(beastId).catch((error: Error) => sendErrorForward('movement', error, response))
+}
+
+export async function getCombatStats(databaseConnection: any, response: Response, beastId: number): Promise<CombatStat[]> {
+    return databaseConnection.get.combatStatArray(beastId).catch((error: Error) => sendErrorForward('combat', error, response))
 }

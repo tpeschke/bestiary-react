@@ -28,7 +28,16 @@ export function sortOutAnyToTheBottom(a: SortAny, b: SortAny): number {
 export function objectifyItemArray(itemArray: Item[]): Object {
     let itemObject = {}
     itemArray.forEach(item => {
-      itemObject[item.itemcategory] = item
+        itemObject[item.itemcategory] = item
     })
     return itemObject
+}
+
+interface nameObject {
+    name: string
+}
+
+export function sortTemplateRoles(a: nameObject, b: nameObject): number {
+    const order = ['Novice', 'Apprentice', 'Journeyman', 'Expert', 'Master', 'Grandmaster', 'Legendary', 'Mythic'];
+    return order.indexOf(a.name) - order.indexOf(b.name)
   }

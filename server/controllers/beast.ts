@@ -1,5 +1,5 @@
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters, ArchetypeInfo } from "../interfaces/beastInterfaces"
+import { ClimateObject, Type, ArtistObject, LocationObject, ConflictObject, Skill, Variant, Reagent, LocationVitality, Folklore, Scenario, Beast, upsertParameters, ArchetypeInfo, Casting, Spell, Role, Movement, CombatStat } from "../interfaces/beastInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { isOwner } from "../utilities/ownerAccess"
@@ -9,12 +9,13 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import {
     getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
-    getScenarios,
-    getTables,
-    getArchetypes
+    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles,
+    getMovement,
+    getCombatStats
 } from "../utilities/gets/getBeast"
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
 import { sortOutAnyToTheBottom } from "../utilities/sorts"
+import { Challenge, Obstacle } from "../interfaces/skillInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -89,7 +90,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     if (hasAppropriatePateronLevel(request.user, beast.patreon, beast.canplayerview)) {
         checkForContentTypeBeforeSending(response, { color: 'red', message: 'You need to update your Patreon tier to access this monster' })
     } else {
-        let promiseArray: any = []
+        let promiseArray: any[] = []
         const isEditing = request.query.edit === 'true'
 
         promiseArray.push(getTypes(databaseConnection, response, beast.id).then((types: Type[]) => beast.types = types))
@@ -103,6 +104,8 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         promiseArray.push(getScenarios(databaseConnection, response, beast.id).then((scenarios: Scenario[]) => beast.scenarios = scenarios))
 
         promiseArray.push(getSkills(databaseConnection, response, beast.id).then((skills: Skill[]) => beast.skills = skills))
+        promiseArray.push(getChallenges(databaseConnection, response, beast.id).then((challenges: Challenge[]) => beast.challenges = challenges))
+        promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.obstacles = obstacles))
 
         promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, beast.traitlimit, beast.devotionlimit, beast.flawlimit).then((conflict: ConflictObject) => beast.conflict = conflict))
 
@@ -130,183 +133,17 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             appearance: []
         }
         getTables(databaseConnection, response, beast.id, beast.tables, promiseArray)
-        
-        // CASTING
-        promiseArray.push(db.get.casting(id).then(result => {
-            beast.casting = result[0]
-        }).catch(e => sendErrorForward('beast casting', e, res)))
 
-        promiseArray.push(db.get.spells(id).then(result => {
-            beast.spells = result
-        }).catch(e => sendErrorForward('beast spells', e, res)))
+        promiseArray.push(getCasting(databaseConnection, response, beast.id).then((casting: Casting) => beast.casting = casting))
+        promiseArray.push(getSpells(databaseConnection, response, beast.id).then((spells: Spell[]) => beast.spells = spells))
 
-        // SKILL CHALLENGES
-        promiseArray.push(db.get.challenges(id).then(result => {
-            beast.challenges = result
-        }).catch(e => sendErrorForward('beast challenges', e, res)))
+        promiseArray.push(getRoles(databaseConnection, response, beast.id, beast.name).then((roles: Role[]) => beast.roles = roles))
 
-        promiseArray.push(db.get.obstacles(id).then(result => {
-            beast.obstacles = result
-        }).catch(e => sendErrorForward('beast obstalces view', e, res)))
+        promiseArray.push(getMovement(databaseConnection, response, beast.id).then((movements: Movement[]) => beast.movements = movements))
+        promiseArray.push(getCombatStats(databaseConnection, response, beast.id).then((combatStats: CombatStat[]) => beast.combatStats = combatStats))
 
-        // Roles
-        promiseArray.push(db.get.roles(id).then(result => {
-            beast.roles = result
-
-            if (beast.name.includes('Template')) {
-                beast.roles = beast.roles.sort(sortTemplateRoles)
-            }
-            beast.roleInfo = {}
-
-            for (i = 0; i < result.length; i++) {
-                beast.roleInfo[result[i].id] = {
-                    vitality: result[i].vitality,
-                    hash: result[i].hash,
-                    name: result[i].name,
-                    uniqueCombat: result[i].combatcount > 0,
-                    uniqueMovement: result[i].movementcount > 0,
-                    uniqueLocationalVitality: result[i].locationvitalitycount > 0,
-                    role: result[i].role,
-                    secondaryrole: result[i].secondaryrole,
-                    attack: result[i].attack,
-                    defense: result[i].defense,
-                    combatpoints: result[i].combatpoints,
-                    stress: result[i].stress,
-                    socialrole: result[i].socialrole,
-                    socialpoints: result[i].socialpoints,
-                    skillrole: result[i].skillrole,
-                    skillpoints: result[i].skillpoints,
-                    socialsecondary: result[i].socialsecondary,
-                    skillsecondary: result[i].skillsecondary,
-                    size: result[i].size,
-                    fatigue: result[i].fatiguestrength,
-                    mental: result[i].mental,
-                    panic: result[i].panicstrength,
-                    knockback: result[i].knockback,
-                    largeweapons: result[i].largeweapons,
-                    singledievitality: result[i].singledievitality,
-                    isincorporeal: result[i].isincorporeal,
-                    weaponbreakagevitality: result[i].weaponbreakagevitality,
-                    noknockback: result[i].noknockback,
-                    descriptionshare: result[i].descriptionshare,
-                    convictionshare: result[i].convictionshare,
-                    devotionshare: result[i].devotionshare,
-                    rollundertrauma: result[i].rollundertrauma,
-                    attack_conf: result[i].attack_conf,
-                    defense_conf: result[i].defense_conf,
-                    attack_skill: result[i].attack_skill,
-                    defense_skill: result[i].defense_skill,
-                    hasarchetypes: result[i].hasarchetypes,
-                    hasmonsterarchetypes: result[i].hasmonsterarchetypes
-                }
-            }
-            return result
-        }).catch(e => sendErrorForward('beast roles', e, res)))
-
-        // PROMISE ARRAY
-        Promise.all(promiseArray).then(finalArray => {
-            finalPromise = [];
-
-            beast.tables.appearance.sort((a, b) => a.label.localeCompare(b.label))
-            beast.tables.habitat.sort((a, b) => a.label.localeCompare(b.label))
-            beast.tables.attack.sort((a, b) => a.label.localeCompare(b.label))
-            beast.tables.defense.sort((a, b) => a.label.localeCompare(b.label))
-
-            finalPromise.push(db.get.movement(id).then(result => {
-                beast.movement = result.map(movementType => {
-                    const points = movementType.roleid ? beast.roleInfo[movementType.roleid].combatpoints : beast.combatpoints
-                    const role = movementType.roleid ? beast.roleInfo[movementType.roleid].role : beast.role
-                    movementType.role = role
-                    movementType.points = points
-                    return combatSquareCtrl.getMovementDirectly(movementType)
-                })
-
-                return true
-            }).catch(e => sendErrorForward('beast movement 2', e, res)))
-
-            finalPromise.push(db.get.combatStatArray(id).then(result => {
-                if (req.query.edit === 'true') {
-                    beast.combatStatArray = result
-                } else {
-                    beast.combatStatArray = result.map(combatSquare => {
-                        const points = combatSquare.roleid ? beast.roleInfo[combatSquare.roleid].combatpoints : beast.combatpoints
-                        const size = combatSquare.roleid && beast.roleInfo[combatSquare.roleid].size ? beast.roleInfo[combatSquare.roleid].size : beast.size ? beast.size : 'Medium'
-                        const role = combatSquare.roleid ? beast.roleInfo[combatSquare.roleid].role : beast.role
-
-                        let equipmentBonuses = { weaponInfo: null, armorInfo: null, shieldInfo: null }
-                        if (combatSquare.weapon) {
-                            equipmentBonuses.weaponInfo = equipmentCtrl.getWeapon(combatSquare.weapon).bonusLong
-                        }
-                        if (combatSquare.armor) {
-                            equipmentBonuses.armorInfo = equipmentCtrl.getArmor(combatSquare.armor).bonusLong
-                        }
-                        if (combatSquare.shield) {
-                            equipmentBonuses.shieldInfo = equipmentCtrl.getShield(combatSquare.shield).bonusLong
-                        }
-
-                        combatSquare.equipmentBonuses = equipmentBonuses
-
-                        let fullCombatSquare = combatSquareCtrl.getSquareDirectly({ combatStats: combatSquare, points, size, role })
-
-                        fullCombatSquare.weaponname = combatSquare.weaponname,
-                            fullCombatSquare.weapon = combatSquare.weapon,
-                            fullCombatSquare.armor = combatSquare.armor,
-                            fullCombatSquare.shield = combatSquare.shield
-
-                        return { combatSquare: fullCombatSquare, combatStats: combatSquare, roleid: combatSquare.roleid, isspecial: combatSquare.isspecial, eua: combatSquare.eua, tdr: combatSquare.tdr }
-                    })
-
-                    let armor = null
-                        , shield = null
-                    if (beast.combatStatArray[0]) {
-                        armor = beast.combatStatArray[0].armor
-                        shield = beast.combatStatArray[0].shield
-                    }
-                    beast.phyiscalAndStress = combatSquareCtrl.setVitalityAndStressDirectly(beast.combatpoints, Math.max(beast.combatpoints, beast.skillpoints, beast.socialpoints), beast.role, { mental: beast.mental, panic: beast.panicstrength, fatigue: beast.fatiguestrength, largeweapons: beast.largeweapons, singledievitality: beast.singledievitality, noknockback: beast.noknockback }, beast.secondaryrole, beast.knockback, beast.size ? beast.size : 'Medium', armor, shield)
-                    for (let role in beast.roleInfo) {
-                        beast.roleInfo[role].phyiscalAndStress = combatSquareCtrl.setVitalityAndStressDirectly(beast.roleInfo[role].combatpoints, Math.max(beast.roleInfo[role].combatpoints, beast.roleInfo[role].skillpoints, beast.roleInfo[role].socialpoints), beast.roleInfo[role].role, { mental: beast.roleInfo[role].mental, panic: beast.roleInfo[role].panic, fatigue: beast.roleInfo[role].fatigue, largeweapons: beast.roleInfo[role].largeweapons, singledievitality: beast.roleInfo[role].singledievitality, noknockback: beast.roleInfo[role].noknockback }, beast.roleInfo[role].secondaryrole, beast.roleInfo[role].knockback, beast.roleInfo[role].size ? beast.roleInfo[role].size : beast.size ? beast.size : 'Medium', armor, shield)
-                    }
-                }
-
-                beast.combat = {}
-                let defenses = []
-                let attacks = []
-                beast.combatStatArray.forEach(({ beastid, roleid, weaponsmallslashing, weaponsmallcrushing, weaponsmallpiercing,
-                    andslashing, andcrushing, flanks, rangeddefence, alldefense, eua, addsizemod, shield, armor, weaponname, rangeddefense,
-                    swarmbonus, adjustment, tdr, info, weapontype, piercingweapons, slashingweapons, crushingweapons, attack, isspecial, weapon, measure, recovery,
-                }) => {
-
-                    defenses.push({
-                        beastid, roleid, weaponsmallslashing, weaponsmallcrushing, weaponsmallpiercing,
-                        andslashing, andcrushing, flanks, rangeddefence, alldefense, eua, addsizemod, shield, armor, defensename: weaponname, rangeddefense,
-                        swarmbonus, adjustment, tdr, info
-                    })
-
-                    attacks.push({
-                        beastid, roleid, weapontype, piercingweapons, slashingweapons, crushingweapons, attack, isspecial, addsizemod, weapon, weaponname, measure, recovery, swarmbonus, adjustment,
-                        info
-                    })
-                })
-                beast.combat.defenses = defenses
-                beast.combat.attacks = attacks
-
-                return result
-            }).catch(e => sendErrorForward('beast combat 2', e, res)))
-
-            if (req.query.edit !== 'true') {
-                beast.conflict.devotions.forEach(val => {
-                    if (val.trait.toUpperCase() === 'ANY') {
-                        finalPromise.push(db.get.randomdevotion().then(result => {
-                            val.trait = result[0].trait
-                        }).catch(e => sendErrorForward('beast random devotion', e, res)))
-                    }
-                })
-            }
-
-            Promise.all(finalPromise).then(actualFinal => {
-                beast.conflict.devotions = beast.conflict.devotions.sort(sortOutAnyToTheBottom)
-                checkForContentTypeBeforeSending(res, beast)
-            }).catch(e => sendErrorForward('beast final promise 2', e, res))
-        }).catch(e => sendErrorForward('beast main promise', e, res))
+        Promise.all(promiseArray).then(() => {
+            checkForContentTypeBeforeSending(response, beast)
+        }).catch((error: Error) => sendErrorForward('get promise.all', error, response))
     }
 }
