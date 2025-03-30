@@ -35,6 +35,7 @@ export default function View() {
             :
             <div>
                 LOADING
-            </div>)
+            </div>
+        )
     )
 }
