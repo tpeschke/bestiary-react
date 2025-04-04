@@ -92,7 +92,7 @@ async function upsertClimates(promiseArray: any[], databaseConnection: any, beas
 }
 
 async function upsertCombats(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, combatStats: CombatStat[]) {
-    await databaseConnection.combatStat.beast.delete([beastId, [0, ...combatStats.map(combatStat => combatStat.id)]]).catch((error: Error) => sendErrorForward('delete combat', error, response))
+    await databaseConnection.beast.combatStat.delete([beastId, [0, ...combatStats.map(combatStat => combatStat.id)]]).catch((error: Error) => sendErrorForward('delete combat', error, response))
 
     combatStats.forEach((combatStat: CombatStat) => {
         const { id, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
@@ -101,14 +101,14 @@ async function upsertCombats(promiseArray: any[], databaseConnection: any, beast
             weapontype, rangedistance, swarmbonus, adjustment, tdr, info } = combatStat
         if (!id) {
             promiseArray.push(
-                databaseConnection.combatStat.beast.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+                databaseConnection.beast.combatStat.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
                     weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
                     unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
                     weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('add combat', error, response))
             )
         } else {
             promiseArray.push(
-                databaseConnection.combatStat.beast.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+                databaseConnection.beast.combatStat.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
                     weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
                     unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
                     weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('update combat', error, response))
@@ -243,7 +243,7 @@ async function upsertArtist(promiseArray: any[], databaseConnection: any, beastI
 }
 
 async function upsertScenarios(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, scenarios: Scenario[]) {
-    await databaseConnection.scenario.delete([beastId, [0, ...scenarios.map(scenario => scenario.id)]]).catch((error: Error) => sendErrorForward('delete folkore', error, response))
+    await databaseConnection.beast.scenario.delete([beastId, [0, ...scenarios.map(scenario => scenario.id)]]).catch((error: Error) => sendErrorForward('delete folkore', error, response))
     scenarios.forEach((singleScenario: Scenario) => {
         const { id, scenario } = singleScenario
         if (!id) {
@@ -255,7 +255,7 @@ async function upsertScenarios(promiseArray: any[], databaseConnection: any, bea
 }
 
 async function upsertFolklore(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, folklore: Folklore[]) {
-    await databaseConnection.folklore.delete([beastId, [0, ...folklore.map(folklore => folklore.id)]]).catch((error: Error) => sendErrorForward('delete folkore', error, response))
+    await databaseConnection.beast.folklore.delete([beastId, [0, ...folklore.map(folklore => folklore.id)]]).catch((error: Error) => sendErrorForward('delete folkore', error, response))
     folklore.forEach((folklore: Folklore) => {
         const { id, belief, truth } = folklore
         if (!id) {

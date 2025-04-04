@@ -39,7 +39,7 @@ export async function getTypes(databaseConnection: any, response: Response, beas
 
 export async function getClimates(databaseConnection: any, response: Response, beastId: number): Promise<ClimateObject> {
     const beast: Climate[] = await databaseConnection.beast.climate.get(beastId).catch((error: Error) => sendErrorForward('climates', error, response))
-    return databaseConnection.beast.climates.getAll().then((alllimates: Climate[]) => {
+    return databaseConnection.beast.climate.getAll().then((alllimates: Climate[]) => {
         return {
             beast,
             alllimates
@@ -289,7 +289,7 @@ export async function getSpells(databaseConnection: any, response: Response, bea
 }
 
 export async function getRoles(databaseConnection: any, response: Response, beastId: number, beastName: string): Promise<Role[]> {
-    return databaseConnection.role.get(beastId).then((roles: Role[]) => {
+    return databaseConnection.beast.role.get(beastId).then((roles: Role[]) => {
         if (beastName.includes('Template')) {
             roles = roles.sort(sortTemplateRoles)
         }
