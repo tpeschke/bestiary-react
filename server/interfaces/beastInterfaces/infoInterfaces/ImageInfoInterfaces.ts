@@ -1,12 +1,12 @@
 export default interface ImageInfo {
     thumbnail: string,
     imagesource: number,
-    artistInfo?: ArtistObject,
+    artistInfo: ArtistObject,
 }
 
 export interface ArtistObject {
     genericArtistInfo: ArtistInfo,
-    allartists?: ArtistInfo[],
+    allartists: ArtistInfo[],
     roleartists: ArtistInfo[]
 }
 

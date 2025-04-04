@@ -25,7 +25,7 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     } else {
         let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
         if (user) {
-            const [notes] = await databaseConnection.beast.player.getNotes(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
+            const [notes] = await databaseConnection.beast.user.notes.get(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
             playerInfo.notes = notes || {}
             checkForContentTypeBeforeSending(response, playerInfo)
         } else {
@@ -40,17 +40,17 @@ export async function addPlayerNotes(request: noteRequest, response: Response) {
     const { beastId, noteId, notes } = request.body
 
     if (user && noteId) {
-        const result = await databaseConnection.beast.player.updateNotes(noteId, notes).catch((error: Error) => sendErrorForward('update beast notes', error, response))[0]
+        const result = await databaseConnection.beast.user.notes.update(noteId, notes).catch((error: Error) => sendErrorForward('update beast notes', error, response))[0]
         checkForContentTypeBeforeSending(response, result)
     } else if (user && user.patreon) {
-        const count = await databaseConnection.beast.player.numberOfNotes(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))[0]
+        const count = await databaseConnection.beast.user.notes.number(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))[0]
         const isAboveDefaultNumberOfNotes = count >= 50
         const isAboveNumberOfNotesForPatrons = count >= (user.patreon * 30) + 50
 
         if (isAboveDefaultNumberOfNotes || isAboveNumberOfNotesForPatrons) {
             request.status(401).send('You need to upgrade your Patreon to add more notes')
         } else {
-            const result = databaseConnection.beast.player.addNotes(beastId, user.id, notes).catch((error: Error) => sendErrorForward('save beast notes', error, response))[0]
+            const result = databaseConnection.beast.user.notes.add(beastId, user.id, notes).catch((error: Error) => sendErrorForward('save beast notes', error, response))[0]
             checkForContentTypeBeforeSending(response, result)
         }
     } else {

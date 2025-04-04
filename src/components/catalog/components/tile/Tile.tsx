@@ -2,8 +2,8 @@ import './Tile.css'
 
 import { Link } from "react-router-dom";
 
-import { CatalogTile } from '../catalogInterfaces'
-import { imageBase } from '../../../frontend-config'
+import { CatalogTile } from '../../catalogInterfaces'
+import { imageBase } from '../../../../frontend-config'
 
 interface Props {
     tile: CatalogTile

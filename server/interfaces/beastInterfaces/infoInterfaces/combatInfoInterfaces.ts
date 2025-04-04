@@ -6,8 +6,8 @@ export default interface CombatInfo {
     combatrole: string,
     combatsecondary: string,
     vitalityInfo: VitalityInfo
-    combatStats?: CombatStat[],
-    movements?: Movement[],
+    combatStats: CombatStat[],
+    movements: Movement[],
 }
 
 export interface CombatStat {
@@ -70,7 +70,7 @@ export interface Movement {
 }
 
 export interface VitalityInfo {
-    locationalVitalities?: LocationVitality[],
+    locationalVitalities: LocationVitality[],
     fatigue: string,
     notrauma: boolean,
     knockback: number,

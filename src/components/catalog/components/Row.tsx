@@ -1,6 +1,6 @@
-import './Catalog.css'
+import '../Catalog.css'
 
-import { CatalogTile } from './catalogInterfaces'
+import { CatalogTile } from '../catalogInterfaces'
 
 import Tile from './tile/Tile'
 

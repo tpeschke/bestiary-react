@@ -3,9 +3,9 @@ import { Loot, SpecificLoot } from "../lootInterfaces"
 export default interface LootInfo {
     lootnotes: string,
     lairLoot: Loot,
-    carriedLoot: Loot
-    reagents?: Reagent[],
-    specificLoots?: SpecificLoot[],
+    carriedLoot: Loot,
+    reagents: Reagent[],
+    specificLoots: SpecificLoot[],
 }
 
 export interface Reagent {

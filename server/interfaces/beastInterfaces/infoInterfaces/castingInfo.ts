@@ -1,8 +1,8 @@
 
 export default interface CastingInfo {
-    casting?: Casting,
-    deletedSpells?: number[],
-    spells?: Spell[], 
+    casting: Casting,
+    deletedSpells: number[],
+    spells: Spell[], 
 }
 
 export interface Casting {

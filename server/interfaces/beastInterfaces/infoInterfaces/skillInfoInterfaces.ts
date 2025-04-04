@@ -1,4 +1,4 @@
-import { Obstacle, Challenge } from "../skillInterfaces";
+import { Obstacle, Challenge } from "../../skillInterfaces";
 
 export default interface SkillInfo {
     panic: number,
@@ -8,9 +8,9 @@ export default interface SkillInfo {
     skillpoints: number,
     atk_skill: string,
     def_skill: string,
-    skills?: Skill[],
-    obstacles?: Obstacle[],
-    challenges?: Challenge[],
+    skills: Skill[],
+    obstacles: Obstacle[],
+    challenges: Challenge[],
 }
 
 export interface Skill {

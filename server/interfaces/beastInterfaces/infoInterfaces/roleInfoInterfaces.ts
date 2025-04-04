@@ -1,7 +1,7 @@
 export default interface RoleInfo {
     rolenameorder: number,
     defaultrole: string,
-    roles?: Role[],
+    roles: Role[],
 }
 
 export interface Role {

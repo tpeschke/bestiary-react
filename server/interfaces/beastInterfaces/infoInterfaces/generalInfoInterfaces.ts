@@ -1,4 +1,4 @@
-import { Encounter } from "../encounterInterfaces"
+import { Encounter } from "../../encounterInterfaces"
 
 export default interface GeneralInfo {
     name: string,
@@ -8,7 +8,7 @@ export default interface GeneralInfo {
     ecology: string,
     scenarios: Scenario[],
     folklores: Folklore[],
-    encounters?: Encounter,
+    encounters: Encounter,
     senses: string,
     diet: string,
     meta: string,

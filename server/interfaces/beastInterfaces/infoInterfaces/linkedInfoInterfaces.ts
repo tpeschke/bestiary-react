@@ -1,8 +1,8 @@
 export default interface LinkedInfo {
-    variants?: Variant[],
-    locations?: LocationObject,
-    types?: Type[],
-    climates?: ClimateObject,
+    variants: Variant[],
+    locations: LocationObject,
+    types: Type[],
+    climates: ClimateObject,
 }
 
 export interface Variant {

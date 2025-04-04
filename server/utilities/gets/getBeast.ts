@@ -213,7 +213,7 @@ export async function getFolklore(databaseConnection: any, response: Response, b
 }
 
 export async function getScenarios(databaseConnection: any, response: Response, beastId: number): Promise<Scenario[]> {
-    return databaseConnection.get.scenarios(beastId).catch((error: Error) => sendErrorForward('scenarios', error, response))
+    return databaseConnection.beast.scenario.get(beastId).catch((error: Error) => sendErrorForward('scenarios', error, response))
 }
 
 interface archetypeInfo {
@@ -250,10 +250,10 @@ export async function getNotes(databaseConnection: any, response: Response, beas
 }
 
 export async function getTables(databaseConnection: any, response: Response, beastId: number, tables: TablesObject, promiseArray: any[]) {
-    const basicTableInfo: Table[] = await databaseConnection.get.tableinfo(beastId).catch((error: Error) => sendErrorForward('tables', error, response))
+    const basicTableInfo: Table[] = await databaseConnection.beast.table.getTable(beastId).catch((error: Error) => sendErrorForward('tables', error, response))
 
     basicTableInfo.forEach(async (table: Table) => {
-        promiseArray.push(databaseConnection.get.rows(table.id).then((rows: Row[]) => {
+        promiseArray.push(databaseConnection.beast.table.getRow(table.id).then((rows: Row[]) => {
             if (table.section === 'ap') {
                 tables.appearance.push({
                     ...table,
@@ -303,5 +303,5 @@ export async function getMovement(databaseConnection: any, response: Response, b
 }
 
 export async function getCombatStats(databaseConnection: any, response: Response, beastId: number): Promise<CombatStat[]> {
-    return databaseConnection.get.combatStatArray(beastId).catch((error: Error) => sendErrorForward('combat', error, response))
+    return databaseConnection.beast.combatStat.get(beastId).catch((error: Error) => sendErrorForward('combat', error, response))
 }

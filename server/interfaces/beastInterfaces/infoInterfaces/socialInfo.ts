@@ -12,7 +12,7 @@ export default interface SocialInfo {
     atk_conf: string,
     def_conf: string,
     archetypeInfo: ArchetypeInfo,
-    conflicts?: ConflictObject,
+    conflicts: ConflictObject,
 }
 
 export interface ConflictObject {

@@ -1,8 +1,13 @@
 import { Response, Error } from '../../interfaces/apiInterfaces'
 import {
-    ClimateObject, Climate, Role, Type, CombatStat, Conflict, Skill, Movement, Variant, Reagent, LocationVitality, Location, ArtistInfo, ArtistObject,
-    Scenario, Folklore, Table, TablesObject, Row, LocationObject, ConflictObject, upsertParameters
+    ClimateObject, Role, Type, CombatStat, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject,
+    Scenario, Folklore, TablesObject, LocationObject, ConflictObject, upsertParameters
 } from '../../interfaces/beastInterfaces/beastInterfaces'
+import { Table, Row } from '../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces'
+import { ArtistInfo } from '../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces'
+import { Climate } from '../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces'
+import { Conflict } from '../../interfaces/beastInterfaces/infoInterfaces/socialInfo'
+import { Location } from '../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces'
 
 import createHash from '../hashGeneration'
 import { sendErrorForwardNoFile } from '../sendingFunctions'

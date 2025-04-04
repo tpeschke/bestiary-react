@@ -91,11 +91,10 @@ interface GetBeastQuery {
 }
 
 export async function getGMVersionOfBeast(request: GetRequest, response: Response) {
-    const beastId = +request.params.id
+    const beastId = +request.params.beastid
     const databaseConnection = getDatabaseConnection(request)
 
-    let unsortedBeastInfo: any = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))[0]
-
+    const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality,
         panicstrength: panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
@@ -112,30 +111,88 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
                 attack: [],
                 defense: [],
                 appearance: []
+            },
+            encounters: {
+                temperaments: {
+                    beastTemperaments: [],
+                    allTemperaments: []
+                },
+                signs: {
+                    beastSigns: [],
+                    allSigns: []
+                },
+                nouns: {
+                    beastNouns: [],
+                    allNouns: []
+                },
+                verbs: {
+                    beastVerbs: [],
+                    allVerbs: []
+                },
+                groups: [],
+                numbers: []
             }
         },
         playerSpecificInfo: {
-            favorite: false
+            favorite: false,
+            notes: ''
         },
         imageInfo: {
             thumbnail,
-            imagesource
+            imagesource,
+            artistInfo: {
+                genericArtistInfo: {
+                    id: 0,
+                    artistid: 0,
+                    artist: '',
+                    tooltip: '',
+                    link: '',
+                    roleid: ''
+                },
+                allartists: [],
+                roleartists: []
+            }
         },
-        linkedInfo: {},
+        linkedInfo: {
+            variants: [],
+            locations: {
+                alllocations: [],
+                beast: []
+            },
+            types: [],
+            climates: {
+                allclimates: [],
+                beast: []
+            },
+        },
         roleInfo: {
-            rolenameorder, defaultrole
+            rolenameorder, defaultrole,
+            roles: []
         },
         combatInfo: {
             sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary,
+            combatStats: [],
+            movements: [],
             vitalityInfo: {
-                fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality
+                fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality,
+                locationalVitalities: []
             }
         },
         skillInfo: {
-            panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill
+            panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
+            skills: [],
+            obstacles: [],
+            challenges: [],
         },
         socialInfo: {
             traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
+            conflicts: {
+                descriptions: [],
+                convictions: [],
+                devotions: [],
+                flaws: [],
+                burdens: []
+            },
             archetypeInfo: {
                 hasarchetypes, hasmonsterarchetypes
             }
@@ -143,9 +200,25 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         lootInfo: {
             lootnotes,
             lairLoot: {},
-            carriedLoot: {}
+            carriedLoot: {},
+            reagents: [],
+            specificLoots: [],
         },
-        castingInfo: {}
+        castingInfo: {
+            casting: {
+                augur: '',
+                wild: '',
+                vancian: '',
+                spellnumberdie: '',
+                manifesting: '',
+                commanding: '',
+                bloodpact: '',
+                defaulttype: '',
+                beastid: id
+            },
+            deletedSpells: [],
+            spells: [], 
+        }
     }
     let promiseArray: any[] = []
     const isEditing = request.query ? request.query.edit === 'true' : false
