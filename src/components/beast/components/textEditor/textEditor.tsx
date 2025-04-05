@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import './textEditor.css'
 
 import ListItem from '@tiptap/extension-list-item'
