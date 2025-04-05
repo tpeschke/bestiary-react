@@ -4,15 +4,15 @@ import PlayerView from "./modules/playerView/playerView";
 import GMView from "./modules/gmView";
 
 export default function View() {
-    const { beast } = beastHooks();
+    const { beast, playerBeast, playerSetInfo } = beastHooks();
 
     return (
-        (beast ?
+        (beast || playerBeast ?
             <div className='card-background'>
-                {beast.generalInfo ?
+                {beast ?
                     <GMView beast={beast} />
                     :
-                    <PlayerView beast={beast} />
+                    <PlayerView beast={playerBeast} setInfo={playerSetInfo} />
                 }
             </div>
             :

@@ -15,6 +15,12 @@ export interface PlayerBeast {
     notes: string
 }
 
+export type PlayerSetInfo = {
+    setPlayerNotes: SetPlayerNotes
+}
+
+export type SetPlayerNotes = (value: string) => void
+
 export interface Beast {
     id: number,
     patreon: number,

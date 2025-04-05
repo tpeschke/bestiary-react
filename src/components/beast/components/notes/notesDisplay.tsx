@@ -1,13 +1,17 @@
 import './notes.css'
 
+import TextEditor from '../textEditor/textEditor'
+import { SetPlayerNotes } from '../../interfaces/viewInterfaces'
+
 interface Props {
-    notes: string
+    notes: string,
+    setPlayerNotes: SetPlayerNotes
 }
 
-export default function NotesDisplay({ notes }: Props) {
+export default function NotesDisplay({ notes, setPlayerNotes }: Props) {
     return (
         <div className='notes-shell'>
-            {notes}
+            <TextEditor content={notes} captureCallBack={setPlayerNotes} />
         </div>
     )
 }
