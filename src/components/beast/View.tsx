@@ -1,35 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import beastHooks from "./hooks/beastHooks";
 
-import { beastURL } from "../../frontend-config";
-
-import PlayerView from "./playerView/playerView";
-import GMView from "./gmView";
+import PlayerView from "./modules/playerView/playerView";
+import GMView from "./modules/gmView";
 
 export default function View() {
-    const [beast, useBeast] = useState<any>()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!beast) {
-            const beastId = window.location.pathname.split('/')[2]
-            axios.get(beastURL + '/' + beastId).then(({ data }) => {
-                useBeast(data)
-                if (data.color === 'red') {
-                    navigate(`/`)
-                }
-            })
-        }
-    }, []);
+    const { beast } = beastHooks();
 
     return (
         (beast ?
             <div className='card-background'>
-                {beast && beast.notes ?
-                    <PlayerView beast={beast} />
-                    :
+                {beast.generalInfo ?
                     <GMView beast={beast} />
+                    :
+                    <PlayerView beast={beast} />
                 }
             </div>
             :

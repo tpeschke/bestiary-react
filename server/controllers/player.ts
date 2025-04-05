@@ -26,7 +26,7 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
         let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
         if (user) {
             const [notes] = await databaseConnection.user.notes.get(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
-            playerInfo.notes = notes || {}
+            playerInfo.notes = notes || ''
             checkForContentTypeBeforeSending(response, playerInfo)
         } else {
             checkForContentTypeBeforeSending(response, playerInfo)
