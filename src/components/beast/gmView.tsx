@@ -1,4 +1,4 @@
-import { Beast } from "./beastInterfaces/viewInterfaces";
+import { Beast } from "./interfaces/viewInterfaces"
 
 interface Props {
     beast: Beast

@@ -1,0 +1,12 @@
+.Name-Header {
+    margin: -16px -16px 0;
+    padding: 16px;
+    background: #607d8b;
+}
+
+.Name-Header h1 {
+    font-family: 'HamletOrNot';
+    color: white;
+    font-size: 35px;
+    letter-spacing: 2px;
+}

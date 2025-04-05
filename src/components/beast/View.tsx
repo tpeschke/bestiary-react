@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { beastURL } from "../../frontend-config";
 
-import PlayerView from "./playerView";
+import PlayerView from "./playerView/playerView";
 import GMView from "./gmView";
 
 export default function View() {

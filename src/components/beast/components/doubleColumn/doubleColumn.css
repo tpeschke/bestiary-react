@@ -1,0 +1,15 @@
+.column-shell {
+    display: flex;
+}
+
+.left {
+    min-height: 500px;
+    width: 40%;
+    padding: 15px;
+}
+
+.right {
+    min-height: 500px;
+    width: 60%;
+    padding: 15px;
+}
