@@ -3,34 +3,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { beastURL } from "../../../frontend-config";
-import { Beast, PlayerBeast, PlayerSetInfo } from "../interfaces/viewInterfaces";
+import PlayerBeastClass from "../models/PlayerBeastClass";
+import GMBeastClass from "../models/GMBeastClass";
 
 interface Return {
-    beast?: Beast,
-    playerBeast?: PlayerBeast,
-    playerSetInfo: PlayerSetInfo
+    beast?: GMBeastClass,
+    playerBeast?: PlayerBeastClass
 }
 
 export default function beastHooks(): Return {
-    const [beast, setBeast] = useState<Beast>()
-    const [playerBeast, setPlayerBeast] = useState<PlayerBeast>()
+    const [beast, setBeast] = useState<GMBeastClass>()
+    const [playerBeast, setPlayerBeast] = useState<PlayerBeastClass>()
     const navigate = useNavigate()
-
-    function setPlayerNotes (value: string ) {
-        if (playerBeast) {
-            const newPlayerBeast = {...playerBeast, notes: value}
-            setPlayerBeast(newPlayerBeast)
-        }
-    }
 
     useEffect(() => {
         if (!beast) {
             const beastId = window.location.pathname.split('/')[2]
             axios.get(beastURL + '/' + beastId).then(({ data }) => {
                 if (data.generalInfo) {
-                    setBeast(data)
+                    setBeast(new GMBeastClass(data))
                 } else {
-                    setPlayerBeast(data)
+                    setPlayerBeast(new PlayerBeastClass(data))
                 }
                 if (data.color === 'red') {
                     navigate(`/`)
@@ -39,10 +32,8 @@ export default function beastHooks(): Return {
         }
     }, []);
 
-    return { 
+    return {
         beast,
-        playerBeast, 
-        playerSetInfo: {
-            setPlayerNotes
-        } }
+        playerBeast
+    }
 }

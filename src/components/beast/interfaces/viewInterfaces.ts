@@ -9,19 +9,13 @@ import RoleInfo from "./infoInterfaces.ts/roleInfoInterfaces"
 import SkillInfo from "./infoInterfaces.ts/skillInfoInterfaces"
 import SocialInfo from "./infoInterfaces.ts/socialInfo"
 
-export interface PlayerBeast {
+export interface PlayerBeastInfo {
     id: number,
     name: string
     notes: string
 }
 
-export type PlayerSetInfo = {
-    setPlayerNotes: SetPlayerNotes
-}
-
-export type SetPlayerNotes = (value: string) => void
-
-export interface Beast {
+export interface BeastInfo {
     id: number,
     patreon: number,
     canplayerview: boolean,

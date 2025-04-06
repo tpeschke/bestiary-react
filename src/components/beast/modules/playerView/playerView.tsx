@@ -1,4 +1,4 @@
-import { PlayerBeast, PlayerSetInfo } from "../../interfaces/viewInterfaces"
+import PlayerBeastClass from "../../models/PlayerBeastClass"
 
 import NameHeader from "../../components/nameHeader/nameHeader"
 import DoubleColumn from "../../components/doubleColumn/doubleColumn"
@@ -6,13 +6,15 @@ import FullImage from "../../components/fullImage/fullImage"
 import NotesDisplay from "../../components/notes/notesDisplay"
 
 interface Props {
-    beast?: PlayerBeast,
-    setInfo: PlayerSetInfo
+    beast: PlayerBeastClass
 }
 
-export default function PlayerView({ beast = { id: 0, name: '', notes: ''}, setInfo }: Props) {
+export default function PlayerView({ beast }: Props) {
     const { id, name, notes } = beast
-    const { setPlayerNotes } = setInfo
+
+    function setPlayerNotes(value: string) {
+        beast.notes = value
+    }
 
     return (
         <>
