@@ -1,3 +1,4 @@
+import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 export default class GMBeastClass {
@@ -9,5 +10,9 @@ export default class GMBeastClass {
 
     get id(): number {
         return this.beastInfo?.id ? this.beastInfo.id : 0
+    }
+
+    get generalInfo(): GeneralInfo {
+        return this.beastInfo.generalInfo
     }
 }

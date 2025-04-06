@@ -1,4 +1,5 @@
-import { PlayerBeastInfo } from "../interfaces/viewInterfaces";
+import { savePlayerNotes } from "../hooks/playerHooks";
+import { Notes, PlayerBeastInfo } from "../interfaces/viewInterfaces";
 
 export default class PlayerBeastClass {
     private beastInfo: PlayerBeastInfo;
@@ -23,13 +24,17 @@ export default class PlayerBeastClass {
         return this.beastInfo?.name ? this.beastInfo?.name : ''
     }
 
-    get notes(): string {
-        return this.beastInfo?.notes ? this.beastInfo?.notes : ''
+    get notes(): Notes {
+        return this.beastInfo?.notes ? this.beastInfo?.notes : { notes: ''}
     }
 
-    set notes(value: string) {
-        console.log(value)
-        this.beastInfo.notes = value
+    async setNotes(value: string) {
+        if (!this.beastInfo.notes) {
+            this.beastInfo.notes = { notes: value}
+            this.beastInfo.notes.id = await savePlayerNotes(this.beastInfo.id, this.beastInfo.notes)
+        } else if (value !== this.beastInfo.notes.notes) {
+            this.beastInfo.notes.notes = value
+            this.beastInfo.notes.id = await savePlayerNotes(this.beastInfo.id, this.beastInfo.notes)
+        }
     }
-
 }

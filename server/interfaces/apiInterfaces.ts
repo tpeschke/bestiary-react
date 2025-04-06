@@ -2,7 +2,6 @@ export interface Request {
     app: App,
     params: Parameters,
     user: User,
-    sendStatus: Function,
     status: Function
 }
 

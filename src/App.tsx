@@ -5,6 +5,10 @@ import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 
+import { ToastContainer } from 'react-toastify';
+import { Slide } from 'react-toastify';
+
+
 import Header from './components/header/Header'
 import Catalog from './components/catalog/Catalog'
 import View from './components/beast/View'
@@ -37,6 +41,7 @@ export default function App() {
         </Routes>
         <br />
         {/* footer */}
+        <ToastContainer transition={Slide} stacked theme="colored" closeOnClick/>
       </div>
     </div>
   )

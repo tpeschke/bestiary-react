@@ -1,7 +1,7 @@
-import { Beast } from "../interfaces/viewInterfaces"
+import GMBeastClass from "../models/GMBeastClass"
 
 interface Props {
-    beast: Beast
+    beast: GMBeastClass
 }
 
 export default function GMView({ beast }: Props) {

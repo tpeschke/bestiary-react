@@ -67,12 +67,6 @@ export default function MenuBar() {
                 >
                     H5
                 </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-                    className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-                >
-                    H6
-                </button>
             </div>
             <div className="button-group">
                 <button

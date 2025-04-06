@@ -12,6 +12,11 @@ import SocialInfo from "./infoInterfaces.ts/socialInfo"
 export interface PlayerBeastInfo {
     id: number,
     name: string
+    notes: Notes
+}
+
+export interface Notes {
+    id?: number,
     notes: string
 }
 

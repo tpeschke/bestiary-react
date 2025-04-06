@@ -6,11 +6,12 @@ import { EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
 import MenuBar from './menuBar'
-import { SetPlayerNotes } from '../../interfaces/viewInterfaces'
+
+import { Notes } from '../../interfaces/viewInterfaces'
 
 interface Props {
-  content: string,
-  captureCallBack: SetPlayerNotes,
+  content: Notes,
+  captureCallBack: (value: string) => void,
   readOnly?: boolean
 }
 
@@ -32,9 +33,9 @@ export default function TextEditor({ content, captureCallBack, readOnly = false 
   return (
     <>
       {readOnly ?
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{ __html: content.notes }} />
         :
-        <EditorProvider onBlur={({editor}) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={content}></EditorProvider>
+        <EditorProvider onBlur={({editor}) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={content.notes}></EditorProvider>
       }
     </>
   )

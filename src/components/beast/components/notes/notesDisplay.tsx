@@ -2,10 +2,12 @@ import './notes.css'
 
 import TextEditor from '../textEditor/textEditor'
 
+import { Notes } from '../../interfaces/viewInterfaces'
+
 type SetPlayerNotes = (value: string) => void
 
 interface Props {
-    notes: string,
+    notes: Notes,
     setPlayerNotes: SetPlayerNotes
 }
 
