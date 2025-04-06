@@ -27,10 +27,8 @@ export function hasAppropriatePateronLevel(user: User, beastPatron: number, canP
         } else {
             return 'player'
         }
-    } else if (user) {
-        return 'player'
     }
-    return 'viewer'
+    return 'player'
 }
 
 export async function getTypes(databaseConnection: any, response: Response, beastId: number): Promise<Type[]> {

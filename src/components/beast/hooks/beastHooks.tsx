@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
-import { beastURL } from "../../../frontend-config";
+import alertInfo from "../../alert/alerts";
+
 import PlayerBeastClass from "../models/PlayerBeastClass";
 import GMBeastClass from "../models/GMBeastClass";
+
+import { beastURL } from "../../../frontend-config";
 
 interface Return {
     beast?: GMBeastClass,
@@ -26,6 +30,7 @@ export default function beastHooks(): Return {
                     setPlayerBeast(new PlayerBeastClass(data))
                 }
                 if (data.color === 'red') {
+                    alertInfo(data)
                     navigate(`/`)
                 }
             })

@@ -69,3 +69,8 @@ a {
 	text-decoration: none;
     color: unset;
 }
+
+.warning {
+	color: #990000;
+    font-style: italic;
+}
