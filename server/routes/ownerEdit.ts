@@ -22,7 +22,7 @@ async function checkIfOwnsBeast(request: ownAuthRequest, response: Response, nex
     const { user, body, params } = request
     if (!user) {
         checkForContentTypeBeforeSending(response, { color: "red", message: "You need to log on." })
-    } else {
+    } else if (user) {
         const databaseConnection = request.app.get('db')
         const beastId = body.id ? body.id : params.id
         if (beastId) {
@@ -32,12 +32,10 @@ async function checkIfOwnsBeast(request: ownAuthRequest, response: Response, nex
             } else {
                 checkForContentTypeBeforeSending(response, { color: "red", message: "This isn't your monster" })
             }
+        } else if (isOwner(user.id) || (user.patreon && user.patreon >= 5)) {
+            next()
         } else {
-            if (isOwner(user.id) || user.patreon >= 5) {
-                next()
-            } else {
-                checkForContentTypeBeforeSending(response, { color: "red", message: "You need to upgrade your Patreon" })
-            }
+            checkForContentTypeBeforeSending(response, { color: "red", message: "You need to upgrade your Patreon" })
         }
     }
 }
