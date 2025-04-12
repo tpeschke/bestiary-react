@@ -92,6 +92,7 @@ interface GetBeastQuery {
 
 export async function getGMVersionOfBeast(request: GetRequest, response: Response) {
     const beastId = +request.params.beastid
+    const userId = request.user?.id
     const databaseConnection = getDatabaseConnection(request)
 
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
@@ -227,8 +228,8 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     promiseArray.push(getFolklore(databaseConnection, response, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
     getTables(databaseConnection, response, beast.id, beast.generalInfo.tables, promiseArray)
 
-    promiseArray.push(getFavorite(databaseConnection, response, beast.id, request.user.id).then((favorite: boolean) => beast.playerSpecificInfo.favorite = favorite))
-    promiseArray.push(getNotes(databaseConnection, response, beast.id, request.user.id).then((notes: string) => beast.playerSpecificInfo.notes = notes))
+    promiseArray.push(getFavorite(databaseConnection, response, beast.id, userId).then((favorite: boolean) => beast.playerSpecificInfo.favorite = favorite))
+    promiseArray.push(getNotes(databaseConnection, response, beast.id, userId).then((notes: string) => beast.playerSpecificInfo.notes = notes))
 
     promiseArray.push(getArtistInfo(databaseConnection, response, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
 

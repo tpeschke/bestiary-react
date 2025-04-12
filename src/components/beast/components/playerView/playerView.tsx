@@ -10,17 +10,12 @@ interface Props {
 }
 
 export default function PlayerView({ beast }: Props) {
-
-    function setPlayerNotes(value: string) {
-        beast.setNotes(value)
-    }
-
     return (
         <>
             <NameHeader name={beast.name} />
             <DoubleColumn 
                 LeftColumn={FullImage({ imageParam: beast.id, altText: beast.name })}
-                RightColumn={NotesDisplay({notes: beast.notes, setPlayerNotes})}
+                RightColumn={NotesDisplay({notes: beast.notes, setPlayerNotes: beast.setNotes})}
             />
         </>
     )

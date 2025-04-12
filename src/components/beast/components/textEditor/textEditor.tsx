@@ -17,6 +17,7 @@ interface Props {
 
 export default function TextEditor({ content, captureCallBack, readOnly = false }: Props) {
   const extensions = [
+    // @ts-ignore
     TextStyle.configure({ types: [ListItem.name] }),
     StarterKit.configure({
       bulletList: {

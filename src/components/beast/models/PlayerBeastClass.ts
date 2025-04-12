@@ -31,10 +31,14 @@ export default class PlayerBeastClass {
     async setNotes(value: string) {
         if (!this.beastInfo.notes) {
             this.beastInfo.notes = { notes: value}
-            this.beastInfo.notes.id = await savePlayerNotes(this.beastInfo.id, this.beastInfo.notes)
+            this.beastInfo.notes.id = await this.saveNotes(this.beastInfo.id, this.beastInfo.notes)
         } else if (value !== this.beastInfo.notes.notes) {
             this.beastInfo.notes.notes = value
-            this.beastInfo.notes.id = await savePlayerNotes(this.beastInfo.id, this.beastInfo.notes)
+            this.beastInfo.notes.id = await this.saveNotes(this.beastInfo.id, this.beastInfo.notes)
         }
     }
+
+    private async saveNotes(beastId: number, notes: Notes): Promise<number> {
+        return await savePlayerNotes(beastId, notes)
+    } 
 }
