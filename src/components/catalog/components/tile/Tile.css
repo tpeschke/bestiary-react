@@ -9,10 +9,13 @@
 }
 
 .tile h2 {
-    margin-top: 5px;
     font-family: 'oldClaude';
     font-size: 14px;
     text-align: center;
+}
+
+.not-updating {
+    opacity: .25;
 }
 
 .image-frame {
@@ -26,4 +29,11 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+.name-frame {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }

@@ -8,5 +8,8 @@ export interface CatalogTile {
     id: number
     name: string,
     thumbnail: string,
-    roles: any[]
+    roles: any[],
+    canplayerview: boolean,
+    patreon: number,
+    notupdating: boolean
 }
