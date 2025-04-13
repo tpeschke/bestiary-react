@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function RoleTitle({ title, points }: Props) {
-    let skulls: boolean[] = [true]
+    let skulls: boolean[] = []
 
     switch (points) {
         case 0:
