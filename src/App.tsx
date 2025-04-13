@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 
 import { ToastContainer } from 'react-toastify';
 import { Slide } from 'react-toastify';
+import { Tooltip } from 'react-tooltip'
 
 import Header from './components/header/Header'
 import Catalog from './components/catalog/Catalog'
@@ -43,6 +44,7 @@ export default function App() {
         <br />
         {/* footer */}
         <ToastContainer transition={Slide} stacked theme="colored" closeOnClick />
+        <Tooltip id="my-tooltip" place="bottom"/>
       </div>
     </div>
   )

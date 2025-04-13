@@ -1,12 +1,13 @@
 import './Icon.css'
 
-type Icon = 'plus' | 'eye' | 'd20'
+type Icon = 'plus' | 'eye' | 'd20' | 'info'
 
 interface Props {
-    iconName: Icon
+    iconName: Icon,
+    tooltip?: string
 }
 
-export default function Icon({ iconName }: Props) {
+export default function Icon({ iconName, tooltip }: Props) {
     const WARNING = 'warning'
     let styling: string = WARNING;
 
@@ -20,6 +21,9 @@ export default function Icon({ iconName }: Props) {
         case 'd20':
             styling = "fa-solid fa-dice-d20";
             break;
+        case 'info':
+            styling = "fa-solid fa-circle-info";
+            break;
         default:
             break;
     }
@@ -28,5 +32,5 @@ export default function Icon({ iconName }: Props) {
         return <p className='warning'>(!)</p>
     }
     
-    return <i className={styling}></i>
+    return <i data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
 }

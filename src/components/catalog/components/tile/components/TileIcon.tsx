@@ -7,11 +7,11 @@ interface Props {
 
 export default function TileIcon({ canplayerview, patreon }: Props) {
     if (canplayerview) {
-        return <Icon iconName='eye' />
+        return <Icon tooltip="Anyone can view this entry" iconName='eye' />
     } else if (patreon === 3) {
-        return <Icon iconName='plus' />
+        return <Icon tooltip="This entry uses the Deluxe rules" iconName='plus' />
     } else if (patreon === 20) {
-        return <Icon iconName='d20' />
+        return <Icon tooltip="Early Access" iconName='d20' />
     }
 
     return <></>

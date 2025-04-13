@@ -15,6 +15,6 @@ export default function Catalog(setLoading: Function) {
             <Row catalogTiles={freeBeasts} title={'Free Entries'} />
             <Row catalogTiles={templates} title={'Templates'} />
             <Rows catalogItems={catalogItems} />
-        </div >
+        </div>
     )
 }

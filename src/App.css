@@ -1,3 +1,8 @@
+.react-tooltip {
+  max-width: 350px;
+  white-space: pre-line
+}
+
 .background {
   background: grey;
   min-height: 100vh;
