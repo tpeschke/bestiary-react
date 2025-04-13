@@ -11,19 +11,10 @@ export interface ArtistObject {
 }
 
 export interface ArtistInfo {
-    id: number,
-    artistid: number,
-    artist: string,
-    tooltip: string,
-    link: string,
-    roleid: string
-}
-
-export interface ArtistInfo {
-    id: number,
-    artistid: number,
-    artist: string,
-    tooltip: string,
-    link: string,
-    roleid: string
+    id?: number,
+    artistid?: number,
+    artist?: string,
+    tooltip?: string,
+    link?: string,
+    roleid?: string
 }

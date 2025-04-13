@@ -1,6 +1,7 @@
 import { Response, Request } from "../interfaces/apiInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
+import { getArtistInfo } from "../utilities/gets/getBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
@@ -26,6 +27,10 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
         checkForContentTypeBeforeSending(response, {color: 'green', message: 'You\'re a GM'})
     } else {
         let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
+
+        const artistInfo = await getArtistInfo(databaseConnection, response, playerInfo.id, false)
+        playerInfo.artistInfo = artistInfo.genericArtistInfo
+
         if (user) {
             const [notes] = await databaseConnection.user.notes.get(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
             playerInfo.notes = notes || ''

@@ -2,3 +2,20 @@ img {
     width: 100%;
     border-radius: 5px;
 }
+
+.artist-frame {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.artist-frame p, .artist-frame a {
+    font-family: 'oldClaude';
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.artist-frame a {
+    text-decoration: underline;
+}
