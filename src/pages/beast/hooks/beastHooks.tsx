@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import alertInfo from "../../alert/alerts";
-
 import PlayerBeastClass from "../models/PlayerBeastClass";
 import GMBeastClass from "../models/GMBeastClass";
 
 import { beastURL } from "../../../frontend-config";
+import alertInfo from "../../../components/alert/alerts";
 
 interface Return {
     beast?: GMBeastClass,

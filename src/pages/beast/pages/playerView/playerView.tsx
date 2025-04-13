@@ -1,9 +1,9 @@
 import PlayerBeastClass from "../../models/PlayerBeastClass"
 
-import NameHeader from "../nameHeader/nameHeader"
-import DoubleColumn from "../doubleColumn/doubleColumn"
-import FullImage from "../fullImage/fullImage"
-import NotesDisplay from "../notes/notesDisplay"
+import NameHeader from "../../components/nameHeader/nameHeader"
+import DoubleColumn from "../../components/doubleColumn/doubleColumn"
+import FullImage from "../../components/fullImage/fullImage"
+import NotesDisplay from "../../components/notes/notesDisplay"
 
 interface Props {
     beast: PlayerBeastClass

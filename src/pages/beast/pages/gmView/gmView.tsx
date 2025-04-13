@@ -1,4 +1,4 @@
-import GMBeastClass from "../models/GMBeastClass"
+import GMBeastClass from "../../models/GMBeastClass"
 
 interface Props {
     beast: GMBeastClass

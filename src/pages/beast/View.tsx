@@ -1,7 +1,7 @@
 import beastHooks from "./hooks/beastHooks";
 
-import PlayerView from "./components/playerView/playerView";
-import GMView from "./components/gmView";
+import PlayerView from "./pages/playerView/playerView";
+import GMView from "./pages/gmView/gmView";
 
 export default function View(setLoading: Function) {
     const { beast, playerBeast } = beastHooks();

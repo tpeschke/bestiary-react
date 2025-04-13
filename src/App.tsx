@@ -11,8 +11,8 @@ import { Slide } from 'react-toastify';
 import { Tooltip } from 'react-tooltip'
 
 import Header from './components/header/Header'
-import Catalog from './components/catalog/Catalog'
-import View from './components/beast/View'
+import Catalog from './pages/catalog/Catalog'
+import View from './pages/beast/View'
 
 import { accessURL } from './frontend-config'
 import { setUser } from './redux/slices/userSlice';
