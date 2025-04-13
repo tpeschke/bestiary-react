@@ -1,3 +1,4 @@
+import Icon from '../../../../components/icon/Icon'
 import './textEditor.css'
 
 import { useCurrentEditor } from "@tiptap/react"
@@ -17,7 +18,7 @@ export default function MenuBar() {
                     disabled={!editor.can().chain().focus().toggleBold().run()}
                     className={editor.isActive('bold') ? 'is-active' : ''}
                 >
-                    Bold
+                    <strong>Bold</strong>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -25,7 +26,7 @@ export default function MenuBar() {
                         !editor.can().chain().focus().toggleItalic().run()}
                     className={editor.isActive('italic') ? 'is-active' : ''}
                 >
-                    Italic
+                    <em>Italic</em>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -33,7 +34,7 @@ export default function MenuBar() {
                         !editor.can().chain().focus().toggleStrike().run()}
                     className={editor.isActive('strike') ? 'is-active' : ''}
                 >
-                    Strike
+                    <s>Strike</s>
                 </button>
             </div>
             <div className="button-group">
@@ -73,13 +74,13 @@ export default function MenuBar() {
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
                     className={editor.isActive('bulletList') ? 'is-active' : ''}
                 >
-                    Bullet list
+                    <Icon iconName='bulletList' color='black'/>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleOrderedList().run()}
                     className={editor.isActive('orderedList') ? 'is-active' : ''}
                 >
-                    Ordered list
+                <Icon iconName='numberedList' color='black'/>
                 </button>
             </div>
             <div className="button-group">
@@ -88,14 +89,14 @@ export default function MenuBar() {
                     disabled={
                         !editor.can().chain().focus().undo().run()}
                 >
-                    Undo
+                    <Icon iconName='backward' color='black'/>
                 </button>
                 <button
                     onClick={() => editor.chain().focus().redo().run()}
                     disabled={
                         !editor.can().chain().focus().redo().run()}
                 >
-                    Redo
+                    <Icon iconName='forward' color='black'/>
                 </button>
             </div>
         </div>

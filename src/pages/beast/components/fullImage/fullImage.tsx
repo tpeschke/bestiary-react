@@ -7,11 +7,13 @@ import { imageBase } from '../../../../frontend-config'
 interface Props {
     imageParam: number,
     altText: string,
-    artistInfo: ArtistInfo
+    artistInfo?: ArtistInfo
 }
 
 export default function FullImage({ imageParam, altText, artistInfo }: Props) {
-    const { artist, tooltip, link } = artistInfo
+    const link = artistInfo?.link
+    const tooltip = artistInfo?.tooltip
+    const artist = artistInfo?.artist
 
     return (
         <>

@@ -60,6 +60,18 @@ table {
 h1, h2, h3, h4, h5 {
   font-family: 'HamletOrNot';
 }
+h2 {
+    color: #795548;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+h3 {
+	font-size: 18px;
+    color: #607d8b;
+    font-weight: 600;
+	font-family: 'oldClaude';
+}
 p {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;

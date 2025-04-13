@@ -25,4 +25,4 @@ export default class GMBeastClass {
     get socialInfo(): SocialInfo {
         return this.beastInfo.socialInfo
     }
-}
+ }

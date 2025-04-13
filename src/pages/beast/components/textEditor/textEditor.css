@@ -36,3 +36,7 @@ ol, ul {
     list-style: unset;
     padding-left: 15px;
 }
+
+.control-group button {
+    min-width: 30px;
+}
