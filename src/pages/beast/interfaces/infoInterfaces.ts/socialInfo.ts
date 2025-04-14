@@ -28,13 +28,10 @@ export interface Conflict {
     beastid: number,
     trait: string,
     value: string,
-    type: string,
+    rank: number,
     socialroleid: string,
     allroles: boolean,
-    severity: number,
-    strength: string,
-    adjustment: number,
-    deleted: boolean
+    deleted?: boolean,
 }
 
 export interface ArchetypeInfo {

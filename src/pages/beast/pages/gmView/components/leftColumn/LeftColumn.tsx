@@ -2,7 +2,7 @@ import ImageInfo from "../../../../interfaces/infoInterfaces.ts/ImageInfoInterfa
 import SocialInfo from "../../../../interfaces/infoInterfaces.ts/socialInfo"
 
 import FullImage from "../../../../components/fullImage/fullImage"
-import Confrontation from "./components/Confrontation"
+import Confrontation from "./components/confrontation/Confrontation"
 
 interface Props {
     beastId: number,
