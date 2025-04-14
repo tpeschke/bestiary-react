@@ -1,22 +1,16 @@
+import { Conflict } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Item } from "../interfaces/lootInterfaces";
 
-interface SortStrength extends Object {
-    strength: string
+export function sortByRank(a: Conflict, b: Conflict): number {
+    if (a.rank && b.rank) {
+        return a.rank - b.rank
+    } 
+    return 0
 }
 
-export function sortByStrength(a: SortStrength, b: SortStrength): number {
-    const order = ['majSt', 'minSt', 'minWk', 'majWk'];
-    return order.indexOf(a.strength) - order.indexOf(b.strength)
-}
-
-interface SortAny extends Object {
-    trait: string,
-    value: string
-}
-
-export function sortOutAnyToTheBottom(a: SortAny, b: SortAny): number {
-    if ((a.trait === 'Any' && b.trait === 'Any') || (a.trait !== 'Any' && b.trait !== 'Any')) {
-        return +b.value - +a.value
+export function sortOutAnyToTheBottom(a: Conflict, b: Conflict): number {
+    if (((a.trait === 'Any' && b.trait === 'Any') || (a.trait !== 'Any' && b.trait !== 'Any')) && (a.rank && b.rank)) {
+        return b.rank - a.rank
     }
     if (a.trait !== 'Any') {
         return -1

@@ -249,7 +249,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     promiseArray.push(getChallenges(databaseConnection, response, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
     promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
-    promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, devotionlimit, flawlimit).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
+    promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, devotionlimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
     promiseArray.push(getArchetypes(databaseConnection, response, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
 
     promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents))

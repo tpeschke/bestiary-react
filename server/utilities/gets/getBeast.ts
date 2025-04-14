@@ -7,13 +7,14 @@ import { Type, ClimateObject, Climate, LocationObject, Variant } from "../../int
 import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
 import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
-import { ConflictObject, Conflict, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
+import { ConflictObject, UnformatedConflict, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces";
 import { Challenge, Obstacle } from "../../interfaces/skillInterfaces";
 
 import { isOwner } from "../ownerAccess";
+import { formatCharacteristics } from '../statCalculators/confrontationCalculator'
 import { sendErrorForwardNoFile } from "../sendingFunctions";
-import { objectifyItemArray, sortByStrength, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
+import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -75,13 +76,13 @@ export async function getLocations(databaseConnection: any, response: Response, 
 }
 
 export async function getConflict(databaseConnection: any, response: Response, beastId: number, isEditing: boolean,
-    traitlimit: number, devotionlimit: number, flawlimit: number): Promise<ConflictObject> {
+    traitlimit: number, devotionlimit: number, flawlimit: number, socialpoints: number): Promise<ConflictObject> {
 
     let conflict: ConflictObject = { descriptions: [], convictions: [], devotions: [], flaws: [], burdens: [] }
 
     if (isEditing) {
-        return databaseConnection.beast.conflict.getEdit(beastId).then((characteristics: Conflict[]) => {
-            characteristics.forEach((characteristic: Conflict) => {
+        return databaseConnection.beast.conflict.getEdit(beastId).then((characteristics: UnformatedConflict[]) => {
+            characteristics.forEach((characteristic: UnformatedConflict) => {
                 if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
                     conflict.convictions.push(characteristic)
                 } else if (characteristic.type === 'd') {
@@ -97,35 +98,35 @@ export async function getConflict(databaseConnection: any, response: Response, b
             return conflict
         }).catch((error: Error) => sendErrorForward('confrontation edit', error, response))
     } else {
-        return databaseConnection.beast.conflict.get(beastId).then((characteristics: Conflict[]) => {
-            characteristics.forEach((characteristic: Conflict) => {
+        return databaseConnection.beast.conflict.get(beastId).then((characteristics: UnformatedConflict[]) => {
+            characteristics.forEach((characteristic: UnformatedConflict) => {
                 if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
                     if (traitlimit && conflict.convictions.length < traitlimit) {
-                        conflict.convictions.push(characteristic)
+                        conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
                     } else if (!traitlimit) {
-                        conflict.convictions.push(characteristic)
+                        conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
                     }
                 } else if (characteristic.type === 'd') {
                     if (devotionlimit && conflict.devotions.length < devotionlimit) {
-                        conflict.devotions.push(characteristic)
+                        conflict.devotions.push(formatCharacteristics(socialpoints, characteristic))
                     } else if (!devotionlimit) {
-                        conflict.devotions.push(characteristic)
+                        conflict.devotions.push(formatCharacteristics(socialpoints, characteristic))
                     }
                 } else if (characteristic.type === 'f') {
                     if (flawlimit && conflict.flaws.length < flawlimit) {
-                        conflict.flaws.push(characteristic)
+                        conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
                     } else if (!flawlimit) {
-                        conflict.flaws.push(characteristic)
+                        conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
                     }
                 } else if (characteristic.type === 'b') {
-                    conflict.burdens.push(characteristic)
+                    conflict.burdens.push(formatCharacteristics(socialpoints, characteristic))
                 } else if (characteristic.type === 'h') {
-                    conflict.descriptions.push(characteristic)
+                    conflict.descriptions.push(formatCharacteristics(socialpoints, characteristic))
                 }
             })
 
-            conflict.descriptions = conflict.descriptions.sort(sortByStrength)
-            conflict.convictions = conflict.convictions.sort(sortByStrength)
+            conflict.descriptions = conflict.descriptions.sort(sortByRank)
+            conflict.convictions = conflict.convictions.sort(sortByRank)
             conflict.flaws = conflict.flaws.sort(sortOutAnyToTheBottom)
             conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
 

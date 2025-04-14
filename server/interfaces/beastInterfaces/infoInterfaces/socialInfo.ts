@@ -23,7 +23,9 @@ export interface ConflictObject {
     burdens: Conflict[]
 }
 
-export interface Conflict {
+export type Strength = 'majSt' | 'minSt' | 'minWk' | 'majWk' | 'one' | 'noneStr' | 'noneWk' | 'none'
+
+export interface UnformatedConflict {
     id: number,
     beastid: number,
     trait: string,
@@ -32,9 +34,19 @@ export interface Conflict {
     socialroleid: string,
     allroles: boolean,
     severity: number,
-    strength: string,
+    strength: Strength,
     adjustment: number,
-    deleted: boolean
+    deleted?: boolean
+}
+
+export interface Conflict {
+    id: number,
+    beastid: number,
+    trait: string,
+    rank?: number,
+    socialroleid: string,
+    allroles: boolean,
+    deleted?: boolean
 }
 
 export interface ArchetypeInfo {
