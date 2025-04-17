@@ -3,3 +3,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.pair-shell p {
+    width: 50%;
+}

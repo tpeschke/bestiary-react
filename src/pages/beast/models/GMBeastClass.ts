@@ -1,3 +1,4 @@
+import CombatInfo from "../interfaces/infoInterfaces.ts/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
 import SkillInfo from "../interfaces/infoInterfaces.ts/skillInfoInterfaces";
@@ -29,5 +30,9 @@ export default class GMBeastClass {
 
     get skillInfo(): SkillInfo {
         return this.beastInfo.skillInfo
+    }
+
+    get combatInfo(): CombatInfo {
+        return this.beastInfo.combatInfo
     }
  }
