@@ -1,7 +1,7 @@
 import ImageInfo from "../../../../interfaces/infoInterfaces.ts/ImageInfoInterfaces"
 import SocialInfo from "../../../../interfaces/infoInterfaces.ts/socialInfo"
 
-import FullImage from "../../../../components/fullImage/fullImage"
+import FullImage from "../../../../components/UI/fullImage/fullImage"
 import Confrontation from "./components/confrontation/Confrontation"
 
 interface Props {

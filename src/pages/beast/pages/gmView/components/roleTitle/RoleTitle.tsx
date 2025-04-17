@@ -49,7 +49,7 @@ export default function RoleTitle({ title, points }: Props) {
         <div className="role-shell">
             <h2>{title}</h2>
             <div className="skull-frame">
-                {skulls.map(() => <Icon iconName="skull" iconSize='h2'/>)}
+                {skulls.map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2'/>)}
             </div>
         </div>
     )

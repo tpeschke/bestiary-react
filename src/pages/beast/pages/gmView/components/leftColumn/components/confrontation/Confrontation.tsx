@@ -1,8 +1,9 @@
 import SocialInfo from "../../../../../../interfaces/infoInterfaces.ts/socialInfo"
 
 import RoleTitle from "../../../roleTitle/RoleTitle"
-import Pair from "../../../../../../components/pair/Pair"
-import Body from "../../../../../../components/body/Body"
+import Pair from "../../../../../../components/UI/pair/Pair"
+import Body from "../../../../../../components/UI/body/Body"
+import Card from "../../../../../../components/UI/card/Card"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 
 interface Props {
@@ -18,9 +19,9 @@ export default function Confrontation({ socialInfo }: Props) {
                 <Pair title="Role" info={socialrole} />
             </Body>
             {conflicts ?
-                <Body format="gray-card">
+                <Card>
                     <CharacteristicsDisplay characteristicInfo={conflicts} />
-                </Body>
+                </Card>
                 : <></>
             }
         </>

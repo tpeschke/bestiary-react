@@ -1,16 +1,14 @@
 import { JSX } from "react"
 import "./Body.css"
 
-type Format = 'gray-card'
 
 interface Props {
     children: JSX.Element,
-    format?: Format
 }
 
-export default function Body({ children, format }: Props) {
+export default function Body({ children }: Props) {
     return (
-        <div className={"body-shell " + format}>
+        <div className="body-shell">
             {children}
         </div>
     )

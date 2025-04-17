@@ -1,7 +1,7 @@
 import GMBeastClass from "../../models/GMBeastClass"
 
-import NameHeader from "../../components/nameHeader/nameHeader"
-import DoubleColumn from "../../components/doubleColumn/doubleColumn"
+import NameHeader from "../../components/UI/nameHeader/nameHeader"
+import DoubleColumn from "../../components/UI/doubleColumn/doubleColumn"
 import RightColumn from "./components/rightColumn/RightColumn"
 import LeftColumn from "./components/leftColumn/LeftColumn"
 

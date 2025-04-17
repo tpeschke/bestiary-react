@@ -1,8 +1,8 @@
 import './fullImage.css'
 
-import { ArtistInfo } from '../../interfaces/infoInterfaces.ts/ImageInfoInterfaces'
+import { ArtistInfo } from '../../../interfaces/infoInterfaces.ts/ImageInfoInterfaces'
 
-import { imageBase } from '../../../../frontend-config'
+import { imageBase } from '../../../../../frontend-config'
 
 interface Props {
     imageParam: number,

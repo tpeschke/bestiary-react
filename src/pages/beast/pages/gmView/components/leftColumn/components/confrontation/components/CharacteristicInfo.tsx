@@ -1,6 +1,6 @@
 import './Characteristics.css'
 
-import Pair from "../../../../../../../components/pair/Pair"
+import Pair from "../../../../../../../components/UI/pair/Pair"
 import { Conflict } from "../../../../../../../interfaces/infoInterfaces.ts/socialInfo"
 
 interface Props {
@@ -12,7 +12,7 @@ export default function CharacteristicsInfo({ title, characteristics }: Props) {
     return (
         <div className='characteristic-info-shell'>
             <h3>{title}</h3>
-            {characteristics.map(({trait, rank}: Conflict) => <Pair title={trait} info={rank} format={{title: 'none'}} />)}
+            {characteristics.map(({trait, rank}: Conflict, index: number) => <Pair key={index} title={trait} info={rank} format={{title: 'none'}} />)}
         </div>
     )
 }

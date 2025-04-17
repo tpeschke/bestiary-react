@@ -6,7 +6,7 @@ type Format = {
 
 interface Props {
     title: string,
-    info: string | number,
+    info?: string | number,
     format?: Format
 }
 
