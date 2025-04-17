@@ -5,15 +5,16 @@ import Icon from "../../../../../../components/icon/Icon";
 interface Props {
     title: string,
     points: number,
-    role: string
+    role: string,
+    secondaryRole?: string
 }
 
-export default function RoleTitle({ title, points, role }: Props) {
+export default function RoleTitle({ title, points, role, secondaryRole }: Props) {
     return (
         <div className="role-shell">
             <h2>{title}</h2>
             <div className="skull-frame">
-                <p>{role}</p>
+                <p>{role} {secondaryRole ? `[${secondaryRole}]` : ''}</p>
                 {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
             </div>
         </div>

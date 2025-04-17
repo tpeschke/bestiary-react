@@ -8,12 +8,12 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo }: Props) {
-    const { combatrole, combatpoints, sp_atk, sp_def } = combatInfo
+    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary } = combatInfo
     const COMBAT = 'Combat'
     
     return (
         <>
-            <RoleTitle title={COMBAT} points={combatpoints} role={combatrole} />
+            <RoleTitle title={COMBAT} points={combatpoints} role={combatrole} secondaryRole={combatsecondary} />
 
             <SpecialInfo section={COMBAT} type="Attack" info={sp_atk} />
             <SpecialInfo section={COMBAT} type="Defense" info={sp_def} />

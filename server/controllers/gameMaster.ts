@@ -98,7 +98,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality,
-        panicstrength: panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
+        panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
         hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -180,7 +180,9 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             }
         },
         skillInfo: {
-            panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
+            skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
+            panic, 
+            stress, 
             skills: [],
             obstacles: [],
             challenges: [],
