@@ -1,7 +1,7 @@
 import SocialInfo from "../../../../../../interfaces/infoInterfaces.ts/socialInfo"
 
 import RoleTitle from "../../../roleTitle/RoleTitle"
-import Body from "../../../../../../components/UI/body/Body"
+import SpecialInfo from "../specialInfo/specialInfo"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 
 interface Props {
@@ -9,16 +9,18 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const { socialrole, socialpoints, conflicts } = socialInfo
+    const { socialrole, socialpoints, conflicts, atk_conf, def_conf } = socialInfo
+    const CONFRONTATION = 'Confrontation'
+
     return (
         <>
-            <RoleTitle title="Confrontation" points={socialpoints} role={socialrole} />
-            <Body>
-                {conflicts ?
-                    <CharacteristicsDisplay characteristicInfo={conflicts} />
-                    : <></>
-                }
-            </Body>
+            <RoleTitle title={CONFRONTATION} points={socialpoints} role={socialrole} />
+            {conflicts ?
+                <CharacteristicsDisplay characteristicInfo={conflicts} />
+                : <></>
+            }
+            <SpecialInfo section={CONFRONTATION} type="Attack" info={atk_conf} />
+            <SpecialInfo section={CONFRONTATION} type="Defense" info={def_conf} />
         </>
     )
 }

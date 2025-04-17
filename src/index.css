@@ -76,7 +76,8 @@ h3 {
 p {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
-	letter-spacing: 1px;
+	letter-spacing: .5px;
+	min-height: 10px;
 }
 a {
 	text-decoration: none;

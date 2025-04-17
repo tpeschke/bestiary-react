@@ -245,7 +245,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
 
     promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 
-    promiseArray.push(getSkills(databaseConnection, response, beast.id).then((skills: Skill[]) => beast.skillInfo.skills = skills))
+    promiseArray.push(getSkills(databaseConnection, response, beast.id, skillpoints).then((skills: Skill[]) => beast.skillInfo.skills = skills))
     promiseArray.push(getChallenges(databaseConnection, response, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
     promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 

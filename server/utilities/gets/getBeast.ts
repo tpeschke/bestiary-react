@@ -15,6 +15,7 @@ import { isOwner } from "../ownerAccess";
 import { formatCharacteristics } from '../statCalculators/confrontationCalculator'
 import { sendErrorForwardNoFile } from "../sendingFunctions";
 import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
+import { formatSkills } from "../statCalculators/skillCalculator";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -135,8 +136,11 @@ export async function getConflict(databaseConnection: any, response: Response, b
     }
 }
 
-export async function getSkills(databaseConnection: any, response: Response, beastId: number): Promise<Skill[]> {
-    return databaseConnection.beast.skill.get(beastId).then((skills: Skill[]) => skills.sort((a, b) => +b.rank - +a.rank)).catch((error: Error) => sendErrorForward('skills', error, response))
+export async function getSkills(databaseConnection: any, response: Response, beastId: number, skillpoints: number): Promise<Skill[]> {
+    return databaseConnection.beast.skill.get(beastId).then((skills: Skill[]) => {
+        skills = skills.map(skill => formatSkills(skillpoints, skill))
+        return skills.sort((a, b) => b.rank - a.rank)
+    }).catch((error: Error) => sendErrorForward('skills', error, response))
 }
 
 export async function getChallenges(databaseConnection: any, response: Response, beastId: number): Promise<Challenge[]> {

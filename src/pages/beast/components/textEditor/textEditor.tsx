@@ -8,6 +8,7 @@ import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './menuBar'
 
 import { Notes } from '../../interfaces/viewInterfaces'
+import HTMLDisplay from '../UI/htmlDisplay'
 
 interface Props {
   content: Notes,
@@ -34,9 +35,9 @@ export default function TextEditor({ content, captureCallBack, readOnly = false 
   return (
     <>
       {readOnly ?
-        <div dangerouslySetInnerHTML={{ __html: content.notes }} />
+        <HTMLDisplay html={content.notes} />
         :
-        <EditorProvider onBlur={({editor}) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={content.notes}></EditorProvider>
+        <EditorProvider onBlur={({ editor }) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={content.notes}></EditorProvider>
       }
     </>
   )
