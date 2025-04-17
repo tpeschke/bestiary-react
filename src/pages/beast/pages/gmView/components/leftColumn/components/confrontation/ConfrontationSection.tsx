@@ -8,7 +8,7 @@ interface Props {
     socialInfo: SocialInfo
 }
 
-export default function Confrontation({ socialInfo }: Props) {
+export default function ConfrontationSection({ socialInfo }: Props) {
     const { socialrole, socialpoints, conflicts } = socialInfo
     return (
         <>

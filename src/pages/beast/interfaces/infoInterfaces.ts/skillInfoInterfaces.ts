@@ -1,5 +1,3 @@
-import { Obstacle, Challenge } from "../skillInterfaces";
-
 export default interface SkillInfo {
     panic: number,
     stress: number,
@@ -23,4 +21,17 @@ export interface Skill {
     strength: string,
     adjustment: number,
     deleted: boolean
+}
+
+export interface Obstacle {
+    id: number,
+    beastid: number,
+    obstacleid: number,
+    notes: string
+}
+
+export interface Challenge {
+    id: number,
+    challengeid: number,
+    beastid: number
 }

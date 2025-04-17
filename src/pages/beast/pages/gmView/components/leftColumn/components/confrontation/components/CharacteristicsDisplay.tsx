@@ -1,4 +1,5 @@
 import { ConflictObject } from "../../../../../../../interfaces/infoInterfaces.ts/socialInfo"
+
 import CharacteristicsInfo from "./CharacteristicInfo"
 
 interface Props {

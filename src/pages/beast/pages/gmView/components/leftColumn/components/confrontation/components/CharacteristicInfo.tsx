@@ -1,6 +1,7 @@
 import './Characteristics.css'
 
 import Pair from "../../../../../../../components/UI/pair/Pair"
+
 import { Conflict } from "../../../../../../../interfaces/infoInterfaces.ts/socialInfo"
 
 interface Props {
