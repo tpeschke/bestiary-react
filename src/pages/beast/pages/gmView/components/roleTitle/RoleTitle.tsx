@@ -4,10 +4,11 @@ import Icon from "../../../../../../components/icon/Icon";
 
 interface Props {
     title: string,
-    points: number
+    points: number,
+    role: string
 }
 
-export default function RoleTitle({ title, points }: Props) {
+export default function RoleTitle({ title, points, role }: Props) {
     let skulls: boolean[] = []
 
     switch (points) {
@@ -49,6 +50,7 @@ export default function RoleTitle({ title, points }: Props) {
         <div className="role-shell">
             <h2>{title}</h2>
             <div className="skull-frame">
+                <p>{role}</p>
                 {skulls.map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2'/>)}
             </div>
         </div>

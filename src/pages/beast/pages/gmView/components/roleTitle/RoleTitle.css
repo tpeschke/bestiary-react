@@ -7,6 +7,11 @@
     align-items: center;
 }
 
+.skull-frame {
+    display: flex;
+    align-items: end;
+}
+
 .skull-frame i {
     margin-left: 3px;
 }
