@@ -71,10 +71,11 @@ h2 {
 }
 h3 {
 	font-size: 18px;
-    color: #607d8b;
+    color: #434343;
     font-weight: 600;
-	font-family: 'oldClaude';
-	margin: 0 0 7px;
+    font-family: 'oldClaude';
+    background: #e1e7ea;
+    padding: 5px 3px;
 }
 p {
 	font-family: "Source Sans 3", sans-serif;

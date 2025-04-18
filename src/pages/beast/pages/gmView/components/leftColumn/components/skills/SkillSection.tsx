@@ -16,7 +16,7 @@ export default function SkillSection({ skillInfo }: Props) {
     return (
         <>
             <RoleTitle title="Skills" points={skillpoints} role={skillrole} secondaryRole={skillsecondary} />
-            <Pair title={"Nerve (Panic)"} info={`${stress} (${panic})`} />
+            <Pair title={"Nerve (Panic)"} info={`${stress} (${panic})`} format={{heading: true}}/>
             <Body>
                 {skills ?
                     <SkillsDisplay skills={skills} />

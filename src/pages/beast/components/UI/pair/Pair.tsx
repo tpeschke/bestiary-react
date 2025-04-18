@@ -1,7 +1,8 @@
 import "./Pair.css"
 
 type Format = {
-    title?: 'none'
+    title?: 'none',
+    heading?: boolean
 }
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 export default function Pair({ title, info, format }: Props) {
     return (
-        <div className="pair-shell">
+        <div className={"pair-shell" + (format?.heading ? " heading" : "")}>
             {format?.title === 'none' ?
                 <p>{title}</p>
                 :

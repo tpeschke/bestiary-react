@@ -2,11 +2,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 7px;
+}
+
+.pair-shell.heading {
+    background: #e1e7ea;
+    padding: 5px 3px;
 }
 
 .pair-shell h3 {
     margin: 0;
+}
+
+.pair-shell.heading h3 {
+    padding: 0;
 }
 
 .pair-shell p {
