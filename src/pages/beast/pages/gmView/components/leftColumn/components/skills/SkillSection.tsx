@@ -22,8 +22,8 @@ export default function SkillSection({ skillInfo }: Props) {
                     <SkillsDisplay skills={skills} />
                     : <></>}
             </Body>
-            <SpecialInfo section="Skill" type="Attack" info={atk_skill} />
-            <SpecialInfo section="Skill" type="Defense" info={def_skill} />
+            <SpecialInfo type="Attack" info={atk_skill} />
+            <SpecialInfo type="Defense" info={def_skill} />
         </>
     )
 }

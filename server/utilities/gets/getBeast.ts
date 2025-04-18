@@ -77,9 +77,9 @@ export async function getLocations(databaseConnection: any, response: Response, 
 }
 
 export async function getConflict(databaseConnection: any, response: Response, beastId: number, isEditing: boolean,
-    traitlimit: number, devotionlimit: number, flawlimit: number, socialpoints: number): Promise<ConflictObject> {
+    traitlimit: number, relationshiplimit: number, flawlimit: number, socialpoints: number): Promise<ConflictObject> {
 
-    let conflict: ConflictObject = { descriptions: [], convictions: [], devotions: [], flaws: [], burdens: [] }
+    let conflict: ConflictObject = { descriptions: [], convictions: [], relationships: [], flaws: [], burdens: [] }
 
     if (isEditing) {
         return databaseConnection.beast.conflict.getEdit(beastId).then((characteristics: UnformatedConflict[]) => {
@@ -87,7 +87,7 @@ export async function getConflict(databaseConnection: any, response: Response, b
                 if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
                     conflict.convictions.push(characteristic)
                 } else if (characteristic.type === 'd') {
-                    conflict.devotions.push(characteristic)
+                    conflict.relationships.push(characteristic)
                 } else if (characteristic.type === 'f') {
                     conflict.flaws.push(characteristic)
                 } else if (characteristic.type === 'b') {
@@ -108,10 +108,10 @@ export async function getConflict(databaseConnection: any, response: Response, b
                         conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
                     }
                 } else if (characteristic.type === 'd') {
-                    if (devotionlimit && conflict.devotions.length < devotionlimit) {
-                        conflict.devotions.push(formatCharacteristics(socialpoints, characteristic))
-                    } else if (!devotionlimit) {
-                        conflict.devotions.push(formatCharacteristics(socialpoints, characteristic))
+                    if (relationshiplimit && conflict.relationships.length < relationshiplimit) {
+                        conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
+                    } else if (!relationshiplimit) {
+                        conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
                     }
                 } else if (characteristic.type === 'f') {
                     if (flawlimit && conflict.flaws.length < flawlimit) {

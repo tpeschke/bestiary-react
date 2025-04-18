@@ -41,7 +41,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const { sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary, vitalityInfo, movements, combatStats } = combatInfo
     const { fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, locationalVitalities } = vitalityInfo
     const { panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, skills, challenges, obstacles } = skillInfo
-    const { traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf, archetypeInfo, conflicts } = socialInfo
+    const { traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf, archetypeInfo, conflicts } = socialInfo
     const { hasarchetypes, hasmonsterarchetypes } = archetypeInfo
     const { lootnotes, lairLoot, carriedLoot, specificLoots, reagents } = lootInfo
     const { casting, spells, deletedSpells } = castingInfo
@@ -49,23 +49,23 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const userid = isOwner(user.id) ? null : user.id
 
     const effectiveTraitLimit = traitlimit > 0 ? traitlimit : null
-    const effectiveDevotionLimit = devotionlimit > 0 ? devotionlimit : null
+    const effectiveRelationshipLimit = relationshiplimit > 0 ? relationshiplimit : null
     const effectiveFlawLimit = flawlimit > 0 ? flawlimit : null
     const effectivePassionLimit = passionlimit > 0 ? passionlimit : null
 
     let beastId = id ? id : null
     if (beastId) {
         await databaseConnection.beast.update(beastId, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
-            vitality, panic, stress, lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
+            vitality, panic, stress, lootnotes, effectiveTraitLimit, effectiveRelationshipLimit, effectiveFlawLimit,
             effectivePassionLimit, plural, thumbnail, rarity, combatrole, combatpoints, socialrole, socialpoints, combatsecondary, skillrole, skillpoints, fatigue,
-            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
+            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, relationshipshare, rollundertrauma,
             imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf)
             .catch((error: Error) => sendErrorForward('update main', error, response))
     } else {
         beastId = await databaseConnection.beast.add(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
-            vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveDevotionLimit, effectiveFlawLimit,
+            vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveRelationshipLimit, effectiveFlawLimit,
             effectivePassionLimit, plural, thumbnail, rarity, combatrole, combatpoints, socialrole, socialpoints, combatsecondary, skillrole, skillpoints, fatigue,
-            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, devotionshare, rollundertrauma,
+            defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, relationshipshare, rollundertrauma,
             imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf)
             .catch((error: Error) => sendErrorForward('add main', error, response))[0].id
     }
@@ -97,9 +97,10 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
 
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
-        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality,
-        panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
-        hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
+        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, 
+        rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill, 
+        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, 
+        devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
 
     let beast: Beast = {
         id, patreon, canplayerview,
@@ -188,11 +189,11 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             challenges: [],
         },
         socialInfo: {
-            traitlimit, devotionlimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, devotionshare, atk_conf, def_conf,
+            traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf,
             conflicts: {
                 descriptions: [],
                 convictions: [],
-                devotions: [],
+                relationships: [],
                 flaws: [],
                 burdens: []
             },
@@ -251,7 +252,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     promiseArray.push(getChallenges(databaseConnection, response, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
     promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
-    promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, devotionlimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
+    promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
     promiseArray.push(getArchetypes(databaseConnection, response, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
 
     promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents))

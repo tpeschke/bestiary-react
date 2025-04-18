@@ -1,6 +1,6 @@
 export default interface SocialInfo {
     traitlimit: number,
-    devotionlimit: number,
+    Relationshiplimit: number,
     flawlimit: number,
     passionlimit: number,
     socialrole: string,
@@ -8,7 +8,7 @@ export default interface SocialInfo {
     socialpoints: number,
     descriptionshare: number,
     convictionshare: number,
-    devotionshare: number,
+    Relationshipshare: number,
     atk_conf: string,
     def_conf: string,
     archetypeInfo: ArchetypeInfo,
@@ -18,7 +18,7 @@ export default interface SocialInfo {
 export interface ConflictObject {
     descriptions: Conflict[],
     convictions: Conflict[],
-    devotions: Conflict[],
+    relationships: Conflict[],
     flaws: Conflict[],
     burdens: Conflict[]
 }

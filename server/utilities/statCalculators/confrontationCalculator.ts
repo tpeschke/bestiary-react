@@ -7,7 +7,7 @@ export function formatCharacteristics(socialpoints: number, characteristic: Unfo
         h: 'Descriptions',
         t: 'Convictions',
         c: 'Convictions',
-        d: 'Devotions'
+        d: 'Relationships'
     }
 
     let formatedCharacteristic = {
@@ -38,7 +38,7 @@ function calculateRankForCharacteristic(type: string = 'Convictions', points: nu
             minWk: 2,
             majWk: 1
         },
-        Devotions: {
+        Relationships: {
             majSt: 8,
             minSt: 6,
             minWk: 4,
@@ -49,7 +49,7 @@ function calculateRankForCharacteristic(type: string = 'Convictions', points: nu
     const typeScalingBonus = {
         Descriptions: 1,
         Convictions: .1,
-        Devotions: 1
+        Relationships: 1
     }
 
     const scaling = {

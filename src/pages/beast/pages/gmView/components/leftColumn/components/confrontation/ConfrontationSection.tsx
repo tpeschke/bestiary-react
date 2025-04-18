@@ -10,17 +10,16 @@ interface Props {
 
 export default function ConfrontationSection({ socialInfo }: Props) {
     const { socialrole, socialpoints, conflicts, atk_conf, def_conf, socialsecondary } = socialInfo
-    const CONFRONTATION = 'Confrontation'
 
     return (
         <>
-            <RoleTitle title={CONFRONTATION} points={socialpoints} role={socialrole} secondaryRole={socialsecondary} />
+            <RoleTitle title='Confrontation' points={socialpoints} role={socialrole} secondaryRole={socialsecondary} />
             {conflicts ?
                 <CharacteristicsDisplay characteristicInfo={conflicts} />
                 : <></>
             }
-            <SpecialInfo section={CONFRONTATION} type="Attack" info={atk_conf} />
-            <SpecialInfo section={CONFRONTATION} type="Defense" info={def_conf} />
+            <SpecialInfo type="Attack" info={atk_conf} />
+            <SpecialInfo type="Defense" info={def_conf} />
         </>
     )
 }
