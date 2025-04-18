@@ -22,6 +22,7 @@ import {
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
     getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats
 } from "../utilities/gets/getBeast"
+import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -182,8 +183,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         },
         skillInfo: {
             skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
-            panic, 
-            stress, 
+            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stress, panic),
             skills: [],
             obstacles: [],
             challenges: [],

@@ -1,3 +1,5 @@
+import { Strength } from "../beastInterfaces"
+
 export default interface SocialInfo {
     traitlimit: number,
     relationshiplimit: number,
@@ -22,8 +24,6 @@ export interface ConflictObject {
     flaws: Conflict[],
     burdens: Conflict[]
 }
-
-export type Strength = 'majSt' | 'minSt' | 'minWk' | 'majWk' | 'one' | 'noneStr' | 'noneWk' | 'none'
 
 export interface UnformatedConflict {
     id: number,

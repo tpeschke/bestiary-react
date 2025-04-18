@@ -1,9 +1,9 @@
 import { Obstacle, Challenge } from "../../skillInterfaces";
-import { Strength } from "./socialInfo";
+import { Strength } from "../beastInterfaces";
 
 export default interface SkillInfo {
-    panic: number,
-    stress: number,
+    panic: number | boolean,
+    stress: number | string,
     skillrole: string,
     skillsecondary: string,
     skillpoints: number,
