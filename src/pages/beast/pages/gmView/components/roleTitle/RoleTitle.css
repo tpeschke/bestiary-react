@@ -4,11 +4,16 @@
     justify-content: space-between;
     align-items: center;
     background: #8aa0ab;
-    padding: 10px 5px;
+    padding: 5px;
 }
 
 .role-shell h2, .role-shell p, .role-shell i {
     color: white;
+    line-height: unset;
+}
+
+.role-shell i {
+    font-size: 14px;
 }
 
 .skull-frame {

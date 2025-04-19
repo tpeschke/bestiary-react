@@ -12,21 +12,24 @@ interface Props {
 
 export default function SkillSection({ skillInfo }: Props) {
     const { skillrole, skillpoints, skills, atk_skill, def_skill, skillsecondary, panic, stress } = skillInfo
-    
+
     let stressString = `${stress}`
     if (panic) { stressString = `(${panic}) ` + stressString }
+
+    const showBottomBorder: boolean = (!!def_skill || !!atk_skill || !!skills)
 
     return (
         <>
             <RoleTitle title="Skills" points={skillpoints} role={skillrole} secondaryRole={skillsecondary} />
-            <Pair title={"Nerve (Panic)"} info={stressString} format={{heading: true}}/>
+            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true, bottomBorder: showBottomBorder }} />
+            <SpecialInfo type="Defense" info={def_skill} />
+            <SpecialInfo type="Attack" info={atk_skill} />
+            <h3>Skills</h3>
             <Body>
                 {skills ?
                     <SkillsDisplay skills={skills} />
                     : <></>}
             </Body>
-            <SpecialInfo type="Attack" info={atk_skill} />
-            <SpecialInfo type="Defense" info={def_skill} />
         </>
     )
 }

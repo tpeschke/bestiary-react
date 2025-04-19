@@ -9,6 +9,10 @@
     padding: 5px 3px;
 }
 
+.pair-shell.border-bottom {
+    border-bottom: 2px solid white;
+}
+
 .pair-shell h3 {
     margin: 0;
 }
