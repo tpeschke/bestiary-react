@@ -8,15 +8,15 @@ import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './menuBar'
 
 import { Notes } from '../../interfaces/viewInterfaces'
-import HTMLDisplay from '../UI/htmlDisplay'
+import HTMLDisplay from '../UI/htmlDisplay/htmlDisplay'
 
 interface Props {
   content: Notes,
-  captureCallBack: (value: string) => void,
+  captureCallBack?: (value: string) => void,
   readOnly?: boolean
 }
 
-export default function TextEditor({ content, captureCallBack, readOnly = false }: Props) {
+export default function TextEditor({ content, captureCallBack = ()=>{}, readOnly = false }: Props) {
   const extensions = [
     // @ts-ignore
     TextStyle.configure({ types: [ListItem.name] }),

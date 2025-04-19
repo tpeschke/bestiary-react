@@ -35,7 +35,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const { body, user } = request
 
     const { id, patreon, generalInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo } = body
-    const { name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity, scenarios, folklores, tables, encounters } = generalInfo
+    const { name, plural, intro, habitat, appearance, senses, diet, meta, size, rarity, scenarios, folklores, tables, encounters } = generalInfo
     const { thumbnail, imagesource, artistInfo } = imageInfo
     const { variants, locations, types, climates } = linkedInfo
     const { rolenameorder, defaultrole, roles } = roleInfo
@@ -56,14 +56,14 @@ export async function updateBeast(request: BeastRequest, response: Response) {
 
     let beastId = id ? id : null
     if (beastId) {
-        await databaseConnection.beast.update(beastId, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
+        await databaseConnection.beast.update(beastId, name, intro, habitat, appearance, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
             vitality, panic, stress, lootnotes, effectiveTraitLimit, effectiveRelationshipLimit, effectiveFlawLimit,
             effectivePassionLimit, plural, thumbnail, rarity, combatrole, combatpoints, socialrole, socialpoints, combatsecondary, skillrole, skillpoints, fatigue,
             defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, relationshipshare, rollundertrauma,
             imagesource, isincorporeal, weaponbreakagevitality, hasarchetypes, hasmonsterarchetypes, skillsecondary, atk_skill, def_skill, atk_conf, def_conf)
             .catch((error: Error) => sendErrorForward('update main', error, response))
     } else {
-        beastId = await databaseConnection.beast.add(userid, name, intro, habitat, ecology, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
+        beastId = await databaseConnection.beast.add(userid, name, intro, habitat, appearance, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
             vitality, panic, stress, createHash(), lootnotes, effectiveTraitLimit, effectiveRelationshipLimit, effectiveFlawLimit,
             effectivePassionLimit, plural, thumbnail, rarity, combatrole, combatpoints, socialrole, socialpoints, combatsecondary, skillrole, skillpoints, fatigue,
             defaultrole, socialsecondary, notrauma, knockback, singledievitality, noknockback, rolenameorder, descriptionshare, convictionshare, relationshipshare, rollundertrauma,
@@ -97,7 +97,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const databaseConnection = getDatabaseConnection(request)
 
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
-    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
+    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, 
         rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill, 
         def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, 
@@ -106,7 +106,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     let beast: Beast = {
         id, patreon, canplayerview,
         generalInfo: {
-            name, plural, intro, habitat, ecology, senses, diet, meta, size, rarity,
+            name, plural, intro, habitat, appearance, senses, diet, meta, size, rarity,
             scenarios: [],
             folklores: [],
             tables: {

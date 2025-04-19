@@ -5,7 +5,7 @@ export default interface GeneralInfo {
     plural: string,
     intro: string,
     habitat: string,
-    ecology: string,
+    appearance: string,
     scenarios: Scenario[],
     folklores: Folklore[],
     encounters: Encounter,

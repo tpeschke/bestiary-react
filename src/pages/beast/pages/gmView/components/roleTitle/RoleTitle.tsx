@@ -14,7 +14,7 @@ export default function RoleTitle({ title, points, role, secondaryRole }: Props)
         <div className="role-shell">
             <h2>{title}</h2>
             <div className="skull-frame">
-                <p>{role} {secondaryRole ? `[${secondaryRole}]` : ''}</p>
+                <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
                 {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
             </div>
         </div>

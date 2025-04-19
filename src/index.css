@@ -47,6 +47,7 @@ ol, ul {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
 	margin: 5px 0 5px 40px;
+	line-height: 1.2;
 }
 blockquote, q {
 	quotes: none;
@@ -80,7 +81,8 @@ h3 {
 p {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
-	min-height: 10px;
+	min-height: 1px;
+	line-height: 1.2;
 }
 a {
 	text-decoration: none;
