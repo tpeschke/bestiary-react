@@ -18,8 +18,8 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 <CharacteristicsDisplay characteristicInfo={conflicts} />
                 : <></>
             }
-            <SpecialInfo type="Attack" info={atk_conf} />
             <SpecialInfo type="Defense" info={def_conf} />
+            <SpecialInfo type="Attack" info={atk_conf} />
         </>
     )
 }

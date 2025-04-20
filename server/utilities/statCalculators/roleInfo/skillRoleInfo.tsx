@@ -32,9 +32,3 @@ export const primarySkillRoles = {
         panic: 'minSt'
     },
 }
-
-export const secondarySkillRoles = {
-    'Fodder': { },
-    'Elite': { },
-    'Solo': { },
-}

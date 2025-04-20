@@ -1,6 +1,6 @@
 import './Icon.css'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull'
+type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow'
 
 type Color = null | 'black'
 
@@ -44,6 +44,9 @@ export default function Icon({ iconName, tooltip, color, iconSize }: Props) {
             break;
         case 'skull':
             styling = "fa-solid fa-skull";
+            break;
+        case 'downArrow':
+            styling = "fa-solid fa-arrow-down";
             break;
         default:
             break;

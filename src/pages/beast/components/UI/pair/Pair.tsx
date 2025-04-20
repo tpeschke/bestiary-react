@@ -14,7 +14,7 @@ interface Props {
 
 export default function Pair({ title, info, format }: Props) {
     return (
-        <div className={"pair-shell" + (format?.heading ? " heading" : "") + (format?.bottomBorder ? " border-bottom" : "")}>
+        <div className={"pair-shell" + (format?.heading ? " heading" : "")}>
             {format?.title === 'none' ?
                 <p>{title}</p>
                 :

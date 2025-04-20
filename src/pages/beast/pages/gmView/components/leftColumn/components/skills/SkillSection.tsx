@@ -16,12 +16,10 @@ export default function SkillSection({ skillInfo }: Props) {
     let stressString = `${stress}`
     if (panic) { stressString = `(${panic}) ` + stressString }
 
-    const showBottomBorder: boolean = (!!def_skill || !!atk_skill || !!skills)
-
     return (
         <>
             <RoleTitle title="Skills" points={skillpoints} role={skillrole} secondaryRole={skillsecondary} />
-            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true, bottomBorder: showBottomBorder }} />
+            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true }} />
             <SpecialInfo type="Defense" info={def_skill} />
             <SpecialInfo type="Attack" info={atk_skill} />
             <h3>Skills</h3>

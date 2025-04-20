@@ -18,11 +18,12 @@ import createHash from "../utilities/hashGeneration"
 import upsertBeast from "../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import {
-    getArtistInfo, getClimates, getConflict, getLocations, getTypes, hasAppropriatePateronLevel, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
+    getArtistInfo, getClimates, getConflict, getLocations, getTypes, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
     getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats
 } from "../utilities/gets/getBeast"
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
+import { calculateVitalityAndFatigue } from "../utilities/statCalculators/combatCalculators/vitalityAndFatigueCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -177,7 +178,8 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             combatStats: [],
             movements: [],
             vitalityInfo: {
-                fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality,
+                notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
+                ...calculateVitalityAndFatigue(combatrole, combatsecondary, combatpoints, vitality, fatigue),
                 locationalVitalities: []
             }
         },

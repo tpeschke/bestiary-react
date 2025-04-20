@@ -1,5 +1,7 @@
 import { Skill, Strength } from "../../interfaces/beastInterfaces/beastInterfaces"
 
+import { primarySkillRoles } from "./roleInfo/skillRoleInfo"
+
 export function formatSkills(skillpoints: number, skillInfo: Skill): Skill {
     const { id, beastid, skill, skillroleid, allroles, strength, adjustment } = skillInfo
 
@@ -38,6 +40,9 @@ function calculateRankForSkill(points: number, strength: Strength = 'minWk', adj
 }
 
 export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength, panicStrength: Strength) {
+    if (!stressStrength) { stressStrength = primarySkillRoles[role].mental }
+    if (!panicStrength) { panicStrength = primarySkillRoles[role].panic }
+
     const stress = calculateStress(secondaryrole, points, stressStrength)
     return {
         stress, 
@@ -118,5 +123,3 @@ function calculatePanic(stress: number | string, points: number, strength: Stren
 
     return Math.floor(panicPercentage * stress)
 }
-
-

@@ -1,0 +1,8 @@
+.trauma-pair-shell {
+    display: flex;
+}
+
+.trauma-pair-shell>div {
+    display: flex;
+    width: 50%;
+}
