@@ -4,16 +4,13 @@ import Body from "../../../../../../../../components/UI/body/Body"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 
 interface Props {
-    vitality: string | number,
+    trauma: number | boolean,
     notrauma: boolean,
     rollundertrauma: number
 }
 
-export default function TraumaDisplay({ vitality, notrauma, rollundertrauma }: Props) {
-    let traumaString: string | boolean = false
-    if (typeof vitality === 'number') {
-        traumaString = `${Math.floor(vitality / 2)} (${rollundertrauma})`
-    }
+export default function TraumaDisplay({ trauma, notrauma, rollundertrauma }: Props) {
+    const traumaString = `${trauma} (${rollundertrauma})`
 
     return (
         <>

@@ -23,7 +23,7 @@ import {
     getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats
 } from "../utilities/gets/getBeast"
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
-import { calculateVitalityAndFatigue } from "../utilities/statCalculators/combatCalculators/vitalityAndFatigueCalculator"
+import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -179,7 +179,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
             movements: [],
             vitalityInfo: {
                 notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
-                ...calculateVitalityAndFatigue(combatrole, combatsecondary, combatpoints, vitality, fatigue),
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitality, fatigue),
                 locationalVitalities: []
             }
         },

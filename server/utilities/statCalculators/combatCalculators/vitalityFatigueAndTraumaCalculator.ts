@@ -2,14 +2,26 @@ import { Strength } from "../../../interfaces/beastInterfaces/beastInterfaces"
 
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo"
 
-export function calculateVitalityAndFatigue(role: string, secondaryrole: string, points: number, vitalityStrength: Strength, fatigueStrength: Strength) {
+interface VitalityReturn {
+    vitality: string | number,
+    trauma: number | boolean,
+    fatigue: string | number | boolean
+}
+
+export function calculateVitalityFatigueAndTrauma(role: string, secondaryrole: string, points: number, vitalityStrength: Strength, fatigueStrength: Strength): VitalityReturn {
     if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.largeweapons }
     if (!fatigueStrength) { fatigueStrength = primaryCombatRoles[role].rangedCombatStats.fatigue }
 
     const vitality = calculateVitality(secondaryrole, points, vitalityStrength)
+
+    let trauma: number | boolean = false
+    if (typeof vitality === 'number') {
+        trauma = Math.floor(vitality / 2)
+    }
+
     return {
-        vitality, 
-        fatigue: calculateFatigue(vitality, points, fatigueStrength)
+        vitality, trauma,
+        fatigue: calculateFatigue(vitality, points, fatigueStrength),
     }
 }
 

@@ -80,6 +80,7 @@ export interface VitalityInfo {
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
     vitality: string | number,
+    trauma: number | boolean
 }
 
 export interface LocationVitality {
