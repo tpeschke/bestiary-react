@@ -1,5 +1,6 @@
 .trauma-pair-shell {
     display: flex;
+    margin-bottom: 5px;
 }
 
 .trauma-pair-shell>div {

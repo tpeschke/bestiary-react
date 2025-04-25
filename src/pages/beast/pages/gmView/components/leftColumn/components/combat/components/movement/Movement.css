@@ -1,0 +1,14 @@
+.movement-shell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movement-shell p {
+    padding: 3px 5px;
+}
+
+.movement-shell p:first-child {
+    background: #f3f3f3;
+    width: 20%;
+}

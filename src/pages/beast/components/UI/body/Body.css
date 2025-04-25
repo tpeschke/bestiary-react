@@ -1,8 +1,8 @@
 .body-shell {
-    padding: 5px;
+    padding: 5px 5px 0;
     border-radius: 5px;
 }
 
 .body-shell .pair-shell {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }

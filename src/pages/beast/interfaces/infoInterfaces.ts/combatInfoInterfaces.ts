@@ -60,12 +60,6 @@ export interface Movement {
     type: string,
     roleid: string,
     allroles: boolean,
-    strollstrength: string,
-    walkstrength: string,
-    jogstrength: string,
-    runstrength: string,
-    sprintstrength: string,
-    adjustment: number,
     deleted: boolean
 }
 

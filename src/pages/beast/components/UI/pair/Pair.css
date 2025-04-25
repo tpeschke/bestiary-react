@@ -10,6 +10,10 @@
     border-bottom: 2px solid white;
 }
 
+.pair-shell.heading.noBorder {
+    border-bottom: unset;
+}
+
 .pair-shell h3 {
     margin: 0;
 }
@@ -18,7 +22,14 @@
     padding: 0;
 }
 
+.pair-shell.opposite p {
+    text-align: right;
+}
+
 .pair-shell p {
     width: 50%;
 }
 
+.pair-shell p.minor {
+    color: #434343;
+}
