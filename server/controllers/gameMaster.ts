@@ -245,7 +245,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
 
     promiseArray.push(getRoles(databaseConnection, response, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
-    promiseArray.push(getMovement(databaseConnection, response, beast.id).then((movements: Movement[]) => beast.combatInfo.movements = movements))
+    promiseArray.push(getMovement(databaseConnection, response, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
     promiseArray.push(getCombatStats(databaseConnection, response, beast.id).then((combatStats: CombatStat[]) => beast.combatInfo.combatStats = combatStats))
 
     promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))

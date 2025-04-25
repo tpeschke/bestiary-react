@@ -52,11 +52,19 @@ export interface CombatStat {
 export interface Movement {
     id: number,
     beastid: number,
-    stroll: string,
-    walk: string,
-    jog: string,
-    run: string,
-    sprint: string,
+    type: string,
+    stroll: number | null,
+    walk: number | null,
+    jog: number | null,
+    run: number | null,
+    sprint: number | null,
+    roleid: string,
+    allroles: boolean,
+}
+
+export interface RawMovement {
+    id: number,
+    beastid: number,
     type: string,
     roleid: string,
     allroles: boolean,
@@ -65,8 +73,7 @@ export interface Movement {
     jogstrength: string,
     runstrength: string,
     sprintstrength: string,
-    adjustment: number,
-    deleted: boolean
+    adjustment: number
 }
 
 export interface VitalityInfo {
