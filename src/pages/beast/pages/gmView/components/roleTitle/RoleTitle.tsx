@@ -4,19 +4,22 @@ import Icon from "../../../../../../components/icon/Icon";
 
 interface Props {
     title: string,
-    points: number,
-    role: string,
+    points?: number,
+    role?: string,
     secondaryRole?: string
 }
 
 export default function RoleTitle({ title, points, role, secondaryRole }: Props) {
+    const showRightSide = points && role
     return (
         <div className="role-shell">
             <h2>{title}</h2>
-            <div className="skull-frame">
-                <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
-                {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
-            </div>
+            {showRightSide ?
+                <div className="skull-frame">
+                    <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
+                    {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
+                </div>
+                : <></>}
         </div>
     )
 }

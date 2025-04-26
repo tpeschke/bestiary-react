@@ -7,13 +7,14 @@ import TraumaDisplay from './components/traumaDisplay/TraumaDisplay'
 import Movement from "./components/movement/MovementInfo"
 import CombatTables from "./components/combatTables/CombatTables"
 import Body from "../../../../../../components/UI/body/Body"
+import TacticsAndStrategy from "./components/tacticsAndStrategy/TacticsAndStrategy"
 
 interface Props {
     combatInfo: CombatInfo
 }
 
 export default function CombatSection({ combatInfo }: Props) {
-    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, combatStats } = combatInfo
+    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, combatStats, tactics } = combatInfo
     const { vitality, fatigue, rollundertrauma, notrauma, trauma } = vitalityInfo
 
     let vitalityString = `${vitality}`
@@ -31,6 +32,7 @@ export default function CombatSection({ combatInfo }: Props) {
                 <CombatTables combatStats={combatStats} />
             </Body>
             <Movement movements={movements} />
+            <TacticsAndStrategy tactics={tactics} />
         </>
     )
 }
