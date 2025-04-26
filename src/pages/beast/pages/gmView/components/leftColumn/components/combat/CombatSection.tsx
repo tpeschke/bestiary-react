@@ -6,6 +6,7 @@ import SpecialInfo from "../specialInfo/specialInfo"
 import TraumaDisplay from './components/traumaDisplay/TraumaDisplay'
 import Movement from "./components/movement/MovementInfo"
 import CombatTables from "./components/combatTables/CombatTables"
+import Body from "../../../../../../components/UI/body/Body"
 
 interface Props {
     combatInfo: CombatInfo
@@ -26,7 +27,9 @@ export default function CombatSection({ combatInfo }: Props) {
             <TraumaDisplay trauma={trauma} notrauma={notrauma} rollundertrauma={rollundertrauma} />
             <SpecialInfo type="Defense" info={sp_def} />
             <SpecialInfo type="Attack" info={sp_atk} />
-            <CombatTables combatStats={combatStats} />
+            <Body>
+                <CombatTables combatStats={combatStats} />
+            </Body>
             <Movement movements={movements} />
         </>
     )

@@ -1,6 +1,15 @@
+.combat-stats-shell {
+    display: flex;
+    justify-content: start;
+}
+
+.combat-table-shell {
+    margin-right: 15px;
+}
+
 .combat-table {
     display: flex;
-    width: 200px;
+    max-width: 200px;
 }
 
 .combat-table .combat-table-column:nth-child(2) {
@@ -9,6 +18,7 @@
 
 .combat-table-column {
     width: 50%;
+    min-width: 100px;
 }
 
 .combat-table-column>div:nth-child(even) {
