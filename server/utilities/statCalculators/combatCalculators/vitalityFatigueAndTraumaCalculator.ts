@@ -9,7 +9,7 @@ interface VitalityReturn {
 }
 
 export function calculateVitalityFatigueAndTrauma(role: string, secondaryrole: string, points: number, vitalityStrength: Strength, fatigueStrength: Strength): VitalityReturn {
-    if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.largeweapons }
+    if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.vitality }
     if (!fatigueStrength) { fatigueStrength = primaryCombatRoles[role].rangedCombatStats.fatigue }
 
     const vitality = calculateVitality(secondaryrole, points, vitalityStrength)
