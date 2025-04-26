@@ -78,6 +78,14 @@ h3 {
     background: #e1e7ea;
     padding: 5px 3px;
 }
+h4 {
+    font-family: 'oldClaude';
+}
+h5 {
+    font-family: 'oldClaude';
+	background: #e1e7ea;
+	padding: 3px;
+}
 p {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
