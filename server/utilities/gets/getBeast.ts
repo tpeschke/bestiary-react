@@ -1,7 +1,7 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
 import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
-import { LocationVitality, Movement, CombatStat, RawMovement } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario, TablesObject, Table, Row } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
+import { LocationVitality, Movement, CombatStat, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Folklore, Scenario, TablesObject, Table, Row, Size } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
 import { Type, ClimateObject, Climate, LocationObject, Variant } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
 import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
@@ -16,7 +16,8 @@ import { formatCharacteristics } from '../statCalculators/confrontationCalculato
 import { sendErrorForwardNoFile } from "../sendingFunctions";
 import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
 import { formatSkills } from "../statCalculators/skillCalculator";
-import { getMovements } from "../statCalculators/combatCalculators/movement";
+import { calculateMovements } from "../statCalculators/combatCalculators/movement";
+import { calculateCombatStats } from "../statCalculators/combatCalculators/combat";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -303,9 +304,9 @@ export async function getRoles(databaseConnection: any, response: Response, beas
 }
 
 export async function getMovement(databaseConnection: any, response: Response, beastId: number, combatpoints: number, role: string): Promise<Movement[]> {
-    return databaseConnection.beast.movement.get(beastId).then((movements: RawMovement[]) => getMovements(movements, combatpoints, role)).catch((error: Error) => sendErrorForward('movement', error, response))
+    return databaseConnection.beast.movement.get(beastId).then((movements: RawMovement[]) => calculateMovements(movements, combatpoints, role)).catch((error: Error) => sendErrorForward('movement', error, response))
 }
 
-export async function getCombatStats(databaseConnection: any, response: Response, beastId: number): Promise<CombatStat[]> {
-    return databaseConnection.beast.combatStat.get(beastId).catch((error: Error) => sendErrorForward('combat', error, response))
+export async function getCombatStats(databaseConnection: any, response: Response, beastId: number, combatpoints: number, role: string, size: Size): Promise<CombatStat[]> {
+    return databaseConnection.beast.combatStat.get(beastId).then((combatStats: RawCombatStat[]) => calculateCombatStats(combatStats, combatpoints, role, size)).catch((error: Error) => sendErrorForward('combat', error, response))
 }

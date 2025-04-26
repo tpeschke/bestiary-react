@@ -1,5 +1,7 @@
 import { Encounter } from "../../encounterInterfaces"
 
+export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal'
+
 export default interface GeneralInfo {
     name: string,
     plural: string,
@@ -12,7 +14,7 @@ export default interface GeneralInfo {
     senses: string,
     diet: string,
     meta: string,
-    size: string,
+    size: Size,
     rarity: number,
     tables: TablesObject,
 }

@@ -1,19 +1,19 @@
 import { Movement, RawMovement } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
-export function getMovements(movements: RawMovement[], combatpoints: number, role: string) {
+export function calculateMovements(movements: RawMovement[], combatpoints: number, role: string) {
     const roleScalingStrength = primaryCombatRoles[role].meleeCombatStats.movement
-    return movements.map(movement => getMovement(movement, combatpoints, roleScalingStrength))
+    return movements.map(movement => calculateMovement(movement, combatpoints, roleScalingStrength))
 }
 
-function getMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {
+function calculateMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {
     const { id, beastid, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
-    let stroll = getSpeed(strollstrength ? strollstrength : roleScalingStrength, combatpoints + adjustment, 0)
-    let walk = getSpeed(walkstrength ? walkstrength : roleScalingStrength, combatpoints + adjustment, stroll)
-    let jog = getSpeed(jogstrength ? jogstrength : roleScalingStrength, combatpoints + adjustment, walk, 2)
-    let run = getSpeed(runstrength ? runstrength : roleScalingStrength, combatpoints + adjustment, jog, 2)
-    let sprint = getSpeed(sprintstrength ? sprintstrength : roleScalingStrength, combatpoints + adjustment, run, 2)
+    let stroll = calculateSpeed(strollstrength ? strollstrength : roleScalingStrength, combatpoints + adjustment, 0)
+    let walk = calculateSpeed(walkstrength ? walkstrength : roleScalingStrength, combatpoints + adjustment, stroll)
+    let jog = calculateSpeed(jogstrength ? jogstrength : roleScalingStrength, combatpoints + adjustment, walk, 2)
+    let run = calculateSpeed(runstrength ? runstrength : roleScalingStrength, combatpoints + adjustment, jog, 2)
+    let sprint = calculateSpeed(sprintstrength ? sprintstrength : roleScalingStrength, combatpoints + adjustment, run, 2)
 
     return {
         id, beastid, roleid, allroles,
@@ -22,7 +22,7 @@ function getMovement(movement: RawMovement, combatpoints: number, roleScalingStr
     }
 }
 
-function getSpeed(strength: string, points: number, baseSpeed: number, multiplier: number = 1): number {
+function calculateSpeed(strength: string, points: number, baseSpeed: number, multiplier: number = 1): number {
     const scaling = {
         majSt: 3 * multiplier,
         minSt: 2.5 * multiplier,

@@ -1,3 +1,16 @@
+export type Size = {
+    Fine: number,
+    Diminutive: number,
+    Tiny: number,
+    Small: number,
+    Medium: number,
+    Large: number,
+    Huge: number,
+    Giant: number,
+    Enormous: number,
+    Colossal: number
+}
+
 export default interface GeneralInfo {
     name: string,
     plural: string,
@@ -9,7 +22,7 @@ export default interface GeneralInfo {
     senses: string,
     diet: string,
     meta: string,
-    size: string,
+    size: Size,
     rarity: number,
     tables: TablesObject,
 }

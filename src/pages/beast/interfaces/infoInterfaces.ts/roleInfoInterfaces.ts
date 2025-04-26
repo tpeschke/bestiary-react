@@ -1,3 +1,5 @@
+import { Size } from "./generalInfoInterfaces";
+
 export default interface RoleInfo {
     rolenameorder: number,
     defaultrole: string,
@@ -17,11 +19,11 @@ export interface Role {
     panic: number,
     stress: number,
     socialrole: number,
-    socialpoints,
+    socialpoints: number,
     skillrole: number,
-    skillpoints,
+    skillpoints: number,
     socialsecondary: number,
-    size: number,
+    size: Size,
     fatigue: number,
     largeweapons: number,
     mental: number,

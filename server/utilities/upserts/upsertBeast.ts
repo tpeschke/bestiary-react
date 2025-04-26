@@ -93,28 +93,33 @@ async function upsertClimates(promiseArray: any[], databaseConnection: any, beas
 
 async function upsertCombats(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, combatStats: CombatStat[]) {
     await databaseConnection.beast.combatStat.delete([beastId, [0, ...combatStats.map(combatStat => combatStat.id)]]).catch((error: Error) => sendErrorForward('delete combat', error, response))
+    return true
+    // combatStats.forEach((combatStat: CombatStat) => {
+    //     const { id, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+    //         weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefense, alldefense, allaround, armorandshields,
+    //         unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
+    //         weapontype, rangedistance, swarmbonus, adjustment, tdr, info } = combatStat
+    //     const { id, roleid, info, attackInfo, defenseInfo, equipmentInfo } = combatStat
+    //     const { measure, attack, damage, damageType, type, recovery, initiative, rangeIncrement, isspecial } = attackInfo
+    //     const { defense, flanks, parry, cover, parryDR, dr, eua, tdr } = defenseInfo
+    //     const { weapon, shield, armor } = equipmentInfo
 
-    combatStats.forEach((combatStat: CombatStat) => {
-        const { id, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
-            weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
-            unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
-            weapontype, rangedistance, swarmbonus, adjustment, tdr, info } = combatStat
-        if (!id) {
-            promiseArray.push(
-                databaseConnection.beast.combatStat.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
-                    weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
-                    unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
-                    weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('add combat', error, response))
-            )
-        } else {
-            promiseArray.push(
-                databaseConnection.beast.combatStat.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
-                    weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefence, alldefense, allaround, armorandshields,
-                    unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
-                    weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('update combat', error, response))
-            )
-        }
-    })
+    //     if (!id) {
+    //         promiseArray.push(
+    //             databaseConnection.beast.combatStat.add(beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+    //                 weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefense, alldefense, allaround, armorandshields,
+    //                 unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
+    //                 weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('add combat', error, response))
+    //         )
+    //     } else {
+    //         promiseArray.push(
+    //             databaseConnection.beast.combatStat.update(id, beastId, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+    //                 weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, rangeddefense, alldefense, allaround, armorandshields,
+    //                 unarmored, attack, isspecial, eua, addsizemod, weapon, shield, armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses,
+    //                 weapontype, rangedistance, swarmbonus, adjustment, tdr, info).catch((error: Error) => sendErrorForward('update combat', error, response))
+    //         )
+    //     }
+    // })
 }
 
 async function upsertConflict(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, conflicts: ConflictObject) {

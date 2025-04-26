@@ -1,4 +1,4 @@
-import './Movement.css'
+import './MovementInfo.css'
 
 import { Movement } from '../../../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces'
 import Pair from '../../../../../../../../components/UI/pair/Pair'
@@ -7,7 +7,7 @@ interface Props {
     movements?: Movement[]
 }
 
-export default function SpecialInfo({ movements }: Props) {
+export default function MovementInfo({ movements }: Props) {
     return (
         <div className='movements-shell'>
             <Pair title="Movement" info="ft / sec" format={{ heading: true, position: 'opposite', info: 'minor', noBorder: true }} />

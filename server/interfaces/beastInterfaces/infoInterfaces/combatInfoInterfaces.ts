@@ -1,3 +1,5 @@
+import { Strength } from "../beastInterfaces"
+
 export default interface CombatInfo {
     sp_atk: string,
     sp_def: string,
@@ -14,35 +16,77 @@ export interface CombatStat {
     id: number,
     beastid: number,
     roleid: string,
-    piercingweapons: string,
-    slashingweapons: string,
-    crushingweapons: string,
-    weaponsmallslashing: string,
-    weaponsmallcrushing: string,
-    weaponsmallpiercing: string,
-    andslashing: string,
-    andcrushing: string,
-    flanks: string,
-    rangeddefence: string,
-    alldefense: string,
-    allaround: string,
-    armorandshields: string,
-    unarmored: string,
+    info: string,
+    name: string,
+    attackInfo?: AttackInfo,
+    defenseInfo: DefenseInfo,
+    equipmentInfo: EquipmentInfo
+    swarmbonus: string,
+}
+
+export interface EquipmentInfo {
+    weapon: string,
+    shield: string,
+    armor: string,
+}
+
+export type DamageType = 'P' | 'C' | 'S'
+export type Type = 'm' | 'r'
+export type IsSpecial = 'yes' | 'no' | 'kinda'
+
+export interface AttackInfo {
+    measure: number,
     attack: string,
-    isspecial: string,
+    damage: string,
+    damageType: DamageType,
+    type: Type,
+    recovery: number,
+    initiative: string,
+    rangeIncrement: string,
+    isspecial: IsSpecial,
+}
+
+export interface DefenseInfo {
+    defense: string,
+    flanks: number,
+    parry: string,
+    cover: string,
+    parryDR: string,
+    dr: string,
+    eua: boolean,
+    tdr: boolean
+}
+
+export interface RawCombatStat {
+    id: number,
+    beastid: number,
+    roleid: string,
+    piercingweapons: Strength,
+    slashingweapons: Strength,
+    crushingweapons: Strength,
+    weaponsmallpiercing: Strength,
+    weaponsmallslashing: Strength,
+    weaponsmallcrushing: Strength,
+    andslashing: Strength,
+    andcrushing: Strength,
+    flanks: Strength,
+    rangeddefense: Strength,
+    alldefense: Strength,
+    allaround: string,
+    attack: Strength,
+    isspecial: IsSpecial,
     eua: boolean,
     addsizemod: boolean,
     weapon: string,
     shield: string,
     armor: string,
     weaponname: string,
-    rangeddefense: string,
-    initiative: string,
-    measure: string,
-    recovery: string,
+    initiative: Strength,
+    measure: Strength,
+    recovery: Strength,
     showonlydefenses: boolean,
-    weapontype: string,
-    rangedistance: string,
+    weapontype: Type,
+    rangedistance: Strength,
     swarmbonus: string,
     adjustment: number,
     tdr: boolean,

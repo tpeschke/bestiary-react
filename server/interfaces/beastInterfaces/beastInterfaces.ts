@@ -12,7 +12,7 @@ import LootInfo, { Reagent } from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo, { Casting, Spell } from './infoInterfaces/castingInfo'
 import { Encounter } from "../encounterInterfaces"
 
-export type Strength = 'majSt' | 'minSt' | 'minWk' | 'majWk' | 'one' | 'noneStr' | 'noneWk' | 'none' | 'x'
+export type Strength = 'majSt' | 'minSt' | 'minWk' | 'majWk' | 'one' | 'noneStr' | 'noneWk' | 'none' | 'x' | null
 
 export interface Beast {
     id: number,
