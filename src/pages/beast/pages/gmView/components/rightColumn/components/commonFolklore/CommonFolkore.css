@@ -1,0 +1,15 @@
+.common-folklore-shell>div:first-child {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin: 10px 0 5px;
+    display: flex;
+    align-items: end;
+}
+
+.common-folklore-shell ul {
+    margin-left: 5px;
+}
+
+.common-folklore-shell ul ul {
+    color: #434343
+}

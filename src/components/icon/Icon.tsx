@@ -4,16 +4,19 @@ type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'b
 
 type Color = null | 'black'
 
-type IconSize = null | 'h2'
+type IconSize = null | 'h2' | 'small'
+
+type Margin = null | 'left' | 'right' | 'center'
 
 interface Props {
     iconName: Icon,
     tooltip?: string,
     color?: Color,
-    iconSize?: IconSize
+    iconSize?: IconSize,
+    margin?: Margin
 }
 
-export default function Icon({ iconName, tooltip, color, iconSize }: Props) {
+export default function Icon({ iconName, tooltip, color, iconSize, margin }: Props) {
     const WARNING = 'warning'
     let styling: string = WARNING;
 
@@ -52,15 +55,28 @@ export default function Icon({ iconName, tooltip, color, iconSize }: Props) {
             break;
     }
 
-    
-    switch(color) {
+
+    switch (color) {
         case 'black':
             styling += ' black-icon'
     }
 
-    switch(iconSize) {
+    switch (iconSize) {
         case 'h2':
             styling += ' h2-size'
+            break;
+    }
+
+    switch (margin) {
+        case 'left':
+            styling += ' margin-left'
+            break;
+        case 'right':
+            styling += ' margin-right'
+            break;
+        case 'center':
+            styling += ' margin-center'
+            break;
     }
 
     if (styling === WARNING) {

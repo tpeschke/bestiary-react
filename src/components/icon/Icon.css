@@ -10,3 +10,15 @@ i {
 .h2-size {
     font-size: 18px;
 }
+
+.margin-left {
+    margin-left: 5px;
+}
+
+.margin-right {
+    margin-right: 5px;
+}
+
+.margin-center {
+    margin: 0 auto;
+}

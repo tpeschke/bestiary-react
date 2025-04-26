@@ -49,6 +49,9 @@ ol, ul {
 	margin: 5px 0 5px 40px;
 	line-height: 1.2;
 }
+ul ul, ol ol, ul ol, ol ul {
+	margin-left: 5px;
+}
 blockquote, q {
 	quotes: none;
 }
