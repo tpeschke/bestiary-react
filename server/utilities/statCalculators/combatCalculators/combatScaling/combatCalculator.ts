@@ -15,7 +15,7 @@ function calculateScalingAndBonus(scalingStrength: Strength, points: number, sca
     } else if (scalingStrength === 'none' || !scalingStrength) {
         return scaling.none
     } else {
-        return scaling[scalingStrength] + (bonus[scalingStrength] * points)
+        return Math.floor(scaling[scalingStrength] + (bonus[scalingStrength] * points))
     }
 }
 
@@ -44,7 +44,7 @@ export function calculateStatWithFormatting(scalingStrength: Strength, type: str
     return formatBonus(calculateScalingAndBonus(scalingStrength, points, allScalingAndBonuses[type].scaling, allScalingAndBonuses[type].bonus))
 }
 
-export function calculateDefense(scalingStrength: Strength, role: string, points: number, addsizemod: boolean, size: Size): string {
+export function calculateDefense(scalingStrength: Strength, role: string, points: number, addsizemod: boolean, size: Size = 'Medium'): string {
     const modifiedStat = calculateStat(scalingStrength, 'defense', role, points)
 
     if (!addsizemod) {
@@ -89,16 +89,16 @@ export function calculateParryDR(staticScalingStrength: Strength, slashScalingSt
     }
 
     const modifiedStatic = calculateStat(staticScalingStrength, 'parryStaticDR', role, points)
-    const modifitiedSlash = calculateStat(slashScalingStrength, 'parrySlashDR', role, points)
-
-    return formatDRString(modifiedStatic, modifitiedSlash)
+    const modifitedSlash = calculateStat(slashScalingStrength, 'parrySlashDR', role, points)
+    
+    return formatDRString(modifiedStatic, modifitedSlash)
 }
 
 export function calculateDR(staticScalingStrength: Strength, slashScalingStrength: Strength, role: string, points: number) {
     const modifiedStatic = calculateStat(staticScalingStrength, 'staticDR', role, points)
-    const modifitiedSlash = calculateStat(slashScalingStrength, 'slashingDR', role, points)
+    const modifitedSlash = calculateStat(slashScalingStrength, 'slashingDR', role, points)
 
-    return formatDRString(modifiedStatic, modifitiedSlash)
+    return formatDRString(modifiedStatic, modifitedSlash)
 }
 
 function formatDRString(staticDR: number, slashDR: number): string {
@@ -115,5 +115,6 @@ function formatDRString(staticDR: number, slashDR: number): string {
         drString += `${slashDR}/d`
     }
 
+    if (drString === '') { return '0'}
     return drString
 }
