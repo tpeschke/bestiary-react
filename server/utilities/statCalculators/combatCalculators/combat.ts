@@ -1,16 +1,29 @@
-import { CombatStat, Strength } from "../../../interfaces/beastInterfaces/beastInterfaces";
-import { DamageType, RawCombatStat } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Strength } from "../../../interfaces/beastInterfaces/beastInterfaces";
+import { AttackInfo, DamageType, DefenseInfo, RawCombatStat } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { Size } from "../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 import { calculateCover, calculateDefense, calculateDR, calculateParryDR, calculateStat, calculateStatWithFormatting } from "./combatScaling/combatCalculator";
 import { calculateDamageAndRecovery } from "./combatScaling/damageAndRecoveryCalculator";
 
-export function calculateCombatStats(combatStats: RawCombatStat[], combatpoints: number, role: string, size: Size): CombatStat[] {
-    return combatStats.map(stats => calculateSingleCombatInfo(stats, combatpoints, role, size))
+export interface CalculateCombatStatsReturn {
+    attacks: AttackInfo[],
+    defenses: DefenseInfo[]
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, combatpoints: number, role: string, size: Size): CombatStat {
+export function calculateCombatStats(combatStats: RawCombatStat[], combatpoints: number, role: string, size: Size): CalculateCombatStatsReturn {
+    let defenses: DefenseInfo[] = []
+    let attacks: AttackInfo[] = []
+
+    combatStats.forEach(stats => calculateSingleCombatInfo(stats, defenses, attacks, combatpoints, role, size))
+
+    return {
+        attacks,
+        defenses
+    }
+}
+
+function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], combatpoints: number, role: string, size: Size): void {
     const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, weapontype, showonlydefenses, recovery, measure, initiative, rangeddefense: cover, weaponname,
         armor, shield, weapon, eua, isspecial, attack, alldefense, flanks, andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry,
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage
@@ -18,37 +31,35 @@ function calculateSingleCombatInfo(stats: RawCombatStat, combatpoints: number, r
 
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, role)
     const totalPoints = combatpoints + adjustment
+    const weaponName = getWeaponName(weaponname, weapon, shield, armor)
 
-    let formattedStats: CombatStat = {
-        id, beastid, roleid, info, swarmbonus,
-        name: getWeaponName(weaponname, weapon, shield, armor),
-        defenseInfo: {
-            eua, tdr,
+    defenses.push(
+        {
+            id, beastid, roleid, swarmbonus, armor, shield, eua, tdr,
+            name: weaponName,
             defense: calculateDefense(alldefense, role, totalPoints, addsizemod, size),
             flanks: calculateStat(flanks, 'flanks', role, totalPoints),
             parry: calculateStatWithFormatting(parry, 'parry', role, totalPoints),
             cover: calculateCover(cover, role, totalPoints),
             parryDR: calculateParryDR(parryStaticDR, parrySlashDR, role, totalPoints, eua),
-            dr: calculateDR(slashingDR, staticDR, role, totalPoints),
-        },
-        equipmentInfo: {
-            weapon, shield, armor,
+            dr: calculateDR(slashingDR, staticDR, role, totalPoints)
         }
-    }
+    )
 
     if (!showonlydefenses) {
-        formattedStats.attackInfo = {
-            damageType, isspecial,
-            measure: calculateStat(measure, 'measure', role, totalPoints),
-            attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
-            type: weapontype,
-            initiative: calculateStatWithFormatting(initiative, 'initiative', role, totalPoints),
-            rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
-            ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recovery, role, totalPoints, isspecial, damageType)
-        }
+        attacks.push(
+            {
+                id, beastid, roleid, info, swarmbonus, damageType, isspecial, weapon,
+                name: weaponName,
+                type: weapontype,
+                measure: calculateStat(measure, 'measure', role, totalPoints),
+                attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
+                initiative: calculateStatWithFormatting(initiative, 'initiative', role, totalPoints),
+                rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
+                ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recovery, role, totalPoints, isspecial, damageType)
+            }
+        )
     }
-
-    return formattedStats
 }
 
 function getWeaponName(chosenName: string, weapon: string, shield: string, armor: string): string {

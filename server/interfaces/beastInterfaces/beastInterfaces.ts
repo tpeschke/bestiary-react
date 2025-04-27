@@ -5,7 +5,7 @@ import PlayerSpecificInfo from './infoInterfaces/playerSpecificInfoInterfaces'
 import ImageInfo, { ArtistObject } from './infoInterfaces/ImageInfoInterfaces'
 import LinkedInfo, { ClimateObject, LocationObject, Type, Variant } from './infoInterfaces/linkedInfoInterfaces'
 import RoleInfo, { Role } from './infoInterfaces/roleInfoInterfaces'
-import CombatInfo, { CombatStat, LocationVitality, Movement } from './infoInterfaces/combatInfoInterfaces'
+import CombatInfo, { AttackInfo, DefenseInfo, LocationVitality, Movement } from './infoInterfaces/combatInfoInterfaces'
 import SkillInfo, { Skill } from './infoInterfaces/skillInfoInterfaces'
 import SocialInfo, { ConflictObject } from './infoInterfaces/socialInfo'
 import LootInfo, { Reagent } from './infoInterfaces/lootInfoInterfaces'
@@ -34,7 +34,6 @@ export interface upsertParameters {
     roles: Role[],
     types: Type[],
     climates: ClimateObject,
-    combatStats: CombatStat[],
     conflicts: ConflictObject,
     skills: Skill[],
     movements: Movement[],
@@ -54,7 +53,9 @@ export interface upsertParameters {
     tables: TablesObject,
     encounters: Encounter,
     lairLoot: Loot,
-    carriedLoot: Loot
+    carriedLoot: Loot,
+    attacks: AttackInfo[],
+    defenses: DefenseInfo[]
 }
 
-export { CombatStat, ClimateObject, Role, Type, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }
+export { ClimateObject, Role, Type, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }

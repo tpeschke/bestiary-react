@@ -1,6 +1,6 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
 import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
-import { LocationVitality, Movement, CombatStat, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { Folklore, Scenario, TablesObject, Table, Row, Size } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
 import { Type, ClimateObject, Climate, LocationObject, Variant } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
@@ -17,7 +17,7 @@ import { sendErrorForwardNoFile } from "../sendingFunctions";
 import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../sorts";
 import { formatSkills } from "../statCalculators/skillCalculator";
 import { calculateMovements } from "../statCalculators/combatCalculators/movement";
-import { calculateCombatStats } from "../statCalculators/combatCalculators/combat";
+import { calculateCombatStats, CalculateCombatStatsReturn } from "../statCalculators/combatCalculators/combat";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
@@ -307,6 +307,6 @@ export async function getMovement(databaseConnection: any, response: Response, b
     return databaseConnection.beast.movement.get(beastId).then((movements: RawMovement[]) => calculateMovements(movements, combatpoints, role)).catch((error: Error) => sendErrorForward('movement', error, response))
 }
 
-export async function getCombatStats(databaseConnection: any, response: Response, beastId: number, combatpoints: number, role: string, size: Size): Promise<CombatStat[]> {
+export async function getCombatStats(databaseConnection: any, response: Response, beastId: number, combatpoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
     return databaseConnection.beast.combatStat.get(beastId).then((combatStats: RawCombatStat[]) => calculateCombatStats(combatStats, combatpoints, role, size)).catch((error: Error) => sendErrorForward('combat', error, response))
 }

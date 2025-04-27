@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo }: Props) {
-    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, combatStats, tactics } = combatInfo
+    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, attacks, defenses, tactics } = combatInfo
     const { vitality, fatigue, rollundertrauma, notrauma, trauma } = vitalityInfo
 
     let vitalityString = `${vitality}`
@@ -28,9 +28,9 @@ export default function CombatSection({ combatInfo }: Props) {
             <TraumaDisplay trauma={trauma} notrauma={notrauma} rollundertrauma={rollundertrauma} />
             <SpecialInfo type="Defense" info={sp_def} />
             <SpecialInfo type="Attack" info={sp_atk} />
-            <Body>
+            {/* <Body>
                 <CombatTables combatStats={combatStats} />
-            </Body>
+            </Body> */}
             <Movement movements={movements} />
             <TacticsAndStrategy tactics={tactics} />
         </>

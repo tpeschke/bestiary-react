@@ -4,7 +4,7 @@ import { Challenge, Obstacle } from "../interfaces/skillInterfaces"
 import { Beast, upsertParameters } from "../interfaces/beastInterfaces/beastInterfaces"
 import { Casting, Spell } from "../interfaces/beastInterfaces/infoInterfaces/castingInfo"
 import { Role } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
-import { Movement, CombatStat, LocationVitality } from "../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
+import { Movement, LocationVitality } from "../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
 import { Scenario, Folklore } from "../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
 import { Variant, LocationObject, Type, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
@@ -24,6 +24,7 @@ import {
 } from "../utilities/gets/getBeast"
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
 import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
+import { CalculateCombatStatsReturn } from "../utilities/statCalculators/combatCalculators/combat"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -40,7 +41,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const { thumbnail, imagesource, artistInfo } = imageInfo
     const { variants, locations, types, climates } = linkedInfo
     const { rolenameorder, defaultrole, roles } = roleInfo
-    const { sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary, vitalityInfo, movements, combatStats } = combatInfo
+    const { sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary, vitalityInfo, movements, attacks, defenses } = combatInfo
     const { fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, locationalVitalities } = vitalityInfo
     const { panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, skills, challenges, obstacles } = skillInfo
     const { traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf, archetypeInfo, conflicts } = socialInfo
@@ -73,7 +74,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     }
 
     const updateParameters: upsertParameters = {
-        roles, types, climates, combatStats, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
+        roles, types, climates, attacks, defenses, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
         casting, deletedSpells, spells, obstacles, challenges, tables, encounters, lairLoot, carriedLoot
     }
 
@@ -175,7 +176,8 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         },
         combatInfo: {
             sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary,
-            combatStats: [],
+            attacks: [],
+            defenses: [],
             movements: [],
             vitalityInfo: {
                 notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
@@ -246,7 +248,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     promiseArray.push(getRoles(databaseConnection, response, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
     promiseArray.push(getMovement(databaseConnection, response, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(databaseConnection, response, beast.id, combatpoints, combatrole).then((combatStats: CombatStat[]) => beast.combatInfo.combatStats = combatStats))
+    promiseArray.push(getCombatStats(databaseConnection, response, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = {...beast.combatInfo, ...attackAndDefenses}))
 
     promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 
