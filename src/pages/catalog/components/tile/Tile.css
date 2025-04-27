@@ -23,6 +23,7 @@
     width: 100px;
     overflow: hidden;
     border-radius: 5px;
+    margin: auto;
 }
 
 .image-frame>img {
