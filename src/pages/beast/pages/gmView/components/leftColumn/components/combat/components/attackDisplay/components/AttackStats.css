@@ -1,0 +1,39 @@
+.attack-stats-shell span {
+    display: flex;
+    justify-content: space-between;
+    background: #f3f3f3;
+    padding: 3px 5px;
+    color: #434343;
+}
+
+.attack-stats-shell span p {
+    font-style: italic;
+}
+
+.attack-stats-shell>div, .attack-stats-left>div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.attack-stats-shell>div>div {
+    width: 66%;
+}
+
+.attack-stats-shell>div>div:last-child {
+    width: 33%;
+}
+
+.attack-stats-left>div>div {
+    display: flex;
+    justify-content: space-evenly;
+    width: 33%;
+}
+
+.attack-stats-left>div>div p {
+    width: 45%;
+    padding: 0 5px;
+}
+
+.attack-stats-left>div>div p:first-child {
+    text-align: right;
+}

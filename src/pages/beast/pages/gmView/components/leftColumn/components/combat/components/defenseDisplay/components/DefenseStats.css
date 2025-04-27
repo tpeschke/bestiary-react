@@ -1,0 +1,26 @@
+h6 {
+    background: #f3f3f3;
+    color: #434343;
+    padding: 3px 5px;
+}
+
+.defense-stats-shell>div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.defense-stats-shell>div>div {
+    display: flex;
+    justify-content: space-evenly;
+    width: 33%;
+    padding: 0 5px;
+}
+
+.defense-stats-shell>div>div p {
+    width: 45%;
+    padding: 0 5px;
+}
+
+.defense-stats-shell>div>div p:first-child {
+    text-align: right;
+}
