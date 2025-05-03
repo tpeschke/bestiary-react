@@ -7,6 +7,7 @@ type Format = {
     bottomBorder?: boolean,
     position?: 'opposite',
     info?: 'minor'
+    infoWidth?: 'unset',
     titleJustified?: 'right'
 }
 
@@ -25,13 +26,17 @@ export default function Pair({ title, info, format }: Props) {
     let titleClassString = ""
     format?.titleJustified === 'right' ? titleClassString += "justifiedRight" : null
 
+    let infoClassString = ""
+    format?.info ? infoClassString += ' minor' : null
+    format?.infoWidth === 'unset' ? infoClassString += ' unsetWith' : null
+
     return (
         <div className={shellClassString}>
             {format?.title === 'none' ?
                 <p className={titleClassString}>{title}</p>
                 :
                 <h3 className={titleClassString}>{title}</h3>}
-            <p className={format?.info ? 'minor' : ''}>{info}</p>
+            <p className={infoClassString}>{info}</p>
         </div>
     )
 }

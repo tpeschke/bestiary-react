@@ -1,0 +1,10 @@
+button.climate-display {
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button.climate-display:hover {
+    background: #e1e7ea;
+}

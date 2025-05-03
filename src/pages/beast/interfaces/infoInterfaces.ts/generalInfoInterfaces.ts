@@ -25,7 +25,7 @@ export default interface GeneralInfo {
     diet: string,
     meta: string,
     size: Size,
-    rarity: number,
+    rarity: Rarity,
     tables: TablesObject,
 }
 
@@ -40,6 +40,12 @@ export interface Folklore {
     beastid: number,
     belief: string,
     truth: string
+}
+
+export interface Rarity {
+    rarityId: number,
+    rarityName: string,
+    modifier?: string
 }
 
 export interface TablesObject {

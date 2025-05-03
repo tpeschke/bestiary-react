@@ -73,6 +73,11 @@ h2 {
     font-weight: 600;
     letter-spacing: 2px;
 }
+h2.border {
+	border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin: 15px 0 5px;
+}
 h3 {
 	font-size: 15px;
     color: #434343;

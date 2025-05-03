@@ -12,7 +12,7 @@ export default function InfoDisplay({ section, info }: Props) {
 
     return (
         <div className='info-display-shell'>
-            <h2>{section}</h2>
+            <h2 className='border'>{section}</h2>
             <Body>
                 <HTMLDisplay html={info} />
             </Body>

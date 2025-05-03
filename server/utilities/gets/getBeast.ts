@@ -1,7 +1,7 @@
 import { Response, Error, User } from "../../interfaces/apiInterfaces";
 import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
 import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario, TablesObject, Table, Row, Size } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
+import { Folklore, Scenario, TablesObject, Table, Row, Size, Rarity } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Climate, LocationObject, Variant, Location } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
 import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
@@ -106,7 +106,7 @@ export async function getLocations(databaseConnection: any, beastId: number, isE
     }
 
     const beast: Location[] = await databaseConnection.beast.location.get(beastId)
-    
+
     return {
         beast,
         alllocations
@@ -346,4 +346,32 @@ export async function getMovement(databaseConnection: any, beastId: number, comb
 export async function getCombatStats(databaseConnection: any, beastId: number, combatpoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
     const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)
     return calculateCombatStats(combatStats, combatpoints, role, size)
+}
+
+export function getRarity(rarityId: number): Rarity {
+    const rarityDictionary = {
+        1: {
+            rarityName: 'Legendary',
+            modifier: '2d20'
+        },
+        3: {
+            rarityName: 'Rare',
+            modifier: 'd20'
+        },
+        5: {
+            rarityName: 'Uncommon',
+            modifier: 'd10'
+        },
+        10: {
+            rarityName: 'Common',
+            modifier: '0'
+        }
+    }
+
+    const rarityInfo = rarityDictionary[rarityId] ? rarityDictionary[rarityId] : { rarityName: 'None'}
+
+    return {
+        rarityId,
+        ...rarityInfo
+    }
 }

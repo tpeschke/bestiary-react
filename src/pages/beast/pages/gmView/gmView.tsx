@@ -4,6 +4,7 @@ import NameHeader from "../../components/UI/nameHeader/nameHeader"
 import DoubleColumn from "../../components/UI/doubleColumn/doubleColumn"
 import RightColumn from "./components/rightColumn/RightColumn"
 import LeftColumn from "./components/leftColumn/LeftColumn"
+import { MiscInfo } from "./components/rightColumn/components/miscInfoDisplay/MiscInfoDisplay"
 
 interface Props {
     beast: GMBeastClass
@@ -11,15 +12,22 @@ interface Props {
 
 export default function GMView({ beast }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo } = beast
-    const { name, appearance, intro, habitat, folklores, size, scenarios } = generalInfo
-    const { types } = linkedInfo
+    const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity } = generalInfo
+    const { types, climates } = linkedInfo
+
+    const miscInfo: MiscInfo = {
+        senses,
+        diet,
+        rarity,
+        climates: climates.beast
+    }
 
     return (
         <>
             <NameHeader name={name} />
             <DoubleColumn 
                 LeftColumn={LeftColumn({ beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size })}
-                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types })}
+                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo })}
             />
         </>
     )

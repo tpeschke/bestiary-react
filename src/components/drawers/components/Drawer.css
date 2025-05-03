@@ -1,12 +1,12 @@
 .drawer-shell {
-    background: #e1e7ea;
+    background: #f3f3f3;
     height: 45px;
     overflow: hidden;
     cursor: pointer;
 }
 
 .drawer-shell h3:hover {
-    background: #d0d4d8;
+    background: #e1e7ea;
 }
 
 .drawer-shell.open {
@@ -23,7 +23,7 @@
 }
 
 .drawer-shell.open h3 {
-    background: #d0d4d8;
+    background: #e1e7ea;
 }
 
 .drawer-innards {

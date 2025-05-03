@@ -14,7 +14,7 @@ export default function TypesDisplay({ types }: Props) {
 
     return (
         <div className='types-display-shell'>
-            <h2>Types</h2>
+            <h2 className='border'>Types</h2>
             <Drawers drawerInnards={formatedTypes} />
         </div>
     )

@@ -20,7 +20,8 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import {
     getArtistInfo, getClimates, getConflict, getLocations, getTypes, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
-    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats
+    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats,
+    getRarity
 } from "../utilities/gets/getBeast"
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
 import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
@@ -118,7 +119,8 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     let beast: Beast = {
         id, patreon, canplayerview,
         generalInfo: {
-            name, plural, intro, habitat, appearance, senses, diet, meta, size, rarity,
+            name, plural, intro, habitat, appearance, senses, diet, meta, size, 
+            rarity: getRarity(rarity),
             scenarios: [],
             folklores: [],
             tables: {

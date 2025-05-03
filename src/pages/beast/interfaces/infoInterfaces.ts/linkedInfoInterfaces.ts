@@ -2,7 +2,7 @@ export default interface LinkedInfo {
     variants?: Variant[],
     locations?: LocationObject,
     types: BeastType[],
-    climates?: ClimateObject,
+    climates: ClimateObject,
 }
 
 export interface Variant {
@@ -33,13 +33,11 @@ export interface ClimateObject {
 export interface Climate {
     beastid: number,
     climate: string,
-    code: string,
+    code?: string,
     examples: string,
     uniqueid: number,
     climateid?: number,
     id?: number,
-    priority?: number,
-    deleted?: boolean
 }
 
 export interface Location {
