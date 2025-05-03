@@ -11,13 +11,13 @@ interface Props {
 
 export default function GMView({ beast }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo } = beast
-    const { name, appearance, intro, habitat, folklores, size } = generalInfo
+    const { name, appearance, intro, habitat, folklores, size, scenarios } = generalInfo
     return (
         <>
             <NameHeader name={name} />
             <DoubleColumn 
                 LeftColumn={LeftColumn({ beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size })}
-                RightColumn={RightColumn({ appearance, intro, habitat, folklores })}
+                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios })}
             />
         </>
     )
