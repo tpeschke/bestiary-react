@@ -3,7 +3,7 @@ import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/
 import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { Folklore, Scenario, TablesObject, Table, Row, Size } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
-import { Type, ClimateObject, Climate, LocationObject, Variant } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
+import { Type, ClimateObject, Climate, LocationObject, Variant, Location } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
 import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
 import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
@@ -41,27 +41,26 @@ export async function getTypes(databaseConnection: any, beastId: number): Promis
 
 export async function getClimates(databaseConnection: any, beastId: number): Promise<ClimateObject> {
     const beast: Climate[] = await databaseConnection.beast.climate.get(beastId)
-    return databaseConnection.beast.climate.getAll().then((alllimates: Climate[]) => {
-        return {
-            beast,
-            alllimates
-        }
-    })
+    const allclimates = await databaseConnection.beast.climate.getAll()
+    return {
+        beast,
+        allclimates
+    }
 }
 
 export async function getArtistInfo(databaseConnection: any, beastId: number, isEditing: boolean): Promise<ArtistObject> {
-    let allArtists: ArtistObject[] = []
+    let allartists: ArtistInfo[] = []
     if (isEditing) {
-        allArtists = await databaseConnection.beast.artist.getAll(beastId)
+        allartists = await databaseConnection.beast.artist.getAll(beastId)
     }
 
-    return databaseConnection.beast.artist.get(beastId).then((genericArtistInfo: ArtistInfo[]) => {
-        return {
-            genericArtistInfo: genericArtistInfo[0],
-            roleartists: genericArtistInfo.splice(1),
-            allArtists
-        }
-    })
+    const genericArtistInfo: ArtistInfo[] = await databaseConnection.beast.artist.get(beastId)
+
+    return {
+        genericArtistInfo: genericArtistInfo[0],
+        roleartists: genericArtistInfo.splice(1),
+        allartists
+    }
 }
 
 export async function getLocations(databaseConnection: any, beastId: number, isEditing: boolean): Promise<LocationObject> {
@@ -70,12 +69,12 @@ export async function getLocations(databaseConnection: any, beastId: number, isE
         alllocations = await databaseConnection.beast.location.getAll(beastId)
     }
 
-    return databaseConnection.beast.location.get(beastId).then(beast => {
-        return {
-            beast,
-            alllocations
-        }
-    })
+    const beast: Location[] = await databaseConnection.beast.location.get(beastId)
+    
+    return {
+        beast,
+        alllocations
+    }
 }
 
 export async function getConflict(databaseConnection: any, beastId: number, isEditing: boolean,
@@ -84,65 +83,64 @@ export async function getConflict(databaseConnection: any, beastId: number, isEd
     let conflict: ConflictObject = { descriptions: [], convictions: [], relationships: [], flaws: [], burdens: [] }
 
     if (isEditing) {
-        return databaseConnection.beast.conflict.getEdit(beastId).then((characteristics: UnformatedConflict[]) => {
-            characteristics.forEach((characteristic: UnformatedConflict) => {
-                if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
-                    conflict.convictions.push(characteristic)
-                } else if (characteristic.type === 'd') {
-                    conflict.relationships.push(characteristic)
-                } else if (characteristic.type === 'f') {
-                    conflict.flaws.push(characteristic)
-                } else if (characteristic.type === 'b') {
-                    conflict.burdens.push(characteristic)
-                } else if (characteristic.type === 'h') {
-                    conflict.descriptions.push(characteristic)
-                }
-            })
-            return conflict
+        const characteristics: UnformatedConflict[] = await databaseConnection.beast.conflict.getEdit(beastId)
+
+        characteristics.forEach((characteristic: UnformatedConflict) => {
+            if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
+                conflict.convictions.push(characteristic)
+            } else if (characteristic.type === 'd') {
+                conflict.relationships.push(characteristic)
+            } else if (characteristic.type === 'f') {
+                conflict.flaws.push(characteristic)
+            } else if (characteristic.type === 'b') {
+                conflict.burdens.push(characteristic)
+            } else if (characteristic.type === 'h') {
+                conflict.descriptions.push(characteristic)
+            }
         })
+        return conflict
     } else {
-        return databaseConnection.beast.conflict.get(beastId).then((characteristics: UnformatedConflict[]) => {
-            characteristics.forEach((characteristic: UnformatedConflict) => {
-                if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
-                    if (traitlimit && conflict.convictions.length < traitlimit) {
-                        conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
-                    } else if (!traitlimit) {
-                        conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
-                    }
-                } else if (characteristic.type === 'd') {
-                    if (relationshiplimit && conflict.relationships.length < relationshiplimit) {
-                        conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
-                    } else if (!relationshiplimit) {
-                        conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
-                    }
-                } else if (characteristic.type === 'f') {
-                    if (flawlimit && conflict.flaws.length < flawlimit) {
-                        conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
-                    } else if (!flawlimit) {
-                        conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
-                    }
-                } else if (characteristic.type === 'b') {
-                    conflict.burdens.push(formatCharacteristics(socialpoints, characteristic))
-                } else if (characteristic.type === 'h') {
-                    conflict.descriptions.push(formatCharacteristics(socialpoints, characteristic))
+        const characteristics: UnformatedConflict[] = await databaseConnection.beast.conflict.get(beastId)
+
+        characteristics.forEach((characteristic: UnformatedConflict) => {
+            if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
+                if (traitlimit && conflict.convictions.length < traitlimit) {
+                    conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
+                } else if (!traitlimit) {
+                    conflict.convictions.push(formatCharacteristics(socialpoints, characteristic))
                 }
-            })
-
-            conflict.descriptions = conflict.descriptions.sort(sortByRank)
-            conflict.convictions = conflict.convictions.sort(sortByRank)
-            conflict.flaws = conflict.flaws.sort(sortOutAnyToTheBottom)
-            conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
-
-            return conflict
+            } else if (characteristic.type === 'd') {
+                if (relationshiplimit && conflict.relationships.length < relationshiplimit) {
+                    conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
+                } else if (!relationshiplimit) {
+                    conflict.relationships.push(formatCharacteristics(socialpoints, characteristic))
+                }
+            } else if (characteristic.type === 'f') {
+                if (flawlimit && conflict.flaws.length < flawlimit) {
+                    conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
+                } else if (!flawlimit) {
+                    conflict.flaws.push(formatCharacteristics(socialpoints, characteristic))
+                }
+            } else if (characteristic.type === 'b') {
+                conflict.burdens.push(formatCharacteristics(socialpoints, characteristic))
+            } else if (characteristic.type === 'h') {
+                conflict.descriptions.push(formatCharacteristics(socialpoints, characteristic))
+            }
         })
+
+        conflict.descriptions = conflict.descriptions.sort(sortByRank)
+        conflict.convictions = conflict.convictions.sort(sortByRank)
+        conflict.flaws = conflict.flaws.sort(sortOutAnyToTheBottom)
+        conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
+
+        return conflict
     }
 }
 
 export async function getSkills(databaseConnection: any, beastId: number, skillpoints: number): Promise<Skill[]> {
-    return databaseConnection.beast.skill.get(beastId).then((skills: Skill[]) => {
-        skills = skills.map(skill => formatSkills(skillpoints, skill))
-        return skills.sort((a, b) => b.rank - a.rank)
-    })
+    const skills: Skill[] = await databaseConnection.beast.skill.get(beastId)
+
+    return skills.map(skill => formatSkills(skillpoints, skill)).sort((a, b) => b.rank - a.rank)
 }
 
 export async function getChallenges(databaseConnection: any, beastId: number): Promise<Challenge[]> {
@@ -170,13 +168,13 @@ export async function getLairAlms(databaseConnection: any, beastId: number): Pro
 }
 
 export async function getLairItems(databaseConnection: any, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
-    return databaseConnection.loot.lair.getItem(beastId).then((items: Item[]) => {
-        if (isEditing) {
-            return objectifyItemArray(items)
-        } else {
-            return items
-        }
-    })
+    const items: Item[] = await databaseConnection.loot.lair.getItem(beastId)
+
+    if (isEditing) {
+        return objectifyItemArray(items)
+    } else {
+        return items
+    }
 }
 
 export async function getLairScrolls(databaseConnection: any, beastId: number): Promise<Scroll[]> {
@@ -192,13 +190,13 @@ export async function getCarriedAlms(databaseConnection: any, beastId: number): 
 }
 
 export async function getCarriedItems(databaseConnection: any, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
-    return databaseConnection.loot.carried.getItem(beastId).then((items: Item[]) => {
-        if (isEditing) {
-            return objectifyItemArray(items)
-        } else {
-            return items
-        }
-    })
+    const items: Item[] = await databaseConnection.loot.carried.getItem(beastId)
+
+    if (isEditing) {
+        return objectifyItemArray(items)
+    } else {
+        return items
+    }
 }
 
 export async function getCarriedScrolls(databaseConnection: any, beastId: number): Promise<Scroll[]> {
@@ -227,14 +225,14 @@ interface archetypeInfo {
 
 export async function getArchetypes(databaseConnection: any, isEditing: boolean, hasarchetypes: boolean, hasmonsterarchetypes: boolean): Promise<Archetype> {
     if (isEditing && hasarchetypes) {
-        return databaseConnection.beast.archetype.get().then((archetypeInfo: archetypeInfo[]) => {
-            const chance = Math.floor(Math.random() * 100)
-            return {
-                archetype: archetypeInfo[0].archetype,
-                deviation: chance > 51 && chance < 75,
-                reverse: chance > 75
-            }
-        })
+        const archetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.get()
+
+        const chance = Math.floor(Math.random() * 100)
+        return {
+            archetype: archetypeInfo[0].archetype,
+            deviation: chance > 51 && chance < 75,
+            reverse: chance > 75
+        }
     } else if (isEditing && hasmonsterarchetypes) {
         return databaseConnection.beast.archetype.getMonster()
     }
@@ -244,14 +242,16 @@ export async function getArchetypes(databaseConnection: any, isEditing: boolean,
 
 export async function getFavorite(databaseConnection: any, beastId: number, userId: number): Promise<boolean> {
     if (userId) {
-        return databaseConnection.user.favorite.get(userId, beastId).then(result => result.length > 0)
+        const result = await databaseConnection.user.favorite.get(userId, beastId)
+        return result.length > 0
     } else {
         return false
     }
 }
 
 export async function getNotes(databaseConnection: any, beastId: number, userId: number): Promise<string> {
-    return databaseConnection.user.notes.get(beastId, userId).then(result => result[0])
+    const result = await databaseConnection.user.notes.get(beastId, userId)
+    return result[0]
 }
 
 export async function getTables(databaseConnection: any, beastId: number, tables: TablesObject, promiseArray: any[]) {
@@ -294,19 +294,20 @@ export async function getSpells(databaseConnection: any, beastId: number): Promi
 }
 
 export async function getRoles(databaseConnection: any, beastId: number, beastName: string): Promise<Role[]> {
-    return databaseConnection.beast.role.get(beastId).then((roles: Role[]) => {
-        if (beastName.includes('Template')) {
-            roles = roles.sort(sortTemplateRoles)
-        }
+    const roles: Role[] = await databaseConnection.beast.role.get(beastId)
 
-        return roles
-    })
+    if (beastName.includes('Template')) {
+        return roles.sort(sortTemplateRoles)
+    }
+    return roles
 }
 
 export async function getMovement(databaseConnection: any, beastId: number, combatpoints: number, role: string): Promise<Movement[]> {
-    return databaseConnection.beast.movement.get(beastId).then((movements: RawMovement[]) => calculateMovements(movements, combatpoints, role))
+    const movements: RawMovement[] = await databaseConnection.beast.movement.get(beastId)
+    return calculateMovements(movements, combatpoints, role)
 }
 
 export async function getCombatStats(databaseConnection: any, beastId: number, combatpoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
-    return databaseConnection.beast.combatStat.get(beastId).then((combatStats: RawCombatStat[]) => calculateCombatStats(combatStats, combatpoints, role, size))
+    const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)
+    return calculateCombatStats(combatStats, combatpoints, role, size)
 }
