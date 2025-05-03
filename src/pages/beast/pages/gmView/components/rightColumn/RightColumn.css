@@ -1,8 +1,8 @@
-h3 {
+.right-column-shell h3 {
     background: unset;
     color: #607d8b;
 }
 
-ul {
+.right-column-shell ul {
     margin-left: 5px;
 }

@@ -23,7 +23,7 @@ interface Props {
 
 export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo }: Props) {
     return (
-        <>
+        <div className='right-column-shell'>
             <Body>
                 <HTMLDisplay html={intro} />
             </Body>
@@ -33,6 +33,6 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <ScenarioDisplay scenarios={scenarios} />
             <TypesDisplay types={types} />
             <MiscInfoDisplay miscInfo={miscInfo} />
-        </>
+        </div>
     )
 }
