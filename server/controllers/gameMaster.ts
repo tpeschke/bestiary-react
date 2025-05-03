@@ -25,7 +25,6 @@ import {
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
 import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
 import { CalculateCombatStatsReturn } from "../utilities/statCalculators/combatCalculators/combat"
-import { calculateStatWithFormatting } from "../utilities/statCalculators/combatCalculators/combatScaling/combatCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -95,11 +94,21 @@ interface GetBeastQuery {
 }
 
 export async function getGMVersionOfBeast(request: GetRequest, response: Response) {
-    const beastId = +request.params.beastid
-    const userId = request.user?.id
     const databaseConnection = getDatabaseConnection(request)
+    const beastId = +request.params.beastid
+    const isEditing = request.query ? request.query.edit === 'true' : false
 
-    const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
+    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastId, isEditing).catch((error: Error) => sendErrorForward('get main', error, response))
+    
+    if (beast) {
+        checkForContentTypeBeforeSending(response, beast)
+    } else {
+        sendErrorForward('404', { message: 'No Beast Found'}, response)
+    }
+}
+
+export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, isEditing: boolean = false): Promise<Beast> {
+    const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
@@ -138,10 +147,6 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
                 groups: [],
                 numbers: []
             }
-        },
-        playerSpecificInfo: {
-            favorite: false,
-            notes: ''
         },
         imageInfo: {
             thumbnail,
@@ -231,53 +236,47 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         }
     }
     let promiseArray: any[] = []
-    const isEditing = request.query ? request.query.edit === 'true' : false
 
-    promiseArray.push(getScenarios(databaseConnection, response, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
-    promiseArray.push(getFolklore(databaseConnection, response, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
-    getTables(databaseConnection, response, beast.id, beast.generalInfo.tables, promiseArray)
+    promiseArray.push(getScenarios(databaseConnection, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
+    promiseArray.push(getFolklore(databaseConnection, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
+    getTables(databaseConnection, beast.id, beast.generalInfo.tables, promiseArray)
 
-    promiseArray.push(getFavorite(databaseConnection, response, beast.id, userId).then((favorite: boolean) => beast.playerSpecificInfo.favorite = favorite))
-    promiseArray.push(getNotes(databaseConnection, response, beast.id, userId).then((notes: string) => beast.playerSpecificInfo.notes = notes))
+    promiseArray.push(getArtistInfo(databaseConnection, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
 
-    promiseArray.push(getArtistInfo(databaseConnection, response, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
+    promiseArray.push(getVariants(databaseConnection, beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
+    promiseArray.push(getLocations(databaseConnection, beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
+    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: Type[]) => beast.linkedInfo.types = types))
+    promiseArray.push(getClimates(databaseConnection, beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
 
-    promiseArray.push(getVariants(databaseConnection, response, beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
-    promiseArray.push(getLocations(databaseConnection, response, beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
-    promiseArray.push(getTypes(databaseConnection, response, beast.id).then((types: Type[]) => beast.linkedInfo.types = types))
-    promiseArray.push(getClimates(databaseConnection, response, beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
+    promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
-    promiseArray.push(getRoles(databaseConnection, response, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
+    promiseArray.push(getMovement(databaseConnection, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
+    promiseArray.push(getCombatStats(databaseConnection, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses } ))
 
-    promiseArray.push(getMovement(databaseConnection, response, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(databaseConnection, response, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses } ))
+    promiseArray.push(getLocationalVitalities(databaseConnection, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 
-    promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
+    promiseArray.push(getSkills(databaseConnection, beast.id, skillpoints).then((skills: Skill[]) => beast.skillInfo.skills = skills))
+    promiseArray.push(getChallenges(databaseConnection, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
+    promiseArray.push(getObstacles(databaseConnection, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
-    promiseArray.push(getSkills(databaseConnection, response, beast.id, skillpoints).then((skills: Skill[]) => beast.skillInfo.skills = skills))
-    promiseArray.push(getChallenges(databaseConnection, response, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
-    promiseArray.push(getObstacles(databaseConnection, response, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
+    promiseArray.push(getConflict(databaseConnection, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
+    promiseArray.push(getArchetypes(databaseConnection, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
 
-    promiseArray.push(getConflict(databaseConnection, response, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
-    promiseArray.push(getArchetypes(databaseConnection, response, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
+    promiseArray.push(getReagents(databaseConnection, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents))
+    promiseArray.push(getSpecificLoots(databaseConnection, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
 
-    promiseArray.push(getReagents(databaseConnection, response, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents))
-    promiseArray.push(getSpecificLoots(databaseConnection, response, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
+    promiseArray.push(getLairBasic(databaseConnection, beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))
+    promiseArray.push(getLairAlms(databaseConnection, beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }))
+    promiseArray.push(getLairItems(databaseConnection, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }))
+    promiseArray.push(getLairScrolls(databaseConnection, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }))
 
-    promiseArray.push(getLairBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))
-    promiseArray.push(getLairAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }))
-    promiseArray.push(getLairItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }))
-    promiseArray.push(getLairScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }))
+    promiseArray.push(getCarriedBasic(databaseConnection, beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }))
+    promiseArray.push(getCarriedAlms(databaseConnection, beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }))
+    promiseArray.push(getCarriedItems(databaseConnection, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }))
+    promiseArray.push(getCarriedScrolls(databaseConnection, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }))
 
-    promiseArray.push(getCarriedBasic(databaseConnection, response, beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }))
-    promiseArray.push(getCarriedAlms(databaseConnection, response, beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }))
-    promiseArray.push(getCarriedItems(databaseConnection, response, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }))
-    promiseArray.push(getCarriedScrolls(databaseConnection, response, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }))
+    promiseArray.push(getCasting(databaseConnection, beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
+    promiseArray.push(getSpells(databaseConnection, beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
 
-    promiseArray.push(getCasting(databaseConnection, response, beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
-    promiseArray.push(getSpells(databaseConnection, response, beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
-
-    Promise.all(promiseArray).then(() => {
-        checkForContentTypeBeforeSending(response, beast)
-    }).catch((error: Error) => sendErrorForward('get promise.all', error, response))
+    return Promise.all(promiseArray).then(_ => beast)
 }

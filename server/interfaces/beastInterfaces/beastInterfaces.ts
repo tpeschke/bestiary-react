@@ -1,7 +1,6 @@
 import { SpecificLoot, Loot } from "../lootInterfaces"
 import { Obstacle, Challenge } from "../skillInterfaces"
 import GeneralInfo, { Folklore, Scenario, TablesObject } from './infoInterfaces/generalInfoInterfaces'
-import PlayerSpecificInfo from './infoInterfaces/playerSpecificInfoInterfaces'
 import ImageInfo, { ArtistObject } from './infoInterfaces/ImageInfoInterfaces'
 import LinkedInfo, { ClimateObject, LocationObject, Type, Variant } from './infoInterfaces/linkedInfoInterfaces'
 import RoleInfo, { Role } from './infoInterfaces/roleInfoInterfaces'
@@ -19,7 +18,6 @@ export interface Beast {
     patreon: number,
     canplayerview: boolean,
     generalInfo: GeneralInfo,
-    playerSpecificInfo: PlayerSpecificInfo,
     imageInfo: ImageInfo,
     linkedInfo : LinkedInfo,
     roleInfo: RoleInfo,

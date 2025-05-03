@@ -8,6 +8,9 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import getDatabaseConnection from '../utilities/databaseConnection'
 import { hasAppropriatePateronLevel } from '../utilities/gets/getBeast'
 import { getPlayerVersionOfBeast } from '../controllers/player'
+import { getMonsterFromCache } from '../controllers/monsterCache'
+import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
+
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
 const BeastRoutes = express.Router()
@@ -29,7 +32,12 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const type: string = hasAppropriatePateronLevel(user, viewInfo.patreon, viewInfo.canplayerview)
 
     if (type === 'gm') {
-        getGMVersionOfBeast(request, response)
+        const beast: Beast | null = getMonsterFromCache(+request.params.beastid)
+        if (beast) {
+            checkForContentTypeBeforeSending(response, beast)
+        } else {
+            getGMVersionOfBeast(request, response)
+        }
     } else if (type === 'player') {
         getPlayerVersionOfBeast(request, response)
     } else {

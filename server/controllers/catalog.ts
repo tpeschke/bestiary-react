@@ -19,11 +19,11 @@ export async function getCatalog(request: Request, response: Response) {
 }
 
 export async function collectCatalog(databaseConnection: any) {
-    let freeBeasts: BeastTile[] = await databaseConnection.catalog.get.free().catch((error: Error) => consoleLogError('get free beasts', error))
+    let freeBeasts: BeastTile[] = await databaseConnection.cache.catalog.free().catch((error: Error) => consoleLogError('get free beasts', error))
     if (freeBeasts.length > 0) { newCache.freeBeasts = freeBeasts }
 
     freeBeasts.forEach(async (beast: BeastTile, index: number) => {
-        beast.roles = await databaseConnection.catalog.get.role(beast.id).catch((error: Error) => consoleLogError('get roles for free beasts', error))
+        beast.roles = await databaseConnection.cache.catalog.role(beast.id).catch((error: Error) => consoleLogError('get roles for free beasts', error))
 
         if (!beast.defaultrole && beast.roles.length > 0) { beast.defaultrole = beast.roles[0].id }
 
@@ -38,11 +38,11 @@ export async function collectCatalog(databaseConnection: any) {
         freeBeasts[index] = beast
     })
 
-    let templateBeasts = await databaseConnection.catalog.get.template().catch((error: Error) => consoleLogError('templates catagory', error))
+    let templateBeasts = await databaseConnection.cache.catalog.template().catch((error: Error) => consoleLogError('templates catagory', error))
     if (templateBeasts.length > 0) { newCache.templates = templateBeasts }
 
     templateBeasts.map(async (beast: BeastTile, index: number) => {
-        beast.roles = await databaseConnection.catalog.get.roleTemplate(beast.id).catch((error: Error) => consoleLogError('collect roles for templates', error))
+        beast.roles = await databaseConnection.cache.catalog.roleTemplate(beast.id).catch((error: Error) => consoleLogError('collect roles for templates', error))
 
         if (!beast.defaultrole && beast.roles.length > 0) { beast.defaultrole = beast.roles[0].id }
 
@@ -64,11 +64,11 @@ async function collectCache(databaseConnection: any, index: number) {
     let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     if (alphabet[index]) {
-        let beasts: BeastTile[] = await databaseConnection.catalog.get.byLetter(alphabet[index]).catch((error: Error) => consoleLogError('get by letter', error))
+        let beasts: BeastTile[] = await databaseConnection.cache.catalog.byLetter(alphabet[index]).catch((error: Error) => consoleLogError('get by letter', error))
         if (beasts.length > 0) { newCache.catalogItems.push(beasts) }
 
         beasts.forEach(async (beast: BeastTile, index: number) => {
-            beast.roles = await databaseConnection.catalog.get.role(beast.id)
+            beast.roles = await databaseConnection.cache.catalog.role(beast.id)
 
             if (!beast.defaultrole && beast.roles.length > 0) {
                 beast.defaultrole = beast.roles[0].id
