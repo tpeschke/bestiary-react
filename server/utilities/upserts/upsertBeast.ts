@@ -1,6 +1,6 @@
 import { Response, Error } from '../../interfaces/apiInterfaces'
 import {
-    ClimateObject, Role, Type, CombatStat, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject,
+    ClimateObject, Role, BeastType, CombatStat, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject,
     Scenario, Folklore, TablesObject, LocationObject, ConflictObject, upsertParameters
 } from '../../interfaces/beastInterfaces/beastInterfaces'
 import { Table, Row } from '../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces'
@@ -71,8 +71,8 @@ async function upsertRoles(promiseArray: any[], databaseConnection: any, beastId
     })
 }
 
-async function upsertTypes(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, types: Type[]) {
-    types.forEach((type: Type) => {
+async function upsertTypes(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, types: BeastType[]) {
+    types.forEach((type: BeastType) => {
         if (!type.id) {
             promiseArray.push(databaseConnection.beast.type.add(beastId, type.typeid).catch((error: Error) => sendErrorForward('add types', error, response)))
         } else if (type.deleted) {

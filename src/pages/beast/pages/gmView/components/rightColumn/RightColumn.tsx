@@ -7,16 +7,19 @@ import HTMLDisplay from "../../../../components/UI/htmlDisplay/htmlDisplay";
 import CommonFolklore from "./components/commonFolklore/CommonFolklore";
 import InfoDisplay from "./components/infoDisplay/InfoDisplay";
 import ScenarioDisplay from "./components/ScenariosDisplay/ScenarioDisplay";
+import TypesDisplay from './components/typesDisplay/TypesDisplay';
+import { BeastType } from '../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces';
 
 interface Props {
     intro: string
     appearance: string,
     habitat: string,
     folklores: Folklore[],
-    scenarios: Scenario[]
+    scenarios: Scenario[],
+    types: BeastType[]
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios }: Props) {
+export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types }: Props) {
     return (
         <>
             <Body>
@@ -26,6 +29,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <CommonFolklore folklores={folklores} />            
             <InfoDisplay section="Habitat / Society" info={habitat} />
             <ScenarioDisplay scenarios={scenarios} />
+            <TypesDisplay types={types} />
         </>
     )
 }

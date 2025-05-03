@@ -1,0 +1,31 @@
+.drawer-shell {
+    background: #e1e7ea;
+    height: 45px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.drawer-shell h3:hover {
+    background: #d0d4d8;
+}
+
+.drawer-shell.open {
+    height: unset;
+    margin-bottom: 5px;
+}
+
+.drawer-shell.open.open-top-margin {
+    margin-top: 5px;
+}
+
+.drawer-shell h3 {
+    padding: 15px
+}
+
+.drawer-shell.open h3 {
+    background: #d0d4d8;
+}
+
+.drawer-innards {
+    padding: 15px 25px
+}

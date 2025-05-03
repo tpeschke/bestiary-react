@@ -2,7 +2,7 @@ import { SpecificLoot, Loot } from "../lootInterfaces"
 import { Obstacle, Challenge } from "../skillInterfaces"
 import GeneralInfo, { Folklore, Scenario, TablesObject } from './infoInterfaces/generalInfoInterfaces'
 import ImageInfo, { ArtistObject } from './infoInterfaces/ImageInfoInterfaces'
-import LinkedInfo, { ClimateObject, LocationObject, Type, Variant } from './infoInterfaces/linkedInfoInterfaces'
+import LinkedInfo, { ClimateObject, LocationObject, BeastType, Variant } from './infoInterfaces/linkedInfoInterfaces'
 import RoleInfo, { Role } from './infoInterfaces/roleInfoInterfaces'
 import CombatInfo, { AttackInfo, DefenseInfo, LocationVitality, Movement } from './infoInterfaces/combatInfoInterfaces'
 import SkillInfo, { Skill } from './infoInterfaces/skillInfoInterfaces'
@@ -30,7 +30,7 @@ export interface Beast {
 
 export interface upsertParameters {
     roles: Role[],
-    types: Type[],
+    types: BeastType[],
     climates: ClimateObject,
     conflicts: ConflictObject,
     skills: Skill[],
@@ -56,4 +56,4 @@ export interface upsertParameters {
     defenses: DefenseInfo[]
 }
 
-export { ClimateObject, Role, Type, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }
+export { ClimateObject, Role, BeastType, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }

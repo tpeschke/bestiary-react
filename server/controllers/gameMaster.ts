@@ -7,7 +7,7 @@ import { Role } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInter
 import { Movement, LocationVitality } from "../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
 import { Scenario, Folklore } from "../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
-import { Variant, LocationObject, Type, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
+import { Variant, LocationObject, BeastType, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
 import { Reagent } from "../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
 import { Skill } from "../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
 import { ConflictObject, Archetype } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo"
@@ -245,7 +245,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
     promiseArray.push(getVariants(databaseConnection, beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
     promiseArray.push(getLocations(databaseConnection, beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
-    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: Type[]) => beast.linkedInfo.types = types))
+    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: BeastType[]) => beast.linkedInfo.types = types))
     promiseArray.push(getClimates(databaseConnection, beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
 
     promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))

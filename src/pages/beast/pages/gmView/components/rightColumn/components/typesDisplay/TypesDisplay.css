@@ -1,0 +1,15 @@
+.types-display-shell h2 {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin: 10px 0 5px;
+}
+
+.type-description-shell button {
+    color: white;
+    background: #795548;
+    margin-left: auto;
+    cursor: pointer;
+    border-radius: 5px;
+    float: right;
+    margin-bottom: 15px;
+}

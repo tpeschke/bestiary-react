@@ -1,7 +1,7 @@
 export default interface LinkedInfo {
     variants?: Variant[],
     locations?: LocationObject,
-    types?: Type[],
+    types: BeastType[],
     climates?: ClimateObject,
 }
 
@@ -12,11 +12,12 @@ export interface Variant {
     deleted: boolean
 }
 
-export interface Type {
+export interface BeastType {
     id: number,
     beastid: number,
     typeid: number,
-    deleted: boolean
+    typeName: string,
+    description: string
 }
 
 export interface LocationObject {

@@ -1,6 +1,7 @@
 import CombatInfo from "../interfaces/infoInterfaces.ts/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
+import LinkedInfo from "../interfaces/infoInterfaces.ts/linkedInfoInterfaces";
 import SkillInfo from "../interfaces/infoInterfaces.ts/skillInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces.ts/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
@@ -34,5 +35,9 @@ export default class GMBeastClass {
 
     get combatInfo(): CombatInfo {
         return this.beastInfo.combatInfo
+    }
+
+    get linkedInfo(): LinkedInfo {
+        return this.beastInfo.linkedInfo
     }
  }

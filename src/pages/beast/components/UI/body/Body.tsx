@@ -1,6 +1,6 @@
-import { JSX } from "react"
 import "./Body.css"
 
+import { JSX } from "react"
 
 interface Props {
     children: JSX.Element,

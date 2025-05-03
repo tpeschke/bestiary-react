@@ -1,5 +1,5 @@
 import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
-import { consoleLogErrorNoFile, checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
+import { consoleLogErrorNoFile } from '../utilities/sendingFunctions'
 import { getGMVersionOfBeastFromDB } from './gameMaster'
 
 const consoleLogError = consoleLogErrorNoFile('monster cache')

@@ -28,7 +28,7 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     } else {
         let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
 
-        const artistInfo = await getArtistInfo(databaseConnection, response, playerInfo.id, false)
+        const artistInfo = await getArtistInfo(databaseConnection, playerInfo.id, false)
         playerInfo.artistInfo = artistInfo.genericArtistInfo
 
         if (user) {

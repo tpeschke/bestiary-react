@@ -3,7 +3,7 @@ import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/
 import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { Folklore, Scenario, TablesObject, Table, Row, Size } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
-import { Type, ClimateObject, Climate, LocationObject, Variant, Location } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
+import { BeastType, ClimateObject, Climate, LocationObject, Variant, Location } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
 import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
 import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
@@ -35,8 +35,44 @@ export function hasAppropriatePateronLevel(user: User, beastPatron: number, canP
     return 'player'
 }
 
-export async function getTypes(databaseConnection: any, beastId: number): Promise<Type[]> {
-    return databaseConnection.beast.type.get(beastId)
+function getTypeArrayDictionary() {
+    let typeArrayDictionary = [
+        'UNDEFINED',
+        'Demon',
+        'Undead, Corporeal',
+        'Undead, Incorporeal',
+        'Elemental',
+        'Bestial',
+        'Weird Creature',
+        'Humanoid',
+        'Intelligent Evil',
+        'Goblinoid',
+        'Swarm',
+        'Flora',
+        'Aos Sidhe',
+        'Spirit',
+        'Eldritch',
+        'Template',
+        'Insectoid',
+        'Symbiote',
+        'Ooze'
+    ]
+    // Because of the way the ids got automatically added, Giant got added with id 51
+    typeArrayDictionary[51] = 'Giant'
+
+    return typeArrayDictionary
+}
+
+export async function getTypes(databaseConnection: any, beastId: number): Promise<BeastType[]> {
+    const typeArrayDictionary = getTypeArrayDictionary()
+    const beastTypes: BeastType[] = await databaseConnection.beast.type.get(beastId)
+
+    return beastTypes.map(type => {
+        return {
+            ...type,
+            typeName: typeArrayDictionary[type.typeid]
+        }
+    })
 }
 
 export async function getClimates(databaseConnection: any, beastId: number): Promise<ClimateObject> {
