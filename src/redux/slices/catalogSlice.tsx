@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { CatalogState } from '../../components/catalog/catalogInterfaces'
+import { CatalogState } from '../../pages/catalog/catalogInterfaces'
 
 const initialState: CatalogState = {
   catalogItems: [],

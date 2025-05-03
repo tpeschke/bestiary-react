@@ -6,7 +6,7 @@ import path from 'path'
 
 import { Response } from './interfaces/apiInterfaces'
 
-import { server, databaseCredentials, fakeAuth } from './server-config'
+import { server, databaseCredentials, fakeAuth, collectMonsterCacheOn } from './server-config'
 
 import authRoutes from './routes/authentication'
 import accessRoutes from './routes/access'
@@ -50,7 +50,9 @@ massive(databaseCredentials).then(dbI => {
     app.listen(server, () => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
         collectCatalog(databaseConnection)
-        collectMonsterCache(databaseConnection)
+        if (collectMonsterCacheOn) {
+            collectMonsterCache(databaseConnection)
+        }
         console.log(`Sing to me a sweet song of forgetfulness and Ill die on your shore ${server}`)
     })
 }).catch(e => console.log('DB connection error', e))
