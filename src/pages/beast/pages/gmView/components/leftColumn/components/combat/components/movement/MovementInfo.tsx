@@ -13,9 +13,9 @@ export default function MovementInfo({ movements }: Props) {
             <Pair title="Movement" info="ft / sec" format={{ heading: true, position: 'opposite', info: 'minor', noBorder: true }} />
             {movements && movements?.length > 0 ?
                 <>
-                    {movements.map(({ type, stroll, walk, jog, run, sprint }: Movement) => {
+                    {movements.map(({ type, stroll, walk, jog, run, sprint }: Movement, index) => {
                         return (
-                            <div className='movement-shell'>
+                            <div key={index} className='movement-shell'>
                                 <p>{type}</p>
                                 <p data-tooltip-id="my-tooltip" data-tooltip-content="Crawl / Stroll">C: {stroll}</p>
                                 <p data-tooltip-id="my-tooltip" data-tooltip-content="Walk">W: {walk}</p>

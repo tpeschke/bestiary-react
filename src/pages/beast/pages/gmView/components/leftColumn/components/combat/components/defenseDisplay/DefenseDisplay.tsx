@@ -13,7 +13,7 @@ export default function DefenseDisplay({ sp_def, defenses }: Props) {
         <>
             <h3>Defense Info</h3>
             <SpecialInfo info={sp_def} />
-            {defenses.map(defense => <DefenseStats defenseStats={defense} />)}
+            {defenses.map((defense, index) => <DefenseStats key={index} defenseStats={defense} />)}
         </>
     )
 }

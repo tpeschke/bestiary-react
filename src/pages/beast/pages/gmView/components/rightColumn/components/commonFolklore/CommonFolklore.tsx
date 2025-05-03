@@ -19,9 +19,9 @@ export default function CommonFolklore({ folklores }: Props) {
             </div>
             <Body>
                 <ul>
-                    {folklores.map(({ belief, truth }: Folklore) => {
+                    {folklores.map(({ belief, truth }: Folklore, index) => {
                         return (
-                            <li>
+                            <li key={index}>
                                 {belief}
                                 <ul>
                                     <li>{truth}</li>
