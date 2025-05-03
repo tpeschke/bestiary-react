@@ -7,6 +7,7 @@ import { calculateCover, calculateDefense, calculateDR, calculateParryDR, calcul
 import { calculateDamageAndRecovery } from "./combatScaling/damageAndRecoveryCalculator";
 
 export interface CalculateCombatStatsReturn {
+    intiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[]
 }
@@ -18,13 +19,14 @@ export function calculateCombatStats(combatStats: RawCombatStat[], combatpoints:
     combatStats.forEach(stats => calculateSingleCombatInfo(stats, defenses, attacks, combatpoints, role, size))
 
     return {
+        intiative: calculateStatWithFormatting(combatStats[0].initiative, 'initiative', role, combatpoints),
         attacks,
         defenses
     }
 }
 
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], combatpoints: number, role: string, size: Size): void {
-    const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, weapontype, showonlydefenses, recovery, measure, initiative, rangeddefense: cover, weaponname,
+    const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, weapontype, showonlydefenses, recovery, measure, rangeddefense: cover, weaponname,
         armor, shield, weapon, eua, isspecial, attack, alldefense, flanks, andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry,
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage
     } = stats
@@ -54,7 +56,6 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
                 type: weapontype,
                 measure: calculateStat(measure, 'measure', role, totalPoints),
                 attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
-                initiative: calculateStatWithFormatting(initiative, 'initiative', role, totalPoints),
                 rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
                 ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recovery, role, totalPoints, isspecial, damageType)
             }

@@ -7,26 +7,30 @@ type Format = {
     bottomBorder?: boolean,
     position?: 'opposite',
     info?: 'minor'
+    titleJustified?: 'right'
 }
 
 interface Props {
     title: string,
     info?: string | number,
-    format?: Format
+    format?: Format,
 }
 
 export default function Pair({ title, info, format }: Props) {
-    let classString = "pair-shell"
-    format?.heading ? classString += " heading" : null;
-    format?.noBorder? classString += " noBorder" : null;
-    format?.position ? classString += " opposite" : null;
+    let shellClassString = "pair-shell"
+    format?.heading ? shellClassString += " heading" : null;
+    format?.noBorder? shellClassString += " noBorder" : null;
+    format?.position ? shellClassString += " opposite" : null;
+
+    let titleClassString = ""
+    format?.titleJustified === 'right' ? titleClassString += "justifiedRight" : null
 
     return (
-        <div className={classString}>
+        <div className={shellClassString}>
             {format?.title === 'none' ?
-                <p>{title}</p>
+                <p className={titleClassString}>{title}</p>
                 :
-                <h3>{title}</h3>}
+                <h3 className={titleClassString}>{title}</h3>}
             <p className={format?.info ? 'minor' : ''}>{info}</p>
         </div>
     )

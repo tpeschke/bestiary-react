@@ -25,6 +25,7 @@ import {
 import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
 import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
 import { CalculateCombatStatsReturn } from "../utilities/statCalculators/combatCalculators/combat"
+import { calculateStatWithFormatting } from "../utilities/statCalculators/combatCalculators/combatScaling/combatCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -100,9 +101,9 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
 
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId).catch((error: Error) => sendErrorForward('get main', error, response))
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
-        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback, 
-        rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill, 
-        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, 
+        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
+        rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
+        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare,
         devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -176,6 +177,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
         },
         combatInfo: {
             sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary,
+            initiative: '+0',
             attacks: [],
             defenses: [],
             movements: [],
@@ -225,7 +227,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
                 beastid: id
             },
             deletedSpells: [],
-            spells: [], 
+            spells: [],
         }
     }
     let promiseArray: any[] = []
@@ -248,7 +250,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     promiseArray.push(getRoles(databaseConnection, response, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
     promiseArray.push(getMovement(databaseConnection, response, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(databaseConnection, response, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = {...beast.combatInfo, ...attackAndDefenses}))
+    promiseArray.push(getCombatStats(databaseConnection, response, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses } ))
 
     promiseArray.push(getLocationalVitalities(databaseConnection, response, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 

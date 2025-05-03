@@ -7,6 +7,7 @@ import ConfrontationSection from "./components/confrontation/ConfrontationSectio
 import SkillSection from "./components/skills/SkillSection"
 import CombatSection from "./components/combat/CombatSection"
 import CombatInfo from "../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces"
+import { Size } from "../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
 
 interface Props {
     beastId: number,
@@ -14,16 +15,17 @@ interface Props {
     imageInfo: ImageInfo, 
     socialInfo: SocialInfo,
     skillInfo: SkillInfo,
-    combatInfo: CombatInfo
+    combatInfo: CombatInfo,
+    size: Size
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo }: Props) {
+export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size }: Props) {
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo}/>
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
-            <CombatSection combatInfo={combatInfo} />
+            <CombatSection combatInfo={combatInfo} size={size} />
         </>
     )
 }

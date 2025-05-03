@@ -14,6 +14,11 @@
     border-bottom: unset;
 }
 
+.pair-shell p.justifiedRight, .pair-shell h3.justifiedRight {
+    text-align: right;
+    margin-right: 5px;
+}
+
 .pair-shell h3 {
     margin: 0;
 }

@@ -6,6 +6,7 @@ export default interface CombatInfo {
     combatrole: string,
     combatsecondary: string,
     vitalityInfo: VitalityInfo,
+    initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
     movements: Movement[],
@@ -47,7 +48,6 @@ export interface AttackInfo {
     damageType: DamageType,
     type: Type,
     recovery: number,
-    initiative: string,
     rangeIncrement: string,
     isspecial: IsSpecial,
 }

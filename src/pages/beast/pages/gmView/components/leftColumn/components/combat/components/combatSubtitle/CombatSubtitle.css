@@ -1,0 +1,10 @@
+.combat-subtitle-shell {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.combat-subtitle-shell>.trauma-pair-shell, .combat-subtitle-shell>.pair-shell {
+    width: 33%;
+}

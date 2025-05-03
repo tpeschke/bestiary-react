@@ -5,5 +5,7 @@
 
 .trauma-pair-shell>div {
     display: flex;
+    justify-content: flex-end;
     width: 50%;
+    margin-right: 5px;
 }
