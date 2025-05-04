@@ -8,8 +8,8 @@ export default interface LinkedInfo {
 export interface Variant {
     id: number,
     beastid: number,
+    name: string,
     variantid: number,
-    deleted: boolean
 }
 
 export interface BeastType {

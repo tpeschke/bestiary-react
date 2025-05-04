@@ -1,15 +1,14 @@
 export default interface LinkedInfo {
-    variants?: Variant[],
-    locations?: LocationObject,
+    variants: Variant[],
+    locations: LocationObject,
     types: BeastType[],
     climates: ClimateObject,
 }
 
 export interface Variant {
     id: number,
-    beastid: number,
-    variantid: number,
-    deleted: boolean
+    name: string,
+    variantid: number
 }
 
 export interface BeastType {

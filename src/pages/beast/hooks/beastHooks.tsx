@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,15 +20,16 @@ interface Return {
 export default function beastHooks(): Return {
     const [beast, setBeast] = useState<GMBeastClass>()
     const [playerBeast, setPlayerBeast] = useState<PlayerBeastClass>()
+
+    const { beastId } = useParams()
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const beastCache = useSelector(getBeastCache)
 
     useEffect(() => {
-        if (!beast) {
-            const beastId = window.location.pathname.split('/')[2]
-
+        if (beastId) {
             const beast: null | GMBeastClass = beastCache[beastId]
             if (beast) {
                 setBeast(beast)
@@ -47,7 +48,7 @@ export default function beastHooks(): Return {
                 })
             }
         }
-    }, []);
+    }, [beastId]);
 
     return {
         beast,

@@ -13,7 +13,7 @@ interface Props {
 export default function GMView({ beast }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo } = beast
     const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity } = generalInfo
-    const { types, climates } = linkedInfo
+    const { types, climates, variants } = linkedInfo
 
     const miscInfo: MiscInfo = {
         senses,
@@ -27,7 +27,7 @@ export default function GMView({ beast }: Props) {
             <NameHeader name={name} />
             <DoubleColumn 
                 LeftColumn={LeftColumn({ beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size })}
-                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo })}
+                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants })}
             />
         </>
     )

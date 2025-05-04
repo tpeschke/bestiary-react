@@ -8,8 +8,9 @@ import CommonFolklore from "./components/commonFolklore/CommonFolklore";
 import InfoDisplay from "./components/infoDisplay/InfoDisplay";
 import ScenarioDisplay from "./components/ScenariosDisplay/ScenarioDisplay";
 import TypesDisplay from './components/typesDisplay/TypesDisplay';
-import { BeastType } from '../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces';
+import { BeastType, Variant } from '../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces';
 import MiscInfoDisplay, { MiscInfo } from './components/miscInfoDisplay/MiscInfoDisplay';
+import VariantsDisplay from './components/variantsDisplay/VariantsDisplay';
 
 interface Props {
     intro: string
@@ -18,10 +19,11 @@ interface Props {
     folklores: Folklore[],
     scenarios: Scenario[],
     types: BeastType[],
-    miscInfo: MiscInfo
+    miscInfo: MiscInfo,
+    variants: Variant[]
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo }: Props) {
+export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants }: Props) {
     return (
         <div className='right-column-shell'>
             <Body>
@@ -33,6 +35,9 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <ScenarioDisplay scenarios={scenarios} />
             <TypesDisplay types={types} />
             <MiscInfoDisplay miscInfo={miscInfo} />
+            {/* Weird Pleroma and Shaping */}
+            <VariantsDisplay variantsInfo={variants} />
+            {/* Locations */}
         </div>
     )
 }
