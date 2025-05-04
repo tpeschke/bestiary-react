@@ -20,10 +20,11 @@ interface Props {
     scenarios: Scenario[],
     types: BeastType[],
     miscInfo: MiscInfo,
-    variants: Variant[]
+    variants: Variant[],
+    meta: string
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants }: Props) {
+export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta }: Props) {
     return (
         <div className='right-column-shell'>
             <Body>
@@ -38,6 +39,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             {/* Weird Pleroma and Shaping */}
             <VariantsDisplay variantsInfo={variants} />
             {/* Locations */}
+            <InfoDisplay section='Meta Notes' info={meta} />
         </div>
     )
 }
