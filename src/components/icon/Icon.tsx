@@ -1,6 +1,6 @@
 import './Icon.css'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow'
+type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up'
 
 type Color = null | 'black'
 
@@ -51,6 +51,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin }: Pro
         case 'downArrow':
             styling = "fa-solid fa-arrow-down";
             break;
+        case 'down':
+            styling = "fa-solid fa-chevron-down"
+            break;
+        case 'up':
+            styling = "fa-solid fa-chevron-up"
+            break
         default:
             break;
     }

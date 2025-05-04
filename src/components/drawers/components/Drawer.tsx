@@ -1,16 +1,18 @@
+import Icon from '../../icon/Icon'
 import './Drawer.css'
 
 import { JSX } from 'react'
 
 interface Props {
     label: string,
+    subtitle?: string,
     innards: JSX.Element,
     isOpen: boolean,
     index: number,
     openDrawer: Function
 }
 
-export default function Drawer({ label, innards, isOpen, index, openDrawer }: Props) {
+export default function Drawer({ label, subtitle, innards, isOpen, index, openDrawer }: Props) {
     let classShellString = 'drawer-shell'
     isOpen ? classShellString += ' open' : ''
 
@@ -19,8 +21,14 @@ export default function Drawer({ label, innards, isOpen, index, openDrawer }: Pr
     const indexToSetTo: null | number = isOpen ? null : index
 
     return (
-        <div className={classShellString} onClick={_=>openDrawer(indexToSetTo)}>
-            <h3>{label}</h3>
+        <div className={classShellString} onClick={_ => openDrawer(indexToSetTo)}>
+            <div className='drawer-header-shell'>
+                <h3>{label}</h3>
+                {subtitle ? <p>{subtitle}</p> : <></>}
+                <div className='icon-shell'>
+                    <Icon iconName={isOpen ? 'up' : 'down'} />
+                </div>
+            </div>
             <div className='drawer-innards'>
                 {innards}
             </div>

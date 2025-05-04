@@ -8,7 +8,7 @@ import { Movement, LocationVitality } from "../interfaces/beastInterfaces/infoIn
 import { Scenario, Folklore } from "../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
 import { Variant, LocationObject, BeastType, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
-import { Reagent } from "../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
+import { Pleroma } from "../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
 import { Skill } from "../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
 import { ConflictObject, Archetype } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
@@ -18,7 +18,7 @@ import createHash from "../utilities/hashGeneration"
 import upsertBeast from "../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import {
-    getArtistInfo, getClimates, getConflict, getLocations, getTypes, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getReagents,
+    getArtistInfo, getClimates, getConflict, getLocations, getTypes, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getPleroma,
     getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
     getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats,
     getRarity
@@ -47,7 +47,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const { panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, skills, challenges, obstacles } = skillInfo
     const { traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf, archetypeInfo, conflicts } = socialInfo
     const { hasarchetypes, hasmonsterarchetypes } = archetypeInfo
-    const { lootnotes, lairLoot, carriedLoot, specificLoots, reagents } = lootInfo
+    const { lootnotes, lairLoot, carriedLoot, specificLoots, pleroma } = lootInfo
     const { casting, spells, deletedSpells } = castingInfo
 
     const userid = isOwner(user.id) ? null : user.id
@@ -75,7 +75,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     }
 
     const updateParameters: upsertParameters = {
-        roles, types, climates, attacks, defenses, conflicts, skills, movements, variants, specificLoots, reagents, locationalVitalities, locations, artistInfo, scenarios, folklores,
+        roles, types, climates, attacks, defenses, conflicts, skills, movements, variants, specificLoots, pleroma, locationalVitalities, locations, artistInfo, scenarios, folklores,
         casting, deletedSpells, spells, obstacles, challenges, tables, encounters, lairLoot, carriedLoot
     }
 
@@ -218,7 +218,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             lootnotes,
             lairLoot: {},
             carriedLoot: {},
-            reagents: [],
+            pleroma: [],
             specificLoots: [],
         },
         castingInfo: {
@@ -264,7 +264,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     promiseArray.push(getConflict(databaseConnection, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
     promiseArray.push(getArchetypes(databaseConnection, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
 
-    promiseArray.push(getReagents(databaseConnection, beast.id).then((reagents: Reagent[]) => beast.lootInfo.reagents = reagents))
+    promiseArray.push(getPleroma(databaseConnection, beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
     promiseArray.push(getSpecificLoots(databaseConnection, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
 
     promiseArray.push(getLairBasic(databaseConnection, beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))

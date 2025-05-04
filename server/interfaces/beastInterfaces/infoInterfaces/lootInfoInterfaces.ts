@@ -1,14 +1,14 @@
-import { Loot, SpecificLoot } from "../lootInterfaces"
+import { Loot, SpecificLoot } from "../../lootInterfaces";
 
 export default interface LootInfo {
     lootnotes: string,
     lairLoot: Loot,
     carriedLoot: Loot,
-    reagents: Reagent[],
+    pleroma: Pleroma[],
     specificLoots: SpecificLoot[],
 }
 
-export interface Reagent {
+export interface Pleroma {
     id: number,
     beastid: number,
     name: string,

@@ -4,7 +4,7 @@ import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../in
 import { Folklore, Scenario, TablesObject, Table, Row, Size, Rarity } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Climate, LocationObject, Variant, Location } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
-import { Reagent } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
+import { Pleroma } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
 import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
 import { ConflictObject, UnformatedConflict, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
@@ -239,8 +239,8 @@ export async function getCarriedScrolls(databaseConnection: any, beastId: number
     return databaseConnection.loot.carried.getScroll(beastId)
 }
 
-export async function getReagents(databaseConnection: any, beastId: number): Promise<Reagent[]> {
-    return databaseConnection.beast.reagent.get(beastId)
+export async function getPleroma(databaseConnection: any, beastId: number): Promise<Pleroma[]> {
+    return databaseConnection.beast.pleroma.get(beastId)
 }
 
 export async function getLocationalVitalities(databaseConnection: any, beastId: number): Promise<LocationVitality[]> {

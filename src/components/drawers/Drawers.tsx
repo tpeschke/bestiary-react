@@ -9,6 +9,7 @@ interface Props {
 
 export interface DrawerObject {
     label: string,
+    subtitle?: string,
     innards: JSX.Element
 }
 
@@ -17,7 +18,7 @@ export default function Drawers({ drawerInnards }: Props) {
 
     return (
         <div className='drawers-shell'>
-            {drawerInnards.map(({ label, innards }, index) => <Drawer key={index} label={label} innards={innards} isOpen={openIndex === index} index={index} openDrawer={setOpenIndex} />)}
+            {drawerInnards.map(({ label, subtitle, innards }, index) => <Drawer key={index} label={label} subtitle={subtitle} innards={innards} isOpen={openIndex === index} index={index} openDrawer={setOpenIndex} />)}
         </div>
     )
 }

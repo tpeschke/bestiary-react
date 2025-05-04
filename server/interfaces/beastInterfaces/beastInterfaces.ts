@@ -7,7 +7,7 @@ import RoleInfo, { Role } from './infoInterfaces/roleInfoInterfaces'
 import CombatInfo, { AttackInfo, DefenseInfo, LocationVitality, Movement } from './infoInterfaces/combatInfoInterfaces'
 import SkillInfo, { Skill } from './infoInterfaces/skillInfoInterfaces'
 import SocialInfo, { ConflictObject } from './infoInterfaces/socialInfo'
-import LootInfo, { Reagent } from './infoInterfaces/lootInfoInterfaces'
+import LootInfo, { Pleroma } from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo, { Casting, Spell } from './infoInterfaces/castingInfo'
 import { Encounter } from "../encounterInterfaces"
 
@@ -37,7 +37,7 @@ export interface upsertParameters {
     movements: Movement[],
     variants: Variant[],
     specificLoots: SpecificLoot[],
-    reagents: Reagent[],
+    pleroma: Pleroma[],
     locationalVitalities: LocationVitality[],
     locations: LocationObject,
     artistInfo: ArtistObject,
@@ -56,4 +56,4 @@ export interface upsertParameters {
     defenses: DefenseInfo[]
 }
 
-export { ClimateObject, Role, BeastType, Skill, Movement, Variant, Reagent, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }
+export { ClimateObject, Role, BeastType, Skill, Movement, Variant, Pleroma, LocationVitality, ArtistObject, Scenario, Folklore, TablesObject, LocationObject, ConflictObject }
