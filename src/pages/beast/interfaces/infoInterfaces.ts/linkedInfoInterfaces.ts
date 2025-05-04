@@ -45,5 +45,4 @@ export interface Location {
     locationid: number,
     location: string,
     link: string,
-    deleted: boolean
 }

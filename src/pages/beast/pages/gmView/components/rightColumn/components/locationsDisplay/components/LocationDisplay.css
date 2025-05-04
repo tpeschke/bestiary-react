@@ -1,0 +1,10 @@
+button.location-display {
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button.location-display:hover {
+    background: #e1e7ea;
+}
