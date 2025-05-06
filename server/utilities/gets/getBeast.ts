@@ -368,7 +368,7 @@ export function getRarity(rarityId: number): Rarity {
         }
     }
 
-    const rarityInfo = rarityDictionary[rarityId] ? rarityDictionary[rarityId] : { rarityName: 'None'}
+    const rarityInfo = rarityDictionary[rarityId] ?? { rarityName: 'None'}
 
     return {
         rarityId,

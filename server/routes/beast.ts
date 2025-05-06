@@ -26,7 +26,7 @@ interface ownerAuthBody {
 async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const { user, body, params } = request
     const databaseConnection = getDatabaseConnection(request)
-    const beastId = body.beastId ? body.beastId : +params.beastid
+    const beastId = body.beastId ?? +params.beastid
 
     const [viewInfo] = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
     const type: string = hasAppropriatePateronLevel(user, viewInfo.patreon, viewInfo.canplayerview)

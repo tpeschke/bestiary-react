@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Row({ title, catalogTiles }: Props) {
-    const displayedTitle = title ? title : catalogTiles[0].name.substring(0, 1)
+    const displayedTitle = title ?? catalogTiles[0].name.substring(0, 1)
     return (
         <div className='row'>
             <h1>{displayedTitle} {displayedTitle === 'Templates' ? <Icon iconName='info' tooltip="A template is the purist expression of a monster - a platonic version, if you will. It is, in fact, so pure that they do not exist in the game world. Templates monsters are baselines that you can use to improve monsters that are not in the Bestiary on the fly." /> : <></>}</h1>

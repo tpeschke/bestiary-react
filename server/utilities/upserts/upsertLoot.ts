@@ -72,7 +72,7 @@ async function upsertItemsLair(databaseConnection: any, beastId: number, respons
     for (let key in items) {
         const { id, itemcategory, materialrarity, detailing, wear, chance, number }: Item = items[key]
 
-        let idToPush: number = id ? id : 0
+        let idToPush: number = id ?? 0
         if (idToPush) {
             await databaseConnection.loot.lair.updateItem(id, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('update lair items', error, response))
         } else {
@@ -131,7 +131,7 @@ async function upsertItemsCarried(databaseConnection: any, beastId: number, resp
     for (let key in items) {
         const { id, itemcategory, materialrarity, detailing, wear, chance, number }: Item = items[key]
 
-        let idToPush: number = id ? id : 0
+        let idToPush: number = id ?? 0
         if (idToPush) {
             await databaseConnection.loot.carried.updateItem(id, itemcategory, materialrarity, detailing, wear, chance, number).catch((error: Error) => sendErrorForward('update carried items', error, response))
         } else {

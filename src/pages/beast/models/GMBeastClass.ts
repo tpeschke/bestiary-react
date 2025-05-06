@@ -15,7 +15,7 @@ export default class GMBeastClass {
     }
 
     get id(): number {
-        return this.beastInfo?.id ? this.beastInfo.id : 0
+        return this.beastInfo?.id ?? 0
     }
 
     get generalInfo(): GeneralInfo {

@@ -53,7 +53,7 @@ export async function addPlayerNotes(request: noteRequest, response: Response) {
         const [count] = await databaseConnection.user.notes.number(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))
         
         const isAboveDefaultNumberOfNotes = count >= 50
-        const patreon = user.patreon ? user.patreon : 0
+        const patreon = user.patreon ?? 0
         const isAboveNumberOfNotesForPatrons = count >= (patreon * 30) + 50
 
         if (isAboveDefaultNumberOfNotes || isAboveNumberOfNotesForPatrons) {

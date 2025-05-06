@@ -9,16 +9,16 @@ export function calculateMovements(movements: RawMovement[], combatpoints: numbe
 function calculateMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {
     const { id, beastid, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
-    let stroll = calculateSpeed(strollstrength ? strollstrength : roleScalingStrength, combatpoints + adjustment, 0)
-    let walk = calculateSpeed(walkstrength ? walkstrength : roleScalingStrength, combatpoints + adjustment, stroll)
-    let jog = calculateSpeed(jogstrength ? jogstrength : roleScalingStrength, combatpoints + adjustment, walk, 2)
-    let run = calculateSpeed(runstrength ? runstrength : roleScalingStrength, combatpoints + adjustment, jog, 2)
-    let sprint = calculateSpeed(sprintstrength ? sprintstrength : roleScalingStrength, combatpoints + adjustment, run, 2)
+    let stroll = calculateSpeed(strollstrength ?? roleScalingStrength, combatpoints + adjustment, 0)
+    let walk = calculateSpeed(walkstrength ?? roleScalingStrength, combatpoints + adjustment, stroll)
+    let jog = calculateSpeed(jogstrength ?? roleScalingStrength, combatpoints + adjustment, walk, 2)
+    let run = calculateSpeed(runstrength ?? roleScalingStrength, combatpoints + adjustment, jog, 2)
+    let sprint = calculateSpeed(sprintstrength ?? roleScalingStrength, combatpoints + adjustment, run, 2)
 
     return {
         id, beastid, roleid, allroles,
         stroll, walk, jog, run, sprint,
-        type: type ? type : 'Land'
+        type: type ?? 'Land'
     }
 }
 

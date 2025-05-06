@@ -19,19 +19,19 @@ export default class PlayerBeastClass {
     }
 
     get id(): number {
-        return this.beastInfo?.id ? this.beastInfo.id : 0
+        return this.beastInfo?.id ?? 0
     }
 
     get name(): string {
-        return this.beastInfo?.name ? this.beastInfo.name : ''
+        return this.beastInfo?.name ?? ''
     }
 
     get notes(): Notes {
-        return this.beastInfo?.notes ? this.beastInfo.notes : { notes: '' }
+        return this.beastInfo?.notes ?? { notes: '' }
     }
 
     get artistInfo(): ArtistInfo {
-        return this.beastInfo?.artistInfo ? this.beastInfo.artistInfo : {}
+        return this.beastInfo?.artistInfo ?? {}
     }
 
     async setNotes(value: string) {

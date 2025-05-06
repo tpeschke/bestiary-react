@@ -26,7 +26,7 @@ function formatPleroma({ name, difficulty, spell, harvest }: Pleroma, { modifier
         innards: (
             <div className='pleroma-description-shell'>
                 <Pair title="Spell" info={spell} />
-                <Pair title="Harvest Risk" info={`+${harvest ? harvest : difficulty}`} />
+                <Pair title="Harvest Risk" info={`+${harvest ?? difficulty}`} />
                 <Pair title="SP Bonus" info={calculateSpellPointBonus(rarityId)} />
                 <Pair title="Check Bonus" info={calculateCheckBonus(rarityId)} />
                 <Pair title="Price" info={calculatePrice(harvest, difficulty, modifier)} />

@@ -18,7 +18,7 @@ export default function Tile({ tile }: Props) {
         <Link to={`/beast/${id}`}>
             <div className={notupdating ? 'tile not-updating' : 'tile'} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
                 <div className='image-frame'>
-                    <img src={imageBase + id} style={{ 'objectPosition': thumbnail ? thumbnail : 'top' }}></img>
+                    <img src={imageBase + id} style={{ 'objectPosition': thumbnail ?? 'top' }}></img>
                 </div>
                 <span className='name-frame'>
                     <TileIcon canplayerview={canplayerview} patreon={patreon} />

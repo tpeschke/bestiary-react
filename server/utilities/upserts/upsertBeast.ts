@@ -288,7 +288,7 @@ async function deleteTables(databaseConnection: any, beastId: number, response: 
 async function upsertTable(promiseArray: any[], databaseConnection: any, beastId: number, response: Response, table: Table[], tableShortName: string) {
     table.forEach(async (table: Table) => {
         const { id, label, rows } = table
-        let tableIdToUpdate = id ? id : null
+        let tableIdToUpdate = id ?? null
 
         if (tableIdToUpdate) {
             promiseArray.push(databaseConnection.beast.table.updateAll(tableIdToUpdate, label).catch((error: Error) => sendErrorForward('update all tables', error, response)))

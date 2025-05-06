@@ -44,7 +44,7 @@ async function upsertGroups(promiseArray: any[], databaseConnection: any, beastI
             await promiseArray.push(databaseConnection.encounter.group.delete(beastId, groupid).catch((error: Error) => sendErrorForward('delete groups', error, response)))
             databaseConnection.encounter.group.deleteRole(beastId, groupid).catch((error: Error) => sendErrorForward('delete group roles', error, response))
         } else {
-            let groupIdToUpdate = groupid ? groupid : null
+            let groupIdToUpdate = groupid ?? null
             if (groupIdToUpdate) {
                 await databaseConnection.encounter.groups.update(beastId, groupid, label, weight).catch((error: Error) => sendErrorForward('update groups', error, response))
             } else {

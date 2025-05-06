@@ -57,7 +57,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     const effectiveFlawLimit = flawlimit > 0 ? flawlimit : null
     const effectivePassionLimit = passionlimit > 0 ? passionlimit : null
 
-    let beastId = id ? id : null
+    let beastId = id ?? null
     if (beastId) {
         await databaseConnection.beast.update(beastId, name, intro, habitat, appearance, senses, diet, meta, sp_atk, sp_def, tactics, size, patreon,
             vitality, panic, stress, lootnotes, effectiveTraitLimit, effectiveRelationshipLimit, effectiveFlawLimit,
