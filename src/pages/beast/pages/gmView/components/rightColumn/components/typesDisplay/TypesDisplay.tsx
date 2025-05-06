@@ -20,13 +20,13 @@ export default function TypesDisplay({ types }: Props) {
     )
 }
 
-function formatType({ typeName, description }: BeastType): DrawerObject {
+function formatType({ type, description }: BeastType): DrawerObject {
     return {
-        label: typeName,
+        label: type,
         innards: (
             <div className='type-description-shell'>
                 <HTMLDisplay html={description} />
-                <button>See More {typeName}s</button>
+                <button>See More {type}s</button>
             </div>
         )
     }

@@ -1,3 +1,3 @@
-select bbbeasttype.id as id, typeid, description from bbbeasttype
+select bbbeasttype.id as id, type, typeid, description from bbbeasttype
 join bbtypelist on bbtypelist.id = bbbeasttype.typeid
- where beastid = $1
+ where beastid = $1;

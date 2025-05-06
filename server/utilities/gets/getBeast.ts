@@ -35,42 +35,12 @@ export function hasAppropriatePateronLevel(user: User, beastPatron: number, canP
     return 'player'
 }
 
-function getTypeArrayDictionary() {
-    let typeArrayDictionary = [
-        'UNDEFINED',
-        'Demon',
-        'Undead, Corporeal',
-        'Undead, Incorporeal',
-        'Elemental',
-        'Bestial',
-        'Weird Creature',
-        'Humanoid',
-        'Intelligent Evil',
-        'Goblinoid',
-        'Swarm',
-        'Flora',
-        'Aos Sidhe',
-        'Spirit',
-        'Eldritch',
-        'Template',
-        'Insectoid',
-        'Symbiote',
-        'Ooze'
-    ]
-    // Because of the way the ids got automatically added, Giant got added with id 51
-    typeArrayDictionary[51] = 'Giant'
-
-    return typeArrayDictionary
-}
-
 export async function getTypes(databaseConnection: any, beastId: number): Promise<BeastType[]> {
-    const typeArrayDictionary = getTypeArrayDictionary()
     const beastTypes: BeastType[] = await databaseConnection.beast.type.get(beastId)
 
     return beastTypes.map(type => {
         return {
-            ...type,
-            typeName: typeArrayDictionary[type.typeid]
+            ...type
         }
     })
 }

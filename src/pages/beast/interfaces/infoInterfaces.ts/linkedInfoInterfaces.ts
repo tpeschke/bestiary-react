@@ -15,7 +15,7 @@ export interface BeastType {
     id: number,
     beastid: number,
     typeid: number,
-    typeName: string,
+    type: string,
     description: string
 }
 
