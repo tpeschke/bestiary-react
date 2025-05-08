@@ -5,13 +5,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
 @font-face {
-  font-family: 'oldClaude';
-  src: url('./assets/fonts/OldClaude.otf') format("opentype");
+	font-family: 'oldClaude';
+	src: url('./assets/fonts/OldClaude.otf') format("opentype");
 }
 
 @font-face {
-  font-family: 'HamletOrNot';
-  src: url('./assets/fonts/HamletOrNot.ttf') format("truetype");
+	font-family: 'HamletOrNot';
+	src: url('./assets/fonts/HamletOrNot.ttf') format("truetype");
 }
 
 html, body, div, span, applet, object, iframe,
@@ -23,8 +23,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -34,14 +34,17 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 	font-family: "Source Sans 3", sans-serif;
@@ -49,68 +52,127 @@ ol, ul {
 	margin: 5px 0 5px 40px;
 	line-height: 1.2;
 }
+
 ul ul, ol ol, ul ol, ol ul {
 	margin-left: 5px;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 h1, h2, h3, h4, h5 {
-  font-family: 'HamletOrNot';
+	font-family: 'HamletOrNot';
 }
+
 h2 {
-    color: #795548;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 2px;
+	color: #795548;
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 2px;
 }
+
 h2.border {
 	border-bottom: 1px solid lightgray;
-    padding-bottom: 7px;
-    margin: 15px 0 5px;
+	padding-bottom: 7px;
+	margin: 15px 0 5px;
 }
+
 h3 {
 	font-size: 15px;
-    color: #434343;
-    font-weight: 600;
-    font-family: 'oldClaude';
-    background: #e1e7ea;
-    padding: 5px 3px;
+	color: #434343;
+	font-weight: 600;
+	font-family: 'oldClaude';
+	background: #e1e7ea;
+	padding: 5px 3px;
 }
+
 h4 {
-    font-family: 'oldClaude';
+	font-family: 'oldClaude';
 }
+
 h5 {
-    font-family: 'oldClaude';
+	font-family: 'oldClaude';
 	background: #e1e7ea;
 	padding: 3px;
 }
+
 p {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
 	min-height: 1px;
 	line-height: 1.2;
 }
+
 a {
 	text-decoration: none;
-    color: #41555f;
+	color: #41555f;
 }
+
 a:hover {
 	color: #607d8b;
 }
 
+select {
+	border: none;
+	background: #f3f3f3;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	min-width: 150px;
+	font-family: "Source Sans 3", sans-serif;
+}
+
+select:hover {
+	background: #e1e7ea;
+}
+
+select:open {
+	background: #e1e7ea;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+select * {
+	background-color: white;
+}
+
+button {
+    border: none;
+    padding: 5px;
+    margin-right: 3px;
+	border-radius: 5px;
+    font-family: "Source Sans 3", sans-serif;
+	cursor: pointer;
+}
+
+button:hover {
+    background: #e1e7ea;
+}
+
+button.blue {
+	background: #8aa0ab;
+	color: white;
+}
+
+button.blue:hover {
+	background: #63747d;
+}
+
 .warning {
 	color: #990000;
-    font-style: italic;
+	font-style: italic;
 }
 
 .displayNone {

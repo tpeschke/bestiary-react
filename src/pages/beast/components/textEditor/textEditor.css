@@ -12,13 +12,10 @@
     justify-content: space-between;
 }
 
-button {
-    border: none;
-    padding: 5px;
-    margin-right: 3px;
+.control-group button {
+    border-radius: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    font-family: "Source Sans 3", sans-serif;
 }
 
 .is-active {

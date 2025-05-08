@@ -35,6 +35,10 @@ export default class CastingClass {
         return this.intialSelected
     }
 
+    get getSpellNumberDie(): string {
+        return this.spellnumberdie
+    }
+
     private filterCastingTypes(): CastingDisplayType[] {
         return this.castingTypesArray.reduce((filtered: CastingDisplayType[], castingType: boolean, index: number) => {
             if (castingType) {

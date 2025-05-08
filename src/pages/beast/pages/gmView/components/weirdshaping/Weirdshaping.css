@@ -1,0 +1,22 @@
+.casting-selection-shell {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin: 0 0 5px;
+}
+
+.casting-explanation-shell, .casting-info-shell {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin: 0 0 5px;
+}
+
+.casting-explanation-shell h3, .casting-info-shell h3 {
+    background: unset;
+    color: #607d8b;
+}
+
+.casting-explanation-shell p.bottom-margin {
+    margin-bottom: 5px;
+}
