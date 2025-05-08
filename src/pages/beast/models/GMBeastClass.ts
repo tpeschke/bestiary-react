@@ -1,3 +1,4 @@
+import { Spell } from "../interfaces/infoInterfaces.ts/castingInfo";
 import CombatInfo from "../interfaces/infoInterfaces.ts/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
@@ -53,5 +54,9 @@ export default class GMBeastClass {
 
     get castingTypesInfo(): CastingClass {
         return this.castingTypeInfo
+    }
+
+    get spells(): Spell[] {
+        return this.beastInfo.castingInfo.spells
     }
  }

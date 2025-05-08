@@ -1,17 +1,21 @@
 import './Weirdshaping.css'
 
-import CastingTypeSelect from './components/CastingTypeSelect'
 import CastingClass from '../../../../models/casting/CastingClass'
+import CastingTypeSelect from './components/casting/CastingTypeSelect'
+import { Spell } from '../../../../interfaces/infoInterfaces.ts/castingInfo'
+import SpellsDisplay from './components/spells/SpellsDisplay'
 
 interface Props {
-    castingTypes: CastingClass
+    castingTypes: CastingClass,
+    spells: Spell[]
 }
 
-export default function Weirdshaping({ castingTypes }: Props) {
+export default function Weirdshaping({ castingTypes, spells }: Props) {
     return (
         <>
             <h2 className='border'>Weirdshaping</h2>
             <CastingTypeSelect castingTypes={castingTypes} />
+            <SpellsDisplay spells={spells} />
         </>
     )
 }

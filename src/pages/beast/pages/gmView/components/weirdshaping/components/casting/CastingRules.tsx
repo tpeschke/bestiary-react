@@ -1,4 +1,4 @@
-import '../Weirdshaping.css'
+import '../../Weirdshaping.css'
 
 interface Props {
     index: number,

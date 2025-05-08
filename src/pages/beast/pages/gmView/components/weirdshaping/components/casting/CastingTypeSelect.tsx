@@ -1,10 +1,11 @@
-import '../Weirdshaping.css'
+import '../../Weirdshaping.css'
+
 import { useEffect, useState } from 'react'
 
-import CastingClass, { CastingDisplayType } from '../../../../../models/casting/CastingClass'
+import CastingClass, { CastingDisplayType } from '../../../../../../models/casting/CastingClass'
 
-import Body from '../../../../../components/UI/body/Body'
 import CastingRules from './CastingRules'
+import Body from '../../../../../../components/UI/body/Body'
 
 interface Props {
     castingTypes: CastingClass
