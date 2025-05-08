@@ -1,3 +1,4 @@
+import CastingInfo from "../interfaces/infoInterfaces.ts/castingInfo";
 import CombatInfo from "../interfaces/infoInterfaces.ts/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
@@ -44,5 +45,9 @@ export default class GMBeastClass {
 
     get lootInfo(): LootInfo {
         return this.beastInfo.lootInfo
+    }
+
+    get castingInfo(): CastingInfo {
+        return this.beastInfo.castingInfo
     }
  }

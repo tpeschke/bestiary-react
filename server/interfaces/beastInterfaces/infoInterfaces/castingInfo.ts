@@ -1,21 +1,16 @@
 
 export default interface CastingInfo {
     casting: Casting,
-    deletedSpells: number[],
     spells: Spell[], 
 }
 
 export interface Casting {
-    augur: string,
-    wild: string,
-    vancian: string,
+    castingTypesArray: boolean[],
     spellnumberdie: string,
-    manifesting: string,
-    commanding: string,
-    bloodpact: string,
-    defaulttype: string,
+    defaulttype: number | null,
     beastid: number
 }
+
 
 export interface Spell {
     id: number,

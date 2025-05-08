@@ -292,7 +292,24 @@ export async function getTables(databaseConnection: any, beastId: number, tables
 }
 
 export async function getCasting(databaseConnection: any, beastId: number): Promise<Casting> {
-    return databaseConnection.beast.casting.get(beastId)[0]
+    const [casting] = await databaseConnection.beast.casting.get(beastId)
+    const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
+
+    // currently this is a string but, as I migrate monsters, I want to change it over to just use the index so this is just a temporary stopgap
+    const defaultTypeIndexDictionary = {
+        'Augury': 0,
+        'Wild Magic': 1,
+        'Vancian': 2,
+        'Manifesting': 3,
+        'Adamic Commanding': 4,
+        'Blood Pact': 5
+    }
+
+    return {
+        spellnumberdie, beastid,
+        defaulttype: defaultTypeIndexDictionary[defaulttype],
+        castingTypesArray: [augur, wild, vancian, manifesting, commanding, bloodpact]
+    }
 }
 
 export async function getSpells(databaseConnection: any, beastId: number): Promise<Spell[]> {

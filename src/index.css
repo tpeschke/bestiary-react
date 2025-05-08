@@ -112,3 +112,7 @@ a:hover {
 	color: #990000;
     font-style: italic;
 }
+
+.displayNone {
+	display: none;
+}

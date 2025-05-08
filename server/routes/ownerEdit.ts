@@ -40,6 +40,6 @@ async function checkIfOwnsBeast(request: ownAuthRequest, response: Response, nex
     }
 }
 
-ownerEditRoutes.post('/upsert', checkIfOwnsBeast, updateBeast)
+// ownerEditRoutes.post('/upsert', checkIfOwnsBeast, updateBeast)
 
 export default ownerEditRoutes
