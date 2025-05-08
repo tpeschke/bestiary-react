@@ -1,20 +1,17 @@
 import './Weirdshaping.css'
 
-import CastingInfo from '../../../../interfaces/infoInterfaces.ts/castingInfo'
-
 import CastingTypeSelect from './components/CastingTypeSelect'
+import CastingClass from '../../../../models/casting/CastingClass'
 
 interface Props {
-    castingInfo: CastingInfo
+    castingTypes: CastingClass
 }
 
-export default function Weirdshaping({ castingInfo }: Props) {
-    const {casting} = castingInfo
-
+export default function Weirdshaping({ castingTypes }: Props) {
     return (
         <>
             <h2 className='border'>Weirdshaping</h2>
-            <CastingTypeSelect castingTypes={casting} />
+            <CastingTypeSelect castingTypes={castingTypes} />
         </>
     )
 }

@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Casting } from '../../../../../interfaces/infoInterfaces.ts/castingInfo'
-import CastingClass, { CastingDisplayType } from '../models/CastingClass'
+import CastingClass, { CastingDisplayType } from '../../../../../models/casting/CastingClass'
 import '../Weirdshaping.css'
 
 interface Props {
-    castingTypes: Casting
+    castingTypes: CastingClass
 }
 
 export default function CastingTypeSelect({ castingTypes }: Props) {
-    const castingInfo = new CastingClass(castingTypes)
-
     const [selected, setSelected] = useState<number>()
 
     useEffect(() => {
         if (!selected) {
-            setSelected(castingInfo.getIntialSelected)
+            setSelected(castingTypes.getIntialSelected)
         }
      }, [])
 
@@ -22,7 +19,7 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
         <>
             <div className='casting-selection-shell'>
                 <select value={selected} onChange={event => setSelected(+event.target.value)}>
-                    {castingInfo.castingOptions.map(({value, displayName}: CastingDisplayType, index) => {
+                    {castingTypes.castingOptions.map(({value, displayName}: CastingDisplayType, index) => {
                         return <option key={index} value={value}>{displayName}</option>
                     })}
                 </select>

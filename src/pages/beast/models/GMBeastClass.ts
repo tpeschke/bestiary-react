@@ -1,4 +1,3 @@
-import CastingInfo from "../interfaces/infoInterfaces.ts/castingInfo";
 import CombatInfo from "../interfaces/infoInterfaces.ts/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces.ts/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
@@ -7,12 +6,17 @@ import LootInfo from "../interfaces/infoInterfaces.ts/lootInfoInterfaces";
 import SkillInfo from "../interfaces/infoInterfaces.ts/skillInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces.ts/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
+import CastingClass from "./casting/CastingClass";
 
 export default class GMBeastClass {
     private beastInfo: BeastInfo;
 
+    private castingTypeInfo: CastingClass
+
     constructor(beastInfo: BeastInfo) {
         this.beastInfo = beastInfo;
+
+        this.castingTypeInfo = new CastingClass(beastInfo.castingInfo.casting)
     }
 
     get id(): number {
@@ -47,7 +51,7 @@ export default class GMBeastClass {
         return this.beastInfo.lootInfo
     }
 
-    get castingInfo(): CastingInfo {
-        return this.beastInfo.castingInfo
+    get castingTypesInfo(): CastingClass {
+        return this.castingTypeInfo
     }
  }
