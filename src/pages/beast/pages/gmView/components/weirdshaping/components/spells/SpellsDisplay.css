@@ -1,0 +1,4 @@
+.spells-display-shell {
+    display: flex;
+    justify-content: start;
+}

@@ -1,0 +1,21 @@
+.spell-display-shell {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    padding: 15px;
+    background: #f3f3f3;
+    width: 350px;
+    height: 100%;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.spell-display-shell h4 {
+    border-bottom: 1px solid #607d8b;
+    padding-bottom: 5px;
+    margin: 0 0 10px;
+	color: #607d8b
+}
+
+.spell-display-shell .spell-stat-effect {
+    display: flex;
+    justify-content: space-between;
+}

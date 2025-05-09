@@ -30,7 +30,7 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
                             return <option key={index} value={value}>{displayName}</option>
                         })}
                     </select>
-                    <button className='blue' onClick={_ => setShowExplanation(!showExplanation)}>Show How to Use</button>
+                    <button className='blue' onClick={_ => setShowExplanation(!showExplanation)}>{showExplanation ? 'Hide' : 'Show'} How to Use</button>
                 </div>
                 <div className={showExplanation ? 'casting-explanation-shell' : 'displayNone'}>
                     <h3>How To Use</h3>
