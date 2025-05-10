@@ -2,14 +2,14 @@ import express from 'express'
 
 import { Response, Request, Error } from "../interfaces/apiInterfaces"
 
-import { getGMVersionOfBeast } from '../controllers/gameMaster'
 
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import getDatabaseConnection from '../utilities/databaseConnection'
-import { hasAppropriatePateronLevel } from '../utilities/gets/getBeast'
 import { getPlayerVersionOfBeast } from '../controllers/player'
 import { getMonsterFromCache } from '../controllers/monsterCache'
 import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
+import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
+import { hasAppropriatePateronLevel } from '../controllers/gameMaster/utilities/getBeast'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 

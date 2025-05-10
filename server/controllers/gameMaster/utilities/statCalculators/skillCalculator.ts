@@ -1,4 +1,4 @@
-import { Skill, Strength } from "../../interfaces/beastInterfaces/beastInterfaces"
+import { Skill, Strength } from "../../../../interfaces/beastInterfaces/beastInterfaces"
 
 import { primarySkillRoles } from "./roleInfo/skillRoleInfo"
 

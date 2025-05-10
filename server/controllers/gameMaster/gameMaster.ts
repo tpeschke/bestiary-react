@@ -1,31 +1,26 @@
-import { Response, Request, Error } from "../interfaces/apiInterfaces"
-import { Alm, Item, Loot, Scroll, SpecificLoot } from "../interfaces/lootInterfaces"
-import { Challenge, Obstacle } from "../interfaces/skillInterfaces"
-import { Beast, upsertParameters } from "../interfaces/beastInterfaces/beastInterfaces"
-import { Casting, Spell } from "../interfaces/beastInterfaces/infoInterfaces/castingInfo"
-import { Role } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
-import { Movement, LocationVitality } from "../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
-import { Scenario, Folklore } from "../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
-import { ArtistObject } from "../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
-import { Variant, LocationObject, BeastType, ClimateObject } from "../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
-import { Pleroma } from "../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
-import { Skill } from "../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
-import { ConflictObject, Archetype } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo"
+import { Response, Request, Error } from "../../interfaces/apiInterfaces"
+import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces"
+import { Challenge, Obstacle } from "../../interfaces/skillInterfaces"
+import { Beast, upsertParameters } from "../../interfaces/beastInterfaces/beastInterfaces"
+import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo"
+import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
+import { Movement, LocationVitality } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
+import { Scenario, Folklore } from "../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
+import { ArtistObject } from "../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces"
+import { Variant, LocationObject, BeastType, ClimateObject } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
+import { Pleroma } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
+import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
+import { ConflictObject, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
-import getDatabaseConnection from "../utilities/databaseConnection"
-import { isOwner } from "../utilities/ownerAccess"
-import createHash from "../utilities/hashGeneration"
-import upsertBeast from "../utilities/upserts/upsertBeast"
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
-import {
-    getArtistInfo, getClimates, getConflict, getLocations, getTypes, getSkills, getFavorite, getNotes, getVariants, getSpecificLoots, getPleroma,
-    getLocationalVitalities, getFolklore, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedAlms, getCarriedBasic, getCarriedItems, getCarriedScrolls,
-    getScenarios, getTables, getArchetypes, getCasting, getSpells, getChallenges, getObstacles, getRoles, getMovement, getCombatStats,
-    getRarity
-} from "../utilities/gets/getBeast"
-import { calculateStressAndPanic } from "../utilities/statCalculators/skillCalculator"
-import { calculateVitalityFatigueAndTrauma } from "../utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
-import { CalculateCombatStatsReturn } from "../utilities/statCalculators/combatCalculators/combat"
+import getDatabaseConnection from "../../utilities/databaseConnection"
+import { isOwner } from "../../utilities/ownerAccess"
+import createHash from "../../utilities/hashGeneration"
+import upsertBeast from "../../utilities/upserts/upsertBeast"
+import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../utilities/sendingFunctions'
+import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getRoles, getMovement, getCombatStats, getLocationalVitalities, getSkills, getChallenges, getObstacles, getConflict, getArchetypes, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
+import { CalculateCombatStatsReturn } from "./utilities/statCalculators/combatCalculators/combat"
+import { calculateVitalityFatigueAndTrauma } from "./utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
+import { calculateStressAndPanic } from "./utilities/statCalculators/skillCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 

@@ -13,7 +13,7 @@ export default function PleromaDisplay({ pleroma, rarity }: Props) {
     const formatedPleroma = pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))
     return (
         <div className='pleroma-display-shell'>
-            <h2 className='border'>Pleroma</h2>
+            <h3 className='border'>Pleroma</h3>
             <Drawers drawerInnards={formatedPleroma} />
         </div>
     )

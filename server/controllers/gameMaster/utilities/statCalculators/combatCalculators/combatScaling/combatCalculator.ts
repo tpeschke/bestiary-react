@@ -1,5 +1,5 @@
-import { Strength } from "../../../../interfaces/beastInterfaces/beastInterfaces";
-import { Size } from "../../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
+import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces";
+import { Size } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
 
 import allScalingAndBonuses, { ScalingObject } from "./combatScaling";
 

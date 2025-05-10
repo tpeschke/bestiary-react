@@ -1,4 +1,4 @@
-import { Strength } from "../../../interfaces/beastInterfaces/beastInterfaces"
+import { Strength } from "../../../../../interfaces/beastInterfaces/beastInterfaces"
 
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo"
 

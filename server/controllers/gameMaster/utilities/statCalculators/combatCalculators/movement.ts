@@ -1,4 +1,5 @@
-import { Movement, RawMovement } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Movement } from "../../../../../interfaces/beastInterfaces/beastInterfaces";
+import { RawMovement } from "../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
 export function calculateMovements(movements: RawMovement[], combatpoints: number, role: string) {

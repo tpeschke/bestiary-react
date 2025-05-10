@@ -1,6 +1,6 @@
-import { Strength } from "../../../interfaces/beastInterfaces/beastInterfaces";
-import { AttackInfo, DamageType, DefenseInfo, RawCombatStat } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { Size } from "../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
+import { Strength } from "../../../../../interfaces/beastInterfaces/beastInterfaces";
+import { AttackInfo, DamageType, DefenseInfo, RawCombatStat } from "../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Size } from "../../../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 import { calculateCover, calculateDefense, calculateDR, calculateParryDR, calculateStat, calculateStatWithFormatting } from "./combatScaling/combatCalculator";

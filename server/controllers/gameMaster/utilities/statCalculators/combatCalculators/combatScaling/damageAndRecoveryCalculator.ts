@@ -1,5 +1,6 @@
-import { Strength } from "../../../../interfaces/beastInterfaces/beastInterfaces";
-import { IsSpecial, DamageType } from "../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+
+import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces";
+import { IsSpecial, DamageType } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 
 import { calculateStat } from "./combatCalculator";
 import { DiceObject } from "./combatScaling";

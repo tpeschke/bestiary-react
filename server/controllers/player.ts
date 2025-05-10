@@ -1,8 +1,8 @@
 import { Response, Request } from "../interfaces/apiInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
-import { getArtistInfo } from "../utilities/gets/getBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
+import { getArtistInfo } from "./gameMaster/utilities/getBeast"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
