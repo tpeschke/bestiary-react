@@ -6,7 +6,7 @@ import { getArtistInfo } from "./gameMaster/utilities/getBeast"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
-interface noteRequest extends Request {
+interface NoteRequest extends Request {
     body: Body
 }
 
@@ -41,7 +41,7 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     }
 }
 
-export async function addPlayerNotes(request: noteRequest, response: Response) {
+export async function addPlayerNotes(request: NoteRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { user } = request
     const { beastId, notes } = request.body

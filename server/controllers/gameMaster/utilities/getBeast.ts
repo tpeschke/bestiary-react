@@ -21,7 +21,7 @@ import { calculateMovements } from "./statCalculators/combatCalculators/movement
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
-export function hasAppropriatePateronLevel(user: User, beastPatron: number, canPlayerView: boolean): string {
+export function hasAppropriatePatreonLevel(user: User, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {
         return 'gm'
     } else if (user && user.patreon) {

@@ -10,6 +10,7 @@ interface App {
 }
 
 interface Parameters {
+    beastId: any
     id: number,
     beastid: string,
     

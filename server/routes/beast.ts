@@ -9,7 +9,8 @@ import { getPlayerVersionOfBeast } from '../controllers/player'
 import { getMonsterFromCache } from '../controllers/monsterCache'
 import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
 import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
-import { hasAppropriatePateronLevel } from '../controllers/gameMaster/utilities/getBeast'
+import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getBeast'
+import getLoot from '../controllers/loot/loot'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
@@ -26,13 +27,13 @@ interface ownerAuthBody {
 async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const { user, body, params } = request
     const databaseConnection = getDatabaseConnection(request)
-    const beastId = body.beastId ?? +params.beastid
+    const beastId = body.beastId ?? +params.beastId
 
     const [viewInfo] = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
-    const type: string = hasAppropriatePateronLevel(user, viewInfo.patreon, viewInfo.canplayerview)
+    const type: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
 
     if (type === 'gm') {
-        const beast: Beast | null = getMonsterFromCache(+request.params.beastid)
+        const beast: Beast | null = getMonsterFromCache(beastId)
         if (beast) {
             checkForContentTypeBeforeSending(response, beast)
         } else {
@@ -45,6 +46,8 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     }
 }
 
-BeastRoutes.get('/:beastid', checkIfGameMaster)
+BeastRoutes.get('/:beastId', checkIfGameMaster)
+
+BeastRoutes.post('/loot', getLoot)
 
 export default BeastRoutes
