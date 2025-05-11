@@ -28,18 +28,17 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const { user, body, params } = request
     const databaseConnection = getDatabaseConnection(request)
     const beastId = body.beastId ?? +params.beastId
-
+    
     const [viewInfo] = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
-    const type: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
-
-    if (type === 'gm') {
+    const viewType: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
+    if (viewType === 'gm') {
         const beast: Beast | null = getMonsterFromCache(beastId)
         if (beast) {
             checkForContentTypeBeforeSending(response, beast)
         } else {
             getGMVersionOfBeast(request, response)
         }
-    } else if (type === 'player') {
+    } else if (viewType === 'player') {
         getPlayerVersionOfBeast(request, response)
     } else {
         checkForContentTypeBeforeSending(response, { color: "red", message: "You need to log on." })
