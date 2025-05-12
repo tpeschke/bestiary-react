@@ -1,8 +1,8 @@
-import { Pleroma } from "../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { Pleroma } from "../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
 
-import Drawers, { DrawerObject } from "../../../../../../../../components/drawers/Drawers"
-import { Rarity } from "../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
-import Pair from "../../../../../../components/UI/pair/Pair"
+import Drawers, { DrawerObject } from "../../../../../../../../../../components/drawers/Drawers"
+import { Rarity } from "../../../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import Pair from "../../../../../../../../components/UI/pair/Pair"
 
 interface Props {
     pleroma: Pleroma[],
@@ -10,11 +10,11 @@ interface Props {
 }
 
 export default function PleromaDisplay({ pleroma, rarity }: Props) {
-    const formatedPleroma = pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))
+    const formattedPleroma = pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))
     return (
         <div className='pleroma-display-shell'>
             <h3 className='border'>Pleroma</h3>
-            <Drawers drawerInnards={formatedPleroma} />
+            <Drawers drawerInnards={formattedPleroma} />
         </div>
     )
 }

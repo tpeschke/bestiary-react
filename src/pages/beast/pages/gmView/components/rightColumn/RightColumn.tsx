@@ -12,8 +12,8 @@ import { BeastType, Location, Variant } from '../../../../interfaces/infoInterfa
 import MiscInfoDisplay, { MiscInfo } from './components/miscInfoDisplay/MiscInfoDisplay';
 import VariantsDisplay from './components/variantsDisplay/VariantsDisplay';
 import LocationsDisplay from './components/locationsDisplay/LocationsDisplay';
-import PleromaDisplay from './components/pleromaDisplay/PleromaDisplay';
 import LootInfo from '../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces';
+import LootDisplay from './components/lootDisplay/LootDisplay';
 
 interface Props {
     intro: string
@@ -30,8 +30,6 @@ interface Props {
 }
 
 export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo }: Props) {
-    const { pleroma } = lootInfo
-
     return (
         <div className='right-column-shell'>
             <Body>
@@ -41,9 +39,9 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <CommonFolklore folklores={folklores} />            
             <InfoDisplay section="Habitat / Society" info={habitat} />
             <ScenarioDisplay scenarios={scenarios} />
-            <TypesDisplay types={types} />
+            <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} />
             <MiscInfoDisplay miscInfo={miscInfo} />
-            <PleromaDisplay pleroma={pleroma} rarity={miscInfo.rarity} />
+            <TypesDisplay types={types} />
             <VariantsDisplay variantsInfo={variants} />
             <LocationsDisplay locationsInfo={locationsInfo} />
             <InfoDisplay section='Meta Notes' info={meta} />

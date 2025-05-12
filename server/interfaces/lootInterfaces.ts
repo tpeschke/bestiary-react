@@ -3,7 +3,6 @@ export interface SpecificLoot {
     beastid: number,
     loot: string,
     price: string,
-    deleted: boolean
 }
 
 export interface Loot {
