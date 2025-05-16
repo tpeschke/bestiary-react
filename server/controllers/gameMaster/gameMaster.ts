@@ -94,7 +94,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const beastId = +request.params.beastId
     const isEditing = request.query ? request.query.edit === 'true' : false
 
-    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastId, isEditing).catch((error: Error) => sendErrorForward('get main', error, response))
+    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastId, isEditing)
     
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)

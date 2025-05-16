@@ -29,7 +29,7 @@ export default function beastHooks(): Return {
     const beastCache = useSelector(getBeastCache)
 
     useEffect(() => {
-        if (beastId) {
+        if (beastId && !beast) {
             const beast: null | GMBeastClass = beastCache[beastId]
             if (beast) {
                 setBeast(beast)

@@ -14,12 +14,11 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     return (
         <>
             <RoleTitle title='Confrontation' points={socialpoints} role={socialrole} secondaryRole={socialsecondary} />
-            {conflicts ?
-                <CharacteristicsDisplay characteristicInfo={conflicts} />
-                : <></>
-            }
-            <SpecialInfo type="Defense" info={def_conf} />
-            <SpecialInfo type="Attack" info={atk_conf} />
+            {conflicts && <CharacteristicsDisplay characteristicInfo={conflicts} />}
+            <h3>Defense Info</h3>
+            <SpecialInfo info={def_conf} />
+            <h3>Attack Info</h3>
+            <SpecialInfo info={atk_conf} />
         </>
     )
 }

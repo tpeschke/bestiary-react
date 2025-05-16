@@ -24,7 +24,7 @@ export default function Drawer({ label, subtitle, innards, isOpen, index, openDr
         <div className={classShellString} onClick={_ => openDrawer(indexToSetTo)}>
             <div className='drawer-header-shell'>
                 <h3>{label}</h3>
-                {subtitle ? <p>{subtitle}</p> : <></>}
+                {subtitle && <p>{subtitle}</p>}
                 <div className='icon-shell'>
                     <Icon iconName={isOpen ? 'up' : 'down'} />
                 </div>

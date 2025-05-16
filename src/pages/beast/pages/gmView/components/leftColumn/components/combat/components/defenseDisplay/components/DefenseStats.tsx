@@ -15,22 +15,14 @@ export default function DefenseStat({ defenseStats }: Props) {
             <div>
                 <div>
                     <p>Def</p>
-                    <p>{defense}</p>
+                    <p>{defense} <span data-tooltip-id="my-tooltip" data-tooltip-content="Parry Information">(P: {parry} vs {flanks} flanks)</span></p>
                 </div>
-                <div>
-                    <p>Flanks</p>
-                    <p>{flanks}</p>
-                </div>
-                <div>
-                    <p>Parry</p>
-                    <p>{parry}</p>
-                </div>
-            </div>
-            <div>
                 <div>
                     <p>Cover</p>
                     <p>{cover}</p>
                 </div>
+            </div>
+            <div>
                 <div>
                     <p>Parry DR</p>
                     <p>{parryDR}</p>

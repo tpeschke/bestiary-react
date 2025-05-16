@@ -20,14 +20,16 @@ export default function SkillSection({ skillInfo }: Props) {
         <>
             <RoleTitle title="Skills" points={skillpoints} role={skillrole} secondaryRole={skillsecondary} />
             <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true }} />
-            <SpecialInfo type="Defense" info={def_skill} />
-            <SpecialInfo type="Attack" info={atk_skill} />
+            <h3>Defense Info</h3>
+            <SpecialInfo info={def_skill} />
+            <h3>Attack Info</h3>
+            <SpecialInfo  info={atk_skill} />
             <h3>Skills</h3>
+            { skills && 
             <Body>
-                {skills ?
-                    <SkillsDisplay skills={skills} />
-                    : <></>}
+                <SkillsDisplay skills={skills} />
             </Body>
+            }
         </>
     )
 }

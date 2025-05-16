@@ -43,12 +43,12 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
                         </>
                     </Body>
                 </div>
-                {selected ?
+                {selected &&
                     <div className='casting-info-shell'>
                         <Body>
                             <CastingRules index={selected} spellnumberdie={castingTypes.getSpellNumberDie} />
                         </Body>
-                    </div> : <></>
+                    </div>
                 }
             </>
         </Body>

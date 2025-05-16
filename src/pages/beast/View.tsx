@@ -10,8 +10,8 @@ export default function View(setLoading: Function) {
 
     return (
         <div className='card-background'>
-            {beast ? <GMView beast={beast} /> : <></>}
-            {playerBeast ? <PlayerView beast={playerBeast} /> : <></>}
+            {beast && <GMView beast={beast} />}
+            {playerBeast && <PlayerView beast={playerBeast} />}
         </div>
     )
 }

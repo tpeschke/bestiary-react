@@ -13,14 +13,13 @@ export default function TraumaDisplay({ trauma, notrauma, rollundertrauma }: Pro
 
     return (
         <>
-            {!notrauma && traumaString ?
+            {(!notrauma && traumaString) &&
                 <div className="trauma-pair-shell">
                     <div>
                         <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip='What you need to roll under for the Trauma Check' /><p>)</p>
                     </div>
                     <p>{traumaString}</p>
                 </div>
-                : <></>
             }
         </>
     )

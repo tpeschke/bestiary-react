@@ -14,12 +14,12 @@ export default function RoleTitle({ title, points, role, secondaryRole }: Props)
     return (
         <div className="role-shell">
             <h2>{title}</h2>
-            {showRightSide ?
+            {showRightSide &&
                 <div className="skull-frame">
                     <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
                     {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
                 </div>
-                : <></>}
+            }
         </div>
     )
 }

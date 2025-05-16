@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { ToastContainer } from 'react-toastify';
 import { Slide } from 'react-toastify';
@@ -15,16 +15,19 @@ import Catalog from './pages/catalog/Catalog'
 import View from './pages/beast/View'
 
 import { accessURL } from './frontend-config'
-import { setUser } from './redux/slices/userSlice';
+import { setUser, isUserLoggedOn } from './redux/slices/userSlice';
 import Loading from './components/loading/Loading';
 
 export default function App() {
+  const userIsLoggedIn = useSelector(isUserLoggedOn)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get(accessURL + '/isLoggedIn').then(({ data }) => {
-      dispatch(setUser(data))
-    })
+    if (!userIsLoggedIn) {
+      axios.get(accessURL + '/isLoggedIn').then(({ data }) => {
+        dispatch(setUser(data))
+      })
+    }
   }, []);
 
   return (

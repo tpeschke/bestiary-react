@@ -11,11 +11,11 @@ export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
         
     return (
         <>
-            {descriptions.length > 0 ? <CharacteristicsInfo title="Descriptions" characteristics={descriptions} /> : <></>}
-            {convictions.length > 0 ? <CharacteristicsInfo title="Convictions" characteristics={convictions} /> : <></>}
-            {relationships.length > 0 ? <CharacteristicsInfo title="Relationships" characteristics={relationships} /> : <></>}
-            {flaws.length > 0 ? <CharacteristicsInfo title="Flaws" characteristics={flaws} /> : <></>}
-            {burdens.length > 0 ? <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} /> : <></>}
+            {descriptions.length > 0 && <CharacteristicsInfo title="Descriptions" characteristics={descriptions} />}
+            {convictions.length > 0 && <CharacteristicsInfo title="Convictions" characteristics={convictions} />}
+            {relationships.length > 0 && <CharacteristicsInfo title="Relationships" characteristics={relationships} />}
+            {flaws.length > 0 && <CharacteristicsInfo title="Flaws" characteristics={flaws} />}
+            {burdens.length > 0 && <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} />}
         </>
     )
 }

@@ -166,7 +166,8 @@ export async function getSpecificLoots(databaseConnection: any, beastId: number)
 }
 
 export async function getLairBasic(databaseConnection: any, beastId: number): Promise<Loot> {
-    return databaseConnection.loot.lair.getBasic(beastId)
+    const [lootInfo] = await databaseConnection.loot.lair.getBasic(beastId)
+    return lootInfo
 }
 
 export async function getLairAlms(databaseConnection: any, beastId: number): Promise<Alm[]> {
@@ -188,7 +189,8 @@ export async function getLairScrolls(databaseConnection: any, beastId: number): 
 }
 
 export async function getCarriedBasic(databaseConnection: any, beastId: number): Promise<Loot> {
-    return databaseConnection.loot.carried.getBasic(beastId)
+    const [lootInfo] = await databaseConnection.loot.carried.getBasic(beastId)
+    return lootInfo
 }
 
 export async function getCarriedAlms(databaseConnection: any, beastId: number): Promise<Alm[]> {
