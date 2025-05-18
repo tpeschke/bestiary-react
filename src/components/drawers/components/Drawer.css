@@ -15,6 +15,10 @@
     margin-bottom: 5px;
 }
 
+.drawer-shell.open:last-child {
+    margin-bottom: 0;
+}
+
 .drawer-shell.open.open-top-margin {
     margin-top: 5px;
 }
