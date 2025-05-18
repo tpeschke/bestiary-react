@@ -1,6 +1,6 @@
 import './Weirdshaping.css'
 
-import CastingClass from '../../../../models/casting/CastingClass'
+import CastingClass from './models/CastingClass'
 import CastingTypeSelect from './components/casting/CastingTypeSelect'
 import { Spell } from '../../../../interfaces/infoInterfaces.ts/castingInfo'
 import SpellsDisplay from './components/spells/SpellsDisplay'

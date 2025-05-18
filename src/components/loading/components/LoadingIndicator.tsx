@@ -1,13 +1,17 @@
 import './LoadingIndicator.css'
 
 interface Props {
-    stylings: string
+    stylings: string,
+    secondaryColor: boolean
 }
 
-export default function LoadingIndicator({ stylings }: Props) {
+export default function LoadingIndicator({ stylings, secondaryColor }: Props) {
+    let classString = 'loader'
+
+    secondaryColor ? classString += ' secondaryColor' : null
     return (
         <div className={stylings}>
-            <span className={"loader"}></span>
+            <span className={classString}></span>
         </div>
     )
 }

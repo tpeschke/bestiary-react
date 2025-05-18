@@ -9,6 +9,10 @@
     animation: rotationBack 1s ease-in-out infinite reverse;
 }
 
+.loader.secondaryColor {
+    background: #795548;
+}
+
 .loader::before {
     content: '';
     box-sizing: border-box;
@@ -20,6 +24,10 @@
     height: 48px;
     background: #FFF;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.loader.secondaryColor::before {
+    background: #795548;
 }
 
 .loader::after {
@@ -34,6 +42,10 @@
     background: #ff5722;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.loader.secondaryColor::after {
+    background: #FFF;
 }
 
 @keyframes rotationBack {

@@ -11,46 +11,38 @@ export interface SpecificLoot {
     beastid: number,
     loot: string,
     price: string,
+    deleted: boolean
 }
 
+export type lootScalingOptions = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g'
+
 export interface Loot {
-    copper?: string,
-    silver?: string,
-    gold?: string,
-    potion?: string,
-    relic?: string,
-    enchanted?: string,
+    copper?: lootScalingOptions,
+    enchanted?: lootScalingOptions,
+    potion?: lootScalingOptions,
+    items?: Item[],
     scrolls?: Scroll[],
     alms?: Alm[],
-    talisman?: string,
-    items?: any
+    talisman?: lootScalingOptions
 }
 
 export interface Scroll {
-    id: number, 
-    beastid: number, 
-    number: string, 
-    power: string, 
-    deleted: boolean
+    power: lootScalingOptions,
+    number: lootScalingOptions
 }
 
 export interface Alm {
-    id: number,
-    beastid: number,
-    number: string,
-    favor: string,
-    deleted: boolean
+    favor: lootScalingOptions,
+    number: lootScalingOptions
 }
 
 export interface Item {
-    id?: number,
-    beastid: number,
-    itemcategory: number,
-    materialrarity: string,
-    detailing: string,
-    wear: string,
-    chance: string,
-    number: number
+    number: number, 
+    chance: lootScalingOptions, 
+    detailing: number, 
+    itemcategory: number, 
+    materialrarity: number, 
+    wear: string
 }
 export interface Pleroma {
     id: number,
@@ -61,3 +53,28 @@ export interface Pleroma {
     harvest: string,
     deleted: boolean
 }
+
+export type ReturnedLoot = ReturnedAlmScript | ReturnedEnchantedItem | ReturnedPotion | ReturnedTalisman | ReturnedScroll | ReturnedGenericLoot
+
+export type ReturnedAlmScript = string
+export interface ReturnedEnchantedItem {
+    id: number,
+    name: string
+}
+export interface ReturnedPotion {
+    name: string,
+    swigs: number,
+    isSalve: boolean,
+    effect: string,
+    price: number
+}
+export interface ReturnedTalisman {
+    skill: string,
+    explanation: string
+}
+export interface ReturnedScroll {
+    scroll: string,
+    sp: number,
+    breakdown: string
+}
+export type ReturnedGenericLoot = string

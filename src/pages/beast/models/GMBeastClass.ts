@@ -7,7 +7,7 @@ import LootInfo from "../interfaces/infoInterfaces.ts/lootInfoInterfaces";
 import SkillInfo from "../interfaces/infoInterfaces.ts/skillInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces.ts/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
-import CastingClass from "./casting/CastingClass";
+import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
 export default class GMBeastClass {
     private beastInfo: BeastInfo;
@@ -22,6 +22,13 @@ export default class GMBeastClass {
 
     get id(): number {
         return this.beastInfo?.id ?? 0
+    }
+
+    get maxPoints(): number {
+        const { combatpoints } = this.beastInfo.combatInfo
+        const { skillpoints } = this.beastInfo.skillInfo
+        const { socialpoints } = this.beastInfo.socialInfo
+        return Math.max(combatpoints,  skillpoints, socialpoints)
     }
 
     get generalInfo(): GeneralInfo {

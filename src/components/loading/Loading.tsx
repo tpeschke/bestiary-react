@@ -3,10 +3,12 @@ import './Loading.css'
 import LoadingIndicator from './components/LoadingIndicator'
 
 interface Props {
-    component: Function
+    component: Function,
+    componentProps?: Object,
+    secondaryColor?: boolean
 }
 
-export default function Loading({ component }: Props) {
+export default function Loading({ component, componentProps, secondaryColor = false }: Props) {
     const [isLoading, setIsLoading] = useState(true)
 
     function setLoading(showPageCondition: boolean) {
@@ -17,9 +19,9 @@ export default function Loading({ component }: Props) {
 
     return (
         <>
-            <LoadingIndicator stylings={isLoading ? '' : 'display-none'}/>
+            <LoadingIndicator stylings={isLoading ? '' : 'display-none'} secondaryColor={secondaryColor}/>
             <div className={isLoading ? 'display-none' : ''}>
-                {component(setLoading)}
+                {component(setLoading, componentProps)}
             </div>
         </>
     )

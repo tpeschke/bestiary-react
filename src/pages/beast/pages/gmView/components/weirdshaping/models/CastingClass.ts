@@ -1,4 +1,4 @@
-import { Casting } from "../../interfaces/infoInterfaces.ts/castingInfo";
+import { Casting } from "../../../../../interfaces/infoInterfaces.ts/castingInfo";
 
 export interface CastingDisplayType {
     value: number,

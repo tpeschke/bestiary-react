@@ -42,3 +42,28 @@ export interface ScrollsToRequest {
     numberOfScrolls: number,
     power: number
 }
+
+export type ReturnedLoot = ReturnedAlmScript | ReturnedEnchantedItem | ReturnedPotion | ReturnedTalisman | ReturnedScroll | ReturnedGenericLoot
+
+export type ReturnedAlmScript = string
+export interface ReturnedEnchantedItem {
+    id: number,
+    name: string
+}
+export interface ReturnedPotion {
+    name: string,
+    swigs: number,
+    isSalve: boolean,
+    effect: string,
+    price: number
+}
+export interface ReturnedTalisman {
+    skill: string,
+    explanation: string
+}
+export interface ReturnedScroll {
+    scroll: string,
+    sp: number,
+    breakdown: string
+}
+export type ReturnedGenericLoot = string

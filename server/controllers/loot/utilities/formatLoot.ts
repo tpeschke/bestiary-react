@@ -1,10 +1,10 @@
-import { ItemsToRequest, LootAlms, LootItem, LootObject, lootScalingOptions, LootScroll, LootToRequest, ScrollsToRequest } from "../interfaces/lootInterfaces"
+import { ItemsToRequest, LootAlms, LootItem, LootObject, lootScalingOptions, LootScroll, LootToRequest, ReturnedGenericLoot, ScrollsToRequest } from "../interfaces/lootInterfaces"
 
 import rollDice from "../../../utilities/diceRoller"
 import { generateEnchantedItem, generateItemChance, generateScriptFavor, generateScriptNumber, generateScrollPower, generatePotion, generateTalisman, generateCoin } from "./generateLoot"
 
-export function getGenericLoot(timesToRoll: number = 1, beastLoot: LootObject, monsterMaxPoints: number, coinMultiplier: number) {
-    let genericLoot: LootToRequest[] = []
+export function getGenericLoot(timesToRoll: number = 1, beastLoot: LootObject, monsterMaxPoints: number, coinMultiplier: number): ReturnedGenericLoot[] {
+    let genericLoot: ReturnedGenericLoot[] = []
 
     const { copper, alms } = beastLoot
 

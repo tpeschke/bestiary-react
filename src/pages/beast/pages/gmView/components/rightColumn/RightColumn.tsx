@@ -26,10 +26,11 @@ interface Props {
     variants: Variant[],
     meta: string,
     locationsInfo: Location[],
-    lootInfo: LootInfo
+    lootInfo: LootInfo,
+    maxPoints: number
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo }: Props) {
+export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints }: Props) {
     return (
         <div className='right-column-shell'>
             <Body>
@@ -39,7 +40,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <CommonFolklore folklores={folklores} />            
             <InfoDisplay section="Habitat / Society" info={habitat} />
             <ScenarioDisplay scenarios={scenarios} />
-            <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} />
+            <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />
             <MiscInfoDisplay miscInfo={miscInfo} />
             <TypesDisplay types={types} />
             <VariantsDisplay variantsInfo={variants} />

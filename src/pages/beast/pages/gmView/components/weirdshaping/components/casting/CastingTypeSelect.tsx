@@ -2,7 +2,7 @@ import '../../Weirdshaping.css'
 
 import { useEffect, useState } from 'react'
 
-import CastingClass, { CastingDisplayType } from '../../../../../../models/casting/CastingClass'
+import CastingClass, { CastingDisplayType } from '../../models/CastingClass'
 
 import CastingRules from './CastingRules'
 import Body from '../../../../../../components/UI/body/Body'
