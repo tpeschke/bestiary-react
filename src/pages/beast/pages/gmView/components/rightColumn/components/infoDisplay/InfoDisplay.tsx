@@ -5,17 +5,19 @@ import Body from '../../../../../../components/UI/body/Body'
 
 interface Props {
     section: string,
-    info: string
+    info: string,
 }
 
 export default function InfoDisplay({ section, info }: Props) {
 
     return (
-        <div className='info-display-shell'>
-            <h2 className='border'>{section}</h2>
-            <Body>
-                <HTMLDisplay html={info} />
-            </Body>
-        </div>
+        <>
+            <div className='info-display-shell'>
+                <h2 className='border'>{section}</h2>
+                <Body>
+                    <HTMLDisplay html={info} />
+                </Body>
+            </div>
+        </>
     )
 }

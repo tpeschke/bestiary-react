@@ -6,7 +6,6 @@ import Body from "../../../../components/UI/body/Body";
 import HTMLDisplay from "../../../../components/UI/htmlDisplay/htmlDisplay";
 import CommonFolklore from "./components/commonFolklore/CommonFolklore";
 import InfoDisplay from "./components/infoDisplay/InfoDisplay";
-import ScenarioDisplay from "./components/ScenariosDisplay/ScenarioDisplay";
 import TypesDisplay from './components/typesDisplay/TypesDisplay';
 import { BeastType, Location, Variant } from '../../../../interfaces/infoInterfaces/linkedInfoInterfaces';
 import MiscInfoDisplay, { MiscInfo } from './components/miscInfoDisplay/MiscInfoDisplay';
@@ -14,6 +13,7 @@ import VariantsDisplay from './components/variantsDisplay/VariantsDisplay';
 import LocationsDisplay from './components/locationsDisplay/LocationsDisplay';
 import LootInfo from '../../../../interfaces/infoInterfaces/lootInfoInterfaces';
 import LootDisplay from './components/lootDisplay/LootDisplay';
+import HabitatDisplay from './components/habitatDisplay/HabitatDisplay';
 
 interface Props {
     intro: string
@@ -38,8 +38,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             </Body>
             <InfoDisplay section="Appearance" info={appearance} />
             <CommonFolklore folklores={folklores} />            
-            <InfoDisplay section="Habitat / Society" info={habitat} />
-            <ScenarioDisplay scenarios={scenarios} />
+            <HabitatDisplay info={habitat} scenarios={scenarios} />
             <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />
             <MiscInfoDisplay miscInfo={miscInfo} />
             <TypesDisplay types={types} />

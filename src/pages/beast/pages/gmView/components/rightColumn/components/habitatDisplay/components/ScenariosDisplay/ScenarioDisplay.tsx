@@ -1,6 +1,6 @@
-import { Scenario } from '../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
+import { Scenario } from '../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 
-import Body from '../../../../../../components/UI/body/Body'
+import Body from '../../../../../../../../components/UI/body/Body'
 
 interface Props {
     scenarios: Scenario[]
