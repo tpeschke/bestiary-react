@@ -1,5 +1,5 @@
 import { enchantedItemBase } from "../../../../../../../../../../../frontend-config"
-import { ReturnedEnchantedItem } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { ReturnedEnchantedItem } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 interface Props {
     enchantedItem: ReturnedEnchantedItem

@@ -1,5 +1,5 @@
 import { savePlayerNotes } from "../hooks/playerHooks";
-import { ArtistInfo } from "../interfaces/infoInterfaces.ts/ImageInfoInterfaces";
+import { ArtistInfo } from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import { Notes, PlayerBeastInfo } from "../interfaces/viewInterfaces";
 
 export default class PlayerBeastClass {

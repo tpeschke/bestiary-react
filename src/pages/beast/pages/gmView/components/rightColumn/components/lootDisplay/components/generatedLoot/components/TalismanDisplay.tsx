@@ -1,5 +1,5 @@
 import Icon from "../../../../../../../../../../../components/icon/Icon"
-import { ReturnedTalisman } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { ReturnedTalisman } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 interface Props {
     talisman: ReturnedTalisman

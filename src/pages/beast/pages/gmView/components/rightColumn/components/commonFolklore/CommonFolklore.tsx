@@ -1,6 +1,6 @@
 import './CommonFolkore.css'
 
-import { Folklore } from '../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces'
+import { Folklore } from '../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 
 import Body from '../../../../../../components/UI/body/Body'
 import Icon from '../../../../../../../../components/icon/Icon'

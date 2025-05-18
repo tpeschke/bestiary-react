@@ -1,4 +1,4 @@
-import { DefenseInfo } from "../../../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces"
+import { DefenseInfo } from "../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces"
 
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import DefenseStats from "./components/DefenseStats"

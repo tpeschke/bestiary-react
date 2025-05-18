@@ -2,7 +2,7 @@ import './Characteristics.css'
 
 import Pair from "../../../../../../../components/UI/pair/Pair"
 
-import { Conflict } from "../../../../../../../interfaces/infoInterfaces.ts/socialInfo"
+import { Conflict } from "../../../../../../../interfaces/infoInterfaces/socialInfo"
 import Body from '../../../../../../../components/UI/body/Body'
 
 interface Props {

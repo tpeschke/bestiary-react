@@ -1,10 +1,10 @@
-import { ItemsToRequest, LootAlms, LootItem, LootObject, lootScalingOptions, LootScroll, LootToRequest, ReturnedGenericLoot, ScrollsToRequest } from "../interfaces/lootInterfaces"
+import { ItemsToRequest, LootAlms, LootItem, LootObject, lootScalingOptions, LootScroll, ReturnedAlmScript, ReturnedGenericLoot, ReturnedLoot, ScrollsToRequest } from "../interfaces/lootInterfaces"
 
 import rollDice from "../../../utilities/diceRoller"
 import { generateEnchantedItem, generateItemChance, generateScriptFavor, generateScriptNumber, generateScrollPower, generatePotion, generateTalisman, generateCoin } from "./generateLoot"
 
-export function getGenericLoot(timesToRoll: number = 1, beastLoot: LootObject, monsterMaxPoints: number, coinMultiplier: number): ReturnedGenericLoot[] {
-    let genericLoot: ReturnedGenericLoot[] = []
+export function getGenericLoot(timesToRoll: number = 1, beastLoot: LootObject, monsterMaxPoints: number, coinMultiplier: number): ReturnedLoot[] {
+    let genericLoot: ReturnedLoot[] = []
 
     const { copper, alms } = beastLoot
 
@@ -130,15 +130,15 @@ function formatItemsForRequest(monsterMaxPoints: number, timesToRoll: number, it
     return itemArray
 }
 
-function formatAlmScripts(monsterMaxPoints: number, timesToRoll: number, alms: LootAlms[]): string[] {
-    let almStrings: string[] = []
+function formatAlmScripts(monsterMaxPoints: number, timesToRoll: number, alms: LootAlms[]): ReturnedLoot[] {
+    let almStrings: ReturnedAlmScript[] = []
     if (alms.length > 0) {
         Array.from(Array(timesToRoll).keys()).forEach(_ => {
             alms.forEach((alm: LootAlms) => {
                 const number = generateScriptNumber(monsterMaxPoints, alm.number)
                 if (number > 0) {
                     const favor = generateScriptFavor(monsterMaxPoints, alm.favor)
-                    almStrings.push(`${number} alm script${number > 1 ? 's' : ''} (${favor} Favor)`)
+                    almStrings.push({type: 'alms', script: `${number} alm script${number > 1 ? 's' : ''} (${favor} Favor)`})
                 }
             })
         })
@@ -147,9 +147,9 @@ function formatAlmScripts(monsterMaxPoints: number, timesToRoll: number, alms: L
     return almStrings
 }
 
-function formatCoinage(monsterMaxPoints: number, timesToRoll: number, copper: lootScalingOptions, coinMultiplier: number): string[] {
+function formatCoinage(monsterMaxPoints: number, timesToRoll: number, copper: lootScalingOptions, coinMultiplier: number): ReturnedLoot[] {
     let coinNumber = [0, 0, 0]
-    let coinageArray: string[] = []
+    let coinageArray: ReturnedGenericLoot[] = []
     if (copper) {
         for (let i = 0; i < timesToRoll; i++) {
             const coinArray: number[] = generateCoin(monsterMaxPoints, copper);
@@ -159,13 +159,13 @@ function formatCoinage(monsterMaxPoints: number, timesToRoll: number, copper: lo
         }
 
         if (coinNumber[0] > 0) {
-            coinageArray.push(coinNumber[0] * coinMultiplier + " gc in coin")
+            coinageArray.push({type: 'generic', info: coinNumber[0] * coinMultiplier + " gc in coin"})
         }
         if (coinNumber[1] > 0) {
-            coinageArray.push(coinNumber[1] * coinMultiplier + " sc in coin")
+            coinageArray.push({type: 'generic', info: coinNumber[1] * coinMultiplier + " sc in coin"})
         }
         if (coinNumber[2] > 0) {
-            coinageArray.push(coinNumber[2] * coinMultiplier + " cc in coin")
+            coinageArray.push({type: 'generic', info: coinNumber[2] * coinMultiplier + " cc in coin"})
         }
     }
 

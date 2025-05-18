@@ -1,8 +1,7 @@
 import Icon from "../../../../../../../../../../../components/icon/Icon"
-import { ReturnedAlmScript } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
 
 interface Props {
-    script: ReturnedAlmScript
+    script: string
 }
 
 export default function AlmScriptDisplay({script}: Props) {

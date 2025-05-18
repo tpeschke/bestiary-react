@@ -1,5 +1,5 @@
 import Pair from "../../../../../../../../../../components/UI/pair/Pair"
-import { Size } from "../../../../../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import { Size } from "../../../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
     size: Size,

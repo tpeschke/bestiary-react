@@ -1,6 +1,6 @@
 import './CombatSubtitle.css'
 
-import { Size } from "../../../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import { Size } from "../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 
 import Body from "../../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../../components/UI/pair/Pair"

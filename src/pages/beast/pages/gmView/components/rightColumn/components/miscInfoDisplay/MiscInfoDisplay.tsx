@@ -2,9 +2,9 @@ import './MiscInfoDisplay.css'
 
 import Body from '../../../../../../components/UI/body/Body'
 import Pair from '../../../../../../components/UI/pair/Pair'
-import { Rarity } from '../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces'
+import { Rarity } from '../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 import ClimatesDisplay from './climates/ClimatesDisplay'
-import { Climate } from '../../../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces'
+import { Climate } from '../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
 
 interface Props {
     miscInfo: MiscInfo

@@ -1,4 +1,4 @@
-import CombatInfo from "../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces"
+import CombatInfo from "../../../../../../interfaces/infoInterfaces/combatInfoInterfaces"
 
 import Pair from "../../../../../../components/UI/pair/Pair"
 import RoleTitle from "../../../roleTitle/RoleTitle"
@@ -7,7 +7,7 @@ import TacticsAndStrategy from "./components/tacticsAndStrategy/TacticsAndStrate
 import DefenseDisplay from "./components/defenseDisplay/DefenseDisplay"
 import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
-import { Size } from "../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import { Size } from "../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
     combatInfo: CombatInfo,

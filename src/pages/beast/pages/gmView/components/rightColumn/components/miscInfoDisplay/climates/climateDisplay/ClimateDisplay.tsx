@@ -1,4 +1,4 @@
-import { Climate } from '../../../../../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces'
+import { Climate } from '../../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
 import './ClimateDisplay.css'
 
 interface Props {

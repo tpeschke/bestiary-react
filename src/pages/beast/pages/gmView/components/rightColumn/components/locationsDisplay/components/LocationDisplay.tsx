@@ -1,6 +1,6 @@
 import './LocationDisplay.css'
 
-import { Location } from '../../../../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces'
+import { Location } from '../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
 
 interface Props {
     locationInfo: Location

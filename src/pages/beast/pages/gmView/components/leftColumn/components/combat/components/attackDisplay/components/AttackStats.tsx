@@ -1,6 +1,6 @@
 import './AttackStats.css'
 
-import { AttackInfo } from '../../../../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces'
+import { AttackInfo } from '../../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces'
 
 interface Props {
     attacksStats: AttackInfo

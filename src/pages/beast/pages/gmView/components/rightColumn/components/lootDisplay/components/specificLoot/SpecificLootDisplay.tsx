@@ -1,4 +1,4 @@
-import { SpecificLoot } from "../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { SpecificLoot } from "../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 interface Props {
     specificLoots?: SpecificLoot[]

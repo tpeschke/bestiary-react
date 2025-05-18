@@ -56,25 +56,39 @@ export interface Pleroma {
 
 export type ReturnedLoot = ReturnedAlmScript | ReturnedEnchantedItem | ReturnedPotion | ReturnedTalisman | ReturnedScroll | ReturnedGenericLoot
 
-export type ReturnedAlmScript = string
-export interface ReturnedEnchantedItem {
-    id: number,
-    name: string
+interface GenericLootObject {
+    type: 'alms' | 'enchanted' | 'potion' | 'talisman' | 'scroll' | 'generic' | null
 }
-export interface ReturnedPotion {
+
+export interface ReturnedAlmScript extends GenericLootObject {
+    script: string,
+    type: 'alms'
+}
+export interface ReturnedEnchantedItem extends GenericLootObject {
+    id: number,
+    name: string,
+    type: 'enchanted'
+}
+export interface ReturnedPotion extends GenericLootObject {
     name: string,
     swigs: number,
     isSalve: boolean,
     effect: string,
-    price: number
+    price: number,
+    type: 'potion'
 }
-export interface ReturnedTalisman {
+export interface ReturnedTalisman extends GenericLootObject {
     skill: string,
-    explanation: string
+    explanation: string,
+    type: 'talisman'
 }
-export interface ReturnedScroll {
+export interface ReturnedScroll extends GenericLootObject {
     scroll: string,
     sp: number,
-    breakdown: string
+    breakdown: string,
+    type: 'scroll'
 }
-export type ReturnedGenericLoot = string
+export interface ReturnedGenericLoot extends GenericLootObject {
+    info: string,
+    type: 'generic'
+}

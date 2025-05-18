@@ -1,4 +1,4 @@
-import { Skill } from '../../../../../../../interfaces/infoInterfaces.ts/skillInfoInterfaces'
+import { Skill } from '../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces'
 
 import Pair from "../../../../../../../components/UI/pair/Pair"
 

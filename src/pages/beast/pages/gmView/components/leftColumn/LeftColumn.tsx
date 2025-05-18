@@ -1,13 +1,13 @@
-import ImageInfo from "../../../../interfaces/infoInterfaces.ts/ImageInfoInterfaces"
-import SocialInfo from "../../../../interfaces/infoInterfaces.ts/socialInfo"
-import SkillInfo from "../../../../interfaces/infoInterfaces.ts/skillInfoInterfaces"
+import ImageInfo from "../../../../interfaces/infoInterfaces/ImageInfoInterfaces"
+import SocialInfo from "../../../../interfaces/infoInterfaces/socialInfo"
+import SkillInfo from "../../../../interfaces/infoInterfaces/skillInfoInterfaces"
 
 import FullImage from "../../../../components/UI/fullImage/fullImage"
 import ConfrontationSection from "./components/confrontation/ConfrontationSection"
 import SkillSection from "./components/skills/SkillSection"
 import CombatSection from "./components/combat/CombatSection"
-import CombatInfo from "../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces"
-import { Size } from "../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import CombatInfo from "../../../../interfaces/infoInterfaces/combatInfoInterfaces"
+import { Size } from "../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
     beastId: number,

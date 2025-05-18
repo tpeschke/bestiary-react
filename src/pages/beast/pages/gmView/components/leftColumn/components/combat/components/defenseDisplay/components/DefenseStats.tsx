@@ -1,6 +1,6 @@
 import './DefenseStats.css'
 
-import { DefenseInfo } from "../../../../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces"
+import { DefenseInfo } from "../../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces"
 
 interface Props {
     defenseStats: DefenseInfo

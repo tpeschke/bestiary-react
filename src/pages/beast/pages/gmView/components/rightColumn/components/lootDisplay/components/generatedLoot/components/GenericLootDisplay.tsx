@@ -1,9 +1,7 @@
-import { ReturnedGenericLoot } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
-
 interface Props {
-    loot: ReturnedGenericLoot
+    info: string
 }
 
-export default function GenericLootDisplay({ loot }: Props) {
-    return <li>{loot}</li>
+export default function GenericLootDisplay({ info }: Props) {
+    return <li>{info}</li>
 }

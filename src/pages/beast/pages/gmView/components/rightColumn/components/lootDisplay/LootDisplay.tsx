@@ -1,7 +1,7 @@
 import './LootDisplay.css'
 
-import { Rarity } from '../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces'
-import LootInfo from '../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces'
+import { Rarity } from '../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
+import LootInfo from '../../../../../../interfaces/infoInterfaces/lootInfoInterfaces'
 
 import PleromaDisplay from './components/pleromaDisplay/PleromaDisplay'
 import SpecificLootDisplay from './components/specificLoot/SpecificLootDisplay'

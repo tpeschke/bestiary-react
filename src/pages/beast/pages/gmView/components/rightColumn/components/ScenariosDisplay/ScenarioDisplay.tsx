@@ -1,4 +1,4 @@
-import { Scenario } from '../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces'
+import { Scenario } from '../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 
 import Body from '../../../../../../components/UI/body/Body'
 

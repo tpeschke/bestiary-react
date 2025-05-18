@@ -1,4 +1,4 @@
-import SocialInfo from "../../../../../../interfaces/infoInterfaces.ts/socialInfo"
+import SocialInfo from "../../../../../../interfaces/infoInterfaces/socialInfo"
 
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import SpecialInfo from "../specialInfo/specialInfo"

@@ -1,5 +1,5 @@
 import Icon from "../../../../../../../../../../../components/icon/Icon"
-import { ReturnedPotion } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { ReturnedPotion } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 interface Props {
     potion: ReturnedPotion

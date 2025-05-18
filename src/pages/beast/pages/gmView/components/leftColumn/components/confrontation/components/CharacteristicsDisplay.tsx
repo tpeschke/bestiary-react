@@ -1,4 +1,4 @@
-import { ConflictObject } from "../../../../../../../interfaces/infoInterfaces.ts/socialInfo"
+import { ConflictObject } from "../../../../../../../interfaces/infoInterfaces/socialInfo"
 
 import CharacteristicsInfo from "./CharacteristicInfo"
 

@@ -1,6 +1,6 @@
 import './MovementInfo.css'
 
-import { Movement } from '../../../../../../../../interfaces/infoInterfaces.ts/combatInfoInterfaces'
+import { Movement } from '../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces'
 import Pair from '../../../../../../../../components/UI/pair/Pair'
 
 interface Props {

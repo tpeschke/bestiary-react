@@ -1,0 +1,12 @@
+.generated-loot-shell>.body-shell {
+    padding-bottom: 5px;
+}
+
+.generated-loot-shell>.body-shell p {
+    text-indent: 20px;
+    font-style: italic;
+}
+
+.generated-loot-shell>.body-shell ul {
+    padding-left: 20px;
+}

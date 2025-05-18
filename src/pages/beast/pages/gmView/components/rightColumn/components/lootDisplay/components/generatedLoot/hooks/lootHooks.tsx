@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { Loot, ReturnedLoot } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces";
+import { Loot, ReturnedLoot } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces";
 
 import { beastURL } from "../../../../../../../../../../../frontend-config";
 

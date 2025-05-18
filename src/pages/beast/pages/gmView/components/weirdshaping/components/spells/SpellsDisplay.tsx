@@ -1,5 +1,5 @@
 import './SpellsDisplay.css'
-import { Spell } from '../../../../../../interfaces/infoInterfaces.ts/castingInfo'
+import { Spell } from '../../../../../../interfaces/infoInterfaces/castingInfo'
 
 import Body from '../../../../../../components/UI/body/Body'
 import SpellDisplay from './spell/SpellDisplay'

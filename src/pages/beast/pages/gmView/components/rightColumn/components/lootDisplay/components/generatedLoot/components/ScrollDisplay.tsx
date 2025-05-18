@@ -1,5 +1,5 @@
 import Icon from "../../../../../../../../../../../components/icon/Icon"
-import { ReturnedScroll } from "../../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { ReturnedScroll } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 interface Props {
     scroll: ReturnedScroll

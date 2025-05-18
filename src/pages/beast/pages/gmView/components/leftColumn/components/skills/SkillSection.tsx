@@ -1,4 +1,4 @@
-import SkillInfo from "../../../../../../interfaces/infoInterfaces.ts/skillInfoInterfaces"
+import SkillInfo from "../../../../../../interfaces/infoInterfaces/skillInfoInterfaces"
 
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import Body from "../../../../../../components/UI/body/Body"

@@ -1,6 +1,6 @@
 import './TypesDisplay.css'
 
-import { BeastType } from "../../../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces"
+import { BeastType } from "../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces"
 
 import Drawers, { DrawerObject } from "../../../../../../../../components/drawers/Drawers"
 import HTMLDisplay from '../../../../../../components/UI/htmlDisplay/htmlDisplay'

@@ -1,8 +1,17 @@
+import './GeneratedLoot.css'
+
 import { useEffect } from "react";
 
-import { Loot } from "../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces";
+import { Loot, ReturnedLoot } from "../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces";
 
 import LootHooks from "./hooks/lootHooks";
+import Body from "../../../../../../../../components/UI/body/Body";
+import AlmScriptDisplay from './components/AlmScriptDisplay';
+import EnchantedItemDisplay from './components/EnchantedItemDisplay';
+import PotionDisplay from './components/PotionDisplay';
+import TalismanDisplay from './components/TalismanDisplay';
+import ScrollDisplay from './components/ScrollDisplay';
+import GenericLootDisplay from './components/GenericLootDisplay';
 
 interface Props {
     lairLoot: Loot,
@@ -20,12 +29,49 @@ export default function GeneratedLootDisplay(setLoading: Function, { lairLoot: l
     setLoading(lairLoot && carriedLoot)
 
     return (
-        <>
+        <div className="generated-loot-shell">
             <h3>Carried Loot</h3>
-            {/* Carried Loot */}
+            {carriedLoot && formatLootDisplay(carriedLoot, 'carried')}
 
             <h3>Lair Loot</h3>
-            {/* Lair Loot */}
-        </>
+            {lairLoot && formatLootDisplay(lairLoot, 'lair')}
+        </div>
     )
+}
+
+function formatLootDisplay(lootArray: ReturnedLoot[], type: string) {
+    if (lootArray.length > 0) {
+        return (
+            <Body>
+                <ul className="horizontal-list">
+                    {lootArray.map((loot: ReturnedLoot, index: number) => formatIndividualItem(loot, index))}
+                </ul>
+            </Body>
+        )
+    }
+    return (
+        <Body>
+            <p>This entry has no {type} loot</p>
+        </Body>
+    )
+}
+
+function formatIndividualItem(loot: ReturnedLoot, key: number) {
+    switch (loot.type) {
+        case 'alms':
+            return <AlmScriptDisplay key={key} script={loot.script} />
+        case 'enchanted':
+            return <EnchantedItemDisplay key={key} enchantedItem={loot} />
+        case 'potion':
+            return <PotionDisplay key={key} potion={loot} />
+        case 'talisman':
+            return <TalismanDisplay key={key} talisman={loot} />
+        case 'scroll':
+            return <ScrollDisplay key={key} scroll={loot} />
+        case 'generic':
+            return <GenericLootDisplay key={key} info={loot.info} />
+        default:
+            return <p>Something went wrong</p>
+    }
+
 }

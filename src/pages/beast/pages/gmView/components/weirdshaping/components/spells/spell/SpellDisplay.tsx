@@ -1,6 +1,6 @@
 import './SpellDisplay.css'
 
-import { Spell } from '../../../../../../../interfaces/infoInterfaces.ts/castingInfo'
+import { Spell } from '../../../../../../../interfaces/infoInterfaces/castingInfo'
 
 import HTMLDisplay from '../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import Icon from '../../../../../../../../../components/icon/Icon'

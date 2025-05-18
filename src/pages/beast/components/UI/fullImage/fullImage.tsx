@@ -1,6 +1,6 @@
 import './fullImage.css'
 
-import { ArtistInfo } from '../../../interfaces/infoInterfaces.ts/ImageInfoInterfaces'
+import { ArtistInfo } from '../../../interfaces/infoInterfaces/ImageInfoInterfaces'
 
 import { imageBase } from '../../../../../frontend-config'
 

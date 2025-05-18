@@ -1,6 +1,6 @@
 import './RightColumn.css'
 
-import { Folklore, Scenario } from "../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces";
+import { Folklore, Scenario } from "../../../../interfaces/infoInterfaces/generalInfoInterfaces";
 
 import Body from "../../../../components/UI/body/Body";
 import HTMLDisplay from "../../../../components/UI/htmlDisplay/htmlDisplay";
@@ -8,11 +8,11 @@ import CommonFolklore from "./components/commonFolklore/CommonFolklore";
 import InfoDisplay from "./components/infoDisplay/InfoDisplay";
 import ScenarioDisplay from "./components/ScenariosDisplay/ScenarioDisplay";
 import TypesDisplay from './components/typesDisplay/TypesDisplay';
-import { BeastType, Location, Variant } from '../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces';
+import { BeastType, Location, Variant } from '../../../../interfaces/infoInterfaces/linkedInfoInterfaces';
 import MiscInfoDisplay, { MiscInfo } from './components/miscInfoDisplay/MiscInfoDisplay';
 import VariantsDisplay from './components/variantsDisplay/VariantsDisplay';
 import LocationsDisplay from './components/locationsDisplay/LocationsDisplay';
-import LootInfo from '../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces';
+import LootInfo from '../../../../interfaces/infoInterfaces/lootInfoInterfaces';
 import LootDisplay from './components/lootDisplay/LootDisplay';
 
 interface Props {

@@ -1,6 +1,6 @@
 import './VariantDisplay.css'
 
-import { Variant } from '../../../../../../../interfaces/infoInterfaces.ts/linkedInfoInterfaces'
+import { Variant } from '../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
 
 import { Link } from 'react-router-dom'
 

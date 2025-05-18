@@ -1,7 +1,7 @@
-import { Pleroma } from "../../../../../../../../interfaces/infoInterfaces.ts/lootInfoInterfaces"
+import { Pleroma } from "../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 import Drawers, { DrawerObject } from "../../../../../../../../../../components/drawers/Drawers"
-import { Rarity } from "../../../../../../../../interfaces/infoInterfaces.ts/generalInfoInterfaces"
+import { Rarity } from "../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 import Pair from "../../../../../../../../components/UI/pair/Pair"
 
 interface Props {
