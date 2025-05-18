@@ -1,8 +1,8 @@
 import './Icon.css'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up'
+type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo'
 
-type Color = null | 'black'
+type Color = null | 'black' | 'white'
 
 type IconSize = null | 'h2' | 'small'
 
@@ -40,9 +40,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin }: Pro
             styling = "fa-solid fa-list-ol";
             break;
         case 'backward':
-            styling = "fa-solid fa-rotate-left"
+            styling = "fa-solid fa-reply"
             break;
         case 'forward':
+            styling = "fa-solid fa-share"
+            break;
+        case 'redo':
             styling = "fa-solid fa-rotate-right"
             break;
         case 'skull':
@@ -65,6 +68,10 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin }: Pro
     switch (color) {
         case 'black':
             styling += ' black-icon'
+            break;
+        case 'white':
+            styling += ' white-icon'
+            break;
     }
 
     switch (iconSize) {

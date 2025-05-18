@@ -37,10 +37,13 @@ export default async function getLoot(request: LootRequest, response: Response) 
         totalCarriedLoot = [...getGenericLoot(timesToRoll, carriedLoot, maxPoints, 1)]
 
         const carriedLootRequestBody = getLootFromReliquary(timesToRoll, carriedLoot, maxPoints, 1, 1)
-        const { data: treasureResponse } = await axios.post(treasureEndpoint, { requestArray: [carriedLootRequestBody] })
+        const queryReturn: any | null = await axios.post(treasureEndpoint, { requestArray: [carriedLootRequestBody] }).catch((error: Error) => sendErrorForward('carried loot', error, response))
 
-        if (treasureResponse[0].length > 0) {
-            totalCarriedLoot = [...totalCarriedLoot, ...treasureResponse[0]]
+        if (queryReturn) {
+            const { data } = queryReturn
+            if (data && data[0].length > 0) {
+                totalCarriedLoot = [...totalCarriedLoot, ...data[0]]
+            }
         }
     }
 
@@ -49,12 +52,15 @@ export default async function getLoot(request: LootRequest, response: Response) 
         totalLairLoot = [...getGenericLoot(timesToRoll, lairLoot, maxPoints, 3)]
 
         const lairLootRequestBody = getLootFromReliquary(timesToRoll, lairLoot, maxPoints, 1.5, 2)
-        const { data: treasureResponse } = await axios.post(treasureEndpoint, { requestArray: [lairLootRequestBody] })
+        const queryReturn: any | null = await axios.post(treasureEndpoint, { requestArray: [lairLootRequestBody] }).catch((error: Error) => sendErrorForward('lair loot', error, response))
 
-        if (treasureResponse[0].length > 0) { 
-            totalLairLoot = [...totalLairLoot, ...treasureResponse[0]]
+        if (queryReturn) {
+            const { data } = queryReturn
+            if (data && data[0].length > 0) {
+                totalLairLoot = [...totalLairLoot, ...data[0]]
+            }
         }
     }
 
-    checkForContentTypeBeforeSending(response, {carriedLoot: totalCarriedLoot, lairLoot: totalLairLoot})
+    checkForContentTypeBeforeSending(response, { carriedLoot: totalCarriedLoot, lairLoot: totalLairLoot, type: 'data' })
 }

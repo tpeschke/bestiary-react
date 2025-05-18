@@ -12,6 +12,7 @@ import PotionDisplay from './components/PotionDisplay';
 import TalismanDisplay from './components/TalismanDisplay';
 import ScrollDisplay from './components/ScrollDisplay';
 import GenericLootDisplay from './components/GenericLootDisplay';
+import Icon from '../../../../../../../../../../components/icon/Icon';
 
 interface Props {
     lairLoot: Loot,
@@ -20,13 +21,26 @@ interface Props {
 }
 
 export default function GeneratedLootDisplay(setLoading: Function, { lairLoot: lairParams, carriedLoot: carriedParams, maxPoints }: Props) {
-    const { generateLoot, lairLoot, carriedLoot } = LootHooks();
-
-    useEffect(() => {
-        generateLoot(lairParams, carriedParams, maxPoints)
-    }, []);
+    const { generateLoot, lairLoot, carriedLoot, setTimesToRoll, timesToRoll } = LootHooks();
 
     setLoading(lairLoot && carriedLoot)
+
+    useEffect(() => {
+        generateLoot(lairParams, carriedParams, maxPoints, timesToRoll)
+    }, []);
+    
+
+    async function regenerateLoot() {
+        await generateLoot(lairParams, carriedParams, maxPoints, timesToRoll)
+    }
+
+    function setNumberOfMonsters( event: any ) {
+        const { value } = event.target
+        if (+value !== timesToRoll) {
+            setTimesToRoll(+value)
+            generateLoot(lairParams, carriedParams, maxPoints, +value)
+        }
+    }
 
     return (
         <div className="generated-loot-shell">
@@ -35,6 +49,11 @@ export default function GeneratedLootDisplay(setLoading: Function, { lairLoot: l
 
             <h3>Lair Loot</h3>
             {lairLoot && formatLootDisplay(lairLoot, 'lair')}
+
+            <div className='input-shell'>
+                <input onBlur={event => setNumberOfMonsters(event)} placeholder='1' type="number" min={0} />
+                <button onClick={regenerateLoot}><Icon iconName='redo' color='white' /></button>
+            </div>
         </div>
     )
 }

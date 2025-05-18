@@ -1,8 +1,9 @@
 import { toast } from 'react-toastify';
 
-interface Message {
+export interface Message {
     color?: 'green' | 'yellow' | 'red' | 'blue',
     message: string,
+    type: 'message'
 }
 
 export default function alertInfo({ color, message }: Message) {

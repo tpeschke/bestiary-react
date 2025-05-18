@@ -166,6 +166,22 @@ select * {
 	background-color: white;
 }
 
+input {
+	font-family: 'oldClaude';
+	border: unset;
+    border-bottom: 1px solid lightgray;
+	transition: .6s;
+}
+
+input[type=number] {
+    text-align: right;
+}
+
+input:focus-visible {
+	border-bottom: 1px solid black;
+    outline: none;
+}
+
 button {
 	border: none;
 	padding: 5px;

@@ -159,13 +159,13 @@ function formatCoinage(monsterMaxPoints: number, timesToRoll: number, copper: lo
         }
 
         if (coinNumber[0] > 0) {
-            coinageArray.push({type: 'generic', info: coinNumber[0] * coinMultiplier + " gc in coin"})
+            coinageArray.push({type: 'generic', info: Math.ceil(coinNumber[0] * coinMultiplier) + " gc in coin"})
         }
         if (coinNumber[1] > 0) {
-            coinageArray.push({type: 'generic', info: coinNumber[1] * coinMultiplier + " sc in coin"})
+            coinageArray.push({type: 'generic', info: Math.ceil(coinNumber[1] * coinMultiplier) + " sc in coin"})
         }
         if (coinNumber[2] > 0) {
-            coinageArray.push({type: 'generic', info: coinNumber[2] * coinMultiplier + " cc in coin"})
+            coinageArray.push({type: 'generic', info: Math.ceil(coinNumber[2] * coinMultiplier) + " cc in coin"})
         }
     }
 
