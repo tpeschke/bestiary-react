@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function ScrollDisplay({ scroll }: Props) {
-    const { scroll: name, sp, breakdown } = scroll
+    const { name, sp, breakdown } = scroll
 
     return (
         <li>

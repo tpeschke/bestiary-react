@@ -83,7 +83,7 @@ export interface ReturnedTalisman extends GenericLootObject {
     type: 'talisman'
 }
 export interface ReturnedScroll extends GenericLootObject {
-    scroll: string,
+    name: string,
     sp: number,
     breakdown: string,
     type: 'scroll'

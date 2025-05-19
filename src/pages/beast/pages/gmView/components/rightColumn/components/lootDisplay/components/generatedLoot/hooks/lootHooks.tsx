@@ -32,6 +32,7 @@ export default function LootHooks(): LootHooksReturn {
 
     async function generateLoot(carriedLoot: Loot | null, lairLoot: Loot | null, maxPoints: number, timesToRollParam: number = 1): Promise<boolean> {
          return axios.post(beastURL + '/loot', { loot: { carriedLoot, lairLoot }, maxPoints, timesToRoll: timesToRollParam }).then(({ data }: GenerateLootReturnData) => {
+            console.log(data)
             if (data.type === 'message') {
                 alertInfo(data)
             } else if (data.type === 'data') {
