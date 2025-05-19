@@ -59,7 +59,8 @@ export default class GMBeastClass {
         return this.beastInfo.lootInfo
     }
 
-    get castingTypesInfo(): CastingClass {
+    get castingInfo(): CastingClass { 
+console.log('class', this.castingTypeInfo)
         return this.castingTypeInfo
     }
 

@@ -30,7 +30,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const beastId = body.beastId ?? +params.beastId
     
     const databaseReturn = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
-    if (databaseReturn.length > 0) {
+    if (databaseReturn?.length > 0) {
         const [viewInfo] = databaseReturn
         const viewType: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
         if (viewType === 'gm') {

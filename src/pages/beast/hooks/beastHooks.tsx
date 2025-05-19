@@ -18,6 +18,8 @@ interface Return {
 }
 
 export default function beastHooks(): Return {
+    const [currentBeastId, setCurrentBeastId] = useState('0')
+
     const [beast, setBeast] = useState<GMBeastClass>()
     const [playerBeast, setPlayerBeast] = useState<PlayerBeastClass>()
 
@@ -29,17 +31,21 @@ export default function beastHooks(): Return {
     const beastCache = useSelector(getBeastCache)
 
     useEffect(() => {
-        if (beastId && !beast) {
+        const idHasChanged = beastId && beastId !== currentBeastId
+        if (idHasChanged || beastId && !beast) {
             const beast: null | GMBeastClass = beastCache[beastId]
             if (beast) {
                 setBeast(beast)
+                scrollToTop()
             } else {
                 axios.get(beastURL + '/' + beastId).then(({ data }) => {
                     if (data.generalInfo) {
                         setBeast(new GMBeastClass(data))
                         dispatch(cacheMonster(data))
+                        scrollToTop()
                     } else {
                         setPlayerBeast(new PlayerBeastClass(data))
+                        scrollToTop()
                     }
                     if (data.color === 'red') {
                         alertInfo(data)
@@ -47,8 +53,13 @@ export default function beastHooks(): Return {
                     }
                 })
             }
+            setCurrentBeastId(beastId)
         }
     }, [beastId]);
+
+    function scrollToTop() {
+        window.scrollTo(0, 0)
+    }
 
     return {
         beast,
