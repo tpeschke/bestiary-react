@@ -38,8 +38,7 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
                         <>
                             <p className='bottom-margin'>These rules are to add variation and mimic different types of casting - giving an approximation of their strengths and weaknesses that players can use and plan around.</p>
                             <p className='bottom-margin'>Some casting types will give points. If you get points, you can add it to Range, Interval, or Effect - anywhere there’s a static number.</p>
-                            <p>For the most part, this is just a simple addition (1 Hour becomes 2 Hours, a +1 becomes a +2) but for Range, you’re going to add it to the second to right’s digit place, unless there is none.</p>
-                            <p>So, +1 to a Range of 100 ft makes it 110 ft. To 10 ft, it becomes 11 ft, and to 1 ft it becomes 2 ft.</p>
+                            <p>For the most part, this is just a simple addition (1 Hour becomes 2 Hours, a +1 becomes a +2).</p>
                         </>
                     </Body>
                 </div>
