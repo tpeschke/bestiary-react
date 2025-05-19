@@ -11,6 +11,7 @@ interface Props {
 }
 
 export default function Weirdshaping({ castingTypes, spells }: Props) {
+    // the component that isn't rerendering correct.
     return (
         <>
             {spells?.length > 0 && (

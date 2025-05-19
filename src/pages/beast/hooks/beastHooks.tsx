@@ -30,6 +30,9 @@ export default function beastHooks(): Return {
 
     const beastCache = useSelector(getBeastCache)
 
+    // the Weirdshaping component will render once but, if you go from an entry without weirdshaping to one that does, the weirdshaping component throws an error
+
+    // data is set and changed here
     useEffect(() => {
         const idHasChanged = beastId && beastId !== currentBeastId
         if (idHasChanged || beastId && !beast) {

@@ -32,6 +32,7 @@ export default function GMView({ beast }: Props) {
                 LeftColumn={LeftColumn({ beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size })}
                 RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints })}
             />
+            {/* This will often return undefined after the beast info gets changed */}
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
         </>
     )
