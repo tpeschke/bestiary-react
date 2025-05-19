@@ -11,7 +11,6 @@ interface Props {
 export default function VariantDisplay({ variantInfo }: Props) {
     const { name, variantid } = variantInfo
     return (
-        // The link between entries
         <Link to={`/beast/${variantid}`}>
             <button className='variant-display'>{name}</button>
         </Link>

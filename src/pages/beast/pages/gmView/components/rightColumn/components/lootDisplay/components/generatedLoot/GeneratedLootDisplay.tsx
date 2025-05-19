@@ -63,6 +63,7 @@ function formatLootDisplay(lootArray: ReturnedLoot[], type: string) {
         return (
             <Body>
                 <ul className="horizontal-list">
+                    {/* TODO add key */}
                     {lootArray.map((loot: ReturnedLoot, index: number) => formatIndividualItem(loot, index))}
                 </ul>
             </Body>

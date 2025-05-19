@@ -16,7 +16,6 @@ export default class GMBeastClass {
 
     constructor(beastInfo: BeastInfo) {
         this.beastInfo = beastInfo;
-
         this.castingTypeInfo = new CastingClass(beastInfo.castingInfo.casting)
     }
 
@@ -60,7 +59,6 @@ export default class GMBeastClass {
     }
 
     get castingInfo(): CastingClass { 
-console.log('class', this.castingTypeInfo)
         return this.castingTypeInfo
     }
 

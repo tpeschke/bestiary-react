@@ -1,7 +1,3 @@
-// lootTables.itemCategories.forEach(category => {
-//     this.itemCategories[category.id] = category.label
-// })
-
 import axios from 'axios'
 
 import { Response, Request, Error } from "../../interfaces/apiInterfaces"

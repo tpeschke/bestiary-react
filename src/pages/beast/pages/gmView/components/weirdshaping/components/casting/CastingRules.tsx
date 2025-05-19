@@ -44,7 +44,6 @@ const wildMagicExplanation = (
     </>
 )
 
-// this needs to take a parameter due to the spell number die being different based on the monster
 const vancianExplanation = (spellnumberdie: string) => {
     return (
         <>
