@@ -5,9 +5,12 @@
 }
 
 .casting-explanation-shell, .casting-info-shell {
-    border-bottom: 1px solid lightgray;
     padding-bottom: 7px;
     margin: 0 0 5px;
+}
+
+.casting-explanation-shell {
+    border-bottom: 1px solid lightgray;
 }
 
 .casting-explanation-shell h3, .casting-info-shell h3 {

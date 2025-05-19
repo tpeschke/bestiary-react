@@ -63,7 +63,6 @@ function formatLootDisplay(lootArray: ReturnedLoot[], type: string) {
         return (
             <Body>
                 <ul className="horizontal-list">
-                    {/* TODO add key */}
                     {lootArray.map((loot: ReturnedLoot, index: number) => formatIndividualItem(loot, index))}
                 </ul>
             </Body>
@@ -91,7 +90,7 @@ function formatIndividualItem(loot: ReturnedLoot, key: number) {
         case 'generic':
             return <GenericLootDisplay key={key} info={loot.info} />
         default:
-            return <p>Something went wrong</p>
+            return <p key={key}>Something went wrong</p>
     }
 
 }
