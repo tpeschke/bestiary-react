@@ -35,7 +35,7 @@ export default async function getLoot(request: LootRequest, response: Response) 
         const carriedLootRequestBody = getLootFromReliquary(timesToRoll, carriedLoot, maxPoints, 1, 1)
         const queryReturn: any | null = await axios.post(treasureEndpoint, { requestArray: [carriedLootRequestBody] }).catch((error: Error) => sendErrorForward('carried loot', error, response))
 
-        if (queryReturn) {
+        if (queryReturn && queryReturn.data && queryReturn.data[0]) {
             const { data } = queryReturn
             if (data && data[0].length > 0) {
                 totalCarriedLoot = [...totalCarriedLoot, ...data[0]]
@@ -50,7 +50,7 @@ export default async function getLoot(request: LootRequest, response: Response) 
         const lairLootRequestBody = getLootFromReliquary(timesToRoll, lairLoot, maxPoints, 1.5, 2)
         const queryReturn: any | null = await axios.post(treasureEndpoint, { requestArray: [lairLootRequestBody] }).catch((error: Error) => sendErrorForward('lair loot', error, response))
 
-        if (queryReturn) {
+        if (queryReturn && queryReturn.data && queryReturn.data[0]) {
             const { data } = queryReturn
             if (data && data[0].length > 0) {
                 totalLairLoot = [...totalLairLoot, ...data[0]]

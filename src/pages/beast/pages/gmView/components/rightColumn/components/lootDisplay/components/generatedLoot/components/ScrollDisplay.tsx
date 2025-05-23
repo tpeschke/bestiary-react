@@ -11,7 +11,7 @@ export default function ScrollDisplay({ scroll }: Props) {
     return (
         <li>
             {name} ({sp} SP)
-            <Icon iconName="info" tooltip={formatTooltipString(breakdown)} />
+            <Icon iconName="info" margin='left' tooltip={formatTooltipString(breakdown)} />
         </li>
     )
 }

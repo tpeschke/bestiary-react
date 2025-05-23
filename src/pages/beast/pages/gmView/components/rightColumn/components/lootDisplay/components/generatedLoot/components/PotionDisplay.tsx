@@ -11,7 +11,7 @@ export default function PotionDisplay({ potion }: Props) {
     return (
         <li>
             {name} w/ {swigs} {formatApplicationString(isSalve, swigs)}
-            <Icon iconName="info" tooltip={formatEffectString(effect, price)} />
+            <Icon iconName="info" margin='left' tooltip={formatEffectString(effect, price)} />
         </li>
     )
 }

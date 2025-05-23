@@ -11,7 +11,7 @@ export default function TalismanDisplay({ talisman }: Props) {
     return (
         <li>
             {skill}
-            <Icon iconName="info" tooltip={explanation} />
+            <Icon iconName="info" margin='left' tooltip={explanation} />
         </li>
     )
 }

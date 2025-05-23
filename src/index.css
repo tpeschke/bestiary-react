@@ -55,12 +55,14 @@ ol, ul {
 
 ol.horizontal-list, ul.horizontal-list {
 	display: flex;
-	justify-content: start;
+	justify-content: space-between;
 	flex-wrap: wrap;
 }
 
 ol.horizontal-list li, ul.horizontal-list li {
 	margin-right: 25px;
+	min-width: 25%;
+    padding: 2px 0px;
 }
 
 ul ul, ol ol, ul ol, ol ul {
