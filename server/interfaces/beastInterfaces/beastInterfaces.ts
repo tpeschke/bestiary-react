@@ -9,7 +9,6 @@ import SkillInfo, { Skill } from './infoInterfaces/skillInfoInterfaces'
 import SocialInfo, { ConflictObject } from './infoInterfaces/socialInfo'
 import LootInfo, { Pleroma } from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo, { Casting, Spell } from './infoInterfaces/castingInfo'
-import { Encounter } from "../encounterInterfaces"
 
 export type Strength = 'majSt' | 'minSt' | 'minWk' | 'majWk' | 'one' | 'noneStr' | 'noneWk' | 'none' | 'x' | null
 
@@ -49,7 +48,6 @@ export interface upsertParameters {
     obstacles: Obstacle[],
     challenges: Challenge[],
     tables: TablesObject,
-    encounters: Encounter,
     lairLoot: Loot,
     carriedLoot: Loot,
     attacks: AttackInfo[],

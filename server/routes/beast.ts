@@ -11,6 +11,7 @@ import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
 import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
 import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getBeast'
 import getLoot from '../controllers/loot/loot'
+import getRandomEncounter from '../controllers/encounter/encounter'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
@@ -51,6 +52,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
 }
 
 BeastRoutes.get('/:beastId', checkIfGameMaster)
+BeastRoutes.get('/encounter/:beastId', getRandomEncounter)
 
 BeastRoutes.post('/loot', getLoot)
 

@@ -1,5 +1,3 @@
-import { Encounter } from "../../encounterInterfaces"
-
 export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal'
 
 export default interface GeneralInfo {
@@ -10,7 +8,6 @@ export default interface GeneralInfo {
     appearance: string,
     scenarios: Scenario[],
     folklores: Folklore[],
-    encounters: Encounter,
     senses: string,
     diet: string,
     meta: string,

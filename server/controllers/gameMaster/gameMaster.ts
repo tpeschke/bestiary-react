@@ -123,26 +123,6 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
                 attack: [],
                 defense: [],
                 appearance: []
-            },
-            encounters: {
-                temperaments: {
-                    beastTemperaments: [],
-                    allTemperaments: []
-                },
-                signs: {
-                    beastSigns: [],
-                    allSigns: []
-                },
-                nouns: {
-                    beastNouns: [],
-                    allNouns: []
-                },
-                verbs: {
-                    beastVerbs: [],
-                    allVerbs: []
-                },
-                groups: [],
-                numbers: []
             }
         },
         imageInfo: {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { Loot, ReturnedLoot } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces";
 
-import { beastURL } from "../../../../../../../../../../../frontend-config";
+import { lootURL } from "../../../../../../../../../../../frontend-config";
 import alertInfo, { Message } from "../../../../../../../../../../../components/alert/alerts";
 
 interface LootHooksReturn {
@@ -31,7 +31,7 @@ export default function LootHooks(): LootHooksReturn {
     const [timesToRoll, setTimesToRoll] = useState(1)
 
     async function generateLoot(carriedLoot: Loot | null, lairLoot: Loot | null, maxPoints: number, timesToRollParam: number = 1): Promise<boolean> {
-         return axios.post(beastURL + '/loot', { loot: { carriedLoot, lairLoot }, maxPoints, timesToRoll: timesToRollParam }).then(({ data }: GenerateLootReturnData) => {
+         return axios.post(lootURL, { loot: { carriedLoot, lairLoot }, maxPoints, timesToRoll: timesToRollParam }).then(({ data }: GenerateLootReturnData) => {
             if (data.type === 'message') {
                 alertInfo(data)
             } else if (data.type === 'data') {
