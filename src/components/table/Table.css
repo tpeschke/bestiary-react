@@ -1,0 +1,37 @@
+table {
+    font-size: 13px;
+}
+
+table.second-column-center td:nth-child(2) {
+    text-align: center;
+}
+
+thead {
+    background: #8aa0ab;
+    text-align: left;
+    color: white;
+    font-family: 'oldClaude';
+}
+
+thead th {
+    padding: 3px;
+}
+
+tr.header-row {
+    background: #4b4b4b;
+    color: white;
+    text-align: left;
+    font-family: 'oldClaude';
+}
+
+tr.header-row th, tr.standard-row td {
+    padding: 3px;
+}
+
+tr.standard-row {
+    font-family: "Source Sans 3", sans-serif;
+}
+
+tr.standard-row:nth-child(even) {
+    background: #f3f3f3;
+}

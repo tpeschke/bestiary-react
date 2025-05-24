@@ -23,18 +23,17 @@ export default async function getGroupInfo(dataBaseConnection: any, beastId: num
         if (groupInfo) {
             return {
                 roleNumbers: getGroupSpecifics(totalNumber, groupInfo),
-                totalNumber, label
+                label
             }
         }
         return {
             roleNumbers: getGroupSpecifics(totalNumber, [{ role: 'None', weight: 1 }]),
-            totalNumber, label
+            label
         }
     } else {
         return {
             roleNumbers: getGroupSpecifics(totalNumber, [{ role: 'None', weight: 1 }]),
-            label: 'Group',
-            totalNumber
+            label: 'Group'
         }
     }
 }

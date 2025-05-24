@@ -107,13 +107,13 @@ async function getBackUp(dataBaseConnection: any, beastId: number): Promise<Back
 
     let rank;
     let rankPlural;
-    if (plural && rank.toUpperCase() === 'NONE') {
+    if (plural && rank && rank.toUpperCase() === 'NONE') {
         rank = name
         rankPlural = plural
-    } else if (!plural && rank.toUpperCase() === 'NONE') {
+    } else if (!plural && rank && rank.toUpperCase() === 'NONE') {
         rank = name
         rankPlural = rank += 's'
-    } else if (!plural && rank.toUpperCase() !== 'NONE') {
+    } else if (!plural && rank && rank.toUpperCase() !== 'NONE') {
         rankPlural = rank += 's'
     }
 

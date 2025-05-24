@@ -14,8 +14,10 @@ import LocationsDisplay from './components/locationsDisplay/LocationsDisplay';
 import LootInfo from '../../../../interfaces/infoInterfaces/lootInfoInterfaces';
 import LootDisplay from './components/lootDisplay/LootDisplay';
 import HabitatDisplay from './components/habitatDisplay/HabitatDisplay';
+import EncounterDisplay from './components/encounterDisplay/EncounterDisplay';
 
 interface Props {
+    beastId: number,
     intro: string
     appearance: string,
     habitat: string,
@@ -39,6 +41,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <InfoDisplay section="Appearance" info={appearance} />
             <CommonFolklore folklores={folklores} />            
             <HabitatDisplay info={habitat} scenarios={scenarios} />
+            <EncounterDisplay />
             <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />
             <MiscInfoDisplay miscInfo={miscInfo} />
             <TypesDisplay types={types} />

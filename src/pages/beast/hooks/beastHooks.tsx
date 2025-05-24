@@ -62,8 +62,10 @@ export default function beastHooks(): Return {
         window.scrollTo(0, 0)
     }
 
-    // Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
-    // So you have to retrieve the data and then transfer it to the GMBeastClass
+    /**
+    * Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
+    * So you have to retrieve the data and then transfer it to the GMBeastClass
+    */
     function getBeastFromCache(beastId: number): null | GMBeastClass {
         const beastFromCache = beastCache[beastId]
         if (beastFromCache) {

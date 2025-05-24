@@ -1,24 +1,14 @@
 export interface Encounter {
-    verb?: string,
-    time?: string,
-    temperament?: Temperament,
-    signs?: SignObject,
-    objectives?: ObjectiveObject,
-    complications?: Complication[],
-    battlefield?: BattlefieldObject,
-    noun?: string,
-    milesFromLair?: number,
-    group?: GroupInfo
-}
-
-export interface ObjectiveObject {
-    player: string,
-    enemy: string
-}
-
-export interface TemperamentObject {
-    beastTemperaments: Temperament[],
-    allTemperaments: Temperament[]
+    verb: string,
+    time: string,
+    temperament: Temperament,
+    signs: SignObject,
+    objectives: ObjectiveObject,
+    complications: Complication[],
+    battlefield: BattlefieldObject,
+    noun: string,
+    milesFromLair: number,
+    group: GroupInfo
 }
 
 export interface Temperament {
@@ -26,20 +16,9 @@ export interface Temperament {
     tooltip: string,
 }
 
-export interface GroupWeight {
-    id: number,
-    weight: number,
-    role: number,
-    deleted: boolean
-}
-
-export interface Number {
-    id: number,
-    beastid: number,
-    deleted: boolean,
-    numbers: string,
-    miles: string,
-    weight: number
+export interface ObjectiveObject {
+    player: string,
+    enemy: string
 }
 
 export interface SignObject {
@@ -55,28 +34,6 @@ export interface Sign {
     deleted: boolean
 }
 
-export interface VerbObject {
-    beastVerbs: Verb[],
-    allVerbs: Verb[] 
-}
-
-export interface Verb {
-    verb: string, 
-    id: number, 
-    beastid: number, 
-}
-
-export interface NounObject {
-    beastNouns: Noun[],
-    allNouns: Noun[]
-}
-
-export interface Noun {
-    noun: string, 
-    id: number, 
-    beastid: number, 
-}
-
 export interface BattlefieldObject {
     battlefield: string,
     pattern: string
@@ -84,6 +41,7 @@ export interface BattlefieldObject {
 
 export interface GroupInfo {
     label: string,
+    totalNumber: number,
     roleNumbers: RoleNumbers
 }
 
