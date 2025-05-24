@@ -1,4 +1,7 @@
 import Loading from "../../../../../../../../components/loading/Loading";
+import Body from "../../../../../../components/UI/body/Body";
+import NumberAppearingDisplay from "./components/NumberAppearingDisplay";
+import ObjectivesDisplay from "./components/ObjectiveDisplay";
 import SignDisplay from "./components/SignDisplay";
 import encounterHooks from "./hooks/EncounterHooks";
 
@@ -21,10 +24,8 @@ function EncounterShell(setLoading: Function) {
     setLoading(encounterInfo)
 
     if (encounterInfo) {
-        const { signs } = encounterInfo
+        const { signs, group, objectives } = encounterInfo
 
-        // Number Appearing
-        // Objectives
         // Verb
         // Noun
         // Temperament
@@ -33,9 +34,13 @@ function EncounterShell(setLoading: Function) {
         // Lair
 
         return (
-            <>
-                <SignDisplay signInfo={signs} />
-            </>
+            <Body>
+                <>
+                    <SignDisplay signInfo={signs} />
+                    <NumberAppearingDisplay groupInfo={group} />
+                    <ObjectivesDisplay objectives={objectives} />
+                </>
+            </Body>
         )
     } else {
         return <></>

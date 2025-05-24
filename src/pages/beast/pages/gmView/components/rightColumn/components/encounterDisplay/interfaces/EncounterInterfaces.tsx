@@ -41,7 +41,6 @@ export interface BattlefieldObject {
 
 export interface GroupInfo {
     label: string,
-    totalNumber: number,
     roleNumbers: RoleNumbers
 }
 

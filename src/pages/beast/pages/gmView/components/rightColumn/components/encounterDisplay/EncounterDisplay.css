@@ -1,0 +1,28 @@
+.sign-table-shell {
+    margin: 0 0 10px 5px;
+}
+
+.number-appearing-shell {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.number-appearing-shell h3, .objectives-shell h3 {
+    padding: 0;
+    margin: 0;
+}
+
+.number-appearing-shell p {
+    margin-left: 5px;
+}
+
+.objectives-shell {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.objective-pair {
+    width: 50%;
+}
