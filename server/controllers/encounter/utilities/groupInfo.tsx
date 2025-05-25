@@ -5,7 +5,8 @@ import rollDice from "../../../utilities/diceRoller"
 
 interface ReturnedGroup {
     id: number,
-    label: string
+    label: string,
+    name: string
 }
 
 interface ReturnGroupInfo {
@@ -17,22 +18,23 @@ export default async function getGroupInfo(dataBaseConnection: any, beastId: num
     const [groupLabel]: ReturnedGroup[] = await dataBaseConnection.encounter.group.getWeighted(beastId)
     const totalNumber = getTotalNumber(numbers)
 
-    if (groupLabel) {
-        const { label, id: groupId } = groupLabel
+    const { label, id: groupId, name: beastName } = groupLabel
+    if (label) {
         const groupInfo: ReturnGroupInfo[] = await dataBaseConnection.encounter.group.getById(beastId, groupId)
-        if (groupInfo) {
+
+        if (groupInfo.length > 0) {
             return {
                 roleNumbers: getGroupSpecifics(totalNumber, groupInfo),
                 label
             }
         }
         return {
-            roleNumbers: getGroupSpecifics(totalNumber, [{ role: 'None', weight: 1 }]),
+            roleNumbers: getGroupSpecifics(totalNumber, [{ role: beastName, weight: 1 }]),
             label
         }
     } else {
         return {
-            roleNumbers: getGroupSpecifics(totalNumber, [{ role: 'None', weight: 1 }]),
+            roleNumbers: getGroupSpecifics(totalNumber, [{ role: beastName, weight: 1 }]),
             label: 'Group'
         }
     }
@@ -63,6 +65,7 @@ function getGroupSpecifics(totalNumber: number, weights: ReturnGroupInfo[]): Rol
         }
 
         const { index, array }: RandomArrayReturn = grabRandomElementFromArrayWithIndex(viableGroups)
+
         const { weight, role } = array
 
         const roleNumber = roleNumbers[role]

@@ -1,4 +1,5 @@
-select RANDOM() * Weight AS RandWeight, * from bbencounterlabels
-where beastid = $1
+select RANDOM() * Weight AS RandWeight, l.*, b.name from bbindividualbeast b 
+left join bbencounterlabels l on b.id = l.beastid
+where b.id = $1
 order by RandWeight desc
-limit 1
+limit 1;

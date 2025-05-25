@@ -149,6 +149,10 @@ a:hover {
 	color: #607d8b;
 }
 
+.italic {
+	font-style: italic;
+}
+
 select {
 	border: none;
 	background: #f3f3f3;

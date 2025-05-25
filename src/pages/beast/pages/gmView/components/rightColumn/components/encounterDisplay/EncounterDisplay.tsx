@@ -36,23 +36,31 @@ function EncounterShell(setLoading: Function) {
 
         return (
             <>
-                <Body>
-                    <div className='encounter-display-shell'>
-                        <SignDisplay signInfo={signs} />
-                        <NumberAppearingDisplay groupInfo={group} />
-                        <ObjectivesDisplay objectives={objectives} />
-                        <VerbNounDisplay verb={verb} noun={noun} />
-                        <div className="pair-shell encounter-display-pair">
-                            <TemperamentDisplay temperamentInfo={temperament} />
-                            <TimeDisplay time={time} />
+                {signs.beastSign?.sign ?
+                    <>
+                        <Body>
+                            <div className='encounter-display-shell'>
+                                <SignDisplay signInfo={signs} />
+                                <NumberAppearingDisplay groupInfo={group} />
+                                <ObjectivesDisplay objectives={objectives} />
+                                <VerbNounDisplay verb={verb} noun={noun} />
+                                <div className="pair-shell encounter-display-pair">
+                                    <TemperamentDisplay temperamentInfo={temperament} />
+                                    <TimeDisplay time={time} />
+                                </div>
+                                <BattlefieldDisplay battlefieldInfo={battlefield} />
+                                <ComplicationDisplay complications={complications} />
+                            </div>
+                        </Body>
+                        <div className='encounter-input-shell'>
+                            <button className='orange' onClick={_ => generateEncounter()}><Icon iconName='redo' color='white' /></button>
                         </div>
-                        <BattlefieldDisplay battlefieldInfo={battlefield} />
-                        <ComplicationDisplay complications={complications} />
-                    </div>
-                </Body>
-                <div className='encounter-input-shell'>
-                    <button className='orange' onClick={_ => generateEncounter()}><Icon iconName='redo' color='white' /></button>
-                </div>
+                    </>
+                    :
+                    <Body>
+                        <p className='italic'>This Entry Has No Random Encounters</p>
+                    </Body>
+                }
             </>
         )
     }

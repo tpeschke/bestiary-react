@@ -18,8 +18,10 @@ export function calculateCombatStats(combatStats: RawCombatStat[], combatpoints:
 
     combatStats.forEach(stats => calculateSingleCombatInfo(stats, defenses, attacks, combatpoints, role, size))
 
+    const initiative = combatStats.length > 0 ? combatStats[0].initiative : 'minWk'
+
     return {
-        intiative: calculateStatWithFormatting(combatStats[0].initiative, 'initiative', role, combatpoints),
+        intiative: calculateStatWithFormatting(initiative, 'initiative', role, combatpoints),
         attacks,
         defenses
     }
