@@ -3,8 +3,7 @@ import { grabRandomElementFromArray } from "../../../utilities/array";
 import rollDice from "../../../utilities/diceRoller";
 
 export default async function getComplications(dataBaseConnection: any, beastId: number): Promise<Complication[]> {
-    // const hasComplication = Math.floor(Math.random() * 10) > 5
-    const hasComplication = true
+    const hasComplication = Math.floor(Math.random() * 10) > 5
 
     let complicationResultArray: Complication[] = []
 

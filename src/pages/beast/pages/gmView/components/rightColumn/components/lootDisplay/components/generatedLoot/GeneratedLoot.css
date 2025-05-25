@@ -15,6 +15,16 @@
 .generated-loot-shell>.input-shell {
     display: flex;
     justify-content: end;
+    align-items: center
+}
+
+.generated-loot-shell>.input-shell>input {
+    width: 50px;
+    margin: 0 5px;
+}
+
+.generated-loot-shell>.input-shell>p {
+    font-style: italic;
 }
 
 .generated-loot-shell>.body-shell p {

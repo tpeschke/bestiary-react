@@ -51,6 +51,7 @@ export default function GeneratedLootDisplay(setLoading: Function, { lairLoot: l
             {lairLoot && formatLootDisplay(lairLoot, 'lair')}
 
             <div className='input-shell'>
+                <p>Number of Enemies: </p>
                 <input onBlur={event => setNumberOfMonsters(event)} placeholder='1' type="number" min={0} max={25} />
                 <button onClick={regenerateLoot}><Icon iconName='redo' color='white' /></button>
             </div>
