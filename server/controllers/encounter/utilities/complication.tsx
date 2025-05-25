@@ -3,11 +3,14 @@ import { grabRandomElementFromArray } from "../../../utilities/array";
 import rollDice from "../../../utilities/diceRoller";
 
 export default async function getComplications(dataBaseConnection: any, beastId: number): Promise<Complication[]> {
-    const hasComplication = Math.floor(Math.random() * 10) > 5
+    // const hasComplication = Math.floor(Math.random() * 10) > 5
+    const hasComplication = true
 
     let complicationResultArray: Complication[] = []
 
     if (hasComplication) {
+        await getComplication(complicationResultArray, dataBaseConnection, beastId)
+        await getComplication(complicationResultArray, dataBaseConnection, beastId)
         await getComplication(complicationResultArray, dataBaseConnection, beastId)
     }
 

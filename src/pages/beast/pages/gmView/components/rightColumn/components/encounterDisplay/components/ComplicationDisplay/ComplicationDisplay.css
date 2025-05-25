@@ -1,0 +1,22 @@
+.complications-shell h3 {
+    padding: 0;
+}
+
+.complication-shell .pair-shell {
+    margin: 5px 0
+}
+
+.complications-shell>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: start;
+}
+
+.complication-shell {
+    width: 215px;
+    background: #f3f3f3;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 5px 5px 0;
+}

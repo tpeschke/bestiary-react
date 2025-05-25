@@ -10,6 +10,7 @@ import TimeDisplay from "./components/TimeDisplay";
 import VerbNounDisplay from "./components/VerbNounDisplay";
 import encounterHooks from "./hooks/EncounterHooks";
 import BattlefieldDisplay from './components/BattlefieldDisplay/BattlefieldDisplay';
+import ComplicationDisplay from './components/ComplicationDisplay/ComplicationDisplay';
 
 interface Props {
 }
@@ -30,7 +31,7 @@ function EncounterShell(setLoading: Function) {
     setLoading(encounterInfo)
 
     if (encounterInfo) {
-        const { signs, group, objectives, verb, noun, temperament, time, battlefield } = encounterInfo
+        const { signs, group, objectives, verb, noun, temperament, time, battlefield, complications } = encounterInfo
 
         return (
             <Body>
@@ -44,6 +45,7 @@ function EncounterShell(setLoading: Function) {
                         <TimeDisplay time={time} />
                     </div>
                     <BattlefieldDisplay battlefieldInfo={battlefield} />
+                    <ComplicationDisplay complications={complications} />
                 </div>
             </Body>
         )

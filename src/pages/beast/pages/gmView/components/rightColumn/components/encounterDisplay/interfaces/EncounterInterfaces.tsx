@@ -50,42 +50,37 @@ export interface RoleNumbers {
 
 export type Complication = BaseComplication | RivalComplication | WoundedComplication | LostComplication | BackUpComplication
 
+export interface BaseComplication {
+    type: 'Trapped' | 'Insane' | 'Diseased' | 'Powerful Weird-Adept or Servant' | 'Infighting' | 'Large (50% more Vitality)' | 'Enchanted Item' | 'Time Limit'
+}
+
 export interface Rival {
     id: number,
     name: string,
     plural: string,
-    number: string
+    number: string,
+    type: 'Rival' | 'Unlikely Allies'
 }
 
-export interface BaseComplication {
-    type: string
+export interface RivalComplication {
+    actors: Rival,
+    type: 'Rival' | 'Unlikely Allies'
 }
 
-export interface RivalComplication extends BaseComplication {
-    actors: Rival
-}
-
-export interface WoundedComplication extends BaseComplication {
+export interface WoundedComplication {
     byWhom: Rival,
-    amount: string
+    amount: string,
+    type: 'Wounded'
 }
 
-export  interface LostComplication extends BaseComplication {
-    distance: string
+export  interface LostComplication {
+    distance: string,
+    type: 'Lost'
 }
 
-export interface BackUp {
-    rank: string, 
-    name: string, 
-    plural: string, 
+export interface BackUpComplication {
     id: number
-}
-
-export interface BackUpComplication extends BaseComplication {
-    id: number
-    rank: string, 
-    name: string, 
-    plural: string,
-    rankPlural: string,
-    time: string
+    name: string,
+    time: string,
+    type: 'Back Up Coming'
 }
