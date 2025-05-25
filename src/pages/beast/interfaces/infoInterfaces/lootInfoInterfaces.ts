@@ -85,7 +85,7 @@ export interface ReturnedTalisman extends GenericLootObject {
 export interface ReturnedScroll extends GenericLootObject {
     name: string,
     sp: number,
-    breakdown: string,
+    tooltip: string,
     type: 'scroll'
 }
 export interface ReturnedGenericLoot extends GenericLootObject {

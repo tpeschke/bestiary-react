@@ -6,12 +6,12 @@ interface Props {
 }
 
 export default function ScrollDisplay({ scroll }: Props) {
-    const { name, sp, breakdown } = scroll
+    const { name, sp, tooltip } = scroll
 
     return (
         <li>
             {name} ({sp} SP)
-            <Icon iconName="info" margin='left' tooltip={formatTooltipString(breakdown)} />
+            <Icon iconName="info" margin='left' tooltip={formatTooltipString(tooltip)} />
         </li>
     )
 }

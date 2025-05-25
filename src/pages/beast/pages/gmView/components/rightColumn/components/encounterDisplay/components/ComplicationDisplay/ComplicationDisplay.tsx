@@ -13,7 +13,6 @@ interface Props {
 }
 
 export default function ComplicationDisplay({ complications }: Props) {
-    console.log(complications)
     return (
         <div className='complications-shell'>
             <h3>Complication{complications.length > 1 ? 's' : ''}</h3>
