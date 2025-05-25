@@ -1,24 +1,24 @@
-import '../EncounterDisplay.css'
+import '../../EncounterDisplay.css'
 
 import { BattlefieldObject } from '../../interfaces/EncounterInterfaces'
+import Dictionary from '../../../../../../../../../../interfaces/dictionaryInterfaces'
 
 import Icon from '../../../../../../../../../../components/icon/Icon'
 
-import explanation from '../assets/explanation.jpg'
+import explanation from './assets/explanation.jpg'
 
-import alley from '../assets/alley.jpg'
-import dangerWall from '../assets/dangerWall.jpg'
-import divide from '../assets/divide.jpg'
-import funnel from '../assets/funnel.jpg'
-import guardian from '../assets/guardian.jpg'
-import horseshoe from '../assets/horseshoe.jpg'
-import kingOfTheHill from '../assets/kingOfTheHill.jpg'
-import longPath from '../assets/longPath.jpg'
-import openField from '../assets/openField.jpg'
-import pillar from '../assets/pillar.jpg'
-import pincer from '../assets/pincer.jpg'
-import uphill from '../assets/uphill.jpg'
-import Dictionary from '../../../../../../../../../../interfaces/dictionaryInterfaces'
+import alley from './assets/alley.jpg'
+import dangerWall from './assets/dangerWall.jpg'
+import divide from './assets/divide.jpg'
+import funnel from './assets/funnel.jpg'
+import guardian from './assets/guardian.jpg'
+import horseshoe from './assets/horseshoe.jpg'
+import kingOfTheHill from './assets/kingOfTheHill.jpg'
+import longPath from './assets/longPath.jpg'
+import openField from './assets/openField.jpg'
+import pillar from './assets/pillar.jpg'
+import pincer from './assets/pincer.jpg'
+import uphill from './assets/uphill.jpg'
 
 interface Props {
     battlefieldInfo: BattlefieldObject
