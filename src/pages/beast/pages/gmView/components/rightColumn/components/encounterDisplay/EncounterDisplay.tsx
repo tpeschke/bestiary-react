@@ -11,6 +11,7 @@ import VerbNounDisplay from "./components/VerbNounDisplay";
 import encounterHooks from "./hooks/EncounterHooks";
 import BattlefieldDisplay from './components/BattlefieldDisplay/BattlefieldDisplay';
 import ComplicationDisplay from './components/ComplicationDisplay/ComplicationDisplay';
+import Icon from '../../../../../../../../components/icon/Icon';
 
 interface Props {
 }
@@ -26,7 +27,7 @@ export default function EncounterDisplay({ }: Props) {
 }
 
 function EncounterShell(setLoading: Function) {
-    const { encounterInfo } = encounterHooks();
+    const { encounterInfo, generateEncounter } = encounterHooks();
 
     setLoading(encounterInfo)
 
@@ -34,20 +35,25 @@ function EncounterShell(setLoading: Function) {
         const { signs, group, objectives, verb, noun, temperament, time, battlefield, complications } = encounterInfo
 
         return (
-            <Body>
-                <div className='encounter-display-shell'>
-                    <SignDisplay signInfo={signs} />
-                    <NumberAppearingDisplay groupInfo={group} />
-                    <ObjectivesDisplay objectives={objectives} />
-                    <VerbNounDisplay verb={verb} noun={noun} />
-                    <div className="pair-shell encounter-display-pair">
-                        <TemperamentDisplay temperamentInfo={temperament} />
-                        <TimeDisplay time={time} />
+            <>
+                <Body>
+                    <div className='encounter-display-shell'>
+                        <SignDisplay signInfo={signs} />
+                        <NumberAppearingDisplay groupInfo={group} />
+                        <ObjectivesDisplay objectives={objectives} />
+                        <VerbNounDisplay verb={verb} noun={noun} />
+                        <div className="pair-shell encounter-display-pair">
+                            <TemperamentDisplay temperamentInfo={temperament} />
+                            <TimeDisplay time={time} />
+                        </div>
+                        <BattlefieldDisplay battlefieldInfo={battlefield} />
+                        <ComplicationDisplay complications={complications} />
                     </div>
-                    <BattlefieldDisplay battlefieldInfo={battlefield} />
-                    <ComplicationDisplay complications={complications} />
+                </Body>
+                <div className='encounter-input-shell'>
+                    <button className='orange' onClick={_ => generateEncounter()}><Icon iconName='redo' color='white' /></button>
                 </div>
-            </Body>
+            </>
         )
     }
 }

@@ -47,5 +47,7 @@ export default async function getRandomEncounter(request: Request, response: Res
     encounterObject.milesFromLair = getDistanceFromLair(miles)
     encounterObject.group = await getGroupInfo(databaseConnection, beastId, numbers)
 
-    checkForContentTypeBeforeSending(response, encounterObject)
+    Promise.all(promiseArray).then(_ => {
+        checkForContentTypeBeforeSending(response, encounterObject)
+    })
 }

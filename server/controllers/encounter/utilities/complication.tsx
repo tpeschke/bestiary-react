@@ -9,8 +9,6 @@ export default async function getComplications(dataBaseConnection: any, beastId:
 
     if (hasComplication) {
         await getComplication(complicationResultArray, dataBaseConnection, beastId)
-        await getComplication(complicationResultArray, dataBaseConnection, beastId)
-        await getComplication(complicationResultArray, dataBaseConnection, beastId)
     }
 
     return complicationResultArray

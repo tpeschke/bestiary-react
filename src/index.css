@@ -211,6 +211,14 @@ button.blue:hover {
 	background: #63747d;
 }
 
+button.orange {
+    background: #ff5722;
+}
+
+button.orange:hover {
+	background: #ec5121;
+}
+
 .hidden-button {
 	cursor: pointer;
 }

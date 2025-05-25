@@ -50,3 +50,14 @@
 .objective-pair, .encounter-display-pair .pair-shell {
     width: 50%;
 }
+
+.encounter-input-shell {
+    display: flex;
+    justify-content: end;
+    padding: 0;
+}
+
+.encounter-input-shell button {
+    padding: 5px 10px;
+    margin-left: 5px;
+}
