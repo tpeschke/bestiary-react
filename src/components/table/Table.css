@@ -1,5 +1,7 @@
 table {
     font-size: 13px;
+    color: black;
+    background: white;
 }
 
 table.second-column-center td:nth-child(2) {

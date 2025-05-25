@@ -1,5 +1,7 @@
 import './Table.css'
 
+import { JSX } from 'react'
+
 interface Props {
     table: TableObject,
     textAlign?: null | 'second-column-center'
@@ -11,7 +13,7 @@ export interface TableObject {
     rows: (string | number)[][]
 }
 
-export default function Table({ table, textAlign }: Props) {
+export default function Table({ table, textAlign }: Props): JSX.Element {
     const { title, headerRow, rows } = table
 
     let classString = ''

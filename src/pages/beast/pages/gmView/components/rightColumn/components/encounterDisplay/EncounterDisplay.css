@@ -1,16 +1,41 @@
+.encounter-display-shell>div {
+    padding: 5px;
+}
+
+.encounter-display-shell>div:nth-child(even) {
+    background: #f3f3f3;
+}
+
+.encounter-display-shell .pair-shell {
+    margin-bottom: 0px;
+}
+
 .sign-table-shell {
     margin: 0 0 10px 5px;
+}
+
+.pair-shell.secondary-div>div {
+    width: 50%;
+    display: flex;
+    justify-content: start;
+}
+
+.pair-shell>div>i {
+    margin-left: 5px;
 }
 
 .number-appearing-shell {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
 }
 
 .number-appearing-shell h3, .objectives-shell h3 {
     padding: 0;
     margin: 0;
+}
+
+.objectives-shell h3 {
+    margin-bottom: 5px;
 }
 
 .number-appearing-shell p {
@@ -20,9 +45,8 @@
 .objectives-shell {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
 }
 
-.objective-pair {
+.objective-pair, .encounter-display-pair .pair-shell {
     width: 50%;
 }

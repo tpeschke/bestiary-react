@@ -1,7 +1,5 @@
 import "../EncounterDisplay.css"
 
-import { useState } from "react"
-
 import { SignObject } from "../interfaces/EncounterInterfaces"
 
 import Icon from "../../../../../../../../../components/icon/Icon"
@@ -12,8 +10,6 @@ interface Props {
 }
 
 export default function SignDisplay({ signInfo }: Props) {
-    const [showTables, setShowTable] = useState(false)
-
     const { beastSign, allSigns } = signInfo
 
     const allSignsTable: TableObject = {
@@ -22,16 +18,18 @@ export default function SignDisplay({ signInfo }: Props) {
         rows: allSigns.map(sign => [sign.sign, sign.weight])
     }
 
+    const htmlTooltip = {
+        component: Table({table: allSignsTable, textAlign: "second-column-center"}),
+        id: 'sign-table'
+    }
+
     return (
         <>
             {signInfo &&
                 <div className="sign-display-shell">
-                    <div className="pair-shell">
+                    <div className="pair-shell secondary-div">
                         <h3>Sign <Icon iconName="info" tooltip="Signs are evidence of the monster's passing or evidence that the monster is near. They can be sights, sounds, leavings, victims, tracks, smells & vapors, environmental damage, and/or intentional markings." /></h3>
-                        <p onClick={_ => setShowTable(!showTables)} className="hidden-button">{beastSign.sign} <Icon iconName={showTables ? 'up' : 'down'} /></p>
-                    </div>
-                    <div className={showTables ? 'sign-table-shell' : 'display-none'}>
-                        <Table table={allSignsTable} textAlign='second-column-center' />
+                        <div><p>{beastSign.sign}</p> <Icon iconName="table" htmlTooltip={htmlTooltip} /></div>
                     </div>
                 </div>
             }

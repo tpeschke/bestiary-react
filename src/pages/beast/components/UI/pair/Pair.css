@@ -28,7 +28,7 @@
     text-align: right;
 }
 
-.pair-shell p {
+.pair-shell>p {
     width: 50%;
 }
 

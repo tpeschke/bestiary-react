@@ -1,6 +1,9 @@
 import './Icon.css'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo'
+import { JSX } from 'react'
+import { Tooltip } from 'react-tooltip'
+
+type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link'
 
 type Color = null | 'black' | 'white'
 
@@ -11,12 +14,16 @@ type Margin = null | 'left' | 'right' | 'center'
 interface Props {
     iconName: Icon,
     tooltip?: string,
+    htmlTooltip?: {
+        component: JSX.Element,
+        id: string
+    }
     color?: Color,
     iconSize?: IconSize,
-    margin?: Margin
+    margin?: Margin,
 }
 
-export default function Icon({ iconName, tooltip, color, iconSize, margin }: Props) {
+export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlTooltip }: Props) {
     const WARNING = 'warning'
     let styling: string = WARNING;
 
@@ -60,6 +67,15 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin }: Pro
         case 'up':
             styling = "fa-solid fa-chevron-up"
             break
+        case 'table':
+            styling = "fa-solid fa-table"
+            break
+        case 'image':
+            styling = "fa-solid fa-image"
+            break
+        case 'link':
+            styling = "fa-solid fa-link"
+            break
         default:
             break;
     }
@@ -96,5 +112,18 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin }: Pro
         return <p className='warning'>(!)</p>
     }
 
+    if (htmlTooltip) {
+        const { component, id } = htmlTooltip
+        return (
+            <>
+                <i data-tooltip-id={id} className={styling}></i>
+                <Tooltip id={id}>
+                    <div>
+                        {component}
+                    </div>
+                </Tooltip>
+            </>
+        )
+    }
     return <i data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
 }
