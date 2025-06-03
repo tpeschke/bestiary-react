@@ -18,6 +18,7 @@ import BeastRoutes from './routes/beast'
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
+import collectGearCache from './controllers/gear/gear'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -49,10 +50,14 @@ massive(databaseCredentials).then(dbI => {
     app.set('db', dbI)
     app.listen(server, () => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
+
         collectCatalog(databaseConnection)
         if (collectMonsterCacheOn) {
             collectMonsterCache(databaseConnection)
         }
+
+        collectGearCache()
+        
         console.log(`Sing to me a sweet song of forgetfulness and Ill die on your shore ${server}`)
     })
 }).catch(e => console.log('DB connection error', e))

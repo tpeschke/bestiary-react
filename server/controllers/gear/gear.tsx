@@ -5,7 +5,7 @@ import GearCacheClass from './model/EquipmentCacheClass'
 
 let equipmentCache = new GearCacheClass()
 
-export default async function processEquipment() {
+export default async function collectGearCache() {
     const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
     equipmentCache.weaponData = weaponData
 
