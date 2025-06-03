@@ -65,7 +65,9 @@ export default class WeaponCacheClass {
 
         let diceExpression = ""
 
-        const damageArray = damageString.replace(/\s/g, '').split('')
+        const damageArray = [...damageString.replace(/\s/g, '')]
+        
+        // We're going from ['d', '8', '+', '1'] to ['d8'] and '1' so its easier to increase damage later.
         damageArray.forEach((element, index, array) => {
             if (index === array.length - 1) {
                 diceExpression = diceExpression + element
