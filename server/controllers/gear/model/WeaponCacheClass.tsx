@@ -1,27 +1,28 @@
-import { DamageInfo, ProcessedWeaponObject, ProcessedWeaponType, ReturnedWeapon, ReturnedWeaponType } from "../interfaces/weaponInterfaces"
+import { GearCategory } from "../interfaces/equipmentInterfaces"
+import { DamageInfo, ProcessedWeapon, ProcessedWeaponDictionary, ReturnedWeapon, ReturnedWeaponType } from "../interfaces/weaponInterfaces"
 
 export default class WeaponCacheClass {
-    private weaponIndex: ProcessedWeaponType[] = []
-    private weaponsObject: ProcessedWeaponObject = {}
+    private weaponList: GearCategory[] = []
+    private weaponsDictionary: ProcessedWeaponDictionary = {}
 
-    get index() {
-        return this.weaponIndex
+    get list(): GearCategory[] {
+        return this.weaponList
     }
 
-    get object() {
-        return this.weaponsObject
+    get dictionary(): ProcessedWeaponDictionary {
+        return this.weaponsDictionary
     }
 
-    public getByName(weaponName: string) {
-        return this.weaponsObject[weaponName]
+    public getByName(weaponName: string): ProcessedWeapon {
+        return this.weaponsDictionary[weaponName]
     }
 
     set weaponData(weaponData: ReturnedWeaponType[]) {
         // I can't guarantee that each weapon will remain at the same index, even alphabetically, so I'm generating an index of the keys that I can 
         // use to retrieve a weapon's information. The key is the weapon's name.
-        let weaponObject: ProcessedWeaponObject = {}
+        let weaponsDictionary: ProcessedWeaponDictionary = {}
 
-        const weaponsIndex: ProcessedWeaponType[] = weaponData.map((weaponType: ReturnedWeaponType): ProcessedWeaponType => {
+        const weaponsList: GearCategory[] = weaponData.map((weaponType: ReturnedWeaponType): GearCategory => {
             return {
                 label: weaponType.label,
                 items: weaponType.weapons.map((weapon: ReturnedWeapon): string => {
@@ -36,7 +37,7 @@ export default class WeaponCacheClass {
 
                     const damage = this.processDamage(weapon.dam, weapon.bonus)
 
-                    weaponObject[`${name} (${weapon.type})`] = {
+                    weaponsDictionary[`${name} (${weapon.type})`] = {
                         name, damage,
                         type: weapon.type
                     }
@@ -46,17 +47,17 @@ export default class WeaponCacheClass {
             }
         })
 
-        this.weaponObject = weaponObject
-        this.weaponsIndex = weaponsIndex
+        this.weaponsList = weaponsList
+        this.weaponsDictionary = weaponsDictionary
         console.log('Weapons Finished Caching')
     }
 
-    private set weaponObject(weaponObject: ProcessedWeaponObject) {
-        this.weaponsObject = weaponObject
+    private set dictionary(weaponsDictionary: ProcessedWeaponDictionary) {
+        this.weaponsDictionary = weaponsDictionary
     }
 
-    private set weaponsIndex(weaponsIndex: ProcessedWeaponType[]) {
-        this.weaponIndex = weaponsIndex
+    private set weaponsList(weaponsList: GearCategory[]) {
+        this.weaponList = weaponsList
     }
 
     private processDamage(damageString: string, bonus: string): DamageInfo {

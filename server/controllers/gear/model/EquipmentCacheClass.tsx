@@ -1,4 +1,7 @@
-import { ReturnedWeaponType } from "../interfaces/weaponInterfaces";
+import { ProcessedArmor, ReturnedArmorInfo } from "../interfaces/armorInterfaces";
+import { AllLists, AllListsAndDictionaries, AllDictionaries } from "../interfaces/equipmentInterfaces";
+import { ProcessedShield, ReturnedShieldInfo } from "../interfaces/shieldInterfaces";
+import { ProcessedWeapon, ReturnedWeaponType } from "../interfaces/weaponInterfaces";
 import ArmorCacheClass from "./ArmorCacheClass";
 import ShieldCacheClass from "./ShieldCacheClass"
 import WeaponCacheClass from "./WeaponCacheClass"
@@ -9,26 +12,26 @@ export default class GearCacheClass {
     private shields = new ShieldCacheClass();
     private armor = new ArmorCacheClass();
 
-    get getAll() {
+    get getAll(): AllListsAndDictionaries {
         return {
-            lists: this.indexes,
-            objects: this.objects
+            lists: this.lists,
+            dictionaries: this.dictionaries
         }
     }
 
-    get indexes() {
+    get lists(): AllLists {
         return {
-            weapons: this.weapons.index,
-            shields: this.shields.index,
-            armor: this.armor.index
+            weapons: this.weapons.list,
+            shields: this.shields.list,
+            armor: this.armor.list
         }
     }
 
-    get objects() {
+    get dictionaries(): AllDictionaries {
         return {
-            weapons: this.weapons.object,
-            shields: this.shields.object,
-            armor: this.armor.object
+            weapons: this.weapons.dictionary,
+            shields: this.shields.dictionary,
+            armor: this.armor.dictionary
         }
     }
 
@@ -36,15 +39,23 @@ export default class GearCacheClass {
         this.weapons.weaponData = weaponData;
     }
 
-    public getWeaponByName(weaponName: string) {
+    set armorData(armorData: ReturnedArmorInfo[]) {
+        this.armor.armorData = armorData
+    }
+
+    set shieldData(shieldData: ReturnedShieldInfo[]) {
+        this.shields.shieldData = shieldData
+    }
+
+    public getWeaponByName(weaponName: string): ProcessedWeapon {
         return this.weapons.getByName(weaponName)
     }
 
-    public getShieldByName(shieldName: string) {
+    public getShieldByName(shieldName: string): ProcessedShield {
         return this.shields.getByName[shieldName]
     }
 
-    public getArmorByName(armorName: string) {
+    public getArmorByName(armorName: string): ProcessedArmor {
         return this.armor.getByName(armorName)
     }
 }

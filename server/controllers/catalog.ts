@@ -90,6 +90,8 @@ async function collectCache(databaseConnection: any, index: number) {
     } else {
         catalogCache = newCache
         newCache = { freeBeasts: [], templates: [], catalogItems: []  }
-        console.log('bestiary catalog collected')
+        console.log('--- ----------------- --- ')
+        console.log('--- Catalog Collected --- ')
+        console.log('--- ----------------- --- ')
     }
 }

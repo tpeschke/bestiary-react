@@ -11,12 +11,7 @@ export interface ReturnedWeapon {
     bonus: any
 }
 
-export interface ProcessedWeaponType {
-    label: string,
-    items: string[]
-}
-
-export interface ProcessedWeaponObject {
+export interface ProcessedWeaponDictionary {
     [key: string]: ProcessedWeapon
 }
 

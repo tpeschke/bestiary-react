@@ -1,18 +1,21 @@
-export function processDR(drString) {
-    let newDR = {
-        flat: 0,
-        slash: 0
-    }
+import { DamageReductionObject } from "../interfaces/armorInterfaces"
+
+export function processDR(drString: string): DamageReductionObject {
+    let flat: number = 0
+    let slash: number = 0
 
     if (drString) {
-        drString.split('+').forEach(element => {
+        const drArray = drString.split('+')
+        drArray.forEach(element => {
             if (element.includes('/d')) {
-                newDR.slash = +element.split('/d')[0]
+                slash = +element.split('/d')[0]
             } else {
-                newDR.flat = +element
+                flat = +element
             }
         })
     }
 
-    return newDR
+    return {
+        flat, slash
+    }
 }
