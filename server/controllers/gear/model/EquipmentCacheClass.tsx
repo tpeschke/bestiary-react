@@ -12,7 +12,7 @@ export default class GearCacheClass {
     private shields = new ShieldCacheClass();
     private armor = new ArmorCacheClass();
 
-    get getAll(): AllListsAndDictionaries {
+    get allInfo(): AllListsAndDictionaries {
         return {
             lists: this.lists,
             dictionaries: this.dictionaries

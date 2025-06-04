@@ -1,3 +1,6 @@
+import { DamageType } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
+import { SizeCategories } from "./equipmentInterfaces"
+
 export interface ReturnedWeaponType {
     label: string,
     weapons: ReturnedWeapon[]
@@ -5,10 +8,14 @@ export interface ReturnedWeaponType {
 
 export interface ReturnedWeapon {
     name: string,
-    type: string,
-    range: string,
+    size: SizeCategories,
     dam: string,
-    bonus: any
+    rec: number,
+    type: DamageType,
+    parry: number,
+    measure: number,
+    bonus: string,
+    range: string
 }
 
 export interface ProcessedWeaponDictionary {
@@ -17,13 +24,17 @@ export interface ProcessedWeaponDictionary {
 
 export interface ProcessedWeapon {
     name: string,
-    type: string,
+    type: DamageType,
     damage: DamageInfo,
+    size: SizeCategories,
+    recovery: number,
+    parry: number,
+    measure: number,
+    bonus: string,
+    range: string
 }
 
 export interface DamageInfo {
     dice: string[],
-    flat: number,
-    isSpecial: boolean,
-    hasSpecialAndDamage: boolean
+    string: string,
 }

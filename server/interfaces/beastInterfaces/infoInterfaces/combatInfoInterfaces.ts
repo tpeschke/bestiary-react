@@ -15,7 +15,6 @@ export default interface CombatInfo {
 }
 
 export type DamageType = 'P' | 'C' | 'S'
-export type Type = 'm' | 'r'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
 export interface AttackInfo {
@@ -29,8 +28,7 @@ export interface AttackInfo {
     measure: number,
     attack: string,
     damage: string,
-    damageType: DamageType,
-    type: Type,
+    type: DamageType,
     recovery: number,
     rangeIncrement: string,
     isspecial: IsSpecial,
@@ -53,6 +51,8 @@ export interface DefenseInfo {
     shield: string,
     armor: string,
 }
+
+export type Type = 'm' | 'r'
 
 export interface RawCombatStat {
     id: number,

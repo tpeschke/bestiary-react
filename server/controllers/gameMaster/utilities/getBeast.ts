@@ -17,7 +17,7 @@ import { sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
 import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../../../utilities/sorts";
 import { CalculateCombatStatsReturn, calculateCombatStats } from "./statCalculators/combatCalculators/combat";
 import { formatSkills } from "./statCalculators/skillCalculator";
-import { calculateMovements } from "./statCalculators/combatCalculators/movement";
+import { calculateMovements } from "./statCalculators/combatCalculators/utilities/movement";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 

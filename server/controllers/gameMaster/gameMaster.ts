@@ -19,7 +19,7 @@ import upsertBeast from "../../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../utilities/sendingFunctions'
 import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getRoles, getMovement, getCombatStats, getLocationalVitalities, getSkills, getChallenges, getObstacles, getConflict, getArchetypes, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
 import { CalculateCombatStatsReturn } from "./utilities/statCalculators/combatCalculators/combat"
-import { calculateVitalityFatigueAndTrauma } from "./utilities/statCalculators/combatCalculators/vitalityFatigueAndTraumaCalculator"
+import { calculateVitalityFatigueAndTrauma } from "./utilities/statCalculators/combatCalculators/utilities/vitalityFatigueAndTraumaCalculator"
 import { calculateStressAndPanic } from "./utilities/statCalculators/skillCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')

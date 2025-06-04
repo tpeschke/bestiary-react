@@ -25,21 +25,21 @@ export default class WeaponCacheClass {
         const weaponsList: GearCategory[] = weaponData.map((weaponType: ReturnedWeaponType): GearCategory => {
             return {
                 label: weaponType.label,
-                items: weaponType.weapons.map((weapon: ReturnedWeapon): string => {
-                    let name = weapon.name
+                items: weaponType.weapons.map(({ name, size, dam, rec, type, parry, measure, bonus, range }: ReturnedWeapon): string => {
+                    let formattedName = name
 
                     // This is a misspelling inherited from the API that needs to be corrected here.
-                    if (weapon.name === 'Horsemans Pick') {
-                        name = `Horseman's pick`
-                    } else if (weapon.name === 'Javelin' && !weapon.range) {
-                        name = `Melee Javelin`
+                    if (name === 'Horsemans Pick') {
+                        formattedName = `Horseman's pick`
+                    } else if (name === 'Javelin' && !range) {
+                        formattedName = `Melee Javelin`
                     }
+                    const damage = this.processDamage(dam)
 
-                    const damage = this.processDamage(weapon.dam, weapon.bonus)
-
-                    weaponsDictionary[`${name} (${weapon.type})`] = {
-                        name, damage,
-                        type: weapon.type
+                    weaponsDictionary[`${formattedName} (${type})`] = {
+                        damage, type, size, parry, measure, bonus, range,
+                        recovery: rec,
+                        name: formattedName,
                     }
 
                     return name
@@ -60,34 +60,10 @@ export default class WeaponCacheClass {
         this.weaponList = weaponsList
     }
 
-    private processDamage(damageString: string, bonus: string): DamageInfo {
-        let dice: string[] = []
-        let flat = 0
-
-        let diceExpression = ""
-
-        const damageArray = [...damageString.replace(/\s/g, '')]
-        
-        // We're going from ['d', '8', '+', '1'] to ['d8'] and '1' so its easier to increase damage later.
-        damageArray.forEach((element, index, array) => {
-            if (index === array.length - 1) {
-                diceExpression = diceExpression + element
-            } else if (element === '-' || element === '+' || element === '*') {
-                if (diceExpression.includes('d')) {
-                    dice.push(diceExpression)
-                } else {
-                    flat += +diceExpression
-                }
-                diceExpression = ""
-            } else {
-                diceExpression = diceExpression + element;
-            }
-        })
-
+    private processDamage(damageString: string): DamageInfo {
         return {
-            dice, flat,
-            isSpecial: false,
-            hasSpecialAndDamage: bonus === 'Yes'
+            dice: damageString.replace(/\s/g, '').split('+'),
+            string: damageString
         }
     }
 }

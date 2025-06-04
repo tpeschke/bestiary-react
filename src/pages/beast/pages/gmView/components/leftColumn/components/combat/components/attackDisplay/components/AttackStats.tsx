@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function AttackStats({ attacksStats }: Props) {
-    const { name, measure, attack, damage, damageType, recovery } = attacksStats
+    const { name, measure, attack, damage, type, recovery } = attacksStats
 
     return (
         <div className='attack-stats-shell'>
@@ -27,7 +27,7 @@ export default function AttackStats({ attacksStats }: Props) {
                     <div>
                         <div>
                             <p>Type</p>
-                            <p>{damageType}</p>
+                            <p>{type}</p>
                         </div>
                         <div>
                             <p>Rec</p>

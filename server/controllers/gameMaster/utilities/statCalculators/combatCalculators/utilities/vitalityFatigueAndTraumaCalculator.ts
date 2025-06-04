@@ -1,6 +1,6 @@
-import { Strength } from "../../../../../interfaces/beastInterfaces/beastInterfaces"
+import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces"
 
-import { primaryCombatRoles } from "../roleInfo/combatRoleInfo"
+import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
 interface VitalityReturn {
     vitality: string | number,
