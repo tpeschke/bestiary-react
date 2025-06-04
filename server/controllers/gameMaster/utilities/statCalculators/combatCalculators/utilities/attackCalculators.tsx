@@ -1,5 +1,6 @@
 import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces";
 import { DamageType, IsSpecial, Type } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { getWeaponByName } from "../../../../../gear/gear";
 import { ProcessedWeapon } from "../../../../../gear/interfaces/weaponInterfaces";
 import { calculateStat, calculateStatWithFormatting } from "../combatScaling/combatCalculator";
 import { calculateDamageAndRecovery } from "../combatScaling/damageAndRecoveryCalculator";
@@ -8,6 +9,7 @@ import { formatNameWithComma } from "./formatting";
 export default function calculateAndFormatAttackInfo(
     totalPoints: number,
     role: string,
+    chosenName: string,
     weaponName: string,
     measure: Strength,
     attack: Strength,
@@ -18,8 +20,9 @@ export default function calculateAndFormatAttackInfo(
     recoveryStrength: Strength,
     isSpecial: IsSpecial,
     damageType: DamageType,
-    weaponInfo?: ProcessedWeapon
 ) {
+    const weaponInfo = getWeaponByName(weaponName)
+
     if (weaponInfo) {
         const { measure, name, type, bonus } = weaponInfo
 
@@ -33,7 +36,7 @@ export default function calculateAndFormatAttackInfo(
     }
 
     return {
-        name: weaponName,
+        name: chosenName,
         type: damageType,
         measure: calculateStat(measure, 'measure', role, totalPoints),
         attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
