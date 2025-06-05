@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function RoleTitle({ title, points, role, secondaryRole }: Props) {
-    const showRightSide = points && role
+    const showRightSide = (points || points === 0) && role
     return (
         <div className="role-shell">
             <h2>{title}</h2>
