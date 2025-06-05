@@ -1,10 +1,9 @@
 import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces";
 import { DamageType, IsSpecial, Type } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { getWeaponByName } from "../../../../../gear/gear";
-import { ProcessedWeapon } from "../../../../../gear/interfaces/weaponInterfaces";
 import { calculateStat, calculateStatWithFormatting } from "../combatScaling/combatCalculator";
 import { calculateDamageAndRecovery } from "../combatScaling/damageAndRecoveryCalculator";
-import { formatNameWithComma } from "./formatting";
+import { getWeaponName } from "./formatting";
 
 export default function calculateAndFormatAttackInfo(
     totalPoints: number,
@@ -43,14 +42,4 @@ export default function calculateAndFormatAttackInfo(
         rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
         ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, damageType)
     }
-}
-
-function getWeaponName(chosenName: string, weapon: string): string {
-    if (chosenName) {
-        return chosenName
-    } else if (weapon) {
-        return weapon
-    }
-
-    return '';
 }

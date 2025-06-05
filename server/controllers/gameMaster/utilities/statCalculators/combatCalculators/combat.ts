@@ -1,12 +1,9 @@
-import { Strength } from "../../../../../interfaces/beastInterfaces/beastInterfaces";
 import { AttackInfo, DamageType, DefenseInfo, RawCombatStat } from "../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
 import { Size } from "../../../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
-import { getWeaponByName } from "../../../../gear/gear";
 
-import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 import { calculateCover, calculateDefense, calculateDR, calculateParryDR, calculateStat, calculateStatWithFormatting } from "./combatScaling/combatCalculator";
 import calculateAndFormatAttackInfo from "./utilities/attackCalculators";
-import { formatNameWithComma } from "./utilities/formatting";
+import { getDefenseName, getDamageType } from './utilities/formatting'
 
 export interface CalculateCombatStatsReturn {
     initiative: string,
@@ -59,24 +56,4 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
             }
         )
     }
-}
-
-function getDefenseName(chosenName: string, shield: string, armor: string): string {
-    if (chosenName) {
-        return chosenName
-    }
-
-    let name = ''
-    if (shield) { name = formatNameWithComma(name, shield) }
-    if (armor) { name = formatNameWithComma(name, armor) }
-
-    return name;
-}
-
-function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength, role: string): DamageType {
-    if (slashingDamage) { return 'S' }
-    if (crushingDamage) { return 'C' }
-    if (piercingDamage) { return 'P' }
-
-    return primaryCombatRoles[role].meleeCombatStats.preferreddamage.substring(0, 1).toUpperCase();
 }
