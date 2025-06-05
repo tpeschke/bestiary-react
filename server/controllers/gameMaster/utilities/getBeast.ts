@@ -9,7 +9,7 @@ import { Role } from "../../../interfaces/beastInterfaces/infoInterfaces/roleInf
 import { Skill } from "../../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
 import { ConflictObject, UnformatedConflict, Archetype } from "../../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
-import { Challenge, Obstacle } from "../../../interfaces/skillInterfaces";
+import { Challenge, Complication, Obstacle, Pair } from "../../../interfaces/skillInterfaces";
 
 import { isOwner } from "../../../utilities/ownerAccess";
 import { formatCharacteristics } from './statCalculators/confrontationCalculator'
@@ -154,7 +154,27 @@ export async function getChallenges(databaseConnection: any, beastId: number): P
 }
 
 export async function getObstacles(databaseConnection: any, beastId: number): Promise<Obstacle[]> {
-    return databaseConnection.skill.obstacle.get(beastId)
+    let obstacles: Obstacle[] = await databaseConnection.skill.obstacle.get(beastId)
+
+    return Promise.all(obstacles.map(async (obstacle: Obstacle): Promise<Obstacle> => {
+        let promiseArray: any[] = []
+
+        let complications: Complication[] | undefined;
+        promiseArray.push(databaseConnection.skill.obstacle.getComplications(obstacle.stringid).then(returnedComplications => complications = returnedComplications))
+
+        let pairsOne: Pair[] | undefined;
+        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairone').then(returnedPairs => pairsOne = returnedPairs))
+        let pairsTwo: Pair[] | undefined;
+        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairtwo').then(returnedPairs => pairsTwo = returnedPairs))
+
+        await Promise.all(promiseArray)
+        return {
+            ...obstacle,
+            pairsOne,
+            pairsTwo,
+            complications
+        }
+    }))
 }
 
 export async function getVariants(databaseConnection: any, beastId: number): Promise<Variant[]> {
@@ -357,7 +377,7 @@ export function getRarity(rarityId: number): Rarity {
         }
     }
 
-    const rarityInfo = rarityDictionary[rarityId] ?? { rarityName: 'None'}
+    const rarityInfo = rarityDictionary[rarityId] ?? { rarityName: 'None' }
 
     return {
         rarityId,

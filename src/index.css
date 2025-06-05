@@ -140,12 +140,13 @@ strong {
 	text-transform: uppercase;
 }
 
-a {
+a, .fake-link {
 	text-decoration: none;
+	cursor: pointer;
 	color: #41555f;
 }
 
-a:hover {
+a:hover, .fake-link:hover {
 	color: #607d8b;
 }
 
