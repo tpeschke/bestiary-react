@@ -1,5 +1,13 @@
-
 .obstacles-display-shell p {
     margin-bottom: 5px;
     cursor: pointer;
+}
+
+.obstacle-shell {
+    width: 350px;
+    opacity: 1;
+}
+
+.obstacle-shell tr td:first-child {
+    width: 25%;
 }

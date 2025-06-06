@@ -9,10 +9,11 @@ table.second-column-center td:nth-child(2) {
 }
 
 thead {
-    background: #8aa0ab;
+    background: #795548;
     text-align: left;
     color: white;
     font-family: 'oldClaude';
+    font-size: 15px;
 }
 
 thead th {

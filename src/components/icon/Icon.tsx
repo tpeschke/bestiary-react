@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link'
+type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy'
 
 type Color = null | 'black' | 'white'
 
@@ -75,6 +75,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'link':
             styling = "fa-solid fa-link"
+            break
+        case 'obstacle':
+            styling = "fa-solid fa-triangle-exclamation"
+            break
+        case 'copy':
+            styling = "fa-solid fa-copy"
             break
         default:
             break;

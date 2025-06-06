@@ -42,10 +42,13 @@ export default async function getRandomEncounter(request: Request, response: Res
     encounterObject.battlefield = getBattlefieldAndPattern()
     
     const [numbersReturn]: NumbersReturn[] = await databaseConnection.encounter.number.getWeighted(beastId)
-    const { numbers, miles } = numbersReturn
 
-    encounterObject.milesFromLair = getDistanceFromLair(miles)
-    encounterObject.group = await getGroupInfo(databaseConnection, beastId, numbers)
+    if (numbersReturn) {
+        const { numbers, miles } = numbersReturn
+    
+        encounterObject.milesFromLair = getDistanceFromLair(miles)
+        encounterObject.group = await getGroupInfo(databaseConnection, beastId, numbers)
+    }
 
     Promise.all(promiseArray).then(_ => {
         checkForContentTypeBeforeSending(response, encounterObject)

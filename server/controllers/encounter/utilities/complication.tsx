@@ -29,7 +29,10 @@ async function getComplication(complicationResultArray: Complication[], dataBase
             complicationResultArray.push(getLost())
             break;
         case BACK_UP_COMING:
-            complicationResultArray.push(await getBackUp(dataBaseConnection, beastId))
+            const backUp = await getBackUp(dataBaseConnection, beastId)
+            if (backUp) {
+                complicationResultArray.push(backUp)
+            }
             break;
         case TRAPPED:
         case INSANE:
@@ -100,27 +103,30 @@ function getLost(): LostComplication {
     return { type: LOST, distance: `${rollDice('10d10')} Miles` }
 }
 
-async function getBackUp(dataBaseConnection: any, beastId: number): Promise<BackUpComplication> {
+async function getBackUp(dataBaseConnection: any, beastId: number): Promise<BackUpComplication | null>  {
     const [backUp]: BackUp[] = await dataBaseConnection.encounter.complication.getBackUp(beastId)
 
-    const {id, name, plural} = backUp
+    if (backUp) {
+        const {id, name, plural} = backUp
 
-    let rank;
-    let rankPlural;
-    if (plural && rank && rank.toUpperCase() === 'NONE') {
-        rank = name
-        rankPlural = plural
-    } else if (!plural && rank && rank.toUpperCase() === 'NONE') {
-        rank = name
-        rankPlural = rank += 's'
-    } else if (!plural && rank && rank.toUpperCase() !== 'NONE') {
-        rankPlural = rank += 's'
+        let rank;
+        let rankPlural;
+        if (plural && rank && rank.toUpperCase() === 'NONE') {
+            rank = name
+            rankPlural = plural
+        } else if (!plural && rank && rank.toUpperCase() === 'NONE') {
+            rank = name
+            rankPlural = rank += 's'
+        } else if (!plural && rank && rank.toUpperCase() !== 'NONE') {
+            rankPlural = rank += 's'
+        }
+    
+    
+        return {
+            id, name, plural, rank, rankPlural,
+            type: BACK_UP_COMING,
+            time: `In ${rollDice('30d2')} Seconds`
+        }
     }
-
-
-    return {
-        id, name, plural, rank, rankPlural,
-        type: BACK_UP_COMING,
-        time: `In ${rollDice('30d2')} Seconds`
-    }
+    return null;
 }
