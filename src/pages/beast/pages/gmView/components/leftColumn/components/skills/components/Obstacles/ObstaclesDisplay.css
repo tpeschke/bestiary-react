@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 
-.obstacle-shell {
+.obstacle-shell table {
     width: 350px;
     opacity: 1;
 }

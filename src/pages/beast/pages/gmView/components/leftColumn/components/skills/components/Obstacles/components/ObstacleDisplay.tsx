@@ -5,10 +5,12 @@ import { Complication, Obstacle, Pair } from "../../../../../../../../../interfa
 import HTMLDisplay from '../../../../../../../../../components/UI/htmlDisplay/htmlDisplay';
 
 interface Props {
-    obstacle: Obstacle
+    obstacle: Obstacle | null
 }
 
 export default function ObstacleDisplay({ obstacle }: Props) {
+    if (!obstacle) { return <></> }
+
     const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
 
     return (
@@ -42,18 +44,14 @@ export default function ObstacleDisplay({ obstacle }: Props) {
                             <tr className='standard-row'>
                                 <td colSpan={2}><strong>Complications</strong></td>
                             </tr>
-                            <tr className='standard-row'>
-                                <td colSpan={2}>
-                                    {complications.map(({name, body}: Complication) => {
-                                        return (
-                                            <tr className='standard-row'>
-                                                <td>{name}</td>
-                                                <td>{body}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                </td>
-                            </tr>
+                            {complications.map(({ name, body }: Complication, index) => {
+                                return (
+                                    <tr key={index} className='standard-row'>
+                                        <td>{name}</td>
+                                        <td>{body}</td>
+                                    </tr>
+                                )
+                            })}
                         </>
                     )}
                     {failure && <tr className='standard-row'>
@@ -76,12 +74,12 @@ export default function ObstacleDisplay({ obstacle }: Props) {
                     )}
                     {information && <HTMLDisplay html={information} />}
                     {notes && (
-                        <>
-                            <tr className='standard-row'>
-                                <td colSpan={2}><strong>Notes</strong></td>
-                            </tr>
-                            <HTMLDisplay html={notes} />
-                        </>
+                        <tr className='standard-row'>
+                            <td colSpan={2}>
+                                <strong>Notes</strong>
+                                <HTMLDisplay html={notes} />
+                            </td>
+                        </tr>
                     )}
                 </tbody>
             </table>
