@@ -23,6 +23,7 @@
     "express-session": "^1.18.1",
     "jest-environment-jsdom": "^29.7.0",
     "massive": "^6.11.3",
+    "mermaid": "^11.6.0",
     "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-auth0": "^1.4.4",
