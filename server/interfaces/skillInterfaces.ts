@@ -1,7 +1,16 @@
 export interface Challenge {
     id: number,
+    beastid: number,
     challengeid: number,
-    beastid: number
+    name: string,
+    flowchart: string,
+    type: string,
+    notes: string,
+    obstacles: ObstacleNameObject
+}
+
+interface ObstacleNameObject {
+    [key: string]: Obstacle
 }
 
 export interface Obstacle {

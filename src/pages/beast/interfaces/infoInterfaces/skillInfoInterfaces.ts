@@ -7,8 +7,8 @@ export default interface SkillInfo {
     atk_skill: string,
     def_skill: string,
     skills?: Skill[],
-    obstacles?: Obstacle[],
-    challenges?: Challenge[],
+    obstacles: Obstacle[],
+    challenges: Challenge[],
 }
 
 export interface Skill {
@@ -62,6 +62,15 @@ export interface Pair {
 
 export interface Challenge {
     id: number,
+    beastid: number,
     challengeid: number,
-    beastid: number
+    name: string,
+    flowchart: string,
+    type: string,
+    notes: string,
+    obstacles: ObstacleNameObject
+}
+
+interface ObstacleNameObject {
+    [key: string]: Obstacle
 }

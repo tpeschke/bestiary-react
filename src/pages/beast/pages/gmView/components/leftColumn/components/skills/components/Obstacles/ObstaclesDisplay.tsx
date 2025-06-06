@@ -2,7 +2,7 @@ import './ObstaclesDisplay.css'
 
 import Body from "../../../../../../../../components/UI/body/Body"
 import { Obstacle } from "../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces"
-import ObstacleItem from "./component/ObstacleItem"
+import ObstacleItem from "./components/ObstacleItem"
 
 interface Props {
     obstacles: Obstacle[]

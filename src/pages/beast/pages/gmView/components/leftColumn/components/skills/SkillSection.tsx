@@ -6,13 +6,14 @@ import SkillsDisplay from "./components/SkillsDisplay"
 import SpecialInfo from "../specialInfo/specialInfo"
 import Pair from "../../../../../../components/UI/pair/Pair"
 import ObstaclesDisplay from "./components/Obstacles/ObstaclesDisplay"
+import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 
 interface Props {
     skillInfo: SkillInfo
 }
 
 export default function SkillSection({ skillInfo }: Props) {
-    const { skillrole, skillpoints, skills, atk_skill, def_skill, skillsecondary, panic, stress, obstacles } = skillInfo
+    const { skillrole, skillpoints, skills, atk_skill, def_skill, skillsecondary, panic, stress, obstacles, challenges } = skillInfo
 
     let stressString = `${stress}`
     if (panic) { stressString = `(${panic}) ` + stressString }
@@ -33,7 +34,8 @@ export default function SkillSection({ skillInfo }: Props) {
                     </Body>
                 </>
             }
-            {obstacles && <ObstaclesDisplay obstacles={obstacles} />}
+            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles} />}
+            {challenges.length > 0 && <ChallengesDisplay challenges={challenges} />}
         </>
     )
 }
