@@ -21,6 +21,7 @@ import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVari
 import { CalculateCombatStatsReturn } from "./utilities/statCalculators/combatCalculators/combat"
 import { calculateVitalityFatigueAndTrauma } from "./utilities/statCalculators/combatCalculators/utilities/vitalityFatigueAndTraumaCalculator"
 import { calculateStressAndPanic } from "./utilities/statCalculators/skillCalculator"
+import calculateKnockBack from "./utilities/statCalculators/combatCalculators/utilities/knockBackCalculator"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -107,10 +108,10 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
-        rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
+        rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare,
         devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
-
+    
     let beast: Beast = {
         id, patreon, canplayerview,
         generalInfo: {
@@ -164,8 +165,9 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             defenses: [],
             movements: [],
             vitalityInfo: {
-                notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitality, fatigue),
+                notrauma, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
+                knockback: calculateKnockBack(knockback, size),
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, largeweapons, fatigue),
                 locationalVitalities: []
             }
         },
