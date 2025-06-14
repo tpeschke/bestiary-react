@@ -1,0 +1,10 @@
+.role-select-shell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.role-select-shell select {
+    width: 90%;
+    margin: 5px 0;
+}

@@ -17,7 +17,6 @@ import HabitatDisplay from './components/habitatDisplay/HabitatDisplay';
 import EncounterDisplay from './components/encounterDisplay/EncounterDisplay';
 
 interface Props {
-    beastId: number,
     intro: string
     appearance: string,
     habitat: string,
