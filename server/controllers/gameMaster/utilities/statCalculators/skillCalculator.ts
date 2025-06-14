@@ -2,12 +2,14 @@ import { Skill, Strength } from "../../../../interfaces/beastInterfaces/beastInt
 
 import { primarySkillRoles } from "./roleInfo/skillRoleInfo"
 
-export function formatSkills(skillpoints: number, skillInfo: Skill): Skill {
-    const { id, beastid, skill, skillroleid, allroles, strength, adjustment } = skillInfo
+export function formatSkills(mainSkillPoints: number, skillInfo: Skill): Skill {
+    const { id, beastid, skill, skillroleid, allroles, strength, adjustment, skillpoints, skillrole } = skillInfo
+
+    const skillPointsToUse = skillpoints ? skillpoints : mainSkillPoints
 
     return {
-        id, beastid, skill, skillroleid, allroles,
-        rank: calculateRankForSkill(skillpoints, strength, adjustment)
+        id, beastid, skill, skillroleid, allroles, skillrole,
+        rank: calculateRankForSkill(skillPointsToUse, strength, adjustment)
     }
 }
 

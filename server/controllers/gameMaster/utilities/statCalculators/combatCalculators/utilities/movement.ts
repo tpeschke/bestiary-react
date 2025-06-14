@@ -8,13 +8,18 @@ export function calculateMovements(movements: RawMovement[], combatpoints: numbe
 }
 
 function calculateMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {
-    const { id, beastid, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
+    const { id, beastid, role, combatpoints: roleCombatPoints, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
-    let stroll = calculateSpeed(strollstrength ?? roleScalingStrength, combatpoints + adjustment, 0)
-    let walk = calculateSpeed(walkstrength ?? roleScalingStrength, combatpoints + adjustment, stroll)
-    let jog = calculateSpeed(jogstrength ?? roleScalingStrength, combatpoints + adjustment, walk, 2)
-    let run = calculateSpeed(runstrength ?? roleScalingStrength, combatpoints + adjustment, jog, 2)
-    let sprint = calculateSpeed(sprintstrength ?? roleScalingStrength, combatpoints + adjustment, run, 2)
+    const specificScalingStrength = primaryCombatRoles[role]?.meleeCombatStats?.movement
+
+    const scalingToUse = specificScalingStrength ? specificScalingStrength : roleScalingStrength
+    const pointsToUse = roleCombatPoints ? roleCombatPoints : combatpoints
+
+    let stroll = calculateSpeed(strollstrength ?? scalingToUse, pointsToUse + adjustment, 0)
+    let walk = calculateSpeed(walkstrength ?? scalingToUse, pointsToUse + adjustment, stroll)
+    let jog = calculateSpeed(jogstrength ?? scalingToUse, pointsToUse + adjustment, walk, 2)
+    let run = calculateSpeed(runstrength ?? scalingToUse, pointsToUse + adjustment, jog, 2)
+    let sprint = calculateSpeed(sprintstrength ?? scalingToUse, pointsToUse + adjustment, run, 2)
 
     return {
         id, beastid, roleid, allroles,

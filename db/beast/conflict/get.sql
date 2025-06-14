@@ -1,4 +1,4 @@
-select * from ( 
+select t.*, r.socialrole, r.socialpoints from ( 
     (select id, value, beastid, type, socialroleid, allroles, trait, severity, strength, adjustment from bbconflict  
     where beastid = $1 and type != 'h' and type != 't' and type != 'c')
 union 
@@ -14,4 +14,5 @@ union
         from bbconflict  
         where beastid = $1 and type = 'h')
       		) t
+left join bbroles r on r.id = t.socialroleid
 order by random();

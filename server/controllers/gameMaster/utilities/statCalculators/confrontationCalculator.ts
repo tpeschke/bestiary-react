@@ -1,8 +1,8 @@
 import { Strength } from "../../../../interfaces/beastInterfaces/beastInterfaces"
 import { UnformatedConflict, Conflict } from "../../../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
-export function formatCharacteristics(socialpoints: number, characteristic: UnformatedConflict): Conflict {
-    const { id, beastid, trait, socialroleid, allroles, type, strength, adjustment } = characteristic
+export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
+    const { id, beastid, trait, socialroleid, socialpoints, socialrole, allroles, type, strength, adjustment } = characteristic
 
     const typeDictionary = {
         h: 'Descriptions',
@@ -18,9 +18,11 @@ export function formatCharacteristics(socialpoints: number, characteristic: Unfo
     if (type === 'b' || type === 'f') {
         return formatedCharacteristic
     } else {
+        const pointsToUse = socialpoints ? socialpoints : mainSocialPoints
+
         return {
             ...formatedCharacteristic,
-            rank: calculateRankForCharacteristic(typeDictionary[type], socialpoints, strength, adjustment)
+            rank: calculateRankForCharacteristic(typeDictionary[type], pointsToUse, strength, adjustment)
         }
     }
 }

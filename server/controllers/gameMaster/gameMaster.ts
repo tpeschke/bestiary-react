@@ -1,7 +1,7 @@
 import { Response, Request, Error } from "../../interfaces/apiInterfaces"
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces"
 import { Challenge, Obstacle } from "../../interfaces/skillInterfaces"
-import { Beast, upsertParameters } from "../../interfaces/beastInterfaces/beastInterfaces"
+import { Beast } from "../../interfaces/beastInterfaces/beastInterfaces"
 import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo"
 import { Role } from "../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
 import { Movement, LocationVitality } from "../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
@@ -17,11 +17,19 @@ import { isOwner } from "../../utilities/ownerAccess"
 import createHash from "../../utilities/hashGeneration"
 import upsertBeast from "../../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../utilities/sendingFunctions'
-import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getRoles, getMovement, getCombatStats, getLocationalVitalities, getSkills, getChallenges, getObstacles, getConflict, getArchetypes, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
+import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
+    getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, 
+    getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
 import { CalculateCombatStatsReturn } from "./utilities/statCalculators/combatCalculators/combat"
 import { calculateVitalityFatigueAndTrauma } from "./utilities/statCalculators/combatCalculators/utilities/vitalityFatigueAndTraumaCalculator"
 import { calculateStressAndPanic } from "./utilities/statCalculators/skillCalculator"
 import calculateKnockBack from "./utilities/statCalculators/combatCalculators/utilities/knockBackCalculator"
+import { getRoles } from "./utilities/getUtilities/getRoleInfo"
+import { getCombatStats, getMovement } from "./utilities/getUtilities/getCombatInfo"
+import { getChallenges } from "./utilities/getUtilities/skillRelatedInfo/getChallenges"
+import { getSkills } from "./utilities/getUtilities/skillRelatedInfo/getSkills"
+import { getObstacles } from "./utilities/getUtilities/skillRelatedInfo/getObstacles"
+import { getArchetypes, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 

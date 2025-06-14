@@ -8,36 +8,88 @@ export default interface RoleInfo {
 
 export interface Role {
     id: string,
-    vitality: string,
-    hash: string,
+    generalInfo: RoleGeneralInfo,
+    combatInfo: RoleCombatInfo,
+    skillInfo: RoleSkillInfo,
+    socialInfo: RoleSocialInfo
+}
+
+export interface RoleGeneralInfo {
     name: string,
     role: string,
+    size: Size,
+    hash: string,
+}
+
+export interface RoleCombatInfo {
     attack: string,
     defense: string,
+    initiative: string,
     secondaryrole: string,
     combatpoints: number,
-    panic: number,
-    stress: number,
-    socialrole: number,
-    socialpoints,
-    skillrole: number,
-    skillpoints,
-    socialsecondary: number,
-    size: Size,
     fatigue: number,
     largeweapons: number,
-    mental: number,
     knockback: number,
     singledievitality: boolean,
     noknockback: boolean,
     rollundertrauma: number,
-    attack_skill: string,
-    defense_skill: string,
-    attack_conf: string,
-    defense_conf: string,
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
+}
+
+export interface RoleSkillInfo {
+    panic: number,
+    stress: number,
+    mental: number,
+    skillpoints: number,
+    skillrole: number,
+    attack_skill: string,
+    defense_skill: string,
+    skillsecondary: string
+}
+
+export interface RoleSocialInfo {
+    socialpoints: number,
+    socialrole: number,
+    socialsecondary: number,
+    attack_conf: string,
+    defense_conf: string,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
-    skillsecondary: string
+}
+
+export interface UnsortedRole {
+    id: string,
+    name: string,
+    role: string,
+    size: Size,
+    hash: string,
+    vitality: string,
+    attack: string,
+    defense: string,
+    secondaryrole: string,
+    combatpoints: number,
+    fatigue: number,
+    largeweapons: number,
+    knockback: number,
+    singledievitality: boolean,
+    noknockback: boolean,
+    rollundertrauma: number,
+    isincorporeal: boolean,
+    weaponbreakagevitality: boolean,
+    panic: number,
+    stress: number,
+    mental: number,
+    skillpoints,
+    skillrole: number,
+    attack_skill: string,
+    defense_skill: string,
+    skillsecondary: string,
+    socialpoints: number,
+    socialrole: number,
+    socialsecondary: number,
+    attack_conf: string,
+    defense_conf: string,
+    hasarchetypes: boolean,
+    hasmonsterarchetypes: boolean,
 }

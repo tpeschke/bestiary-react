@@ -32,6 +32,8 @@ export interface UnformatedConflict {
     value: string,
     type: string,
     socialroleid: string,
+    socialrole: string,
+    socialpoints: number,
     allroles: boolean,
     severity: number,
     strength: Strength,

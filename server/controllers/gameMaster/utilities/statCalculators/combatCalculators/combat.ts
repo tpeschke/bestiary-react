@@ -15,7 +15,7 @@ export function calculateCombatStats(combatStats: RawCombatStat[], combatPoints:
     let defenses: DefenseInfo[] = []
     let attacks: AttackInfo[] = []
 
-    combatStats.forEach(stats => calculateSingleCombatInfo(stats, defenses, attacks, combatPoints, role, size))
+    combatStats.forEach(stats => calculateSingleCombatInfo(stats, defenses, attacks, size))
 
     const initiative = combatStats.length > 0 ? combatStats[0].initiative : 'minWk'
 
@@ -26,10 +26,10 @@ export function calculateCombatStats(combatStats: RawCombatStat[], combatPoints:
     }
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], combatPoints: number, role: string, size: Size): void {
+function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size): void {
     const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, weapontype, showonlydefenses, recovery, measure, rangeddefense: cover, weaponname: chosenName,
         armor, shield, weapon, eua, isspecial, attack, alldefense, flanks, andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry,
-        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage
+        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints
     } = stats
 
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, role)

@@ -15,12 +15,12 @@ export interface Skill {
     id: number,
     beastid: number,
     skill: string,
-    rank: string,
+    rank: number,
     skillroleid: string,
+    skillrole: string,
+    skillpoints?: number,
     allroles: boolean,
-    strength: string,
-    adjustment: number,
-    deleted: boolean
+    deleted?: boolean
 }
 
 export interface Obstacle {

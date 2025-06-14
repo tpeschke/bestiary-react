@@ -1,3 +1,5 @@
+import { Role } from "../interfaces/beastInterfaces/beastInterfaces";
+import { UnsortedRole } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
 import { Conflict } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Item } from "../interfaces/lootInterfaces";
 
@@ -27,11 +29,7 @@ export function objectifyItemArray(itemArray: Item[]): Object {
     return itemObject
 }
 
-interface nameObject {
-    name: string
-}
-
-export function sortTemplateRoles(a: nameObject, b: nameObject): number {
+export function sortTemplateRoles(a: UnsortedRole, b: UnsortedRole): number {
     const order = ['Novice', 'Apprentice', 'Journeyman', 'Expert', 'Master', 'Grandmaster', 'Legendary', 'Mythic'];
     return order.indexOf(a.name) - order.indexOf(b.name)
   }
