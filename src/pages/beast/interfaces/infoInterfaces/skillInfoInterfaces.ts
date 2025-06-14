@@ -18,7 +18,6 @@ export interface Skill {
     rank: number,
     skillroleid: string,
     skillrole: string,
-    skillpoints?: number,
     allroles: boolean,
     deleted?: boolean
 }
