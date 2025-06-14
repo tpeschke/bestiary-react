@@ -16,7 +16,7 @@ export default function MovementInfo({ movements }: Props) {
                     {movements.map(({ type, stroll, walk, jog, run, sprint }: Movement, index) => {
                         return (
                             <div key={index} className='movement-shell'>
-                                <p>{type}</p>
+                                <p>{type ? type : 'Land'}</p>
                                 <p data-tooltip-id="my-tooltip" data-tooltip-content="Crawl / Stroll">C: {stroll}</p>
                                 <p data-tooltip-id="my-tooltip" data-tooltip-content="Walk">W: {walk}</p>
                                 <p data-tooltip-id="my-tooltip" data-tooltip-content="Jog">J: {jog}</p>
