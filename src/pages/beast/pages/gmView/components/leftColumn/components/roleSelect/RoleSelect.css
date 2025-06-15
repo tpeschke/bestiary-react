@@ -4,7 +4,43 @@
     justify-content: space-between;
 }
 
-.role-select-shell select {
-    width: 90%;
-    margin: 5px 0;
+.role-select-shell .role-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Source Sans 3", sans-serif;
+    padding: 5px;
+}
+
+.role-select-shell .role-option:hover {
+    background: #f3f3f3;
+}
+
+.role-select-shell .role-option span {
+    font-size: 12px;
+    color: gray
+}
+
+.role-select-shell .css-b62m3t-container {
+    width: 85%;
+}
+
+.role-select-shell .css-b62m3t-container:hover {
+    background: #f3f3f3;
+}
+
+.role-select-shell .css-13cymwt-control {
+    border: unset;
+}
+
+.role-select-shell .css-hlgwow {
+    text-align: right;
+}
+
+.role-select-shell .css-1u9des2-indicatorSeparator {
+    display: none;
+}
+
+.role-select-shell h2 {
+    padding-left: 8px;
 }

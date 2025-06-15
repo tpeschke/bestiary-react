@@ -16,7 +16,6 @@ export interface Role {
 
 export interface RoleGeneralInfo {
     name: string,
-    role: string,
     size: Size,
     hash: string,
 }
@@ -25,7 +24,8 @@ export interface RoleCombatInfo {
     attack: string,
     defense: string,
     initiative: string,
-    secondaryrole: string,
+    combatrole: string,
+    combatsecondary: string,
     combatpoints: number,
     fatigue: number,
     largeweapons: number,
@@ -42,16 +42,16 @@ export interface RoleSkillInfo {
     stress: number,
     mental: number,
     skillpoints: number,
-    skillrole: number,
+    skillrole: string,
+    skillsecondary: string
     attack_skill: string,
     defense_skill: string,
-    skillsecondary: string
 }
 
 export interface RoleSocialInfo {
     socialpoints: number,
-    socialrole: number,
-    socialsecondary: number,
+    socialrole: string,
+    socialsecondary: string,
     attack_conf: string,
     defense_conf: string,
     hasarchetypes: boolean,

@@ -16,7 +16,6 @@ export interface Role {
 
 export interface RoleGeneralInfo {
     name: string,
-    role: string,
     size: Size,
     hash: string,
 }
@@ -25,7 +24,8 @@ export interface RoleCombatInfo {
     attack: string,
     defense: string,
     initiative: string,
-    secondaryrole: string,
+    combatrole: string,
+    combatsecondary: string,
     combatpoints: number,
     fatigue: number,
     largeweapons: number,
