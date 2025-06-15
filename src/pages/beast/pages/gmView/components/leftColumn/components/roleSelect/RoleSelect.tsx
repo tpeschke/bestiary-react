@@ -1,6 +1,6 @@
 import './RoleSelect.css'
 
-import RoleInfo, { Role } from "../../../../../../interfaces/infoInterfaces/roleInfoInterfaces";
+import RoleInfo, { Role, RoleCombatInfo, RoleSkillInfo, RoleSocialInfo } from "../../../../../../interfaces/infoInterfaces/roleInfoInterfaces";
 import { useEffect, useState } from 'react';
 import { UpdateSelectedRoleFunction } from '../../../../../../hooks/beastHooks';
 import Select from 'react-select'
@@ -8,7 +8,7 @@ import Select from 'react-select'
 interface Props {
     roleInfo: RoleInfo,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    selectedRole: string
+    selectedRoleIndex: number
 }
 
 interface OptionProp {
@@ -16,7 +16,7 @@ interface OptionProp {
     label: string,
 }
 
-export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRole }: Props) {
+export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleIndex }: Props) {
     const [currentSelectedOption, setCurrentSelectedOption] = useState<OptionProp | null>(null)
     const [roleOptions, setRoleOptions] = useState<any[] | null>(null)
 
@@ -24,15 +24,12 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRole 
         if (!roleOptions) {
             const { roles } = roleInfo
 
+            setCurrentSelectedOption(getSelectedRole(roles, selectedRoleIndex))
+
             const options = roles.map(({ generalInfo, combatInfo, skillInfo, socialInfo, id: roleId }: Role): any => {
                 const { name } = generalInfo
-                const { socialrole, socialsecondary } = socialInfo
-                const { skillrole, skillsecondary } = skillInfo
-                const { combatrole, combatsecondary } = combatInfo
 
-                const roleName = formatRoleName(socialrole, socialsecondary, skillrole, skillsecondary, combatrole, combatsecondary)
-
-                if (roleId === selectedRole) { setCurrentSelectedOption({ value: roleId, label: `${name} : ${roleName}` }) }
+                const roleName = formatRoleName(socialInfo, skillInfo, combatInfo)
 
                 return { value: roleId, label: `${name} : ${roleName}` }
             })
@@ -65,15 +62,28 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRole 
     )
 }
 
+function getSelectedRole(roles: Role[], selectedRoleIndex: number) {
+    const { id: roleId, generalInfo, socialInfo, skillInfo, combatInfo } = roles[selectedRoleIndex]
+    const { name } = generalInfo
+
+    const roleName = formatRoleName(socialInfo, skillInfo, combatInfo)
+
+    return { value: roleId, label: `${name} : ${roleName}` }
+}
+
 function formatOption({ innerProps, label }: any) {
     const [name, roleName] = label.split(' : ')
     return <div {...innerProps} className='role-option'>{name} <span>{roleName}</span></div>
 }
 
-function formatRoleName(socialRole: string, socialSecondary: string | null, skillRole: string, skillSecondary: string | null, combatRole: string, combatSecondary: string | null) {
-    const socialRoleName = formatSingleRoleNamePair(socialRole, socialSecondary)
-    const skillRoleName = formatSingleRoleNamePair(skillRole, skillSecondary)
-    const combatRoleName = formatSingleRoleNamePair(combatRole, combatSecondary)
+function formatRoleName(socialInfo: RoleSocialInfo, skillInfo: RoleSkillInfo, combatInfo: RoleCombatInfo): string {
+    const { socialrole, socialsecondary } = socialInfo
+    const { skillrole, skillsecondary } = skillInfo
+    const { combatrole, combatsecondary } = combatInfo
+
+    const socialRoleName = formatSingleRoleNamePair(socialrole, socialsecondary)
+    const skillRoleName = formatSingleRoleNamePair(skillrole, skillsecondary)
+    const combatRoleName = formatSingleRoleNamePair(combatrole, combatsecondary)
 
     return `${socialRoleName} / ${skillRoleName} / ${combatRoleName}`
 }

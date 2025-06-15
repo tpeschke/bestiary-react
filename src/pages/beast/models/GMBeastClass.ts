@@ -29,7 +29,7 @@ export default class GMBeastClass {
     private castingTypeInfo: CastingClass
     private entrySpells: Spell[]
 
-    private selectRoleId: string
+    private selectRoleIndex: number
 
     constructor(beastInfo: BeastInfo) {
         const { id, patreon, canplayerview, generalInfo, playerSpecificInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo } = beastInfo
@@ -49,7 +49,7 @@ export default class GMBeastClass {
 
         this.castingTypeInfo = new CastingClass(castingInfo.casting)
         this.entrySpells = castingInfo.spells
-        this.selectRoleId = roleInfo.defaultrole
+        this.selectRoleIndex = roleInfo.roles.findIndex(role => roleInfo.defaultrole === role.id)
     }
 
     get beastInfo(): BeastInfo {
@@ -102,15 +102,16 @@ export default class GMBeastClass {
 
         if (conflicts) {
             const { descriptions, convictions, relationships, flaws, burdens } = conflicts
+            const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
 
             return {
                 ...this.entrySocialInfo,
                 conflicts: {
-                    descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === this.selectRoleId),
-                    convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === this.selectRoleId),
-                    relationships: relationships.filter((info: Conflict) => !info.socialroleid || info.socialroleid === this.selectRoleId),
-                    flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === this.selectRoleId),
-                    burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === this.selectRoleId)
+                    descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
+                    convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
+                    relationships: relationships.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
+                    flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
+                    burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID)
                 }
             }
         }
@@ -120,9 +121,11 @@ export default class GMBeastClass {
 
     get skillInfo(): SkillInfo {
         const { skills } = this.entrySkillInfo
+        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
+
         return {
             ...this.entrySkillInfo,
-            skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === this.selectRoleId)
+            skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID)
         }
     }
 
@@ -132,12 +135,13 @@ export default class GMBeastClass {
 
     formatCombatInfo = (combatInfo: CombatInfo): CombatInfo => {
         const { attacks, defenses, movements } = combatInfo
+        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
 
         return {
             ...combatInfo,
-            attacks: attacks.filter((info: AttackInfo) => info.roleid === this.selectRoleId),
-            defenses: defenses.filter((info: DefenseInfo) => info.roleid === this.selectRoleId),
-            movements: movements.filter((info: Movement) => !info.roleid || info.roleid === this.selectRoleId)
+            attacks: attacks.filter((info: AttackInfo) => info.roleid === roleID),
+            defenses: defenses.filter((info: DefenseInfo) => info.roleid === roleID),
+            movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
         }
     }
 
@@ -161,11 +165,11 @@ export default class GMBeastClass {
         return this.entryRoleInfo
     }
 
-    get selectedRoleId(): string {
-        return this.selectRoleId
+    get selectedRoleIndex(): number {
+        return this.selectRoleIndex
     }
 
-    set selectedRoleId(newRoleId: string) {
-        this.selectRoleId = newRoleId
+    set selectedRoleIndex(newIndex: number) {
+        this.selectedRoleIndex = newIndex
     }
 }

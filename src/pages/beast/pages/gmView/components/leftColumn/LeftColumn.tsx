@@ -21,15 +21,15 @@ interface Props {
     combatInfo: CombatInfo,
     size: Size,
     roleInfo: RoleInfo,
-    selectedRoleId: string
+    selectedRoleIndex: number
     updateSelectedRole: UpdateSelectedRoleFunction,
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleId, updateSelectedRole }: Props) {
+export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, updateSelectedRole }: Props) {
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo}/>
-            <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRole={selectedRoleId} />
+            <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
