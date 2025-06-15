@@ -12,14 +12,12 @@ import { BeastInfo } from "../interfaces/viewInterfaces";
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
 export default class GMBeastClass {
-    private beastInfo: BeastInfo;
-
     private entryID: number
     private patreon: number
     private canplayerview: boolean
 
     private entryGeneralInfo: GeneralInfo
-    private playerSpecificInfo: PlayerSpecificInfo
+    private entryPlayerSpecificInfo: PlayerSpecificInfo
     private entryImageInfo: ImageInfo
     private entryLinkedInfo: LinkedInfo
     private entryRoleInfo: RoleInfo
@@ -40,7 +38,7 @@ export default class GMBeastClass {
         this.patreon = patreon
         this.canplayerview = canplayerview
         this.entryGeneralInfo = generalInfo
-        this.playerSpecificInfo = playerSpecificInfo
+        this.entryPlayerSpecificInfo = playerSpecificInfo
         this.entryImageInfo = imageInfo
         this.entryLinkedInfo = linkedInfo
         this.entryRoleInfo = roleInfo
@@ -52,6 +50,32 @@ export default class GMBeastClass {
         this.castingTypeInfo = new CastingClass(castingInfo.casting)
         this.entrySpells = castingInfo.spells
         this.selectRoleId = roleInfo.defaultrole
+    }
+
+    get beastInfo(): BeastInfo {
+        return {
+            id: this.id,
+            patreon: this.patreon,
+            canplayerview: this.canplayerview,
+            generalInfo: this.entryGeneralInfo,
+            playerSpecificInfo: this.entryPlayerSpecificInfo,
+            imageInfo: this.entryImageInfo,
+            linkedInfo : this.entryLinkedInfo,
+            roleInfo: this.entryRoleInfo,
+            combatInfo: this.entryCombatInfo,
+            skillInfo: this.entrySkillInfo,
+            socialInfo: this.entrySocialInfo,
+            lootInfo: this.entryLootInfo,
+            castingInfo: {
+                casting: {
+                    castingTypesArray: this.castingTypeInfo.castingTypes,
+                    spellnumberdie: this.castingTypeInfo.getSpellNumberDie,
+                    defaulttype: this.castingTypeInfo.getDefaultType,
+                    beastid: this.id
+                },
+                spells: this.entrySpells
+            }
+        }
     }
 
     get id(): number {
@@ -143,12 +167,5 @@ export default class GMBeastClass {
 
     set selectedRoleId(newRoleId: string) {
         this.selectRoleId = newRoleId
-    }
-
-    // Brody: How to reload info?
-    public updateSelectedRole = (newRoleId: string) => {
-        this.selectedRoleId = newRoleId
-
-        this.entryCombatInfo = this.formatCombatInfo(this.entryCombatInfo)
     }
 }

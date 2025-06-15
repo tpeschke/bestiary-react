@@ -10,6 +10,7 @@ import CombatInfo from "../../../../interfaces/infoInterfaces/combatInfoInterfac
 import { Size } from "../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 import RoleInfo from "../../../../interfaces/infoInterfaces/roleInfoInterfaces"
 import RoleSelect from "./components/roleSelect/RoleSelect"
+import { UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks"
 
 interface Props {
     beastId: number,
@@ -20,11 +21,11 @@ interface Props {
     combatInfo: CombatInfo,
     size: Size,
     roleInfo: RoleInfo,
-    updateSelectedRole: Function,
     selectedRoleId: string
+    updateSelectedRole: UpdateSelectedRoleFunction,
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, updateSelectedRole, selectedRoleId }: Props) {
+export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleId, updateSelectedRole }: Props) {
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo}/>

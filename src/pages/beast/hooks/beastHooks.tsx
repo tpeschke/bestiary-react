@@ -11,10 +11,14 @@ import { beastURL } from "../../../frontend-config";
 import alertInfo from "../../../components/alert/alerts";
 
 import { cacheMonster, getBeastCache } from "../../../redux/slices/beastCacheSlice";
+import { BeastInfo } from "../interfaces/viewInterfaces";
+
+export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 
 interface Return {
     beast?: GMBeastClass,
-    playerBeast?: PlayerBeastClass
+    playerBeast?: PlayerBeastClass,
+    updateSelectedRole: UpdateSelectedRoleFunction
 }
 
 export default function beastHooks(): Return {
@@ -74,8 +78,25 @@ export default function beastHooks(): Return {
         return null
     }
 
+    const updateSelectedRole = (newRoleId: string): void => {
+        const beastInfo = beast?.beastInfo
+
+        if (beastInfo) {
+            const modifiedBeastInfo: BeastInfo = {
+                ...beastInfo,
+                roleInfo: {
+                    ...beastInfo.roleInfo,
+                    defaultrole: newRoleId
+                },
+            }
+
+            setBeast(new GMBeastClass(modifiedBeastInfo))
+        }
+    }
+
     return {
         beast,
-        playerBeast
+        playerBeast,
+        updateSelectedRole
     }
 }

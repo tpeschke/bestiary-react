@@ -2,10 +2,11 @@ import './RoleSelect.css'
 
 import RoleInfo, { Role } from "../../../../../../interfaces/infoInterfaces/roleInfoInterfaces";
 import { useState } from 'react';
+import { UpdateSelectedRoleFunction } from '../../../../../../hooks/beastHooks';
 
 interface Props {
     roleInfo: RoleInfo,
-    updateSelectedRole: Function,
+    updateSelectedRole: UpdateSelectedRoleFunction,
     selectedRole: string
 }
 

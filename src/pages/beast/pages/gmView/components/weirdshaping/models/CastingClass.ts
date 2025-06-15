@@ -27,8 +27,16 @@ export default class CastingClass {
         this.intialSelected = this.getInitialSelected()
     }
 
+    get castingTypes(): boolean[] {
+        return this.castingTypesArray;
+    }
+
     get castingOptions(): CastingDisplayType[] {
         return this.filteredCastingTypes
+    }
+
+    get getDefaultType(): number | null {
+        return this.defaulttype
     }
 
     get getIntialSelected(): number {
