@@ -14,11 +14,6 @@
     border-bottom: unset;
 }
 
-.pair-shell p.justifiedRight, .pair-shell h3.justifiedRight {
-    text-align: right;
-    margin-right: 5px;
-}
-
 .pair-shell h3 {
     margin: 0;
     padding: 0;
@@ -38,4 +33,13 @@
 
 .pair-shell p.minor {
     color: #434343;
+}
+
+.pair-shell p.justifiedRight, .pair-shell h3.justifiedRight {
+    text-align: right;
+    margin-right: 5px;
+}
+
+.pair-shell p.justifiedLeft, .pair-shell h3.justifiedLeft {
+    text-align: left;
 }

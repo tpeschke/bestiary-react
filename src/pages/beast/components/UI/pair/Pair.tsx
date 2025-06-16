@@ -8,7 +8,7 @@ type Format = {
     position?: 'opposite',
     info?: 'minor'
     infoWidth?: 'unset',
-    titleJustified?: 'right'
+    titleJustified?: 'right' | 'left'
 }
 
 interface Props {
@@ -25,6 +25,7 @@ export default function Pair({ title, info, format }: Props) {
 
     let titleClassString = ""
     format?.titleJustified === 'right' ? titleClassString += "justifiedRight" : null
+    format?.titleJustified === 'left' ? titleClassString += "justifiedLeft" : null
 
     let infoClassString = ""
     format?.info ? infoClassString += ' minor' : null

@@ -89,7 +89,7 @@ export interface RawCombatStat {
     swarmbonus: string,
     adjustment: number,
     tdr: boolean,
-    info: string
+    info: string,
 }
 
 export interface Movement {

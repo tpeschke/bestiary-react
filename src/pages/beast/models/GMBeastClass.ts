@@ -103,17 +103,17 @@ export default class GMBeastClass {
 
         if (conflicts) {
             const { descriptions, convictions, relationships, flaws, burdens } = conflicts
-            const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
+            const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
-            const roleSelected = this.selectRoleIndex || this.selectRoleIndex === 0
+            const roleSelected = this.isRoleSelected()
 
             const socialrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialrole : role
             const socialsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialsecondary : secondary
             const socialpoints = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialpoints : points
-
+            
             const hasarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasmonsterarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
-
+            
             return {
                 ...this.entrySocialInfo,
                 socialrole, socialsecondary, socialpoints,
@@ -136,9 +136,9 @@ export default class GMBeastClass {
 
     get skillInfo(): SkillInfo {
         const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points } = this.entrySkillInfo
-        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
+        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
-        const roleSelected = this.selectRoleIndex || this.selectRoleIndex === 0
+        const roleSelected = this.isRoleSelected()
 
         const skillrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillrole : role
         const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
@@ -157,9 +157,9 @@ export default class GMBeastClass {
 
     formatCombatInfo = (combatInfo: CombatInfo): CombatInfo => {
         const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points } = combatInfo
-        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex].id
+        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
-        const roleSelected = this.selectRoleIndex || this.selectRoleIndex === 0
+        const roleSelected = this.isRoleSelected()
 
         const combatrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatrole : role
         const combatsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatsecondary : secondary
@@ -172,6 +172,10 @@ export default class GMBeastClass {
             defenses: defenses.filter((info: DefenseInfo) => info.roleid === roleID),
             movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
         }
+    }
+
+    isRoleSelected = (): boolean => {
+        return this.selectRoleIndex >= 0
     }
 
     get linkedInfo(): LinkedInfo {

@@ -29,7 +29,7 @@ import { getCombatStats, getMovement } from "./utilities/getUtilities/getCombatI
 import { getChallenges } from "./utilities/getUtilities/skillRelatedInfo/getChallenges"
 import { getSkills } from "./utilities/getUtilities/skillRelatedInfo/getSkills"
 import { getObstacles } from "./utilities/getUtilities/skillRelatedInfo/getObstacles"
-import { getArchetypes, GetArchetypesReturn, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
+import { getArchetypes, GetArchetypesReturn, getConflict, getDifficultyDie } from "./utilities/getUtilities/getConfrontationInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -119,7 +119,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
         rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare,
         devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
-    
+
     let beast: Beast = {
         id, patreon, canplayerview,
         generalInfo: {
@@ -196,7 +196,8 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
                 burdens: []
             },
             archetypeInfo: {
-                hasarchetypes, hasmonsterarchetypes
+                hasarchetypes, hasmonsterarchetypes,
+                difficultyDie: getDifficultyDie(socialpoints) 
             }
         },
         lootInfo: {

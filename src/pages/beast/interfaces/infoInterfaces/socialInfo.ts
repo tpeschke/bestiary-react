@@ -29,6 +29,7 @@ export interface Conflict {
 export interface ArchetypeInfo {
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
+    difficultyDie: string,
     normalArchetypes: NormalArchetypeObject,
     monsterArchetypes: MonsterArchetypeObject
 }

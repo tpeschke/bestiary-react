@@ -1,23 +1,15 @@
 import { Response, Error, User } from "../../../interfaces/apiInterfaces";
 import { Casting, Spell } from "../../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
-import { LocationVitality, Movement, RawMovement, RawCombatStat } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario, TablesObject, Table, Row, Size, Rarity } from "../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
+import { LocationVitality } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
+import { Folklore, Scenario, TablesObject, Table, Row, Rarity } from "../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Climate, LocationObject, Variant, Location } from "../../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
 import { Pleroma } from "../../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
-import { Role, UnsortedRole } from "../../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
-import { Skill } from "../../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces";
-import { ConflictObject, UnformatedConflict, Archetype } from "../../../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
-import { Challenge, Complication, Obstacle, Pair } from "../../../interfaces/skillInterfaces";
 
 import { isOwner } from "../../../utilities/ownerAccess";
-import { formatCharacteristics } from './statCalculators/confrontationCalculator'
 import { sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
-import { objectifyItemArray, sortByRank, sortOutAnyToTheBottom, sortTemplateRoles } from "../../../utilities/sorts";
-import { CalculateCombatStatsReturn, calculateCombatStats } from "./statCalculators/combatCalculators/combat";
-import { formatSkills } from "./statCalculators/skillCalculator";
-import { calculateMovements } from "./statCalculators/combatCalculators/utilities/movement";
+import { objectifyItemArray } from "../../../utilities/sorts";
 
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 

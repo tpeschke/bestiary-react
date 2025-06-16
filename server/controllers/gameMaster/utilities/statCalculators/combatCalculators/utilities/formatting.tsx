@@ -32,5 +32,9 @@ export function getDamageType(slashingDamage: Strength, crushingDamage: Strength
     if (crushingDamage) { return 'C' }
     if (piercingDamage) { return 'P' }
 
-    return primaryCombatRoles[role].meleeCombatStats.preferreddamage.substring(0, 1).toUpperCase();
+    if (role) {
+        return primaryCombatRoles[role].meleeCombatStats.preferreddamage.substring(0, 1).toUpperCase();
+    }
+
+    return 'S'
 }
