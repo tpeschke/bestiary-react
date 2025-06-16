@@ -30,7 +30,8 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             panic, stress, mental, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary
         },
         socialInfo: {
-            socialpoints, socialrole, socialsecondary, attack_conf, defense_conf, hasarchetypes, hasmonsterarchetypes
+            socialpoints, socialrole, socialsecondary, attack_conf, defense_conf, 
+            hasarchetypes, hasmonsterarchetypes
         }
     }
 }

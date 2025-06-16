@@ -10,7 +10,7 @@ import { ArtistObject } from "../../interfaces/beastInterfaces/infoInterfaces/Im
 import { Variant, LocationObject, BeastType, ClimateObject } from "../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces"
 import { Pleroma } from "../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces"
 import { Skill } from "../../interfaces/beastInterfaces/infoInterfaces/skillInfoInterfaces"
-import { ConflictObject, Archetype } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
+import { ConflictObject } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
 import getDatabaseConnection from "../../utilities/databaseConnection"
 import { isOwner } from "../../utilities/ownerAccess"
@@ -29,7 +29,7 @@ import { getCombatStats, getMovement } from "./utilities/getUtilities/getCombatI
 import { getChallenges } from "./utilities/getUtilities/skillRelatedInfo/getChallenges"
 import { getSkills } from "./utilities/getUtilities/skillRelatedInfo/getSkills"
 import { getObstacles } from "./utilities/getUtilities/skillRelatedInfo/getObstacles"
-import { getArchetypes, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
+import { getArchetypes, GetArchetypesReturn, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -241,7 +241,12 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     promiseArray.push(getObstacles(databaseConnection, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
     promiseArray.push(getConflict(databaseConnection, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
-    promiseArray.push(getArchetypes(databaseConnection, isEditing, hasarchetypes, hasmonsterarchetypes).then((archetypeInfo: Archetype) => beast.socialInfo.archetypeInfo.archetypes = archetypeInfo))
+    promiseArray.push(getArchetypes(databaseConnection, isEditing).then((archetypeInfo: GetArchetypesReturn) => {
+        beast.socialInfo.archetypeInfo = {
+            ...beast.socialInfo.archetypeInfo,
+            ...archetypeInfo
+        }
+    }))
 
     promiseArray.push(getPleroma(databaseConnection, beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
     promiseArray.push(getSpecificLoots(databaseConnection, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))

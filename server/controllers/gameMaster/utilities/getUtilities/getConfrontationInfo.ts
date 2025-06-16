@@ -1,5 +1,5 @@
 import { ConflictObject } from "../../../../interfaces/beastInterfaces/beastInterfaces"
-import { Archetype, UnformatedConflict } from "../../../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
+import { MonsterArchetypeObject, NormalArchetypeObject, UnformatedConflict } from "../../../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 import { sortByRank, sortOutAnyToTheBottom } from "../../../../utilities/sorts"
 import { formatCharacteristics } from "../statCalculators/confrontationCalculator"
 
@@ -7,21 +7,30 @@ interface archetypeInfo {
     archetype: string
 }
 
-export async function getArchetypes(databaseConnection: any, isEditing: boolean, hasarchetypes: boolean, hasmonsterarchetypes: boolean): Promise<Archetype> {
-    if (isEditing && hasarchetypes) {
-        const archetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.get()
+export interface GetArchetypesReturn {
+    normalArchetypes: NormalArchetypeObject,
+    monsterArchetypes: MonsterArchetypeObject
+}
 
-        const chance = Math.floor(Math.random() * 100)
-        return {
-            archetype: archetypeInfo[0].archetype,
+export async function getArchetypes(databaseConnection: any, isEditing: boolean): Promise<GetArchetypesReturn> {
+    const normalArchetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.get()
+
+    const chance = Math.floor(Math.random() * 100)
+
+    const monsterArchetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.getMonster();
+
+    return {
+        normalArchetypes: {
+            type: 'normal',
+            archetype: normalArchetypeInfo[0].archetype,
             deviation: chance > 51 && chance < 75,
             reverse: chance > 75
+        },
+        monsterArchetypes: {
+            type: 'monster',
+            archetype: monsterArchetypeInfo.map(archetype => archetype.archetype)
         }
-    } else if (isEditing && hasmonsterarchetypes) {
-        return databaseConnection.beast.archetype.getMonster()
     }
-
-    return null
 }
 
 export async function getConflict(databaseConnection: any, beastId: number, isEditing: boolean,

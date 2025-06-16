@@ -98,7 +98,8 @@ export default class GMBeastClass {
     }
 
     get socialInfo(): SocialInfo {
-        const { conflicts, socialrole: role, socialsecondary: secondary, socialpoints: points } = this.entrySocialInfo
+        const { conflicts, socialrole: role, socialsecondary: secondary, socialpoints: points, archetypeInfo} = this.entrySocialInfo
+        const { hasarchetypes: mainHasArchetypes, hasmonsterarchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
             const { descriptions, convictions, relationships, flaws, burdens } = conflicts
@@ -110,9 +111,16 @@ export default class GMBeastClass {
             const socialsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialsecondary : secondary
             const socialpoints = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialpoints : points
 
+            const hasarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
+            const hasmonsterarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
+
             return {
                 ...this.entrySocialInfo,
                 socialrole, socialsecondary, socialpoints,
+                archetypeInfo: {
+                    ...archetypeInfo,
+                    hasarchetypes, hasmonsterarchetypes
+                },
                 conflicts: {
                     descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
                     convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),

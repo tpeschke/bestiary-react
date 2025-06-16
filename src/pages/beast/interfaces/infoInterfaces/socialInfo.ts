@@ -29,13 +29,21 @@ export interface Conflict {
 export interface ArchetypeInfo {
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
-    archetypes?: Archetype
+    normalArchetypes: NormalArchetypeObject,
+    monsterArchetypes: MonsterArchetypeObject
 }
 
-export type Archetype = ArchetypeObject | string[] | null
+interface ArchetypeObject {
+    type: 'monster' | 'normal'
+}
 
+export interface MonsterArchetypeObject extends ArchetypeObject {
+    type: 'monster',
+    archetype: string[]
+}
 
-export interface ArchetypeObject {
+export interface NormalArchetypeObject extends ArchetypeObject {
+    type: 'normal'
     archetype: string,
     deviation: boolean,
     reverse: boolean
