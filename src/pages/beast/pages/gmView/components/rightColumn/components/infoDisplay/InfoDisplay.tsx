@@ -9,15 +9,20 @@ interface Props {
 }
 
 export default function InfoDisplay({ section, info }: Props) {
+    const showSection = info && info !== ''
 
     return (
         <>
-            <div className='info-display-shell'>
-                <h2 className='border'>{section}</h2>
-                <Body>
-                    <HTMLDisplay html={info} />
-                </Body>
-            </div>
+            {showSection &&
+                <>
+                    <div className='info-display-shell'>
+                        <h2 className='border'>{section}</h2>
+                        <Body>
+                            <HTMLDisplay html={info} />
+                        </Body>
+                    </div>
+                </>
+            }
         </>
     )
 }

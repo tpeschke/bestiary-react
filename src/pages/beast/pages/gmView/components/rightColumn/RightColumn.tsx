@@ -32,13 +32,18 @@ interface Props {
 }
 
 export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints }: Props) {
+    const showIntroSection = intro && intro !== ''
+
     return (
         <div className='right-column-shell'>
-            <Body>
-                <HTMLDisplay html={intro} />
-            </Body>
+            {showIntroSection &&
+                <Body>
+                    <HTMLDisplay html={intro} />
+                </Body>
+
+            }
             <InfoDisplay section="Appearance" info={appearance} />
-            <CommonFolklore folklores={folklores} />            
+            <CommonFolklore folklores={folklores} />
             <HabitatDisplay info={habitat} scenarios={scenarios} />
             <EncounterDisplay />
             <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />

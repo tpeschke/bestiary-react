@@ -9,13 +9,17 @@ interface Props {
 export default function LocationsDisplay({ locationsInfo }: Props) {
 
     return (
-        <div className='variants-shell'>
-            <h2 className='border'>Locations & Adventures</h2>
-            <Body>
-                <div>
-                    {locationsInfo.map((location, index) => <LocationDisplay key={index} locationInfo={location} />)}
+        <>
+            {locationsInfo.length > 0 &&
+                <div className='variants-shell'>
+                    <h2 className='border'>Locations & Adventures</h2>
+                    <Body>
+                        <div>
+                            {locationsInfo.map((location, index) => <LocationDisplay key={index} locationInfo={location} />)}
+                        </div>
+                    </Body>
                 </div>
-            </Body>
-        </div>
+            }
+        </>
     )
 }

@@ -9,13 +9,17 @@ interface Props {
 export default function VariantsDisplay({ variantsInfo }: Props) {
 
     return (
-        <div className='variants-shell'>
-            <h2 className='border'>Variants</h2>
-            <Body>
-                <div>
-                    {variantsInfo.map((variant, index) => <VariantDisplay key={index} variantInfo={variant} />)}
+        <>
+            {variantsInfo.length > 0 &&
+                <div className='variants-shell'>
+                    <h2 className='border'>Variants</h2>
+                    <Body>
+                        <div>
+                            {variantsInfo.map((variant, index) => <VariantDisplay key={index} variantInfo={variant} />)}
+                        </div>
+                    </Body>
                 </div>
-            </Body>
-        </div>
+            }
+        </>
     )
 }

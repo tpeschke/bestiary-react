@@ -9,14 +9,20 @@ interface Props {
     types: BeastType[]
 }
 
+// Brody: is this the common wisdom for how to toggle whether a component renders?
+//      Or would it be better to do return <></> inside an if statement
 export default function TypesDisplay({ types }: Props) {
     const formatedTypes = types.map(type => formatType(type))
 
     return (
-        <div className='types-display-shell'>
-            <h2 className='border'>Types</h2>
-            <Drawers drawerInnards={formatedTypes} />
-        </div>
+        <>
+            {types.length > 0 &&
+                <div className='types-display-shell'>
+                    <h2 className='border'>Types</h2>
+                    <Drawers drawerInnards={formatedTypes} />
+                </div>
+            }
+        </>
     )
 }
 

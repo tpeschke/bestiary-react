@@ -21,15 +21,19 @@ export interface MiscInfo {
 export default function MiscInfoDisplay({ miscInfo }: Props) {
     const { senses, diet, rarity, climates } = miscInfo
 
+    const showSenses = senses && senses !== ''
+    const showDiet = diet && diet !== ''
+    const showClimates = climates.length > 0
+
     return (
         <div className='misc-info-display-shell'>
             <h2 className='border'>Misc Info</h2>
             <Body>
                 <div>
-                    <Pair title='Senses' info={senses} />
-                    <Pair title='Diet' info={diet} />
+                    {showSenses && <Pair title='Senses' info={senses} />}
+                    {showDiet && <Pair title='Diet' info={diet} />}
                     <Pair title='Rarity' info={formatRarityString(rarity)} />
-                    <ClimatesDisplay climates={climates} />
+                    {showClimates && <ClimatesDisplay climates={climates} />}
                 </div>
             </Body>
         </div>

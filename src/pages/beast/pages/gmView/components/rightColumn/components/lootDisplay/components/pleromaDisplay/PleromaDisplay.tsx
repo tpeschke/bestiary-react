@@ -1,3 +1,5 @@
+import './PleromaDisplay.css'
+
 import { Pleroma } from "../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
 
 import Drawers, { DrawerObject } from "../../../../../../../../../../components/drawers/Drawers"
@@ -11,10 +13,15 @@ interface Props {
 
 export default function PleromaDisplay({ pleroma, rarity }: Props) {
     const formattedPleroma = pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))
+
     return (
         <div className='pleroma-display-shell'>
             <h3>Pleroma</h3>
-            <Drawers drawerInnards={formattedPleroma} />
+            {pleroma.length > 0 ? (
+                <Drawers drawerInnards={formattedPleroma} />
+            ): (
+                <p className="italic">This entry has no Pleroma</p>
+            )}
         </div>
     )
 }
