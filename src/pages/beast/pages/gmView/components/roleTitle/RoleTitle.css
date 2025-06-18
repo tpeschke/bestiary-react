@@ -24,3 +24,7 @@
 .skull-frame i {
     margin-left: 5px;
 }
+
+.title-bottom-border {
+    border-bottom: 2px solid white;
+}

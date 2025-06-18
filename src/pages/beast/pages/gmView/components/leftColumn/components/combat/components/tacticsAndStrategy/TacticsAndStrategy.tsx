@@ -8,14 +8,18 @@ interface Props {
 }
 
 export default function TacticsAndStrategy({ tactics }: Props) {
-
+    const showSection = tactics && tactics !== ''
 
     return (
         <>
-            <RoleTitle title='Tactics & Strategies' />
-            <Body>
-                <HTMLDisplay html={tactics} />
-            </Body>
+            {showSection &&
+                <>
+                    <RoleTitle title='Tactics & Strategies' />
+                    <Body>
+                        <HTMLDisplay html={tactics} />
+                    </Body>
+                </>
+            }
         </>
     )
 }

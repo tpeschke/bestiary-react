@@ -28,7 +28,7 @@ export default function MovementInfo({ movements }: Props) {
                     }
                 </>
                 :
-                <div>This Monster Has No Movement</div>
+                <p className='no-movement'>This Monster Has No Movement</p>
             }
         </div>
     )

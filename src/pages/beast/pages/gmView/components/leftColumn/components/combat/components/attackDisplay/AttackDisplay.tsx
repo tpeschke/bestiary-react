@@ -9,11 +9,16 @@ interface Props {
 }
 
 export default function AttackDisplay({ sp_atk, attacks }: Props) {
+    const showSection = sp_atk && attacks.length > 0
     return (
         <>
-            <h3>Attack Info</h3>
-            <SpecialInfo info={sp_atk} />
-            {attacks.map((attack, index) => <AttackStats key={index} attacksStats={attack} />)}
+            {showSection &&
+                <>
+                    <h3>Attack Info</h3>
+                    <SpecialInfo info={sp_atk} />
+                    {attacks.map((attack, index) => <AttackStats key={index} attacksStats={attack} />)}
+                </>
+            }
         </>
     )
 }

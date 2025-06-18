@@ -54,7 +54,7 @@ export function calculateStressAndPanic(role: string, secondaryrole: string, poi
     }
 
     return {
-        stress: 'n/a', 
+        stress: 'N/A', 
         panic: false
     }
 }

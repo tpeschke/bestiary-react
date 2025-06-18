@@ -12,3 +12,7 @@
     background: #f3f3f3;
     width: 20%;
 }
+
+.movements-shell .no-movement {
+    margin: 5px;
+}

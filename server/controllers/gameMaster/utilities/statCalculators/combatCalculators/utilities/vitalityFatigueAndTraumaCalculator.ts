@@ -27,7 +27,7 @@ export function calculateVitalityFatigueAndTrauma(role: string, secondaryrole: s
     }
 
     return {
-        vitality: 'n/a', 
+        vitality: 'N/A', 
         trauma: false,
         fatigue: false
     }

@@ -6,7 +6,7 @@ export default interface SkillInfo {
     skillpoints: number,
     atk_skill: string,
     def_skill: string,
-    skills?: Skill[],
+    skills: Skill[],
     obstacles: Obstacle[],
     challenges: Challenge[],
 }

@@ -7,10 +7,11 @@ import Icon, { IconName } from '../../../../../../../../../../components/icon/Ic
 
 interface Props {
     archetypeInfo: ArchetypeInfo,
-    points: number
+    points: number,
+    setHasArchetypes: Function
 }
 
-export default function ArchetypeDisplay({ archetypeInfo }: Props) {
+export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Props) {
     const { hasarchetypes, hasmonsterarchetypes, normalArchetypes, monsterArchetypes, difficultyDie } = archetypeInfo
 
     let archetypeElements;
@@ -41,6 +42,9 @@ export default function ArchetypeDisplay({ archetypeInfo }: Props) {
             </div>
         )
     }
+
+    console.log(archetypeElements)
+    setHasArchetypes(!!archetypeElements)
 
     return (
         <>

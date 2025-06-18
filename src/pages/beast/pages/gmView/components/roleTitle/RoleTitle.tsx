@@ -6,13 +6,20 @@ interface Props {
     title: string,
     points?: number,
     role?: string,
-    secondaryRole?: string
+    secondaryRole?: string,
+    hasBottomBorder?: boolean
 }
 
-export default function RoleTitle({ title, points, role, secondaryRole }: Props) {
+export default function RoleTitle({ title, points, role, secondaryRole, hasBottomBorder }: Props) {
     const showRightSide = (points || points === 0) && role
+
+    let shellClass = 'role-shell'
+    if (hasBottomBorder) {
+        shellClass += ' title-bottom-border'
+    }
+
     return (
-        <div className="role-shell">
+        <div className={shellClass}>
             <h2>{title}</h2>
             {showRightSide &&
                 <div className="skull-frame">
