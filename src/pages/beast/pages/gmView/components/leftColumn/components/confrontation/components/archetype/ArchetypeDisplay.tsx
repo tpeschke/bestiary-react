@@ -28,7 +28,7 @@ export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Pr
 
         archetypeElements = (
             <span>
-                <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />
+                {tooltip && <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />}
                 <Pair title={normalArchetypes.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
             </span>
         )
@@ -43,7 +43,6 @@ export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Pr
         )
     }
 
-    console.log(archetypeElements)
     setHasArchetypes(!!archetypeElements)
 
     return (

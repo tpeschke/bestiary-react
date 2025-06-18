@@ -3,19 +3,28 @@ import { ConflictObject } from "../../../../../../../interfaces/infoInterfaces/s
 import CharacteristicsInfo from "./CharacteristicInfo"
 
 interface Props {
-    characteristicInfo: ConflictObject
+    characteristicInfo: ConflictObject,
+    setHasCharacteristics: Function
 }
 
-export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
+export default function CharacteristicsDisplay({ characteristicInfo, setHasCharacteristics }: Props) {
     const { burdens,  convictions,  descriptions,  relationships, flaws } = characteristicInfo
+
+    const hasDescriptions = descriptions.length > 0
+    const hasConvictions = convictions.length > 0
+    const hasRelationships = relationships.length > 0
+    const hasFlaws = flaws.length > 0
+    const hasBurdens = burdens.length > 0
+
+    setHasCharacteristics(hasDescriptions && hasConvictions && hasRelationships && hasFlaws && hasBurdens)
         
     return (
         <>
-            {descriptions.length > 0 && <CharacteristicsInfo title="Descriptions" characteristics={descriptions} />}
-            {convictions.length > 0 && <CharacteristicsInfo title="Convictions" characteristics={convictions} />}
-            {relationships.length > 0 && <CharacteristicsInfo title="Relationships" characteristics={relationships} />}
-            {flaws.length > 0 && <CharacteristicsInfo title="Flaws" characteristics={flaws} />}
-            {burdens.length > 0 && <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} />}
+            {hasDescriptions && <CharacteristicsInfo title="Descriptions" characteristics={descriptions} />}
+            {hasConvictions && <CharacteristicsInfo title="Convictions" characteristics={convictions} />}
+            {hasRelationships && <CharacteristicsInfo title="Relationships" characteristics={relationships} />}
+            {hasFlaws && <CharacteristicsInfo title="Flaws" characteristics={flaws} />}
+            {hasBurdens && <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} />}
         </>
     )
 }

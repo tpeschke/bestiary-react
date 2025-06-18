@@ -12,6 +12,7 @@ interface Props {
 
 export default function ConfrontationSection({ socialInfo }: Props) {
     const [hasArchetypes, setHasArchetypes] = useState(false);
+    const [hasCharacteristics, setHasCharacteristics] = useState(false);
 
     const { socialrole, socialpoints, conflicts, atk_conf, def_conf, socialsecondary, archetypeInfo } = socialInfo
 
@@ -19,7 +20,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const showAttackSection = atk_conf && atk_conf !== ''
 
     // When there is nothing to display in this section, this border helps visually separate it from the next section
-    const hasBottomBorder = !(showDefenseSection && showAttackSection && conflicts && hasArchetypes)
+    const hasBottomBorder = !(showDefenseSection || showAttackSection || hasCharacteristics || hasArchetypes)
 
     return (
         <>
@@ -37,7 +38,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 </>
             }
             <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialpoints} setHasArchetypes={setHasArchetypes}  />
-            {conflicts && <CharacteristicsDisplay characteristicInfo={conflicts} />}
+            {conflicts && <CharacteristicsDisplay characteristicInfo={conflicts} setHasCharacteristics={setHasCharacteristics} />}
         </>
     )
 }
