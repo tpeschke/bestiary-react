@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-type Icon = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal'
 
 type Color = null | 'black' | 'white'
 
@@ -11,8 +11,10 @@ type IconSize = null | 'h2' | 'small'
 
 type Margin = null | 'left' | 'right' | 'center'
 
+type Float = null | 'left'
+
 interface Props {
-    iconName: Icon,
+    iconName: IconName,
     tooltip?: string,
     htmlTooltip?: {
         component: JSX.Element,
@@ -21,9 +23,10 @@ interface Props {
     color?: Color,
     iconSize?: IconSize,
     margin?: Margin,
+    float?: Float
 }
 
-export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlTooltip }: Props) {
+export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlTooltip, float }: Props) {
     const WARNING = 'warning'
     let styling: string = WARNING;
 
@@ -82,10 +85,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'copy':
             styling = "fa-solid fa-copy"
             break
+        case 'reversal':
+            styling = 'fa-solid fa-right-left'
+            break
         default:
             break;
     }
-
 
     switch (color) {
         case 'black':
@@ -112,6 +117,11 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'center':
             styling += ' margin-center'
             break;
+    }
+
+    switch (float) {
+        case 'left':
+            styling += ' float-left'
     }
 
     if (styling === WARNING) {

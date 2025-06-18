@@ -26,3 +26,7 @@ i {
 .margin-center {
     margin: 0 auto;
 }
+
+.float-left {
+    float: left;
+}

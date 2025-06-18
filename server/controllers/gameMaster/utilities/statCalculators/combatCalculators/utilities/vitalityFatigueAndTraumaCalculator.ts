@@ -9,19 +9,27 @@ interface VitalityReturn {
 }
 
 export function calculateVitalityFatigueAndTrauma(role: string, secondaryrole: string, points: number, vitalityStrength: Strength, fatigueStrength: Strength): VitalityReturn {
-    if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.vitality }
-    if (!fatigueStrength) { fatigueStrength = primaryCombatRoles[role].rangedCombatStats.fatigue }
-
-    const vitality = calculateVitality(secondaryrole, points, vitalityStrength)
-
-    let trauma: number | boolean = false
-    if (typeof vitality === 'number') {
-        trauma = Math.floor(vitality / 2)
+    if (role) {
+        if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.vitality }
+        if (!fatigueStrength) { fatigueStrength = primaryCombatRoles[role].rangedCombatStats.fatigue }
+    
+        const vitality = calculateVitality(secondaryrole, points, vitalityStrength)
+    
+        let trauma: number | boolean = false
+        if (typeof vitality === 'number') {
+            trauma = Math.floor(vitality / 2)
+        }
+    
+        return {
+            vitality, trauma,
+            fatigue: calculateFatigue(vitality, points, fatigueStrength),
+        }
     }
 
     return {
-        vitality, trauma,
-        fatigue: calculateFatigue(vitality, points, fatigueStrength),
+        vitality: 'n/a', 
+        trauma: false,
+        fatigue: false
     }
 }
 

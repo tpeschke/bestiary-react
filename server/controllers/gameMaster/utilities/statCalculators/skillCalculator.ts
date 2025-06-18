@@ -42,13 +42,20 @@ function calculateRankForSkill(points: number, strength: Strength = 'minWk', adj
 }
 
 export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength, panicStrength: Strength) {
-    if (!stressStrength) { stressStrength = primarySkillRoles[role].mental }
-    if (!panicStrength) { panicStrength = primarySkillRoles[role].panic }
+    if (role) {
+        if (!stressStrength) { stressStrength = primarySkillRoles[role].mental }
+        if (!panicStrength) { panicStrength = primarySkillRoles[role].panic }
+    
+        const stress = calculateStress(secondaryrole, points, stressStrength)
+        return {
+            stress, 
+            panic: calculatePanic(stress, points, panicStrength)
+        }
+    }
 
-    const stress = calculateStress(secondaryrole, points, stressStrength)
     return {
-        stress, 
-        panic: calculatePanic(stress, points, panicStrength)
+        stress: 'n/a', 
+        panic: false
     }
 }
 

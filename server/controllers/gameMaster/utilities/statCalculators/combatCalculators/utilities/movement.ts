@@ -3,8 +3,11 @@ import { RawMovement } from "../../../../../../interfaces/beastInterfaces/infoIn
 import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
 export function calculateMovements(movements: RawMovement[], combatpoints: number, role: string) {
-    const roleScalingStrength = primaryCombatRoles[role].meleeCombatStats.movement
-    return movements.map(movement => calculateMovement(movement, combatpoints, roleScalingStrength))
+    if (role) {
+        const roleScalingStrength = primaryCombatRoles[role].meleeCombatStats.movement
+        return movements.map(movement => calculateMovement(movement, combatpoints, roleScalingStrength))
+    }
+    return []
 }
 
 function calculateMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {

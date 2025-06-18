@@ -3,6 +3,7 @@ import './ArchetypeDisplay.css'
 import Body from "../../../../../../../../components/UI/body/Body";
 import { ArchetypeInfo } from "../../../../../../../../interfaces/infoInterfaces/socialInfo";
 import Pair from '../../../../../../../../components/UI/pair/Pair';
+import Icon, { IconName } from '../../../../../../../../../../components/icon/Icon';
 
 interface Props {
     archetypeInfo: ArchetypeInfo,
@@ -14,8 +15,22 @@ export default function ArchetypeDisplay({ archetypeInfo }: Props) {
 
     let archetypeElements;
     if (hasarchetypes) {
-        // TODO: display reversal and deviation
-        archetypeElements = <Pair title={normalArchetypes.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
+        let tooltip = ''
+        let iconName: IconName = 'd20'
+        if (normalArchetypes.reverse) {
+            tooltip = "Completely reverse this Archetype.\nExample: 'Rogue with a heart of gold' > 'A nice guy with a vile heart'"
+            iconName = 'reversal'
+        } else if (normalArchetypes.deviation) {
+            tooltip = "Change one thing about this Archetype.\nExample: 'Rogue with a heart of gold' > 'A rogue with a vile heart'"
+            iconName = 'deviation'
+        }
+
+        archetypeElements = (
+            <span>
+                <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />
+                <Pair title={normalArchetypes.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
+            </span>
+        )
     } else if (hasmonsterarchetypes) {
         archetypeElements = (
             <div className='monster-archetype-shell'>
