@@ -18,18 +18,19 @@ export interface CalculateCombatStatsReturn {
     defenses: DefenseInfo[]
 }
 
-export function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, role: string, size: Size): CalculateCombatStatsReturn {
+export function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size): CalculateCombatStatsReturn {
     let defenses: DefenseInfo[] = []
     let attacks: AttackInfo[] = []
-
     combatStats.forEach(stats => {
-        calculateSingleCombatInfo(stats, defenses, attacks, size, combatPoints, role)
+        calculateSingleCombatInfo(stats, defenses, attacks, size, combatPoints, mainRole)
     })
 
-    const initiative = combatStats.length > 0 ? combatStats[0].initiative : 'minWk'
+    const firstCombatIndex = combatStats[0]
+    const initiative = firstCombatIndex ? firstCombatIndex.initiative : 'minWk'
+    const roleToUse = firstCombatIndex && firstCombatIndex.role ? firstCombatIndex.role : mainRole
 
     return {
-        initiative: calculateStatWithFormatting(initiative, 'initiative', role, combatPoints),
+        initiative: calculateStatWithFormatting(initiative, 'initiative', roleToUse, combatPoints),
         attacks,
         defenses
     }
