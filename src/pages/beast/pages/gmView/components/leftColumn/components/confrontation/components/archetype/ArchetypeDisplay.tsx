@@ -4,6 +4,7 @@ import Body from "../../../../../../../../components/UI/body/Body";
 import { ArchetypeInfo } from "../../../../../../../../interfaces/infoInterfaces/socialInfo";
 import Pair from '../../../../../../../../components/UI/pair/Pair';
 import Icon, { IconName } from '../../../../../../../../../../components/icon/Icon';
+import { JSX, useEffect, useState } from 'react';
 
 interface Props {
     archetypeInfo: ArchetypeInfo,
@@ -14,36 +15,64 @@ interface Props {
 export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Props) {
     const { hasarchetypes, hasmonsterarchetypes, normalArchetypes, monsterArchetypes, difficultyDie } = archetypeInfo
 
-    let archetypeElements;
-    if (hasarchetypes) {
-        let tooltip = ''
-        let iconName: IconName = 'd20'
-        if (normalArchetypes.reverse) {
-            tooltip = "Completely reverse this Archetype.\nExample: 'Rogue with a heart of gold' > 'A nice guy with a vile heart'"
-            iconName = 'reversal'
-        } else if (normalArchetypes.deviation) {
-            tooltip = "Change one thing about this Archetype.\nExample: 'Rogue with a heart of gold' > 'A rogue with a vile heart'"
-            iconName = 'deviation'
+    const [archetypeElements, setArchetypeElements] = useState<JSX.Element | null>(null)
+
+    const [currentHasMonsterArchetype, setCurrentHasMonsterArchetypes] = useState(false)
+    const [currentHasArchetype, setCurrentHasArchetypes] = useState(false)
+
+    useEffect(() => {
+        if (currentHasMonsterArchetype !== hasmonsterarchetypes) {
+            setCurrentHasMonsterArchetypes(hasmonsterarchetypes)
+
+            if (hasmonsterarchetypes) {
+                const newArchetypeElements = (
+                    <div className='monster-archetype-shell'>
+                        <div>
+                            {monsterArchetypes.archetype.map((archetype, index) => <p key={index}>{archetype}</p>)}
+                        </div>
+                        <p>{difficultyDie}</p>
+                    </div>
+                )
+
+                setElementsForDisplay(newArchetypeElements)
+            } else {
+                setElementsForDisplay(null)
+            }
         }
 
-        archetypeElements = (
-            <span>
-                {tooltip && <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />}
-                <Pair title={normalArchetypes.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
-            </span>
-        )
-    } else if (hasmonsterarchetypes) {
-        archetypeElements = (
-            <div className='monster-archetype-shell'>
-                <div>
-                    {monsterArchetypes.archetype.map((archetype, index) => <p key={index}>{archetype}</p>)}
-                </div>
-                <p>{difficultyDie}</p>
-            </div>
-        )
+        if (currentHasArchetype !== hasarchetypes) {
+            setCurrentHasArchetypes(hasarchetypes)
+
+            if (hasarchetypes) {
+                let tooltip = ''
+                let iconName: IconName = 'd20'
+                if (normalArchetypes.reverse) {
+                    tooltip = "Completely reverse this Archetype.\nExample: 'Rogue with a heart of gold' > 'A nice guy with a vile heart'"
+                    iconName = 'reversal'
+                } else if (normalArchetypes.deviation) {
+                    tooltip = "Change one thing about this Archetype.\nExample: 'Rogue with a heart of gold' > 'A rogue with a vile heart'"
+                    iconName = 'deviation'
+                }
+    
+                const newArchetypeElements = (
+                    <span>
+                        {tooltip && <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />}
+                        <Pair title={normalArchetypes.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
+                    </span>
+                )
+    
+                setElementsForDisplay(newArchetypeElements)
+            } else {
+                setElementsForDisplay(null)
+            }
+        }
+    })
+
+    function setElementsForDisplay(elements: JSX.Element | null) {
+        setArchetypeElements(elements)
+        setHasArchetypes(!!elements)
     }
 
-    setHasArchetypes(!!archetypeElements)
 
     return (
         <>

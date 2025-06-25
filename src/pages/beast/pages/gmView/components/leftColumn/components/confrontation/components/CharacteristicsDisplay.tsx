@@ -4,10 +4,9 @@ import CharacteristicsInfo from "./CharacteristicInfo"
 
 interface Props {
     characteristicInfo: ConflictObject,
-    setHasCharacteristics: Function
 }
 
-export default function CharacteristicsDisplay({ characteristicInfo, setHasCharacteristics }: Props) {
+export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
     const { burdens,  convictions,  descriptions,  relationships, flaws } = characteristicInfo
 
     const hasDescriptions = descriptions.length > 0
@@ -15,8 +14,6 @@ export default function CharacteristicsDisplay({ characteristicInfo, setHasChara
     const hasRelationships = relationships.length > 0
     const hasFlaws = flaws.length > 0
     const hasBurdens = burdens.length > 0
-
-    setHasCharacteristics(hasDescriptions && hasConvictions && hasRelationships && hasFlaws && hasBurdens)
         
     return (
         <>
