@@ -168,8 +168,8 @@ export default class GMBeastClass {
         return {
             ...combatInfo,
             combatrole, combatsecondary, combatpoints,
-            attacks: attacks.filter((info: AttackInfo) => info.roleid === roleID),
-            defenses: defenses.filter((info: DefenseInfo) => info.roleid === roleID),
+            attacks: attacks.filter((info: AttackInfo) => !info.roleid || info.roleid === roleID),
+            defenses: defenses.filter((info: DefenseInfo) => !info.roleid || info.roleid === roleID),
             movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
         }
     }

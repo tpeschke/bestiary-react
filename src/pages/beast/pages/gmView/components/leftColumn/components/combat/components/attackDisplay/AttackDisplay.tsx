@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function AttackDisplay({ sp_atk, attacks }: Props) {
-    const showSection = sp_atk && attacks.length > 0
+    const showSection = sp_atk || attacks.length > 0
     return (
         <>
             {showSection &&
