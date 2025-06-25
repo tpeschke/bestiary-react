@@ -8,9 +8,12 @@ interface Props {
 export default function CatalogRows({ catalogItems }: Props) {
     return (
         <>
-            {catalogItems.map((catalogItem: CatalogTile[], index: number) => {
-                return <Row key={index} catalogTiles={catalogItem} />
-            })}
+            {catalogItems.reduce((filteredArray: any[], catalogItem: CatalogTile[], index: number) => {
+                if (catalogItem.length > 0) {
+                    filteredArray.push(<Row key={index} catalogTiles={catalogItem} />)
+                }
+                return filteredArray
+            }, [])}
         </>
     )
 }

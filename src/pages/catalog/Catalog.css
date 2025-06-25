@@ -36,3 +36,7 @@ div {
     font-weight: 600;
     letter-spacing: 1.5px;
 }
+
+.card-background.catalog button {
+    margin: 15px 0;
+}

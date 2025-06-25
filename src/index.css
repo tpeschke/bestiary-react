@@ -218,6 +218,7 @@ button.blue:hover {
 
 button.orange {
     background: #ff5722;
+	color: white;
 }
 
 button.orange:hover {

@@ -6,7 +6,8 @@ import { CatalogState } from '../../pages/catalog/catalogInterfaces'
 const initialState: CatalogState = {
   catalogItems: [],
   templates: [],
-  freeBeasts: []
+  freeBeasts: [],
+  updatingCatalogItems: []
 }
 
 export const catalogSlice = createSlice({
@@ -18,6 +19,9 @@ export const catalogSlice = createSlice({
       state.templates = templates
       state.freeBeasts = freeBeasts
       state.catalogItems = catalogItems
+      state.updatingCatalogItems = catalogItems.map(row => {
+        return row.filter(item => !item.notupdating)
+      })
     }
   },
 })

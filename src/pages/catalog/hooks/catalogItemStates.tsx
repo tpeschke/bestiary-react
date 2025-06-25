@@ -13,6 +13,8 @@ export default function catalogItemStates() {
     const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)
     const freeBeasts: CatalogTile[] = useSelector((state: RootState) => state.catalog.freeBeasts)
     const catalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.catalogItems)
+    const updatingCatalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.updatingCatalogItems)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,6 +28,7 @@ export default function catalogItemStates() {
     return {
         templates,
         freeBeasts,
-        catalogItems
+        catalogItems,
+        updatingCatalogItems
     }
 }
