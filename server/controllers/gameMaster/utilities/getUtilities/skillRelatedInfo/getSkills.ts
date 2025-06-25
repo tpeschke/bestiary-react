@@ -1,5 +1,5 @@
-import { Skill } from "../../../../../interfaces/beastInterfaces/beastInterfaces"
-import { formatSkills } from "../../statCalculators/skillCalculator"
+import { Skill } from "../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { formatSkills } from "../../../../../../common/utilities/scalingAndBonus/skill/skillCalculator"
 
 export async function getSkills(databaseConnection: any, beastId: number, skillpoints: number): Promise<Skill[]> {
     const skills: Skill[] = await databaseConnection.beast.skill.get(beastId)

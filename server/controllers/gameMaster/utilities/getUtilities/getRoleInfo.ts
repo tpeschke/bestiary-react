@@ -1,5 +1,4 @@
-import { Role } from "../../../../interfaces/beastInterfaces/beastInterfaces"
-import { UnsortedRole } from "../../../../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces"
+import { Role, UnsortedRole } from "../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { sortTemplateRoles } from "../../../../utilities/sorts"
 
 export async function getRoles(databaseConnection: any, beastId: number, beastName: string): Promise<Role[]> {

@@ -1,4 +1,4 @@
-import { DamageType } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
+import { DamageType } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { SizeCategories } from "./equipmentInterfaces"
 
 export interface ReturnedWeaponType {

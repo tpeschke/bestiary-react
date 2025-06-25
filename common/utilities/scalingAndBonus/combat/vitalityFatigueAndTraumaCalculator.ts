@@ -1,5 +1,4 @@
-import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces"
-
+import { Strength } from "../../../interfaces/calculationInterfaces"
 import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
 interface VitalityReturn {

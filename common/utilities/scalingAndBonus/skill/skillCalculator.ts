@@ -1,6 +1,6 @@
-import { Skill, Strength } from "../../../../interfaces/beastInterfaces/beastInterfaces"
-
-import { primarySkillRoles } from "./roleInfo/skillRoleInfo"
+import { Strength } from "../../../interfaces/calculationInterfaces"
+import { primarySkillRoles } from "../../roleInfo/skillRoleInfo"
+import { Skill } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 export function formatSkills(mainSkillPoints: number, skillInfo: Skill): Skill {
     const { id, beastid, skill, skillroleid, allroles, strength, adjustment, skillpoints, skillrole } = skillInfo

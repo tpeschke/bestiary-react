@@ -1,4 +1,4 @@
-import { Strength } from "../beastInterfaces"
+import { Strength } from "../../calculationInterfaces"
 
 export default interface SocialInfo {
     traitlimit: number,

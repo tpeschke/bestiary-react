@@ -1,7 +1,7 @@
-import { Movement, RawCombatStat, RawMovement } from "../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
-import { Size } from "../../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces"
-import { CalculateCombatStatsReturn, calculateCombatStats } from "../statCalculators/combatCalculators/combat"
-import { calculateMovements } from "../statCalculators/combatCalculators/utilities/movement"
+import { CalculateCombatStatsReturn, calculateCombatStats } from "../../../../../common/utilities/scalingAndBonus/combat/combatCalculation"
+import { calculateMovements } from "../../../../../common/utilities/scalingAndBonus/combat/movement"
+import { Movement, RawCombatStat, RawMovement } from "../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
     const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)

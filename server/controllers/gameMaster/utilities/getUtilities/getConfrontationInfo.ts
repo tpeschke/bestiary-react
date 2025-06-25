@@ -1,7 +1,7 @@
-import { ConflictObject } from "../../../../interfaces/beastInterfaces/beastInterfaces"
 import { MonsterArchetypeObject, NormalArchetypeObject, UnformatedConflict } from "../../../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 import { sortByRank, sortOutAnyToTheBottom } from "../../../../utilities/sorts"
-import { formatCharacteristics } from "../statCalculators/confrontationCalculator"
+import { formatCharacteristics } from "../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
+import { ConflictObject } from "../../../../../common/interfaces/beast/infoInterfaces/socialInfo"
 
 interface archetypeInfo {
     archetype: string

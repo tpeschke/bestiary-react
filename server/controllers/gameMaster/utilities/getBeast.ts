@@ -1,10 +1,10 @@
+import { LocationVitality } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { Folklore, Scenario, TablesObject, Table, Row, Rarity } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { ArtistObject, ArtistInfo } from "../../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
+import { BeastType, ClimateObject, Climate, LocationObject, Location, Variant } from "../../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
+import { Pleroma } from "../../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
 import { Response, Error, User } from "../../../interfaces/apiInterfaces";
 import { Casting, Spell } from "../../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
-import { LocationVitality } from "../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario, TablesObject, Table, Row, Rarity } from "../../../interfaces/beastInterfaces/infoInterfaces/generalInfoInterfaces";
-import { ArtistObject, ArtistInfo } from "../../../interfaces/beastInterfaces/infoInterfaces/ImageInfoInterfaces";
-import { BeastType, ClimateObject, Climate, LocationObject, Variant, Location } from "../../../interfaces/beastInterfaces/infoInterfaces/linkedInfoInterfaces";
-import { Pleroma } from "../../../interfaces/beastInterfaces/infoInterfaces/lootInfoInterfaces";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
 
 import { isOwner } from "../../../utilities/ownerAccess";

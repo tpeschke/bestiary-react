@@ -25,6 +25,14 @@ export interface LocationObject {
     beast: Location[]
 }
 
+export interface Location {
+    id: number,
+    beastid: number,
+    locationid: number,
+    location: string,
+    link: string,
+}
+
 export interface ClimateObject {
     allclimates: Climate[],
     beast: Climate[]
@@ -40,12 +48,4 @@ export interface Climate {
     id?: number,
     priority?: number,
     deleted?: boolean
-}
-
-export interface Location {
-    id: number,
-    beastid: number,
-    locationid: number,
-    location: string,
-    link: string,
 }

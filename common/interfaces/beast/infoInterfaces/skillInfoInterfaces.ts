@@ -1,5 +1,6 @@
-import { Obstacle, Challenge } from "../../skillInterfaces";
-import { Strength } from "../beastInterfaces";
+import { Challenge, Obstacle } from "../../../../server/interfaces/skillInterfaces";
+import { Strength } from "../../calculationInterfaces";
+
 
 export default interface SkillInfo {
     panic: number | boolean,

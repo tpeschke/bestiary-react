@@ -30,7 +30,7 @@ export default function GMView({ beast, updateSelectedRole }: Props) {
     return (
         <>
             <NameHeader name={name} />
-            <DoubleColumn 
+            <DoubleColumn
                 LeftColumn={LeftColumn({ beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, updateSelectedRole })}
                 RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints })}
             />

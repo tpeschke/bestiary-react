@@ -1,9 +1,10 @@
-import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces";
-import { DamageType, IsSpecial, Type } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces";
-import { getWeaponByName } from "../../../../../gear/gear";
-import { calculateStat, calculateStatWithFormatting } from "../combatScaling/combatCalculator";
-import { calculateDamageAndRecovery } from "../combatScaling/damageAndRecoveryCalculator";
-import { getWeaponName } from "./formatting";
+import { IsSpecial, DamageType } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Strength } from "../../../interfaces/calculationInterfaces"
+import { getWeaponName } from "../../formatting/formatting"
+import { calculateStatWithFormatting, calculateStat } from "./combatCalculation"
+import { calculateDamageAndRecovery } from "./damageAndRecoveryCalculator"
+
+import {getWeaponByName } from '../../../../server/controllers/gear/gear'
 
 export default function calculateAndFormatAttackInfo(
     totalPoints: number,

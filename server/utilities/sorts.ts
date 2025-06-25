@@ -1,5 +1,4 @@
-import { Role } from "../interfaces/beastInterfaces/beastInterfaces";
-import { UnsortedRole } from "../interfaces/beastInterfaces/infoInterfaces/roleInfoInterfaces";
+import { UnsortedRole } from "../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { Conflict } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo";
 import { Item } from "../interfaces/lootInterfaces";
 

@@ -1,6 +1,6 @@
-import { Strength } from "../../../../../../interfaces/beastInterfaces/beastInterfaces"
-import { DamageType } from "../../../../../../interfaces/beastInterfaces/infoInterfaces/combatInfoInterfaces"
-import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
+import { DamageType } from "../../interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { Strength } from "../../interfaces/calculationInterfaces";
+import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
 export function getWeaponName(chosenName: string, weapon: string): string {
     if (chosenName) {
