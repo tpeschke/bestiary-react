@@ -17,7 +17,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const { socialrole, socialpoints, conflicts, atk_conf, def_conf, socialsecondary, archetypeInfo } = socialInfo
 
     useEffect(() => {
-        const { conflicts, atk_conf, def_conf } = socialInfo
+        const { conflicts } = socialInfo
 
         if (conflicts && !hasCharacteristics) {
             const { burdens, convictions, descriptions, relationships, flaws } = conflicts
