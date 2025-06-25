@@ -1,7 +1,11 @@
 import { Movement, LocationVitality, AttackInfo, DefenseInfo } from "../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { Scenario, Folklore, TablesObject } from "../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { ArtistObject } from "../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, LocationObject, Variant } from "../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
+import { Pleroma } from "../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
 import { Skill } from "../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import { ConflictObject } from "../../common/interfaces/beast/infoInterfaces/socialInfo";
+import { Casting, Spell } from "../../common/interfaces/beast/infoInterfaces/castingInfo";
 import { Role } from "./catalogInterfaces";
 import { SpecificLoot, Loot } from "./lootInterfaces";
 import { Obstacle, Challenge } from "./skillInterfaces";
