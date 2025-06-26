@@ -2,7 +2,7 @@ import { Strength } from "../../../interfaces/calculationInterfaces"
 import { UnformatedConflict, Conflict } from "../../../../server/interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
 export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
-    const { id, beastid, trait, socialroleid, socialpoints, socialrole, allroles, type, strength, adjustment } = characteristic
+    const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
 
     const typeDictionary = {
         h: 'Descriptions',

@@ -25,6 +25,7 @@ export interface BeastInfo {
     id: number,
     patreon: number,
     canplayerview: boolean,
+    roleModifier: number,
     generalInfo: GeneralInfo,
     playerSpecificInfo: PlayerSpecificInfo,
     imageInfo: ImageInfo,

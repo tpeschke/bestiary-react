@@ -31,8 +31,10 @@ export default class GMBeastClass {
 
     private selectRoleIndex: number
 
+    private selectedRoleModifier: number
+
     constructor(beastInfo: BeastInfo) {
-        const { id, patreon, canplayerview, generalInfo, playerSpecificInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo } = beastInfo
+        const { id, patreon, canplayerview, generalInfo, playerSpecificInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo, roleModifier } = beastInfo
 
         this.entryID = id
         this.patreon = patreon
@@ -46,6 +48,8 @@ export default class GMBeastClass {
         this.entrySkillInfo = skillInfo
         this.entrySocialInfo = socialInfo
         this.entryLootInfo = lootInfo
+
+        this.selectedRoleModifier = roleModifier ? roleModifier : 0
 
         this.castingTypeInfo = new CastingClass(castingInfo.casting)
         this.entrySpells = castingInfo.spells
@@ -74,7 +78,8 @@ export default class GMBeastClass {
                     beastid: this.id
                 },
                 spells: this.entrySpells
-            }
+            },
+            roleModifier: this.selectedRoleModifier
         }
     }
 
@@ -86,7 +91,7 @@ export default class GMBeastClass {
         const { combatpoints } = this.entryCombatInfo
         const { skillpoints } = this.entrySkillInfo
         const { socialpoints } = this.entrySocialInfo
-        return Math.max(combatpoints, skillpoints, socialpoints)
+        return Math.max(combatpoints + this.selectedRoleModifier, skillpoints + this.selectedRoleModifier, socialpoints + this.selectedRoleModifier)
     }
 
     get generalInfo(): GeneralInfo {
@@ -109,8 +114,8 @@ export default class GMBeastClass {
 
             const socialrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialrole : role
             const socialsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialsecondary : secondary
-            const socialpoints = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialpoints : points
-            
+            const socialpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialpoints : points) + this.selectedRoleModifier
+
             const hasarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasmonsterarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
             
@@ -142,7 +147,7 @@ export default class GMBeastClass {
 
         const skillrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillrole : role
         const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
-        const skillpoints = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points
+        const skillpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedRoleModifier
 
         return {
             ...this.entrySkillInfo,
@@ -163,7 +168,7 @@ export default class GMBeastClass {
 
         const combatrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatrole : role
         const combatsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatsecondary : secondary
-        const combatpoints = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points
+        const combatpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points) + this.selectedRoleModifier
 
         return {
             ...combatInfo,

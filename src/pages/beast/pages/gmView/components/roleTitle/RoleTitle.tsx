@@ -32,32 +32,21 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
 }
 
 function getSkullNumber(points: number): number[] {
-    switch (points) {
-        case 0:
-        case 3:
-            return [...Array(1).keys()]
-        case 5:
-        case 8:
-            return [...Array(2).keys()]
-        case 10:
-        case 13:
-            return [...Array(3).keys()]
-        case 15:
-        case 18:
-            return [...Array(4).keys()]
-        case 20:
-        case 23:
-            return [...Array(5).keys()]
-        case 25:
-        case 28:
-            return [...Array(6).keys()]
-        case 30:
-        case 33:
-            return [...Array(7).keys()]
-        case 35:
-        case 38:
-            return [...Array(8).keys()]
-        default:
-            return [];
+    if (points <= 3) {
+        return [...Array(1).keys()]
+    } else if (points <= 8) {
+        return [...Array(2).keys()]
+    } else if (points <= 13) {
+        return [...Array(3).keys()]
+    } else if (points <= 18) {
+        return [...Array(4).keys()]
+    } else if (points <= 23) {
+        return [...Array(5).keys()]
+    } else if (points <= 28) {
+        return [...Array(6).keys()]
+    } else if (points <= 33) {
+        return [...Array(7).keys()]
+    } else {
+        return [...Array(8).keys()]
     }
 }
