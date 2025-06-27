@@ -21,14 +21,13 @@ export default function ConfrontationSection({ socialInfo }: Props) {
 
         if (conflicts && !hasCharacteristics) {
             const { burdens, convictions, descriptions, relationships, flaws } = conflicts
-
             const hasDescriptions = descriptions.length > 0
             const hasConvictions = convictions.length > 0
             const hasRelationships = relationships.length > 0
             const hasFlaws = flaws.length > 0
             const hasBurdens = burdens.length > 0
 
-            setHasCharacteristics(hasDescriptions && hasConvictions && hasRelationships && hasFlaws && hasBurdens)
+            setHasCharacteristics(hasDescriptions || hasConvictions || hasRelationships || hasFlaws || hasBurdens)
         }
 
     }, [])

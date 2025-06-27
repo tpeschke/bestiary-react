@@ -1,5 +1,5 @@
+import { Conflict, UnformatedConflict } from "../../../interfaces/beast/infoInterfaces/socialInfo"
 import { Strength } from "../../../interfaces/calculationInterfaces"
-import { UnformatedConflict, Conflict } from "../../../../server/interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
 export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
     const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
