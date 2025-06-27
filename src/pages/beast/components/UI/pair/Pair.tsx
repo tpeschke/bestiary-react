@@ -4,7 +4,6 @@ type Format = {
     title?: 'none',
     heading?: boolean,
     noBorder?: boolean,
-    bottomBorder?: boolean,
     position?: 'opposite',
     info?: 'minor'
     infoWidth?: 'unset',

@@ -22,10 +22,12 @@ export default function SkillSection({ skillInfo }: Props) {
     const showDefenseSection = def_skill && def_skill !== ''
     const showAttackSection = atk_skill && atk_skill !== ''
 
+    const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
+
     return (
         <>
             <RoleTitle title="Skills" points={skillpoints} role={skillrole} secondaryRole={skillsecondary} />
-            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true }} />
+            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true, noBorder: hasBottomBorder }} />
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
