@@ -11,6 +11,14 @@ i {
     color: white
 }
 
+.orange-icon {
+    color: #ff5722
+}
+
+.red-icon {
+    color: #990000
+}
+
 .h2-size {
     font-size: 18px;
 }

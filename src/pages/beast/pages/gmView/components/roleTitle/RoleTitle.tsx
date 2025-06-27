@@ -24,7 +24,7 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
             {showRightSide &&
                 <div className="skull-frame">
                     <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
-                    {getSkullNumber(points).map((_, index: number) => <Icon key={index} iconName="skull" iconSize='h2' />)}
+                    {getSkullNumber(points).map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} />)}
                 </div>
             }
         </div>

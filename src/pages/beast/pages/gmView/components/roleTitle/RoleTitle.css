@@ -7,7 +7,7 @@
     padding: 5px;
 }
 
-.role-shell h2, .role-shell p, .role-shell i {
+.role-shell h2, .role-shell p {
     color: white;
     line-height: unset;
 }

@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip'
 
 export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal'
 
-type Color = null | 'black' | 'white'
+type Color = null | 'black' | 'white' | 'orange' | 'red'
 
 type IconSize = null | 'h2' | 'small'
 
@@ -99,6 +99,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'white':
             styling += ' white-icon'
             break;
+        case 'orange':
+            styling += ' orange-icon'
+            break;
+        case 'red':
+            styling += ' red-icon'
+            break
     }
 
     switch (iconSize) {
