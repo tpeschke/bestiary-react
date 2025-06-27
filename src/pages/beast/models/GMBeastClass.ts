@@ -127,11 +127,11 @@ export default class GMBeastClass {
                     hasarchetypes, hasmonsterarchetypes
                 },
                 conflicts: {
-                    descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
-                    convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
-                    relationships: relationships.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
-                    flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID),
-                    burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID)
+                    descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
+                    convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
+                    relationships: relationships.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
+                    flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
+                    burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles)
                 }
             }
         }
@@ -152,7 +152,7 @@ export default class GMBeastClass {
         return {
             ...this.entrySkillInfo,
             skillrole, skillsecondary, skillpoints,
-            skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID)
+            skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID || info.allroles)
         }
     }
 
