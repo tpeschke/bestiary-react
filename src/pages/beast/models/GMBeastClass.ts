@@ -7,8 +7,12 @@ import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
 import RoleInfo from "../interfaces/infoInterfaces/roleInfoInterfaces";
 import SkillInfo, { Skill } from "../interfaces/infoInterfaces/skillInfoInterfaces";
-import SocialInfo, { Conflict } from "../interfaces/infoInterfaces/socialInfo";
+import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
+
+import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import { calculateRankForCharacteristic } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
+
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
 export default class GMBeastClass {
@@ -64,7 +68,7 @@ export default class GMBeastClass {
             generalInfo: this.entryGeneralInfo,
             playerSpecificInfo: this.entryPlayerSpecificInfo,
             imageInfo: this.entryImageInfo,
-            linkedInfo : this.entryLinkedInfo,
+            linkedInfo: this.entryLinkedInfo,
             roleInfo: this.entryRoleInfo,
             combatInfo: this.entryCombatInfo,
             skillInfo: this.entrySkillInfo,
@@ -103,7 +107,7 @@ export default class GMBeastClass {
     }
 
     get socialInfo(): SocialInfo {
-        const { conflicts, socialrole: role, socialsecondary: secondary, socialpoints: points, archetypeInfo} = this.entrySocialInfo
+        const { conflicts, socialrole: role, socialsecondary: secondary, socialpoints: points, archetypeInfo } = this.entrySocialInfo
         const { hasarchetypes: mainHasArchetypes, hasmonsterarchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
@@ -118,7 +122,7 @@ export default class GMBeastClass {
 
             const hasarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasmonsterarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
-            
+
             return {
                 ...this.entrySocialInfo,
                 socialrole, socialsecondary, socialpoints,
@@ -127,9 +131,9 @@ export default class GMBeastClass {
                     hasarchetypes, hasmonsterarchetypes
                 },
                 conflicts: {
-                    descriptions: descriptions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
-                    convictions: convictions.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
-                    relationships: relationships.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', socialpoints, roleID), []),
+                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', socialpoints, roleID), []),
+                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', socialpoints, roleID), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
                     burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles)
                 }
@@ -137,6 +141,18 @@ export default class GMBeastClass {
         }
 
         return this.socialInfo
+    }
+
+    adjustCharacteristicRank = (type: string, points: number, roleID: string) => {
+        return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
+            if (!characteristic.socialroleid || characteristic.socialroleid === roleID || characteristic.allroles) {
+                characteristics.push({
+                    ...characteristic,
+                    rank: calculateRankForCharacteristic(type, points, characteristic.strength, characteristic.adjustment)
+                })
+            }
+            return characteristics
+        }
     }
 
     get skillInfo(): SkillInfo {

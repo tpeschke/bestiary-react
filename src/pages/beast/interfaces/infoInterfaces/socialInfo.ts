@@ -1,3 +1,5 @@
+import { ConflictObject } from '../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+
 export default interface SocialInfo {
     socialrole: string,
     socialsecondary: string,
@@ -6,24 +8,6 @@ export default interface SocialInfo {
     def_conf: string,
     archetypeInfo: ArchetypeInfo,
     conflicts: ConflictObject,
-}
-
-export interface ConflictObject {
-    descriptions: Conflict[],
-    convictions: Conflict[],
-    relationships: Conflict[],
-    flaws: Conflict[],
-    burdens: Conflict[]
-}
-
-export interface Conflict {
-    id: number,
-    beastid: number,
-    trait: string,
-    rank?: number,
-    socialroleid: string,
-    allroles: boolean,
-    deleted?: boolean,
 }
 
 export interface ArchetypeInfo {

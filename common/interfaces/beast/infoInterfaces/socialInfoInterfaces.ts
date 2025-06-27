@@ -25,22 +25,6 @@ export interface ConflictObject {
     burdens: Conflict[]
 }
 
-export interface UnformatedConflict {
-    id: number,
-    beastid: number,
-    trait: string,
-    value: string,
-    type: string,
-    socialroleid: string,
-    socialrole: string,
-    socialpoints: number,
-    allroles: boolean,
-    severity: number,
-    strength: Strength,
-    adjustment: number,
-    deleted?: boolean
-}
-
 export interface Conflict {
     id: number,
     beastid: number,
@@ -48,6 +32,8 @@ export interface Conflict {
     rank?: number,
     socialroleid: string,
     allroles: boolean,
+    strength: Strength,
+    adjustment: number,
     deleted?: boolean
 }
 

@@ -1,7 +1,7 @@
-import { MonsterArchetypeObject, NormalArchetypeObject, UnformatedConflict } from "../../../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 import { sortByRank, sortOutAnyToTheBottom } from "../../../../utilities/sorts"
-import { formatCharacteristics } from "../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
-import { ConflictObject } from "../../../../../common/interfaces/beast/infoInterfaces/socialInfo"
+import { calculateRankForCharacteristic } from "../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
+import { Conflict, ConflictObject, MonsterArchetypeObject, NormalArchetypeObject } from "../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { Strength } from "../../../../../common/interfaces/calculationInterfaces"
 
 interface archetypeInfo {
     archetype: string
@@ -93,43 +93,44 @@ export async function getConflict(databaseConnection: any, beastId: number, isEd
     }
 }
 
-export function getDifficultyDie(points: number) {
-    switch (points) {
-        case 0:
-            return '+0'
-        case 3:
-            return '+0, roll twice; take highest'
-        case 5:
-            return '+d10!'
-        case 8:
-            return '+d10!, roll twice; take highest'
-        case 10:
-            return '+d20!'
-        case 13:
-            return '+d20!, roll twice; take highest'
-        case 15:
-            return '+d20!+d10!'
-        case 18:
-            return '+d20!+d10!, roll twice; take highest'
-        case 20:
-            return '+2d20!'
-        case 23:
-            return '+2d20!, roll twice; take highest'
-        case 25:
-            return '+2d20!+d10!'
-        case 28:
-            return '+2d20!+d10!, roll twice; take highest'
-        case 30:
-            return '+3d20!'
-        case 33:
-            return '+3d20!, roll twice; take highest'
-        case 35:
-            return '+4d20!+d10!'
-        case 38:
-            return '+4d20!+d10!, roll twice; take highest'
-        case 40:
-            return '+3d20!'
-        default:
-            return 'Something Went Wrong'
+export interface UnformatedConflict {
+    id: number,
+    beastid: number,
+    trait: string,
+    value: string,
+    type: string,
+    socialroleid: string,
+    socialrole: string,
+    socialpoints: number,
+    allroles: boolean,
+    severity: number,
+    strength: Strength,
+    adjustment: number,
+    deleted?: boolean
+}
+
+export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
+    const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
+
+    const typeDictionary = {
+        h: 'Descriptions',
+        t: 'Convictions',
+        c: 'Convictions',
+        d: 'Relationships'
+    }
+
+    let formatedCharacteristic = {
+        id, beastid, trait, socialroleid, allroles, strength, adjustment
+    }
+
+    if (type === 'b' || type === 'f') {
+        return formatedCharacteristic
+    } else {
+        const pointsToUse = socialpoints ? socialpoints : mainSocialPoints
+
+        return {
+            ...formatedCharacteristic,
+            rank: calculateRankForCharacteristic(typeDictionary[type], pointsToUse, strength, adjustment)
+        }
     }
 }

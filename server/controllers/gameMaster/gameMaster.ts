@@ -1,8 +1,6 @@
 import { Response, Request, Error } from "../../interfaces/apiInterfaces"
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces"
 import { Challenge, Obstacle } from "../../interfaces/skillInterfaces"
-import { Casting, Spell } from "../../interfaces/beastInterfaces/infoInterfaces/castingInfo"
-import { ConflictObject } from "../../interfaces/beastInterfaces/infoInterfaces/socialInfo"
 
 import getDatabaseConnection from "../../utilities/databaseConnection"
 import { isOwner } from "../../utilities/ownerAccess"
@@ -18,7 +16,7 @@ import { getCombatStats, getMovement } from "./utilities/getUtilities/getCombatI
 import { getChallenges } from "./utilities/getUtilities/skillRelatedInfo/getChallenges"
 import { getSkills } from "./utilities/getUtilities/skillRelatedInfo/getSkills"
 import { getObstacles } from "./utilities/getUtilities/skillRelatedInfo/getObstacles"
-import { getArchetypes, GetArchetypesReturn, getConflict, getDifficultyDie } from "./utilities/getUtilities/getConfrontationInfo"
+import { getArchetypes, GetArchetypesReturn, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
 import { CalculateCombatStatsReturn } from "../../../common/utilities/scalingAndBonus/combat/combatCalculation"
 import { calculateVitalityFatigueAndTrauma } from "../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
 import calculateKnockBack from "./utilities/combatCalculators/knockBackCalculator"
@@ -30,6 +28,9 @@ import { ArtistObject } from "../../../common/interfaces/beast/infoInterfaces/Im
 import { BeastType, ClimateObject, LocationObject, Variant } from "../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Role } from "../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { Pleroma } from "../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
+import { getDifficultyDie } from "../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
+import { Casting, Spell } from "../../../common/interfaces/beast/infoInterfaces/castingInfo"
+import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 

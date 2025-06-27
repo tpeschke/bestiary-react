@@ -1,34 +1,18 @@
-import { Conflict, UnformatedConflict } from "../../../interfaces/beast/infoInterfaces/socialInfo"
 import { Strength } from "../../../interfaces/calculationInterfaces"
 
-export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
-    const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
-
-    const typeDictionary = {
-        h: 'Descriptions',
-        t: 'Convictions',
-        c: 'Convictions',
-        d: 'Relationships'
-    }
-
-    let formatedCharacteristic = {
-        id, beastid, trait, socialroleid, allroles
-    }
-
-    if (type === 'b' || type === 'f') {
-        return formatedCharacteristic
-    } else {
-        const pointsToUse = socialpoints ? socialpoints : mainSocialPoints
-
-        return {
-            ...formatedCharacteristic,
-            rank: calculateRankForCharacteristic(typeDictionary[type], pointsToUse, strength, adjustment)
-        }
+// TODO this can be much less generic
+interface TypeBaseObject {
+    [key: string]: {
+        [key: string]: number
     }
 }
 
-function calculateRankForCharacteristic(type: string = 'Convictions', points: number, strength: Strength, adjustment: number = 0): number {
-    const typeBase = {
+interface TypeScalingObject {
+    [key: string]: number
+}
+
+export function calculateRankForCharacteristic(type: string = 'Convictions', points: number, strength: Strength, adjustment: number = 0): number {
+    const typeBase: TypeBaseObject = {
         Descriptions: {
             majSt: 5,
             minSt: 3,
@@ -49,13 +33,13 @@ function calculateRankForCharacteristic(type: string = 'Convictions', points: nu
         }
     }
     
-    const typeScalingBonus = {
+    const typeScalingBonus: TypeScalingObject = {
         Descriptions: 1,
         Convictions: .1,
         Relationships: 1
     }
 
-    const scaling = {
+    const scaling: TypeScalingObject = {
         majSt: 1,
         minSt: .75,
         minWk: .5,
@@ -72,5 +56,47 @@ function calculateRankForCharacteristic(type: string = 'Convictions', points: nu
         return 3
     } else {
         return Math.ceil(typeBase[type][strength] + ((scaling[strength] * typeScalingBonus[type]) * (points + adjustment)))
+    }
+}
+
+//TODO This should be an if-else statement to catch in between values
+export function getDifficultyDie(points: number) {
+    switch (points) {
+        case 0:
+            return '+0'
+        case 3:
+            return '+0, roll twice; take highest'
+        case 5:
+            return '+d10!'
+        case 8:
+            return '+d10!, roll twice; take highest'
+        case 10:
+            return '+d20!'
+        case 13:
+            return '+d20!, roll twice; take highest'
+        case 15:
+            return '+d20!+d10!'
+        case 18:
+            return '+d20!+d10!, roll twice; take highest'
+        case 20:
+            return '+2d20!'
+        case 23:
+            return '+2d20!, roll twice; take highest'
+        case 25:
+            return '+2d20!+d10!'
+        case 28:
+            return '+2d20!+d10!, roll twice; take highest'
+        case 30:
+            return '+3d20!'
+        case 33:
+            return '+3d20!, roll twice; take highest'
+        case 35:
+            return '+4d20!+d10!'
+        case 38:
+            return '+4d20!+d10!, roll twice; take highest'
+        case 40:
+            return '+3d20!'
+        default:
+            return 'Something Went Wrong'
     }
 }
