@@ -11,7 +11,7 @@ import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
-import { calculateRankForCharacteristic } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
+import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
@@ -128,7 +128,8 @@ export default class GMBeastClass {
                 socialrole, socialsecondary, socialpoints,
                 archetypeInfo: {
                     ...archetypeInfo,
-                    hasarchetypes, hasmonsterarchetypes
+                    hasarchetypes, hasmonsterarchetypes,
+                    difficultyDie: getDifficultyDie(socialpoints)
                 },
                 conflicts: {
                     descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', socialpoints, roleID), []),
@@ -143,7 +144,7 @@ export default class GMBeastClass {
         return this.socialInfo
     }
 
-    adjustCharacteristicRank = (type: string, points: number, roleID: string) => {
+    adjustCharacteristicRank = (type: CharacteristicWithRanks, points: number, roleID: string) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
             if (!characteristic.socialroleid || characteristic.socialroleid === roleID || characteristic.allroles) {
                 characteristics.push({
