@@ -123,7 +123,11 @@ export interface RawMovement {
 
 export interface VitalityInfo {
     locationalVitalities: LocationVitality[],
+    vitality: string | number,
+    trauma: number | boolean
     fatigue: string | number | boolean,
+    vitalityStrength: Strength,
+    fatigueStrength: Strength,
     notrauma: boolean,
     knockback: number,
     singledievitality: boolean,
@@ -131,8 +135,6 @@ export interface VitalityInfo {
     rollundertrauma: number,
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
-    vitality: string | number,
-    trauma: number | boolean
 }
 
 export interface LocationVitality {

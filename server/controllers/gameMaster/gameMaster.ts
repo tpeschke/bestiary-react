@@ -175,6 +175,8 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             movements: [],
             vitalityInfo: {
                 notrauma, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
+                vitalityStrength: largeweapons,
+                fatigueStrength: fatigue,
                 knockback: calculateKnockBack(knockback, size),
                 ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, largeweapons, fatigue),
                 locationalVitalities: []

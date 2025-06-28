@@ -1,3 +1,5 @@
+import { VitalityInfo } from '../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+
 export default interface CombatInfo {
     sp_atk: string,
     sp_def: string,
@@ -81,20 +83,6 @@ export interface Movement {
     roleid: string,
     allroles: boolean,
     deleted: boolean
-}
-
-export interface VitalityInfo {
-    locationalVitalities?: LocationVitality[],
-    fatigue: string | number | boolean,
-    notrauma: boolean,
-    knockback: number,
-    singledievitality: boolean,
-    noknockback: boolean,
-    rollundertrauma: number,
-    isincorporeal: boolean,
-    weaponbreakagevitality: boolean,
-    vitality: string | number,
-    trauma: number | boolean
 }
 
 export interface LocationVitality {

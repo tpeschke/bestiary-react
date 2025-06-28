@@ -10,7 +10,6 @@ interface VitalityReturn {
 export function calculateVitalityFatigueAndTrauma(role: string, secondaryrole: string, points: number, vitalityStrength: Strength, fatigueStrength: Strength): VitalityReturn {
     if (role) {
         if (!vitalityStrength) { vitalityStrength = primaryCombatRoles[role].rangedCombatStats.vitality }
-        if (!fatigueStrength) { fatigueStrength = primaryCombatRoles[role].rangedCombatStats.fatigue }
     
         const vitality = calculateVitality(secondaryrole, points, vitalityStrength)
     
@@ -66,12 +65,12 @@ function calculateVitality(secondaryrole: string, points: number, strength: Stre
     if (secondaryrole === 'Fodder') {
         return Math.ceil(baseVitality / 2)
     } else if (secondaryrole === 'Elite') {
-        return baseVitality * 2.5
+        return Math.ceil(baseVitality * 2.5)
     } else if (secondaryrole === 'Solo') {
-        return baseVitality * 3.5
+        return Math.ceil(baseVitality * 3.5)
     }
 
-    return baseVitality
+    return Math.ceil(baseVitality)
 }
 
 function calculateFatigue(vitality: number | string, points: number, strength: Strength): number | boolean {

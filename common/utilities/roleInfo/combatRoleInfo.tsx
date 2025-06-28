@@ -1,4 +1,6 @@
-export const primaryCombatRoles = {
+import { Strength } from "../../interfaces/calculationInterfaces"
+
+export const primaryCombatRoles: PrimaryCombatRolesObject = {
     'Artillery': {
         weapontype: 'r',
         rangedCombatStats: {
@@ -377,4 +379,45 @@ export const primaryCombatRoles = {
         armor: ['Gambeson', 'Leather'],
         shields: ['Buckler'],
     }
+}
+
+type PreferredWeaponTypes = 'piercingweapons' | 'crushingweapons' | 'slashingweapons'
+
+interface WeaponStats {
+    damage: Strength,
+    preferreddamage: PreferredWeaponTypes,
+    slashingDR: Strength,
+    staticDR: Strength,
+    parry: Strength,
+    parrySlashDR: Strength,
+    parryStaticDR: Strength,
+    flanks: Strength,
+    cover: Strength,
+    defense: Strength,
+    attack: Strength,
+    initiative: Strength,
+    measure: Strength,
+    panic: Strength,
+    rangeIncrement: Strength,
+    recovery: Strength,
+    vitality: Strength,
+    movement: Strength,
+}
+
+interface LabelAndItems {
+    label: string,
+    items: string[]
+}
+
+interface PrimaryCombatRole {
+    weapontype: 'r' | 'm',
+    rangedCombatStats: WeaponStats,
+    meleeCombatStats: WeaponStats,
+    weapons: LabelAndItems[],
+    armor: string[],
+    shields: string[]
+}
+
+interface PrimaryCombatRolesObject {
+    [key: string] : PrimaryCombatRole
 }

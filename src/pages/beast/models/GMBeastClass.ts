@@ -1,5 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo, { AttackInfo, DefenseInfo, Movement, VitalityInfo } from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { AttackInfo, DefenseInfo, Movement } from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
@@ -12,6 +12,8 @@ import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/soc
 import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import { VitalityInfo } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { calculateVitalityFatigueAndTrauma } from '../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
@@ -221,7 +223,11 @@ export default class GMBeastClass {
 
         return {
             ...combatInfo,
-            combatrole, combatsecondary, combatpoints, vitalityInfo,
+            combatrole, combatsecondary, combatpoints, 
+            vitalityInfo: {
+                ...vitalityInfo,
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength)
+            },
             attacks: attacks.filter((info: AttackInfo) => !info.roleid || info.roleid === roleID),
             defenses: defenses.filter((info: DefenseInfo) => !info.roleid || info.roleid === roleID),
             movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
@@ -241,7 +247,9 @@ export default class GMBeastClass {
             isincorporeal: roleVitalityInfo.isincorporeal ?? mainVitalityInfo.isincorporeal,
             weaponbreakagevitality: roleVitalityInfo.weaponbreakagevitality ?? mainVitalityInfo.weaponbreakagevitality,
             vitality: roleVitalityInfo.vitality ?? mainVitalityInfo.vitality,
-            trauma: roleVitalityInfo.trauma ?? mainVitalityInfo.trauma
+            trauma: roleVitalityInfo.trauma ?? mainVitalityInfo.trauma,
+            vitalityStrength: roleVitalityInfo.vitalityStrength ?? mainVitalityInfo.vitalityStrength,
+            fatigueStrength: roleVitalityInfo.fatigueStrength ?? roleVitalityInfo.fatigueStrength
         }
     }
 
