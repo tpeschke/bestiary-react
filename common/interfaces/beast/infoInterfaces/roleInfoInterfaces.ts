@@ -1,3 +1,4 @@
+import { VitalityInfo } from "../../../../src/pages/beast/interfaces/infoInterfaces/combatInfoInterfaces";
 import { Strength } from "../../calculationInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
@@ -28,14 +29,7 @@ export interface RoleCombatInfo {
     combatrole: string,
     combatsecondary: string,
     combatpoints: number,
-    fatigue: number,
-    largeweapons: number,
-    knockback: number,
-    singledievitality: boolean,
-    noknockback: boolean,
-    rollundertrauma: number,
-    isincorporeal: boolean,
-    weaponbreakagevitality: boolean,
+    vitalityInfo: VitalityInfo
 }
 
 export interface RoleSkillInfo {
@@ -51,41 +45,6 @@ export interface RoleSkillInfo {
 }
 
 export interface RoleSocialInfo {
-    socialpoints: number,
-    socialrole: string,
-    socialsecondary: string,
-    attack_conf: string,
-    defense_conf: string,
-    hasarchetypes: boolean,
-    hasmonsterarchetypes: boolean,
-}
-
-export interface UnsortedRole {
-    id: string,
-    name: string,
-    role: string,
-    size: Size,
-    hash: string,
-    vitality: string,
-    attack: string,
-    defense: string,
-    secondaryrole: string,
-    combatpoints: number,
-    fatigue: number,
-    largeweapons: number,
-    knockback: number,
-    singledievitality: boolean,
-    noknockback: boolean,
-    rollundertrauma: number,
-    isincorporeal: boolean,
-    weaponbreakagevitality: boolean,
-    panicstrength: Strength,
-    stressstrength: Strength,
-    skillpoints: number,
-    skillrole: string,
-    attack_skill: string,
-    defense_skill: string,
-    skillsecondary: string,
     socialpoints: number,
     socialrole: string,
     socialsecondary: string,

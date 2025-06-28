@@ -1,4 +1,4 @@
-import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Size } from "../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export default function calculateKnockBack(knockBack: number | null, size: Size) {
     if (knockBack) {

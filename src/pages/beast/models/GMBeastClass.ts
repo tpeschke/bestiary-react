@@ -1,17 +1,17 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo, { AttackInfo, DefenseInfo, Movement } from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { AttackInfo, DefenseInfo, Movement, VitalityInfo } from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
-import RoleInfo from "../interfaces/infoInterfaces/roleInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
+import RoleInfo from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
@@ -102,7 +102,17 @@ export default class GMBeastClass {
     }
 
     get generalInfo(): GeneralInfo {
-        return this.entryGeneralInfo
+        const { size: mainSize } = this.entryGeneralInfo
+
+        const roleSelected = this.isRoleSelected()
+
+        const size = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].generalInfo.size : mainSize
+
+        return {
+            ...this.entryGeneralInfo,
+            // a Role's size can be null, in which case, it defaults to the default size, so this is what this is doing
+            size: size ?? mainSize
+        }
     }
 
     get imageInfo(): ImageInfo {
@@ -198,7 +208,7 @@ export default class GMBeastClass {
     }
 
     formatCombatInfo = (combatInfo: CombatInfo): CombatInfo => {
-        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points } = combatInfo
+        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo } = combatInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
@@ -207,12 +217,31 @@ export default class GMBeastClass {
         const combatsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatsecondary : secondary
         const combatpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points) + this.selectedRoleModifier
 
+        const vitalityInfo = roleSelected ? this.populateVitalityInfo(mainVitalityInfo, this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.vitalityInfo) : mainVitalityInfo
+
         return {
             ...combatInfo,
-            combatrole, combatsecondary, combatpoints,
+            combatrole, combatsecondary, combatpoints, vitalityInfo,
             attacks: attacks.filter((info: AttackInfo) => !info.roleid || info.roleid === roleID),
             defenses: defenses.filter((info: DefenseInfo) => !info.roleid || info.roleid === roleID),
             movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
+        }
+    }
+
+    populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
+        // BRODY is this faster than just looping through the object
+        return {
+            locationalVitalities: roleVitalityInfo.locationalVitalities ?? mainVitalityInfo.locationalVitalities,
+            fatigue: roleVitalityInfo.fatigue ?? mainVitalityInfo.fatigue,
+            notrauma: roleVitalityInfo.notrauma ?? mainVitalityInfo.notrauma,
+            knockback: roleVitalityInfo.knockback ?? mainVitalityInfo.knockback,
+            singledievitality: roleVitalityInfo.singledievitality ?? mainVitalityInfo.singledievitality,
+            noknockback: roleVitalityInfo.noknockback ?? mainVitalityInfo.noknockback,
+            rollundertrauma: roleVitalityInfo.rollundertrauma ?? mainVitalityInfo.rollundertrauma,
+            isincorporeal: roleVitalityInfo.isincorporeal ?? mainVitalityInfo.isincorporeal,
+            weaponbreakagevitality: roleVitalityInfo.weaponbreakagevitality ?? mainVitalityInfo.weaponbreakagevitality,
+            vitality: roleVitalityInfo.vitality ?? mainVitalityInfo.vitality,
+            trauma: roleVitalityInfo.trauma ?? mainVitalityInfo.trauma
         }
     }
 

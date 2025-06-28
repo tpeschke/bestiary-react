@@ -19,7 +19,7 @@ import { getObstacles } from "./utilities/getUtilities/skillRelatedInfo/getObsta
 import { getArchetypes, GetArchetypesReturn, getConflict } from "./utilities/getUtilities/getConfrontationInfo"
 import { CalculateCombatStatsReturn } from "../../../common/utilities/scalingAndBonus/combat/combatCalculation"
 import { calculateVitalityFatigueAndTrauma } from "../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
-import calculateKnockBack from "./utilities/combatCalculators/knockBackCalculator"
+import calculateKnockBack from "../../../common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import { Beast } from "../../../common/interfaces/beast/beast"
 import { Movement, LocationVitality } from "../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Skill } from "../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
