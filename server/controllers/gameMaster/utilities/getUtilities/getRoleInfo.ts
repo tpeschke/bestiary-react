@@ -1,5 +1,5 @@
 import { Role, UnsortedRole } from "../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
-import { calculateStressAndPanic } from "../../../../../common/utilities/scalingAndBonus/skill/skillCalculator"
+import { calculateStressAndPanic } from "../../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
 import { sortTemplateRoles } from "../../../../utilities/sorts"
 
 export async function getRoles(databaseConnection: any, beastId: number, beastName: string): Promise<Role[]> {

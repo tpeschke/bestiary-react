@@ -1,45 +1,5 @@
 import { Strength } from "../../../interfaces/calculationInterfaces"
 import { primarySkillRoles } from "../../roleInfo/skillRoleInfo"
-import { Skill } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
-
-export function formatSkills(mainSkillPoints: number, skillInfo: Skill): Skill {
-    const { id, beastid, skill, skillroleid, allroles, strength, adjustment, skillpoints, skillrole } = skillInfo
-
-    const skillPointsToUse = skillpoints ? skillpoints : mainSkillPoints
-
-    return {
-        id, beastid, skill, skillroleid, allroles, skillrole,
-        rank: calculateRankForSkill(skillPointsToUse, strength, adjustment)
-    }
-}
-
-function calculateRankForSkill(points: number, strength: Strength = 'minWk', adjustment: number = 0): number {
-    const scaling = {
-        majSt: 1.25,
-        minSt: 1,
-        minWk: .75,
-        majWk: .5
-    }
-
-    const base = {
-        majSt: 7,
-        minSt: 5,
-        minWk: 3,
-        majWk: 1
-    }
-
-    if (strength === 'one') {
-        return 1
-    } else if (strength === 'noneStr') {
-        return 5
-    } else if (strength === 'noneWk') {
-        return 0
-    } else if (strength === 'none' || !strength) {
-        return 3
-    } else {
-        return Math.ceil(base[strength] + (scaling[strength] * (points + adjustment)))
-    }
-}
 
 export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength, panicStrength: Strength) {
     if (role) {

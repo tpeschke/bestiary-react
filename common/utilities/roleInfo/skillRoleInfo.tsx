@@ -1,4 +1,15 @@
-export const primarySkillRoles = {
+import { Strength } from "../../interfaces/calculationInterfaces"
+
+interface PrimarySkillRolesObject {
+    [key: string]: RoleObject
+}
+
+interface RoleObject {
+    mental: Strength,
+    panic: Strength
+}
+
+export const primarySkillRoles: PrimarySkillRolesObject = {
     'Fodder': {
         mental: 'minWk',
         panic: 'minWk'

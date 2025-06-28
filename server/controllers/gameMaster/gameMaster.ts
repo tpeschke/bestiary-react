@@ -10,7 +10,7 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../
 import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
     getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, 
     getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
-import { calculateStressAndPanic } from "../../../common/utilities/scalingAndBonus/skill/skillCalculator"
+import { calculateStressAndPanic } from "../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
 import { getRoles } from "./utilities/getUtilities/getRoleInfo"
 import { getCombatStats, getMovement } from "./utilities/getUtilities/getCombatInfo"
 import { getChallenges } from "./utilities/getUtilities/skillRelatedInfo/getChallenges"

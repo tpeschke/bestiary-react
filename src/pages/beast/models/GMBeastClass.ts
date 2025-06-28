@@ -13,7 +13,7 @@ import { BeastInfo } from "../interfaces/viewInterfaces";
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
-import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/skillCalculator'
+import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
