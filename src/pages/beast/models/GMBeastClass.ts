@@ -157,7 +157,7 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points } = this.entrySkillInfo
+        const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points, stress: mainStress, panic: mainPanic } = this.entrySkillInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
@@ -166,9 +166,12 @@ export default class GMBeastClass {
         const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
         const skillpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedRoleModifier
 
+        const stress = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.stress : mainStress
+        const panic = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.panic : mainPanic
+
         return {
             ...this.entrySkillInfo,
-            skillrole, skillsecondary, skillpoints,
+            skillrole, skillsecondary, skillpoints, stress, panic,
             skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID || info.allroles)
         }
     }

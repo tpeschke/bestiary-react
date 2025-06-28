@@ -1,3 +1,4 @@
+import { Strength } from "../../calculationInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
 export default interface RoleInfo {
@@ -38,20 +39,19 @@ export interface RoleCombatInfo {
 }
 
 export interface RoleSkillInfo {
-    panic: number,
-    stress: number,
-    mental: number,
+    panic: number | boolean,
+    stress: number | string,
     skillpoints: number,
-    skillrole: number,
+    skillrole: string,
+    skillsecondary: string
     attack_skill: string,
     defense_skill: string,
-    skillsecondary: string
 }
 
 export interface RoleSocialInfo {
     socialpoints: number,
-    socialrole: number,
-    socialsecondary: number,
+    socialrole: string,
+    socialsecondary: string,
     attack_conf: string,
     defense_conf: string,
     hasarchetypes: boolean,
@@ -77,17 +77,16 @@ export interface UnsortedRole {
     rollundertrauma: number,
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
-    panic: number,
-    stress: number,
-    mental: number,
+    panicstrength: Strength,
+    stressstrength: Strength,
     skillpoints,
-    skillrole: number,
+    skillrole: string,
     attack_skill: string,
     defense_skill: string,
     skillsecondary: string,
     socialpoints: number,
-    socialrole: number,
-    socialsecondary: number,
+    socialrole: string,
+    socialsecondary: string,
     attack_conf: string,
     defense_conf: string,
     hasarchetypes: boolean,

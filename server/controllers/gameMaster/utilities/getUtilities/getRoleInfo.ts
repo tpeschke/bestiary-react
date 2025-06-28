@@ -1,4 +1,5 @@
 import { Role, UnsortedRole } from "../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { calculateStressAndPanic } from "../../../../../common/utilities/scalingAndBonus/skill/skillCalculator"
 import { sortTemplateRoles } from "../../../../utilities/sorts"
 
 export async function getRoles(databaseConnection: any, beastId: number, beastName: string): Promise<Role[]> {
@@ -12,8 +13,8 @@ export async function getRoles(databaseConnection: any, beastId: number, beastNa
 }
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
-    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue, largeweapons, knockback, singledievitality, noknockback, rollundertrauma, 
-        isincorporeal, weaponbreakagevitality, panic, stress, mental, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole, 
+    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue, largeweapons, knockback, singledievitality, noknockback, rollundertrauma,
+        isincorporeal, weaponbreakagevitality, panicstrength: panic, stressstrength: stress, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole,
         socialsecondary, attack_conf, defense_conf, hasarchetypes, hasmonsterarchetypes } = unsortedRole
 
     return {
@@ -26,10 +27,11 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             initiative: '+20'
         },
         skillInfo: {
-            panic, stress, mental, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary
+            skillpoints, skillrole, attack_skill, defense_skill, skillsecondary,
+            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stress, panic)
         },
         socialInfo: {
-            socialpoints, socialrole, socialsecondary, attack_conf, defense_conf, 
+            socialpoints, socialrole, socialsecondary, attack_conf, defense_conf,
             hasarchetypes, hasmonsterarchetypes
         }
     }

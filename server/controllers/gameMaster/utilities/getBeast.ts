@@ -3,14 +3,13 @@ import { Folklore, Scenario, TablesObject, Table, Row, Rarity } from "../../../.
 import { ArtistObject, ArtistInfo } from "../../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Climate, LocationObject, Location, Variant } from "../../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Pleroma } from "../../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
-import { Response, Error, User } from "../../../interfaces/apiInterfaces";
-import { Casting, Spell } from "../../../interfaces/beastInterfaces/infoInterfaces/castingInfo";
+import { Spell, Casting } from "../../../../common/interfaces/beast/infoInterfaces/castingInfo";
+import { User } from "../../../interfaces/apiInterfaces";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
 
 import { isOwner } from "../../../utilities/ownerAccess";
 import { sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
 import { objectifyItemArray } from "../../../utilities/sorts";
-
 const sendErrorForward = sendErrorForwardNoFile('get beast')
 
 export function hasAppropriatePatreonLevel(user: User, beastPatron: number, canPlayerView: boolean): string {
