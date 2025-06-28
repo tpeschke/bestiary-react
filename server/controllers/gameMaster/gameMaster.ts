@@ -182,6 +182,8 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
         },
         skillInfo: {
             skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
+            stressStrength: stress,
+            panicStrength: panic,
             ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stress, panic),
             skills: [],
             obstacles: [],

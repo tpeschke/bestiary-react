@@ -14,7 +14,7 @@ export async function getRoles(databaseConnection: any, beastId: number, beastNa
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
     const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue, largeweapons, knockback, singledievitality, noknockback, rollundertrauma,
-        isincorporeal, weaponbreakagevitality, panicstrength: panic, stressstrength: stress, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole,
+        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole,
         socialsecondary, attack_conf, defense_conf, hasarchetypes, hasmonsterarchetypes } = unsortedRole
 
     return {
@@ -28,7 +28,9 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
         },
         skillInfo: {
             skillpoints, skillrole, attack_skill, defense_skill, skillsecondary,
-            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stress, panic)
+            stressStrength: stressstrength,
+            panicStrength: panicstrength,
+            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressstrength, panicstrength)
         },
         socialInfo: {
             socialpoints, socialrole, socialsecondary, attack_conf, defense_conf,

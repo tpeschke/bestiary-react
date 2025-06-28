@@ -1,5 +1,3 @@
-import SkillInfo from "../../../../../../interfaces/infoInterfaces/skillInfoInterfaces"
-
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import Body from "../../../../../../components/UI/body/Body"
 import SkillsDisplay from "./components/SkillsDisplay"
@@ -7,6 +5,8 @@ import SpecialInfo from "../specialInfo/specialInfo"
 import Pair from "../../../../../../components/UI/pair/Pair"
 import ObstaclesDisplay from "./components/Obstacles/ObstaclesDisplay"
 import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
+
+import SkillInfo from "../../../../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 interface Props {
     skillInfo: SkillInfo

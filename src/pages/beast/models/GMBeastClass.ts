@@ -6,12 +6,14 @@ import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
 import RoleInfo from "../interfaces/infoInterfaces/roleInfoInterfaces";
-import SkillInfo, { Skill } from "../interfaces/infoInterfaces/skillInfoInterfaces";
+import { Skill } from "../interfaces/infoInterfaces/skillInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
+import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/skillCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
@@ -157,7 +159,7 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points, stress: mainStress, panic: mainPanic } = this.entrySkillInfo
+        const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points, stressStrength: mainStressStrength, panicStrength: mainPanicStrength } = this.entrySkillInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
@@ -166,12 +168,13 @@ export default class GMBeastClass {
         const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
         const skillpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedRoleModifier
 
-        const stress = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.stress : mainStress
-        const panic = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.panic : mainPanic
+        const stressStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.stressStrength : mainStressStrength
+        const panicStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.panicStrength : mainPanicStrength
 
         return {
             ...this.entrySkillInfo,
-            skillrole, skillsecondary, skillpoints, stress, panic,
+            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressStrength, panicStrength),
+            skillrole, skillsecondary, skillpoints,
             skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID || info.allroles)
         }
     }

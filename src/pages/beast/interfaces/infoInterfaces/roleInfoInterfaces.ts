@@ -1,5 +1,7 @@
 import { Size } from "./generalInfoInterfaces";
 
+import { RoleSkillInfo } from '../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces'
+
 export default interface RoleInfo {
     rolenameorder: number,
     defaultrole: string,
@@ -35,17 +37,6 @@ export interface RoleCombatInfo {
     rollundertrauma: number,
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
-}
-
-export interface RoleSkillInfo {
-    panic: number,
-    stress: number,
-    mental: number,
-    skillpoints: number,
-    skillrole: string,
-    skillsecondary: string
-    attack_skill: string,
-    defense_skill: string,
 }
 
 export interface RoleSocialInfo {

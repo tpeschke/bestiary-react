@@ -41,6 +41,8 @@ export interface RoleCombatInfo {
 export interface RoleSkillInfo {
     panic: number | boolean,
     stress: number | string,
+    stressStrength: Strength,
+    panicStrength: Strength,
     skillpoints: number,
     skillrole: string,
     skillsecondary: string
@@ -79,7 +81,7 @@ export interface UnsortedRole {
     weaponbreakagevitality: boolean,
     panicstrength: Strength,
     stressstrength: Strength,
-    skillpoints,
+    skillpoints: number,
     skillrole: string,
     attack_skill: string,
     defense_skill: string,

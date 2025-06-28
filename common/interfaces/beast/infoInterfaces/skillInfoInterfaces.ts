@@ -5,6 +5,8 @@ import { Strength } from "../../calculationInterfaces";
 export default interface SkillInfo {
     panic: number | boolean,
     stress: number | string,
+    stressStrength: Strength,
+    panicStrength: Strength,
     skillrole: string,
     skillsecondary: string,
     skillpoints: number,
