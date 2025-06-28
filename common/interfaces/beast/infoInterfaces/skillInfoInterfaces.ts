@@ -1,7 +1,6 @@
 import { Challenge, Obstacle } from "../../../../server/interfaces/skillInterfaces";
 import { Strength } from "../../calculationInterfaces";
 
-
 export default interface SkillInfo {
     panic: number | boolean,
     stress: number | string,
@@ -22,11 +21,10 @@ export interface Skill {
     beastid: number,
     skill: string,
     rank: number,
+    adjustment: number,
+    strength: Strength,
     skillroleid: string,
     skillrole: string,
-    skillpoints?: number,
     allroles: boolean,
-    strength?: Strength,
-    adjustment?: number,
     deleted?: boolean
 }

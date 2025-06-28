@@ -1,14 +1,3 @@
-export interface Skill {
-    id: number,
-    beastid: number,
-    skill: string,
-    rank: number,
-    skillroleid: string,
-    skillrole: string,
-    allroles: boolean,
-    deleted?: boolean
-}
-
 export interface Obstacle {
     id: number,
     beastid: number,

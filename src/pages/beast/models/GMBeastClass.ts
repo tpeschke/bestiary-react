@@ -6,14 +6,15 @@ import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
 import RoleInfo from "../interfaces/infoInterfaces/roleInfoInterfaces";
-import { Skill } from "../interfaces/infoInterfaces/skillInfoInterfaces";
 import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
+import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 
@@ -175,9 +176,22 @@ export default class GMBeastClass {
             ...this.entrySkillInfo,
             ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressStrength, panicStrength),
             skillrole, skillsecondary, skillpoints,
-            skills: skills?.filter((info: Skill) => !info.skillroleid || info.skillroleid === roleID || info.allroles)
+            skills: skills?.reduce(this.adjustSkillRank(skillpoints, roleID), [])
         }
     }
+
+    adjustSkillRank = (points: number, roleID: string) => {
+        return (skills: Skill[], skill: Skill): Skill[] => {
+            if (!skill.skillroleid || skill.skillroleid === roleID || skill.allroles) {
+                skills.push({
+                    ...skill,
+                    rank: calculateRankForSkill(points, skill.strength, skill.adjustment)
+                })
+            }
+            return skills
+        }
+    }
+
 
     get combatInfo(): CombatInfo {
         return this.formatCombatInfo(this.entryCombatInfo)
