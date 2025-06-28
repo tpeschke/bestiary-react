@@ -18,57 +18,26 @@ export interface CalculateCombatStatsReturn {
     defenses: DefenseInfo[]
 }
 
-export function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size): CalculateCombatStatsReturn {
-    let defenses: DefenseInfo[] = []
-    let attacks: AttackInfo[] = []
-    combatStats.forEach(stats => {
-        calculateSingleCombatInfo(stats, defenses, attacks, size, combatPoints, mainRole)
-    })
+export function calculateDefenseInfo(defenseInfo: any, points: number, role: string, addsizemod: boolean, size: Size) {
+    const { id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR } = defenseInfo
 
-    const firstCombatIndex = combatStats[0]
-    const initiative = firstCombatIndex ? firstCombatIndex.initiative : 'minWk'
-    const roleToUse = firstCombatIndex && firstCombatIndex.role ? firstCombatIndex.role : mainRole
-
-    return {
-        initiative: calculateStatWithFormatting(initiative, 'initiative', roleToUse, combatPoints),
-        attacks,
-        defenses
+    return         {
+        id, beastid, roleid, swarmbonus, armor, shield, eua, tdr,
+        name: getDefenseName(name, shield, armor),
+        defense: calculateDefense(alldefense, role, points + adjustment, addsizemod, size),
+        flanks: calculateStat(flanks, 'flanks', role, points + adjustment),
+        parry: calculateStatWithFormatting(parry, 'parry', role, points + adjustment),
+        cover: calculateCover(cover, role, points + adjustment),
+        parryDR: calculateParryDR(parryStaticDR, parrySlashDR, role, points + adjustment, eua),
+        dr: calculateDR(slashingDR, staticDR, role, points + adjustment)
     }
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size, mainCombatPoints: number, mainRole: string): void {
-    const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, weapontype, showonlydefenses, recovery, measure, rangeddefense: cover, weaponname: chosenName,
-        armor, shield, weapon, eua, isspecial, attack, alldefense, flanks, andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry,
-        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints
-    } = stats
-
-    const roleToUse = role ? role : mainRole
-
-    const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
-
-    const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
-    const totalPoints = pointsToUse + adjustment
-
-    defenses.push(
-        {
-            id, beastid, roleid, swarmbonus, armor, shield, eua, tdr,
-            name: getDefenseName(chosenName, shield, armor),
-            defense: calculateDefense(alldefense, roleToUse, totalPoints, addsizemod, size),
-            flanks: calculateStat(flanks, 'flanks', roleToUse, totalPoints),
-            parry: calculateStatWithFormatting(parry, 'parry', roleToUse, totalPoints),
-            cover: calculateCover(cover, roleToUse, totalPoints),
-            parryDR: calculateParryDR(parryStaticDR, parrySlashDR, roleToUse, totalPoints, eua),
-            dr: calculateDR(slashingDR, staticDR, roleToUse, totalPoints)
-        }
-    )
-
-    if (!showonlydefenses) {
-        attacks.push(
-            {
-                id, beastid, roleid, info, swarmbonus, isspecial, weapon,
-                ...calculateAndFormatAttackInfo(totalPoints, roleToUse, chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType)
-            }
-        )
+export function calculateAttackInfo(attackInfo: any, points: number, role: string) {
+    const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment} = attackInfo
+    return             {
+        ...attackInfo,
+        ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType)
     }
 }
 
