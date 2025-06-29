@@ -384,8 +384,8 @@ export const primaryCombatRoles: PrimaryCombatRolesObject = {
 export type PreferredWeaponTypes = 'piercingweapons' | 'crushingweapons' | 'slashingweapons'
 
 interface WeaponStats {
-    damage: Strength,
     preferreddamage: PreferredWeaponTypes,
+    damage: Strength,
     slashingDR: Strength,
     staticDR: Strength,
     parry: Strength,

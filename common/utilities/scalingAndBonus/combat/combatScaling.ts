@@ -4,7 +4,7 @@ export type ScalingObject = {
     none: number,
     minWk: number,
     majWk: number,
-    x: number
+    x?: number
 }
 
 export type DiceObject = {
@@ -24,7 +24,11 @@ export type ScalingAndBonus = {
     swarm?: ScalingObject
 }
 
-export default {
+export interface ScalingAndBonusObject {
+    [key: string]: ScalingAndBonus
+}
+
+const scalingAndBonusObject: ScalingAndBonusObject = {
     attack: {
         scaling: {
             majSt: 5,
@@ -264,3 +268,5 @@ export default {
         }
     }
 }
+
+export default scalingAndBonusObject

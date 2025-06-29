@@ -50,6 +50,8 @@ function calculateScalingAndBonus(scalingStrength: Strength, points: number, sca
         return scaling.majWk
     } else if (scalingStrength === 'none' || !scalingStrength) {
         return scaling.none
+    } else if (scalingStrength === 'x') {
+        return 0
     } else {
         return Math.floor(scaling[scalingStrength] + (bonus[scalingStrength] * points))
     }
@@ -66,6 +68,7 @@ function formatBonus(stat: number | string): string {
 
 export function calculateStat(scalingStrength: Strength, type: string, role: string, points: number): number {
     if (!scalingStrength) {
+        // BRODY This is throwing an error but I'm not sure how to fix it
         scalingStrength = primaryCombatRoles[role].meleeCombatStats[type]
     }
 
