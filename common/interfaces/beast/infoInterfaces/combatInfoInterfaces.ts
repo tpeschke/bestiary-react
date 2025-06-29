@@ -132,7 +132,14 @@ export interface Movement {
     run: number | null,
     sprint: number | null,
     roleid: string,
+    role: string,
     allroles: boolean,
+    adjustment: number,
+    strollstrength: Strength, 
+    walkstrength: Strength, 
+    jogstrength: Strength, 
+    runstrength: Strength, 
+    sprintstrength: Strength
 }
 
 export interface RawMovement {
@@ -143,11 +150,11 @@ export interface RawMovement {
     combatpoints: number,
     roleid: string,
     allroles: boolean,
-    strollstrength: string,
-    walkstrength: string,
-    jogstrength: string,
-    runstrength: string,
-    sprintstrength: string,
+    strollstrength: Strength, 
+    walkstrength: Strength, 
+    jogstrength: Strength, 
+    runstrength: Strength, 
+    sprintstrength: Strength
     adjustment: number
 }
 

@@ -1,4 +1,4 @@
-import { VitalityInfo, AttackInfo, DefenseInfo } from '../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { VitalityInfo, AttackInfo, DefenseInfo, Movement } from '../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 
 export default interface CombatInfo {
     sp_atk: string,
@@ -35,20 +35,6 @@ export interface EquipmentInfo {
 export type DamageType = 'P' | 'C' | 'S'
 export type Type = 'm' | 'r'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
-
-export interface Movement {
-    id: number,
-    beastid: number,
-    stroll: string,
-    walk: string,
-    jog: string,
-    run: string,
-    sprint: string,
-    type: string,
-    roleid: string,
-    allroles: boolean,
-    deleted: boolean
-}
 
 export interface LocationVitality {
     id: number,

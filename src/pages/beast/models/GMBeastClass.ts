@@ -1,5 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo, { Movement } from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
@@ -12,7 +12,8 @@ import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/soc
 import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { VitalityInfo, AttackInfo, DefenseInfo } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import calculateMovement from '../../../../common/utilities/scalingAndBonus/combat/movement'
+import { VitalityInfo, AttackInfo, DefenseInfo, Movement } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import { calculateAttackInfo, calculateDefenseInfo } from '../../../../common/utilities/scalingAndBonus/combat/combatCalculation'
 import { calculateVitalityFatigueAndTrauma } from '../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
@@ -232,7 +233,7 @@ export default class GMBeastClass {
             },
             attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
-            movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID || info.allroles)
+            movements: movements.reduce(this.adjustMovementInfo(combatpoints, roleID, combatrole), [])
         }
     }
 
@@ -256,6 +257,15 @@ export default class GMBeastClass {
                 })
             }
             return defenseInfo
+        }
+    }
+
+    adjustMovementInfo = (points: number, roleID: string, role: string) => {
+        return (movementInfo: Movement[], movement: Movement): Movement[] => {
+            if (!movement.roleid || movement.roleid === roleID || movement.allroles) {
+                movementInfo.push( calculateMovement(movement, points, role) )
+            }
+            return movementInfo
         }
     }
 
