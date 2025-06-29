@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,6 +31,8 @@ export default function beastHooks(): Return {
 
     const { beastId } = useParams()
 
+    const [searchParams] = useSearchParams();
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -39,7 +41,10 @@ export default function beastHooks(): Return {
     useEffect(() => {
         const idHasChanged = beastId && beastId !== currentBeastId
         if (idHasChanged || beastId && !beast) {
-            const beast = getBeastFromCache(beastCache)
+            const roleId = searchParams.get("roleId")
+            const modifier = searchParams.get("modifier")
+
+            const beast = getBeastFromCache(beastCache, roleId, modifier)
 
             if (beast) {
                 setBeast(beast)
@@ -47,7 +52,7 @@ export default function beastHooks(): Return {
             } else {
                 axios.get(beastURL + '/' + beastId).then(({ data }) => {
                     if (data.generalInfo) {
-                        setBeast(new GMBeastClass(data))
+                        setBeast(new GMBeastClass(data, roleId, modifier))
                         dispatch(cacheMonster(data))
                         scrollToTop()
                     } else {
@@ -72,10 +77,10 @@ export default function beastHooks(): Return {
     * Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
     * So you have to retrieve the data and then transfer it to the GMBeastClass
     */
-    function getBeastFromCache(beastId: number): null | GMBeastClass {
+    function getBeastFromCache(beastId: number, roleId: string | null, modifier: string | null): null | GMBeastClass {
         const beastFromCache = beastCache[beastId]
         if (beastFromCache) {
-            return new GMBeastClass(beastFromCache)
+            return new GMBeastClass(beastFromCache, roleId, modifier)
         }
         return null
     }
@@ -92,7 +97,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
         }
     }
 
@@ -105,7 +110,7 @@ export default function beastHooks(): Return {
                 roleModifier: newRoleModifier * 5
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
         }
     }
 

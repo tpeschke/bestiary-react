@@ -1,17 +1,17 @@
 import ImageInfo from "../../../../interfaces/infoInterfaces/ImageInfoInterfaces"
 import SocialInfo from "../../../../interfaces/infoInterfaces/socialInfo"
-import SkillInfo from "../../../../interfaces/infoInterfaces/skillInfoInterfaces"
 
 import FullImage from "../../../../components/UI/fullImage/fullImage"
 import ConfrontationSection from "./components/confrontation/ConfrontationSection"
 import SkillSection from "./components/skills/SkillSection"
 import CombatSection from "./components/combat/CombatSection"
 import CombatInfo from "../../../../interfaces/infoInterfaces/combatInfoInterfaces"
-import { Size } from "../../../../interfaces/infoInterfaces/generalInfoInterfaces"
-import RoleInfo from "../../../../interfaces/infoInterfaces/roleInfoInterfaces"
 import RoleSelect from "./components/roleSelect/RoleSelect"
 import { UpdateRoleModifierFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks"
 import RatingModifierDisplay from "./components/RatingModifier/RatingModifierDisplay"
+import { Size } from "../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import RoleInfo from "../../../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import SkillInfo from "../../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 interface Props {
     beastId: number,
@@ -24,10 +24,11 @@ interface Props {
     roleInfo: RoleInfo,
     selectedRoleIndex: number
     updateSelectedRole: UpdateSelectedRoleFunction,
-    updateRoleModifier: UpdateRoleModifierFunction
+    updateRoleModifier: UpdateRoleModifierFunction,
+    modifierIndex: number
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, updateSelectedRole, updateRoleModifier }: Props) {
+export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, updateSelectedRole, updateRoleModifier, modifierIndex }: Props) {
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo}/>
@@ -35,7 +36,7 @@ export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, 
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
-            <RatingModifierDisplay updateRoleModifier={updateRoleModifier} />
+            <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} />
         </>
     )
 }

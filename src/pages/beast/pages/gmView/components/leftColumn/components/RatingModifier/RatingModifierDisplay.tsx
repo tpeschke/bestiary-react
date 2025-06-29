@@ -2,10 +2,11 @@ import { UpdateRoleModifierFunction } from '../../../../../../hooks/beastHooks'
 import './RatingModifierDisplay.css'
 
 interface Props {
-    updateRoleModifier: UpdateRoleModifierFunction
+    updateRoleModifier: UpdateRoleModifierFunction,
+    modifierIndex: number
 }
 
-export default function RatingModifierDisplay({ updateRoleModifier }: Props) {
+export default function RatingModifierDisplay({ updateRoleModifier, modifierIndex }: Props) {
     const modifierDictionary = [
         'None',
         'Unique',
@@ -17,7 +18,7 @@ export default function RatingModifierDisplay({ updateRoleModifier }: Props) {
     return (
         <div className='rating-modifier-shell'>
             <h2>Skull Modifier</h2> 
-            <select onChange={event => updateRoleModifier(+event.target.value)}>
+            <select value={modifierIndex} onChange={event => updateRoleModifier(+event.target.value)}>
                 {modifierDictionary.map((modifier: string, index: number) => {
                     return <option key={index} value={index}>{modifier}</option>
                 })}
