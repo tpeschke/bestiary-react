@@ -238,7 +238,15 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
     promiseArray.push(getVariants(databaseConnection, beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
     promiseArray.push(getLocations(databaseConnection, beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
-    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: BeastType[]) => beast.linkedInfo.types = types))
+    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: BeastType[]) => {
+        const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
+        if (isABeast) {
+            const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
+            beast.socialInfo.def_conf += beastBonus
+        }
+
+        beast.linkedInfo.types = types
+    }))
     promiseArray.push(getClimates(databaseConnection, beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
 
     promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
