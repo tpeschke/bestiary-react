@@ -1,9 +1,9 @@
 import './RoleSelect.css'
 
-import RoleInfo, { Role, RoleCombatInfo, RoleSkillInfo, RoleSocialInfo } from "../../../../../../interfaces/infoInterfaces/roleInfoInterfaces";
 import { useEffect, useState } from 'react';
 import { UpdateSelectedRoleFunction } from '../../../../../../hooks/beastHooks';
 import Select from 'react-select'
+import RoleInfo, { Role, RoleSocialInfo, RoleSkillInfo, RoleCombatInfo } from '../../../../../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 
 interface Props {
     roleInfo: RoleInfo,

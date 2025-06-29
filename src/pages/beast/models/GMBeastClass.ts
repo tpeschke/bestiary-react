@@ -11,7 +11,7 @@ import { BeastInfo } from "../interfaces/viewInterfaces";
 import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import RoleInfo from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import RoleInfo, { Role } from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateMovement from '../../../../common/utilities/scalingAndBonus/combat/movement'
 import { VitalityInfo, AttackInfo, DefenseInfo, Movement } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import { calculateAttackInfo, calculateDefenseInfo } from '../../../../common/utilities/scalingAndBonus/combat/combatCalculation'
@@ -70,7 +70,7 @@ export default class GMBeastClass {
         this.castingTypeInfo = new CastingClass(castingInfo.casting)
         this.entrySpells = castingInfo.spells
 
-        this.selectRoleIndex = roleInfo.roles.findIndex(role => roleInfo.defaultrole === role.id)
+        this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
     }
 
     getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
@@ -87,6 +87,14 @@ export default class GMBeastClass {
         }
 
         return modifier
+    }
+
+    getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
+        if (roleFromParam) {
+            return roles.findIndex(role => roleFromParam === role.id)
+        }
+
+        return roles.findIndex(role => defaultRole === role.id)
     }
 
     get beastInfo(): BeastInfo {
