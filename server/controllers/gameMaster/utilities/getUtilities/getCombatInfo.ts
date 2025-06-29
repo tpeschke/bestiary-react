@@ -44,13 +44,15 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
 
     const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
-    defenses.push(
-        calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR }, pointsToUse, roleToUse, addsizemod, size)
-    )
+    defenses.push({
+        ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR }, pointsToUse, roleToUse, addsizemod, size),
+        scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
+    })
 
     if (!showonlydefenses) {
-        attacks.push(
-            calculateAttackInfo({id, beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment}, pointsToUse, roleToUse)
-        )
+        attacks.push({
+            ...calculateAttackInfo({ id, beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
+            scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
+        })
     }
 }

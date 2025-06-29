@@ -3,7 +3,8 @@ export type ScalingObject = {
     minSt: number,
     none: number,
     minWk: number,
-    majWk: number
+    majWk: number,
+    x: number
 }
 
 export type DiceObject = {

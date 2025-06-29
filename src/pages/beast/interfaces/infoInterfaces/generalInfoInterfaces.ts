@@ -1,3 +1,5 @@
+import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+
 export type SizeObject = {
     Fine: number,
     Diminutive: number,
@@ -10,8 +12,6 @@ export type SizeObject = {
     Enormous: number,
     Colossal: number
 }
-
-export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal' | ''
 
 export default interface GeneralInfo {
     name: string,

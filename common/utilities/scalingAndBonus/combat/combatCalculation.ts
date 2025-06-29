@@ -1,7 +1,7 @@
 import { Size } from "../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { AttackInfo, DefenseInfo, RawCombatStat } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackInfo, DefenseInfo } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Strength } from "../../../interfaces/calculationInterfaces"
-import { getDamageType, getDefenseName } from "../../formatting/formatting"
+import { getDefenseName } from "../../formatting/formatting"
 import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 import calculateAndFormatAttackInfo from "./attackCalculator"
 import allScalingAndBonuses, { ScalingObject } from "./combatScaling"
@@ -21,7 +21,7 @@ export interface CalculateCombatStatsReturn {
 export function calculateDefenseInfo(defenseInfo: any, points: number, role: string, addsizemod: boolean, size: Size) {
     const { id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR } = defenseInfo
 
-    return         {
+    return {
         id, beastid, roleid, swarmbonus, armor, shield, eua, tdr,
         name: getDefenseName(name, shield, armor),
         defense: calculateDefense(alldefense, role, points + adjustment, addsizemod, size),
@@ -34,8 +34,8 @@ export function calculateDefenseInfo(defenseInfo: any, points: number, role: str
 }
 
 export function calculateAttackInfo(attackInfo: any, points: number, role: string) {
-    const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment} = attackInfo
-    return             {
+    const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment } = attackInfo
+    return {
         ...attackInfo,
         ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType)
     }

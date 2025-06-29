@@ -1,5 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo, { AttackInfo, DefenseInfo, Movement } from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { Movement } from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
@@ -12,13 +12,15 @@ import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/soc
 import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { VitalityInfo } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { VitalityInfo, AttackInfo, DefenseInfo } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { calculateAttackInfo, calculateDefenseInfo } from '../../../../common/utilities/scalingAndBonus/combat/combatCalculation'
 import { calculateVitalityFatigueAndTrauma } from '../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
+import { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 
 export default class GMBeastClass {
     private entryID: number
@@ -206,10 +208,10 @@ export default class GMBeastClass {
 
 
     get combatInfo(): CombatInfo {
-        return this.formatCombatInfo(this.entryCombatInfo)
+        return this.formatCombatInfo(this.entryCombatInfo, this.generalInfo.size)
     }
 
-    formatCombatInfo = (combatInfo: CombatInfo): CombatInfo => {
+    formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
         const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo } = combatInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
@@ -228,9 +230,32 @@ export default class GMBeastClass {
                 ...vitalityInfo,
                 ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength)
             },
-            attacks: attacks.filter((info: AttackInfo) => !info.roleid || info.roleid === roleID),
-            defenses: defenses.filter((info: DefenseInfo) => !info.roleid || info.roleid === roleID),
+            attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
+            defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
             movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
+        }
+    }
+
+    adjustAttackInfo = (points: number, roleID: string, role: string) => {
+        return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
+            if (!attack.roleid || attack.roleid === roleID) {
+                attackInfo.push(
+                    calculateAttackInfo(attack.scalingInfo, points, role)
+                )
+            }
+            return attackInfo
+        }
+    }
+
+    adjustDefenseInfo = (points: number, roleID: string, role: string, size: Size) => {
+        return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
+            if (!defense.roleid || defense.roleid === roleID) {
+                defenseInfo.push({
+                    ...calculateDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    scalingInfo: defense.scalingInfo
+                })
+            }
+            return defenseInfo
         }
     }
 

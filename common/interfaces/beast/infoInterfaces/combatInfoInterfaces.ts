@@ -24,7 +24,7 @@ export interface AttackInfo {
     info: string,
     name: string,
     weapon: string,
-    swarmbonus: string,
+    swarmbonus: boolean,
     measure: number,
     attack: string,
     damage: string,
@@ -32,6 +32,18 @@ export interface AttackInfo {
     recovery: number,
     rangeIncrement: string,
     isspecial: IsSpecial,
+    scalingInfo: {
+        name: string,
+        weapon: string,
+        swarmbonus: boolean,
+        measure: number,
+        attack: Strength,
+        damage: Strength,
+        type: DamageType,
+        recovery: Strength,
+        rangeIncrement: Strength,
+        isspecial: IsSpecial,
+    }
 }
 
 export interface DefenseInfo {
@@ -39,7 +51,7 @@ export interface DefenseInfo {
     beastid: number,
     roleid: string,
     name: string,
-    swarmbonus: string,
+    swarmbonus: boolean,
     defense: string,
     flanks: number,
     parry: string,
@@ -50,6 +62,24 @@ export interface DefenseInfo {
     tdr: boolean,
     shield: string,
     armor: string,
+    scalingInfo: {
+        name: string,
+        swarmbonus: boolean,
+        alldefense: Strength,
+        flanks: Strength,
+        parry: Strength,
+        cover: Strength,
+        parryStaticDR: Strength,
+        parrySlashDR: Strength,
+        slashingDR: Strength,
+        staticDR: Strength,
+        eua: boolean,
+        tdr: boolean,
+        shield: string,
+        armor: string,
+        adjustment: number,
+        addsizemod: boolean
+    }
 }
 
 export type Type = 'm' | 'r'
@@ -86,7 +116,7 @@ export interface RawCombatStat {
     showonlydefenses: boolean,
     weapontype: Type,
     rangedistance: Strength,
-    swarmbonus: string,
+    swarmbonus: boolean,
     adjustment: number,
     tdr: boolean,
     info: string,

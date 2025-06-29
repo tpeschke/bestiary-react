@@ -1,4 +1,4 @@
-export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal'
+export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal' | null
 
 export default interface GeneralInfo {
     name: string,
