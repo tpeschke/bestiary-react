@@ -232,7 +232,7 @@ export default class GMBeastClass {
             },
             attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
-            movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID)
+            movements: movements.filter((info: Movement) => !info.roleid || info.roleid === roleID || info.allroles)
         }
     }
 

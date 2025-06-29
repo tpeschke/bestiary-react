@@ -2,20 +2,19 @@ import { RawMovement, Movement } from "../../../interfaces/beast/infoInterfaces/
 import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
 export function calculateMovements(movements: RawMovement[], combatpoints: number, role: string) {
-    if (role) {
-        const roleScalingStrength = primaryCombatRoles[role].meleeCombatStats.movement
-        return movements.map(movement => calculateMovement(movement, combatpoints, roleScalingStrength))
-    }
-    return []
+    return movements.map(movement => calculateMovement(movement, combatpoints, role))
 }
 
-function calculateMovement(movement: RawMovement, combatpoints: number, roleScalingStrength: string): Movement {
+function calculateMovement(movement: RawMovement, combatpoints: number, mainRole: string): Movement {
     const { id, beastid, role, combatpoints: roleCombatPoints, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
-
-    const specificScalingStrength = primaryCombatRoles[role]?.meleeCombatStats?.movement
-
-    const scalingToUse = specificScalingStrength ? specificScalingStrength : roleScalingStrength
+    
+    const specificScalingStrength = primaryCombatRoles[role].meleeCombatStats.movement
+    
     const pointsToUse = roleCombatPoints ? roleCombatPoints : combatpoints
+    const rolesToUse = role ? role : mainRole
+    
+    const roleScalingStrength = primaryCombatRoles[rolesToUse].meleeCombatStats.movement
+    const scalingToUse = specificScalingStrength ? specificScalingStrength : roleScalingStrength
 
     let stroll = calculateSpeed(strollstrength ?? scalingToUse, pointsToUse + adjustment, 0)
     let walk = calculateSpeed(walkstrength ?? scalingToUse, pointsToUse + adjustment, stroll)
