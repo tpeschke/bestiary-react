@@ -10,7 +10,7 @@
     font-style: italic;
 }
 
-.attack-stats-shell>div, .attack-stats-left>div {
+.attack-stats-shell>.attack-stats-inner-shell, .attack-stats-left>div {
     display: flex;
     justify-content: space-evenly;
 }
@@ -36,4 +36,9 @@
 
 .attack-stats-left>div>div p:first-child {
     text-align: right;
+}
+
+.attack-stats-shell .html-display-shell {
+    margin: 5px 9px;
+    border-bottom: 1px solid #e1e7ea;
 }

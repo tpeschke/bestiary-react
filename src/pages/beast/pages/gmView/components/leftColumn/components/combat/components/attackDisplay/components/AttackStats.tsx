@@ -1,18 +1,20 @@
 import './AttackStats.css'
 
-import { AttackInfo } from '../../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces'
+import { AttackInfo } from '../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import HTMLDisplay from '../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 
 interface Props {
     attacksStats: AttackInfo
 }
 
 export default function AttackStats({ attacksStats }: Props) {
-    const { name, measure, attack, damage, type, recovery } = attacksStats
+    const { name, measure, attack, damage, type, recovery, info } = attacksStats
 
     return (
         <div className='attack-stats-shell'>
             <span><h6></h6> <p>{name}</p></span>
-            <div>
+            {info && <HTMLDisplay html={info} />}
+            <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>
                     <div>
                         <div>

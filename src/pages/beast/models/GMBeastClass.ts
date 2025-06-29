@@ -240,9 +240,10 @@ export default class GMBeastClass {
     adjustAttackInfo = (points: number, roleID: string, role: string) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!attack.roleid || attack.roleid === roleID) {
-                attackInfo.push(
-                    calculateAttackInfo(attack.scalingInfo, points, role)
-                )
+                attackInfo.push({
+                    ...attack,
+                    ...calculateAttackInfo(attack.scalingInfo, points, role)
+                })
             }
             return attackInfo
         }

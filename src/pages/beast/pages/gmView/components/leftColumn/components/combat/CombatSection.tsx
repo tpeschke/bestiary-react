@@ -7,7 +7,8 @@ import TacticsAndStrategy from "./components/tacticsAndStrategy/TacticsAndStrate
 import DefenseDisplay from "./components/defenseDisplay/DefenseDisplay"
 import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
-import { Size } from "../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
+
+import { Size } from "../../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
     combatInfo: CombatInfo,
