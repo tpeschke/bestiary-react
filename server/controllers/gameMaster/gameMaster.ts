@@ -168,7 +168,9 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             roles: []
         },
         combatInfo: {
-            sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary,
+            tactics, combatpoints, combatrole, combatsecondary,
+            sp_atk: sp_atk ?? '', 
+            sp_def: sp_def ?? '', 
             initiative: '+0',
             attacks: [],
             defenses: [],
@@ -183,7 +185,9 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             }
         },
         skillInfo: {
-            skillrole, skillsecondary, skillpoints, atk_skill, def_skill,
+            skillrole, skillsecondary, skillpoints,
+            atk_skill: atk_skill ?? '', 
+            def_skill: def_skill ?? '', 
             stressStrength: stress,
             panicStrength: panic,
             ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stress, panic),
@@ -192,7 +196,9 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             challenges: [],
         },
         socialInfo: {
-            traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf,
+            traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, 
+            atk_conf: atk_conf ?? '', 
+            def_conf: def_conf ?? '',
             conflicts: {
                 descriptions: [],
                 convictions: [],
