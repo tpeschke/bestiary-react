@@ -45,7 +45,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
     const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
     defenses.push({
-        ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR }, pointsToUse, roleToUse, addsizemod, size),
+        ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
         scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
     })
 

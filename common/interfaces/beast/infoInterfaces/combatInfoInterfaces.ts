@@ -50,6 +50,7 @@ export interface DefenseInfo {
     id: number,
     beastid: number,
     roleid: string,
+    info: string,
     name: string,
     swarmbonus: boolean,
     defense: string,
