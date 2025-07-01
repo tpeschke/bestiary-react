@@ -405,7 +405,7 @@ interface WeaponStats {
 }
 
 // Note to self
-export type WeaponStatStrength = Omit<WeaponStats,'preferreddamage'>
+export type WeaponStatStrength = Omit<WeaponStats, 'preferreddamage'>
 
 export type WeaponStatsKey = keyof WeaponStatStrength
 
