@@ -21,12 +21,11 @@ export const beastCacheSlice = createSlice({
   reducers: {
     cacheMonster: (state: any, action: PayloadAction<GMBeastClass>) => {
       const { payload } = action
-      state.cache[payload.id] = payload
+      state.cache[`${payload.id}`] = payload
     }
   },
 })
 
 export const { cacheMonster } = beastCacheSlice.actions
-export const getBeastCache = (state: any) => state.beastCache.cache
 
 export default beastCacheSlice.reducer

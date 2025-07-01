@@ -10,7 +10,7 @@ import GMBeastClass from "../models/GMBeastClass";
 import { beastURL } from "../../../frontend-config";
 import alertInfo from "../../../components/alert/alerts";
 
-import { cacheMonster, getBeastCache } from "../../../redux/slices/beastCacheSlice";
+import { cacheMonster } from "../../../redux/slices/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
@@ -36,7 +36,7 @@ export default function beastHooks(): Return {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const beastCache = useSelector(getBeastCache)
+    const beastCache = useSelector((state: any) => state.beastCache.cache)
 
     useEffect(() => {
         handleBackwardsCompatibilityWithOldUrl()
@@ -47,10 +47,9 @@ export default function beastHooks(): Return {
             const roleId = searchParams.get("roleId")
             const modifier = searchParams.get("modifier")
 
-            const beast = getBeastFromCache(beastCache, roleId, modifier)
-console.log(beast)
+            const beast = getBeastFromCache(beastId, roleId, modifier)
+
             if (beast) {
-                console.log('hello!')
                 setBeast(beast)
                 scrollToTop()
             } else {
@@ -109,7 +108,7 @@ console.log(beast)
     * Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
     * So you have to retrieve the data and then transfer it to the GMBeastClass
     */
-    function getBeastFromCache(beastId: number, roleId: string | null, modifier: string | null): null | GMBeastClass {
+    function getBeastFromCache(beastId: string, roleId: string | null, modifier: string | null): null | GMBeastClass {
         const beastFromCache = beastCache[beastId]
         if (beastFromCache) {
             return new GMBeastClass(beastFromCache, roleId, modifier)
