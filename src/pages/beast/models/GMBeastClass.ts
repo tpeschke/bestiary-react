@@ -22,6 +22,8 @@ import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBo
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 import { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { createSearchParams } from "react-router-dom";
+import alertInfo from "../../../components/alert/alerts";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -73,7 +75,7 @@ export default class GMBeastClass {
         this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
     }
 
-    getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
+    public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
         if (modifierFromParam) {
             const modifierIndexDictionary: ModifierIndexDictionaryObject = {
                 'NONE': 0,
@@ -89,7 +91,7 @@ export default class GMBeastClass {
         return modifier
     }
 
-    getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
+    public getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
         if (roleFromParam) {
             return roles.findIndex(role => roleFromParam === role.id)
         }
@@ -191,7 +193,7 @@ export default class GMBeastClass {
         return this.socialInfo
     }
 
-    adjustCharacteristicRank = (type: CharacteristicWithRanks, points: number, roleID: string) => {
+    private adjustCharacteristicRank = (type: CharacteristicWithRanks, points: number, roleID: string) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
             if (!characteristic.socialroleid || characteristic.socialroleid === roleID || characteristic.allroles) {
                 characteristics.push({
@@ -224,7 +226,7 @@ export default class GMBeastClass {
         }
     }
 
-    adjustSkillRank = (points: number, roleID: string) => {
+    private adjustSkillRank = (points: number, roleID: string) => {
         return (skills: Skill[], skill: Skill): Skill[] => {
             if (!skill.skillroleid || skill.skillroleid === roleID || skill.allroles) {
                 skills.push({
@@ -241,7 +243,7 @@ export default class GMBeastClass {
         return this.formatCombatInfo(this.entryCombatInfo, this.generalInfo.size)
     }
 
-    formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
+    private formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
         const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo, sp_atk, sp_def } = combatInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
@@ -271,7 +273,7 @@ export default class GMBeastClass {
         }
     }
 
-    adjustAttackInfo = (points: number, roleID: string, role: string) => {
+    private adjustAttackInfo = (points: number, roleID: string, role: string) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!attack.roleid || attack.roleid === roleID) {
                 attackInfo.push({
@@ -283,7 +285,7 @@ export default class GMBeastClass {
         }
     }
 
-    adjustDefenseInfo = (points: number, roleID: string, role: string, size: Size) => {
+    private adjustDefenseInfo = (points: number, roleID: string, role: string, size: Size) => {
         return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
             if (!defense.roleid || defense.roleid === roleID) {
                 defenseInfo.push({
@@ -295,16 +297,16 @@ export default class GMBeastClass {
         }
     }
 
-    adjustMovementInfo = (points: number, roleID: string, role: string) => {
+    private adjustMovementInfo = (points: number, roleID: string, role: string) => {
         return (movementInfo: Movement[], movement: Movement): Movement[] => {
             if (!movement.roleid || movement.roleid === roleID || movement.allroles) {
-                movementInfo.push( calculateMovement(movement, points, role) )
+                movementInfo.push(calculateMovement(movement, points, role))
             }
             return movementInfo
         }
     }
 
-    populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
+    private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
         return {
             locationalVitalities: roleVitalityInfo.locationalVitalities ?? mainVitalityInfo.locationalVitalities,
             fatigue: roleVitalityInfo.fatigue ?? mainVitalityInfo.fatigue,
@@ -322,7 +324,7 @@ export default class GMBeastClass {
         }
     }
 
-    isRoleSelected = (): boolean => {
+    public isRoleSelected = (): boolean => {
         return this.selectRoleIndex >= 0
     }
 
@@ -356,5 +358,62 @@ export default class GMBeastClass {
 
     get modifierIndex() {
         return this.selectedModifier / 5
+    }
+
+    public copyQuickLink = (): void => {
+        let textArea = this.getTextArea()
+        const url = this.getURL()
+
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            alertInfo({ color: "green", message: `${url} successfully copied`, type: 'message' })
+        } catch (err) {
+            alertInfo({ color: "red", message: `Unable to copy ${url}`, type: 'message' })
+        }
+        document.body.removeChild(textArea);
+    }
+
+    private getTextArea = () => {
+        let textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+
+        return textArea
+    }
+
+    private getURL = () => {
+        const { origin, pathname } = window.location
+        return `${origin}${pathname}?${createSearchParams(this.getQuickLinkParams()).toString()}`
+    }
+
+    private getQuickLinkParams = (): any => {
+        const selectedRoleId: string = this.roleInfo.roles[this.selectRoleIndex].id
+
+        if (selectedRoleId && this.selectedModifier) {
+            return {
+                roleId: selectedRoleId,
+                modifier: `${this.selectedModifier}`
+            }
+        } else if (selectedRoleId) {
+            return {
+                roleId: selectedRoleId,
+            }
+        } else if (this.selectedModifier) {
+            return {
+                modifier: `${this.selectedModifier}`
+            }
+        }
+
+        return {}
+    }
+
+    get hasModifier(): boolean {
+        return !!this.modifierIndex
     }
 }

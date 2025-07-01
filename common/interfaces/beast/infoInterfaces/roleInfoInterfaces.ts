@@ -1,5 +1,5 @@
-import { VitalityInfo } from "../../../../src/pages/beast/interfaces/infoInterfaces/combatInfoInterfaces";
 import { Strength } from "../../calculationInterfaces";
+import { VitalityInfo } from "./combatInfoInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
 export default interface RoleInfo {

@@ -1,12 +1,13 @@
 import CombatInfo from './infoInterfaces/combatInfoInterfaces'
 import GeneralInfo from './infoInterfaces/generalInfoInterfaces'
 import SkillInfo from './infoInterfaces/skillInfoInterfaces'
-import SocialInfo from './infoInterfaces/socialInfo'
 import ImageInfo from './infoInterfaces/ImageInfoInterfaces'
 import LinkedInfo from './infoInterfaces/linkedInfoInterfaces'
 import RoleInfo from './infoInterfaces/roleInfoInterfaces'
 import LootInfo from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo from './infoInterfaces/castingInfo'
+
+import SocialInfo from '../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 
 export interface Beast {
     id: number,

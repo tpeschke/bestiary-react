@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import { UpdateSelectedRoleFunction } from '../../../../../../hooks/beastHooks';
 import Select from 'react-select'
 import RoleInfo, { Role, RoleSocialInfo, RoleSkillInfo, RoleCombatInfo } from '../../../../../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
+import QuickLink from '../../../../../../components/QuickLink';
 
 interface Props {
     roleInfo: RoleInfo,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    selectedRoleIndex: number
+    selectedRoleIndex: number,
+    copyQuickLink: Function,
+    hasModifier: boolean
 }
 
 interface OptionProp {
@@ -16,7 +19,7 @@ interface OptionProp {
     label: string,
 }
 
-export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleIndex }: Props) {
+export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleIndex, copyQuickLink, hasModifier }: Props) {
     const [currentSelectedOption, setCurrentSelectedOption] = useState<OptionProp | null>(null)
     const [roleOptions, setRoleOptions] = useState<any[] | null>(null)
 
@@ -59,6 +62,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
                         components={{ Option: formatOption }}
                         options={roleOptions}
                         onChange={(event: any) => updateRoleId(event)} />
+                    <QuickLink copyQuickLink={copyQuickLink} hasModifier={hasModifier}/>
                 </>
             )}
         </div>

@@ -4,3 +4,11 @@
     align-items: center;
     margin-top: 20px;
 }
+
+.rating-modifier-shell h2 {
+    margin-right: auto;
+}
+
+.rating-modifier-shell button {
+    margin-left: 5px;
+}

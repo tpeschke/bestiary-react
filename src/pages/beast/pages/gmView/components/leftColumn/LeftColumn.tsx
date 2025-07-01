@@ -16,7 +16,7 @@ import SkillInfo from "../../../../../../../common/interfaces/beast/infoInterfac
 interface Props {
     beastId: number,
     beastName: string,
-    imageInfo: ImageInfo, 
+    imageInfo: ImageInfo,
     socialInfo: SocialInfo,
     skillInfo: SkillInfo,
     combatInfo: CombatInfo,
@@ -25,18 +25,22 @@ interface Props {
     selectedRoleIndex: number
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
-    modifierIndex: number
+    modifierIndex: number,
+    copyQuickLink: Function,
+    hasModifier: boolean
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, updateSelectedRole, updateRoleModifier, modifierIndex }: Props) {
+export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
+    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier }: Props) {
+
     return (
         <>
-            <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo}/>
-            <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} />
+            <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} />
+            <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
-            <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} />
+            <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
         </>
     )
 }
