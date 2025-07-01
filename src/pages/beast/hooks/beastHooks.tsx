@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,7 @@ export default function beastHooks(): Return {
     const [beast, setBeast] = useState<GMBeastClass>()
     const [playerBeast, setPlayerBeast] = useState<PlayerBeastClass>()
 
-    const { beastId } = useParams()
+    const { beastId, param1, param2 } = useParams()
 
     const [searchParams] = useSearchParams();
 
@@ -39,7 +39,10 @@ export default function beastHooks(): Return {
     const beastCache = useSelector(getBeastCache)
 
     useEffect(() => {
+        handleBackwardsCompatibilityWithOldUrl()
+
         const idHasChanged = beastId && beastId !== currentBeastId
+
         if (idHasChanged || beastId && !beast) {
             const roleId = searchParams.get("roleId")
             const modifier = searchParams.get("modifier")
@@ -67,10 +70,38 @@ export default function beastHooks(): Return {
             }
             setCurrentBeastId(beastId)
         }
-    }, [beastId]);
+    }, [beastId, searchParams]);
 
     function scrollToTop() {
         window.scrollTo(0, 0)
+    }
+
+    // BRODY Why isn't this working?
+    function handleBackwardsCompatibilityWithOldUrl() {
+        let queryParams: any = {}
+        const modifierIndexDictionary = ['NONE', 'UNIQUE', 'GREATER', 'DREAD', 'THE']
+
+        if (window.location.pathname.includes('gm')) {
+            if (param1 && param2) {
+                queryParams = {
+                    roleId: param1,
+                    modifier: param2
+                }
+            } else if (param1 && modifierIndexDictionary.includes(param1)) {
+                queryParams = {
+                    modifier: param2
+                }
+            } else if (param1) {
+                queryParams = {
+                    roleId: param1,
+                }
+            }
+
+            navigate({ 
+                pathname: `/beast/${beastId}`,
+                search: createSearchParams(queryParams).toString()
+            })
+        }
     }
 
     /**

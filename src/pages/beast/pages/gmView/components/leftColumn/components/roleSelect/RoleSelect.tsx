@@ -21,10 +21,13 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
     const [roleOptions, setRoleOptions] = useState<any[] | null>(null)
 
     useEffect(() => {
+        const { roles } = roleInfo
+        setCurrentSelectedOption(getSelectedRole(roles, selectedRoleIndex))
+    }, [roleInfo, selectedRoleIndex]);
+
+    useEffect(() => {
         if (!roleOptions && roleInfo.roles.length > 0) {
             const { roles } = roleInfo
-
-            setCurrentSelectedOption(getSelectedRole(roles, selectedRoleIndex))
 
             const options = roles.map(({ generalInfo, combatInfo, skillInfo, socialInfo, id: roleId }: Role): any => {
                 const { name } = generalInfo
@@ -36,7 +39,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
 
             setRoleOptions(options)
         }
-    }, [currentSelectedOption, roleOptions]);
+    }, [roleOptions, currentSelectedOption])
 
     function updateRoleId(selectedOption: OptionProp | undefined) {
         if (selectedOption) {
@@ -52,7 +55,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
                     <h2>Role</h2>
                     <Select
                         isSearchable
-                        defaultValue={currentSelectedOption}
+                        value={currentSelectedOption}
                         components={{ Option: formatOption }}
                         options={roleOptions}
                         onChange={(event: any) => updateRoleId(event)} />

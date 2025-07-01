@@ -2,7 +2,7 @@ import { Size } from "../../../interfaces/beast/infoInterfaces/generalInfoInterf
 import { AttackInfo, DefenseInfo } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Strength } from "../../../interfaces/calculationInterfaces"
 import { getDefenseName } from "../../formatting/formatting"
-import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
+import { primaryCombatRoles, WeaponStatsKey } from "../../roleInfo/combatRoleInfo"
 import calculateAndFormatAttackInfo from "./attackCalculator"
 import allScalingAndBonuses, { ScalingObject } from "./combatScaling"
 
@@ -66,16 +66,15 @@ function formatBonus(stat: number | string): string {
     return `+${stat}`
 }
 
-export function calculateStat(scalingStrength: Strength, type: string, role: string, points: number): number {
+export function calculateStat(scalingStrength: Strength, type: WeaponStatsKey, role: string, points: number): number {
     if (!scalingStrength) {
-        // BRODY This is throwing an error but I'm not sure how to fix it
         scalingStrength = primaryCombatRoles[role].meleeCombatStats[type]
     }
 
     return calculateScalingAndBonus(scalingStrength, points, allScalingAndBonuses[type].scaling, allScalingAndBonuses[type].bonus)
 }
 
-export function calculateStatWithFormatting(scalingStrength: Strength, type: string, role: string, points: number): string {
+export function calculateStatWithFormatting(scalingStrength: Strength, type: WeaponStatsKey, role: string, points: number): string {
     if (!scalingStrength) {
         scalingStrength = primaryCombatRoles[role].meleeCombatStats[type]
     }

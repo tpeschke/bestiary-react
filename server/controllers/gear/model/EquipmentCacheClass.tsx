@@ -6,7 +6,6 @@ import ArmorCacheClass from "./ArmorCacheClass";
 import ShieldCacheClass from "./ShieldCacheClass"
 import WeaponCacheClass from "./WeaponCacheClass"
 
-// Brody
 export default class GearCacheClass {
     private weapons = new WeaponCacheClass(); 
     private shields = new ShieldCacheClass();
@@ -52,7 +51,7 @@ export default class GearCacheClass {
     }
 
     public getShieldByName(shieldName: string): ProcessedShield {
-        return this.shields.getByName[shieldName]
+        return this.shields.getByName(shieldName)
     }
 
     public getArmorByName(armorName: string): ProcessedArmor {

@@ -305,7 +305,6 @@ export default class GMBeastClass {
     }
 
     populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
-        // BRODY is this faster than just looping through the object
         return {
             locationalVitalities: roleVitalityInfo.locationalVitalities ?? mainVitalityInfo.locationalVitalities,
             fatigue: roleVitalityInfo.fatigue ?? mainVitalityInfo.fatigue,

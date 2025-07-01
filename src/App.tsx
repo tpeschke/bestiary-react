@@ -40,6 +40,8 @@ export default function App() {
           <Route path='beast'>
             <Route index element={<Loading component={Catalog} />} />
             <Route path=':beastId/gm' element={<Loading component={View} />} />
+            <Route path=':beastId/gm/:param1' element={<Loading component={View} />} />
+            <Route path=':beastId/gm/:param1/:param2' element={<Loading component={View} />} />
             <Route path=':beastId/player' element={<Loading component={View} />} />
             <Route path=':beastId' element={<Loading component={View} />} />
           </Route>

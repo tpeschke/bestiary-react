@@ -404,6 +404,11 @@ interface WeaponStats {
     movement: Strength,
 }
 
+// Note to self
+export type WeaponStatStrength = Omit<WeaponStats,'preferreddamage'>
+
+export type WeaponStatsKey = keyof WeaponStatStrength
+
 interface LabelAndItems {
     label: string,
     items: string[]

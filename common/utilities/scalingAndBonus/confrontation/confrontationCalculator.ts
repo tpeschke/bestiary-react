@@ -1,13 +1,5 @@
 import { Strength } from "../../../interfaces/calculationInterfaces"
 
-export type CharacteristicWithRanks = 'Convictions' | 'Descriptions' | 'Relationships'
-
-// BRODY 
-// type TypeBaseObject {
-//     [key: CharacteristicWithRanks]: {
-//         [key: Strength]: number
-//     }
-// }
 interface SelectedStrengthObject {
     majSt: number,
     minSt: number,
@@ -21,6 +13,9 @@ interface TypeBaseObject {
     Descriptions: SelectedStrengthObject,
     Relationships: SelectedStrengthObject
 }
+
+// NOTE TO SELF
+export type CharacteristicWithRanks = keyof TypeBaseObject
 
 interface TypeScalingObject {
     Convictions: number,
