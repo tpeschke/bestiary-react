@@ -1,5 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { LocationVitality } from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
@@ -24,6 +24,7 @@ import CastingClass from "../pages/gmView/components/weirdshaping/models/Casting
 import { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../components/alert/alerts";
+import { Strength } from "../../../../common/interfaces/calculationInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -300,7 +301,8 @@ export default class GMBeastClass {
     private adjustMovementInfo = (points: number, roleID: string, role: string) => {
         return (movementInfo: Movement[], movement: Movement): Movement[] => {
             if (!movement.roleid || movement.roleid === roleID || movement.allroles) {
-                movementInfo.push(calculateMovement(movement, points, role))
+                const calculatedMovement = calculateMovement(movement, points, role)
+                if (calculatedMovement) { movementInfo.push(calculatedMovement) }
             }
             return movementInfo
         }
@@ -308,20 +310,24 @@ export default class GMBeastClass {
 
     private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
         return {
-            locationalVitalities: roleVitalityInfo.locationalVitalities ?? mainVitalityInfo.locationalVitalities,
-            fatigue: roleVitalityInfo.fatigue ?? mainVitalityInfo.fatigue,
-            notrauma: roleVitalityInfo.notrauma ?? mainVitalityInfo.notrauma,
-            knockback: roleVitalityInfo.knockback ?? mainVitalityInfo.knockback,
-            singledievitality: roleVitalityInfo.singledievitality ?? mainVitalityInfo.singledievitality,
-            noknockback: roleVitalityInfo.noknockback ?? mainVitalityInfo.noknockback,
-            rollundertrauma: roleVitalityInfo.rollundertrauma ?? mainVitalityInfo.rollundertrauma,
-            isincorporeal: roleVitalityInfo.isincorporeal ?? mainVitalityInfo.isincorporeal,
-            weaponbreakagevitality: roleVitalityInfo.weaponbreakagevitality ?? mainVitalityInfo.weaponbreakagevitality,
-            vitality: roleVitalityInfo.vitality ?? mainVitalityInfo.vitality,
-            trauma: roleVitalityInfo.trauma ?? mainVitalityInfo.trauma,
-            vitalityStrength: roleVitalityInfo.vitalityStrength ?? mainVitalityInfo.vitalityStrength,
-            fatigueStrength: roleVitalityInfo.fatigueStrength ?? roleVitalityInfo.fatigueStrength
+            locationalVitalities:       this.getDefault<LocationVitality[]>(roleVitalityInfo.locationalVitalities, mainVitalityInfo.locationalVitalities),
+            fatigue:                    this.getDefault<string | number | boolean>(roleVitalityInfo.fatigue, mainVitalityInfo.fatigue),
+            notrauma:                   this.getDefault<boolean>(roleVitalityInfo.notrauma, mainVitalityInfo.notrauma),
+            knockback:                  this.getDefault<number>(roleVitalityInfo.knockback, mainVitalityInfo.knockback),
+            singledievitality:          this.getDefault<boolean>(roleVitalityInfo.singledievitality, mainVitalityInfo.singledievitality),
+            noknockback:                this.getDefault<boolean>(roleVitalityInfo.noknockback, mainVitalityInfo.noknockback),
+            rollundertrauma:            this.getDefault<number>(roleVitalityInfo.rollundertrauma, mainVitalityInfo.rollundertrauma),
+            isincorporeal:              this.getDefault<boolean>(roleVitalityInfo.isincorporeal, mainVitalityInfo.isincorporeal),
+            weaponbreakagevitality:     this.getDefault<boolean>(roleVitalityInfo.weaponbreakagevitality, mainVitalityInfo.weaponbreakagevitality),
+            vitality:                   this.getDefault<string | number>(roleVitalityInfo.vitality, mainVitalityInfo.vitality),
+            trauma:                     this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma),
+            vitalityStrength:           this.getDefault<Strength>(roleVitalityInfo.vitalityStrength, mainVitalityInfo.vitalityStrength),
+            fatigueStrength:            this.getDefault<Strength>(roleVitalityInfo.fatigueStrength, roleVitalityInfo.fatigueStrength)
         }
+    }
+
+    private getDefault = <Type>(roleInfo: Type, defaultInfo: Type): Type => {
+        return roleInfo ?? defaultInfo
     }
 
     public isRoleSelected = (): boolean => {
