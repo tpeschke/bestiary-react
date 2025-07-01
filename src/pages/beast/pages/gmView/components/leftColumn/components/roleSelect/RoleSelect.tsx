@@ -25,7 +25,9 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
 
     useEffect(() => {
         const { roles } = roleInfo
-        setCurrentSelectedOption(getSelectedRole(roles, selectedRoleIndex))
+        if (roles.length > 0) {
+            setCurrentSelectedOption(getSelectedRole(roles, selectedRoleIndex))
+        }
     }, [roleInfo, selectedRoleIndex]);
 
     useEffect(() => {

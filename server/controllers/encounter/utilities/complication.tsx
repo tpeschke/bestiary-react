@@ -74,7 +74,7 @@ const complicationArray = [RIVAL, WOUNDED, TRAPPED, INSANE, LOST, DISEASED, TIME
 
 async function getRival(dataBaseConnection: any, beastId: number, type: string): Promise<RivalComplication> {
     const [rival]: Rival[] = await dataBaseConnection.encounter.complication.getRival(beastId)
-
+console.log(rival)
     if (rival.name && rival.name.includes(',')) {
         const splitName = rival.name.split(', ')
         rival.name = `${splitName[1]} ${splitName[0]}`

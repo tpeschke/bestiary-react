@@ -48,8 +48,9 @@ export default function beastHooks(): Return {
             const modifier = searchParams.get("modifier")
 
             const beast = getBeastFromCache(beastCache, roleId, modifier)
-
+console.log(beast)
             if (beast) {
+                console.log('hello!')
                 setBeast(beast)
                 scrollToTop()
             } else {
