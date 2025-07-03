@@ -27,15 +27,16 @@ interface Props {
     updateRoleModifier: UpdateRoleModifierFunction,
     modifierIndex: number,
     copyQuickLink: Function,
-    hasModifier: boolean
+    hasModifier: boolean,
+    selectedRoleID: string | null
 }
 
 export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
-    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier }: Props) {
+    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID }: Props) {
 
     return (
         <>
-            <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} />
+            <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} roleID={selectedRoleID} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />

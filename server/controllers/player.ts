@@ -20,19 +20,19 @@ interface Body {
 
 export async function getPlayerVersionOfBeast(request: Request, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
-    const beastid: number = +request.params.beastid
+    const beastId: number = +request.params.beastId
     const { user } = request
 
     if ( user && user.patreon && user.patreon > 3 ) {
         checkForContentTypeBeforeSending(response, {color: 'green', message: 'You\'re a GM'})
     } else {
-        let [playerInfo] = await databaseConnection.beast.player.info(beastid).catch((error: Error) => sendErrorForward('player version of beast', error, response))
+        let [playerInfo] = await databaseConnection.beast.player.info(beastId).catch((error: Error) => sendErrorForward('player version of beast', error, response))
 
         const artistInfo = await getArtistInfo(databaseConnection, playerInfo.id, false)
         playerInfo.artistInfo = artistInfo.genericArtistInfo
 
         if (user) {
-            const [notes] = await databaseConnection.user.notes.get(beastid, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
+            const [notes] = await databaseConnection.user.notes.get(beastId, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
             playerInfo.notes = notes || ''
             checkForContentTypeBeforeSending(response, playerInfo)
         } else {

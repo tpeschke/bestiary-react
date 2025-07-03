@@ -330,10 +330,6 @@ export default class GMBeastClass {
         return roleInfo ?? defaultInfo
     }
 
-    public isRoleSelected = (): boolean => {
-        return this.selectRoleIndex >= 0
-    }
-
     get linkedInfo(): LinkedInfo {
         return this.entryLinkedInfo
     }
@@ -352,6 +348,18 @@ export default class GMBeastClass {
 
     get roleInfo(): RoleInfo {
         return this.entryRoleInfo
+    }
+
+    public isRoleSelected = (): boolean => {
+        return this.selectRoleIndex >= 0
+    }
+
+    get selectedRoleID(): string | null {
+        if (this.selectRoleIndex) {
+            return this.roleInfo.roles[this.selectRoleIndex].id
+        }
+
+        return null
     }
 
     get selectedRoleIndex(): number {
