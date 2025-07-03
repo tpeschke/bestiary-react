@@ -1,4 +1,4 @@
-import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
+import { Beast } from '../../common/interfaces/beast/beast'
 import { consoleLogErrorNoFile } from '../utilities/sendingFunctions'
 import { getGMVersionOfBeastFromDB } from './gameMaster/gameMaster'
 
@@ -20,9 +20,9 @@ export function getMonsterFromCache(beastId: number): Beast | null {
 }
 
 export async function collectMonsterCache(databaseConnection: any): Promise<void> {
-    const freeIds: MonsterId[] = await databaseConnection.cache.monster.free().catch((error: Error) => consoleLogError('get free beasts ids', error))
+    const freeIds: MonsterId[] = await databaseConnection.cache.monster.freeAndUpdating().catch((error: Error) => consoleLogError('get free beasts ids', error))
 
-    const numberOfFavoritesToGet = Math.max(50 - freeIds.length, 0)
+    const numberOfFavoritesToGet = Math.max(100 - freeIds.length, 0)
     const monsterIds: MonsterId[] = [...freeIds, ...await databaseConnection.cache.monster.favorites(numberOfFavoritesToGet).catch((error: Error) => consoleLogError('get free beasts ids', error))]
 
     getMonsterFromId(databaseConnection, monsterIds, 0)
