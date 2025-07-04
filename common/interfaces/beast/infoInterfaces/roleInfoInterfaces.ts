@@ -2,8 +2,10 @@ import { Strength } from "../../calculationInterfaces";
 import { VitalityInfo } from "./combatInfoInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
+export type RoleNameOrderOptions = '1' | '2' | '3' | null
+
 export default interface RoleInfo {
-    rolenameorder: number,
+    rolenameorder: RoleNameOrderOptions,
     defaultrole: string,
     roles: Role[],
 }

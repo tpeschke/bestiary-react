@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red'
 
@@ -87,6 +87,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'reversal':
             styling = 'fa-solid fa-right-left'
+            break
+        case 'download':
+            styling = 'fa-solid fa-download'
             break
         default:
             break;

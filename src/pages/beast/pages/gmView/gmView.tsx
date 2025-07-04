@@ -16,7 +16,7 @@ interface Props {
 
 export default function GMView({ beast, updateSelectedRole, updateRoleModifier }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
-        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID } = beast
+        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName } = beast
     const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
@@ -31,7 +31,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier }
 
     return (
         <>
-            <NameHeader name={name} />
+            <NameHeader name={name} beastID={id} roleID={selectedRoleID} roleName={roleName} roleNameOrder={roleInfo.rolenameorder} />
             <DoubleColumn
                 LeftColumn={LeftColumn({
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,

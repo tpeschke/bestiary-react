@@ -355,7 +355,7 @@ export default class GMBeastClass {
     }
 
     get selectedRoleID(): string | null {
-        if (this.selectRoleIndex) {
+        if (this.selectRoleIndex >= 0) {
             return this.roleInfo.roles[this.selectRoleIndex].id
         }
 
@@ -368,6 +368,14 @@ export default class GMBeastClass {
 
     set selectedRoleIndex(newIndex: number) {
         this.selectedRoleIndex = newIndex
+    }
+
+    get roleName() {
+        if (this.selectRoleIndex >= 0) {
+            return this.roleInfo.roles[this.selectRoleIndex].generalInfo.name
+        }
+
+        return null
     }
 
     get modifierIndex() {
