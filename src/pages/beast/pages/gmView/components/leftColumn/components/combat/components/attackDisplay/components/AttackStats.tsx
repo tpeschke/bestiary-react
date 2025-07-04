@@ -12,7 +12,7 @@ export default function AttackStats({ attacksStats }: Props) {
 
     return (
         <div className='attack-stats-shell'>
-            <span><h6></h6> <p>{name}</p></span>
+            <span><h6></h6> <p>{name ? name : 'Default Attack'}</p></span>
             {info && <HTMLDisplay html={info} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>

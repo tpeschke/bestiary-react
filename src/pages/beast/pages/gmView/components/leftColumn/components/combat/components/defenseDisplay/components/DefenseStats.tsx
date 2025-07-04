@@ -12,7 +12,7 @@ export default function DefenseStat({ defenseStats }: Props) {
 
     return (
         <div className='defense-stats-shell'>
-            <h6>{name}</h6>
+            <h6>{name ? name : 'Default Defense'}</h6>
             {info && <HTMLDisplay html={info} />}
             <div className='defense-stats-inner-shell'>
                 <div>
@@ -24,7 +24,7 @@ export default function DefenseStat({ defenseStats }: Props) {
                     <p>{cover}</p>
                 </div>
             </div>
-            <div>
+            <div className='defense-stats-inner-shell'>
                 <div>
                     <p>Parry DR</p>
                     <p>{parryDR}</p>
