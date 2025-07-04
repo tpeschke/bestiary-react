@@ -225,6 +225,15 @@ button.orange:hover {
 	background: #ec5121;
 }
 
+button.transparent-white {
+	background: transparent;
+	color: white;
+}
+
+button.transparent-white:hover {
+	background: #00000046;
+}
+
 .hidden-button {
 	cursor: pointer;
 }

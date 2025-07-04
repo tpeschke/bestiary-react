@@ -54,7 +54,7 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
     return (
         <div className='Name-Header'>
             <h1>{name}</h1>
-            {beastID && <button onClick={forceDownload} className='blue'>
+            {beastID && <button onClick={forceDownload} className='transparent-white'>
                 <Icon iconName='download' color='white' margin='right' />
                 Download Token
             </button>}
