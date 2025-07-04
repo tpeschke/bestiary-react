@@ -31,7 +31,7 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
     function forceDownload() {
         if (beastID) {
             const idBase = roleTokenID ? beastID + roleTokenID : beastID
-            const beastName = roleName ? processNameAndRoleOrder(name, roleName, roleNameOrder) : name
+            const beastName = processName(name, roleTokenID, roleName, roleNameOrder)
 
             let xhr = new XMLHttpRequest();
             xhr.open("GET", imageBase + idBase + '-token', true);
@@ -62,8 +62,8 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
     )
 }
 
-function processNameAndRoleOrder(name: string, roleName: string, roleNameOrder: RoleNameOrderOptions = '1') {
-    if (roleName.toUpperCase() !== "NONE") {
+function processName(name: string, roleTokenID: string | null, roleName: string | null | undefined, roleNameOrder: RoleNameOrderOptions = '1') {
+    if (roleTokenID && roleName && roleName.toUpperCase() !== "NONE") {
         if (!roleNameOrder || roleNameOrder === '1') {
             return name + " " + roleName
         } else if (roleNameOrder === '3') {
