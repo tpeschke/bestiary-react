@@ -18,13 +18,17 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
         shellClass += ' title-bottom-border'
     }
 
+    const tooltip = "This indicates how dangerous this entry is. Red Skulls represent a particularly dangerous entry"
+
     return (
         <div className={shellClass}>
             <h2>{title}</h2>
             {showRightSide &&
                 <div className="skull-frame">
                     <p>{role} {secondaryRole ? `(${secondaryRole})` : ''}</p>
-                    {getSkullNumber(points).map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} />)}
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
+                        {getSkullNumber(points).map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)}
+                    </span>
                 </div>
             }
         </div>
