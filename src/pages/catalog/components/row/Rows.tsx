@@ -1,5 +1,5 @@
+import { CatalogTile } from '../../catalogInterfaces';
 import Row from './Row';
-import { CatalogTile } from '../catalogInterfaces';
 
 interface Props {
     catalogItems: CatalogTile[][]

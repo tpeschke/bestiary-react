@@ -1,8 +1,8 @@
-import '../Catalog.css'
+import '../../Catalog.css'
 
-import Icon from '../../../components/icon/Icon'
-import { CatalogTile } from '../catalogInterfaces'
-import Tile from './tile/Tile'
+import Icon from '../../../../components/icon/Icon'
+import { CatalogTile } from '../../catalogInterfaces'
+import Tile from '../tile/Tile'
 
 interface Props {
     title?: string,

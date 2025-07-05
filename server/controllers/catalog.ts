@@ -18,8 +18,8 @@ let catalogCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], f
 let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
 
 export async function getCatalog(request: Request, response: Response) {
-    const { id: userID } = request.user
-    if (userID) {
+    if (request.user?.id) {
+        const { id: userID } = request.user
         const databaseConnection = getDatabaseConnection(request)
         const favorites = await getFavorites(databaseConnection, userID)
         checkForContentTypeBeforeSending(
