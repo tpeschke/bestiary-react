@@ -24,6 +24,15 @@
     overflow: hidden;
     border-radius: 5px;
     margin: auto;
+    position: relative;
+}
+
+.image-frame .icon-frame {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.788);
+    padding: 1px;
+    bottom: 0;
+    border-top-right-radius: 5px;
 }
 
 .image-frame>img {

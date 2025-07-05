@@ -14,7 +14,7 @@ interface Props {
 export default function Tile({ tile }: Props) {
     const { id, thumbnail, name, canplayerview, patreon, notupdating } = tile
 
-    function handleImageError({currentTarget}: any) {
+    function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
         currentTarget.src = ImageNotFound
     }
@@ -24,10 +24,12 @@ export default function Tile({ tile }: Props) {
         <Link to={`/beast/${id}`}>
             <div className={notupdating ? 'tile not-updating' : 'tile'} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
                 <div className='image-frame'>
+                    <div className='icon-frame'>
+                        <TileIcon canplayerview={canplayerview} patreon={patreon} />
+                    </div>
                     <img src={imageBase + id} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleImageError}></img>
                 </div>
                 <span className='name-frame'>
-                    <TileIcon canplayerview={canplayerview} patreon={patreon} />
                     <h2>{name}</h2>
                 </span>
             </div>
