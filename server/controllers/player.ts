@@ -6,25 +6,13 @@ import { getArtistInfo } from "./gameMaster/utilities/getBeast"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
-interface NoteRequest extends Request {
-    body: Body
-}
-
-interface Body {
-    beastId?: number,
-    notes: {
-        id?: number,
-        notes: string
-    }
-}
-
 export async function getPlayerVersionOfBeast(request: Request, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const beastId: number = +request.params.beastId
     const { user } = request
 
-    if ( user && user.patreon && user.patreon > 3 ) {
-        checkForContentTypeBeforeSending(response, {color: 'green', message: 'You\'re a GM'})
+    if (user && user.patreon && user.patreon > 3) {
+        checkForContentTypeBeforeSending(response, { color: 'green', message: 'You\'re a GM' })
     } else {
         let [playerInfo] = await databaseConnection.beast.player.info(beastId).catch((error: Error) => sendErrorForward('player version of beast', error, response))
 
@@ -41,6 +29,18 @@ export async function getPlayerVersionOfBeast(request: Request, response: Respon
     }
 }
 
+interface NoteRequest extends Request {
+    body: Body
+}
+
+interface Body {
+    beastId?: number,
+    notes: {
+        id?: number,
+        notes: string
+    }
+}
+
 export async function addPlayerNotes(request: NoteRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { user } = request
@@ -48,10 +48,10 @@ export async function addPlayerNotes(request: NoteRequest, response: Response) {
 
     if (user && notes.id) {
         await databaseConnection.user.notes.update(notes.id, notes.notes).catch((error: Error) => sendErrorForward('update notes', error, response))
-        checkForContentTypeBeforeSending(response, {color: 'green', message: 'Notes Saved!', noteId: notes.id})
+        checkForContentTypeBeforeSending(response, { color: 'green', message: 'Notes Saved!', noteId: notes.id })
     } else if (user) {
         const [count] = await databaseConnection.user.notes.number(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))
-        
+
         const isAboveDefaultNumberOfNotes = count >= 50
         const patreon = user.patreon ?? 0
         const isAboveNumberOfNotesForPatrons = count >= (patreon * 30) + 50
@@ -60,9 +60,37 @@ export async function addPlayerNotes(request: NoteRequest, response: Response) {
             request.status(401).send('You need to upgrade your Patreon to add more notes')
         } else {
             const [result] = await databaseConnection.user.notes.add(beastId, user.id, notes.notes).catch((error: Error) => sendErrorForward('save notes', error, response))
-            checkForContentTypeBeforeSending(response, {color: 'green', message: 'Notes Saved!', noteId: result.id})
+            checkForContentTypeBeforeSending(response, { color: 'green', message: 'Notes Saved!', noteId: result.id })
         }
     } else {
-        sendErrorForward('notes', {message: 'something has gone terrible wrong RUN RUN AS FAST YOU CAN'}, response)
+        sendErrorForward('notes', { message: 'something has gone terrible wrong RUN RUN AS FAST YOU CAN' }, response)
     }
+}
+
+interface FavoriteRequest extends Request {
+    body: Body
+}
+
+interface Body {
+    beastID: number,
+    newStatus: boolean
+}
+
+export async function updateFavoriteStatus(request: FavoriteRequest, response: Response) {
+    const databaseConnection = getDatabaseConnection(request)
+    const { id: userID } = request.user
+    const { beastID, newStatus } = request.body
+
+    if (newStatus) {
+        await databaseConnection.user.favorite.add(userID, beastID)
+        const [newFavoriteCatalog] = await databaseConnection.user.favorite.getOne(userID, beastID)
+        checkForContentTypeBeforeSending(response, newFavoriteCatalog)
+    } else {
+        await databaseConnection.user.favorite.delete(userID, beastID)
+        checkForContentTypeBeforeSending(response, {beastID: beastID})
+    }
+}
+
+export async function getFavorites(databaseConnection: any, userID: number) {
+    return await databaseConnection.user.favorite.getAll(userID)
 }

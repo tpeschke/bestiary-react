@@ -445,6 +445,10 @@ export default class GMBeastClass {
         return this.entryPlayerSpecificInfo.notes
     }
 
+    get favorite(): boolean {
+        return this.entryPlayerSpecificInfo.favorite
+    }
+
     get playerInfo(): PlayerSpecificInfo {
         return this.entryPlayerSpecificInfo
     }

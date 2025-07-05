@@ -1,13 +1,13 @@
 import './Icon.css'
 
-import { JSX } from 'react'
+import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow'
 
-type Color = null | 'black' | 'white' | 'orange' | 'red'
+type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow'
 
-type IconSize = null | 'h2' | 'small'
+type IconSize = null | 'h1' | 'h2' | 'small'
 
 type Margin = null | 'left' | 'right' | 'center'
 
@@ -23,10 +23,11 @@ interface Props {
     color?: Color,
     iconSize?: IconSize,
     margin?: Margin,
-    float?: Float
+    float?: Float,
+    onClick?: MouseEventHandler<HTMLElement>
 }
 
-export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlTooltip, float }: Props) {
+export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlTooltip, float, onClick }: Props) {
     const WARNING = 'warning'
     let styling: string = WARNING;
 
@@ -91,6 +92,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'download':
             styling = 'fa-solid fa-download'
             break
+        case 'star-hollow':
+            styling = 'fa-regular fa-star'
+            break
+        case 'star':
+            styling = 'fa-solid fa-star'
+            break
         default:
             break;
     }
@@ -108,9 +115,15 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'red':
             styling += ' red-icon'
             break
+        case 'yellow':
+            styling += ' yellow-icon'
+            break
     }
 
     switch (iconSize) {
+        case 'h1':
+            styling += ' h1-size'
+            break;
         case 'h2':
             styling += ' h2-size'
             break;
@@ -141,7 +154,7 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         const { component, id } = htmlTooltip
         return (
             <>
-                <i data-tooltip-id={id} className={styling}></i>
+                <i onClick={onClick} data-tooltip-id={id} className={styling}></i>
                 <Tooltip id={id}>
                     <div>
                         {component}
@@ -150,5 +163,5 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             </>
         )
     }
-    return <i data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
+    return <i onClick={onClick} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
 }

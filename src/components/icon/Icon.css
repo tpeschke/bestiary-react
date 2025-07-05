@@ -19,6 +19,18 @@ i {
     color: #990000
 }
 
+.yellow-icon {
+    color: #ffd740
+}
+
+.yellow-icon:hover {
+    color: #dbb839
+}
+
+.h1-size {
+    font-size: 30px;
+}
+
 .h2-size {
     font-size: 18px;
 }

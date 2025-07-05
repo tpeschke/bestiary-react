@@ -1,26 +1,42 @@
 import { Request, Response, Error } from "../interfaces/apiInterfaces"
 import { BeastTile, Role } from "../interfaces/catalogInterfaces"
+import getDatabaseConnection from "../utilities/databaseConnection"
 
 import { consoleLogErrorNoFile, checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
+import { getFavorites } from "./player"
 
 const consoleLogError = consoleLogErrorNoFile('catalog')
 
 interface Catalog {
     freeBeasts: BeastTile[],
     templates: BeastTile[],
-    catalogItems: BeastTile[][]
+    catalogItems: BeastTile[][],
+    favorites: BeastTile[]
 }
 
-let catalogCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [] }
-let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [] }
+let catalogCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
+let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
 
 export async function getCatalog(request: Request, response: Response) {
-    checkForContentTypeBeforeSending(response, catalogCache)
+    const { id: userID } = request.user
+    if (userID) {
+        const databaseConnection = getDatabaseConnection(request)
+        const favorites = await getFavorites(databaseConnection, userID)
+        checkForContentTypeBeforeSending(
+            response,
+            {
+                ...catalogCache,
+                favorites
+            }
+        )
+    } else {
+        checkForContentTypeBeforeSending(response, catalogCache)
+    }
 }
 
 export async function collectCatalog(databaseConnection: any) {
     let freeBeasts: BeastTile[] = await databaseConnection.cache.catalog.free().catch((error: Error) => consoleLogError('get free beasts', error))
-    
+
     if (freeBeasts.length > 0) { newCache.freeBeasts = freeBeasts }
 
     freeBeasts.forEach(async (beast: BeastTile, index: number) => {
@@ -90,7 +106,7 @@ async function collectCache(databaseConnection: any, index: number) {
         collectCache(databaseConnection, ++index)
     } else {
         catalogCache = newCache
-        newCache = { freeBeasts: [], templates: [], catalogItems: []  }
+        newCache = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
         console.log('--- ----------------- --- ')
         console.log('--- Catalog Collected --- ')
         console.log('--- ----------------- --- ')

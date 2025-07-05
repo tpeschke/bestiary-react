@@ -12,6 +12,7 @@ import { saveCatalog } from '../../../redux/slices/catalogSlice';
 export default function catalogItemStates() {
     const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)
     const freeBeasts: CatalogTile[] = useSelector((state: RootState) => state.catalog.freeBeasts)
+    const favorites: CatalogTile[] = useSelector((state: RootState) => state.catalog.favorites)
     const catalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.catalogItems)
     const updatingCatalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.updatingCatalogItems)
 
@@ -29,6 +30,7 @@ export default function catalogItemStates() {
         templates,
         freeBeasts,
         catalogItems,
-        updatingCatalogItems
+        updatingCatalogItems,
+        favorites
     }
 }

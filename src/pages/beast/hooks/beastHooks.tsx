@@ -12,19 +12,38 @@ import alertInfo from "../../../components/alert/alerts";
 
 import { cacheMonster } from "../../../redux/slices/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
-import { savePlayerNotes } from "./playerHooks";
+import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import { SetPlayerNotes } from "../components/notes/notesDisplay";
+import { CatalogTile } from "../../catalog/catalogInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
+export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
+
+interface UpdateFavoriteReturnBase {
+    type: 'delete' | 'add'
+}
+
+interface DeleteFavoriteReturn extends UpdateFavoriteReturnBase {
+    type: 'delete',
+    beastID: number
+}
+
+interface AddFavoriteReturn extends UpdateFavoriteReturnBase {
+    type: 'add',
+    beastInfo: CatalogTile
+}
+
+export type FavoriteReturn = DeleteFavoriteReturn | AddFavoriteReturn
 
 interface Return {
     beast?: GMBeastClass,
     playerBeast?: PlayerBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
-    updateNotes: SetPlayerNotes
+    updateNotes: SetPlayerNotes,
+    updateFavorite: UpdateFavoriteFunction
 }
 
 export default function beastHooks(): Return {
@@ -176,11 +195,32 @@ export default function beastHooks(): Return {
         return await savePlayerNotes(beastId, notes)
     }
 
+    const updateFavorite = async (): Promise<FavoriteReturn | null> => {
+        if (beast) {
+            const favoriteReturn = await updateFavoriteStatus(beast.id, !beast.favorite)
+
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                playerInfo: {
+                    ...beast.playerInfo,
+                    favorite: !beast.favorite
+                },
+            }
+
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            return favoriteReturn
+        }
+
+        return null
+    }
+
     return {
         beast,
         playerBeast,
         updateSelectedRole,
         updateRoleModifier,
-        updateNotes
+        updateNotes,
+        updateFavorite
     }
 }

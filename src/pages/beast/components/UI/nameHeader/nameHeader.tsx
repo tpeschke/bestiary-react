@@ -5,17 +5,24 @@ import axios from 'axios';
 import Icon from '../../../../../components/icon/Icon'
 import { imageBase } from '../../../../../frontend-config';
 import { RoleNameOrderOptions } from '../../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
+import { UpdateFavoriteFunction } from '../../../hooks/beastHooks';
+import { useDispatch } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../../../../../redux/slices/catalogSlice';
 
 interface Props {
     name: string,
     beastID?: number,
     roleID?: string | null,
     roleName?: string | null,
-    roleNameOrder?: RoleNameOrderOptions
+    roleNameOrder?: RoleNameOrderOptions,
+    favorite: boolean,
+    updateFavorite: UpdateFavoriteFunction
 }
 
-export default function NameHeader({ name, beastID, roleID, roleName, roleNameOrder }: Props) {
+export default function NameHeader({ name, beastID, roleID, roleName, roleNameOrder, favorite, updateFavorite }: Props) {
     const [roleTokenID, setRoleTokenID] = useState<string | null>(null)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (roleID) {
@@ -51,9 +58,21 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
         }
     }
 
+    async function updateFavoriteAndCatalog() {
+        const favoriteReturn = await updateFavorite()
+        if (favoriteReturn?.type === 'add') {
+            dispatch(addToFavorites(favoriteReturn.beastInfo))
+        } else if (favoriteReturn?.type === 'delete') {
+            dispatch(removeFromFavorites(favoriteReturn.beastID))
+        }
+    }
+
     return (
         <div className='Name-Header'>
-            <h1>{name}</h1>
+            <span className='title-span'>
+                <Icon onClick={updateFavoriteAndCatalog} iconName={favorite ? 'star' : 'star-hollow'} color='yellow' margin="right" iconSize='h1' tooltip="Click to Favorite this Entry" />
+                <h1>{name}</h1>
+            </span>
             {beastID && <button onClick={forceDownload} className='transparent-white'>
                 <Icon iconName='download' color='white' margin='right' />
                 Download Token

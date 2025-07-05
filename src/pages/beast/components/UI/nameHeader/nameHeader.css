@@ -7,6 +7,11 @@
     align-items: center;
 }
 
+.Name-Header .title-span {
+    display: flex;
+    align-items: center;
+}
+
 .Name-Header h1 {
     font-family: 'HamletOrNot';
     color: white;

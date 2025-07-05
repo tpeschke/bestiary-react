@@ -2,7 +2,8 @@ export interface CatalogState {
     catalogItems: CatalogTile[][],
     templates: CatalogTile[],
     freeBeasts: CatalogTile[],
-    updatingCatalogItems: CatalogTile[][]
+    updatingCatalogItems: CatalogTile[][],
+    favorites: CatalogTile[]
 }
 
 export interface CatalogTile {

@@ -4,13 +4,13 @@ import PlayerView from "./pages/playerView/playerView";
 import GMView from "./pages/gmView/gmView";
 
 export default function View(setLoading: Function) {
-    const { beast, playerBeast, updateSelectedRole, updateRoleModifier, updateNotes } = beastHooks();
+    const { beast, playerBeast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite } = beastHooks();
 
     setLoading(!beast && !playerBeast)
 
     return (
         <div className='card-background'>
-            {beast && <GMView beast={beast} updateSelectedRole={updateSelectedRole} updateRoleModifier={updateRoleModifier} updateNotes={updateNotes} />}
+            {beast && <GMView beast={beast} updateSelectedRole={updateSelectedRole} updateRoleModifier={updateRoleModifier} updateNotes={updateNotes} updateFavorite={updateFavorite} />}
             {playerBeast && <PlayerView beast={playerBeast} />}
         </div>
     )

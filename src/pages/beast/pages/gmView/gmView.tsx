@@ -6,19 +6,20 @@ import DoubleColumn from "../../components/UI/doubleColumn/doubleColumn"
 import RightColumn from "./components/rightColumn/RightColumn"
 import LeftColumn from "./components/leftColumn/LeftColumn"
 import Weirdshaping from "./components/weirdshaping/Weirdshaping"
-import { UpdateRoleModifierFunction, UpdateSelectedRoleFunction } from "../../hooks/beastHooks"
+import { UpdateRoleModifierFunction, UpdateSelectedRoleFunction, UpdateFavoriteFunction } from "../../hooks/beastHooks"
 import { SetPlayerNotes } from "../../components/notes/notesDisplay"
 
 interface Props {
     beast: GMBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
-    updateNotes: SetPlayerNotes
+    updateNotes: SetPlayerNotes,
+    updateFavorite: UpdateFavoriteFunction
 }
 
-export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes }: Props) {
+export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
-        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes } = beast
+        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite } = beast
     const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
@@ -33,7 +34,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
 
     return (
         <>
-            <NameHeader name={name} beastID={id} roleID={selectedRoleID} roleName={roleName} roleNameOrder={roleInfo.rolenameorder} />
+            <NameHeader name={name} beastID={id} roleID={selectedRoleID} roleName={roleName} roleNameOrder={roleInfo.rolenameorder} favorite={favorite} updateFavorite={updateFavorite} />
             <DoubleColumn
                 LeftColumn={LeftColumn({
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,

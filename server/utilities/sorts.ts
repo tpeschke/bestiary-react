@@ -1,5 +1,5 @@
-import { UnsortedRole } from "../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { Conflict } from "../interfaces/beastInterfaces/infoInterfaces/socialInfo";
+import { Conflict } from '../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces';
+import { UnsortedRole } from '../controllers/gameMaster/utilities/getUtilities/getRoleInfo';
 import { Item } from "../interfaces/lootInterfaces";
 
 export function sortByRank(a: Conflict, b: Conflict): number {

@@ -27,6 +27,10 @@ div {
     overflow-y: hidden;
 }
 
+.tile-row .paragraph-padding {
+    padding: 30px;
+}
+
 .catalog h1 {
     color: #795548;
     border-bottom: 1px solid lightgray;

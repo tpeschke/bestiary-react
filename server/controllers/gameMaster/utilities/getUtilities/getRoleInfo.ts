@@ -53,7 +53,7 @@ export async function getRoles(databaseConnection: any, beastId: number, beastNa
 }
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
-    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue, largeweapons, knockback, singledievitality, noknockback, rollundertrauma,
+    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue: fatigueStrength, largeweapons: vitalityStrength, knockback, singledievitality, noknockback, rollundertrauma,
         isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole,
         socialsecondary, attack_conf, defense_conf, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
 
@@ -66,8 +66,9 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             attack, defense, combatrole, combatsecondary, combatpoints,
             vitalityInfo: {
                 notrauma, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
+                vitalityStrength, fatigueStrength,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, largeweapons, fatigue),
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityStrength, fatigueStrength),
                 locationalVitalities: []
             },
             initiative: '+20'
