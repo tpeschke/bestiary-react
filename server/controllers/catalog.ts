@@ -20,6 +20,7 @@ export async function getCatalog(request: Request, response: Response) {
 
 export async function collectCatalog(databaseConnection: any) {
     let freeBeasts: BeastTile[] = await databaseConnection.cache.catalog.free().catch((error: Error) => consoleLogError('get free beasts', error))
+    
     if (freeBeasts.length > 0) { newCache.freeBeasts = freeBeasts }
 
     freeBeasts.forEach(async (beast: BeastTile, index: number) => {
@@ -41,7 +42,7 @@ export async function collectCatalog(databaseConnection: any) {
     let templateBeasts = await databaseConnection.cache.catalog.template().catch((error: Error) => consoleLogError('templates catagory', error))
     if (templateBeasts.length > 0) { newCache.templates = templateBeasts }
 
-    templateBeasts.map(async (beast: BeastTile, index: number) => {
+    templateBeasts.forEach(async (beast: BeastTile, index: number) => {
         beast.roles = await databaseConnection.cache.catalog.roleTemplate(beast.id).catch((error: Error) => consoleLogError('collect roles for templates', error))
 
         if (!beast.defaultrole && beast.roles.length > 0) { beast.defaultrole = beast.roles[0].id }

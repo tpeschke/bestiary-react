@@ -14,7 +14,7 @@ export default function PlayerView({ beast }: Props) {
         <>
             <NameHeader name={beast.name} />
             <DoubleColumn 
-                LeftColumn={FullImage({ imageParam: beast.id, altText: beast.name, artistInfo: beast.artistInfo })}
+                LeftColumn={FullImage({ imageParam: beast.id, altText: beast.name, artistInfo: beast.artistInfo, roleID: null })}
                 RightColumn={NotesDisplay({notes: beast.notes, setPlayerNotes: beast.setNotes})}
             />
         </>

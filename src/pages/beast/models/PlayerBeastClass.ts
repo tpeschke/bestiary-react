@@ -1,6 +1,7 @@
+import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import { savePlayerNotes } from "../hooks/playerHooks";
 import { ArtistInfo } from "../interfaces/infoInterfaces/ImageInfoInterfaces";
-import { Notes, PlayerBeastInfo } from "../interfaces/viewInterfaces";
+import { PlayerBeastInfo } from "../interfaces/viewInterfaces";
 
 export default class PlayerBeastClass {
     private beastInfo: PlayerBeastInfo;

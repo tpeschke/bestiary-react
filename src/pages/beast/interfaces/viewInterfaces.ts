@@ -9,6 +9,7 @@ import SocialInfo from "./infoInterfaces/socialInfo"
 
 import RoleInfo from '../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces'
 import SkillInfo from "../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 
 export interface PlayerBeastInfo {
     id: number,
@@ -17,18 +18,13 @@ export interface PlayerBeastInfo {
     artistInfo: ArtistInfo
 }
 
-export interface Notes {
-    id?: number,
-    notes: string
-}
-
 export interface BeastInfo {
     id: number,
     patreon: number,
     canplayerview: boolean,
     roleModifier: number,
     generalInfo: GeneralInfo,
-    playerSpecificInfo: PlayerSpecificInfo,
+    playerInfo: PlayerSpecificInfo,
     imageInfo: ImageInfo,
     linkedInfo : LinkedInfo,
     roleInfo: RoleInfo,

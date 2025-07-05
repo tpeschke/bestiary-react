@@ -15,6 +15,9 @@ import LootInfo from '../../../../interfaces/infoInterfaces/lootInfoInterfaces';
 import LootDisplay from './components/lootDisplay/LootDisplay';
 import HabitatDisplay from './components/habitatDisplay/HabitatDisplay';
 import EncounterDisplay from './components/encounterDisplay/EncounterDisplay';
+import PlayerDisplayInfo from './components/playerInfo/PlayerDisplayInfo';
+import { Notes } from '../../../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces';
+import { SetPlayerNotes } from '../../../../components/notes/notesDisplay';
 
 interface Props {
     intro: string
@@ -28,10 +31,12 @@ interface Props {
     meta: string,
     locationsInfo: Location[],
     lootInfo: LootInfo,
-    maxPoints: number
+    maxPoints: number,
+    notes: Notes,
+    updateNotes: SetPlayerNotes
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints }: Props) {
+export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes }: Props) {
     const showIntroSection = intro && intro !== ''
 
     return (
@@ -52,6 +57,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <VariantsDisplay variantsInfo={variants} />
             <LocationsDisplay locationsInfo={locationsInfo} />
             <InfoDisplay section='Meta Notes' info={meta} />
+            <PlayerDisplayInfo notes={notes} updateNotes={updateNotes} />
         </div>
     )
 }

@@ -31,6 +31,7 @@ import { Pleroma } from "../../../common/interfaces/beast/infoInterfaces/lootInf
 import { getDifficultyDie } from "../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
 import { Casting, Spell } from "../../../common/interfaces/beast/infoInterfaces/castingInfo"
 import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { getFavorite, getNotes } from "./utilities/getUtilities/getPlayerInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -103,8 +104,9 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const databaseConnection = getDatabaseConnection(request)
     const beastId = +request.params.beastId
     const isEditing = request.query ? request.query.edit === 'true' : false
+    const { id: userID } = request.user
 
-    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastId, isEditing)
+    const beast: Beast = await getGMVersionOfBeastFromDB(databaseConnection, beastId, {isEditing, userID})
     
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)
@@ -113,7 +115,14 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     }
 }
 
-export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, isEditing: boolean = false): Promise<Beast> {
+interface GetBeastOptions {
+    isEditing: boolean,
+    userID?: number
+}
+
+export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, options: GetBeastOptions = {isEditing: false}): Promise<Beast> {
+    const { isEditing, userID } = options
+
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
@@ -123,6 +132,10 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
     let beast: Beast = {
         id, patreon, canplayerview,
+        playerInfo: {
+            favorite: false,
+            notes: ''
+        },
         generalInfo: {
             name, plural, intro, habitat, appearance, senses, diet, meta, size, 
             rarity: getRarity(rarity),
@@ -229,6 +242,11 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
         }
     }
     let promiseArray: any[] = []
+    
+    if (userID) {
+        promiseArray.push(getFavorite(databaseConnection, beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
+        promiseArray.push(getNotes(databaseConnection, beast.id, userID).then((notes: string) => beast.playerInfo.notes = notes))
+    }
 
     promiseArray.push(getScenarios(databaseConnection, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
     promiseArray.push(getFolklore(databaseConnection, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))

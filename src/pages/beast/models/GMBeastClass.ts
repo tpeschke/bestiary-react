@@ -25,6 +25,7 @@ import { Size } from "../../../../common/interfaces/beast/infoInterfaces/general
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../components/alert/alerts";
 import { Strength } from "../../../../common/interfaces/calculationInterfaces";
+import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -53,13 +54,14 @@ export default class GMBeastClass {
     private selectedModifier: number
 
     constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null) {
-        const { id, patreon, canplayerview, generalInfo, playerSpecificInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo, roleModifier } = beastInfo
+        const { id, patreon, canplayerview, generalInfo, playerInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, 
+            castingInfo, roleModifier, } = beastInfo
 
         this.entryID = id
         this.patreon = patreon
         this.canplayerview = canplayerview
         this.entryGeneralInfo = generalInfo
-        this.entryPlayerSpecificInfo = playerSpecificInfo
+        this.entryPlayerSpecificInfo = playerInfo
         this.entryImageInfo = imageInfo
         this.entryLinkedInfo = linkedInfo
         this.entryRoleInfo = roleInfo
@@ -106,7 +108,7 @@ export default class GMBeastClass {
             patreon: this.patreon,
             canplayerview: this.canplayerview,
             generalInfo: this.entryGeneralInfo,
-            playerSpecificInfo: this.entryPlayerSpecificInfo,
+            playerInfo: this.entryPlayerSpecificInfo,
             imageInfo: this.entryImageInfo,
             linkedInfo: this.entryLinkedInfo,
             roleInfo: this.entryRoleInfo,
@@ -437,5 +439,13 @@ export default class GMBeastClass {
 
     get hasModifier(): boolean {
         return !!this.modifierIndex
+    }
+
+    get notes(): Notes {
+        return this.entryPlayerSpecificInfo.notes
+    }
+
+    get playerInfo(): PlayerSpecificInfo {
+        return this.entryPlayerSpecificInfo
     }
 }

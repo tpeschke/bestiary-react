@@ -29,7 +29,7 @@ export async function collectMonsterCache(databaseConnection: any): Promise<void
 }
 
 async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number) {
-    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, false).catch((error: Error) => consoleLogError('get main', error))
+    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, {isEditing: false}).catch((error: Error) => consoleLogError('get main', error))
 
     if (beast) {
         monsterCache[monsterIds[index].beastid] = beast

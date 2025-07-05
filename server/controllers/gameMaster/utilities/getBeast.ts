@@ -144,20 +144,6 @@ export async function getScenarios(databaseConnection: any, beastId: number): Pr
     return databaseConnection.beast.scenario.get(beastId)
 }
 
-export async function getFavorite(databaseConnection: any, beastId: number, userId: number): Promise<boolean> {
-    if (userId) {
-        const result = await databaseConnection.user.favorite.get(userId, beastId)
-        return result.length > 0
-    } else {
-        return false
-    }
-}
-
-export async function getNotes(databaseConnection: any, beastId: number, userId: number): Promise<string> {
-    const result = await databaseConnection.user.notes.get(beastId, userId)
-    return result[0]
-}
-
 export async function getTables(databaseConnection: any, beastId: number, tables: TablesObject, promiseArray: any[]) {
     const basicTableInfo: Table[] = await databaseConnection.beast.table.getTable(beastId)
 

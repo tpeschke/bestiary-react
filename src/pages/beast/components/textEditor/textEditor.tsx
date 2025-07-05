@@ -7,8 +7,8 @@ import StarterKit from '@tiptap/starter-kit'
 
 import MenuBar from './menuBar'
 
-import { Notes } from '../../interfaces/viewInterfaces'
 import HTMLDisplay from '../UI/htmlDisplay/htmlDisplay'
+import { Notes } from '../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
 
 interface Props {
   content: Notes,

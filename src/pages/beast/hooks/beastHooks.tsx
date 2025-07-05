@@ -12,6 +12,9 @@ import alertInfo from "../../../components/alert/alerts";
 
 import { cacheMonster } from "../../../redux/slices/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
+import { savePlayerNotes } from "./playerHooks";
+import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
+import { SetPlayerNotes } from "../components/notes/notesDisplay";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -20,7 +23,8 @@ interface Return {
     beast?: GMBeastClass,
     playerBeast?: PlayerBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    updateRoleModifier: UpdateRoleModifierFunction
+    updateRoleModifier: UpdateRoleModifierFunction,
+    updateNotes: SetPlayerNotes
 }
 
 export default function beastHooks(): Return {
@@ -76,7 +80,6 @@ export default function beastHooks(): Return {
         window.scrollTo(0, 0)
     }
 
-    // BRODY Why isn't this working?
     function handleBackwardsCompatibilityWithOldUrl() {
         let queryParams: any = {}
         const modifierIndexDictionary = ['NONE', 'UNIQUE', 'GREATER', 'DREAD', 'THE']
@@ -145,10 +148,39 @@ export default function beastHooks(): Return {
         }
     }
 
+    const updateNotes = async (value: string): Promise<void> => {
+        let notes: Notes = { notes: value}
+
+        if (beast && !beast?.notes.id) {
+            const id = await saveNotes(beast.id, notes)
+            notes = {...notes, id}
+        } else if (beast && value !== beast?.notes.notes) {
+            notes = {...beast.notes, ...notes}
+            await saveNotes(beast.id, notes)
+        }
+
+        if (beast) {
+            const modifiedBeastInfo: BeastInfo = {
+                ...beast.beastInfo,
+                playerInfo: {
+                    ...beast.playerInfo,
+                    notes
+                },
+            }
+
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
+    const saveNotes = async (beastId: number, notes: Notes): Promise<number> => {
+        return await savePlayerNotes(beastId, notes)
+    }
+
     return {
         beast,
         playerBeast,
         updateSelectedRole,
-        updateRoleModifier
+        updateRoleModifier,
+        updateNotes
     }
 }

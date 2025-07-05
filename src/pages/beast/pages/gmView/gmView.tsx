@@ -7,16 +7,18 @@ import RightColumn from "./components/rightColumn/RightColumn"
 import LeftColumn from "./components/leftColumn/LeftColumn"
 import Weirdshaping from "./components/weirdshaping/Weirdshaping"
 import { UpdateRoleModifierFunction, UpdateSelectedRoleFunction } from "../../hooks/beastHooks"
+import { SetPlayerNotes } from "../../components/notes/notesDisplay"
 
 interface Props {
     beast: GMBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    updateRoleModifier: UpdateRoleModifierFunction
+    updateRoleModifier: UpdateRoleModifierFunction,
+    updateNotes: SetPlayerNotes
 }
 
-export default function GMView({ beast, updateSelectedRole, updateRoleModifier }: Props) {
+export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
-        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName } = beast
+        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes } = beast
     const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
@@ -37,9 +39,8 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier }
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
                     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID
                 })}
-                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints })}
+                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />
-            {/* This will often return undefined after the beast info gets changed */}
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
         </>
     )

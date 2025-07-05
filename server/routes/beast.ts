@@ -7,11 +7,11 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../uti
 import getDatabaseConnection from '../utilities/databaseConnection'
 import { getPlayerVersionOfBeast } from '../controllers/player'
 import { getMonsterFromCache } from '../controllers/monsterCache'
-import { Beast } from '../interfaces/beastInterfaces/beastInterfaces'
 import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
 import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getBeast'
 import getLoot from '../controllers/loot/loot'
 import getRandomEncounter from '../controllers/encounter/encounter'
+import { Beast } from '../../common/interfaces/beast/beast'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
@@ -31,12 +31,15 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const beastId = body.beastId ?? +params.beastId
     
     const databaseReturn = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
+
     if (databaseReturn?.length > 0) {
         const [viewInfo] = databaseReturn
         const viewType: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
+
         if (viewType === 'gm') {
             const beast: Beast | null = getMonsterFromCache(beastId)
             if (beast) {
+                // get player stuff
                 checkForContentTypeBeforeSending(response, beast)
             } else {
                 getGMVersionOfBeast(request, response)
@@ -46,6 +49,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
         } else {
             checkForContentTypeBeforeSending(response, { color: "red", message: "You need to log on." })
         }
+
     } else {
         checkForContentTypeBeforeSending(response, { color: "red", message: "You need to log on." })
     }

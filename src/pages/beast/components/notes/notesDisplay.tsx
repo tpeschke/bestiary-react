@@ -2,11 +2,11 @@ import './notes.css'
 
 import TextEditor from '../textEditor/textEditor'
 
-import { Notes } from '../../interfaces/viewInterfaces'
 import { useSelector } from 'react-redux'
 import { isUserLoggedOn } from '../../../../redux/slices/userSlice'
+import { Notes } from '../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
 
-type SetPlayerNotes = (value: string) => void
+export type SetPlayerNotes = (value: string) => void
 
 interface Props {
     notes: Notes,
