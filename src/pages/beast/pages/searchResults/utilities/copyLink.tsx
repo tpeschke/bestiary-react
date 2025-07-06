@@ -2,7 +2,7 @@ import alertInfo from "../../../../../components/alert/alerts";
 
 export function copyLink(): void {
     let textArea = getTextArea()
-    const url = window.location.href
+    const url = getURL()
 
     textArea.value = url;
     document.body.appendChild(textArea);
@@ -25,4 +25,8 @@ function getTextArea() {
     textArea.style.left = '0';
 
     return textArea
+}
+
+function getURL(): string {
+    return `${window.location.href}&goDirectlyTo=true`
 }

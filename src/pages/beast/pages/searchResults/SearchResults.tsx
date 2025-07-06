@@ -7,13 +7,16 @@ import { useEffect } from 'react'
 import ResultCard from './resultCard/ResultCard'
 import Icon from '../../../../components/icon/Icon'
 import { copyLink } from './utilities/copyLink'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
     setLoading?: SetLoadingFunction
 }
 
 export default function SearchResults({ setLoading }: Props) {
-    const { searchResults } = SearchHooks()
+    const { searchResults, navigateToRandomResult } = SearchHooks()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (setLoading) {
@@ -31,7 +34,7 @@ export default function SearchResults({ setLoading }: Props) {
                     <div className='result-info-shell'>
                         <h2>Results: {searchResults.length}</h2>
                         <span>
-                            <button data-tooltip-id="my-tooltip" data-tooltip-content={getRandomResultTooltip}>
+                            <button data-tooltip-id="my-tooltip" data-tooltip-content={getRandomResultTooltip} onClick={(_: any) => navigateToRandomResult(searchResults, navigate)}>
                                 <Icon iconName='dice' tooltip={getRandomResultTooltip} iconSize='h2' />
                             </button>
                             <button data-tooltip-id="my-tooltip" data-tooltip-content={linkTooltip} onClick={copyLink}>
