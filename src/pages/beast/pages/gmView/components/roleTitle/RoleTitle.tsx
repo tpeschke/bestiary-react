@@ -18,7 +18,7 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
         shellClass += ' title-bottom-border'
     }
 
-    const tooltip = "This indicates how dangerous this entry is. Red Skulls represent a particularly dangerous entry"
+    const tooltip = "This indicates how dangerous this entry is.\nRed Skulls represent a particularly dangerous entry"
 
     return (
         <div className={shellClass}>
