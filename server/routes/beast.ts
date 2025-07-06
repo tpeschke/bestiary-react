@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { Response, Request, Error } from "../interfaces/apiInterfaces"
+import { Response, Request, Error, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
 
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
@@ -17,7 +17,7 @@ const sendErrorForward = sendErrorForwardNoFile('GM route')
 
 const BeastRoutes = express.Router()
 
-interface gmAuthRequest extends Request {
+interface gmAuthRequest extends BasicParamsRequest {
     body: ownerAuthBody
 }
 

@@ -19,6 +19,7 @@ import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
 import collectGearCache from './controllers/gear/gear'
+import searchRoutes from './routes/search'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -33,6 +34,7 @@ app.use('/', authRoutes)
 app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
+app.use('/searchAPI', searchRoutes)
 
 app.use('/info', BeastRoutes)
 

@@ -1,4 +1,4 @@
-import { Response, Request, Error } from "../../interfaces/apiInterfaces"
+import { Response, Request, BasicParamsRequest } from "../../interfaces/apiInterfaces"
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../interfaces/lootInterfaces"
 import { Challenge, Obstacle } from "../../interfaces/skillInterfaces"
 
@@ -32,6 +32,7 @@ import { getDifficultyDie } from "../../../common/utilities/scalingAndBonus/conf
 import { Casting, Spell } from "../../../common/interfaces/beast/infoInterfaces/castingInfo"
 import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { getFavorite, getNotes } from "./utilities/getUtilities/getPlayerInfo"
+import { Notes } from "../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -92,7 +93,7 @@ interface BeastRequest extends Request {
 //     checkForContentTypeBeforeSending(response, { id: beastId })
 // }
 
-interface GetRequest extends Request {
+interface GetRequest extends BasicParamsRequest {
     query?: GetBeastQuery
 }
 
@@ -134,7 +135,9 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
         id, patreon, canplayerview,
         playerInfo: {
             favorite: false,
-            notes: ''
+            notes: {
+                notes: ''
+            }
         },
         generalInfo: {
             name, plural, intro, habitat, appearance, senses, diet, meta, size, 
@@ -245,7 +248,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     
     if (userID) {
         promiseArray.push(getFavorite(databaseConnection, beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
-        promiseArray.push(getNotes(databaseConnection, beast.id, userID).then((notes: string) => beast.playerInfo.notes = notes))
+        promiseArray.push(getNotes(databaseConnection, beast.id, userID).then((notes: Notes) => beast.playerInfo.notes = notes))
     }
 
     promiseArray.push(getScenarios(databaseConnection, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))

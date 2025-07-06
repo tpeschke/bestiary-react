@@ -1,8 +1,11 @@
 export interface Request {
     app: App,
-    params: Parameters,
-    user: User,
+    user?: User,
     status: Function
+}
+
+export interface BasicParamsRequest extends Request {
+    params: Parameters
 }
 
 interface App {
@@ -13,7 +16,6 @@ interface Parameters {
     beastId: any
     id: number,
     beastid: string,
-    
 }
 
 export interface User {
