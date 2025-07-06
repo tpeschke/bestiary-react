@@ -28,7 +28,9 @@ export default function LootDisplay({ lootInfo, rarity, maxPoints }: Props) {
                     <HTMLDisplay html={lootnotes} />
                 </Body>
             )}
-            <Loading component={GeneratedLootDisplay} componentProps={{ carriedLoot, lairLoot, maxPoints }} secondaryColor={true} />
+            <Loading secondaryColor={true}>
+                <GeneratedLootDisplay carriedLoot={carriedLoot} lairLoot={lairLoot} maxPoints={maxPoints}/>
+            </Loading>
             <PleromaDisplay pleroma={pleroma} rarity={rarity} />
         </>
     )

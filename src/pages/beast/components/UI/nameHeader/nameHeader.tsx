@@ -15,11 +15,11 @@ interface Props {
     roleID?: string | null,
     roleName?: string | null,
     roleNameOrder?: RoleNameOrderOptions,
-    favorite: boolean,
-    updateFavorite: UpdateFavoriteFunction
+    favorite?: boolean,
+    updateFavorite?: UpdateFavoriteFunction
 }
 
-export default function NameHeader({ name, beastID, roleID, roleName, roleNameOrder, favorite, updateFavorite }: Props) {
+export default function NameHeader({ name, beastID, roleID, roleName, roleNameOrder, favorite = false, updateFavorite }: Props) {
     const [roleTokenID, setRoleTokenID] = useState<string | null>(null)
 
     const dispatch = useDispatch()
@@ -59,11 +59,13 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
     }
 
     async function updateFavoriteAndCatalog() {
-        const favoriteReturn = await updateFavorite()
-        if (favoriteReturn?.type === 'add') {
-            dispatch(addToFavorites(favoriteReturn.beastInfo))
-        } else if (favoriteReturn?.type === 'delete') {
-            dispatch(removeFromFavorites(favoriteReturn.beastID))
+        if (updateFavorite) {
+            const favoriteReturn = await updateFavorite()
+            if (favoriteReturn?.type === 'add') {
+                dispatch(addToFavorites(favoriteReturn.beastInfo))
+            } else if (favoriteReturn?.type === 'delete') {
+                dispatch(removeFromFavorites(favoriteReturn.beastID))
+            }
         }
     }
 

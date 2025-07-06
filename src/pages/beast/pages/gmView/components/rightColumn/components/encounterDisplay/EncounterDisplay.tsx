@@ -1,6 +1,6 @@
 import './EncounterDisplay.css'
 
-import Loading from "../../../../../../../../components/loading/Loading";
+import Loading, { SetLoadingFunction } from "../../../../../../../../components/loading/Loading";
 import Body from "../../../../../../components/UI/body/Body";
 import NumberAppearingDisplay from "./components/NumberAppearingDisplay";
 import ObjectivesDisplay from "./components/ObjectiveDisplay";
@@ -21,15 +21,24 @@ export default function EncounterDisplay({ }: Props) {
     return (
         <>
             <h2 className='border'>Random Encounters</h2>
-            <Loading component={EncounterShell} secondaryColor={true} />
+            <Loading secondaryColor={true}>
+                <EncounterShell />
+            </Loading>
+
         </>
     )
 }
 
-function EncounterShell(setLoading: Function) {
+interface Props {
+    setLoading?: SetLoadingFunction
+}
+
+function EncounterShell({ setLoading }: Props) {
     const { encounterInfo, generateEncounter } = encounterHooks();
 
-    setLoading(encounterInfo)
+    if (setLoading) {
+        setLoading(!!encounterInfo)
+    }
 
     if (encounterInfo) {
         const { signs, group, objectives, verb, noun, temperament, time, battlefield, complications } = encounterInfo

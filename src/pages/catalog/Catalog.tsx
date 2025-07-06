@@ -8,14 +8,21 @@ import { useState } from 'react';
 import { isUserLoggedOn } from '../../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 import FavoritesDisplay from './components/favorites/FavoritesDisplay';
+import { SetLoadingFunction } from '../../components/loading/Loading';
 
-export default function Catalog(setLoading: Function) {
+interface Props {
+    setLoading?: SetLoadingFunction
+}
+
+export default function Catalog({ setLoading }: Props) {
     const { templates, freeBeasts, catalogItems, updatingCatalogItems, favorites } = catalogItemStates()
     const userIsLoggedIn = useSelector(isUserLoggedOn)
-    
+
     const [showAll, setShowAll] = useState(false)
 
-    setLoading(templates.length === 0 && freeBeasts.length === 0 && catalogItems.length === 0)
+    if (setLoading) {
+        setLoading(templates.length === 0 && freeBeasts.length === 0 && catalogItems.length === 0)
+    }
 
     return (
         <div className='card-background catalog'>

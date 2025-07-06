@@ -13,17 +13,21 @@ import TalismanDisplay from './components/TalismanDisplay';
 import ScrollDisplay from './components/ScrollDisplay';
 import GenericLootDisplay from './components/GenericLootDisplay';
 import Icon from '../../../../../../../../../../components/icon/Icon';
+import { SetLoadingFunction } from '../../../../../../../../../../components/loading/Loading';
 
 interface Props {
     lairLoot: Loot,
     carriedLoot: Loot,
-    maxPoints: number
+    maxPoints: number,
+    setLoading?: SetLoadingFunction
 }
 
-export default function GeneratedLootDisplay(setLoading: Function, { lairLoot: lairParams, carriedLoot: carriedParams, maxPoints }: Props) {
+export default function GeneratedLootDisplay({ lairLoot: lairParams, carriedLoot: carriedParams, maxPoints, setLoading }: Props) {
     const { generateLoot, lairLoot, carriedLoot, setTimesToRoll, timesToRoll } = LootHooks();
 
-    setLoading(lairLoot && carriedLoot)
+    if (setLoading) {
+        setLoading(!!lairLoot && !!carriedLoot)
+    }
 
     useEffect(() => {
         generateLoot(lairParams, carriedParams, maxPoints, timesToRoll)

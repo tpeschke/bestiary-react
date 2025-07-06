@@ -2,11 +2,18 @@ import beastHooks from "./hooks/beastHooks";
 
 import PlayerView from "./pages/playerView/playerView";
 import GMView from "./pages/gmView/gmView";
+import { SetLoadingFunction } from "../../components/loading/Loading";
 
-export default function View(setLoading: Function) {
+interface Props {
+    setLoading?: SetLoadingFunction
+}
+
+export default function View({ setLoading }: Props) {
     const { beast, playerBeast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite } = beastHooks();
 
-    setLoading(!beast && !playerBeast)
+    if (setLoading) {
+        setLoading(!beast && !playerBeast)
+    }
 
     return (
         <div className='card-background'>

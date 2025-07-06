@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow'
 
@@ -97,6 +97,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'star':
             styling = 'fa-solid fa-star'
+            break
+        case 'magnifying-glass':
+            styling = 'fa-solid fa-magnifying-glass'
             break
         default:
             break;
