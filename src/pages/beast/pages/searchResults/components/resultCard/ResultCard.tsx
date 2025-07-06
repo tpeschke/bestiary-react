@@ -1,11 +1,11 @@
 import './ResultCard.css'
 import ImageNotFound from '../../../../../assets/images/404.png'
 
-import { SearchResult } from '../../../../../../common/interfaces/search'
-import { imageBase } from '../../../../../frontend-config'
-import HTMLDisplay from '../../../components/UI/htmlDisplay/htmlDisplay'
-import Pair from '../../../components/UI/pair/Pair'
-import TileIcon from '../../../../catalog/components/tile/components/TileIcon'
+import { SearchResult } from '../../../../../../../common/interfaces/search'
+import { imageBase } from '../../../../../../frontend-config'
+import HTMLDisplay from '../../../../components/UI/htmlDisplay/htmlDisplay'
+import Pair from '../../../../components/UI/pair/Pair'
+import TileIcon from '../../../../../catalog/components/tile/components/TileIcon'
 import { Link } from 'react-router-dom'
 
 interface Props {

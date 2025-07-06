@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
 import { searchURL } from "../../../../frontend-config";
 
-type NavigateToRandomResultFunction = (searchResults: SearchResult[], navigate: NavigateFunction) => void
+export type NavigateToRandomResultFunction = (searchResults: SearchResult[], navigate: NavigateFunction) => void
 
 interface Return {
     searchResults: SearchResult[],
