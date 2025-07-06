@@ -1,0 +1,23 @@
+.result-info-shell {
+    margin-bottom: 20px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-info-shell h2 {
+    color: white;
+}
+
+.result-info-shell>span>button {
+    margin-right: 0;
+}
+
+.result-info-shell>span>button:first-child {
+    margin-right: 15px;
+}
+
+.result-info-shell.no-results {
+    text-align: center;
+}

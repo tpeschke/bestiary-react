@@ -1,7 +1,7 @@
 import './MovementInfo.css'
 
-import { Movement } from '../../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces'
 import Pair from '../../../../../../../../components/UI/pair/Pair'
+import { Movement } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 
 interface Props {
     movements?: Movement[]
