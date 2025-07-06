@@ -3,7 +3,7 @@ import { Size, Rarity} from './beast/infoInterfaces/generalInfoInterfaces'
 interface SearchResultBase {
     type: 'player' | 'gm',
     id: number,
-    number: string,
+    name: string,
     intro: string,
     patreon: number,
     rarity: Rarity,

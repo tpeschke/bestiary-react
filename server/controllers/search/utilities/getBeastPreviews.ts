@@ -1,15 +1,15 @@
 import { SearchResult } from "../../../../common/interfaces/search"
 import { User } from "../../../interfaces/apiInterfaces"
-import { isOwner } from "../../../utilities/ownerAccess"
+import { SearchReturn } from "../search"
 
-export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: number[], user: User | undefined): Promise<SearchResult[]> {
+export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: SearchReturn[], user: User | undefined): Promise<SearchResult[]> {
     let promiseArray: Promise<SearchResult>[] = []
 
-    flattenedIDArray.forEach(async (beastID: number) => {
+    flattenedIDArray.forEach(async ({ id: beastID }) => {
         if (user?.patreon && user?.patreon >= 3) {
-            promiseArray.push(await databaseConnection.search.preview.gm(beastID, user?.id).then(result => result[0]))
+            promiseArray.push(databaseConnection.search.preview.gm(beastID, user?.id).then(result => result[0]))
         } else {
-            promiseArray.push(await databaseConnection.search.preview.player(beastID).then(result => result[0]))
+            promiseArray.push(databaseConnection.search.preview.player(beastID).then(result => result[0]))
         }
     })
 

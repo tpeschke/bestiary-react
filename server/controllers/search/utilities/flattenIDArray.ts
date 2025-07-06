@@ -1,12 +1,11 @@
 import _ from 'lodash'
+import { SearchReturn } from '../search'
 
-export default function flattenIDArray (idArray: number[][]): number[] {
+export default function flattenIDArray (idArray: SearchReturn[][]): SearchReturn[] {
     const idArrayLength = idArray.length
 
     if (idArrayLength > 1) {
-        console.log(idArray)
-        const finalIdArray: number[] = _.intersection(...idArray)
-        console.log(finalIdArray)
+        const finalIdArray: SearchReturn[] = _.intersection(...idArray)
         return finalIdArray
     } else if (idArray.length === 1) {
         return [...idArray[0]]

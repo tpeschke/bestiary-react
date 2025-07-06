@@ -1,25 +1,30 @@
+import axios from "axios";
+
+import { SearchResult } from '../../../../../common/interfaces/search'
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { searchURL } from "../../../../frontend-config";
 
 interface Return {
-    searchResults: any[]
+    searchResults: SearchResult[]
 }
 
 export default function SearchHooks(): Return {
     const [currentQueries, setCurrentQueries] = useState('')
-    const [searchResults, setSearchResults] = useState<any[]>([])
+    const [searchResults, setSearchResults] = useState<SearchResult[]>([])
 
     const [searchParams] = useSearchParams();
 
-    const navigate = useNavigate()
-    
     useEffect(() => {
-        
-    }, [currentQueries]);
+        if (currentQueries !== searchParams.toString()) {
+            setSearchResults([])
+            setCurrentQueries(searchParams.toString())
 
-    function scrollToTop() {
-        window.scrollTo(0, 0)
-    }
+            axios.get(searchURL + '?' + searchParams.toString()).then(({data}) => {
+                setSearchResults(data)
+            })
+        }
+    }, [searchParams]);
 
     return {
         searchResults

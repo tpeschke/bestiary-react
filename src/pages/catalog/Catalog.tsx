@@ -4,7 +4,7 @@ import catalogItemStates from './hooks/catalogItemStates';
 
 import Row from './components/row/Row';
 import Rows from './components/row/Rows';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isUserLoggedOn } from '../../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 import FavoritesDisplay from './components/favorites/FavoritesDisplay';
@@ -20,9 +20,11 @@ export default function Catalog({ setLoading }: Props) {
 
     const [showAll, setShowAll] = useState(false)
 
-    if (setLoading) {
-        setLoading(templates.length === 0 && freeBeasts.length === 0 && catalogItems.length === 0)
-    }
+    useEffect(() => {
+        if (setLoading) {
+            setLoading(templates.length === 0 && freeBeasts.length === 0 && catalogItems.length === 0)
+        }
+    }, [setLoading, templates, freeBeasts, catalogItems])
 
     return (
         <div className='card-background catalog'>

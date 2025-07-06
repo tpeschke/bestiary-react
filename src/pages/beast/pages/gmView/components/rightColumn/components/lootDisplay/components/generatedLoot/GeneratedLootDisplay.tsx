@@ -25,13 +25,15 @@ interface Props {
 export default function GeneratedLootDisplay({ lairLoot: lairParams, carriedLoot: carriedParams, maxPoints, setLoading }: Props) {
     const { generateLoot, lairLoot, carriedLoot, setTimesToRoll, timesToRoll } = LootHooks();
 
-    if (setLoading) {
-        setLoading(!!lairLoot && !!carriedLoot)
-    }
-
     useEffect(() => {
         generateLoot(lairParams, carriedParams, maxPoints, timesToRoll)
     }, []);
+
+    useEffect(() => {
+        if (setLoading) {
+            setLoading(!!lairLoot && !!carriedLoot)
+        }
+    }, [setLoading, lairLoot, carriedLoot])
     
 
     async function regenerateLoot() {

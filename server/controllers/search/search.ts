@@ -14,6 +14,10 @@ export interface SearchQuery {
     [key: string]: string
 }
 
+export interface SearchReturn {
+    id: number
+}
+
 export default async function search(request: SearchRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
 

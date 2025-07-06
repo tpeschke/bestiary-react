@@ -12,6 +12,7 @@ import encounterHooks from "./hooks/EncounterHooks";
 import BattlefieldDisplay from './components/BattlefieldDisplay/BattlefieldDisplay';
 import ComplicationDisplay from './components/ComplicationDisplay/ComplicationDisplay';
 import Icon from '../../../../../../../../components/icon/Icon';
+import { useEffect } from 'react';
 
 interface Props {
 }
@@ -36,9 +37,11 @@ interface Props {
 function EncounterShell({ setLoading }: Props) {
     const { encounterInfo, generateEncounter } = encounterHooks();
 
-    if (setLoading) {
-        setLoading(!!encounterInfo)
-    }
+    useEffect(() => {
+        if (setLoading) {
+            setLoading(!!encounterInfo)
+        }
+    }, [setLoading, encounterInfo])
 
     if (encounterInfo) {
         const { signs, group, objectives, verb, noun, temperament, time, battlefield, complications } = encounterInfo

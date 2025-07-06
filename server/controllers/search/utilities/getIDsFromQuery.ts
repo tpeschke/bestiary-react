@@ -1,9 +1,9 @@
 import { User } from "../../../interfaces/apiInterfaces";
-import { SearchQuery } from "../search";
+import { SearchQuery, SearchReturn } from "../search";
 import getRoleName from "./roleName";
 
-export default async function getIDsFromQuery(databaseConnection: any, query: SearchQuery, user: User | undefined): Promise<number[][]> {
-    let idArray: number[][] = []
+export default async function getIDsFromQuery(databaseConnection: any, query: SearchQuery, user: User | undefined): Promise<SearchReturn[][]> {
+    let idArray: SearchReturn[][] = []
 
     for (const item in query) {
         switch (item) {
