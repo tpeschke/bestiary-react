@@ -199,31 +199,3 @@ export async function getCasting(databaseConnection: any, beastId: number): Prom
 export async function getSpells(databaseConnection: any, beastId: number): Promise<Spell[]> {
     return databaseConnection.beast.spell.get(beastId)
 }
-
-export function getRarity(rarityId: number): Rarity {
-    const rarityDictionary = {
-        1: {
-            rarityName: 'Legendary',
-            modifier: '2d20'
-        },
-        3: {
-            rarityName: 'Rare',
-            modifier: 'd20'
-        },
-        5: {
-            rarityName: 'Uncommon',
-            modifier: 'd10'
-        },
-        10: {
-            rarityName: 'Common',
-            modifier: '0'
-        }
-    }
-
-    const rarityInfo = rarityDictionary[rarityId] ?? { rarityName: 'None' }
-
-    return {
-        rarityId,
-        ...rarityInfo
-    }
-}

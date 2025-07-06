@@ -4,6 +4,7 @@ interface SearchResultBase {
     type: 'player' | 'gm',
     id: number,
     name: string,
+    thumbnail: string,
     intro: string,
     patreon: number,
     rarity: Rarity,

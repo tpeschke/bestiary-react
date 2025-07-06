@@ -1,0 +1,66 @@
+.result-card {
+    color: unset;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+.result-card:hover {
+    color: unset
+}
+
+.result-card .image-shell {
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.image-shell>img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.result-card .info-shell {
+    margin-left: 5px;
+    width: calc(100% - 155px);
+}
+
+.result-card .info-shell>.name-shell>h3 {
+    font-size: 20px;
+    background: transparent;
+    padding: 0px;
+    color: #607d8b;
+}
+
+.result-card .info-shell>.name-shell {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.result-card .info-shell>.name-shell i {
+    margin-right: 5px;
+}
+
+.result-card .misc-info-shell h3 {
+    background: unset;
+}
+
+.inner-info-shell {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inner-info-shell .intro-shell {
+    width: calc(100% - 200px);
+}
+
+.result-card .misc-info-shell {
+    width: 200px;
+    margin-left: 5px
+}

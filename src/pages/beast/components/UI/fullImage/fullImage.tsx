@@ -7,9 +7,9 @@ import { imageBase } from '../../../../../frontend-config'
 
 interface Props {
     imageParam: number,
-    altText: string,
+    altText?: string,
     artistInfo?: ArtistInfo
-    roleID: string | null
+    roleID?: string | null
 }
 
 export default function FullImage({ imageParam, altText, artistInfo, roleID = '' }: Props) {

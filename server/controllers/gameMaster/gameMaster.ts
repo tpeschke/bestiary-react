@@ -7,7 +7,7 @@ import { isOwner } from "../../utilities/ownerAccess"
 import createHash from "../../utilities/hashGeneration"
 // import upsertBeast from "../../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../utilities/sendingFunctions'
-import { getRarity, getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
+import { getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
     getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, 
     getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
 import { calculateStressAndPanic } from "../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
@@ -33,6 +33,7 @@ import { Casting, Spell } from "../../../common/interfaces/beast/infoInterfaces/
 import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { getFavorite, getNotes } from "./utilities/getUtilities/getPlayerInfo"
 import { Notes } from "../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
+import { getRarity } from "../../utilities/rarity"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -105,7 +106,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const databaseConnection = getDatabaseConnection(request)
     const beastId = +request.params.beastId
     const isEditing = request.query ? request.query.edit === 'true' : false
-    const { id: userID } = request.user
+    const userID = request.user?.id
 
     const beast: Beast = await getGMVersionOfBeastFromDB(databaseConnection, beastId, {isEditing, userID})
     

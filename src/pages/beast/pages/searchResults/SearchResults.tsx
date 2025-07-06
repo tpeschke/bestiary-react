@@ -4,6 +4,7 @@ import { SetLoadingFunction } from '../../../../components/loading/Loading'
 import SearchHooks from './SearchHooks'
 import { SearchResult } from '../../../../../common/interfaces/search'
 import { useEffect } from 'react'
+import ResultCard from './resultCard/ResultCard'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -11,8 +12,6 @@ interface Props {
 
 export default function SearchResults({ setLoading }: Props) {
     const { searchResults } = SearchHooks()
-
-    console.log(searchResults)
 
     useEffect(() => {
         if (setLoading) {
@@ -22,7 +21,7 @@ export default function SearchResults({ setLoading }: Props) {
 
     return (
         <>
-            {searchResults.length > 0 && searchResults.map((result: SearchResult, index: number) => <p key={index}>{result.name}</p>)}
+            {searchResults.length > 0 && searchResults.map((result: SearchResult, index: number) => <ResultCard key={index} searchResult={result} />)}
         </>
     )
 }
