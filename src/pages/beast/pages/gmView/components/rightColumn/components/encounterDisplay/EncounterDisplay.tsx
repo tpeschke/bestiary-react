@@ -53,7 +53,7 @@ function EncounterShell(setLoading: Function) {
                             </div>
                         </Body>
                         <div className='encounter-input-shell'>
-                            <button className='orange' onClick={_ => generateEncounter()}><Icon iconName='redo' color='white' /></button>
+                            <button onClick={_ => generateEncounter()}><Icon iconName='redo' /></button>
                         </div>
                     </>
                     :

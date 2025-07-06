@@ -3,6 +3,7 @@ button.location-display {
     margin-top: 5px;
     padding: 5px 10px;
     cursor: pointer;
+    background-color: #f3f3f3;
 }
 
 button.location-display:hover {

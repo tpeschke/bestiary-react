@@ -156,7 +156,7 @@ a:hover, .fake-link:hover {
 
 select {
 	border: none;
-	background: #f3f3f3;
+	background: #e1e7ea;
 	padding: 5px 10px;
 	cursor: pointer;
 	border-radius: 5px;
@@ -165,11 +165,11 @@ select {
 }
 
 select:hover {
-	background: #e1e7ea;
+	background: #c9cfd1;
 }
 
 select:open {
-	background: #e1e7ea;
+	background: #c9cfd1;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
@@ -201,10 +201,11 @@ button {
 	border-radius: 5px;
 	font-family: "Source Sans 3", sans-serif;
 	cursor: pointer;
+	background: #e1e7ea;
 }
 
 button:hover {
-	background: #e1e7ea;
+	background: #c9cfd1;
 }
 
 button.blue {

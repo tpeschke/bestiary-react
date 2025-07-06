@@ -1,11 +1,6 @@
 .generated-loot-shell button {
-    background: #ff5722;
     padding: 5px 10px;
     margin-left: 5px;
-}
-
-.generated-loot-shell button:hover {
-    background: #ec5121;
 }
 
 .generated-loot-shell>.body-shell {
