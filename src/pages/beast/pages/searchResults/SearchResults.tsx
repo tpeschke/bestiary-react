@@ -38,8 +38,8 @@ export default function SearchResults({ setLoading }: Props) {
                                 <Icon iconName='dice' tooltip={getRandomResultTooltip} iconSize='h2' />
                             </button>
                             <button data-tooltip-id="my-tooltip" data-tooltip-content={linkTooltip} onClick={copyLink}>
-                                <Icon iconName='dice' tooltip={linkTooltip} margin='right' iconSize='h2'/>
-                                <Icon iconName='link' tooltip={linkTooltip} iconSize='h2'/>
+                                <Icon iconName='dice' tooltip={linkTooltip} margin='right' iconSize='h2' />
+                                <Icon iconName='link' tooltip={linkTooltip} iconSize='h2' />
                             </button>
                         </span>
                     </div>
