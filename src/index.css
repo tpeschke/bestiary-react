@@ -156,7 +156,7 @@ a:hover, .fake-link:hover {
 
 select {
 	border: none;
-	background: #e1e7ea;
+	background: #f3f3f3;
 	padding: 5px 10px;
 	cursor: pointer;
 	border-radius: 5px;
@@ -165,11 +165,11 @@ select {
 }
 
 select:hover {
-	background: #c9cfd1;
+	background: #e1e7ea;
 }
 
 select:open {
-	background: #c9cfd1;
+	background: #e1e7ea;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
