@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function SearchResults({ setLoading }: Props) {
-    const { searchResults, navigateToRandomResult } = SearchHooks()
+    const { searchResults, navigateToRandomResult, sortingMethodInfo, sortingDirectionInfo } = SearchHooks()
 
     useEffect(() => {
         if (setLoading) {
@@ -24,7 +24,7 @@ export default function SearchResults({ setLoading }: Props) {
         <>
             {searchResults.length > 0 ? (
                 <>
-                    <SearchTopBar searchResults={searchResults} navigateToRandomResult={navigateToRandomResult} />
+                    <SearchTopBar searchResults={searchResults} navigateToRandomResult={navigateToRandomResult} sortingMethodInfo={sortingMethodInfo} sortingDirectionInfo={sortingDirectionInfo} />
                     {searchResults.map((result: SearchResult, index: number) => <ResultCard key={index} searchResult={result} />)}
                 </>
             ) : (

@@ -1,5 +1,5 @@
 import './ResultCard.css'
-import ImageNotFound from '../../../../../assets/images/404.png'
+import ImageNotFound from '../../../../../../assets/images/404.png'
 
 import { SearchResult } from '../../../../../../../common/interfaces/search'
 import { imageBase } from '../../../../../../frontend-config'

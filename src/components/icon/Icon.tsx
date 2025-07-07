@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow'
 
@@ -100,6 +100,18 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'magnifying-glass':
             styling = 'fa-solid fa-magnifying-glass'
+            break
+        case 'direction-alphabet-z':
+            styling = "fa-solid fa-arrow-down-z-a"
+            break
+        case 'direction-alphabet-a':
+            styling = "fa-solid fa-arrow-down-a-z"
+            break
+        case 'direction-number-9':
+            styling = "fa-solid fa-arrow-down-9-1"
+            break
+        case 'direction-number-1':
+            styling = 'fa-solid fa-arrow-down-1-9'
             break
         case 'dice':
             styling = 'fa-solid fa-dice'

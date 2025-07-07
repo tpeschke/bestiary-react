@@ -21,3 +21,35 @@
 .result-info-shell.no-results {
     text-align: center;
 }
+
+.result-sort-shell {
+    display: flex;
+    align-items: center;
+}
+
+.result-sort-shell p {
+    color: white;
+    margin: 0 3px;
+}
+
+.result-sort-shell p:nth-child(odd) {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.sort-option {
+    padding: 2px 3px;
+    border-radius: 5px;
+}
+
+.sort-option:hover {
+    background: rgba(0, 0, 0, 0.25)
+}
+
+.is-the-active-sort {
+    background: #ff5722;
+}
+
+.is-the-active-sort:hover {
+    background: #ec5121;
+}
