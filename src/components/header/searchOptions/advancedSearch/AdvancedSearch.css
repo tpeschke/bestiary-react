@@ -1,0 +1,13 @@
+.advanced-search-shell .drawers-shell {
+    margin-top: 15px;
+}
+
+.advanced-search-innards-shell {
+    width: 100%;
+}
+
+.advanced-search-innards-shell input {
+    background: unset;
+    border-bottom: 1px solid #795548;
+    width: 100%;
+}

@@ -10,6 +10,11 @@
     color: white;
 }
 
+.result-info-shell>span>p {
+    width: 134px;
+    color: white;
+}
+
 .result-info-shell>span>button {
     margin-right: 0;
 }

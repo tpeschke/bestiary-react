@@ -2,3 +2,8 @@
     border-radius: 5px;
     overflow: hidden;
 }
+
+.drawers-shell h3 {
+    background: unset;
+    color: #607d8b;
+}

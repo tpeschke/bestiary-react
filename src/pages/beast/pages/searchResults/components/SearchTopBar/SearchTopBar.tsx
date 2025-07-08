@@ -30,7 +30,10 @@ export default function SearchTopBar({ searchResults, navigateToRandomResult, so
 
     return (
         <div className='result-info-shell'>
-            <h2>Results: {searchResults.length}</h2>
+            <span>
+                <h2>Results: {searchResults.length}</h2>
+                {searchResults.length === 25 && <p>(max: refine your search)</p>}
+            </span>
             <div className='result-sort-shell'>
                 {formatSortingOption(handleSortingClick, 'name', 'Name', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'alpha')}
                 <p>|</p>
@@ -62,7 +65,7 @@ function formatSortingOption(handleSortingClick: Function, type: SortingOptions,
     return (
         <p className={isActive ? 'is-the-active-sort sort-option' : 'sort-option'} onClick={_ => handleSortingClick(type)}>
             {title}
-            {isActive &&<Icon iconName={findIcon(currentDirection, directionType)} color='white' margin='left' />}
+            {isActive && <Icon iconName={findIcon(currentDirection, directionType)} color='white' margin='left' />}
         </p>
     )
 }

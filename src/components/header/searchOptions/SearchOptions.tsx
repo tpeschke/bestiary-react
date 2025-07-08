@@ -4,6 +4,9 @@ import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 
 import Icon from '../../icon/Icon'
 import { useEffect, useState } from 'react'
+import AdvancedSearch from './advancedSearch/AdvancedSearch'
+
+export type CaptureQueryFunction = (param: string, value: string) => void
 
 export default function SearchOptions() {
     const [isOnSearch, setIsOnSearch] = useState(false)
@@ -21,14 +24,14 @@ export default function SearchOptions() {
         }
     }, [location])
 
-    function captureQuery(value: string) {
+    function captureQuery(param: string, value: string) {
         if (timeoutID) { clearTimeout(timeoutID) }
 
         const newTimeoutID = setTimeout(() => {
             if (value) {
                 navigate({
                     pathname: '/search',
-                    search: createSearchParams({ name: value }).toString()
+                    search: createSearchParams({ [param]: value }).toString()
                 })
             }
         }, 1000)
@@ -44,7 +47,8 @@ export default function SearchOptions() {
         <div className='search-options-shell'>
             <span>
                 <Icon iconName='magnifying-glass' margin='right' color='black' />
-                <input onChange={e => captureQuery(e.target.value)} placeholder='Search by Name' />
+                <input onChange={e => captureQuery('name', e.target.value)} placeholder='Search by Name' />
+                <AdvancedSearch captureQuery={captureQuery}/>
             </span>
         </div>
     )
