@@ -24,7 +24,7 @@ export interface SortingDirectionObject {
 }
 
 interface Return {
-    searchResults: SearchResult[],
+    searchResults: SearchResult[] | null,
     navigateToRandomResult: NavigateToRandomResultFunction,
     sortingMethodInfo: SortingMethodObject,
     sortingDirectionInfo: SortingDirectionObject
@@ -32,7 +32,7 @@ interface Return {
 
 export default function SearchHooks(): Return {
     const [currentQueries, setCurrentQueries] = useState('')
-    const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+    const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null)
 
     const [sortingMethod, setSortingMethod] = useState<SortingOptions>('name')
     const [sortingDirection, setSortingDirection] = useState<SortingDirection>('dsc')
@@ -41,8 +41,8 @@ export default function SearchHooks(): Return {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (currentQueries !== searchParams.toString()) {
-            setSearchResults([])
+        if (searchParams.toString() && currentQueries !== searchParams.toString()) {
+            setSearchResults(null)
             setCurrentQueries(searchParams.toString())
 
             axios.get(searchURL + '?' + searchParams.toString()).then(({ data }) => {
@@ -53,6 +53,8 @@ export default function SearchHooks(): Return {
                     sortAndSetResults(data)
                 }
             })
+        } else if (!searchParams.toString()) {
+            sortAndSetResults([])
         }
     }, [searchParams]);
 
@@ -69,23 +71,27 @@ export default function SearchHooks(): Return {
     }
 
     function changeMethod(newMethod: SortingOptions) {
-        setSortingDirection('dsc')
-        setSortingMethod(newMethod)
-        
-        const sortedResults: SearchResult[] = searchResults.sort(sortResults(newMethod, 'dsc'))
-        setSearchResults(sortedResults)
+        if (searchResults) {
+            setSortingDirection('dsc')
+            setSortingMethod(newMethod)
+
+            const sortedResults: SearchResult[] = searchResults.sort(sortResults(newMethod, 'dsc'))
+            setSearchResults(sortedResults)
+        }
     }
 
     function toggleDirection() {
-        let newDirection: SortingDirection = 'asc'
-        if (sortingDirection === 'dsc') {
-            setSortingDirection(newDirection)
-        } else {
-            newDirection = 'dsc'
-            setSortingDirection(newDirection)
+        if (searchResults) {
+            let newDirection: SortingDirection = 'asc'
+            if (sortingDirection === 'dsc') {
+                setSortingDirection(newDirection)
+            } else {
+                newDirection = 'dsc'
+                setSortingDirection(newDirection)
+            }
+            const sortedResults: SearchResult[] = searchResults.sort(sortResults(sortingMethod, newDirection))
+            setSearchResults(sortedResults)
         }
-        const sortedResults: SearchResult[] = searchResults.sort(sortResults(sortingMethod, newDirection))
-        setSearchResults(sortedResults)
     }
 
     return {

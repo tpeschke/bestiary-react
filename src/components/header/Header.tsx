@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { Link } from "react-router-dom";
 import { isUserLoggedOn } from '../../redux/slices/userSlice';
-import SearchOptions from './searchOptions/searchOptions';
+import SearchOptions from './searchOptions/SearchOptions';
 
 export default function Header() {
     const userIsLoggedIn = useSelector(isUserLoggedOn)
