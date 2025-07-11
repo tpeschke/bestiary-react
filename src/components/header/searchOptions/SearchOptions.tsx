@@ -12,6 +12,8 @@ export default function SearchOptions() {
     const [isOnSearch, setIsOnSearch] = useState(false)
     const [timeoutID, setTimeoutID] = useState<any | null>(null)
 
+    const [queryParams, setQueryParams] = useState({})
+
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -27,11 +29,14 @@ export default function SearchOptions() {
     function captureQuery(param: string, value: string) {
         if (timeoutID) { clearTimeout(timeoutID) }
 
+        const newQueryParams = { ...queryParams, [param]: value }
+        setQueryParams(newQueryParams)
+
         const newTimeoutID = setTimeout(() => {
             if (value) {
                 navigate({
                     pathname: '/search',
-                    search: createSearchParams({ [param]: value }).toString()
+                    search: createSearchParams(newQueryParams).toString()
                 })
             }
         }, 1000)
@@ -48,7 +53,7 @@ export default function SearchOptions() {
             <span>
                 <Icon iconName='magnifying-glass' margin='right' color='black' />
                 <input onChange={e => captureQuery('name', e.target.value)} placeholder='Search by Name' />
-                <AdvancedSearch captureQuery={captureQuery}/>
+                <AdvancedSearch captureQuery={captureQuery} />
             </span>
         </div>
     )

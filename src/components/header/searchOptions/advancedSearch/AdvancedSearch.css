@@ -4,6 +4,8 @@
 
 .advanced-search-innards-shell {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .advanced-search-innards-shell input {
