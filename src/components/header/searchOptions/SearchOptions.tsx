@@ -40,6 +40,7 @@ export default function SearchOptions() {
         } else if (isOnSearch) {
             setIsOnSearch(false)
             clearInputs()
+            clearSelects()
         }
     }, [location])
 
@@ -69,8 +70,14 @@ export default function SearchOptions() {
     function clearInputs() {
         const inputs = document.getElementsByClassName('search-options-shell')[0].querySelectorAll('input');
         inputs.forEach(input => input.value = '')
+        inputs.forEach(input => input.checked = false)
     }
 
+    function clearSelects() {
+        const selects = document.getElementsByClassName('search-options-shell')[0].querySelectorAll('select');
+        selects.forEach(input => input.value = 'none')
+    }
+    
     return (
         <div className='search-options-shell'>
             <span>
