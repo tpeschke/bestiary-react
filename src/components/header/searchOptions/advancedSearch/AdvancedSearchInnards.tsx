@@ -17,7 +17,7 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
     return (
         <div className='advanced-search-innards-shell' onClick={event => event.stopPropagation()}>
             <input onChange={event => stopPropagationAndCaptureQuery('body', event)} placeholder='Search in Body' />
-            <div className='select-searches-shell'>
+            <div className='inner-searches-shell'>
                 <select onChange={event => stopPropagationAndCaptureQuery('size', event)}>
                     <option value='none'>I Don't Care</option>
                     {sizeSearchDictionary.map((size: Size, index: number) => {

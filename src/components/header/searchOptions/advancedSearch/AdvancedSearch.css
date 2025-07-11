@@ -14,10 +14,14 @@
     width: 100%;
 }
 
-.advanced-search-innards-shell .select-searches-shell {
+.advanced-search-innards-shell .inner-searches-shell {
     padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .advanced-search-innards-shell select {
     border-bottom: 1px solid #795548;
+    width: 25%;
+    border-radius: 0px;
 }
