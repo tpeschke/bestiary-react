@@ -13,3 +13,11 @@
     border-bottom: 1px solid #795548;
     width: 100%;
 }
+
+.advanced-search-innards-shell .select-searches-shell {
+    padding: 15px 0;
+}
+
+.advanced-search-innards-shell select {
+    border-bottom: 1px solid #795548;
+}

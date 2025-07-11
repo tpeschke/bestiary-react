@@ -6,13 +6,21 @@ import Icon from '../../icon/Icon'
 import { useEffect, useState } from 'react'
 import AdvancedSearch from './advancedSearch/AdvancedSearch'
 
-export type CaptureQueryFunction = (param: string, value: string) => void
+export type CaptureQueryFunction = (param: QueryParams, value: string) => void
+
+type QueryParamsObject = {
+    name?: string,
+    body?: string,
+    size?: string
+}
+
+export type QueryParams = keyof QueryParamsObject
 
 export default function SearchOptions() {
     const [isOnSearch, setIsOnSearch] = useState(false)
     const [timeoutID, setTimeoutID] = useState<any | null>(null)
 
-    const [queryParams, setQueryParams] = useState({})
+    const [queryParams, setQueryParams] = useState<QueryParamsObject>({})
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -26,14 +34,20 @@ export default function SearchOptions() {
         }
     }, [location])
 
-    function captureQuery(param: string, value: string) {
+    function captureQuery(param: QueryParams, value: string) {
         if (timeoutID) { clearTimeout(timeoutID) }
 
-        const newQueryParams = { ...queryParams, [param]: value }
+        let newQueryParams: QueryParamsObject = { ...queryParams }
+        if (value === 'none' || value === '') {
+            delete newQueryParams[param]
+        } else {
+            newQueryParams[param] = value
+        }
+        
         setQueryParams(newQueryParams)
 
         const newTimeoutID = setTimeout(() => {
-            if (value) {
+            if (queryParams[param] !== newQueryParams[param]) {
                 navigate({
                     pathname: '/search',
                     search: createSearchParams(newQueryParams).toString()
