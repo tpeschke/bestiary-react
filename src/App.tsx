@@ -47,6 +47,11 @@ export default function App() {
               <SearchResults />
             </Loading>
           } />
+          <Route path='search;' element={
+            <Loading>
+              <SearchResults />
+            </Loading>
+          } />
           <Route path='beast'>
             <Route index element={
               <Loading>

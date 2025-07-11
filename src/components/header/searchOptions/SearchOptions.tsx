@@ -36,6 +36,8 @@ export default function SearchOptions() {
     const location = useLocation()
 
     useEffect(() => {
+        handleOldStyleLinks()
+
         if (location.pathname === '/search') {
             setIsOnSearch(true)
         } else if (isOnSearch) {
@@ -44,6 +46,25 @@ export default function SearchOptions() {
             clearSelects()
         }
     }, [location])
+
+    function handleOldStyleLinks() {
+        const splitURL = location.pathname.split(';')
+        if (splitURL.length > 1) {
+            let queryParams: any = {}
+
+            splitURL.forEach(urlSection => {
+                const [param, value] = urlSection.split('=')
+                if (value) {
+                    queryParams[param] = value
+                }
+            })
+
+            navigate({
+                pathname: '/search',
+                search: createSearchParams(queryParams).toString()
+            })
+        }
+    }
 
     function captureQuery(param: QueryParams, value: string) {
         if (timeoutID) { clearTimeout(timeoutID) }
