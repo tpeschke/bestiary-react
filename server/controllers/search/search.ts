@@ -27,6 +27,3 @@ export default async function search(request: SearchRequest, response: Response)
     
     checkForContentTypeBeforeSending(response, populatedArray)
 }
-
-
-
