@@ -20,7 +20,8 @@ type QueryParamsObject = {
     maxComRate?: string,
     minChallengeRate?: string,
     maxChallengeRate?: string,
-    anyAccess?: string
+    anyAccess?: string,
+    personalNotes?: string
 }
 
 export type QueryParams = keyof QueryParamsObject
@@ -77,7 +78,7 @@ export default function SearchOptions() {
         const selects = document.getElementsByClassName('search-options-shell')[0].querySelectorAll('select');
         selects.forEach(input => input.value = 'none')
     }
-    
+
     return (
         <div className='search-options-shell'>
             <span>

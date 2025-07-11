@@ -103,11 +103,14 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
                 <label>Anyone Can View?</label>
                 <input type="checkbox" onClick={event => stopPropagationAndCaptureQueryFromCheckBox('anyAccess', event)} />
             </div>
+
+            <div className='rating-shell checkbox-shell'>
+                <label>Has Personal Notes?</label>
+                <input type="checkbox" onClick={event => stopPropagationAndCaptureQueryFromCheckBox('personalNotes', event)} />
+            </div>
         </div>
     )
 }
-
-// personal notes
 
 // roles
 // types
