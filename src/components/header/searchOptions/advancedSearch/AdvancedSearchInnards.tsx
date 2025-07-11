@@ -26,9 +26,9 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
             <input onChange={event => stopPropagationAndCaptureQuery('body', event)} placeholder='Search in Body' />
 
             <div className='inner-searches-shell'>
-                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='size' dictionary={sizeSearchDictionary} />
-                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='rarity' dictionary={raritySearchDictionary} />
-                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='access' dictionary={accessSearchDictionary} />
+                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} label='Size' param='size' dictionary={sizeSearchDictionary} />
+                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} label='Rarity' param='rarity' dictionary={raritySearchDictionary} />
+                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} label='Access' param='access' dictionary={accessSearchDictionary} />
             </div>
 
             <div className='inner-searches-shell'>
