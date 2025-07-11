@@ -13,113 +13,103 @@ export const sizeSearchDictionary: Size[] = [
     'Colossal'
 ]
 
-export interface RaritySearchObject {
-    rarity: string,
+export interface SearchObject {
+    value: string | number,
     id: number
 }
 
-export const raritySearchDictionary: RaritySearchObject[] = [
+export const raritySearchDictionary: SearchObject[] = [
     {
-        rarity: 'Legendary',
+        value: 'Legendary',
         id: 1
     },
     {
-        rarity: 'Rare',
+        value: 'Rare',
         id: 3
     },
     {
-        rarity: 'Uncommon',
+        value: 'Uncommon',
         id: 5
     },
     {
-        rarity: 'Common',
+        value: 'Common',
         id: 10
     }
 ]
 
-export interface AccessSearchObject {
-    access: string,
-    id: number
-}
-
-export const accessSearchDictionary: AccessSearchObject[] = [
+export const accessSearchDictionary: SearchObject[] = [
     {
-        access: 'Basic',
+        value: 'Basic',
         id: 0
     },
     {
-        access: 'Deluxe',
+        value: 'Deluxe',
         id: 3
     },
     {
-        access: 'Early Access',
+        value: 'Early Access',
         id: 20
     }
 ]
 
-export interface SkullNumberObject {
-    skulls: number,
-    id: number
-}
-
-export const minSkullSearchDictionary: SkullNumberObject[] = [
+export const minSkullSearchDictionary: SearchObject[] = [
     {
-        skulls: 1,
+        value: 1,
         id: 0
     },
     {
-        skulls: 2,
+        value: 2,
         id: 5
     },
     {
-        skulls: 3,
+        value: 3,
         id: 10
     },
     {
-        skulls: 4,
+        value: 4,
         id: 15
     },
     {
-        skulls: 5,
+        value: 5,
         id: 20
     },
     {
-        skulls: 6,
+        value: 6,
         id: 25
     },
     {
-        skulls: 7,
+        value: 7,
         id: 30
     }
 ]
 
-export const maxSkullSearchDictionary: SkullNumberObject[] = [
+export const maxSkullSearchDictionary: SearchObject[] = [
     {
-        skulls: 1,
+        value: 1,
         id: 3
     },
     {
-        skulls: 2,
+        value: 2,
         id: 8
     },
     {
-        skulls: 3,
+        value: 3,
         id: 13
     },
     {
-        skulls: 4,
+        value: 4,
         id: 18
     },
     {
-        skulls: 5,
+        value: 5,
         id: 23
     },
     {
-        skulls: 6,
+        value: 6,
         id: 28
     },
     {
-        skulls: 7,
+        value: 7,
         id: 35
     }
 ]
