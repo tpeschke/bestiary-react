@@ -126,7 +126,7 @@ h5 {
 	padding: 3px;
 }
 
-p {
+p, label {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
 	min-height: 1px;

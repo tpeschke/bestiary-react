@@ -19,7 +19,8 @@ type QueryParamsObject = {
     minComRate?: string,
     maxComRate?: string,
     minChallengeRate?: string,
-    maxChallengeRate?: string
+    maxChallengeRate?: string,
+    anyAccess?: string
 }
 
 export type QueryParams = keyof QueryParamsObject
@@ -46,7 +47,7 @@ export default function SearchOptions() {
         if (timeoutID) { clearTimeout(timeoutID) }
 
         let newQueryParams: QueryParamsObject = { ...queryParams }
-        if (value === 'none' || value === '') {
+        if (value === 'none' || value === '' || !value) {
             delete newQueryParams[param]
         } else {
             newQueryParams[param] = value

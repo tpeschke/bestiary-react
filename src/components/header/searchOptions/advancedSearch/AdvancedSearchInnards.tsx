@@ -14,6 +14,11 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
         captureQuery(param, event.target.value)
     }
 
+    function stopPropagationAndCaptureQueryFromCheckBox(param: QueryParams, event: any) {
+        event.stopPropagation()
+        captureQuery(param, event.target.checked)
+    }
+
     return (
         <div className='advanced-search-innards-shell' onClick={event => event.stopPropagation()}>
             <input onChange={event => stopPropagationAndCaptureQuery('body', event)} placeholder='Search in Body' />
@@ -58,7 +63,7 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
                         })}
                     </select>
                 </div>
-                
+
                 <div className='rating-shell'>
                     <p>Combat Rating</p>
                     <select onChange={event => stopPropagationAndCaptureQuery('minComRate', event)}>
@@ -93,11 +98,15 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
                     </select>
                 </div>
             </div>
+
+            <div className='rating-shell checkbox-shell'>
+                <label>Anyone Can View?</label>
+                <input type="checkbox" onClick={event => stopPropagationAndCaptureQueryFromCheckBox('anyAccess', event)} />
+            </div>
         </div>
     )
 }
 
-// Anyone can view
 // personal notes
 
 // roles

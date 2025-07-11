@@ -10,7 +10,6 @@
 
 .advanced-search-innards-shell input {
     background: unset;
-    border-bottom: 1px solid #795548;
     width: 100%;
 }
 
@@ -21,12 +20,16 @@
 }
 
 .advanced-search-innards-shell select {
-    border-bottom: 1px solid #795548;
+    border-bottom: 1px solid lightgray;
     width: 25%;
     border-radius: 0px;
 }
 
-.advanced-search-innards-shell .inner-searches-shell .rating-shell {
+.advanced-search-innards-shell .rating-shell {
     display: flex;
     align-items: center;
+}
+
+.advanced-search-innards-shell .checkbox-shell input {
+    width: unset;
 }
