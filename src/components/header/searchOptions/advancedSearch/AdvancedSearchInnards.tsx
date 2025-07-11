@@ -43,8 +43,6 @@ export default function AdvancedSearchInnards({ captureQuery }: Props) {
     )
 }
 
-// rarity
-// patreon level
 // confrontation rating - min, max
 // combat rating - min, max
 // challenge rating - min, max
