@@ -13,7 +13,13 @@ type QueryParamsObject = {
     body?: string,
     size?: string,
     rarity?: string,
-    access?: string
+    access?: string,
+    minConfRate?: string,
+    maxConfRate?: string,
+    minComRate?: string,
+    maxComRate?: string,
+    minChallengeRate?: string,
+    maxChallengeRate?: string
 }
 
 export type QueryParams = keyof QueryParamsObject

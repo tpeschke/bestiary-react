@@ -25,3 +25,8 @@
     width: 25%;
     border-radius: 0px;
 }
+
+.advanced-search-innards-shell .inner-searches-shell .rating-shell {
+    display: flex;
+    align-items: center;
+}
