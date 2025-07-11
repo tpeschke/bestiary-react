@@ -11,7 +11,8 @@ export type CaptureQueryFunction = (param: QueryParams, value: string) => void
 type QueryParamsObject = {
     name?: string,
     body?: string,
-    size?: string
+    size?: string,
+    rarity?: string
 }
 
 export type QueryParams = keyof QueryParamsObject
@@ -43,7 +44,7 @@ export default function SearchOptions() {
         } else {
             newQueryParams[param] = value
         }
-        
+
         setQueryParams(newQueryParams)
 
         const newTimeoutID = setTimeout(() => {
