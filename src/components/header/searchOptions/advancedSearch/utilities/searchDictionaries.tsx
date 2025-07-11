@@ -36,3 +36,23 @@ export const raritySearchDictionary: RaritySearchObject[] = [
         id: 10
     }
 ]
+
+export interface AccessSearchObject {
+    access: string,
+    id: number
+}
+
+export const accessSearchDictionary: AccessSearchObject[] = [
+    {
+        access: 'Basic',
+        id: 0
+    },
+    {
+        access: 'Deluxe',
+        id: 3
+    },
+    {
+        access: 'Early Access',
+        id: 20
+    }
+]

@@ -12,7 +12,8 @@ type QueryParamsObject = {
     name?: string,
     body?: string,
     size?: string,
-    rarity?: string
+    rarity?: string,
+    access?: string
 }
 
 export type QueryParams = keyof QueryParamsObject
