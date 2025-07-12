@@ -13,6 +13,7 @@ export default function catalogItemStates() {
     const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)
     const freeBeasts: CatalogTile[] = useSelector((state: RootState) => state.catalog.freeBeasts)
     const favorites: CatalogTile[] = useSelector((state: RootState) => state.catalog.favorites)
+    
     const catalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.catalogItems)
     const updatingCatalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.updatingCatalogItems)
 
@@ -24,7 +25,7 @@ export default function catalogItemStates() {
                 dispatch(saveCatalog(data))
             })
         }
-    }, []);
+    }, [catalogItems]);
 
     return {
         templates,

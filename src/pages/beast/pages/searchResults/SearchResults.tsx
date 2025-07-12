@@ -14,10 +14,9 @@ interface Props {
 export default function SearchResults({ setLoading }: Props) {
     const { searchResults, navigateToRandomResult, sortingMethodInfo, sortingDirectionInfo } = SearchHooks()
 
-    // Brody: this doesn't seem to be showing the loading icon
     useEffect(() => {
         if (setLoading) {
-            setLoading(!!searchResults)
+            setLoading(!searchResults)
         }
     }, [searchResults])
 

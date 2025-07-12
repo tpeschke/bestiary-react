@@ -11,7 +11,7 @@ import FavoritesDisplay from './components/favorites/FavoritesDisplay';
 import { SetLoadingFunction } from '../../components/loading/Loading';
 
 interface Props {
-    setLoading?: SetLoadingFunction
+    setLoading: SetLoadingFunction
 }
 
 export default function Catalog({ setLoading }: Props) {
@@ -21,10 +21,8 @@ export default function Catalog({ setLoading }: Props) {
     const [showAll, setShowAll] = useState(false)
 
     useEffect(() => {
-        if (setLoading) {
-            setLoading(templates.length === 0 && freeBeasts.length === 0 && catalogItems.length === 0)
-        }
-    }, [setLoading, templates, freeBeasts, catalogItems])
+        setLoading(catalogItems.length === 0)
+    }, [catalogItems])
 
     return (
         <div className='card-background catalog'>
