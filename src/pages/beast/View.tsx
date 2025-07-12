@@ -14,7 +14,7 @@ export default function View({ setLoading }: Props) {
 
     useEffect(() => {
         if (setLoading) {
-            setLoading(!beast && !playerBeast)
+            setLoading(!!beast || !!playerBeast)
         }
     }, [setLoading, beast, playerBeast])
 
