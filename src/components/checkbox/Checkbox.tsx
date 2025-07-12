@@ -16,7 +16,11 @@ export default function Checkbox({ onClick, label, tooltip }: Props) {
             checkbox.checked = !checkbox.checked
         }
 
-        onClick({ ...event, target: { ...event.target, checked: checkbox.checked } })
+        onClick({
+            ...event,
+            stopPropagation: event.stopPropagation,
+            target: { ...event.target, checked: checkbox.checked }
+        })
     }
 
     return (
