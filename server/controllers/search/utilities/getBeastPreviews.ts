@@ -3,10 +3,10 @@ import { User } from "../../../interfaces/apiInterfaces"
 import { getRarity } from "../../../utilities/rarity"
 import { SearchReturn } from "../search"
 
-export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: SearchReturn[], user: User | undefined): Promise<SearchResult[]> {
+export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: number[], user: User | undefined): Promise<SearchResult[]> {
     let promiseArray: Promise<SearchResult>[] = []
 
-    flattenedIDArray.slice(0, 25).forEach(async ({ id: beastID }) => {
+    flattenedIDArray.slice(0, 25).forEach(async (beastID) => {
         if (user?.patreon && user?.patreon >= 3) {
             promiseArray.push(databaseConnection.search.preview.gm(beastID, user?.id).then(formatResult))
         } else {
@@ -21,5 +21,5 @@ export default async function getBeastPreviews(databaseConnection: any, flattene
 }
 
 function formatResult(result: any[]): SearchResult {
-    return {...result[0], rarity: getRarity(result[0]?.rarity)}
+    return { ...result[0], rarity: getRarity(result[0]?.rarity) }
 }

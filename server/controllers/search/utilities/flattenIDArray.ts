@@ -1,18 +1,23 @@
-import _ from 'lodash'
 import { SearchReturn } from '../search'
 
-export default function flattenIDArray (idArray: SearchReturn[][]): SearchReturn[] {
+export default function flattenIDArray(idArray: SearchReturn[][]): number[] {
     const idArrayLength = idArray.length
+    let idCountObj = {}
+    let intersectionArray: number[] = []
 
-    if (idArrayLength > 1) {
-        return _.intersectionWith(idArray, compareIDArray)[0]
-    } else if (idArray.length === 1) {
-        return [...idArray[0]]
-    }
+    idArray.forEach((innerIDArray: SearchReturn[]) => {
+        innerIDArray.forEach(({ id }: SearchReturn) => {
+            if (idCountObj[id]) {
+                idCountObj[id] += 1
+            } else if (!idCountObj[id]) {
+                idCountObj[id] = 1
+            }
 
-    return []
-}
+            if (idCountObj[id] >= idArrayLength) {
+                intersectionArray.push(id)
+            }
+        })
+    })
 
-function compareIDArray(one: SearchReturn, two: SearchReturn): boolean {
-    return one.id === two.id
+    return intersectionArray
 }
