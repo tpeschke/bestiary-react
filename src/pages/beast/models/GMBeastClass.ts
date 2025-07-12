@@ -248,6 +248,7 @@ export default class GMBeastClass {
 
     private formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
         const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo, sp_atk, sp_def } = combatInfo
+
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
@@ -258,14 +259,10 @@ export default class GMBeastClass {
 
         const vitalityInfo = roleSelected ? this.populateVitalityInfo(mainVitalityInfo, this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.vitalityInfo) : mainVitalityInfo
 
-        const spAtkToUse = roleSelected && this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.attack ? sp_atk + this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.attack : ''
-        const spDefToUse = roleSelected && this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.defense ? sp_def + this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.defense : ''
-
         return {
             ...combatInfo,
             combatrole, combatsecondary, combatpoints,
-            sp_atk: spAtkToUse,
-            sp_def: spDefToUse,
+            sp_atk, sp_def,
             vitalityInfo: {
                 ...vitalityInfo,
                 ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength)

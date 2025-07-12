@@ -22,6 +22,15 @@ h6 {
     padding: 0 5px;
 }
 
+.defense-stats-shell>.defense-stats-inner-shell>div p:nth-child(2) {
+    width: 60%;
+}
+
+.defense-stats-shell>.defense-stats-inner-shell>div p:nth-child(3) {
+    width: 25%;
+}
+
+
 .defense-stats-shell>.defense-stats-inner-shell>div p:first-child {
     text-align: right;
 }
