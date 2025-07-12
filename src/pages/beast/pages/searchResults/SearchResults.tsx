@@ -16,7 +16,7 @@ export default function SearchResults({ setLoading }: Props) {
 
     useEffect(() => {
         if (setLoading) {
-            setLoading(!searchResults)
+            setLoading(!!searchResults)
         }
     }, [searchResults])
 

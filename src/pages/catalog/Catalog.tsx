@@ -21,7 +21,7 @@ export default function Catalog({ setLoading }: Props) {
     const [showAll, setShowAll] = useState(false)
 
     useEffect(() => {
-        setLoading(catalogItems.length === 0)
+        setLoading(catalogItems.length > 0)
     }, [catalogItems])
 
     return (

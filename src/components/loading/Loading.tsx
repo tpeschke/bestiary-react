@@ -13,7 +13,7 @@ export default function Loading({ children, secondaryColor = false }: Props) {
     const [isLoading, setIsLoading] = useState(true)
 
     const setLoading = (showPageCondition: boolean) => {
-        setIsLoading(showPageCondition)
+        setIsLoading(!showPageCondition)
     }
 
     return (
