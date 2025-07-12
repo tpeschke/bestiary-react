@@ -6,8 +6,16 @@
     min-width: 33%;
 }
 
+.drawer-shell .drawer-shell {
+    background: #e1e7ea; 
+}
+
 .drawer-shell > div:first-child:hover {
     background: #e1e7ea;
+}
+
+.drawer-shell .drawer-shell > div:first-child:hover {
+    background: #d9dee0;
 }
 
 .drawer-shell.open {
@@ -29,6 +37,10 @@
 
 .drawer-shell.open > div:first-child {
     background: #e1e7ea;
+}
+
+.drawer-shell .drawer-shell.open > div:first-child {
+    background: #d9dee0;
 }
 
 .drawer-shell > div {
