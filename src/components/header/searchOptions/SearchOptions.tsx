@@ -7,8 +7,6 @@ import { useEffect, useState } from 'react'
 import AdvancedSearch from './advancedSearch/AdvancedSearch'
 import { QueryParamsObject, QueryArrayParams, QueryBasicParams, QueryParams } from './advancedSearch/interfaces/SearchInterfaces'
 
-
-
 export default function SearchOptions() {
     const [isOnSearch, setIsOnSearch] = useState(false)
     const [timeoutID, setTimeoutID] = useState<any | null>(null)

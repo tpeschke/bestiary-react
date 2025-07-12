@@ -22,6 +22,8 @@ export interface QueryBasicParamsObject {
 export type QueryBasicParams = keyof QueryBasicParamsObject
 
 export interface QueryArrayParamsObject {
-    climate?: number[]
+    climate?: number[],
+    roles?: number[],
+    types?: number[]
 }
 export type QueryArrayParams = keyof QueryArrayParamsObject

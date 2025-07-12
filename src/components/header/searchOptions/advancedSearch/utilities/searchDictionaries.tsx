@@ -208,3 +208,25 @@ export const skillSecondaryDictionary: SearchObject[] = [
     { id: 34, value: 'Elite' },
     { id: 35, value: 'Solo' }
 ]
+
+export const typeSearchDictionary: SearchObject[] = [
+    { id: 12, value: 'Aos Sidhe' },
+    { id: 1, value: 'Demon' },
+    { id: 14, value: 'Eldritch' },
+    { id: 4, value: 'Elemental' },
+    { id: 11, value: 'Flora' },
+    { id: 51, value: 'Giant' },
+    { id: 9, value: 'Goblinoid' },
+    { id: 7, value: 'Humanoid' },
+    { id: 8, value: 'Intelligent Evil' },
+    { id: 16, value: 'Insectoid' },
+    { id: 5, value: 'Bestial' },
+    { id: 18, value: 'Ooze' },
+    { id: 13, value: 'Spirit' },
+    { id: 10, value: 'Swarm' },
+    { id: 17, value: 'Symbiote' },
+    { id: 2, value: 'Undead, Corporeal' },
+    { id: 3, value: 'Undead, Incorporeal' },
+    { id: 6, value: 'Weird Creature' },
+    { id: 15, value: 'Template' }
+]
