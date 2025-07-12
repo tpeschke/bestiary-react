@@ -5,26 +5,9 @@ import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import Icon from '../../icon/Icon'
 import { useEffect, useState } from 'react'
 import AdvancedSearch from './advancedSearch/AdvancedSearch'
+import { QueryParamsObject, QueryArrayParams, QueryBasicParams, QueryParams } from './advancedSearch/interfaces/SearchInterfaces'
 
-export type CaptureQueryFunction = (param: QueryParams, value: string) => void
 
-type QueryParamsObject = {
-    name?: string,
-    body?: string,
-    size?: string,
-    rarity?: string,
-    access?: string,
-    minConfRate?: string,
-    maxConfRate?: string,
-    minComRate?: string,
-    maxComRate?: string,
-    minChallengeRate?: string,
-    maxChallengeRate?: string,
-    anyAccess?: string,
-    personalNotes?: string
-}
-
-export type QueryParams = keyof QueryParamsObject
 
 export default function SearchOptions() {
     const [isOnSearch, setIsOnSearch] = useState(false)
@@ -66,7 +49,31 @@ export default function SearchOptions() {
         }
     }
 
-    function captureQuery(param: QueryParams, value: string) {
+    function captureQueryArray(param: QueryArrayParams, id: number, checked: boolean) {
+        let currentArray: number[] = [];
+
+        if (queryParams[param]) {
+            currentArray = [...queryParams[param]]
+        }
+
+        if (checked) {
+            currentArray.push(id)
+        } else {
+            const indexToRemove = currentArray.indexOf(id)
+            currentArray.splice(indexToRemove, 1)
+        }
+
+        let newQueryParams: QueryParamsObject = { ...queryParams }
+        if (currentArray.length === 0) {
+            delete newQueryParams[param]
+        } else {
+            newQueryParams[param] = currentArray
+        }
+        
+        debounceQuery(newQueryParams, param)
+    }
+
+    function captureQuery(param: QueryBasicParams, value: string) {
         if (timeoutID) { clearTimeout(timeoutID) }
 
         let newQueryParams: QueryParamsObject = { ...queryParams }
@@ -76,8 +83,12 @@ export default function SearchOptions() {
             newQueryParams[param] = value
         }
 
+        debounceQuery(newQueryParams, param)
+    }
+    
+    function debounceQuery(newQueryParams: any, param: QueryParams) {
         setQueryParams(newQueryParams)
-
+        
         const newTimeoutID = setTimeout(() => {
             if (queryParams[param] !== newQueryParams[param]) {
                 navigate({
@@ -105,7 +116,7 @@ export default function SearchOptions() {
             <span>
                 <Icon iconName='magnifying-glass' margin='right' color='black' />
                 <input onChange={e => captureQuery('name', e.target.value)} placeholder='Search by Name' />
-                <AdvancedSearch captureQuery={captureQuery} />
+                <AdvancedSearch captureQuery={captureQuery} captureQueryArray={captureQueryArray} />
             </span>
         </div>
     )
