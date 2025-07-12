@@ -6,9 +6,11 @@ import Icon from '../../icon/Icon'
 import { useEffect, useState } from 'react'
 import AdvancedSearch from './advancedSearch/AdvancedSearch'
 import { QueryParamsObject, QueryArrayParams, QueryBasicParams, QueryParams } from './advancedSearch/interfaces/SearchInterfaces'
+import SearchStatusHook from '../../../hooks/SearchStatusHook'
 
 export default function SearchOptions() {
-    const [isOnSearch, setIsOnSearch] = useState(false)
+    const { isOnSearch } = SearchStatusHook()
+
     const [timeoutID, setTimeoutID] = useState<any | null>(null)
 
     const [queryParams, setQueryParams] = useState<QueryParamsObject>({})
@@ -17,15 +19,14 @@ export default function SearchOptions() {
     const location = useLocation()
 
     useEffect(() => {
-        handleOldStyleLinks()
-
-        if (location.pathname === '/search') {
-            setIsOnSearch(true)
-        } else if (isOnSearch) {
-            setIsOnSearch(false)
+        if (!isOnSearch) {
             clearInputs()
             clearSelects()
         }
+    }, [isOnSearch])
+
+    useEffect(() => {
+        handleOldStyleLinks()
     }, [location])
 
     function handleOldStyleLinks() {

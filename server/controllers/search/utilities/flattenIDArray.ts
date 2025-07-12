@@ -13,7 +13,7 @@ export default function flattenIDArray(idArray: SearchReturn[][]): number[] {
                 idCountObj[id] = 1
             }
 
-            if (idCountObj[id] >= idArrayLength) {
+            if (idCountObj[id] === idArrayLength) {
                 intersectionArray.push(id)
             }
         })

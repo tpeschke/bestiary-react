@@ -1,10 +1,11 @@
 import Drawer from './components/Drawer'
 import './Drawers.css'
 
-import { JSX, useState } from 'react'
+import { JSX, useEffect, useState } from 'react'
 
 interface Props {
-    drawerInnards: DrawerObject[]
+    drawerInnards: DrawerObject[],
+    closeDrawer?: boolean
 }
 
 export interface DrawerObject {
@@ -13,8 +14,14 @@ export interface DrawerObject {
     innards: JSX.Element
 }
 
-export default function Drawers({ drawerInnards }: Props) {
-    const [openIndex, setOpenIndex] = useState()
+export default function Drawers({ drawerInnards, closeDrawer = false }: Props) {
+    const [openIndex, setOpenIndex] = useState<number|null>(null)
+
+    useEffect(() => {
+        if (closeDrawer) {
+            setOpenIndex(null)
+        }
+    }, [closeDrawer])
 
     return (
         <div className='drawers-shell'>
