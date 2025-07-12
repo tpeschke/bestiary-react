@@ -5,6 +5,7 @@ import Drawers from '../../../drawers/Drawers'
 import ClimateSearch from './components/drawers/ClimateSearch'
 import { CaptureQueryArrayFunction, CaptureQueryFunction, QueryBasicParams, QueryArrayParams } from './interfaces/SearchInterfaces'
 import Checkbox from '../../../checkbox/Checkbox'
+import RoleSearch from './components/drawers/RoleSearch'
 
 export type StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction = (param: QueryArrayParams, id: number, event: any) => StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction
 type StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction = (id: number, event: any) => void
@@ -73,10 +74,9 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
             <Checkbox label='Anyone Can View?' onClick={stopPropagationAndCaptureQueryFromCheckBox('anyAccess')} />
             <Checkbox label='Has Personal Notes?' onClick={stopPropagationAndCaptureQueryFromCheckBox('personalNotes')} />
 
-            <Drawers drawerInnards={[ClimateSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray)]}/>
+            <Drawers drawerInnards={[ClimateSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray), RoleSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray)]}/>
         </div>
     )
 }
 
-// roles
 // types

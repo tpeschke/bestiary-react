@@ -2,3 +2,13 @@
     width: 20%;
     min-width: 250px;
 }
+
+.search-roles-shell {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.search-roles-shell p.italic {
+    margin-top: 5px;
+}

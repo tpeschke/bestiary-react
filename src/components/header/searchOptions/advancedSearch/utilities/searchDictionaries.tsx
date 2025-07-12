@@ -157,3 +157,54 @@ export const climateSearchDictionary = [
     { id: 40, code: null, climate: 'Castle', examples: 'Neuschwanstein, Caernarfon, Bodiam' },
     { id: 41, code: null, climate: 'Ruin', examples: 'Anything the Romans built' }
 ]
+
+export const confrontationPrimaryDictionary: SearchObject[] = [
+    { id: 1, value: 'Striker' },
+    { id: 2, value: 'Defender' },
+    { id: 3, value: 'Fast - Talker' },
+    { id: 4, value: 'Feinter' },
+    { id: 5, value: 'Fodder' },
+    { id: 6, value: 'Sandbagger' },
+    { id: 7, value: 'Corruptor' },
+    { id: 8, value: 'Gaslighter' },
+    { id: 9, value: 'Enabler' },
+    { id: 10, value: 'Opportunist' }
+]
+
+export const confrontationSecondaryDictionary: SearchObject[] = [
+    { id: 32, value: 'Elite' },
+    { id: 33, value: 'Solo' }
+]
+
+export const combatPrimaryDictionary: SearchObject[] = [
+    { id: 11, value: 'Artillery' },
+    { id: 12, value: 'Brute' },
+    { id: 13, value: 'Captain' },
+    { id: 14, value: 'Controller' },
+    { id: 15, value: 'Defender' },
+    { id: 16, value: 'Duelist' },
+    { id: 19, value: 'Shock' },
+    { id: 20, value: 'Skirmisher' }
+]
+
+export const combatSecondaryDictionary: SearchObject[] = [
+    { id: 18, value: 'Fodder' },
+    { id: 31, value: 'Elite' },
+    { id: 21, value: 'Solo' },
+]
+
+export const skillPrimaryDictionary: SearchObject[] = [
+    { id: 22, value: 'Hunter' },
+    { id: 23, value: 'Prey' },
+    { id: 24, value: 'Controller' },
+    { id: 25, value: 'Lock' },
+    { id: 27, value: 'Antagonist' },
+    { id: 28, value: 'Trap' },
+    { id: 29, value: 'Hazard' },
+    { id: 30, value: 'Fodder' }
+]
+
+export const skillSecondaryDictionary: SearchObject[] = [
+    { id: 34, value: 'Elite' },
+    { id: 35, value: 'Solo' }
+]
