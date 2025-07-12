@@ -4,6 +4,7 @@ import { BeastType } from "../../../../../../interfaces/infoInterfaces/linkedInf
 
 import Drawers, { DrawerObject } from "../../../../../../../../components/drawers/Drawers"
 import HTMLDisplay from '../../../../../../components/UI/htmlDisplay/htmlDisplay'
+import { Link } from 'react-router-dom'
 
 interface Props {
     types: BeastType[]
@@ -24,13 +25,15 @@ export default function TypesDisplay({ types }: Props) {
     )
 }
 
-function formatType({ type, description }: BeastType): DrawerObject {
+function formatType({ type, description, typeid }: BeastType): DrawerObject {
     return {
         label: type,
         innards: (
             <div className='type-description-shell'>
                 <HTMLDisplay html={description} />
-                <button>See More {type}s</button>
+                <Link to={`/search?types=${typeid}`}>
+                    <button>See More {type}s</button>
+                </Link>
             </div>
         )
     }
