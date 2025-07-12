@@ -69,7 +69,7 @@ export default function SearchOptions() {
         } else {
             newQueryParams[param] = currentArray
         }
-        
+
         debounceQuery(newQueryParams, param)
     }
 
@@ -85,10 +85,10 @@ export default function SearchOptions() {
 
         debounceQuery(newQueryParams, param)
     }
-    
+
     function debounceQuery(newQueryParams: any, param: QueryParams) {
         setQueryParams(newQueryParams)
-        
+
         const newTimeoutID = setTimeout(() => {
             if (queryParams[param] !== newQueryParams[param]) {
                 navigate({

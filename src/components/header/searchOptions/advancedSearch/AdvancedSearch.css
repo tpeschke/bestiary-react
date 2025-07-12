@@ -31,12 +31,3 @@
     width: 20%;
     min-width: 225px;
 }
-
-.advanced-search-innards-shell .checkbox-shell input {
-    width: unset;
-}
-
-.advanced-search-innards-shell label {
-    min-width: 125px;
-    margin-left: 5px;
-}

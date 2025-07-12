@@ -2,10 +2,12 @@ import './AdvancedSearch.css'
 import { sizeSearchDictionary, raritySearchDictionary, accessSearchDictionary, minSkullSearchDictionary, maxSkullSearchDictionary } from './utilities/searchDictionaries'
 import SearchSelect from './components/SearchSelect'
 import Drawers from '../../../drawers/Drawers'
-import ClimateSearch from './components/ClimateSearch'
+import ClimateSearch from './components/drawers/ClimateSearch'
 import { CaptureQueryArrayFunction, CaptureQueryFunction, QueryBasicParams, QueryArrayParams } from './interfaces/SearchInterfaces'
+import Checkbox from '../../../checkbox/Checkbox'
 
-export type StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction = (param: QueryArrayParams, id: number, event: any) => void
+export type StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction = (param: QueryArrayParams, id: number, event: any) => StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction
+type StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction = (id: number, event: any) => void
 
 interface Props {
     captureQuery: CaptureQueryFunction,
@@ -21,14 +23,18 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
         captureQuery(param, event.target.value)
     }
 
-    function stopPropagationAndCaptureQueryFromCheckBox(param: QueryBasicParams, event: any) {
-        event.stopPropagation()
-        captureQuery(param, event.target.checked)
+    function stopPropagationAndCaptureQueryFromCheckBox(param: QueryBasicParams) {
+        return (event: any) => {
+            event.stopPropagation()
+            captureQuery(param, event.target.checked)
+        }
     }
 
-    function stopPropagationAndCaptureQueryFromCheckBoxForArray(param: QueryArrayParams, id: number, event: any) {
-        event.stopPropagation()
-        captureQueryArray(param, id, event.target.checked)
+    function stopPropagationAndCaptureQueryFromCheckBoxForArray(param: QueryArrayParams, id: number) {
+        return (event: any) => {
+            event.stopPropagation()
+            captureQueryArray(param, id, event.target.checked)
+        }
     }
 
     return (
@@ -64,15 +70,8 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
                 </div>
             </div>
 
-            <div className='rating-shell checkbox-shell'>
-                <input type="checkbox" onClick={event => stopPropagationAndCaptureQueryFromCheckBox('anyAccess', event)} />
-                <label>Anyone Can View?</label>
-            </div>
-
-            <div className='rating-shell checkbox-shell'>
-                <input type="checkbox" onClick={event => stopPropagationAndCaptureQueryFromCheckBox('personalNotes', event)} />
-                <label>Has Personal Notes?</label>
-            </div>
+            <Checkbox label='Anyone Can View?' onClick={stopPropagationAndCaptureQueryFromCheckBox('anyAccess')} />
+            <Checkbox label='Has Personal Notes?' onClick={stopPropagationAndCaptureQueryFromCheckBox('personalNotes')} />
 
             <Drawers drawerInnards={[ClimateSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray)]}/>
         </div>

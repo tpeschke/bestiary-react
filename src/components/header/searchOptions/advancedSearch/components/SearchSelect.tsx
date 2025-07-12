@@ -1,10 +1,10 @@
-import { QueryParams } from "../../SearchOptions"
 import { StopPropagationAndCaptureQuery } from "../AdvancedSearchInnards"
+import { QueryBasicParams } from "../interfaces/SearchInterfaces"
 import { SearchObject } from "../utilities/searchDictionaries"
 
 interface Props {
     stopPropagationAndCaptureQuery: StopPropagationAndCaptureQuery,
-    param: QueryParams,
+    param: QueryBasicParams,
     label?: string,
     dictionary: SearchObject[] | string[]
 }

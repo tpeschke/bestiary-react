@@ -1,0 +1,14 @@
+.checkbox-shell {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-shell input {
+    width: unset;
+}
+
+.checkbox-shell p {
+    min-width: 125px;
+    margin-left: 5px;
+}
