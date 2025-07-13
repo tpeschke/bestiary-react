@@ -9,7 +9,7 @@ export async function getCombatStats(databaseConnection: any, beastId: number, c
     return calculateCombatStats(combatStats, combatPoints, role, size)
 }
 
-export async function getMovement(databaseConnection: any, beastId: number, combatpoints: number, role: string): Promise<Movement[]> {
+export async function getMovement(databaseConnection: any, beastId: number, combatpoints: number, role: string): Promise<(Movement | null)[]> {
     const movements: RawMovement[] = await databaseConnection.beast.movement.get(beastId)
     return calculateMovements(movements, combatpoints, role)
 }
