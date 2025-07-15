@@ -35,13 +35,3 @@ export interface EquipmentInfo {
 export type DamageType = 'P' | 'C' | 'S'
 export type Type = 'm' | 'r'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
-
-export interface LocationVitality {
-    id: number,
-    location: string,
-    vitality: string,
-    beastid: number,
-    deleted: boolean,
-    roleid: string,
-    allroles: boolean
-}

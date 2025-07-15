@@ -178,7 +178,7 @@ export interface VitalityInfo {
 export interface LocationVitality {
     id: number,
     location: string,
-    vitality: string,
+    vitality: string | number,
     beastid: number,
     deleted: boolean,
     roleid: string,

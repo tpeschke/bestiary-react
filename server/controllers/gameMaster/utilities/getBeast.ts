@@ -6,6 +6,7 @@ import { Pleroma } from "../../../../common/interfaces/beast/infoInterfaces/loot
 import { Spell, Casting } from "../../../../common/interfaces/beast/infoInterfaces/castingInfo";
 import { User } from "../../../interfaces/apiInterfaces";
 import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
+import rollDice from '../../../utilities/diceRoller'
 
 import { isOwner } from "../../../utilities/ownerAccess";
 import { sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
@@ -133,7 +134,14 @@ export async function getPleroma(databaseConnection: any, beastId: number): Prom
 }
 
 export async function getLocationalVitalities(databaseConnection: any, beastId: number): Promise<LocationVitality[]> {
-    return databaseConnection.beast.locationalVitality.get(beastId)
+    const returnedVitalities = await databaseConnection.beast.locationalVitality.get(beastId)
+
+    return returnedVitalities.map((vitality: LocationVitality) => {
+        return {
+            ...vitality,
+            vitality: rollDice(vitality.vitality)
+        }
+    })
 }
 
 export async function getFolklore(databaseConnection: any, beastId: number): Promise<Folklore[]> {

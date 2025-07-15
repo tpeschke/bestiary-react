@@ -1,5 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo, { LocationVitality } from "../interfaces/infoInterfaces/combatInfoInterfaces";
+import CombatInfo from "../interfaces/infoInterfaces/combatInfoInterfaces";
 import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
@@ -13,7 +13,7 @@ import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillI
 import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateMovement from '../../../../common/utilities/scalingAndBonus/combat/movement'
-import { VitalityInfo, AttackInfo, DefenseInfo, Movement } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { VitalityInfo, AttackInfo, DefenseInfo, Movement, LocationVitality } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import { calculateAttackInfo, calculateDefenseInfo } from '../../../../common/utilities/scalingAndBonus/combat/combatCalculation'
 import { calculateVitalityFatigueAndTrauma } from '../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator'
 import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
@@ -258,14 +258,15 @@ export default class GMBeastClass {
         const combatpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points) + this.selectedModifier
 
         const vitalityInfo = roleSelected ? this.populateVitalityInfo(mainVitalityInfo, this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.vitalityInfo) : mainVitalityInfo
-
+console.log(vitalityInfo.locationalVitalities)
         return {
             ...combatInfo,
             combatrole, combatsecondary, combatpoints,
             sp_atk, sp_def,
             vitalityInfo: {
                 ...vitalityInfo,
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength)
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength),
+                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
@@ -309,7 +310,7 @@ export default class GMBeastClass {
 
     private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
         return {
-            locationalVitalities:       this.getDefault<LocationVitality[]>(roleVitalityInfo.locationalVitalities, mainVitalityInfo.locationalVitalities),
+            locationalVitalities:       mainVitalityInfo.locationalVitalities,
             fatigue:                    this.getDefault<string | number | boolean>(roleVitalityInfo.fatigue, mainVitalityInfo.fatigue),
             notrauma:                   this.getDefault<boolean>(roleVitalityInfo.notrauma, mainVitalityInfo.notrauma),
             knockback:                  this.getDefault<number>(roleVitalityInfo.knockback, mainVitalityInfo.knockback),

@@ -9,6 +9,7 @@ import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 
 import { Size } from "../../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import LocationVitalities from "./locationalVitalities/LocationalVitalities"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -17,7 +18,7 @@ interface Props {
 
 export default function CombatSection({ combatInfo, size }: Props) {
     const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, attacks, defenses, tactics, initiative } = combatInfo
-    const { vitality, fatigue, rollundertrauma, notrauma, trauma, knockback, noknockback } = vitalityInfo
+    const { vitality, fatigue, rollundertrauma, notrauma, trauma, knockback, noknockback, locationalVitalities } = vitalityInfo
 
     let vitalityString = `${vitality}`
     if (fatigue && fatigue < vitality) { vitalityString = `(${fatigue}) ` + vitalityString }
@@ -40,6 +41,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
             <RoleTitle title='Combat' points={combatpoints} role={combatrole} secondaryRole={combatsecondary} />
             <Pair title={"Vitality (Fatigue)"} info={vitalityString} format={{ heading: true }} />
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
+            <LocationVitalities locationalVitalities={locationalVitalities}/>
             <DefenseDisplay defenses={defenses} sp_def={sp_def} />
             <AttackDisplay attacks={attacks} sp_atk={sp_atk} />
             <Movement movements={movements} />

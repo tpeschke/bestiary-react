@@ -1,11 +1,10 @@
 import './CombatSubtitle.css'
 
-import { Size } from "../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
-
 import Body from "../../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../../components/UI/pair/Pair"
 import SizeDisplay from "./components/sizeDisplay/SizeDisplay"
 import TraumaDisplay from "./components/traumaDisplay/TraumaDisplay"
+import { Size } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {
     traumaInfo: TraumaInfo,
@@ -29,7 +28,7 @@ export default function CombatSubtitle({ traumaInfo, initiative, knockbackInfo }
     const { trauma, notrauma, rollundertrauma } = traumaInfo
     const { knockback, noknockback, size } = knockbackInfo
 
-    const showSection = trauma || notrauma || knockback || size !== ''
+    const showSection = trauma || notrauma || knockback || size
 
     return (
         <>
