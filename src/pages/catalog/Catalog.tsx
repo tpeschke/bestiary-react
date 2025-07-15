@@ -11,7 +11,7 @@ import FavoritesDisplay from './components/favorites/FavoritesDisplay';
 import { SetLoadingFunction } from '../../components/loading/Loading';
 
 interface Props {
-    setLoading: SetLoadingFunction
+    setLoading?: SetLoadingFunction
 }
 
 export default function Catalog({ setLoading }: Props) {
@@ -21,7 +21,9 @@ export default function Catalog({ setLoading }: Props) {
     const [showAll, setShowAll] = useState(false)
 
     useEffect(() => {
-        setLoading(catalogItems.length > 0)
+        if (setLoading) {
+            setLoading(catalogItems.length > 0)
+        }
     }, [catalogItems])
 
     return (
