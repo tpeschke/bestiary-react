@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow'
 
@@ -115,6 +115,12 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'dice':
             styling = 'fa-solid fa-dice'
+            break
+        case 'log-in':
+            styling = 'fa-solid fa-right-to-bracket'
+            break
+        case 'log-out':
+            styling = 'fa-solid fa-right-from-bracket'
             break
         default:
             break;

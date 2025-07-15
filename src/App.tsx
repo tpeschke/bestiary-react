@@ -19,6 +19,7 @@ import { setUser, isUserLoggedOn } from './redux/slices/userSlice';
 import Loading from './components/loading/Loading';
 import SearchResults from './pages/beast/pages/searchResults/SearchResults';
 import ListHome from './pages/list/ListHome';
+import Footer from './components/footer/Footer';
 
 export default function App() {
   const userIsLoggedIn = useSelector(isUserLoggedOn)
@@ -96,7 +97,7 @@ export default function App() {
           <Route path="*" element={<Navigate to='/' replace />} />
         </Routes>
         <br />
-        {/* footer */}
+        <Footer />
         <ToastContainer transition={Slide} stacked theme="colored" closeOnClick />
         <Tooltip id="my-tooltip" place="bottom" />
       </div>
