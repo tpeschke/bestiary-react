@@ -7,7 +7,7 @@ import { isOwner } from "../../utilities/ownerAccess"
 import createHash from "../../utilities/hashGeneration"
 // import upsertBeast from "../../utilities/upserts/upsertBeast"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../../utilities/sendingFunctions'
-import { getScenarios, getFolklore, getTables, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
+import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities,
     getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, 
     getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/getBeast"
 import { calculateStressAndPanic } from "../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
@@ -22,7 +22,7 @@ import { calculateVitalityFatigueAndTrauma } from "../../../common/utilities/sca
 import calculateKnockBack from "../../../common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import { Beast } from "../../../common/interfaces/beast/beast"
 import { Skill } from "../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
-import { Folklore, Scenario } from "../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Folklore, Scenario, TablesObject } from "../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { BeastType, ClimateObject, LocationObject, Variant } from "../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Role } from "../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
@@ -34,6 +34,7 @@ import { getFavorite, getNotes } from "./utilities/getUtilities/getPlayerInfo"
 import { Notes } from "../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 import { getRarity } from "../../utilities/rarity"
 import { LocationVitality, Movement } from "../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import getTables from "./utilities/getUtilities/getTables"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -254,7 +255,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
     promiseArray.push(getScenarios(databaseConnection, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
     promiseArray.push(getFolklore(databaseConnection, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
-    getTables(databaseConnection, beast.id, beast.generalInfo.tables, promiseArray)
+    promiseArray.push(getTables(databaseConnection, beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables))
 
     promiseArray.push(getArtistInfo(databaseConnection, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
 

@@ -1,5 +1,5 @@
 import { LocationVitality } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario, TablesObject, Table, Row, Rarity } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { Folklore, Scenario } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject, ArtistInfo } from "../../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Climate, LocationObject, Location, Variant } from "../../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Pleroma } from "../../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
@@ -150,37 +150,6 @@ export async function getFolklore(databaseConnection: any, beastId: number): Pro
 
 export async function getScenarios(databaseConnection: any, beastId: number): Promise<Scenario[]> {
     return databaseConnection.beast.scenario.get(beastId)
-}
-
-export async function getTables(databaseConnection: any, beastId: number, tables: TablesObject, promiseArray: any[]) {
-    const basicTableInfo: Table[] = await databaseConnection.beast.table.getTable(beastId)
-
-    basicTableInfo.forEach(async (table: Table) => {
-        promiseArray.push(databaseConnection.beast.table.getRow(table.id).then((rows: Row[]) => {
-            if (table.section === 'ap') {
-                tables.appearance.push({
-                    ...table,
-                    rows
-                })
-            } else if (table.section === 'ha') {
-                tables.habitat.push({
-                    ...table,
-                    rows
-                })
-            } else if (table.section === 'at') {
-                tables.attack.push({
-                    ...table,
-                    rows
-                })
-            } else if (table.section === 'de') {
-                tables.defense.push({
-                    ...table,
-                    rows
-                })
-            }
-            return true
-        }))
-    })
 }
 
 export async function getCasting(databaseConnection: any, beastId: number): Promise<Casting> {

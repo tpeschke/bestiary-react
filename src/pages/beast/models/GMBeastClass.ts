@@ -258,7 +258,7 @@ export default class GMBeastClass {
         const combatpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points) + this.selectedModifier
 
         const vitalityInfo = roleSelected ? this.populateVitalityInfo(mainVitalityInfo, this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.vitalityInfo) : mainVitalityInfo
-console.log(vitalityInfo.locationalVitalities)
+
         return {
             ...combatInfo,
             combatrole, combatsecondary, combatpoints,
