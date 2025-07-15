@@ -10,10 +10,11 @@ interface Props {
 
 export default function TraumaDisplay({ trauma, notrauma, rollundertrauma }: Props) {
     const traumaString = `${trauma} (${rollundertrauma})`
+    const showTrauma = !notrauma && trauma
 
     return (
         <>
-            {(!notrauma && traumaString) &&
+            {showTrauma &&
                 <div className="trauma-pair-shell">
                     <div>
                         <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip='What you need to roll under for the Trauma Check' /><p>)</p>
