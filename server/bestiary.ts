@@ -36,7 +36,7 @@ app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
-app.use('/list', listRoutes)
+app.use('/lists', listRoutes)
 
 app.use('/info', BeastRoutes)
 

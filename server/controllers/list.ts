@@ -1,4 +1,4 @@
-import { Request, Response, Error } from "../interfaces/apiInterfaces"
+import { Request, Response } from "../interfaces/apiInterfaces"
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { checkForContentTypeBeforeSending } from "../utilities/sendingFunctions"
 
@@ -14,6 +14,6 @@ export async function getRandomMonsterFromList(request: GetRandomRequest, respon
     const databaseConnection = getDatabaseConnection(request)
     const { listId } = request.params
 
-    const [randomBeast] = await databaseConnection.get.list.randomBeast(listId)
+    const [randomBeast] = await databaseConnection.list.random.get(listId)
     checkForContentTypeBeforeSending(response, randomBeast)
 }

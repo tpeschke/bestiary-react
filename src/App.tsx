@@ -3,7 +3,7 @@ import './App.css'
 import { useEffect } from 'react';
 
 import axios from 'axios';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ToastContainer } from 'react-toastify';
@@ -18,6 +18,7 @@ import { accessURL } from './frontend-config'
 import { setUser, isUserLoggedOn } from './redux/slices/userSlice';
 import Loading from './components/loading/Loading';
 import SearchResults from './pages/beast/pages/searchResults/SearchResults';
+import ListHome from './pages/list/ListHome';
 
 export default function App() {
   const userIsLoggedIn = useSelector(isUserLoggedOn)
@@ -84,12 +85,21 @@ export default function App() {
               </Loading>
             } />
           </Route>
+          <Route path='lists'>
+            <Route path=':listId/directlyTo' element={
+              <Loading>
+                <ListHome />
+              </Loading>
+            } />
+            <Route index element={<Navigate to='/' replace />} />
+          </Route>
+          <Route path="*" element={<Navigate to='/' replace />} />
         </Routes>
         <br />
         {/* footer */}
         <ToastContainer transition={Slide} stacked theme="colored" closeOnClick />
         <Tooltip id="my-tooltip" place="bottom" />
       </div>
-    </div>
+    </div >
   )
 }
