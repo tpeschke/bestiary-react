@@ -9,7 +9,7 @@ interface Props {
     setLoading?: SetLoadingFunction
 }
 
-export default function View({ setLoading }: Props) {
+export default function View({ setLoading }: Props) { 
     const { beast, playerBeast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite } = beastHooks();
 
     useEffect(() => {

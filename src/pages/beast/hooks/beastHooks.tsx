@@ -73,15 +73,18 @@ export default function beastHooks(): Return {
             const beast = getBeastFromCache(beastId, roleId, modifier)
 
             if (beast) {
+                document.title = `${beast.generalInfo.name} - Bonfire Bestiary`
                 setBeast(beast)
                 scrollToTop()
             } else {
                 axios.get(beastURL + '/' + beastId).then(({ data }) => {
                     if (data.generalInfo) {
+                        document.title = `${data.generalInfo.name} - Bonfire Bestiary`
                         setBeast(new GMBeastClass(data, roleId, modifier))
                         dispatch(cacheMonster(data))
                         scrollToTop()
                     } else {
+                        document.title = `${data.name} - Bonfire Bestiary`
                         setPlayerBeast(new PlayerBeastClass(data))
                         scrollToTop()
                     }
@@ -119,7 +122,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            navigate({ 
+            navigate({
                 pathname: `/beast/${beastId}`,
                 search: createSearchParams(queryParams).toString()
             })
@@ -168,13 +171,13 @@ export default function beastHooks(): Return {
     }
 
     const updateNotes = async (value: string): Promise<void> => {
-        let notes: Notes = { notes: value}
+        let notes: Notes = { notes: value }
 
         if (beast && !beast?.notes.id) {
             const id = await saveNotes(beast.id, notes)
-            notes = {...notes, id}
+            notes = { ...notes, id }
         } else if (beast && value !== beast?.notes.notes) {
-            notes = {...beast.notes, ...notes}
+            notes = { ...beast.notes, ...notes }
             await saveNotes(beast.id, notes)
         }
 

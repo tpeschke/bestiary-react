@@ -9,6 +9,8 @@ interface Props {
 }
 
 export default function ListHome({ setLoading }: Props) {
+    document.title = 'Bonfire Bestiary'
+    
     const { listId } = useParams()
     const navigate = useNavigate()
 

@@ -15,6 +15,8 @@ interface Props {
 }
 
 export default function Catalog({ setLoading }: Props) {
+    document.title = 'Bonfire Bestiary'
+    
     const { templates, freeBeasts, catalogItems, updatingCatalogItems, favorites } = catalogItemStates()
     const userIsLoggedIn = useSelector(isUserLoggedOn)
 
