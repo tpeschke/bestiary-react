@@ -1,6 +1,6 @@
-import { LocationVitality } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import Body from "../../../../../../../components/UI/body/Body"
-import Pair from "../../../../../../../components/UI/pair/Pair"
+import { LocationVitality } from "../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import Body from "../../../../../../../../components/UI/body/Body"
+import Pair from "../../../../../../../../components/UI/pair/Pair"
 
 interface Props {
     locationalVitalities: LocationVitality[]

@@ -9,7 +9,7 @@ import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 
 import { Size } from "../../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import LocationVitalities from "./locationalVitalities/LocationalVitalities"
+import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 
 interface Props {
     combatInfo: CombatInfo,
