@@ -2,10 +2,11 @@
     padding: 10px;
     cursor: pointer;
     transition: .6s;
+    border-radius: 5px;
 }
 
 .tile:hover {
-    background: whitesmoke;
+    background: #d9dee0;
 }
 
 .tile h2 {
