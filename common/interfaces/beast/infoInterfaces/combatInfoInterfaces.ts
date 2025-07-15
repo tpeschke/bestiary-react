@@ -11,7 +11,7 @@ export default interface CombatInfo {
     initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
-    movements: Movement[],
+    movements: (Movement | null)[],
 }
 
 export type DamageType = 'P' | 'C' | 'S'

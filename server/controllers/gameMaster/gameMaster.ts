@@ -21,7 +21,6 @@ import { CalculateCombatStatsReturn } from "../../../common/utilities/scalingAnd
 import { calculateVitalityFatigueAndTrauma } from "../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
 import calculateKnockBack from "../../../common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import { Beast } from "../../../common/interfaces/beast/beast"
-import { Movement, LocationVitality } from "../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Skill } from "../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Folklore, Scenario } from "../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
@@ -34,6 +33,7 @@ import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/
 import { getFavorite, getNotes } from "./utilities/getUtilities/getPlayerInfo"
 import { Notes } from "../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 import { getRarity } from "../../utilities/rarity"
+import { LocationVitality, Movement } from "../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
@@ -273,7 +273,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
     promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
-    promiseArray.push(getMovement(databaseConnection, beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
+    promiseArray.push(getMovement(databaseConnection, beast.id, combatpoints, combatrole).then((movements: (Movement| null)[]) => beast.combatInfo.movements = movements))
     promiseArray.push(getCombatStats(databaseConnection, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses } ))
 
     promiseArray.push(getLocationalVitalities(databaseConnection, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
