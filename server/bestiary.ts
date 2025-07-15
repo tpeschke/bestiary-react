@@ -20,6 +20,7 @@ import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
 import collectGearCache from './controllers/gear/gear'
 import searchRoutes from './routes/search'
+import listRoutes from './routes/list'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -35,6 +36,7 @@ app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
+app.use('/list', listRoutes)
 
 app.use('/info', BeastRoutes)
 
