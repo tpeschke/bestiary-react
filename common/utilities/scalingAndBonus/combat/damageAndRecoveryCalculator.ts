@@ -12,7 +12,7 @@ interface Return {
 export function calculateDamageAndRecovery(slashingDamageScalingStrength: Strength, crushingDamageScalingStrength: Strength, piercingDamageScalingStrength: Strength, recoveryScalingStrength: Strength, role: string, points: number, isspecial: IsSpecial, damageType: DamageType): Return {
     if (isspecial) { return {damage: '*', recovery: 10} }
 
-    let setDamageScaling;
+    let setDamageScaling: Strength = null;
     if (slashingDamageScalingStrength) {
         setDamageScaling = slashingDamageScalingStrength
     } else if (crushingDamageScalingStrength) {
@@ -161,15 +161,19 @@ function createDiceStringAndRecovery(diceObject: DiceObject): Return {
     return { damage, recovery }
 }
 
+interface diceRecoveryDictionaryObject {
+    [key: string]: number
+}
+
 function getRecoveryFromDiceSize(diceSize: string): number {
-    const diceRecoveryDictionary = {
-        d3: 2,
-        d4: 3,
-        d6: 4,
-        d8: 5,
-        d10: 6,
-        d12: 7,
-        d20: 11,
+    const diceRecoveryDictionary: diceRecoveryDictionaryObject = {
+        'd3': 2,
+        'd4': 3,
+        'd6': 4,
+        'd8': 5,
+        'd10': 6,
+        'd12': 7,
+        'd20': 11,
     }
     return diceRecoveryDictionary[diceSize]
 }

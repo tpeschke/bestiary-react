@@ -1,5 +1,5 @@
+import { Size } from "../../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import Pair from "../../../../../../../../../../components/UI/pair/Pair"
-import { Size } from "../../../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
     size: Size,

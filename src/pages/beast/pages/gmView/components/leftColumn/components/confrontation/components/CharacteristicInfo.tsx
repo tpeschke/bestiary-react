@@ -2,8 +2,8 @@ import './Characteristics.css'
 
 import Pair from "../../../../../../../components/UI/pair/Pair"
 
-import { Conflict } from "../../../../../../../interfaces/infoInterfaces/socialInfo"
 import Body from '../../../../../../../components/UI/body/Body'
+import { Conflict } from '../../../../../../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 
 interface Props {
     title: string,

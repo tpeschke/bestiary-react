@@ -6,7 +6,6 @@ import GearCacheClass from './model/EquipmentCacheClass'
 import { ProcessedArmor } from './interfaces/armorInterfaces'
 import { ProcessedShield } from './interfaces/shieldInterfaces'
 import { ProcessedWeapon } from './interfaces/weaponInterfaces'
-import { AllListsAndDictionaries } from './interfaces/equipmentInterfaces'
 
 let equipmentCache = new GearCacheClass()
 
@@ -26,7 +25,7 @@ export function getWeaponByName(weaponName: string): ProcessedWeapon {
 }
 
 export function getShieldByName(shieldName: string): ProcessedShield {
-    return equipmentCache.getShieldByName[shieldName]
+    return equipmentCache.getShieldByName(shieldName)
 }
 
 export function getArmorByName(armorName: string): ProcessedArmor {

@@ -1,5 +1,4 @@
-import { ConflictObject } from "../../../../../../../interfaces/infoInterfaces/socialInfo"
-
+import { ConflictObject } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CharacteristicsInfo from "./CharacteristicInfo"
 
 interface Props {

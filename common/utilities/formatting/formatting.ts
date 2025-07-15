@@ -1,4 +1,3 @@
-import { DamageType } from "../../interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Strength } from "../../interfaces/calculationInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
@@ -27,7 +26,7 @@ export function getDefenseName(chosenName: string, shield: string, armor: string
     return name;
 }
 
-export function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength, role: string): DamageType {
+export function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength, role: string): string {
     if (slashingDamage) { return 'S' }
     if (crushingDamage) { return 'C' }
     if (piercingDamage) { return 'P' }

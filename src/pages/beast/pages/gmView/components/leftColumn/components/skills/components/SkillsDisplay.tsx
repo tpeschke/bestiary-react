@@ -1,5 +1,4 @@
-import { Skill } from '../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces'
-
+import { Skill } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Pair from "../../../../../../../components/UI/pair/Pair"
 
 interface Props {

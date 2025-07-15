@@ -11,8 +11,6 @@ export interface DamageReductionObject {
     slash: number
 }
 
-type ArmorCategory = 'Light' | 'Medium' | 'Heavy'
-
 export type ProcessedArmorDictionary = {
     [key: string]: ProcessedArmor
 }
@@ -21,13 +19,13 @@ export interface ProcessedArmor {
     name: string,
     dr: DamageReductionObject,
     size: SizeCategories,
-    type: ArmorCategory
+    type: string
 }
 
 export const armorCategoryBySizeDictionary = {
-    'Light': 'S',
-    'Medium': 'M',
-    'Heavy': 'L'
+    'S': 'Light',
+    'M': 'Medium',
+    'L': 'Heavy'
 }
 
 export const LIGHT = 0
