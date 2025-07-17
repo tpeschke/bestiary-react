@@ -1,6 +1,6 @@
 export interface Request {
     app: App,
-    user?: User,
+    user?: User | null,
     status: Function
 }
 
@@ -31,4 +31,9 @@ export interface Response {
 
 export interface Error {
     message: string
+}
+
+export interface Profile {
+    displayName: string,
+    user_id: string
 }

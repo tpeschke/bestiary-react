@@ -1,52 +1,28 @@
 import express from 'express'
-import session from 'express-session'
-import passport from 'passport'
-import Auth0Strategy from 'passport-auth0'
+import { Request, Response } from '../interfaces/apiInterfaces';
 
-import { secret, domain, clientID, clientSecret, callbackURL } from '../server-config'
-
-export interface Profile {
-    displayName: string,
-    user_id: string
+interface LogOutRequest extends Request {
+    logOut: Function
 }
 
-const authRoutes = express.Router()
+interface LogOutResponse extends Response {
+    redirect: Function
+}
 
-authRoutes.use(session({
-    secret,
-    resave: false,
-    saveUninitialized: true
-}))
-authRoutes.use(passport.initialize());
-authRoutes.use(passport.session());
+export default function authRoutesWithoutPassword(passport: any) {
+    const authRoutes = express.Router()
 
-passport.use(new Auth0Strategy({
-    domain,
-    clientID,
-    clientSecret,
-    callbackURL,
-    scope: 'openid profile'
-}, async (accessToken: string, refreshToken: string, extraParams: Object, profile: Profile, finishingCallback: Function) => {
-    const { displayName, user_id: userID } = profile;
-    const db = authRoutes.get('db');
-    const [ user ] = await db.find.user(userID)
-    if (!user) {
-        await db.create.user(displayName, userID)
-    }
-    return finishingCallback(null, user.id)
-}))
+    authRoutes.get('/', passport.authenticate('auth0'));
+    authRoutes.get('/callback', passport.authenticate('auth0', {
+        successRedirect: `/`
+    }));
 
-authRoutes.get('/', passport.authenticate('auth0'));
-authRoutes.get('/callback', passport.authenticate('auth0', {
-    successRedirect: `/`
-}));
+    authRoutes.get('/signOut', (request: LogOutRequest, response: LogOutResponse, next: Function) => {
+        request.logOut(error => {
+            if (error) { return next(error); }
+            response.redirect('/');
+        });
+    })
 
-passport.serializeUser((id : number, done : Function) => {
-    done(null, id)
-})
-passport.deserializeUser(async (id : number, done : Function) => {
-    const [ user ] = await authRoutes.get('db').user.findSession(id)
-    return done(null, user);
-})
-
-export default authRoutes
+    return authRoutes
+} 
