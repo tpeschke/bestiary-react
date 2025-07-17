@@ -37,7 +37,6 @@ export default function App() {
     <div className='background'>
       <div className='container'>
         <Header />
-        <br />
         <Routes>
           <Route index element={
             <Loading>
@@ -96,7 +95,6 @@ export default function App() {
           </Route>
           <Route path="*" element={<Navigate to='/' replace />} />
         </Routes>
-        <br />
         <Footer />
         <ToastContainer transition={Slide} stacked theme="colored" closeOnClick />
         <Tooltip id="my-tooltip" place="bottom" />
