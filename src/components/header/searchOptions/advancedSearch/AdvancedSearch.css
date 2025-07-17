@@ -28,6 +28,6 @@
 .advanced-search-innards-shell .rating-shell {
     display: flex;
     align-items: center;
-    width: 20%;
+    width: 30%;
     min-width: 225px;
 }

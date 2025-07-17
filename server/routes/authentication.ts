@@ -36,8 +36,8 @@ passport.use(new Auth0Strategy({
     return finishingCallback(null, user.id)
 }))
 
-authRoutes.get('/auth', passport.authenticate('auth0'));
-authRoutes.get('/auth/callback', passport.authenticate('auth0', {
+authRoutes.get('/', passport.authenticate('auth0'));
+authRoutes.get('/callback', passport.authenticate('auth0', {
     successRedirect: `/`
 }));
 

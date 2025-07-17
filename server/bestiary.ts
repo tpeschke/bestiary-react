@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import massive from 'massive'
 import path from 'path'
+import { fileURLToPath } from 'url';
 
 import { Response } from './interfaces/apiInterfaces'
 
@@ -26,12 +27,10 @@ const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
 app.use(cors())
 
-// app.use(express.static(__dirname + `/../dist/bestiary`));
-
 // ================================== \\
 app.use(fakeAuth)
 
-app.use('/', authRoutes)
+app.use('/auth', authRoutes)
 app.use('/catalog', catalogRoutes)
 app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
@@ -44,9 +43,8 @@ app.use('/ownerEdit', ownerEditRoutes)
 
 // ================================== \\
 
-app.get('/*', (request: Request, response : Response) => {
-    // response.sendFile(path.join(__dirname + '/../dist/bestiary/index.html'))
-})
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(__dirname + `/../dist`));
 
 // ================================== \\
 
