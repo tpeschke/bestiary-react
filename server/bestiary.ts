@@ -76,7 +76,6 @@ app.use('/ownerEdit', ownerEditRoutes)
 
 // ================================== \\
 
-// Brody
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(__dirname + `/../dist`));
 
