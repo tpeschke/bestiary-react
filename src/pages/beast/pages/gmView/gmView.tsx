@@ -8,6 +8,7 @@ import LeftColumn from "./components/leftColumn/LeftColumn"
 import Weirdshaping from "./components/weirdshaping/Weirdshaping"
 import { UpdateRoleModifierFunction, UpdateSelectedRoleFunction, UpdateFavoriteFunction } from "../../hooks/beastHooks"
 import { SetPlayerNotes } from "../../components/notes/notesDisplay"
+import CanEditButton from "./components/canEditButton/CanEditButton"
 
 interface Props {
     beast: GMBeastClass,
@@ -20,7 +21,7 @@ interface Props {
 export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
         selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite } = beast
-    const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta } = generalInfo
+    const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
     const { beast: locationsInfo } = locations
@@ -43,6 +44,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
                 RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
+            <CanEditButton canEdit={canEdit} />
         </>
     )
 }

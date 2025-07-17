@@ -2,6 +2,7 @@ export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large'
 
 export default interface GeneralInfo {
     name: string,
+    canEdit: boolean,
     plural: string,
     intro: string,
     habitat: string,

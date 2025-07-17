@@ -107,8 +107,8 @@ async function collectCache(databaseConnection: any, index: number) {
     } else {
         catalogCache = newCache
         newCache = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
-        console.log('--- ----------------- --- ')
+        console.log('------------------------- ')
         console.log('--- Catalog Collected --- ')
-        console.log('--- ----------------- --- ')
+        console.log('------------------------- ')
     }
 }

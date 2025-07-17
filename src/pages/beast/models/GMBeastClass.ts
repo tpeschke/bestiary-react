@@ -1,6 +1,5 @@
 import { Spell } from "../interfaces/infoInterfaces/castingInfo";
 import CombatInfo from "../interfaces/infoInterfaces/combatInfoInterfaces";
-import GeneralInfo from "../interfaces/infoInterfaces/generalInfoInterfaces";
 import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
@@ -21,7 +20,7 @@ import { calculateStressAndPanic } from '../../../../common/utilities/scalingAnd
 import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
 
 import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
-import { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import GeneralInfo, { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../components/alert/alerts";
 import { Strength } from "../../../../common/interfaces/calculationInterfaces";

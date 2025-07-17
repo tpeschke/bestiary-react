@@ -20,7 +20,6 @@ interface BeastAccessRequest extends Request {
     }
 }
 
-
 export async function checkIfPlayerView(request: BeastAccessRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const beastId: number = +request.params.beastId
@@ -49,12 +48,12 @@ export async function canEditMonster(request: BeastAccessRequest, response: Resp
 async function checkIfUserHasPermissions(request: Request, response: Response, beastId: number, user: User) {
     const databaseConnection = getDatabaseConnection(request)
 
-    const { userid: userId } = await databaseConnection.beast.canEdit(beastId).catch((error: Error) => sendErrorForward('custom monster check', error, response))[0]
+    const { userid: beastOwnerId } = await databaseConnection.beast.canEdit(beastId).catch((error: Error) => sendErrorForward('custom monster check', error, response))[0]
     const { id, patreon = 0 } = user
 
-    if (userId) {
+    if (beastOwnerId) {
         const body = {
-            canEdit: isOwner(id) || id === userId
+            canEdit: isOwner(id) || id === beastOwnerId
         }
         checkForContentTypeBeforeSending(response, body)
     } else {

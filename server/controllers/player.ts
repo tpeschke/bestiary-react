@@ -1,4 +1,4 @@
-import { Response, Request } from "../interfaces/apiInterfaces"
+import { Response, Request, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
 import getDatabaseConnection from "../utilities/databaseConnection"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
@@ -6,7 +6,7 @@ import { getArtistInfo } from "./gameMaster/utilities/getBeast"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
-export async function getPlayerVersionOfBeast(request: Request, response: Response) {
+export async function getPlayerVersionOfBeast(request: BasicParamsRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const beastId: number = +request.params.beastId
     const { user } = request
@@ -78,7 +78,7 @@ interface Body {
 
 export async function updateFavoriteStatus(request: FavoriteRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
-    const { id: userID } = request.user
+    const userID = request.user?.id
     const { beastID, newStatus } = request.body
 
     if (newStatus) {

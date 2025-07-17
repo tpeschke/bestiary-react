@@ -9,16 +9,14 @@ import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootI
 import rollDice from '../../../utilities/diceRoller'
 
 import { isOwner } from "../../../utilities/ownerAccess";
-import { sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
 import { objectifyItemArray } from "../../../utilities/sorts";
-const sendErrorForward = sendErrorForwardNoFile('get beast')
 
-export function hasAppropriatePatreonLevel(user: User | undefined, beastPatron: number, canPlayerView: boolean): string {
+export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {
         return 'gm'
     } else if (user && user.patreon) {
-        let effectivePatreon = beastPatron === 0 ? beastPatron + 3 : beastPatron
-        if (effectivePatreon >= user.patreon) {
+        const effectivePatreon = beastPatron === 0 ? beastPatron + 3 : beastPatron
+        if (effectivePatreon <= user.patreon) {
             return 'gm'
         } else {
             return 'player'

@@ -1,5 +1,3 @@
-import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-
 export type SizeObject = {
     Fine: number,
     Diminutive: number,
@@ -11,22 +9,6 @@ export type SizeObject = {
     Giant: number,
     Enormous: number,
     Colossal: number
-}
-
-export default interface GeneralInfo {
-    name: string,
-    plural: string,
-    intro: string,
-    habitat: string,
-    appearance: string,
-    scenarios: Scenario[],
-    folklores: Folklore[],
-    senses: string,
-    diet: string,
-    meta: string,
-    size: Size,
-    rarity: Rarity,
-    tables: TablesObject,
 }
 
 export interface Scenario {

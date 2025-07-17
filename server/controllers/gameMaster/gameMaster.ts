@@ -114,7 +114,7 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)
     } else {
-        sendErrorForward('404', { message: 'No Beast Found'}, response)
+        sendErrorForward('404', { message: 'No Entry Found'}, response)
     }
 }
 
@@ -131,7 +131,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare,
-        devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes } = unsortedBeastInfo
+        devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId } = unsortedBeastInfo
 
     let beast: Beast = {
         id, patreon, canplayerview,
@@ -146,6 +146,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             rarity: getRarity(rarity),
             scenarios: [],
             folklores: [],
+            canEdit: isOwner(userID) || userID === beastOwnerId,
             tables: {
                 habitat: [],
                 attack: [],
