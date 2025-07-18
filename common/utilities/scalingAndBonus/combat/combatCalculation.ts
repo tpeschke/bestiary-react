@@ -20,7 +20,6 @@ export interface CalculateCombatStatsReturn {
 
 export function calculateDefenseInfo(defenseInfo: any, points: number, role: string, addsizemod: boolean, size: Size) {
     const { id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info } = defenseInfo
-
     return {
         id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, info,
         name: getDefenseName(name, shield, armor),

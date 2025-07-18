@@ -4,7 +4,7 @@ import { getWeaponName } from "../../formatting/formatting"
 import { calculateStatWithFormatting, calculateStat } from "./combatCalculation"
 import { calculateDamageAndRecovery } from "./damageAndRecoveryCalculator"
 
-import {getWeaponByName } from '../../../../server/controllers/gear/gear'
+import { getWeaponByName } from '../../../../server/controllers/gear/gear'
 
 export default function calculateAndFormatAttackInfo(
     totalPoints: number,
@@ -24,11 +24,11 @@ export default function calculateAndFormatAttackInfo(
     const weaponInfo = getWeaponByName(weaponName)
 
     if (weaponInfo) {
-        const { measure, name, type, bonus } = weaponInfo
+        const { measure, type, name, bonus } = weaponInfo
 
         return {
             measure, type, bonus,
-            name: getWeaponName(weaponName, name),
+            name: getWeaponName(chosenName, name),
             attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
             rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
             ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, type)

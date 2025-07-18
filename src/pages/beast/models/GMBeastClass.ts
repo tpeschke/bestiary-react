@@ -247,7 +247,6 @@ export default class GMBeastClass {
 
     private formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
         const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo, sp_atk, sp_def } = combatInfo
-
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
@@ -278,7 +277,7 @@ export default class GMBeastClass {
             if (!attack.roleid || attack.roleid === roleID) {
                 attackInfo.push({
                     ...attack,
-                    ...calculateAttackInfo(attack.scalingInfo, points, role)
+                    ...calculateAttackInfo({...attack.scalingInfo, name: attack.name}, points, role)
                 })
             }
             return attackInfo

@@ -1,14 +1,14 @@
 import { Strength } from "../../interfaces/calculationInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
-export function getWeaponName(chosenName: string, weapon: string): string {
+export function getWeaponName(chosenName: string | null, weapon: string): string | null {
     if (chosenName) {
         return chosenName
     } else if (weapon) {
         return weapon
     }
 
-    return '';
+    return null;
 }
 
 export function getDefenseName(chosenName: string, shield: string, armor: string): string {
