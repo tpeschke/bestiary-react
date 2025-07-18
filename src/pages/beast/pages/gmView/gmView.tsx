@@ -44,7 +44,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
                 RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
-            <CanEditButton canEdit={canEdit} />
+            <CanEditButton canEdit={canEdit} beastID={id} />
         </>
     )
 }

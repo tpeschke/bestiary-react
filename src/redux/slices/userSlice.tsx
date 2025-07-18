@@ -25,6 +25,6 @@ export const userSlice = createSlice({
 export const { setUser } = userSlice.actions
 export const isUserLoggedOn = (state: any): boolean => state.user.isUserLoggedIn
 export const getUserPatreon = (state: any): number => state.user.patreon
-export const isOwner = (state: any): number => state.user.isOwner
+export const isOwner = (state: any): boolean => state.user.isOwner
 
 export default userSlice.reducer
