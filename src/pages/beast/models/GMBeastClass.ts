@@ -19,12 +19,12 @@ import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyD
 import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
 
-import CastingClass from "../pages/gmView/components/weirdshaping/models/CastingClass";
 import GeneralInfo, { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../components/alert/alerts";
 import { Strength } from "../../../../common/interfaces/calculationInterfaces";
 import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
+import CastingClass from "../pages/view/gmView/components/weirdshaping/models/CastingClass";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number

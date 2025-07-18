@@ -1,11 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Loading from "../components/loading/Loading";
 import EditView from "../pages/beast/pages/edit/EditView";
-import SearchResults from "../pages/beast/pages/searchResults/SearchResults";
-import View from "../pages/beast/View";
+import View from "../pages/beast/pages/view/View";
 import Catalog from "../pages/catalog/Catalog";
 import ListHome from "../pages/list/ListHome";
 import OwnerAuth from "./auth/OwnerAuth";
+import SearchResults from "../pages/searchResults/SearchResults";
 
 export default function AllRoutes() {
     return (
