@@ -72,7 +72,9 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
     return (
         <div className='Name-Header'>
             <span className='title-span'>
-                <Icon onClick={updateFavoriteAndCatalog} iconName={favorite ? 'star' : 'star-hollow'} color='yellow' margin="right" iconSize='h1' tooltip="Click to Favorite this Entry" />
+                {updateFavorite &&
+                    <Icon onClick={updateFavoriteAndCatalog} iconName={favorite ? 'star' : 'star-hollow'} color='yellow' margin="right" iconSize='h1' tooltip="Click to Favorite this Entry" />
+                }
                 <h1>{name}</h1>
             </span>
             {beastID && <button onClick={forceDownload} className='transparent-white'>
