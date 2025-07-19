@@ -5,7 +5,7 @@ import { SearchResult } from '../../../../../common/interfaces/search'
 import { Link } from 'react-router-dom'
 import { imageBase } from '../../../../frontend-config'
 import HTMLDisplay from '../../../beast/components/UI/htmlDisplay/htmlDisplay'
-import Pair from '../../../beast/components/UI/pair/Pair'
+import Pair, { PairIconSettings } from '../../../beast/components/UI/pair/Pair'
 import TileIcon from '../../../catalog/components/tile/components/TileIcon'
 
 interface Props {
@@ -18,6 +18,10 @@ export default function ResultCard({ searchResult }: Props) {
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
         currentTarget.src = ImageNotFound
+    }
+
+    const skullIconFormat: PairIconSettings = {
+        iconName: 'skull'
     }
 
     return (
@@ -35,9 +39,9 @@ export default function ResultCard({ searchResult }: Props) {
                         <HTMLDisplay html={intro} />
                     </div>
                     <div className='misc-info-shell'>
-                        <Pair title='Confrontation' info={formatSkullRating(minsocial, maxsocial)} format={{ position: 'opposite' }} />
-                        <Pair title='Combat' info={formatSkullRating(mincombat, maxcombat)} format={{ position: 'opposite' }} />
-                        <Pair title='Skill' info={formatSkullRating(minskill, maxskill)} format={{ position: 'opposite' }} />
+                        <Pair title='Confrontation' info={formatSkullRating(minsocial, maxsocial)} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        <Pair title='Combat' info={formatSkullRating(mincombat, maxcombat)} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        <Pair title='Skill' info={formatSkullRating(minskill, maxskill)} format={{ position: 'opposite' }} icon={skullIconFormat} />
                         {size && <Pair title='Size' info={size} format={{ position: 'opposite' }} />}
                         <Pair title='Rarity' info={rarity.rarityName} format={{ position: 'opposite' }} />
                     </div>
@@ -49,9 +53,9 @@ export default function ResultCard({ searchResult }: Props) {
 
 function formatSkullRating(min: number, max: number): string {
     if (min === max) {
-        return `${getSkullNumber(min)} Skulls`
+        return `${getSkullNumber(min)}`
     } else {
-        return `${getSkullNumber(min)} - ${getSkullNumber(max)} Skulls`
+        return `${getSkullNumber(min)} - ${getSkullNumber(max)}`
     }
 }
 
