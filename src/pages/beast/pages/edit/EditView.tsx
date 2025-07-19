@@ -9,7 +9,7 @@ interface Props {
 
 export default function EditView({ setLoading }: Props) {
     const { beast } = beastHooks();
-
+    
     useEffect(() => {
         if (setLoading) {
             setLoading(!!beast)

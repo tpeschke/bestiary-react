@@ -4,8 +4,8 @@ import EditView from "../pages/beast/pages/edit/EditView";
 import View from "../pages/beast/pages/view/View";
 import Catalog from "../pages/catalog/Catalog";
 import ListHome from "../pages/list/ListHome";
-import OwnerAuth from "./auth/OwnerAuth";
 import SearchResults from "../pages/searchResults/SearchResults";
+import OwnerAuth from "./auth/OwnerAuth";
 
 export default function AllRoutes() {
     return (
@@ -32,13 +32,9 @@ export default function AllRoutes() {
                     </Loading>
                 } />
                 <Route path=':beastId/edit' element={
-                    OwnerAuth() ? (
-                        <Loading>
-                            <EditView />
-                        </Loading>
-                    ) : (
-                        <Navigate to='/' />
-                    )
+                    <OwnerAuth>
+                        <EditView />
+                    </OwnerAuth>
                 } />
                 <Route path=':beastId/gm' element={
                     <Loading>
