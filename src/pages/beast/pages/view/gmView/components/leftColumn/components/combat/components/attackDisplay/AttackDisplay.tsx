@@ -15,7 +15,7 @@ export default function AttackDisplay({ sp_atk, attacks }: Props) {
                 <>
                     <h3>Attack Info</h3>
                     <SpecialInfo info={sp_atk} />
-                    {attacks.map((attack, index) => <AttackStats key={index} attacksStats={attack} />)}
+                    {attacks.map((attack, index) => <AttackStats key={index} attackStats={attack} />)}
                 </>
             }
         </>

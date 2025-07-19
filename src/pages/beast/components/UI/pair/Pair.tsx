@@ -1,3 +1,4 @@
+import Icon, { IconName } from "../../../../../components/icon/Icon"
 import "./Pair.css"
 
 type Format = {
@@ -10,13 +11,19 @@ type Format = {
     titleJustified?: 'right' | 'left'
 }
 
+export type PairIconSettings = {
+    iconName: IconName,
+    tooltip?: string
+}
+
 interface Props {
     title: string,
     info?: string | number,
     format?: Format,
+    icon?: PairIconSettings | null
 }
 
-export default function Pair({ title, info, format }: Props) {
+export default function Pair({ title, info, format, icon }: Props) {
     let shellClassString = "pair-shell"
     format?.heading ? shellClassString += " heading" : null;
     format?.noBorder? shellClassString += " noBorder" : null;
@@ -36,7 +43,7 @@ export default function Pair({ title, info, format }: Props) {
                 <p className={titleClassString}>{title}</p>
                 :
                 <h3 className={titleClassString}>{title}</h3>}
-            <p className={infoClassString}>{info}</p>
+            <p className={infoClassString}>{info} {icon && <Icon iconName={icon.iconName} tooltip={icon.tooltip} color='black' />}</p>
         </div>
     )
 }

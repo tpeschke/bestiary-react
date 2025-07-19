@@ -3,11 +3,11 @@ import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay
 import './AttackStats.css'
 
 interface Props {
-    attacksStats: AttackInfo
+    attackStats: AttackInfo
 }
 
-export default function AttackStats({ attacksStats }: Props) {
-    const { name, weaponName, measure, attack, damage, type, recovery, info } = attacksStats
+export default function AttackStats({ attackStats }: Props) {
+    const { name, weaponName, measure, attack, damage, type, recovery, info } = attackStats
 
     return (
         <div className='attack-stats-shell'>

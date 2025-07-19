@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow'
 
@@ -121,6 +121,15 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'log-out':
             styling = 'fa-solid fa-right-from-bracket'
+            break
+        case 'wall':
+            styling = 'fa-solid fa-block-brick'
+            break
+        case 'shield':
+            styling = 'fa-solid fa-shield'
+            break
+        case 'ghost':
+            styling = 'fa-solid fa-ghost'
             break
         default:
             break;
