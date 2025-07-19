@@ -52,7 +52,7 @@ export default class CombatInfoClass {
 
     private adjustAttackInfo = (points: number, roleID: string | null, role: string) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
-            if (!attack.roleid || attack.roleid === roleID) {
+            if (!roleID || attack.roleid === roleID) {
                 attackInfo.push({
                     ...attack,
                     ...calculateAttackInfo({ ...attack.scalingInfo }, points, role),
@@ -65,7 +65,7 @@ export default class CombatInfoClass {
 
     private adjustDefenseInfo = (points: number, roleID: string | null, role: string, size: Size) => {
         return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
-            if (!defense.roleid || defense.roleid === roleID) {
+            if (!roleID || defense.roleid === roleID) {
                 defenseInfo.push({
                     ...calculateDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
                     scalingInfo: defense.scalingInfo
