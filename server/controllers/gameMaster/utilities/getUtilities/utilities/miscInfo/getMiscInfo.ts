@@ -1,15 +1,14 @@
-import { LocationVitality } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
-import { Folklore, Scenario } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
-import { ArtistObject, ArtistInfo } from "../../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
-import { BeastType, ClimateObject, Climate, LocationObject, Location, Variant } from "../../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
-import { Pleroma } from "../../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
-import { Spell, Casting } from "../../../../common/interfaces/beast/infoInterfaces/castingInfo";
-import { User } from "../../../interfaces/apiInterfaces";
-import { Alm, Item, Loot, Scroll, SpecificLoot } from "../../../interfaces/lootInterfaces";
-import rollDice from '../../../utilities/diceRoller'
-
-import { isOwner } from "../../../utilities/ownerAccess";
-import { objectifyItemArray } from "../../../utilities/sorts";
+import { Casting, Spell } from "../../../../../../../common/interfaces/beast/infoInterfaces/castingInfo"
+import { LocationVitality } from "../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Folklore, Scenario } from "../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { ArtistObject, ArtistInfo } from "../../../../../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
+import { BeastType, ClimateObject, Climate, Variant, LocationObject, Location } from "../../../../../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
+import { Pleroma } from "../../../../../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
+import { User } from "../../../../../../interfaces/apiInterfaces"
+import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../interfaces/lootInterfaces"
+import rollDice from "../../../../../../utilities/diceRoller"
+import { isOwner } from "../../../../../../utilities/ownerAccess"
+import { objectifyItemArray } from "../../../../../../utilities/sorts"
 
 export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {

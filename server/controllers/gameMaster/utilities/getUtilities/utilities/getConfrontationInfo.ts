@@ -1,7 +1,7 @@
-import { sortByRank, sortOutAnyToTheBottom } from "../../../../utilities/sorts"
-import { calculateRankForCharacteristic } from "../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
-import { Conflict, ConflictObject, MonsterArchetypeObject, NormalArchetypeObject } from "../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
-import { Strength } from "../../../../../common/interfaces/calculationInterfaces"
+import { NormalArchetypeObject, MonsterArchetypeObject, ConflictObject, Conflict } from "../../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
+import { Strength } from "../../../../../../common/interfaces/calculationInterfaces";
+import { calculateRankForCharacteristic } from "../../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator";
+import { sortByRank, sortOutAnyToTheBottom } from "../../../../../utilities/sorts";
 
 interface archetypeInfo {
     archetype: string

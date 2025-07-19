@@ -1,6 +1,6 @@
-import { Skill } from "../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
-import { calculateRankForSkill } from "../../../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator"
-import { BackendSkill } from "../../../../../interfaces/beast/GetInterfaces"
+import { Skill } from "../../../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { calculateRankForSkill } from "../../../../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator"
+import { BackendSkill } from "../../../../../../interfaces/beast/GetInterfaces"
 
 export async function getSkills(databaseConnection: any, beastId: number, skillpoints: number): Promise<Skill[]> {
     const skills: Skill[] = await databaseConnection.beast.skill.get(beastId)

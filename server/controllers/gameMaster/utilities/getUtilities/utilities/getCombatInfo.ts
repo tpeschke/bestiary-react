@@ -1,8 +1,8 @@
-import { calculateAttackInfo, CalculateCombatStatsReturn, calculateDefenseInfo, calculateStatWithFormatting } from "../../../../../common/utilities/scalingAndBonus/combat/combatCalculation"
-import { calculateMovements } from "../../../../../common/utilities/scalingAndBonus/combat/movement"
-import { AttackInfo, DefenseInfo, Movement, RawCombatStat, RawMovement } from "../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { getDamageType } from "../../../../../common/utilities/formatting/formatting"
+import { calculateAttackInfo, CalculateCombatStatsReturn, calculateDefenseInfo, calculateStatWithFormatting } from "../../../../../../common/utilities/scalingAndBonus/combat/combatCalculation"
+import { calculateMovements } from "../../../../../../common/utilities/scalingAndBonus/combat/movement"
+import { AttackInfo, DefenseInfo, Movement, RawCombatStat, RawMovement } from "../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Size } from "../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { getDamageType } from "../../../../../../common/utilities/formatting/formatting"
 
 export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
     const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)

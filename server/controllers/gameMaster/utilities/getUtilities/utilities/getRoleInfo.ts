@@ -1,10 +1,10 @@
-import { Size } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { Role } from "../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
-import { Strength } from "../../../../../common/interfaces/calculationInterfaces"
-import calculateKnockBack from "../../../../../common/utilities/scalingAndBonus/combat/knockBackCalculator"
-import { calculateVitalityFatigueAndTrauma } from "../../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
-import { calculateStressAndPanic } from "../../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
-import { sortTemplateRoles } from "../../../../utilities/sorts"
+import { Size } from "../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Role } from "../../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { Strength } from "../../../../../../common/interfaces/calculationInterfaces"
+import calculateKnockBack from "../../../../../../common/utilities/scalingAndBonus/combat/knockBackCalculator"
+import { calculateVitalityFatigueAndTrauma } from "../../../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
+import { calculateStressAndPanic } from "../../../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
+import { sortTemplateRoles } from "../../../../../utilities/sorts"
 
 export interface UnsortedRole {
     id: string,

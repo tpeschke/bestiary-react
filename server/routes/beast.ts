@@ -1,17 +1,16 @@
 import express from 'express'
 
-import { Response, Request, Error, BasicParamsRequest } from "../interfaces/apiInterfaces"
-
+import { Response, Error, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import getDatabaseConnection from '../utilities/databaseConnection'
 import { getPlayerVersionOfBeast } from '../controllers/player'
 import { getMonsterFromCache } from '../controllers/monsterCache'
 import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
-import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getBeast'
 import getLoot from '../controllers/loot/loot'
 import getRandomEncounter from '../controllers/encounter/encounter'
 import { Beast } from '../../common/interfaces/beast/beast'
+import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getUtilities/utilities/miscInfo/getMiscInfo'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
