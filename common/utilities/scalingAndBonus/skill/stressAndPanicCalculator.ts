@@ -1,7 +1,9 @@
 import { Strength } from "../../../interfaces/calculationInterfaces"
 import { primarySkillRoles } from "../../roleInfo/skillRoleInfo"
 
-export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength, panicStrength: Strength) {
+export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength | '0', panicStrength: Strength) {
+    if (stressStrength === '0') {stressStrength = null}
+    
     if (role) {
         if (!stressStrength) { stressStrength = primarySkillRoles[role].mental }
         if (!panicStrength) { panicStrength = primarySkillRoles[role].panic }
