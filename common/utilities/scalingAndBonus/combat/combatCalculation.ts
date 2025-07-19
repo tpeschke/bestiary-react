@@ -37,8 +37,7 @@ export function calculateAttackInfo(attackInfo: any, points: number, role: strin
     const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment } = attackInfo
     return {
         ...attackInfo,
-        chosenName: name,
-        ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType)
+        ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType),
     }
 }
 

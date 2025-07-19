@@ -29,6 +29,7 @@ export default function calculateAndFormatAttackInfo(
         return {
             measure, type, bonus,
             name: getWeaponName(chosenName, name),
+            weaponName: name,
             attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
             rangeIncrement: calculateStatWithFormatting(rangeIncrement, 'rangeIncrement', role, totalPoints),
             ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, type)

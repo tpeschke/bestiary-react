@@ -25,6 +25,7 @@ export interface AttackInfo {
     name: string,
     chosenName: string,
     weapon: string,
+    weaponName: string,
     swarmbonus: boolean,
     measure: number,
     attack: string,

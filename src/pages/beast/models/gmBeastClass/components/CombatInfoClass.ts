@@ -34,7 +34,7 @@ export default class CombatInfoClass {
         const combatpoints = (selectedRole ? selectedRole.combatInfo.combatpoints : points) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
-
+console.log(attacks)
         return {
             ...this.entryCombatInfo,
             combatrole, combatsecondary, combatpoints,
@@ -55,7 +55,8 @@ export default class CombatInfoClass {
             if (!attack.roleid || attack.roleid === roleID) {
                 attackInfo.push({
                     ...attack,
-                    ...calculateAttackInfo({ ...attack.scalingInfo }, points, role)
+                    ...calculateAttackInfo({ ...attack.scalingInfo }, points, role),
+                    weaponName: attack.weaponName
                 })
             }
             return attackInfo
