@@ -8,7 +8,7 @@ import { SetPlayerNotes } from "../../../components/notes/notesDisplay"
 import DoubleColumn from "../../../components/UI/doubleColumn/doubleColumn"
 import NameHeader from "../../../components/UI/nameHeader/nameHeader"
 import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction, UpdateFavoriteFunction } from "../../../hooks/beastHooks"
-import GMBeastClass from "../../../models/GMBeastClass"
+import GMBeastClass from "../../../models/gmBeastClass/GMBeastClass"
 
 interface Props {
     beast: GMBeastClass,

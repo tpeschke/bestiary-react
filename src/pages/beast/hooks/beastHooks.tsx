@@ -5,7 +5,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import PlayerBeastClass from "../models/PlayerBeastClass";
-import GMBeastClass from "../models/GMBeastClass";
+import GMBeastClass from "../models/gmBeastClass/GMBeastClass";
 
 import { beastURL } from "../../../frontend-config";
 import alertInfo from "../../../components/alert/alerts";

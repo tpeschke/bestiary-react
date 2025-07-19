@@ -1,4 +1,4 @@
-import GMBeastClass from '../../pages/beast/models/GMBeastClass'
+import GMBeastClass from '../../pages/beast/models/gmBeastClass/GMBeastClass'
 
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'

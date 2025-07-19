@@ -1,30 +1,26 @@
-import { Spell } from "../interfaces/infoInterfaces/castingInfo";
-import CombatInfo from "../interfaces/infoInterfaces/combatInfoInterfaces";
-import ImageInfo from "../interfaces/infoInterfaces/ImageInfoInterfaces";
-import LinkedInfo from "../interfaces/infoInterfaces/linkedInfoInterfaces";
-import LootInfo from "../interfaces/infoInterfaces/lootInfoInterfaces";
-import PlayerSpecificInfo from "../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
-import SocialInfo from "../interfaces/infoInterfaces/socialInfo";
-import { BeastInfo } from "../interfaces/viewInterfaces";
+import { Spell } from "../../interfaces/infoInterfaces/castingInfo";
+import CombatInfo from "../../interfaces/infoInterfaces/combatInfoInterfaces";
+import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces";
+import LinkedInfo from "../../interfaces/infoInterfaces/linkedInfoInterfaces";
+import LootInfo from "../../interfaces/infoInterfaces/lootInfoInterfaces";
+import PlayerSpecificInfo from "../../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
+import SocialInfo from "../../interfaces/infoInterfaces/socialInfo";
+import { BeastInfo } from "../../interfaces/viewInterfaces";
 
-import { Conflict } from '../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
-import { Skill } from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import SkillInfo from '../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import RoleInfo, { Role } from "../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import calculateMovement from '../../../../common/utilities/scalingAndBonus/combat/movement'
-import { VitalityInfo, AttackInfo, DefenseInfo, Movement, LocationVitality } from '../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
-import { calculateAttackInfo, calculateDefenseInfo } from '../../../../common/utilities/scalingAndBonus/combat/combatCalculation'
-import { calculateVitalityFatigueAndTrauma } from '../../../../common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator'
-import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
-import { calculateStressAndPanic } from '../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
-import { calculateRankForSkill } from '../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
+import { Conflict } from '../../../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import { Skill } from '../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
+import SkillInfo from '../../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
+import RoleInfo, { Role } from "../../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '../../../../../common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
+import { calculateStressAndPanic } from '../../../../../common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
+import { calculateRankForSkill } from '../../../../../common/utilities/scalingAndBonus/skill/skillRankCalculator'
 
-import GeneralInfo, { Size } from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import GeneralInfo from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
-import alertInfo from "../../../components/alert/alerts";
-import { Strength } from "../../../../common/interfaces/calculationInterfaces";
-import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
-import CastingClass from "../pages/view/gmView/components/weirdshaping/models/CastingClass";
+import alertInfo from "../../../../components/alert/alerts";
+import { Notes } from "../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
+import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
+import CombatInfoClass from "./components/CombatInfoClass";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -40,7 +36,7 @@ export default class GMBeastClass {
     private entryImageInfo: ImageInfo
     private entryLinkedInfo: LinkedInfo
     private entryRoleInfo: RoleInfo
-    private entryCombatInfo: CombatInfo
+    private entryCombatInfo: CombatInfoClass
     private entrySkillInfo: SkillInfo
     private entrySocialInfo: SocialInfo
     private entryLootInfo: LootInfo
@@ -64,7 +60,7 @@ export default class GMBeastClass {
         this.entryImageInfo = imageInfo
         this.entryLinkedInfo = linkedInfo
         this.entryRoleInfo = roleInfo
-        this.entryCombatInfo = combatInfo
+        this.entryCombatInfo = new CombatInfoClass(combatInfo)
         this.entrySkillInfo = skillInfo
         this.entrySocialInfo = socialInfo
         this.entryLootInfo = lootInfo
@@ -111,7 +107,7 @@ export default class GMBeastClass {
             imageInfo: this.entryImageInfo,
             linkedInfo: this.entryLinkedInfo,
             roleInfo: this.entryRoleInfo,
-            combatInfo: this.entryCombatInfo,
+            combatInfo: this.entryCombatInfo.rawCombatInfo,
             skillInfo: this.entrySkillInfo,
             socialInfo: this.entrySocialInfo,
             lootInfo: this.entryLootInfo,
@@ -133,10 +129,10 @@ export default class GMBeastClass {
     }
 
     get maxPoints(): number {
-        const { combatpoints } = this.entryCombatInfo
+        const { combatPoints } = this.entryCombatInfo
         const { skillpoints } = this.entrySkillInfo
         const { socialpoints } = this.entrySocialInfo
-        return Math.max(combatpoints + this.selectedModifier, skillpoints + this.selectedModifier, socialpoints + this.selectedModifier)
+        return Math.max(combatPoints + this.selectedModifier, skillpoints + this.selectedModifier, socialpoints + this.selectedModifier)
     }
 
     get generalInfo(): GeneralInfo {
@@ -240,92 +236,11 @@ export default class GMBeastClass {
         }
     }
 
-
     get combatInfo(): CombatInfo {
-        return this.formatCombatInfo(this.entryCombatInfo, this.generalInfo.size)
-    }
+        const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
+        const selectedRole: Role = this.entryRoleInfo.roles[this.selectRoleIndex]
 
-    private formatCombatInfo = (combatInfo: CombatInfo, size: Size): CombatInfo => {
-        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo, sp_atk, sp_def } = combatInfo
-        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
-
-        const roleSelected = this.isRoleSelected()
-
-        const combatrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatrole : role
-        const combatsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatsecondary : secondary
-        const combatpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.combatpoints : points) + this.selectedModifier
-
-        const vitalityInfo = roleSelected ? this.populateVitalityInfo(mainVitalityInfo, this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.vitalityInfo) : mainVitalityInfo
-
-        return {
-            ...combatInfo,
-            combatrole, combatsecondary, combatpoints,
-            sp_atk, sp_def,
-            vitalityInfo: {
-                ...vitalityInfo,
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength),
-                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
-            },
-            attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
-            movements: movements.reduce(this.adjustMovementInfo(combatpoints, roleID, combatrole), [])
-        }
-    }
-
-    private adjustAttackInfo = (points: number, roleID: string, role: string) => {
-        return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
-            if (!attack.roleid || attack.roleid === roleID) {
-                attackInfo.push({
-                    ...attack,
-                    ...calculateAttackInfo({...attack.scalingInfo}, points, role)
-                })
-            }
-            return attackInfo
-        }
-    }
-
-    private adjustDefenseInfo = (points: number, roleID: string, role: string, size: Size) => {
-        return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
-            if (!defense.roleid || defense.roleid === roleID) {
-                defenseInfo.push({
-                    ...calculateDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
-                    scalingInfo: defense.scalingInfo
-                })
-            }
-            return defenseInfo
-        }
-    }
-
-    private adjustMovementInfo = (points: number, roleID: string, role: string) => {
-        return (movementInfo: Movement[], movement: Movement): Movement[] => {
-            if (!movement.roleid || movement.roleid === roleID || movement.allroles) {
-                const calculatedMovement = calculateMovement(movement, points, role)
-                if (calculatedMovement) { movementInfo.push(calculatedMovement) }
-            }
-            return movementInfo
-        }
-    }
-
-    private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
-        return {
-            locationalVitalities:       mainVitalityInfo.locationalVitalities,
-            fatigue:                    this.getDefault<string | number | boolean>(roleVitalityInfo.fatigue, mainVitalityInfo.fatigue),
-            notrauma:                   this.getDefault<boolean>(roleVitalityInfo.notrauma, mainVitalityInfo.notrauma),
-            knockback:                  this.getDefault<number>(roleVitalityInfo.knockback, mainVitalityInfo.knockback),
-            singledievitality:          this.getDefault<boolean>(roleVitalityInfo.singledievitality, mainVitalityInfo.singledievitality),
-            noknockback:                this.getDefault<boolean>(roleVitalityInfo.noknockback, mainVitalityInfo.noknockback),
-            rollundertrauma:            this.getDefault<number>(roleVitalityInfo.rollundertrauma, mainVitalityInfo.rollundertrauma),
-            isincorporeal:              this.getDefault<boolean>(roleVitalityInfo.isincorporeal, mainVitalityInfo.isincorporeal),
-            weaponbreakagevitality:     this.getDefault<boolean>(roleVitalityInfo.weaponbreakagevitality, mainVitalityInfo.weaponbreakagevitality),
-            vitality:                   this.getDefault<string | number>(roleVitalityInfo.vitality, mainVitalityInfo.vitality),
-            trauma:                     this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma),
-            vitalityStrength:           this.getDefault<Strength>(roleVitalityInfo.vitalityStrength, mainVitalityInfo.vitalityStrength),
-            fatigueStrength:            this.getDefault<Strength>(roleVitalityInfo.fatigueStrength, roleVitalityInfo.fatigueStrength)
-        }
-    }
-
-    private getDefault = <Type>(roleInfo: Type, defaultInfo: Type): Type => {
-        return roleInfo ?? defaultInfo
+        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier)
     }
 
     get linkedInfo(): LinkedInfo {

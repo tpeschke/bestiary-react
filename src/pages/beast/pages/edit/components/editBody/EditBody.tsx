@@ -1,5 +1,5 @@
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
-import GMBeastClass from "../../../../models/GMBeastClass";
+import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
 import CombatEdit from "./components/combatEdit/CombatEdit";
 
 interface Props {
