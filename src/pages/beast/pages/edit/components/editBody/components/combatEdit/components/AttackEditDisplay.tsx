@@ -6,14 +6,15 @@ interface Props {
 }
 
 export default function AttackEditDisplay({ attacks }: Props) {
+    console.log(attacks)
     return (
         <Body>
             <>
                 <h1>Attacks</h1>
-                {attacks.map(({ chosenName, weapon }, index: number) => {
+                {attacks.map(({ name, weapon }, index: number) => {
                     return (
                         <div key={index}>
-                            {index} {chosenName ? chosenName : '_'} {weapon}
+                            {index} {name ? name : '_'} {weapon ? weapon : '_'}
                         </div>
                     )
                 })}

@@ -34,7 +34,7 @@ export default class CombatInfoClass {
         const combatpoints = (selectedRole ? selectedRole.combatInfo.combatpoints : points) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
-console.log(attacks)
+
         return {
             ...this.entryCombatInfo,
             combatrole, combatsecondary, combatpoints,
