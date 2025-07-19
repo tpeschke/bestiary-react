@@ -19,10 +19,11 @@ export interface CalculateCombatStatsReturn {
 }
 
 export function calculateDefenseInfo(defenseInfo: any, points: number, role: string, addsizemod: boolean, size: Size) {
-    const { id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info } = defenseInfo
+    const { beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info } = defenseInfo
     return {
-        id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, info,
+        beastid, roleid, swarmbonus, armor, shield, eua, tdr, info,
         name: getDefenseName(name, shield, armor),
+        chosenName: name,
         defense: calculateDefense(alldefense, role, points + adjustment, addsizemod, size),
         flanks: calculateStat(flanks, 'flanks', role, points + adjustment),
         parry: calculateStatWithFormatting(parry, 'parry', role, points + adjustment),
@@ -36,6 +37,7 @@ export function calculateAttackInfo(attackInfo: any, points: number, role: strin
     const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment } = attackInfo
     return {
         ...attackInfo,
+        chosenName: name,
         ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType)
     }
 }

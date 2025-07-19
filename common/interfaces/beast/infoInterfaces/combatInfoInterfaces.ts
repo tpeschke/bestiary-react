@@ -18,11 +18,12 @@ export type DamageType = 'P' | 'C' | 'S'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
 export interface AttackInfo {
-    id: number,
+    id?: number,
     beastid: number,
     roleid: string,
     info: string,
     name: string,
+    chosenName: string,
     weapon: string,
     swarmbonus: boolean,
     measure: number,
@@ -47,11 +48,12 @@ export interface AttackInfo {
 }
 
 export interface DefenseInfo {
-    id: number,
+    id?: number,
     beastid: number,
     roleid: string,
     info: string,
     name: string,
+    chosenName: string,
     swarmbonus: boolean,
     defense: string,
     flanks: number,

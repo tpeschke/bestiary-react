@@ -277,7 +277,7 @@ export default class GMBeastClass {
             if (!attack.roleid || attack.roleid === roleID) {
                 attackInfo.push({
                     ...attack,
-                    ...calculateAttackInfo({...attack.scalingInfo, name: attack.name}, points, role)
+                    ...calculateAttackInfo({...attack.scalingInfo}, points, role)
                 })
             }
             return attackInfo

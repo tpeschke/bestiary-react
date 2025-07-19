@@ -38,9 +38,9 @@ import getTables from "./utilities/getUtilities/getTables"
 
 const sendErrorForward = sendErrorForwardNoFile('beast controller')
 
-interface BeastRequest extends Request {
-    body: Beast
-}
+// interface BeastRequest extends Request {
+//     body: Beast
+// }
 
 // export async function updateBeast(request: BeastRequest, response: Response) {
 //     const databaseConnection = getDatabaseConnection(request)

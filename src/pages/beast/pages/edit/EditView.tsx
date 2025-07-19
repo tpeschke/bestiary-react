@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { SetLoadingFunction } from "../../../../components/loading/Loading";
 import beastHooks from "../../hooks/beastHooks";
-import EditBody from "./components/editBody";
+import EditBody from "./components/editBody/EditBody";
 
 interface Props {
     setLoading?: SetLoadingFunction
