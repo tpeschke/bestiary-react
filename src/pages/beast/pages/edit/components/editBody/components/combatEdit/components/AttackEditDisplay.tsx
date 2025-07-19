@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function AttackEditDisplay({ attacks }: Props) {
-    console.log(attacks)
     return (
         <Body>
             <>
