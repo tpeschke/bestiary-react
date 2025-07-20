@@ -12,7 +12,7 @@ export default function AttackEditDisplay({ attacks, updateAttackOrder }: Props)
     return (
         <Body>
             <>
-                <h1>Attacks</h1>
+                <h2 className="border">Attacks</h2>
                 {attacks.map((attack: AttackInfo, index: number) => {
                     const nextUp = attacks[index - 1]?.overAllIndex
                     const nextDown = attacks[index + 1]?.overAllIndex
