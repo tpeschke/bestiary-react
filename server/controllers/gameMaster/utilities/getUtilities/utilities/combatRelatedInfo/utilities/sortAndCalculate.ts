@@ -1,20 +1,9 @@
-import { calculateAttackInfo, CalculateCombatStatsReturn, calculateDefenseInfo, calculateStatWithFormatting } from "../../../../../../common/utilities/scalingAndBonus/combat/combatCalculation"
-import { calculateMovements } from "../../../../../../common/utilities/scalingAndBonus/combat/movement"
-import { AttackInfo, DefenseInfo, Movement, RawCombatStat, RawMovement } from "../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Size } from "../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { getDamageType } from "../../../../../../common/utilities/formatting/formatting"
+import { RawCombatStat, DefenseInfo, AttackInfo } from "../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Size } from "../../../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { getDamageType } from "../../../../../../../../common/utilities/formatting/formatting"
+import { CalculateCombatStatsReturn, calculateStatWithFormatting, calculateDefenseInfo, calculateAttackInfo } from "../../../../../../../../common/utilities/scalingAndBonus/combat/combatCalculation"
 
-export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
-    const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)
-    return calculateCombatStats(combatStats, combatPoints, role, size)
-}
-
-export async function getMovement(databaseConnection: any, beastId: number, combatpoints: number, role: string): Promise<(Movement | null)[]> {
-    const movements: RawMovement[] = await databaseConnection.beast.movement.get(beastId)
-    return calculateMovements(movements, combatpoints, role)
-}
-
-function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size): CalculateCombatStatsReturn {
+export default function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size): CalculateCombatStatsReturn {
     let defenses: DefenseInfo[] = []
     let attacks: AttackInfo[] = []
     combatStats.forEach(stats => {
@@ -39,9 +28,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
     } = stats
 
     const roleToUse = role ? role : mainRole
-
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
-
     const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
     defenses.push({

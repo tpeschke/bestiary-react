@@ -19,7 +19,7 @@ import { Challenge, Obstacle } from "../../../../interfaces/skillInterfaces"
 import { isOwner } from "../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../utilities/rarity"
 import { getChallenges } from "./utilities/skillRelatedInfo/getChallenges"
-import { getMovement, getCombatStats } from "./utilities/getCombatInfo"
+import { getCombatStats } from "./utilities/combatRelatedInfo/getCombatInfo"
 import { getConflict, getArchetypes, GetArchetypesReturn } from "./utilities/getConfrontationInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
@@ -27,6 +27,7 @@ import getTables from "./utilities/getTables"
 import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
 import { getObstacles } from "./utilities/skillRelatedInfo/getObstacles"
 import { getSkills } from "./utilities/skillRelatedInfo/getSkills"
+import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
 
 interface GetBeastOptions {
     isEditing: boolean,
