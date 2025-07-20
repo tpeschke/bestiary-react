@@ -1,7 +1,7 @@
-
 import { Beast } from "../../../../../common/interfaces/beast/beast";
 import { Request, Response } from "../../../../interfaces/apiInterfaces";
 import getDatabaseConnection from "../../../../utilities/databaseConnection";
+import { isOwner } from "../../../../utilities/ownerAccess";
 import { checkForContentTypeBeforeSending } from "../../../../utilities/sendingFunctions";
 
 interface BeastRequest extends Request {
@@ -11,28 +11,22 @@ interface BeastRequest extends Request {
 export async function updateBeast(request: BeastRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     const { body, user } = request
+    const { id: beastID, combatInfo } = body
     
-    const { id: beastID } = body 
+    const result = await databaseConnection.beast.canEdit(beastID)
+    const beastOwnerID = result[0].userid
 
-    //     const { id, patreon, generalInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, castingInfo } = body
-    //     const { name, plural, intro, habitat, appearance, senses, diet, meta, size, rarity, scenarios, folklores, tables, encounters } = generalInfo
-    //     const { thumbnail, imagesource, artistInfo } = imageInfo
-    //     const { variants, locations, types, climates } = linkedInfo
-    //     const { rolenameorder, defaultrole, roles } = roleInfo
-    //     const { sp_atk, sp_def, tactics, combatpoints, combatrole, combatsecondary, vitalityInfo, movements, attacks, defenses } = combatInfo
-    //     const { fatigue, notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, vitality, locationalVitalities } = vitalityInfo
-    //     const { panic, stress, skillrole, skillsecondary, skillpoints, atk_skill, def_skill, skills, challenges, obstacles } = skillInfo
-    //     const { traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare, atk_conf, def_conf, archetypeInfo, conflicts } = socialInfo
-    //     const { hasarchetypes, hasmonsterarchetypes } = archetypeInfo
-    //     const { lootnotes, lairLoot, carriedLoot, specificLoots, pleroma } = lootInfo
-    //     const { casting, spells } = castingInfo
+    if (isOwner(user?.id) || beastOwnerID === user?.id) {
+        // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
+        const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
+        let promiseArray: any = []
 
-    //     const userid = isOwner(user.id) ? null : user.id
+        await Promise.all(promiseArray)
 
-    //     const effectiveTraitLimit = traitlimit > 0 ? traitlimit : null
-    //     const effectiveRelationshipLimit = relationshiplimit > 0 ? relationshiplimit : null
-    //     const effectiveFlawLimit = flawlimit > 0 ? flawlimit : null
-    //     const effectivePassionLimit = passionlimit > 0 ? passionlimit : null
+        checkForContentTypeBeforeSending(response, { beastID })
+    } else {
+        checkForContentTypeBeforeSending(response, { color: 'red', message: "You don't own this entry so can't edit it", type: 'message' })
+    }
 
     //     let beastId = id ?? null
     //     if (beastId) {
@@ -60,7 +54,4 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     //         await upsertBeast(databaseConnection, beastId, response, updateParameters)
     //     }
 
-    // ALSO NEED TO UPDATE CACHE IF APPLICABLE
-    checkForContentTypeBeforeSending(response, { beastID })
-    // ALSO UPDATE CACHE ON OTHER SIDE
 }

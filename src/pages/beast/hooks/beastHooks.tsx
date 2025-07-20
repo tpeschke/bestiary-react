@@ -22,6 +22,7 @@ export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 export type updateAttackOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
+export type UpdateBeastFunction = () => void
 
 interface UpdateFavoriteReturnBase {
     type: 'delete' | 'add'
@@ -46,7 +47,8 @@ interface Return {
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
     updateFavorite: UpdateFavoriteFunction,
-    updateAttackOrder: updateAttackOrderFunction
+    updateAttackOrder: updateAttackOrderFunction,
+    updateBeast: UpdateBeastFunction
 }
 
 export default function beastHooks(): Return {
@@ -280,6 +282,20 @@ export default function beastHooks(): Return {
         }
     }
 
+    const updateBeast = async () => {
+        if (beast) {
+            const { data }  = await axios.post(beastURL + '/save', beast.beastInfo)
+    
+            if (data.color === 'red') {
+                alertInfo(data)
+                navigate(`/`)
+            } else if (data.beastID) {
+                // do something poke poke
+                console.log(data)
+            }
+        }
+    } 
+
     return {
         beast,
         playerBeast,
@@ -287,6 +303,7 @@ export default function beastHooks(): Return {
         updateRoleModifier,
         updateNotes,
         updateFavorite,
-        updateAttackOrder
+        updateAttackOrder,
+        updateBeast
     }
 }

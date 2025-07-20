@@ -1,4 +1,4 @@
-import { Request, Response } from '../../interfaces/apiInterfaces'
+import { BasicParamsRequest, Response } from '../../interfaces/apiInterfaces'
 import { Complication, Encounter, SignObject, Temperament } from '../../interfaces/encounterInterfaces';
 
 import getDatabaseConnection from "../../utilities/databaseConnection";
@@ -21,7 +21,7 @@ interface NumbersReturn {
     miles: string
 }
 
-export default async function getRandomEncounter(request: Request, response: Response) {
+export default async function getRandomEncounter(request: BasicParamsRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
     let promiseArray: any[] = []
     let encounterObject: Encounter = { }
