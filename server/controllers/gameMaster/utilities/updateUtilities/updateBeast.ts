@@ -4,6 +4,7 @@ import getDatabaseConnection from "../../../../utilities/databaseConnection";
 import { isOwner } from "../../../../utilities/ownerAccess";
 import { checkForContentTypeBeforeSending } from "../../../../utilities/sendingFunctions";
 import updateAttacks from "./utilities/updateAttacks";
+import updateDefense from "./utilities/updateDefenses";
 
 interface BeastRequest extends Request {
     body: Beast
@@ -22,7 +23,9 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
         let promiseArray: any = []
 
-        promiseArray.push(updateAttacks(databaseConnection, combatInfo.attacks))
+        const { attacks, defenses } = combatInfo
+        promiseArray.push(updateAttacks(databaseConnection, attacks))
+        promiseArray.push(updateDefense(databaseConnection, defenses))
         
         await Promise.all(promiseArray)
 

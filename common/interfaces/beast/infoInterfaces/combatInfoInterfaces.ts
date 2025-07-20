@@ -52,6 +52,7 @@ export interface AttackInfo {
 
 export interface DefenseInfo {
     id?: number,
+    oldID: number,
     beastid: number,
     roleid: string,
     info: string,
