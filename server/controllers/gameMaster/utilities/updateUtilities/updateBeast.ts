@@ -25,7 +25,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
 
         const { attacks, defenses } = combatInfo
         promiseArray.push(updateAttacks(databaseConnection, attacks))
-        promiseArray.push(updateDefense(databaseConnection, defenses))
+        promiseArray.push(updateDefense(databaseConnection, beastID, defenses))
         
         await Promise.all(promiseArray)
 
