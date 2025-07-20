@@ -4,7 +4,11 @@ export default async function updateDefense(databaseConnection: any, defenses: D
     let promiseArray: any[] = []
 
     defenses.forEach(({ overAllIndex, oldID, id }) => {
-        promiseArray.push(databaseConnection.beast.defenses.upsert(id, oldID, overAllIndex))
+        if (id) {
+            promiseArray.push(databaseConnection.beast.defenses.update(id, oldID, overAllIndex))
+        } else {
+            promiseArray.push(databaseConnection.beast.defenses.add(oldID, overAllIndex))
+        }
     })
 
     return Promise.all(promiseArray)

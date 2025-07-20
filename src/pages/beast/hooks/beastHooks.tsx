@@ -233,9 +233,9 @@ export default function beastHooks(): Return {
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
                 combatInfo: {
-                    ...beast.combatInfo,
+                    ...beast.beastInfo.combatInfo,
                     attacks: shiftAttackOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.attacks)
-                },
+                }
             }
 
             dispatch(cacheMonster(modifiedBeastInfo))
@@ -248,9 +248,9 @@ export default function beastHooks(): Return {
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
                 combatInfo: {
-                    ...beast.combatInfo,
+                    ...beast.beastInfo.combatInfo,
                     defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.defenses)
-                },
+                }
             }
 
             dispatch(cacheMonster(modifiedBeastInfo))

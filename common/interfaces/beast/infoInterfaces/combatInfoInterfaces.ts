@@ -95,6 +95,7 @@ export type Type = 'm' | 'r'
 export interface RawCombatStat {
     id: number,
     oldID: number,
+    attackid: number,
     beastid: number,
     roleid: string,
     combatpoints: number,

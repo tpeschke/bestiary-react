@@ -3,11 +3,11 @@ import { UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
 
 export type DirectionOptions = 'down' | 'up'
 
-export default function MoveOrderButton(active: boolean, direction: DirectionOptions, updateAttackOrder: UpdateOrderFunction, overAllIndex: number, indexToMoveTo: number) {
+export default function MoveOrderButton(active: boolean, direction: DirectionOptions, updateOrderCallback: UpdateOrderFunction, overAllIndex: number, indexToMoveTo: number) {
     return (
         <>
             {active ? (
-                <button onClick={_ => updateAttackOrder(overAllIndex, indexToMoveTo)} >
+                <button onClick={_ => updateOrderCallback(overAllIndex, indexToMoveTo)} >
                     <Icon iconName={direction} color='black' />
                 </button>
             ) : (
