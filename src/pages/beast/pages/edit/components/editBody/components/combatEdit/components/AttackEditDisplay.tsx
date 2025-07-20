@@ -27,27 +27,27 @@ export default function AttackEditDisplay({ attacks, updateAttackOrder }: Props)
 function AttackEdit({ name, weapon, overAllIndex }: AttackInfo, index: number, arrayLength: number, nextUp: number, nextDown: number, updateAttackOrder: updateAttackOrderFunction) {
     return (
         <div key={index}>
-            {index > 0 ? (
-                <button onClick={_ => updateAttackOrder(overAllIndex, nextUp)} >
-                    <Icon iconName="up" color='black' />
-                </button>
-            ) : (
-                <button disabled={true}>
-                    <Icon iconName="up" color='gray' />
-                </button>
-            )
-            }
-            {index < arrayLength - 1 ? (
-                <button onClick={_ => updateAttackOrder(overAllIndex, nextDown)} >
-                    <Icon iconName="down" color='black' />
-                </button>
-            ) : (
-                <button disabled={true}>
-                    <Icon iconName="down" color='gray' />
-                </button>
-            )
-            }
+            {MoveOrderButton(index > 0, 'up', updateAttackOrder, overAllIndex, nextUp)}
+            {MoveOrderButton(index < arrayLength - 1, 'down', updateAttackOrder, overAllIndex, nextDown)}
             {index} {overAllIndex} {name ? name : '_'} {weapon ? weapon : '_'}
         </div>
+    )
+}
+
+type DirectionOptions = 'down' | 'up'
+
+function MoveOrderButton(active: boolean, direction: DirectionOptions, updateAttackOrder: updateAttackOrderFunction, overAllIndex: number, indexToMoveTo: number) {
+    return (
+        <>
+            {active ? (
+                <button onClick={_ => updateAttackOrder(overAllIndex, indexToMoveTo)} >
+                    <Icon iconName={direction} color='black' />
+                </button>
+            ) : (
+                <button disabled={true}>
+                    <Icon iconName={direction} color='white' />
+                </button>
+            )}
+        </>
     )
 }

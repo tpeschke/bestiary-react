@@ -210,6 +210,7 @@ button:hover {
 
 button:disabled, button:disabled:hover {
 	background: white;
+	cursor: unset;
 }
 
 button.blue {
