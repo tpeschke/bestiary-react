@@ -52,6 +52,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
     if (!showonlydefenses) {
         attacks.push({
             ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
+            overAllIndex: attacks.length,
             scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
         })
     }

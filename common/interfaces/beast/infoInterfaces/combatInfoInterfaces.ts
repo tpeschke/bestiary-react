@@ -34,6 +34,7 @@ export interface AttackInfo {
     recovery: number,
     rangeIncrement: string,
     isspecial: IsSpecial,
+    overAllIndex: number,
     scalingInfo: {
         name: string,
         weapon: string,
