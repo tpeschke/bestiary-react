@@ -16,12 +16,13 @@ import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import { SetPlayerNotes } from "../components/notes/notesDisplay";
 import { CatalogTile } from "../../catalog/catalogInterfaces";
-import { AttackInfo } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { shiftAttackOrder } from "./utilities/updateAttacks";
+import { shiftDefenseOrder } from "./utilities/updateDefenses";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
-export type updateAttackOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
+export type updateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type UpdateBeastFunction = () => void
 
 interface UpdateFavoriteReturnBase {
@@ -47,7 +48,8 @@ interface Return {
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
     updateFavorite: UpdateFavoriteFunction,
-    updateAttackOrder: updateAttackOrderFunction,
+    updateAttackOrder: updateOrderFunction,
+    updateDefenseOrder: updateOrderFunction,
     updateBeast: UpdateBeastFunction
 }
 
@@ -225,55 +227,26 @@ export default function beastHooks(): Return {
 
     const updateAttackOrder = (overAllIndex: number, overAllIndexToMoveTo: number) => {
         if (beast) {
-            const { attacks: rawAttacks } = beast.beastInfo.combatInfo
-            const attackToMove = { ...rawAttacks[overAllIndex] }
-            let filteredAttacks: AttackInfo[] = []
-
-            if (overAllIndex < overAllIndexToMoveTo) {
-                // down
-                filteredAttacks = rawAttacks.reduce((attacks: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
-                    const originalOverAllIndex = attack.overAllIndex
-                    if (originalOverAllIndex !== overAllIndex) {
-                        attacks.push({
-                            ...attack,
-                            overAllIndex: attacks.length
-                        })
-                    }
-                    if (originalOverAllIndex === overAllIndexToMoveTo) {
-                        attacks.push({
-                            ...attackToMove,
-                            overAllIndex: attacks.length
-                        })
-                    }
-
-                    return attacks
-                }, [])
-            } else if (overAllIndex > overAllIndexToMoveTo) {
-                // up
-                filteredAttacks = rawAttacks.reduce((attacks: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
-                    const originalOverAllIndex = attack.overAllIndex
-                    if (originalOverAllIndex === overAllIndexToMoveTo) {
-                        attacks.push({
-                            ...attackToMove,
-                            overAllIndex: attacks.length
-                        })
-                    }
-                    if (originalOverAllIndex !== overAllIndex) {
-                        attacks.push({
-                            ...attack,
-                            overAllIndex: attacks.length
-                        })
-                    }
-
-                    return attacks
-                }, [])
-            }
-
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
                 combatInfo: {
                     ...beast.combatInfo,
-                    attacks: filteredAttacks
+                    attacks: shiftAttackOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.attacks)
+                },
+            }
+
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
+    const updateDefenseOrder = (overAllIndex: number, overAllIndexToMoveTo: number) => {
+        if (beast) {
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: {
+                    ...beast.combatInfo,
+                    defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.defenses)
                 },
             }
 
@@ -309,6 +282,7 @@ export default function beastHooks(): Return {
         updateNotes,
         updateFavorite,
         updateAttackOrder,
+        updateDefenseOrder,
         updateBeast
     }
 }

@@ -68,6 +68,7 @@ export interface DefenseInfo {
     tdr: boolean,
     shield: string,
     armor: string,
+    overAllIndex: number,
     scalingInfo: {
         name: string,
         swarmbonus: boolean,
