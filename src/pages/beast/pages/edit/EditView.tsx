@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function EditView({ setLoading }: Props) {
-    const { beast, updateAttackOrder } = beastHooks();
+    const { beast, updateAttackOrder, updateSelectedRole } = beastHooks();
     
     useEffect(() => {
         if (setLoading) {
@@ -19,7 +19,7 @@ export default function EditView({ setLoading }: Props) {
     return (
         <div className='card-background'>
             {beast && 
-                <EditBody beast={beast} updateAttackOrder={updateAttackOrder} />
+                <EditBody beast={beast} updateAttackOrder={updateAttackOrder} updateSelectedRole={updateSelectedRole} />
             }
         </div>
     )
