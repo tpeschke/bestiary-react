@@ -67,6 +67,7 @@ export default class CombatInfoClass {
         return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
             if (!roleID || defense.roleid === roleID) {
                 defenseInfo.push({
+                    ...defense,
                     ...calculateDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
                     scalingInfo: defense.scalingInfo
                 })

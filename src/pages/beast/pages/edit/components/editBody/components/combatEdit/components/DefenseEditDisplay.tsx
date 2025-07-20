@@ -1,7 +1,7 @@
 import { DefenseInfo } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import Icon from "../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../components/UI/body/Body"
 import { updateOrderFunction } from "../../../../../../../hooks/beastHooks"
+import MoveOrderButton from "./components/MoveOrderButton"
 
 interface Props {
     defenses: DefenseInfo[],
@@ -31,23 +31,5 @@ function DefenseEdit({ name, overAllIndex }: DefenseInfo, index: number, arrayLe
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
             {overAllIndex} {name ? name : '_'}
         </div>
-    )
-}
-
-type DirectionOptions = 'down' | 'up'
-
-function MoveOrderButton(active: boolean, direction: DirectionOptions, updateDefenseOrder: updateOrderFunction, overAllIndex: number, indexToMoveTo: number) {
-    return (
-        <>
-            {active ? (
-                <button onClick={_ => updateDefenseOrder(overAllIndex, indexToMoveTo)} >
-                    <Icon iconName={direction} color='black' />
-                </button>
-            ) : (
-                <button disabled={true}>
-                    <Icon iconName={direction} color='white' />
-                </button>
-            )}
-        </>
     )
 }
