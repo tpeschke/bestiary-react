@@ -9,7 +9,7 @@ interface sliceState {
 
 interface beastCache {
     [key: string]: GMBeastClass
-}
+} 
 
 const initialState: sliceState = {
   cache: {}
@@ -19,13 +19,15 @@ export const beastCacheSlice = createSlice({
   name: 'beastCacheSlice',
   initialState,
   reducers: {
-    cacheMonster: (state: any, action: PayloadAction<GMBeastClass>) => {
-      const { payload } = action
+    cacheMonster: (state: any, {payload}: PayloadAction<GMBeastClass>) => {
       state.cache[`${payload.id}`] = payload
+    },
+    removeMonsterFromCache: (state: any, { payload }: PayloadAction<number>) => {
+      delete state.cache[`${payload}`]
     }
   },
 })
 
-export const { cacheMonster } = beastCacheSlice.actions
+export const { cacheMonster, removeMonsterFromCache } = beastCacheSlice.actions
 
 export default beastCacheSlice.reducer

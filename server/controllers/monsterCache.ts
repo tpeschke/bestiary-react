@@ -19,6 +19,18 @@ export function getMonsterFromCache(beastId: number): Beast | null {
     return monsterCache[beastId];
 }
 
+export async function reCacheMonsterIfItExists(databaseConnection: any, beastID: number) {
+    if (monsterCache[beastID]) {
+        const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastID, {isEditing: false}).catch((error: Error) => consoleLogError('get main', error))
+        if (beast) {
+            monsterCache[beastID] = beast
+            console.log('RE-CACHE COMPLETE')
+        }
+    }
+
+    return true
+}
+
 export async function collectMonsterCache(databaseConnection: any): Promise<void> {
     const freeIds: MonsterId[] = await databaseConnection.cache.monster.freeAndUpdating().catch((error: Error) => consoleLogError('get free beasts ids', error))
 
@@ -36,7 +48,9 @@ async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[]
     }
 
     if (index === monsterIds.length - 1) {
-        console.log('monster cache collected')
+        console.log('------------------------- ')
+        console.log('---- Cache Collected ---- ')
+        console.log('------------------------- ')
     } else {
         console.log(`...Collecting Number ${index + 1} of ${monsterIds.length}`)
         getMonsterFromId(databaseConnection, monsterIds, ++index)

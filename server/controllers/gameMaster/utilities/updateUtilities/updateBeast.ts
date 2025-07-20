@@ -3,6 +3,7 @@ import { Request, Response } from "../../../../interfaces/apiInterfaces";
 import getDatabaseConnection from "../../../../utilities/databaseConnection";
 import { isOwner } from "../../../../utilities/ownerAccess";
 import { checkForContentTypeBeforeSending } from "../../../../utilities/sendingFunctions";
+import { getMonsterFromCache, reCacheMonsterIfItExists } from "../../../monsterCache";
 import updateAttacks from "./utilities/updateAttacks";
 import updateDefense from "./utilities/updateDefenses";
 
@@ -28,6 +29,8 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         promiseArray.push(updateDefense(databaseConnection, beastID, defenses))
         
         await Promise.all(promiseArray)
+
+        reCacheMonsterIfItExists(databaseConnection, beastID)
 
         checkForContentTypeBeforeSending(response, { beastID })
     } else {

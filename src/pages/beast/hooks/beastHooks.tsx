@@ -10,7 +10,7 @@ import GMBeastClass from "../models/gmBeastClass/GMBeastClass";
 import { beastURL } from "../../../frontend-config";
 import alertInfo, { showPendingAlert } from "../../../components/alert/alerts";
 
-import { cacheMonster } from "../../../redux/slices/beastCacheSlice";
+import { cacheMonster, removeMonsterFromCache } from "../../../redux/slices/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
@@ -292,9 +292,8 @@ export default function beastHooks(): Return {
                 if (data.color === 'red') {
                     navigate(`/`)
                 } else if (data.beastID) {
-                    const modifiedBeastInfo: any = { ...beast.beastInfo }
-                    dispatch(cacheMonster(modifiedBeastInfo))
-                    // navigate back to view
+                    dispatch(removeMonsterFromCache(beast.id))
+                    navigate(`/beast/${beast.id}`)
                     return { data: { color: 'green', type: 'message', message: 'Entry Saved' } }
                 }
 

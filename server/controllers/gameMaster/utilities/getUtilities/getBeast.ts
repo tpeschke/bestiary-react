@@ -57,6 +57,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
             rarity: getRarity(rarity),
             scenarios: [],
             folklores: [],
+            beastOwnerId: beastOwnerId,
             canEdit: isOwner(userID) || userID === beastOwnerId,
             tables: {
                 habitat: [],

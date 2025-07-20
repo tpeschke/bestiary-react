@@ -12,6 +12,9 @@ import getRandomEncounter from '../controllers/encounter/encounter'
 import { Beast } from '../../common/interfaces/beast/beast'
 import { hasAppropriatePatreonLevel } from '../controllers/gameMaster/utilities/getUtilities/utilities/miscInfo/getMiscInfo'
 import { updateBeast } from '../controllers/gameMaster/utilities/updateUtilities/updateBeast'
+import { Notes } from '../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
+import { getFavorite, getNotes } from '../controllers/gameMaster/utilities/getUtilities/utilities/getPlayerInfo'
+import { isOwner } from '../utilities/ownerAccess'
 
 const sendErrorForward = sendErrorForwardNoFile('GM route')
 
@@ -29,7 +32,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const { user, body, params } = request
     const databaseConnection = getDatabaseConnection(request)
     const beastId = body.beastId ?? +params.beastId
-    
+
     const databaseReturn = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
 
     if (databaseReturn?.length > 0) {
@@ -39,7 +42,18 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
         if (viewType === 'gm') {
             const beast: Beast | null = getMonsterFromCache(beastId)
             if (beast) {
-                // get player stuff
+                let modifiedBeast = { ...beast }
+                let promiseArray: any = []
+
+                if (user?.id) {
+                    promiseArray.push(getFavorite(databaseConnection, modifiedBeast.id, user?.id).then((isFavorite: boolean) => modifiedBeast.playerInfo.favorite = isFavorite))
+                    promiseArray.push(getNotes(databaseConnection, modifiedBeast.id, user?.id).then((notes: Notes) => modifiedBeast.playerInfo.notes = notes))
+                }
+
+                modifiedBeast.generalInfo.canEdit = isOwner(user?.id) || user?.id === modifiedBeast.generalInfo.beastOwnerId
+
+                await Promise.all(promiseArray)
+
                 checkForContentTypeBeforeSending(response, beast)
             } else {
                 getGMVersionOfBeast(request, response)
