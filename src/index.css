@@ -208,6 +208,10 @@ button:hover {
 	background: #c9cfd1;
 }
 
+button:disabled, button:disabled:hover {
+	background: white;
+}
+
 button.blue {
 	background: #8aa0ab;
 	color: white;

@@ -27,15 +27,25 @@ export default function AttackEditDisplay({ attacks, updateAttackOrder }: Props)
 function AttackEdit({ name, weapon, overAllIndex }: AttackInfo, index: number, arrayLength: number, nextUp: number, nextDown: number, updateAttackOrder: updateAttackOrderFunction) {
     return (
         <div key={index}>
-            {index > 0 &&
+            {index > 0 ? (
                 <button onClick={_ => updateAttackOrder(overAllIndex, nextUp)} >
                     <Icon iconName="up" color='black' />
                 </button>
+            ) : (
+                <button disabled={true}>
+                    <Icon iconName="up" color='gray' />
+                </button>
+            )
             }
-            {index < arrayLength - 1 &&
+            {index < arrayLength - 1 ? (
                 <button onClick={_ => updateAttackOrder(overAllIndex, nextDown)} >
                     <Icon iconName="down" color='black' />
                 </button>
+            ) : (
+                <button disabled={true}>
+                    <Icon iconName="down" color='gray' />
+                </button>
+            )
             }
             {index} {overAllIndex} {name ? name : '_'} {weapon ? weapon : '_'}
         </div>
