@@ -19,13 +19,18 @@ export default function alertInfo({ color, message }: Message) {
 }
 
 export async function showPendingAlert(callBack: Promise<unknown> | (() => Promise<unknown>)): Promise<Object> {
-    const { data }: any = await toast.promise(
+    const response: any = await toast.promise(
         callBack,
         {
             pending: 'Saving',
         }
     )
 
-    if (data.color) { alertInfo(data) }
-    return data
+    if (response.color) {
+        alertInfo(response)
+        return response
+    }
+    
+    alertInfo(response.data)
+    return response.data
 }

@@ -8,7 +8,7 @@ import PlayerBeastClass from "../models/PlayerBeastClass";
 import GMBeastClass from "../models/gmBeastClass/GMBeastClass";
 
 import { beastURL } from "../../../frontend-config";
-import alertInfo from "../../../components/alert/alerts";
+import alertInfo, { showPendingAlert } from "../../../components/alert/alerts";
 
 import { cacheMonster } from "../../../redux/slices/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
@@ -284,17 +284,22 @@ export default function beastHooks(): Return {
 
     const updateBeast = async () => {
         if (beast) {
-            const { data }  = await axios.post(beastURL + '/save', beast.beastInfo)
-    
-            if (data.color === 'red') {
-                alertInfo(data)
-                navigate(`/`)
-            } else if (data.beastID) {
-                // do something poke poke
-                console.log(data)
-            }
+            showPendingAlert(async () => {
+                const { data } = await axios.post(beastURL + '/save', beast.beastInfo)
+
+                if (data.color === 'red') {
+                    navigate(`/`)
+                } else if (data.beastID) {
+                    const modifiedBeastInfo: any = { ...beast.beastInfo }
+                    dispatch(cacheMonster(modifiedBeastInfo))
+                    // navigate back to view
+                    return { data: { color: 'green', type: 'message', message: 'Entry Saved' } }
+                }
+
+                return { data }
+            })
         }
-    } 
+    }
 
     return {
         beast,

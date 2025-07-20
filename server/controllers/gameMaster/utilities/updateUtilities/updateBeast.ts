@@ -21,6 +21,10 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
         let promiseArray: any = []
 
+        combatInfo.attacks.forEach(({overAllIndex, oldID, id}) => {
+            promiseArray.push(databaseConnection.beast.attacks.upsert(id, oldID, overAllIndex))
+        })
+
         await Promise.all(promiseArray)
 
         checkForContentTypeBeforeSending(response, { beastID })

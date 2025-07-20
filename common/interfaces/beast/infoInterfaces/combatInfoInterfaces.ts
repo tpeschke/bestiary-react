@@ -19,6 +19,7 @@ export type IsSpecial = 'yes' | 'no' | 'kinda'
 
 export interface AttackInfo {
     id?: number,
+    oldID: number,
     beastid: number,
     roleid: string,
     info: string,
@@ -91,6 +92,7 @@ export type Type = 'm' | 'r'
 
 export interface RawCombatStat {
     id: number,
+    oldID: number,
     beastid: number,
     roleid: string,
     combatpoints: number,
