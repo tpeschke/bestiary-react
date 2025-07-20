@@ -1,18 +1,18 @@
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
-import { updateOrderFunction, UpdateBeastFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
+import { UpdateBeastFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
 import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
+import { CombatInfoFunctions } from "../../EditView";
 import CombatEdit from "./components/combatEdit/CombatEdit";
 
 interface Props {
     beast: GMBeastClass,
-    updateAttackOrder: updateOrderFunction,
-    updateDefenseOrder: updateOrderFunction,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    updateBeast: UpdateBeastFunction
+    updateBeast: UpdateBeastFunction,
+    combatInfoFunctions: CombatInfoFunctions
 }
 
-export default function EditBody({ beast, updateAttackOrder, updateSelectedRole, updateBeast, updateDefenseOrder }: Props) {
+export default function EditBody({ beast, updateSelectedRole, updateBeast, combatInfoFunctions }: Props) {
     const { generalInfo, combatInfo, roleInfo, selectedRoleIndex } = beast
     const { name } = generalInfo
 
@@ -20,7 +20,7 @@ export default function EditBody({ beast, updateAttackOrder, updateSelectedRole,
         <>
             <NameHeader name={`Edit ${name}`} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} />
-            <CombatEdit combatInfo={combatInfo} updateAttackOrder={updateAttackOrder} updateDefenseOrder={updateDefenseOrder} />
+            <CombatEdit combatInfo={combatInfo} combatInfoFunctions={combatInfoFunctions} />
 
             <h2 className="border">Save</h2>
             <button className="orange" onClick={updateBeast}>Save Entry</button>

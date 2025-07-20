@@ -1,9 +1,9 @@
 import Icon from "../../../../../../../../../../components/icon/Icon"
-import { updateOrderFunction } from "../../../../../../../../hooks/beastHooks"
+import { UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
 
 export type DirectionOptions = 'down' | 'up'
 
-export default function MoveOrderButton(active: boolean, direction: DirectionOptions, updateAttackOrder: updateOrderFunction, overAllIndex: number, indexToMoveTo: number) {
+export default function MoveOrderButton(active: boolean, direction: DirectionOptions, updateAttackOrder: UpdateOrderFunction, overAllIndex: number, indexToMoveTo: number) {
     return (
         <>
             {active ? (

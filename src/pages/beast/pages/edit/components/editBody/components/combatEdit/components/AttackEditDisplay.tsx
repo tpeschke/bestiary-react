@@ -1,11 +1,11 @@
 import { AttackInfo } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
-import { updateOrderFunction } from "../../../../../../../hooks/beastHooks"
+import { UpdateOrderFunction } from "../../../../../../../hooks/beastHooks"
 import MoveOrderButton from "./components/MoveOrderButton"
 
 interface Props {
     attacks: AttackInfo[],
-    updateAttackOrder: updateOrderFunction
+    updateAttackOrder: UpdateOrderFunction
 }
 
 export default function AttackEditDisplay({ attacks, updateAttackOrder }: Props) {
@@ -24,7 +24,7 @@ export default function AttackEditDisplay({ attacks, updateAttackOrder }: Props)
     )
 }
 
-function AttackEdit({ name, weapon, overAllIndex }: AttackInfo, index: number, arrayLength: number, nextUp: number, nextDown: number, updateAttackOrder: updateOrderFunction) {
+function AttackEdit({ name, weapon, overAllIndex }: AttackInfo, index: number, arrayLength: number, nextUp: number, nextDown: number, updateAttackOrder: UpdateOrderFunction) {
     return (
         <div key={index}>
             {MoveOrderButton(index > 0, 'up', updateAttackOrder, overAllIndex, nextUp)}
