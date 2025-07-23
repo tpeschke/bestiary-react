@@ -4,16 +4,17 @@ import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay
 import './DefenseStats.css'
 
 interface Props {
-    defenseStats: DefenseInfo
+    defenseStats: DefenseInfo,
+    showDefenseNameBanner: boolean
 }
 
-export default function DefenseStat({ defenseStats }: Props) {
+export default function DefenseStat({ defenseStats, showDefenseNameBanner }: Props) {
     const { name, defense, flanks, parry, cover, parryDR, dr, info, tdr, defensename } = defenseStats
     const tooltip = 'Damage above DR is reduced to 1. Doubling the damage needed, increases it to 2 and so on. So, for 5 TDR, dealing 9 damage only deals 1; dealing 23 damage deals 3.'
 
     return (
         <div className='defense-stats-shell'>
-            <h6>{defensename ? defensename : name ? name : 'Default Defense'}</h6>
+            {showDefenseNameBanner && <h6>{defensename ? defensename : name ? name : 'Default Defense'}</h6>}
             {info && <HTMLDisplay html={info} />}
             <div className='defense-stats-inner-shell'>
                 <div>

@@ -8,14 +8,23 @@ interface Props {
 }
 
 export default function DefenseDisplay({ sp_def, defenses }: Props) {
-    const showSection = sp_def || defenses.length > 0
+    const hasDefenses = defenses.length > 0
+    const hasSpecialDefenses = !!sp_def
+
+    const showSection = hasSpecialDefenses || hasDefenses
+    
+    const hasSpecificName = defenses[0].name || defenses[0].defensename
+    const hasMultipleDefenses = defenses.length > 1
+
+    const showDefenseNameBanner: boolean = !!(hasMultipleDefenses || (!hasMultipleDefenses && hasSpecialDefenses) || (!hasMultipleDefenses && hasSpecificName))
+
     return (
         <>
             {showSection &&
                 <>
                     <h3>Defense Info</h3>
                     <SpecialInfo info={sp_def} />
-                    {defenses.map((defense, index) => <DefenseStats key={index} defenseStats={defense} />)}
+                    {defenses.map((defense, index) => <DefenseStats key={index} defenseStats={defense} showDefenseNameBanner={showDefenseNameBanner} />)}
                 </>
             }
         </>
