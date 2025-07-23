@@ -1,5 +1,7 @@
 import { AttackInfo } from '../../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
+import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
 import './AttackStats.css'
 
 interface Props {
@@ -7,7 +9,7 @@ interface Props {
 }
 
 export default function AttackStats({ attackStats }: Props) {
-    const { name, weaponName, measure, attack, damage, type, recovery, info, situation } = attackStats
+    const { name, weaponName, measure, attack, damage, type, recovery, info, situation, tactic } = attackStats
 
     return (
         <div className='attack-stats-shell'>
@@ -41,6 +43,13 @@ export default function AttackStats({ attackStats }: Props) {
                     <p>{damage}</p>
                 </div>
             </div>
+            {tactic &&
+                <Body>
+                    <p className='italic'>
+                        + {getTacticInfo(tactic)}
+                    </p>
+                </Body>
+            }
         </div>
     )
 }

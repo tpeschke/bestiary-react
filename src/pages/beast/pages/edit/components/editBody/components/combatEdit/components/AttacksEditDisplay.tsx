@@ -1,17 +1,17 @@
 import './AttacksEditDisplay.css'
 import { AttackInfo } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
-import { UpdateOrderFunction, UpdateSituationFunction } from "../../../../../../../hooks/beastHooks"
+import { UpdateOrderFunction, updateAttackInfoFunction } from "../../../../../../../hooks/beastHooks"
 import AttackSingleEdit from './components/AttackSingleEdit'
 
 interface Props {
     attacks: AttackInfo[],
     updateAttackOrder: UpdateOrderFunction,
-    updateSituation: UpdateSituationFunction,
+    updateAttackInfo: updateAttackInfoFunction,
     combatRoleType: string | null
 }
 
-export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateSituation, combatRoleType }: Props) {
+export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, combatRoleType }: Props) {
     return (
         <Body>
             <>
@@ -29,7 +29,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateS
                             nextUp={nextUp}
                             nextDown={nextDown}
                             updateAttackOrder={updateAttackOrder}
-                            updateSituation={updateSituation}
+                            updateAttackInfo={updateAttackInfo}
                             combatRoleType={combatRoleType}
                         />
                     )

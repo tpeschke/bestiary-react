@@ -1,13 +1,9 @@
 import Select from 'react-select'
 import { AttackInfo } from "../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { UpdateOrderFunction, UpdateSituationFunction } from "../../../../../../../../hooks/beastHooks"
-import getSituationOptions from "../utilities/situationOptions"
+import { UpdateOrderFunction, updateAttackInfoFunction } from "../../../../../../../../hooks/beastHooks"
+import getSituationOptions from "./utilities/situationOptions"
 import MoveOrderButton from "./MoveOrderButton"
-
-interface OptionProp {
-    value: string,
-    label: string,
-}
+import { getTacticOptionsForEdit } from '../../../../../../../../utilities/tacticOptions'
 
 interface Props {
     attackInfo: AttackInfo,
@@ -16,7 +12,7 @@ interface Props {
     nextUp: number,
     nextDown: number,
     updateAttackOrder: UpdateOrderFunction,
-    updateSituation: UpdateSituationFunction
+    updateAttackInfo: updateAttackInfoFunction
     combatRoleType: string | null
 }
 
@@ -27,16 +23,10 @@ export default function AttackSingleEdit({
     nextUp,
     nextDown,
     updateAttackOrder,
-    updateSituation,
+    updateAttackInfo,
     combatRoleType
 }: Props) {
-    const { name, weapon, overAllIndex, situation } = attackInfo
-
-    console.log(combatRoleType)
-
-    function getSituation(selectedOption: OptionProp, overAllIndex: number) {
-        updateSituation(selectedOption.value, overAllIndex)
-    }
+    const { name, weapon, overAllIndex, situation, tactic } = attackInfo
 
     return (
         <div className='attack-edit-shell'>
@@ -50,7 +40,16 @@ export default function AttackSingleEdit({
                     isSearchable
                     value={{ value: situation, label: situation }}
                     options={getSituationOptions(combatRoleType)}
-                    onChange={(event: any) => getSituation(event, overAllIndex)}
+                    onChange={(event: any) => updateAttackInfo('situation', event.value, overAllIndex)}
+                />
+            </div>
+
+            <div className='attack-edit-select-shell'>
+                <Select
+                    isSearchable
+                    value={{ value: tactic, label: tactic }}
+                    options={getTacticOptionsForEdit()}
+                    onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
                 />
             </div>
         </div>

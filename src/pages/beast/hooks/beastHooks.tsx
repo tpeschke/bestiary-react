@@ -22,11 +22,14 @@ import { AttackInfo, DefenseInfo } from "../../../../common/interfaces/beast/inf
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
+
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
+
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type RemoveDefenseFunction = (indexToRemove: number) => void
+export type updateAttackInfoFunction = (key: string, value: string, overAllIndex: number) => void
+
 export type UpdateBeastFunction = () => void
-export type UpdateSituationFunction = (value: string, overAllIndex: number) => void
 
 interface UpdateFavoriteReturnBase {
     type: 'delete' | 'add'
@@ -57,7 +60,7 @@ interface Return {
 
 export type UpdateCombatInfoFunctionsObject = {
     updateAttackOrder: UpdateOrderFunction,
-    updateSituation: UpdateSituationFunction,
+    updateAttackInfo: updateAttackInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveDefenseFunction
 }
@@ -235,7 +238,7 @@ export default function beastHooks(): Return {
     }
 
 
-    const updateSituation = (value: string, overAllIndex: number) => {
+    const updateAttackInfo = (key: string, value: string, overAllIndex: number) => {
         if (beast) {
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
@@ -245,7 +248,7 @@ export default function beastHooks(): Return {
                         if (index == overAllIndex) {
                             attacks.push({
                                 ...attack,
-                                situation: value
+                                [key]: value
                             })
                         } else {
                             attacks.push(attack)
@@ -343,7 +346,7 @@ export default function beastHooks(): Return {
         updateFavorite,
         updateCombatInfoFunctions: {
             updateAttackOrder,
-            updateSituation,
+            updateAttackInfo,
             updateDefenseOrder,
             removeDefense,
         },
