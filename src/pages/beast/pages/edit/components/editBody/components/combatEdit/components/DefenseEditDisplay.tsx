@@ -2,7 +2,7 @@ import { DefenseInfo } from "../../../../../../../../../../common/interfaces/bea
 import Icon from "../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../components/UI/body/Body"
 import { RemoveDefenseFunction, UpdateOrderFunction } from "../../../../../../../hooks/beastHooks"
-import MoveOrderButton from "./components/MoveOrderButton"
+import MoveOrderButton from "./AttacksEditDisplay/components/MoveOrderButton"
 
 interface Props {
     defenses: DefenseInfo[],

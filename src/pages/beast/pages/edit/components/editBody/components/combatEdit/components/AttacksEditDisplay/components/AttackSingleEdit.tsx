@@ -1,9 +1,9 @@
 import Select from 'react-select'
-import { AttackInfo } from "../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { UpdateOrderFunction, updateAttackInfoFunction } from "../../../../../../../../hooks/beastHooks"
+import { AttackInfo } from "../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { UpdateOrderFunction, updateAttackInfoFunction } from "../../../../../../../../../hooks/beastHooks"
 import getSituationOptions from "./utilities/situationOptions"
 import MoveOrderButton from "./MoveOrderButton"
-import { getTacticOptionsForEdit } from '../../../../../../../../utilities/tacticOptions'
+import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 
 interface Props {
     attackInfo: AttackInfo,

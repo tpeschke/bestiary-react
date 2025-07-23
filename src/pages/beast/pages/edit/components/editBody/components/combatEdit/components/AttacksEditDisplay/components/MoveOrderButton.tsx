@@ -1,5 +1,5 @@
-import Icon from "../../../../../../../../../../components/icon/Icon"
-import { UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
+import Icon from "../../../../../../../../../../../components/icon/Icon"
+import { UpdateOrderFunction } from "../../../../../../../../../hooks/beastHooks"
 
 export type DirectionOptions = 'down' | 'up'
 
