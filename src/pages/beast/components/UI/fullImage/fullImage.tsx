@@ -4,6 +4,8 @@ import ImageNotFound from '../../../../../assets/images/404.png'
 import { ArtistInfo } from '../../../interfaces/infoInterfaces/ImageInfoInterfaces'
 
 import { imageBase } from '../../../../../frontend-config'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 interface Props {
     imageParam: number,
@@ -13,16 +15,22 @@ interface Props {
 }
 
 export default function FullImage({ imageParam, altText, artistInfo, roleID = '' }: Props) {
+    const [hasRoleArt, setHasRoleArt] = useState(false)
+
     const link = artistInfo?.link
     const tooltip = artistInfo?.tooltip
     const artist = artistInfo?.artist
 
+    const roleImage = imageBase + imageParam + roleID
+    const normalImage = imageBase + imageParam
+    const notFoundImage = ImageNotFound
+
+    useEffect(() => {
+        axios.get(roleImage).then(result => setHasRoleArt(result.status === 200)).catch(_ => {setHasRoleArt(false)})
+    }, [roleID])
+
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
-
-        const roleImage = imageBase + imageParam + roleID
-        const normalImage = imageBase + imageParam
-        const notFoundImage = ImageNotFound
 
         if (currentTarget.src === roleImage) {
             currentTarget.src = normalImage
@@ -33,7 +41,7 @@ export default function FullImage({ imageParam, altText, artistInfo, roleID = ''
 
     return (
         <>
-            <img src={imageBase + imageParam + roleID} alt={altText} onError={handleImageError}></img>
+            <img src={hasRoleArt ? roleImage : normalImage} alt={altText} onError={handleImageError}></img>
             <div className='artist-frame'>
                 {link ?
                     <a target="_blank" href={link} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>{artist}</a>
