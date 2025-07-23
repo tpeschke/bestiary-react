@@ -7,11 +7,11 @@ interface Props {
 }
 
 export default function AttackStats({ attackStats }: Props) {
-    const { name, weaponName, measure, attack, damage, type, recovery, info } = attackStats
+    const { name, weaponName, measure, attack, damage, type, recovery, info, situation } = attackStats
 
     return (
         <div className='attack-stats-shell'>
-            <span><h6></h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
+            <span><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
             {info && <HTMLDisplay html={info} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>

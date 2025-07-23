@@ -18,7 +18,7 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
 function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, mainRole: string): AttackInfo[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
-            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid
+            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -27,6 +27,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
 
         return {
             ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
+            situation,
             oldID: id ? id : oldID,
             overAllIndex: index,
             id: attackid,

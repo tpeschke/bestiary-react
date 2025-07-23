@@ -12,14 +12,14 @@ interface Props {
 }
 
 export default function EditBody({ beast, updateSelectedRole, updateBeast, updateCombatInfoFunctions }: Props) {
-    const { generalInfo, combatInfo, roleInfo, selectedRoleIndex, roleName} = beast
+    const { generalInfo, combatInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
 
     return (
         <>
             <NameHeader name={`Edit ${name}`} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} />
-            <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} roleName={roleName} />
+            <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} />
 
             <h2 className="border">Save</h2>
             <button className="orange" onClick={updateBeast}>Save Entry</button>

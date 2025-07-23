@@ -6,6 +6,12 @@
     color: #434343;
 }
 
+.attack-stats-shell h6 {
+    padding: 0;
+    font-family: 'Source Sans 3';
+    font-size: 14px;
+}
+
 .attack-stats-shell span p {
     font-style: italic;
 }

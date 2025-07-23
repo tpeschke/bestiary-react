@@ -283,12 +283,20 @@ export default class GMBeastClass {
         this.selectedRoleIndex = newIndex
     }
 
-    get roleName() {
+    get roleName(): string | null {
         if (this.selectRoleIndex >= 0) {
             return this.roleInfo.roles[this.selectRoleIndex].generalInfo.name
         }
 
         return null
+    }
+
+    get combatRoleType(): string | null {
+        if (this.selectRoleIndex >= 0) {
+            return this.roleInfo.roles[this.selectRoleIndex].combatInfo.combatrole
+        }
+
+        return this.combatInfo.combatrole
     }
 
     get modifierIndex() {

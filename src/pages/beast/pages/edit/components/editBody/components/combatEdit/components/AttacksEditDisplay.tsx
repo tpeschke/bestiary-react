@@ -8,10 +8,10 @@ interface Props {
     attacks: AttackInfo[],
     updateAttackOrder: UpdateOrderFunction,
     updateSituation: UpdateSituationFunction,
-    roleName: string | null
+    combatRoleType: string | null
 }
 
-export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateSituation, roleName }: Props) {
+export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateSituation, combatRoleType }: Props) {
     return (
         <Body>
             <>
@@ -22,6 +22,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateS
 
                     return (
                         <AttackSingleEdit
+                            key={index}
                             attackInfo={attack}
                             index={index}
                             arrayLength={attacks.length}
@@ -29,7 +30,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateS
                             nextDown={nextDown}
                             updateAttackOrder={updateAttackOrder}
                             updateSituation={updateSituation}
-                            roleName={roleName}
+                            combatRoleType={combatRoleType}
                         />
                     )
                 })}

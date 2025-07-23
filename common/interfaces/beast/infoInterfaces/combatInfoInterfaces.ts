@@ -98,6 +98,7 @@ export interface RawCombatStat {
     oldID: number,
     attackid?: number,
     defenseid?: number,
+    situation: string | null,
     beastid: number,
     roleid: string,
     combatpoints: number,

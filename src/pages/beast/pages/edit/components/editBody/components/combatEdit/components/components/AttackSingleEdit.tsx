@@ -17,7 +17,7 @@ interface Props {
     nextDown: number,
     updateAttackOrder: UpdateOrderFunction,
     updateSituation: UpdateSituationFunction
-    roleName: string | null
+    combatRoleType: string | null
 }
 
 export default function AttackSingleEdit({
@@ -28,16 +28,18 @@ export default function AttackSingleEdit({
     nextDown,
     updateAttackOrder,
     updateSituation,
-    roleName
+    combatRoleType
 }: Props) {
     const { name, weapon, overAllIndex, situation } = attackInfo
+
+    console.log(combatRoleType)
 
     function getSituation(selectedOption: OptionProp, overAllIndex: number) {
         updateSituation(selectedOption.value, overAllIndex)
     }
 
     return (
-        <div key={index} className='attack-edit-shell'>
+        <div className='attack-edit-shell'>
             {MoveOrderButton(index > 0, 'up', updateAttackOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateAttackOrder, overAllIndex, nextDown)}
             {overAllIndex}
@@ -47,7 +49,7 @@ export default function AttackSingleEdit({
                 <Select
                     isSearchable
                     value={{ value: situation, label: situation }}
-                    options={getSituationOptions(roleName)}
+                    options={getSituationOptions(combatRoleType)}
                     onChange={(event: any) => getSituation(event, overAllIndex)}
                 />
             </div>
