@@ -11,7 +11,6 @@ interface Props {
     roleName: string | null
 }
 
-
 export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateSituation, roleName }: Props) {
     return (
         <Body>

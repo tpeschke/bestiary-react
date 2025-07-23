@@ -13,8 +13,8 @@ interface BeastRequest extends Request {
 
 export async function updateBeast(request: BeastRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
-    const { body, user } = request
-    const { id: beastID, combatInfo } = body
+    const { body: beast, user } = request
+    const { id: beastID, combatInfo } = beast
     
     const result = await databaseConnection.beast.canEdit(beastID)
     const beastOwnerID = result[0].userid
