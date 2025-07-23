@@ -27,7 +27,7 @@ export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type RemoveDefenseFunction = (indexToRemove: number) => void
-export type updateAttackInfoFunction = (key: string, value: string, overAllIndex: number) => void
+export type updateCombatInfoFunction = (key: string, value: string, overAllIndex: number) => void
 
 export type UpdateBeastFunction = () => void
 
@@ -60,7 +60,8 @@ interface Return {
 
 export type UpdateCombatInfoFunctionsObject = {
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: updateAttackInfoFunction,
+    updateAttackInfo: updateCombatInfoFunction,
+    updateDefenseInfo: updateCombatInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveDefenseFunction
 }
@@ -237,7 +238,6 @@ export default function beastHooks(): Return {
         return null
     }
 
-
     const updateAttackInfo = (key: string, value: string, overAllIndex: number) => {
         if (beast) {
             const modifiedBeastInfo: any = {
@@ -270,6 +270,31 @@ export default function beastHooks(): Return {
                 combatInfo: {
                     ...beast.beastInfo.combatInfo,
                     attacks: shiftAttackOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.attacks)
+                }
+            }
+
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
+    const updateDefenseInfo = (key: string, value: string, overAllIndex: number) => {
+        if (beast) {
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: {
+                    ...beast.beastInfo.combatInfo,
+                    defenses: beast.beastInfo.combatInfo.defenses.reduce((defenses: DefenseInfo[], defense: DefenseInfo, index: number) => {
+                        if (index == overAllIndex) {
+                            defenses.push({
+                                ...defense,
+                                [key]: value
+                            })
+                        } else {
+                            defenses.push(defense)
+                        }
+                        return defenses
+                    }, []) 
                 }
             }
 
@@ -349,6 +374,7 @@ export default function beastHooks(): Return {
             updateAttackInfo,
             updateDefenseOrder,
             removeDefense,
+            updateDefenseInfo
         },
         updateBeast,
     }

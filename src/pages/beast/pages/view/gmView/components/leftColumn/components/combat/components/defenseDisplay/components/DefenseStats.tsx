@@ -8,12 +8,12 @@ interface Props {
 }
 
 export default function DefenseStat({ defenseStats }: Props) {
-    const { name, defense, flanks, parry, cover, parryDR, dr, info, tdr } = defenseStats
+    const { name, defense, flanks, parry, cover, parryDR, dr, info, tdr, defensename } = defenseStats
     const tooltip = 'Damage above DR is reduced to 1. Doubling the damage needed, increases it to 2 and so on. So, for 5 TDR, dealing 9 damage only deals 1; dealing 23 damage deals 3.'
 
     return (
         <div className='defense-stats-shell'>
-            <h6>{name ? name : 'Default Defense'}</h6>
+            <h6>{defensename ? defensename : name ? name : 'Default Defense'}</h6>
             {info && <HTMLDisplay html={info} />}
             <div className='defense-stats-inner-shell'>
                 <div>

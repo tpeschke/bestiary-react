@@ -5,11 +5,11 @@ export default async function updateDefense(databaseConnection: any, beastID: nu
 
     await databaseConnection.beast.defenses.delete([beastID, [0, ...defenses.map(defenses => defenses.id)]])
 
-    defenses.forEach(({ overAllIndex, oldID, id }) => {
+    defenses.forEach(({ overAllIndex, oldID, id, defensename }) => {
         if (id) {
-            promiseArray.push(databaseConnection.beast.defenses.update(id, oldID, overAllIndex))
+            promiseArray.push(databaseConnection.beast.defenses.update(id, oldID, overAllIndex, defensename))
         } else {
-            promiseArray.push(databaseConnection.beast.defenses.add(oldID, overAllIndex))
+            promiseArray.push(databaseConnection.beast.defenses.add(oldID, overAllIndex, defensename))
         }
     })
 

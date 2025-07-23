@@ -1,13 +1,13 @@
 import { AttackInfo } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Body from '../../../../../../../../components/UI/body/Body'
-import { UpdateOrderFunction, updateAttackInfoFunction } from '../../../../../../../../hooks/beastHooks'
+import { UpdateOrderFunction, updateCombatInfoFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 
 interface Props {
     attacks: AttackInfo[],
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: updateAttackInfoFunction,
+    updateAttackInfo: updateCombatInfoFunction,
     combatRoleType: string | null
 }
 

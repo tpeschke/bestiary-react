@@ -1,16 +1,17 @@
 import { DefenseInfo } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../components/UI/body/Body"
-import { RemoveDefenseFunction, UpdateOrderFunction } from "../../../../../../../hooks/beastHooks"
+import { RemoveDefenseFunction, updateCombatInfoFunction, UpdateOrderFunction } from "../../../../../../../hooks/beastHooks"
 import MoveOrderButton from "./AttacksEditDisplay/components/MoveOrderButton"
 
 interface Props {
     defenses: DefenseInfo[],
+    updateDefenseInfo: updateCombatInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction
+    removeDefense: RemoveDefenseFunction,
 }
 
-export default function DefenseEditDisplay({ defenses, updateDefenseOrder, removeDefense }: Props) {
+export default function DefenseEditDisplay({ defenses, updateDefenseOrder, removeDefense, updateDefenseInfo }: Props) {
     return (
         <Body>
             <>
@@ -19,7 +20,7 @@ export default function DefenseEditDisplay({ defenses, updateDefenseOrder, remov
                     const nextUp = defenses[index - 1]?.overAllIndex
                     const nextDown = defenses[index + 1]?.overAllIndex
 
-                    return DefenseEdit(attack, index, defenses.length, nextUp, nextDown, updateDefenseOrder, removeDefense)
+                    return DefenseEdit(attack, index, defenses.length, nextUp, nextDown, updateDefenseOrder, removeDefense, updateDefenseInfo)
                 })}
             </>
         </Body>
@@ -27,19 +28,21 @@ export default function DefenseEditDisplay({ defenses, updateDefenseOrder, remov
 }
 
 function DefenseEdit(
-    { name, overAllIndex }: DefenseInfo,
+    { overAllIndex, defensename }: DefenseInfo,
     index: number,
     arrayLength: number,
     nextUp: number,
     nextDown: number,
     updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction
+    removeDefense: RemoveDefenseFunction,
+    updateDefenseInfo: updateCombatInfoFunction
 ) {
     return (
         <div key={index}>
             {MoveOrderButton(index > 0, 'up', updateDefenseOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
-            {overAllIndex} {name ? name : '_'}
+            {overAllIndex} 
+            <input placeholder="Defense Name" value={defensename} onBlur={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
             <button className="orange" onClick={_ => removeDefense(overAllIndex)}>
                 <Icon iconName='trash' color='white' />
             </button>

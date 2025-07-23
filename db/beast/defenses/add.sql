@@ -1,2 +1,2 @@
-insert into bbdefenses (oldid, index)
-values ($1, $2)
+insert into bbdefenses (oldid, index, name)
+values ($1, $2, $3)
