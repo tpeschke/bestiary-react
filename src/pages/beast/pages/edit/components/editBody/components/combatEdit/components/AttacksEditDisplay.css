@@ -1,0 +1,8 @@
+.attack-edit-shell {
+    display: flex;
+    align-items: center;
+}
+
+.attack-edit-select-shell {
+    width: 250px;
+}

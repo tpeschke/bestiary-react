@@ -1,20 +1,21 @@
 import CombatInfo from "../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { CombatInfoFunctions } from "../../../../EditView"
-import AttackEditDisplay from "./components/AttackEditDisplay"
+import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/beastHooks"
+import AttacksEditDisplay from "./components/AttacksEditDisplay"
 import DefenseEditDisplay from "./components/DefenseEditDisplay"
 
 interface Props {
     combatInfo: CombatInfo,
-    combatInfoFunctions: CombatInfoFunctions
+    updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject,
+    roleName: string | null
 }
 
-export default function CombatEdit({ combatInfo, combatInfoFunctions } : Props) {
-    const { updateAttackOrder, updateDefenseOrder, removeDefense } = combatInfoFunctions
+export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, roleName } : Props) {
+    const { updateAttackOrder, updateDefenseOrder, removeDefense, updateSituation } = updateCombatInfoFunctions
     const { attacks, defenses } = combatInfo
 
     return (
         <>
-            <AttackEditDisplay attacks={attacks} updateAttackOrder={updateAttackOrder} />
+            <AttacksEditDisplay attacks={attacks} updateAttackOrder={updateAttackOrder} updateSituation={updateSituation} roleName={roleName} />
             <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} />
         </>
     )

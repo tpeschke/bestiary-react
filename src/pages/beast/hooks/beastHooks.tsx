@@ -18,7 +18,7 @@ import { SetPlayerNotes } from "../components/notes/notesDisplay";
 import { CatalogTile } from "../../catalog/catalogInterfaces";
 import { shiftAttackOrder } from "./utilities/updateAttacks";
 import { shiftDefenseOrder } from "./utilities/updateDefenses";
-import { DefenseInfo } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { AttackInfo, DefenseInfo } from "../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -26,6 +26,7 @@ export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type RemoveDefenseFunction = (indexToRemove: number) => void
 export type UpdateBeastFunction = () => void
+export type UpdateSituationFunction = (value: string, overAllIndex: number) => void
 
 interface UpdateFavoriteReturnBase {
     type: 'delete' | 'add'
@@ -50,10 +51,15 @@ interface Return {
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
     updateFavorite: UpdateFavoriteFunction,
-    updateAttackOrder: UpdateOrderFunction,
-    updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction,
+    updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject
     updateBeast: UpdateBeastFunction
+}
+
+export type UpdateCombatInfoFunctionsObject = {
+    updateAttackOrder: UpdateOrderFunction,
+    updateSituation: UpdateSituationFunction,
+    updateDefenseOrder: UpdateOrderFunction,
+    removeDefense: RemoveDefenseFunction
 }
 
 export default function beastHooks(): Return {
@@ -228,6 +234,32 @@ export default function beastHooks(): Return {
         return null
     }
 
+
+    const updateSituation = (value: string, overAllIndex: number) => {
+        if (beast) {
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: {
+                    ...beast.beastInfo.combatInfo,
+                    attacks: beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackInfo[], attack: AttackInfo, index: number) => {
+                        if (index == overAllIndex) {
+                            attacks.push({
+                                ...attack,
+                                situation: value
+                            })
+                        } else {
+                            attacks.push(attack)
+                        }
+                        return attacks
+                    }, []) 
+                }
+            }
+
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
     const updateAttackOrder = (overAllIndex: number, overAllIndexToMoveTo: number) => {
         if (beast) {
             const modifiedBeastInfo: any = {
@@ -309,9 +341,12 @@ export default function beastHooks(): Return {
         updateRoleModifier,
         updateNotes,
         updateFavorite,
-        updateAttackOrder,
-        updateDefenseOrder,
-        removeDefense,
-        updateBeast
+        updateCombatInfoFunctions: {
+            updateAttackOrder,
+            updateSituation,
+            updateDefenseOrder,
+            removeDefense,
+        },
+        updateBeast,
     }
 }

@@ -20,6 +20,7 @@ export type IsSpecial = 'yes' | 'no' | 'kinda'
 export interface AttackInfo {
     id?: number,
     oldID: number,
+    situation: string | null,
     beastid: number,
     roleid: string,
     info: string,
