@@ -1,7 +1,7 @@
+import { AttackInfo } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import Body from '../../../../../../../../components/UI/body/Body'
+import { UpdateOrderFunction, updateAttackInfoFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
-import { AttackInfo } from "../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import Body from "../../../../../../../components/UI/body/Body"
-import { UpdateOrderFunction, updateAttackInfoFunction } from "../../../../../../../hooks/beastHooks"
 import AttackSingleEdit from './components/AttackSingleEdit'
 
 interface Props {

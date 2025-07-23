@@ -1,6 +1,6 @@
 import CombatInfo from "../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/beastHooks"
-import AttacksEditDisplay from "./components/AttacksEditDisplay"
+import AttacksEditDisplay from "./components/AttacksEditDisplay/AttacksEditDisplay"
 import DefenseEditDisplay from "./components/DefenseEditDisplay"
 
 interface Props {
