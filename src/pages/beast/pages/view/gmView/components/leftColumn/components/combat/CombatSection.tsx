@@ -54,7 +54,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
 function getVitalityIconSetting(weaponbreakagevitality: boolean, isincorporeal: boolean): PairIconSettings | null {
     if (weaponbreakagevitality) {
         return {
-            iconName: 'shield',
+            iconName: 'crack',
             tooltip: 'This creature only takes damage when it would take Wear on a 1-to-1 basis'
         }
 
