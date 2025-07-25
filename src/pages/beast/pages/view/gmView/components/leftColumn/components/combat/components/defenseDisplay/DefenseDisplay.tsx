@@ -12,8 +12,8 @@ export default function DefenseDisplay({ sp_def, defenses }: Props) {
     const hasSpecialDefenses = !!sp_def
 
     const showSection = hasSpecialDefenses || hasDefenses
-    
-    const hasSpecificName = defenses[0].name || defenses[0].defensename
+console.log(defenses)
+    const hasSpecificName = defenses[0]?.name || defenses[0]?.defensename
     const hasMultipleDefenses = defenses.length > 1
 
     const showDefenseNameBanner: boolean = !!(hasMultipleDefenses || (!hasMultipleDefenses && hasSpecialDefenses) || (!hasMultipleDefenses && hasSpecificName))
