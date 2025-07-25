@@ -6,10 +6,10 @@ export type SetLoadingFunction = (showPageCondition: boolean) => void
 
 interface Props {
     children: JSX.Element,
-    secondaryColor?: boolean
+    secondary?: boolean
 }
 
-export default function Loading({ children, secondaryColor = false }: Props) {
+export default function Loading({ children, secondary = false }: Props) {
     const [isLoading, setIsLoading] = useState(true)
 
     const setLoading = (showPageCondition: boolean) => {
@@ -18,7 +18,7 @@ export default function Loading({ children, secondaryColor = false }: Props) {
 
     return (
         <>
-            <LoadingIndicator stylings={isLoading ? '' : 'display-none'} secondaryColor={secondaryColor} />
+            <LoadingIndicator stylings={isLoading ? '' : 'display-none'} secondary={secondary} />
             <div className={isLoading ? 'display-none' : ''}>
                 {cloneElement(children, { setLoading })}
             </div>

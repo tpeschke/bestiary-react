@@ -22,7 +22,7 @@ export default function EncounterDisplay({ }: Props) {
     return (
         <>
             <h2 className='border'>Random Encounters</h2>
-            <Loading secondaryColor={true}>
+            <Loading secondary={true}>
                 <EncounterShell />
             </Loading>
 

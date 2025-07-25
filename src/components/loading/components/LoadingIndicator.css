@@ -1,6 +1,9 @@
 .loading-indicator-shell {
-    height: calc(100vh - 185px);
     display: flex;
+}
+
+.full-height {
+    height: calc(100vh - 185px);
 }
 
 .loader {
