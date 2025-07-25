@@ -27,7 +27,8 @@ export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type RemoveDefenseFunction = (indexToRemove: number) => void
-export type updateCombatInfoFunction = (key: string, value: string, overAllIndex: number) => void
+export type UpdateCombatInfoFunction = (key: string, value: string, overAllIndex: number) => void
+export type AddAttackFunction = (newAttack: AttackInfo) => void
 
 export type UpdateBeastFunction = () => void
 
@@ -60,8 +61,9 @@ interface Return {
 
 export type UpdateCombatInfoFunctionsObject = {
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: updateCombatInfoFunction,
-    updateDefenseInfo: updateCombatInfoFunction,
+    updateAttackInfo: UpdateCombatInfoFunction,
+    addAttack: AddAttackFunction,
+    updateDefenseInfo: UpdateCombatInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveDefenseFunction
 }
@@ -254,7 +256,25 @@ export default function beastHooks(): Return {
                             attacks.push(attack)
                         }
                         return attacks
-                    }, []) 
+                    }, [])
+                }
+            }
+
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
+    const addAttack = (newAttack: AttackInfo) => {
+        if (beast) {
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: {
+                    ...beast.beastInfo.combatInfo,
+                    attacks: [
+                        ...beast.beastInfo.combatInfo.attacks,
+                        { ...newAttack, roleid: beast.selectedRoleID }
+                    ]
                 }
             }
 
@@ -294,7 +314,7 @@ export default function beastHooks(): Return {
                             defenses.push(defense)
                         }
                         return defenses
-                    }, []) 
+                    }, [])
                 }
             }
 
@@ -372,6 +392,7 @@ export default function beastHooks(): Return {
         updateCombatInfoFunctions: {
             updateAttackOrder,
             updateAttackInfo,
+            addAttack,
             updateDefenseOrder,
             removeDefense,
             updateDefenseInfo

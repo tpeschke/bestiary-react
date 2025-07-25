@@ -1,12 +1,12 @@
 import Select from 'react-select'
 import { WeaponInfo } from "../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { updateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
+import { UpdateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
 import getSituationOptions from "./utilities/situationOptions"
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 
 interface Props {
     attackInfo: WeaponInfo,
-    updateAttackInfo: updateCombatInfoFunction
+    updateAttackInfo: UpdateCombatInfoFunction
     combatRoleType: string | null
 }
 

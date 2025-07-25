@@ -6,3 +6,9 @@
 .attack-edit-select-shell {
     width: 250px;
 }
+
+.add-attack-button-shell {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+}

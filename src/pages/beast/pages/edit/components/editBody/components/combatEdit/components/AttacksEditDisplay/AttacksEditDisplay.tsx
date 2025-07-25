@@ -1,6 +1,7 @@
 import { AttackInfo } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import Icon from '../../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../../../components/UI/body/Body'
-import { UpdateOrderFunction, updateCombatInfoFunction } from '../../../../../../../../hooks/beastHooks'
+import { UpdateOrderFunction, UpdateCombatInfoFunction, AddAttackFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
@@ -9,17 +10,17 @@ import ReferenceEdit from './components/ReferenceEdit'
 interface Props {
     attacks: AttackInfo[],
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: updateCombatInfoFunction,
+    updateAttackInfo: UpdateCombatInfoFunction,
+    addAttack: AddAttackFunction,
     combatRoleType: string | null
 }
 
-export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, combatRoleType }: Props) {
+export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, combatRoleType }: Props) {
 
-    const getCorrectAttackEditOption = (key: number, attackInfo: AttackInfo, updateAttackInfo: updateCombatInfoFunction, combatRoleType: string | null) => {
+    const getCorrectAttackEditOption = (attackInfo: AttackInfo, updateAttackInfo: UpdateCombatInfoFunction, combatRoleType: string | null) => {
         if (attackInfo.infoType === 'weapon') {
             return (
                 <AttackSingleEdit
-                    key={key}
                     attackInfo={attackInfo}
                     updateAttackInfo={updateAttackInfo}
                     combatRoleType={combatRoleType}
@@ -28,7 +29,6 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
         } else if (attackInfo.infoType === 'reference') {
             return (
                 <ReferenceEdit
-                    key={key}
                     attackReference={attackInfo}
                     updateAttackInfo={updateAttackInfo}
                     combatRoleType={combatRoleType}
@@ -46,13 +46,16 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     const nextDown = attacks[index + 1]?.overAllIndex
 
                     return (
-                        <div className='attack-edit-shell'>
+                        <div key={index} className='attack-edit-shell'>
                             {MoveOrderButton(index > 0, 'up', updateAttackOrder, attack.overAllIndex, nextUp)}
                             {MoveOrderButton(index < attacks.length - 1, 'down', updateAttackOrder, attack.overAllIndex, nextDown)}
-                            {getCorrectAttackEditOption(index, attack, updateAttackInfo, combatRoleType)}
+                            {getCorrectAttackEditOption(attack, updateAttackInfo, combatRoleType)}
                         </div>
                     )
                 })}
+                <div className='add-attack-button-shell'>
+                    <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: attacks.length })}><Icon iconName='plus' color='black' /> Reference</button>
+                </div>
             </>
         </Body>
     )

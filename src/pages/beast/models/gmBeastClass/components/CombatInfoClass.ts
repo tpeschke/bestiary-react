@@ -52,12 +52,16 @@ export default class CombatInfoClass {
 
     private adjustAttackInfo = (points: number, roleID: string | null, role: string) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
-        if (!roleID || attack.roleid === roleID) {
-                attackInfo.push({
-                    ...attack,
-                    ...calculateAttackInfo({ ...attack.scalingInfo }, points, role),
-                    weaponName: attack.weaponName
-                })
+            if (!roleID || attack.roleid === roleID) {
+                if (attack.infoType === 'weapon') {
+                    attackInfo.push({
+                        ...attack,
+                        ...calculateAttackInfo({ ...attack.scalingInfo }, points, role),
+                        weaponName: attack.weaponName
+                    })
+                } else if (attack.infoType === 'reference') {
+                    attackInfo.push({...attack})
+                }
             }
             return attackInfo
         }
@@ -85,7 +89,7 @@ export default class CombatInfoClass {
             return movementInfo
         }
     }
-    
+
     private getDefault = <Type>(roleInfo: Type, defaultInfo: Type): Type => {
         return roleInfo ?? defaultInfo
     }
