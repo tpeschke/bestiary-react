@@ -21,9 +21,11 @@ export type AttackInfo = AttackReference | WeaponInfo
 
 export interface AttackReference {
     infoType: 'reference'
+    id?: number,
     reference: string,
+    tactic?: string,
     overAllIndex: number,
-    roleid?: string | null
+    roleid?: string
 }
 
 export interface WeaponInfo {
@@ -33,7 +35,7 @@ export interface WeaponInfo {
     situation: string | null,
     tactic: string | null,
     beastid: number,
-    roleid: string | null,
+    roleid?: string,
     info: string,
     name: string,
     chosenName: string,
@@ -110,6 +112,7 @@ export interface RawCombatStat {
     oldID: number,
     attackid?: number,
     defenseid?: number,
+    reference?: string,
     defensename: string | undefined,
     situation: string | null,
     tactic: string | null,

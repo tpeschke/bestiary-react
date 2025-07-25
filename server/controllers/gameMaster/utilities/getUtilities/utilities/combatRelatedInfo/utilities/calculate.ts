@@ -19,21 +19,30 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation,
-            tactic
+            tactic, reference
         } = stat
 
         const roleToUse = role ? role : mainRole
         const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
         const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
-        return {
-            ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
-            situation, tactic,
-            oldID: id ? id : oldID,
-            overAllIndex: index,
-            id: attackid,
-            infoType: 'weapon',
-            scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
+        if (reference) {
+            return {
+                id: attackid,
+                infoType: 'reference',
+                overAllIndex: index,
+                tactic, roleid, reference
+            }
+        } else {
+            return {
+                ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
+                situation, tactic,
+                oldID: id ? id : oldID,
+                overAllIndex: index,
+                id: attackid,
+                infoType: 'weapon',
+                scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
+            }
         }
     })
 }

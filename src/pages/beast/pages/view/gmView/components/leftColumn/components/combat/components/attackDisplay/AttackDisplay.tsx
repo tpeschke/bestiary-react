@@ -18,6 +18,9 @@ export default function AttackDisplay({ sp_atk, attacks }: Props) {
                     {attacks.map((attack, index) => {
                         if (attack.infoType === 'weapon') {
                             return <AttackStats key={index} attackStats={attack} />
+                        } else if (attack.infoType === 'reference') {
+                            console.log(attack)
+                            return <div key={index}>{attack.reference}</div>
                         }
                     })}
                 </>
