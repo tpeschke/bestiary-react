@@ -21,11 +21,17 @@ export default function Header() {
                 </Link>
                 {userIsLoggedIn ?
                     <a href={signOutURL}>
-                        <Icon iconName='log-out' tooltip='Log Out' color='white' iconSize='h1' />
+                        <button className='transparent-white'>
+                            <Icon iconName='log-out' color='white' margin='right' />
+                            Log Out
+                        </button>
                     </a>
                     :
                     <a href={signInURL}>
-                        <Icon iconName='log-in' tooltip='Log In' color='white' iconSize='h1' />
+                        <button className='transparent-white'>
+                            <Icon iconName='log-in' color='white' margin='right' />
+                            Log In
+                        </button>
                     </a>
                 }
             </div>
