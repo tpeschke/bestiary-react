@@ -1,6 +1,7 @@
 import { AttackInfo } from "../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import AttackStats from "./components/AttackStats"
+import ReferenceView from "./components/ReferenceView"
 
 interface Props {
     sp_atk: string,
@@ -19,8 +20,7 @@ export default function AttackDisplay({ sp_atk, attacks }: Props) {
                         if (attack.infoType === 'weapon') {
                             return <AttackStats key={index} attackStats={attack} />
                         } else if (attack.infoType === 'reference') {
-                            console.log(attack)
-                            return <div key={index}>{attack.reference}</div>
+                            return <ReferenceView key={index} referenceInfo={attack} />
                         }
                     })}
                 </>

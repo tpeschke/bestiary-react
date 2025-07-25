@@ -23,6 +23,7 @@ export interface AttackReference {
     infoType: 'reference'
     id?: number,
     reference: string,
+    situation?: string,
     tactic?: string,
     overAllIndex: number,
     roleid?: string

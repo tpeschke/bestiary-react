@@ -31,7 +31,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
                 id: attackid,
                 infoType: 'reference',
                 overAllIndex: index,
-                tactic, roleid, reference
+                tactic, roleid, reference, situation
             }
         } else {
             return {

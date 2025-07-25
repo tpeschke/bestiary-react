@@ -24,11 +24,10 @@ async function upsertWeaponAttack (databaseConnection: any, attack: WeaponInfo, 
 }
 
 async function upsertReferenceAttack(databaseConnection: any, attack: AttackReference, beastID: number) {
-    console.log(attack)
-    const { id, overAllIndex, reference, tactic, roleid } = attack
+    const { id, overAllIndex, reference, tactic, roleid, situation } = attack
     if (id) {
-        return databaseConnection.beast.attacks.updateReference(id, overAllIndex, reference, tactic, beastID)
+        return databaseConnection.beast.attacks.updateReference(id, overAllIndex, reference, tactic, situation, beastID)
     } else {
-        return databaseConnection.beast.attacks.addReference( overAllIndex, reference, tactic, roleid, beastID)
+        return databaseConnection.beast.attacks.addReference( overAllIndex, reference, tactic, situation, roleid, beastID)
     }
 }
