@@ -115,6 +115,7 @@ export interface RawCombatStat {
     defenseid?: number,
     reference?: string,
     defensename: string | undefined,
+    attackrole: string | null,
     situation: string | null,
     tactic: string | null,
     beastid: number,

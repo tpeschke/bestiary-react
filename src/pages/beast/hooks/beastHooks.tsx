@@ -273,7 +273,11 @@ export default function beastHooks(): Return {
                     ...beast.beastInfo.combatInfo,
                     attacks: [
                         ...beast.beastInfo.combatInfo.attacks,
-                        { ...newAttack, roleid: beast.selectedRoleID }
+                        {
+                            ...newAttack,
+                            roleid: beast.selectedRoleID,
+                            overAllIndex: beast.beastInfo.combatInfo.attacks.length
+                        }
                     ]
                 }
             }

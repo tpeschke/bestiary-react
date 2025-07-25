@@ -37,6 +37,8 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
         }
     }
 
+    console.log(attacks)
+
     return (
         <Body>
             <>
@@ -49,12 +51,13 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                         <div key={index} className='attack-edit-shell'>
                             {MoveOrderButton(index > 0, 'up', updateAttackOrder, attack.overAllIndex, nextUp)}
                             {MoveOrderButton(index < attacks.length - 1, 'down', updateAttackOrder, attack.overAllIndex, nextDown)}
+                            {attack.overAllIndex} 
                             {getCorrectAttackEditOption(attack, updateAttackInfo, combatRoleType)}
                         </div>
                     )
                 })}
                 <div className='add-attack-button-shell'>
-                    <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: attacks.length })}><Icon iconName='plus' color='black' /> Reference</button>
+                    <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
                 </div>
             </>
         </Body>

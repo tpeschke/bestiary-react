@@ -19,7 +19,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation,
-            tactic, reference
+            tactic, reference, attackrole
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -31,7 +31,8 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
                 id: attackid,
                 infoType: 'reference',
                 overAllIndex: index,
-                tactic, roleid, reference, situation
+                roleid: roleid ? roleid : attackrole,
+                tactic, reference, situation
             }
         } else {
             return {
