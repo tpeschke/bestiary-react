@@ -1,0 +1,3 @@
+export const situationTooltip = "This represents a situation that this enemy might find itself in battle and what attack and tactics it would prefer to use in that circumstance.\nIf there are multiple weapons under a single situation, they can use all of them, simultaneously, without penalty.\n \nThe situations are arranged in the enemy's preferred order, starting at the top."
+
+export const tacticTooltip = "This is the preferred Tactic that the enemy will employ. It's bonuses are not factored into the attack stats."

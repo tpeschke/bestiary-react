@@ -2,6 +2,7 @@ import { WeaponInfo } from '../../../../../../../../../../../../../common/interf
 import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
+import { situationTooltip, tacticTooltip } from '../utilities/situationTooltip'
 import './AttackStats.css'
 
 interface Props {
@@ -13,7 +14,7 @@ export default function AttackStats({ attackStats }: Props) {
 
     return (
         <div className='attack-stats-shell'>
-            <span><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
+            <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
             {info && <HTMLDisplay html={info} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>
@@ -45,7 +46,7 @@ export default function AttackStats({ attackStats }: Props) {
             </div>
             {tactic &&
                 <Body>
-                    <p className='italic'>
+                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
                         + {getTacticInfo(tactic)}
                     </p>
                 </Body>
