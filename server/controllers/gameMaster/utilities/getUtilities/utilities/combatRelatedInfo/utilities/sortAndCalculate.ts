@@ -44,6 +44,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
             oldID: id ? id : oldID,
             overAllIndex: attacks.length,
             id: attackid,
+            infoType: 'weapon',
             scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
         })
     }

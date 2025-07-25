@@ -3,6 +3,8 @@ import Body from '../../../../../../../../components/UI/body/Body'
 import { UpdateOrderFunction, updateCombatInfoFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
+import MoveOrderButton from './components/MoveOrderButton'
+import ReferenceEdit from './components/ReferenceEdit'
 
 interface Props {
     attacks: AttackInfo[],
@@ -12,6 +14,29 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, combatRoleType }: Props) {
+
+    const getCorrectAttackEditOption = (key: number, attackInfo: AttackInfo, updateAttackInfo: updateCombatInfoFunction, combatRoleType: string | null) => {
+        if (attackInfo.infoType === 'weapon') {
+            return (
+                <AttackSingleEdit
+                    key={key}
+                    attackInfo={attackInfo}
+                    updateAttackInfo={updateAttackInfo}
+                    combatRoleType={combatRoleType}
+                />
+            )
+        } else if (attackInfo.infoType === 'reference') {
+            return (
+                <ReferenceEdit
+                    key={key}
+                    attackReference={attackInfo}
+                    updateAttackInfo={updateAttackInfo}
+                    combatRoleType={combatRoleType}
+                />
+            )
+        }
+    }
+
     return (
         <Body>
             <>
@@ -21,17 +46,11 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     const nextDown = attacks[index + 1]?.overAllIndex
 
                     return (
-                        <AttackSingleEdit
-                            key={index}
-                            attackInfo={attack}
-                            index={index}
-                            arrayLength={attacks.length}
-                            nextUp={nextUp}
-                            nextDown={nextDown}
-                            updateAttackOrder={updateAttackOrder}
-                            updateAttackInfo={updateAttackInfo}
-                            combatRoleType={combatRoleType}
-                        />
+                        <div className='attack-edit-shell'>
+                            {MoveOrderButton(index > 0, 'up', updateAttackOrder, attack.overAllIndex, nextUp)}
+                            {MoveOrderButton(index < attacks.length - 1, 'down', updateAttackOrder, attack.overAllIndex, nextDown)}
+                            {getCorrectAttackEditOption(index, attack, updateAttackInfo, combatRoleType)}
+                        </div>
                     )
                 })}
             </>

@@ -17,7 +17,16 @@ export default interface CombatInfo {
 export type DamageType = 'P' | 'C' | 'S'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
-export interface AttackInfo {
+export type AttackInfo = AttackReference | WeaponInfo
+
+export interface AttackReference {
+    infoType: 'reference'
+    reference: string,
+    overAllIndex: number
+}
+
+export interface WeaponInfo {
+    infoType: 'weapon',
     id?: number,
     oldID: number,
     situation: string | null,
@@ -60,7 +69,7 @@ export interface DefenseInfo {
     info: string,
     name: string,
     chosenName: string,
-    defensename: string | undefined,
+    defensename?: string,
     swarmbonus: boolean,
     defense: string,
     flanks: number,

@@ -32,6 +32,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
             oldID: id ? id : oldID,
             overAllIndex: index,
             id: attackid,
+            infoType: 'weapon',
             scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
         }
     })

@@ -1,11 +1,11 @@
-import { AttackInfo } from '../../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { WeaponInfo } from '../../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
 import './AttackStats.css'
 
 interface Props {
-    attackStats: AttackInfo
+    attackStats: WeaponInfo
 }
 
 export default function AttackStats({ attackStats }: Props) {
