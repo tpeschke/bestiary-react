@@ -27,21 +27,21 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid
     } = stats
 
-    const roleToUse = role ? role : mainRole
+    const roleToUse = role ?? mainRole
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
-    const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
+    const pointsToUse = combatPoints ?? mainCombatPoints
 
     defenses.push({
         ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
         overAllIndex: defenses.length,
-        oldID: id ? id : oldID,
+        oldID: id ?? oldID,
         scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
     })
 
     if (!showonlydefenses) {
         attacks.push({
             ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
-            oldID: id ? id : oldID,
+            oldID: id ?? oldID,
             overAllIndex: attacks.length,
             id: attackid,
             infoType: 'weapon',
