@@ -27,13 +27,20 @@ export default class CombatInfoClass {
     }
 
     private formatCombatInfo = (size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo => {
-        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo, sp_atk, sp_def } = this.entryCombatInfo
-
+        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+        
         const combatrole = selectedRole ? selectedRole.combatInfo.combatrole : role
         const combatsecondary = selectedRole ? selectedRole.combatInfo.combatsecondary : secondary
         const combatpoints = (selectedRole ? selectedRole.combatInfo.combatpoints : points) + selectedModifier
-
+        
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
+        
+        let { sp_atk, sp_def} = this.entryCombatInfo
+        if (selectedRole) {
+            const { attack, defense } = selectedRole.combatInfo
+            if (attack) {  sp_atk += attack }
+            if (defense) { sp_def += defense }
+        }
 
         return {
             ...this.entryCombatInfo,
