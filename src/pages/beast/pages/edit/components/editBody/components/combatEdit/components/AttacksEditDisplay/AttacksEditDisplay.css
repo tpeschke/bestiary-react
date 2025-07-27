@@ -12,3 +12,24 @@
     display: flex;
     flex-direction: row-reverse;
 }
+
+.attack-edit-header, .attack-edit-row {
+    display: flex;
+    align-items: center;
+}
+
+.attack-edit-header>div {
+    width: 54px;
+}
+
+.attack-edit-header p {
+    font-style: italic ;
+}
+
+.attack-edit-header>p, .attack-edit-row>p {
+    width: 150px;
+}
+
+.attack-edit-header>p.input-header, .attack-edit-row>p.input-header {
+    width: 250px;
+}

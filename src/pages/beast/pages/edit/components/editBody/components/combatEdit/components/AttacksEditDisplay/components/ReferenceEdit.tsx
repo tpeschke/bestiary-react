@@ -14,7 +14,9 @@ export default function ReferenceEdit({ attackReference, combatRoleType, updateA
     const { reference, overAllIndex, situation, tactic } = attackReference
 
     return (
-        <>
+        <div className='attack-edit-row'>
+            <p></p>
+            <p></p>
             <div className='attack-edit-select-shell'>
                 <Select
                     isSearchable
@@ -39,6 +41,6 @@ export default function ReferenceEdit({ attackReference, combatRoleType, updateA
                     onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
                 />
             </div>
-        </>
+        </div>
     )
 }

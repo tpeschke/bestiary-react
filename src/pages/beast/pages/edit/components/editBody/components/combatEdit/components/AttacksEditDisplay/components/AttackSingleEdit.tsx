@@ -18,9 +18,9 @@ export default function AttackSingleEdit({
     const { name, weapon, overAllIndex, situation, tactic } = attackInfo
 
     return (
-        <>
-            {name ? name : '_'}
-            {weapon ? weapon : '_'}
+        <div className='attack-edit-row'>
+            <p>{name ? name : ''}</p>
+            <p>{weapon ? weapon : ''}</p>
             <div className='attack-edit-select-shell'>
                 <Select
                     isSearchable
@@ -29,6 +29,7 @@ export default function AttackSingleEdit({
                     onChange={(event: any) => updateAttackInfo('situation', event.value, overAllIndex)}
                 />
             </div>
+            <p className='input-header'></p>
             <div className='attack-edit-select-shell'>
                 <Select
                     isSearchable
@@ -37,6 +38,6 @@ export default function AttackSingleEdit({
                     onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
                 />
             </div>
-        </>
+        </div>
     )
 }

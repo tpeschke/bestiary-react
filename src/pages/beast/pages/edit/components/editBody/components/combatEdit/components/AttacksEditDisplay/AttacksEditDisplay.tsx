@@ -37,12 +37,18 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
         }
     }
 
-    console.log(attacks)
-
     return (
         <Body>
             <>
                 <h2 className="border">Attacks</h2>
+                <div className='attack-edit-header'>
+                    <div></div>
+                    <p>Name</p>
+                    <p>Weapon</p>
+                    <p className='input-header'>Situation</p>
+                    <p className='input-header'>Reference</p>
+                    <p className='input-header'>Tactic</p>
+                </div>
                 {attacks.map((attack: AttackInfo, index: number) => {
                     const nextUp = attacks[index - 1]?.overAllIndex
                     const nextDown = attacks[index + 1]?.overAllIndex
@@ -51,7 +57,6 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                         <div key={index} className='attack-edit-shell'>
                             {MoveOrderButton(index > 0, 'up', updateAttackOrder, attack.overAllIndex, nextUp)}
                             {MoveOrderButton(index < attacks.length - 1, 'down', updateAttackOrder, attack.overAllIndex, nextDown)}
-                            {attack.overAllIndex} 
                             {getCorrectAttackEditOption(attack, updateAttackInfo, combatRoleType)}
                         </div>
                     )

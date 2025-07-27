@@ -1,8 +1,9 @@
-h6 {
+.defense-stats-shell h6 {
     background: #f3f3f3;
     color: #434343;
     padding: 3px 5px;
     font-size: 15px;
+    font-family: 'Source Sans 3';
 }
 
 .defense-stats-shell>div {

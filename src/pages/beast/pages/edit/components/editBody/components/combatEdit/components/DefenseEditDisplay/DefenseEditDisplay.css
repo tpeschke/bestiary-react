@@ -1,0 +1,16 @@
+.defense-edit-header {
+    display: flex;
+    align-content: center;
+}
+
+.defense-edit-header>div {
+    width: 54px;
+}
+
+.defense-edit-header>p {
+    font-style: italic;
+}
+
+.defense-edit-row>input {
+    margin-right: 15px;
+}

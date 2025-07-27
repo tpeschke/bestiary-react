@@ -14,7 +14,7 @@ export default function DefenseStat({ defenseStats, showDefenseNameBanner }: Pro
 
     return (
         <div className='defense-stats-shell'>
-            {showDefenseNameBanner && <h6>{defensename ? defensename : name ? name : 'Default Defense'}</h6>}
+            {showDefenseNameBanner && <h6>{defensename ? defensename : name ? name : 'Default'}</h6>}
             {info && <HTMLDisplay html={info} />}
             <div className='defense-stats-inner-shell'>
                 <div>
