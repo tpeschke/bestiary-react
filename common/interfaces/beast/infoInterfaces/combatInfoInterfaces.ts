@@ -87,7 +87,7 @@ export interface DefenseInfo {
     armor: string,
     overAllIndex: number,
     scalingInfo: {
-        name: string,
+        name: string | undefined,
         swarmbonus: boolean,
         alldefense: Strength,
         flanks: Strength,

@@ -50,7 +50,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
 
 function calculateDefenses(stats: RawCombatStat[], size: Size, mainCombatPoints: number, mainRole: string): DefenseInfo[] {
     return stats.map((stat, index) => {
-        const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangeddefense: cover, weaponname: chosenName, armor, shield, eua, alldefense, flanks,
+        const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangeddefense: cover, armor, shield, eua, alldefense, flanks,
             andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry, role,
             combatpoints: combatPoints, oldID, defenseid, defensename
         } = stat
@@ -59,12 +59,12 @@ function calculateDefenses(stats: RawCombatStat[], size: Size, mainCombatPoints:
         const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
         return {
-            ...calculateDefenseInfo({ beastid, roleid, swarmbonus, armor, shield, eua, tdr, defensename, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
+            ...calculateDefenseInfo({ beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
             overAllIndex: index,
             oldID: id ? id : oldID,
             defensename,
             id: defenseid,
-            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
+            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: defensename, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
         }
     })
 }
