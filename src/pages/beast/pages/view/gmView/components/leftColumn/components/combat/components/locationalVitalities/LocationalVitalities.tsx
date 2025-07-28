@@ -10,18 +10,20 @@ export default function LocationVitalities({ locationalVitalities }: Props) {
     return (
         <>
             {locationalVitalities.length > 0 &&
-                <>
-                    <h6>Locational Vitalities</h6>
-                    <Body>
-                        <>
-                            {locationalVitalities.map(({ location, vitality }: LocationVitality, index) => {
-                                return (
-                                    <Pair key={index} title={location} info={vitality} format={{ title: 'none' }} />
-                                )
-                            })}
-                        </>
-                    </Body >
-                </>
+                <Body>
+                    <>
+                        <h6>Locational Vitalities</h6>
+                        <Body>
+                            <>
+                                {locationalVitalities.map(({ location, vitality }: LocationVitality, index) => {
+                                    return (
+                                        <Pair key={index} title={location} info={vitality} format={{ title: 'none' }} />
+                                    )
+                                })}
+                            </>
+                        </Body >
+                    </>
+                </Body>
             }
         </>
     )

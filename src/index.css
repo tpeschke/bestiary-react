@@ -126,6 +126,11 @@ h5 {
 	padding: 3px;
 }
 
+h6 {
+	font-family: 'oldClaude';
+	font-size: 14px;
+}
+
 p, label {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;

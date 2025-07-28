@@ -9,11 +9,11 @@ interface Props {
 
 export default function SizeDisplay({ size, knockback, noknockback }: Props) {
     let knockbackString = `${knockback} `
-    if (noknockback) {
+    if (noknockback || !knockback) {
         knockbackString = `N `
     }
 
-    knockbackString += `(${size})`
+    size ? knockbackString += `(${size})` : null
 
     return (
         <Pair title="Knock-Back" info={knockbackString} format={{title: 'none', titleJustified: 'right'}} />

@@ -45,7 +45,7 @@ function DefenseEdit(
         <div key={index} className="defense-edit-row">
             {MoveOrderButton(index > 0, 'up', updateDefenseOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
-            <input value={defensename} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
+            <input value={defensename ? defensename : ''} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
             <button className="orange" onClick={_ => removeDefense(overAllIndex)}>
                 <Icon iconName='trash' color='white' />
             </button>
