@@ -1,19 +1,22 @@
 import Select from 'react-select'
 import { WeaponInfo } from "../../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { UpdateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
+import { RemoveCombatFunction, UpdateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
 import getSituationOptions from "./utilities/situationOptions"
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
+import Icon from '../../../../../../../../../../../components/icon/Icon'
 
 interface Props {
     attackInfo: WeaponInfo,
     updateAttackInfo: UpdateCombatInfoFunction
-    combatRoleType: string | null
+    combatRoleType: string | null,
+    removeAttack: RemoveCombatFunction
 }
 
 export default function AttackSingleEdit({
     attackInfo,
     updateAttackInfo,
-    combatRoleType
+    combatRoleType,
+    removeAttack
 }: Props) {
     const { name, weapon, overAllIndex, situation, tactic } = attackInfo
 
@@ -38,6 +41,9 @@ export default function AttackSingleEdit({
                     onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
                 />
             </div>
+            <button className="orange" onClick={_ => removeAttack(overAllIndex)}>
+                <Icon iconName='trash' color='white' />
+            </button>
         </div>
     )
 }

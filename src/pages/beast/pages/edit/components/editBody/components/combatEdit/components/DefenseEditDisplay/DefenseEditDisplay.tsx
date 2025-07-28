@@ -2,14 +2,14 @@ import './DefenseEditDisplay.css'
 import { DefenseInfo } from "../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../../components/UI/body/Body"
-import { RemoveDefenseFunction, UpdateCombatInfoFunction, UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
+import { RemoveCombatFunction, UpdateCombatInfoFunction, UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
 import MoveOrderButton from "../AttacksEditDisplay/components/MoveOrderButton"
 
 interface Props {
     defenses: DefenseInfo[],
     updateDefenseInfo: UpdateCombatInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction,
+    removeDefense: RemoveCombatFunction,
 }
 
 export default function DefenseEditDisplay({ defenses, updateDefenseOrder, removeDefense, updateDefenseInfo }: Props) {
@@ -38,7 +38,7 @@ function DefenseEdit(
     nextUp: number,
     nextDown: number,
     updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction,
+    removeDefense: RemoveCombatFunction,
     updateDefenseInfo: UpdateCombatInfoFunction
 ) {
     return (

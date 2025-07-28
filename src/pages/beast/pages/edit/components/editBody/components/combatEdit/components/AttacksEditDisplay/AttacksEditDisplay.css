@@ -33,3 +33,7 @@
 .attack-edit-header>p.input-header, .attack-edit-row>p.input-header {
     width: 250px;
 }
+
+.attack-edit-row button {
+    margin-left: 15px;
+}

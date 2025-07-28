@@ -1,2 +1,2 @@
-insert into bbdefenses (oldid, index, name)
-values ($1, $2, $3)
+insert into bbdefenses (oldid, beastid, index, name)
+values ($1, $2, $3, $4)

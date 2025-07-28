@@ -1,7 +1,7 @@
 import { AttackInfo } from '../../../../../../../../../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Icon from '../../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../../../components/UI/body/Body'
-import { UpdateOrderFunction, UpdateCombatInfoFunction, AddAttackFunction } from '../../../../../../../../hooks/beastHooks'
+import { UpdateOrderFunction, UpdateCombatInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
@@ -12,10 +12,11 @@ interface Props {
     updateAttackOrder: UpdateOrderFunction,
     updateAttackInfo: UpdateCombatInfoFunction,
     addAttack: AddAttackFunction,
+    removeAttack: RemoveCombatFunction,
     combatRoleType: string | null
 }
 
-export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, combatRoleType }: Props) {
+export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType }: Props) {
 
     const getCorrectAttackEditOption = (attackInfo: AttackInfo, updateAttackInfo: UpdateCombatInfoFunction, combatRoleType: string | null) => {
         if (attackInfo.infoType === 'weapon') {
@@ -24,6 +25,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     attackInfo={attackInfo}
                     updateAttackInfo={updateAttackInfo}
                     combatRoleType={combatRoleType}
+                    removeAttack={removeAttack}
                 />
             )
         } else if (attackInfo.infoType === 'reference') {

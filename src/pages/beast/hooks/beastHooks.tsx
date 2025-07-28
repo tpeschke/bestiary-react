@@ -26,7 +26,7 @@ export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
-export type RemoveDefenseFunction = (indexToRemove: number) => void
+export type RemoveCombatFunction = (indexToRemove: number) => void
 export type UpdateCombatInfoFunction = (key: string, value: string, overAllIndex: number) => void
 export type AddAttackFunction = (newAttack: AttackInfo) => void
 
@@ -65,7 +65,8 @@ export type UpdateCombatInfoFunctionsObject = {
     addAttack: AddAttackFunction,
     updateDefenseInfo: UpdateCombatInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
-    removeDefense: RemoveDefenseFunction
+    removeDefense: RemoveCombatFunction,
+    removeAttack: RemoveCombatFunction
 }
 
 export default function beastHooks(): Return {
@@ -287,6 +288,31 @@ export default function beastHooks(): Return {
         }
     }
 
+    const removeAttack = (indexToRemove: number) => {
+        if (beast) {
+            const attacks = beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackInfo[], attack: AttackInfo) => {
+                if (attack.overAllIndex !== indexToRemove) {
+                    attacks.push({
+                        ...attack,
+                        overAllIndex: attacks.length
+                    })
+                }
+
+                return attacks
+            }, [])
+
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: {
+                    ...beast.beastInfo.combatInfo,
+                    attacks
+                },
+            }
+            dispatch(cacheMonster(modifiedBeastInfo))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        }
+    }
+
     const updateAttackOrder = (overAllIndex: number, overAllIndexToMoveTo: number) => {
         if (beast) {
             const modifiedBeastInfo: any = {
@@ -358,7 +384,7 @@ export default function beastHooks(): Return {
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
                 combatInfo: {
-                    ...beast.combatInfo,
+                    ...beast.beastInfo.combatInfo,
                     defenses
                 },
             }
@@ -399,7 +425,8 @@ export default function beastHooks(): Return {
             addAttack,
             updateDefenseOrder,
             removeDefense,
-            updateDefenseInfo
+            updateDefenseInfo,
+            removeAttack
         },
         updateBeast,
     }

@@ -3,6 +3,8 @@ import { AttackInfo, AttackReference, WeaponInfo } from "../../../../../../commo
 export default async function updateAttacks(databaseConnection: any, attacks: AttackInfo[], beastID: number) {
     let promiseArray: any[] = []
 
+    await databaseConnection.beast.attacks.delete([beastID, [0, ...attacks.map(attack => attack.id)]])
+
     attacks.forEach(attack => {
         if (attack.infoType === 'weapon') {
             promiseArray.push(upsertWeaponAttack(databaseConnection, attack, beastID))
