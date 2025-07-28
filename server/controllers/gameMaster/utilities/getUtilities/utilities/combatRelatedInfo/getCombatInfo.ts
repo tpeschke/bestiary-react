@@ -6,11 +6,12 @@ import calculateAttacksAndDefenses from "./utilities/calculate"
 
 export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size): Promise<CalculateCombatStatsReturn> {
     const defenses: RawCombatStat[] = await databaseConnection.beast.defenses.get(beastId)
-    const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)
-
+    
     if (defenses.length > 0) {
+        const combatStats: RawCombatStat[] = await databaseConnection.beast.attacks.get(beastId)
         return calculateAttacksAndDefenses(combatStats, defenses, combatPoints, role, size)
     } else {
+        const combatStats: RawCombatStat[] = await databaseConnection.beast.combatStat.get(beastId)
         return calculateCombatStats(combatStats, combatPoints, role, size)
     }
 }

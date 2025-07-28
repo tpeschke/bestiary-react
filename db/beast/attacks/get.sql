@@ -6,6 +6,6 @@ select
 	index
 from bbcombatstats c
 left join bbroles r on r.id = c.roleid
-full join bbattacks a on a.oldid = c.id
+join bbattacks a on a.oldid = c.id
 where c.beastid = $1 or a.beastid = $1
 order by index;
