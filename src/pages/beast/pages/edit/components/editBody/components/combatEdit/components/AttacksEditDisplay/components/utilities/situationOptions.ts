@@ -59,6 +59,8 @@ const situationDictionary: GroupType[] = [
             { value: 'On Odd Attacks', label: 'On Odd Attacks' },
             { value: 'After Ranged Attack', label: 'After Ranged Attack' },
             { value: 'After Melee Attack', label: 'After Melee Attack' },
+            { value: 'Against Defenseless', label: 'Against Defenseless' },
+            { value: 'While Moving', label: 'While Moving' },
             { value: 'Otherwise', label: 'Otherwise' }
         ]
     },
