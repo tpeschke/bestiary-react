@@ -1,6 +1,5 @@
 import CastingInfo from "./infoInterfaces/castingInfo"
 import CombatInfo from "./infoInterfaces/combatInfoInterfaces"
-import GeneralInfo from "./infoInterfaces/generalInfoInterfaces"
 import ImageInfo, { ArtistInfo } from "./infoInterfaces/ImageInfoInterfaces"
 import LinkedInfo from "./infoInterfaces/linkedInfoInterfaces"
 import LootInfo from "./infoInterfaces/lootInfoInterfaces"
@@ -10,6 +9,7 @@ import SocialInfo from "./infoInterfaces/socialInfo"
 import RoleInfo from '../../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces'
 import SkillInfo from "../../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Notes } from "../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
+import GeneralInfo from "../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export interface PlayerBeastInfo {
     id: number,

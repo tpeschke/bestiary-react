@@ -2,8 +2,8 @@ import './Weirdshaping.css'
 
 import CastingClass from './models/CastingClass'
 import CastingTypeSelect from './components/casting/CastingTypeSelect'
-import { Spell } from '../../../../interfaces/infoInterfaces/castingInfo'
 import SpellsDisplay from './components/spells/SpellsDisplay'
+import { Spell } from '../../../../../interfaces/infoInterfaces/castingInfo'
 
 interface Props {
     castingTypes: CastingClass,
