@@ -45,8 +45,9 @@ const situationDictionary: GroupType[] = [
             { value: 'Engaged with Medium / Heavy Armor', label: 'Engaged with Medium / Heavy Armor' },
             { value: 'Engaged with Multiple Enemies', label: 'Engaged with Multiple Enemies' },
             { value: 'Engaged with Shield User', label: 'Engaged with Shield User' },
+            { value: 'Engaged with No Weapon', label: 'Engaged with No Weapon' },
             { value: 'Adjacent to Ally', label: 'Adjacent to Ally' },
-            { value: 'At Range', label: 'At Range' },
+            { value: 'At Distance', label: 'At Distance' },
             { value: 'When Closing', label: 'When Closing' },
             { value: 'On Higher Elevation', label: 'On Higher Elevation' },
             { value: 'Closing In on Enemy', label: 'Closing In on Enemy' },
@@ -62,8 +63,12 @@ const situationDictionary: GroupType[] = [
             { value: 'After Melee Attack', label: 'After Melee Attack' },
             { value: 'Against Defenseless', label: 'Against Defenseless' },
             { value: 'Against Prone', label: 'Against Prone' },
+            { value: 'From Hiding Spot', label: 'From Hiding Spot' },
+            { value: 'From Above', label: 'From Above' },
+            { value: 'From Water', label: 'From Water' },
             { value: 'While Moving', label: 'While Moving' },
             { value: 'While Mounted', label: 'While Mounted' },
+            { value: 'On Ceiling', label: 'On Ceiling' },
             { value: 'Otherwise', label: 'Otherwise' }
         ]
     },

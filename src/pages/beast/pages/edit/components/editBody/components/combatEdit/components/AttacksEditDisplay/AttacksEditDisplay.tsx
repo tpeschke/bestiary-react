@@ -17,7 +17,6 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType }: Props) {
-
     const getCorrectAttackEditOption = (attackInfo: AttackInfo, updateAttackInfo: UpdateCombatInfoFunction, combatRoleType: string | null) => {
         if (attackInfo.infoType === 'weapon') {
             return (
