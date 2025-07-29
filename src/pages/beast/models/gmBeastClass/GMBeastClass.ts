@@ -256,7 +256,16 @@ export default class GMBeastClass {
     }
 
     get spells(): Spell[] {
-        return this.entrySpells
+        return this.entrySpells.reduce(this.filterSpells(this.selectedRoleID), [])
+    }
+
+    private filterSpells(roleID: string | null) {
+        return (spells: Spell[], spell: Spell) => {
+            if (spell.allroles || spell.roleid === roleID) {
+                spells.push(spell)
+            }
+            return spells
+        }
     }
 
     get roleInfo(): RoleInfo {

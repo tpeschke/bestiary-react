@@ -39,16 +39,17 @@ const situationDictionary: GroupType[] = [
     {
         label: 'General Options',
         options: [
-            { value: 'Adjacent to Ally', label: 'Adjacent to Ally' },
-            { value: 'At Range', label: 'At Range' },
-            { value: 'On Higher Elevation', label: 'On Higher Elevation' },
-            { value: 'Closing In on Enemy', label: 'Closing In on Enemy' },
             { value: 'Engaged', label: 'Engaged' },
             { value: 'Engaged with Ally', label: 'Engaged with Ally' },
             { value: 'Engaged with Light Armor', label: 'Engaged with Light Armor' },
             { value: 'Engaged with Medium / Heavy Armor', label: 'Engaged with Medium / Heavy Armor' },
             { value: 'Engaged with Multiple Enemies', label: 'Engaged with Multiple Enemies' },
             { value: 'Engaged with Shield User', label: 'Engaged with Shield User' },
+            { value: 'Adjacent to Ally', label: 'Adjacent to Ally' },
+            { value: 'At Range', label: 'At Range' },
+            { value: 'When Closing', label: 'When Closing' },
+            { value: 'On Higher Elevation', label: 'On Higher Elevation' },
+            { value: 'Closing In on Enemy', label: 'Closing In on Enemy' },
             { value: 'Flanked', label: 'Flanked' },
             { value: 'Flanking', label: 'Flanking' },
             { value: 'Flanking at Distance', label: 'Flanking at Distance' },
@@ -60,7 +61,9 @@ const situationDictionary: GroupType[] = [
             { value: 'After Ranged Attack', label: 'After Ranged Attack' },
             { value: 'After Melee Attack', label: 'After Melee Attack' },
             { value: 'Against Defenseless', label: 'Against Defenseless' },
+            { value: 'Against Prone', label: 'Against Prone' },
             { value: 'While Moving', label: 'While Moving' },
+            { value: 'While Mounted', label: 'While Mounted' },
             { value: 'Otherwise', label: 'Otherwise' }
         ]
     },
