@@ -6,11 +6,11 @@ import { situationTooltip, tacticTooltip } from '../utilities/situationTooltip'
 import './AttackStats.css'
 
 interface Props {
-    attackStats: WeaponInfo
+    attackStat: WeaponInfo
 }
 
-export default function AttackStats({ attackStats }: Props) {
-    const { name, weaponName, measure, attack, damage, type, recovery, info, situation, tactic } = attackStats
+export default function AttackStats({ attackStat }: Props) {
+    const { name, weaponName, measure, attack, damage, type, recovery, info, situation, tactic, rangeIncrement } = attackStat
 
     return (
         <div className='attack-stats-shell'>
@@ -20,8 +20,8 @@ export default function AttackStats({ attackStats }: Props) {
                 <div className='attack-stats-left'>
                     <div>
                         <div>
-                            <p>Meas</p>
-                            <p>{measure}</p>
+                            <p>{rangeIncrement ? 'RI' : 'Meas'}</p>
+                            <p>{rangeIncrement ? rangeIncrement : measure}</p>
                         </div>
                         <div>
                             <p>Atk</p>

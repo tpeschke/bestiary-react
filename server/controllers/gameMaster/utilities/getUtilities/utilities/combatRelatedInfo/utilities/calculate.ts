@@ -19,7 +19,7 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation,
-            tactic, reference, attackrole
+            tactic, reference, attackrole, weapontype
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -36,13 +36,13 @@ function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, main
             }
         } else {
             return {
-                ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
+                ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment, weapontype }, pointsToUse, roleToUse),
                 situation, tactic,
                 oldID: id ? id : oldID,
                 overAllIndex: index,
                 id: attackid,
                 infoType: 'weapon',
-                scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment }
+                scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment, weapontype }
             }
         }
     })

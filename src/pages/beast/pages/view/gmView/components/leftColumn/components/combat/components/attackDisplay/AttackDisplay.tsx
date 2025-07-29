@@ -18,7 +18,7 @@ export default function AttackDisplay({ sp_atk, attacks }: Props) {
                     <SpecialInfo info={sp_atk} />
                     {attacks.map((attack, index) => {
                         if (attack.infoType === 'weapon') {
-                            return <AttackStats key={index} attackStats={attack} />
+                            return <AttackStats key={index} attackStat={attack} />
                         } else if (attack.infoType === 'reference') {
                             return <ReferenceView key={index} referenceInfo={attack} />
                         }

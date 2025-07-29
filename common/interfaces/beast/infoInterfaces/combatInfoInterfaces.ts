@@ -1,3 +1,4 @@
+import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
 import { Strength } from "../../calculationInterfaces"
 
 export default interface CombatInfo {
@@ -62,7 +63,8 @@ export interface WeaponInfo {
         recovery: Strength,
         rangeIncrement: Strength,
         isspecial: IsSpecial,
-    }
+    },
+    weaponInfo: ProcessedWeapon
 }
 
 export interface DefenseInfo {
