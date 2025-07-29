@@ -1,5 +1,6 @@
+// @ts-ignore
 import express from 'express'
-import { Request, Response } from '../interfaces/apiInterfaces';
+import { Request, Response, Error } from '../interfaces/apiInterfaces';
 
 interface LogOutRequest extends Request {
     logOut: Function
@@ -18,7 +19,7 @@ export default function authRoutesWithoutPassword(passport: any) {
     }));
 
     authRoutes.get('/signOut', (request: LogOutRequest, response: LogOutResponse, next: Function) => {
-        request.logOut(error => {
+        request.logOut((error: Error) => {
             if (error) { return next(error); }
             response.redirect('/');
         });

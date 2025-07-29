@@ -1,7 +1,14 @@
 import { Rarity } from "../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
+interface RarityDictionaryObject {
+    [key: number]: {
+        rarityName: string,
+        modifier: string
+    }
+}
+
 export function getRarity(rarityId: number): Rarity {
-    const rarityDictionary = {
+    const rarityDictionary: RarityDictionaryObject = {
         1: {
             rarityName: 'Legendary',
             modifier: '2d20'

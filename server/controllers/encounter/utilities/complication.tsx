@@ -109,8 +109,8 @@ async function getBackUp(dataBaseConnection: any, beastId: number): Promise<Back
     if (backUp) {
         const {id, name, plural} = backUp
 
-        let rank;
-        let rankPlural;
+        let rank: string = '';
+        let rankPlural: string = '';
         if (plural && rank && rank.toUpperCase() === 'NONE') {
             rank = name
             rankPlural = plural

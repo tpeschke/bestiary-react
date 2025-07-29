@@ -2,7 +2,7 @@ import { SearchReturn } from '../search'
 
 export default function flattenIDArray(idArray: SearchReturn[][]): number[] {
     const idArrayLength = idArray.length
-    let idCountObj = {}
+    let idCountObj: { [key: number]: number} = {}
     let intersectionArray: number[] = []
 
     idArray.forEach((innerIDArray: SearchReturn[]) => {

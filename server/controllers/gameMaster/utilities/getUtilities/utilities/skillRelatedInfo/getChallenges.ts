@@ -1,4 +1,4 @@
-import { Challenge, Obstacle, Complication, Pair } from "../../../../../interfaces/skillInterfaces"
+import { Challenge, Obstacle, Complication, Pair } from "../../../../../../interfaces/skillInterfaces"
 
 export async function getChallenges(databaseConnection: any, beastId: number): Promise<Challenge[]> {
     const challenges = await databaseConnection.skill.challenge.get(beastId)
@@ -35,7 +35,7 @@ async function getObstacleFromChallengeFlowchart(databaseConnection: any, flowch
         }
     })
 
-    let obstacles = {}
+    let obstacles: { [key: string]: Obstacle } = {}
 
     await Promise.all(obstaclesArray.map(async (obstacleName: string) => {
         let [obstacle]: Obstacle[] = await databaseConnection.skill.obstacle.getByName(obstacleName)
@@ -44,12 +44,12 @@ async function getObstacleFromChallengeFlowchart(databaseConnection: any, flowch
             let promiseArray: any[] = []
 
             let complications: Complication[] | undefined;
-            promiseArray.push(databaseConnection.skill.obstacle.getComplications(obstacle.stringid).then(returnedComplications => complications = returnedComplications))
+            promiseArray.push(databaseConnection.skill.obstacle.getComplications(obstacle.stringid).then((returnedComplications: any) => complications = returnedComplications))
 
             let pairsOne: Pair[] | undefined;
-            promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairone').then(returnedPairs => pairsOne = returnedPairs))
+            promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairone').then((returnedPairs: any) => pairsOne = returnedPairs))
             let pairsTwo: Pair[] | undefined;
-            promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairtwo').then(returnedPairs => pairsTwo = returnedPairs))
+            promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairtwo').then((returnedPairs: any) => pairsTwo = returnedPairs))
 
             await Promise.all(promiseArray)
             obstacles[obstacleName] = {

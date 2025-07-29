@@ -1,8 +1,14 @@
+import { Casting, Spell } from "../../../common/interfaces/beast/infoInterfaces/castingInfo";
+import { Movement, LocationVitality, AttackInfo, DefenseInfo } from "../../../common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Scenario, Folklore, TablesObject } from "../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { ArtistObject } from "../../../common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Variant, LocationObject } from "../../../common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
+import { Pleroma } from "../../../common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
 import { Role } from "../../../common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfo";
+import { Skill } from "../../../common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
+import { ConflictObject } from "../../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
 import { SpecificLoot, Loot } from "../lootInterfaces";
+import { Obstacle, Challenge } from "../skillInterfaces";
 
 export interface upsertParameters {
     roles: Role[],

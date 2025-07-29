@@ -1,5 +1,5 @@
 import { Conflict } from '../../common/interfaces/beast/infoInterfaces/socialInfoInterfaces';
-import { UnsortedRole } from '../controllers/gameMaster/utilities/getUtilities/getRoleInfo';
+import { UnsortedRole } from '../controllers/gameMaster/utilities/getUtilities/utilities/getRoleInfo';
 import { Item } from "../interfaces/lootInterfaces";
 
 export function sortByRank(a: Conflict, b: Conflict): number {
@@ -21,7 +21,7 @@ export function sortOutAnyToTheBottom(a: Conflict, b: Conflict): number {
 }
 
 export function objectifyItemArray(itemArray: Item[]): Object {
-    let itemObject = {}
+    let itemObject: any = {}
     itemArray.forEach(item => {
         itemObject[item.itemcategory] = item
     })

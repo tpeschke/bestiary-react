@@ -1,19 +1,28 @@
+// @ts-ignore
 import express from 'express'
+// @ts-ignore
 import session from 'express-session'
+// @ts-ignore
 import passport from 'passport'
+// @ts-ignore
 import Auth0Strategy from 'passport-auth0'
+// @ts-ignore
 import bodyParser from 'body-parser'
+// @ts-ignore
 import cors from 'cors'
+// @ts-ignore
 import massive from 'massive'
+// @ts-ignore
 import path from 'path'
 import { fileURLToPath } from 'url';
 
 import { server, databaseCredentials, fakeAuth, collectMonsterCacheOn, domain, secret, callbackURL, clientID, clientSecret } from './server-config'
 
+import { Error } from './interfaces/apiInterfaces'
+
 import authRoutesWithoutPassword from './routes/authentication'
 import accessRoutes from './routes/access'
 import playerRoutes from './routes/player'
-import ownerEditRoutes from './routes/ownerEdit'
 import catalogRoutes from './routes/catalog'
 import BeastRoutes from './routes/beast'
 
@@ -44,6 +53,7 @@ passport.use(new Auth0Strategy({
     callbackURL,
     scope: 'openid profile'
 }, async (accessToken: string, refreshToken: string, extraParams: Object, profile: Profile, finishingCallback: Function) => {
+    accessToken; refreshToken; extraParams;
     const { displayName, user_id: userID } = profile;
     const [user] = await getDatabaseConnectionViaApp(app).user.find(userID)
     if (!user) {
@@ -52,10 +62,10 @@ passport.use(new Auth0Strategy({
     return finishingCallback(null, user.id)
 }))
 
-passport.serializeUser((id, done) => {
+passport.serializeUser((id: any, done: any) => {
     done(null, id)
 })
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id: any, done: any) => {
     const [user] = await getDatabaseConnectionViaApp(app).user.findSession(id)
     done(null, user);
 })
@@ -72,8 +82,6 @@ app.use('/lists', listRoutes)
 
 app.use('/info', BeastRoutes)
 
-app.use('/ownerEdit', ownerEditRoutes)
-
 // ================================== \\
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -81,7 +89,7 @@ app.use(express.static(__dirname + `/../dist`));
 
 // ================================== \\
 
-massive(databaseCredentials).then(dbI => {
+massive(databaseCredentials).then((dbI: any) => {
     app.set('db', dbI)
     app.listen(server, () => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
@@ -95,4 +103,4 @@ massive(databaseCredentials).then(dbI => {
 
         console.log(`Sing to me a sweet song of forgetfulness and Ill die on your shore ${server}`)
     })
-}).catch(e => console.log('DB connection error', e))
+}).catch((e: Error) => console.log('DB connection error', e))

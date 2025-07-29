@@ -27,7 +27,7 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
     let encounterObject: Encounter = { }
     const beastId = +request.params.beastId
 
-    function sendErrorForwardWithResponse(response) {
+    function sendErrorForwardWithResponse(response: Response) {
         return (location: string, e: Error) => sendErrorForward(location, e, response)
     }
 

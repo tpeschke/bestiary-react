@@ -1,9 +1,8 @@
 import { SearchResult } from "../../../../common/interfaces/search"
 import { User } from "../../../interfaces/apiInterfaces"
 import { getRarity } from "../../../utilities/rarity"
-import { SearchReturn } from "../search"
 
-export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: number[], user: User | undefined): Promise<SearchResult[]> {
+export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: number[], user: User | null | undefined): Promise<SearchResult[]> {
     let promiseArray: Promise<SearchResult>[] = []
 
     flattenedIDArray.slice(0, 25).forEach(async (beastID) => {

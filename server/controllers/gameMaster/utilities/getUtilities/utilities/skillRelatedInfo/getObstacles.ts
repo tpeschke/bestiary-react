@@ -1,4 +1,4 @@
-import { Obstacle, Complication, Pair } from "../../../../../interfaces/skillInterfaces";
+import { Obstacle, Complication, Pair } from "../../../../../../interfaces/skillInterfaces";
 
 export async function getObstacles(databaseConnection: any, beastId: number): Promise<Obstacle[]> {
     let obstacles: Obstacle[] = await databaseConnection.skill.obstacle.get(beastId)
@@ -7,12 +7,12 @@ export async function getObstacles(databaseConnection: any, beastId: number): Pr
         let promiseArray: any[] = []
 
         let complications: Complication[] | undefined;
-        promiseArray.push(databaseConnection.skill.obstacle.getComplications(obstacle.stringid).then(returnedComplications => complications = returnedComplications))
+        promiseArray.push(databaseConnection.skill.obstacle.getComplications(obstacle.stringid).then((returnedComplications: any) => complications = returnedComplications))
 
         let pairsOne: Pair[] | undefined;
-        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairone').then(returnedPairs => pairsOne = returnedPairs))
+        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairone').then((returnedPairs: any) => pairsOne = returnedPairs))
         let pairsTwo: Pair[] | undefined;
-        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairtwo').then(returnedPairs => pairsTwo = returnedPairs))
+        promiseArray.push(databaseConnection.skill.obstacle.getPairs(obstacle.stringid, 'pairtwo').then((returnedPairs: any) => pairsTwo = returnedPairs))
 
         await Promise.all(promiseArray)
         return {

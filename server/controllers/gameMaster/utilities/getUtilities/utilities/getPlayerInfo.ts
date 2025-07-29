@@ -1,4 +1,4 @@
-import { Notes } from '../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
+import { Notes } from "../../../../../../common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 
 export async function getFavorite(databaseConnection: any, beastId: number, userId: number): Promise<boolean> {
     if (userId) {

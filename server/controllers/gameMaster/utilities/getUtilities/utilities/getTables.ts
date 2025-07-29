@@ -1,4 +1,4 @@
-import { Row, Table, TablesObject } from "../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Table, TablesObject, Row } from "../../../../../../common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export default async function getTables(databaseConnection: any, beastId: number) {
     const basicTableInfo: Table[] = await databaseConnection.beast.table.getTable(beastId)

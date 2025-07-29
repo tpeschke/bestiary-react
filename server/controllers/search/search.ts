@@ -1,8 +1,7 @@
 import getDatabaseConnection from "../../utilities/databaseConnection"
-import { Request, Response, User } from '../../interfaces/apiInterfaces'
+import { Request, Response } from '../../interfaces/apiInterfaces'
 import getIDsFromQuery from "./utilities/getIDsFromQuery"
 import flattenIDArray from "./utilities/flattenIDArray"
-import { isOwner } from "../../utilities/ownerAccess"
 import getBeastPreviews from "./utilities/getBeastPreviews"
 import { checkForContentTypeBeforeSending } from "../../utilities/sendingFunctions"
 

@@ -154,7 +154,7 @@ export async function getCasting(databaseConnection: any, beastId: number): Prom
     const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
 
     // currently this is a string but, as I migrate monsters, I want to change it over to just use the index so this is just a temporary stopgap
-    const defaultTypeIndexDictionary = {
+    const defaultTypeIndexDictionary: { [key: string]: number } = {
         'Augury': 0,
         'Wild Magic': 1,
         'Vancian': 2,

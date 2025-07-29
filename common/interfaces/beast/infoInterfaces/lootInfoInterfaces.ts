@@ -1,4 +1,4 @@
-import { Loot, SpecificLoot } from "../../lootInterfaces";
+import { Loot, SpecificLoot } from "../../../../server/interfaces/lootInterfaces";
 
 export default interface LootInfo {
     lootnotes: string,

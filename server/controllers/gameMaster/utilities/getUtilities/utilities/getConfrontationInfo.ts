@@ -13,6 +13,7 @@ export interface GetArchetypesReturn {
 }
 
 export async function getArchetypes(databaseConnection: any, isEditing: boolean): Promise<GetArchetypesReturn> {
+    isEditing
     const normalArchetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.get()
 
     const chance = Math.floor(Math.random() * 100)
@@ -112,11 +113,11 @@ export interface UnformatedConflict {
 export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
     const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
 
-    const typeDictionary = {
-        h: 'Descriptions',
-        t: 'Convictions',
-        c: 'Convictions',
-        d: 'Relationships'
+    const typeDictionary: any = {
+        'h': 'Descriptions',
+        't': 'Convictions',
+        'c': 'Convictions', 
+        'd': 'Relationships'
     }
 
     let formatedCharacteristic = {
