@@ -89,7 +89,7 @@ export default class CombatInfoClass {
 
     private adjustMovementInfo = (points: number, roleID: string | null, role: string) => {
         return (movementInfo: Movement[], movement: Movement): Movement[] => {
-            if (!movement.roleid || movement.roleid === roleID || movement.allroles) {
+            if (!movement?.roleid || movement?.roleid === roleID || movement?.allroles) {
                 const calculatedMovement = calculateMovement(movement, points, role)
                 if (calculatedMovement) { movementInfo.push(calculatedMovement) }
             }

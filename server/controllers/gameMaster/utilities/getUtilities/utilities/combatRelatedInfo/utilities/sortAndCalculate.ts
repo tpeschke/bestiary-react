@@ -15,7 +15,7 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], comba
     const roleToUse = firstCombatIndex && firstCombatIndex.role ? firstCombatIndex.role : mainRole
 
     return {
-        initiative: calculateStatWithFormatting(initiative, 'initiative', roleToUse, combatPoints),
+        initiative: roleToUse ? calculateStatWithFormatting(initiative, 'initiative', roleToUse, combatPoints) : '+0',
         attacks,
         defenses
     }
@@ -31,14 +31,16 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
     const pointsToUse = combatPoints ?? mainCombatPoints
 
-    defenses.push({
-        ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
-        overAllIndex: defenses.length,
-        oldID: id ?? oldID,
-        scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
-    })
+    if (roleToUse) {
+        defenses.push({
+            ...calculateDefenseInfo({ id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
+            overAllIndex: defenses.length,
+            oldID: id ?? oldID,
+            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
+        })
+    }
 
-    if (!showonlydefenses) {
+    if (!showonlydefenses && roleToUse) {
         attacks.push({
             ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment }, pointsToUse, roleToUse),
             oldID: id ?? oldID,

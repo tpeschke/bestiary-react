@@ -3,26 +3,35 @@ import { Strength } from "../../../interfaces/calculationInterfaces"
 import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
 export function calculateMovements(movements: RawMovement[], combatpoints: number, mainRole: string) {
-    return movements.map(movement => {
-        const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
+    return movements.reduce((movements: Movement[], movement: RawMovement) => {
+        if (movement) {
+            const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
-        const reformattedMovement: Movement = {
-            id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment,
-            stroll: 0, walk: 0, jog: 0, run: 0, sprint: 0
+            const reformattedMovement: Movement = {
+                id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment,
+                stroll: 0, walk: 0, jog: 0, run: 0, sprint: 0
+            }
+
+            const calculatedMovement: Movement | null = calculateMovement(reformattedMovement, combatpoints, mainRole)
+            if (calculatedMovement) {
+                movements.push(calculatedMovement)
+            }
         }
 
-        return calculateMovement(reformattedMovement, combatpoints, mainRole)
-    })
+        return movements
+    }, [])
 }
 
 export default function calculateMovement(movement: Movement, combatpoints: number, mainRole: string): Movement | null {
     const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
-    const rolesToUse = role ? role : mainRole
+    const roleToUse = role ? role : mainRole
 
-    const specificScalingStrength = primaryCombatRoles[rolesToUse].meleeCombatStats.movement
+    if (!roleToUse) { return null }
 
-    const roleScalingStrength = primaryCombatRoles[rolesToUse].meleeCombatStats.movement
+    const specificScalingStrength = primaryCombatRoles[roleToUse].meleeCombatStats.movement
+
+    const roleScalingStrength = primaryCombatRoles[roleToUse].meleeCombatStats.movement
     const scalingToUse = specificScalingStrength ? specificScalingStrength : roleScalingStrength
 
     let stroll = calculateSpeed(strollstrength ?? scalingToUse, combatpoints + adjustment, 0)
