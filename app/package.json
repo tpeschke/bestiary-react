@@ -1,0 +1,9 @@
+{
+    "name": "@bestiary/frontend",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "vite",
+        "build": "tsc && vite build"
+    },
+    "type": "module"
+}

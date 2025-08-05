@@ -1,0 +1,9 @@
+{
+    "files": [
+        "app/dist/**/*.js",
+        "backend/common/dist/**/*.js",
+        "backend/server/dist/**/*.js"
+    ],
+    "from": "/@bestiary/common//g",
+    "to": "@bestiary/common/dist/common/"
+}
