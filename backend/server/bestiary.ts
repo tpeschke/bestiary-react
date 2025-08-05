@@ -14,7 +14,6 @@ import cors from 'cors'
 import massive from 'massive'
 // @ts-ignore
 import path from 'path'
-// import { fileURLToPath } from 'url';
 
 import { server, databaseCredentials, fakeAuth, collectMonsterCacheOn, domain, secret, callbackURL, clientID, clientSecret } from './server-config'
 
@@ -84,7 +83,6 @@ app.use('/info', BeastRoutes)
 
 // ================================== \\
 
-// const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(__dirname + `/../../app/dist`));
 
 // ================================== \\

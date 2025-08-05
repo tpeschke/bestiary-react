@@ -7,7 +7,9 @@
     "dev": "vite app",
     "test": "jest",
     "build": "lerna run build && npm run replace",
-    "replace": "replace-in-file --configFile=replace-config.json --verbose",
+    "replace": "npm run replace-common && npm run replace-server",
+    "replace-common": "replace-in-file --configFile=replaceScripts/replace-common.json --verbose",
+    "replace-server": "replace-in-file --configFile=replaceScripts/replace-server.json --verbose",
     "lint": "eslint .",
     "preview": "vite preview --port 4545",
     "backend": "npx tsx backend/server/bestiary.ts"
