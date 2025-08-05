@@ -17,7 +17,7 @@ import path from 'path'
 
 import { server, databaseCredentials, fakeAuth, collectMonsterCacheOn, domain, secret, callbackURL, clientID, clientSecret } from './server-config'
 
-import { Error } from './interfaces/apiInterfaces'
+import { Error, Response, Request } from './interfaces/apiInterfaces'
 
 import authRoutesWithoutPassword from './routes/authentication'
 import accessRoutes from './routes/access'
@@ -84,6 +84,9 @@ app.use('/info', BeastRoutes)
 // ================================== \\
 
 app.use(express.static(__dirname + `/../../app/dist`));
+app.get('/*', (request: Request, response: Response) => {
+    response.sendFile(path.join(__dirname + '/../../app/dist/index.html'))
+})
 
 // ================================== \\
 
