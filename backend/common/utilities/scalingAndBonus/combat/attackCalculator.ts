@@ -45,7 +45,7 @@ export default function calculateAndFormatAttackInfo(
         type: damageType,
         measure: calculateStat(measure, 'measure', role, totalPoints),
         attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
-        rangeIncrement:  weapontype === 'r' ? calculateStat(rangeIncrement, 'rangeIncrement', role, totalPoints) : null,
+        rangeIncrement: weapontype === 'r' ? calculateStat(rangeIncrement, 'rangeIncrement', role, totalPoints) : null,
         ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, damageType)
     }
 }

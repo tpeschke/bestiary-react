@@ -1,9 +1,9 @@
 import { Strength } from "../../interfaces/calculationInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
-export function getWeaponName(name: string | null, weapon: string): string | null {
-    if (name) {
-        return name
+export function getWeaponName(chosenName: string | null, weapon: string): string | null {
+    if (chosenName) {
+        return chosenName
     } else if (weapon) {
         return weapon
     }
