@@ -9,8 +9,6 @@ import { isUserLoggedOn } from '../../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 import FavoritesDisplay from './components/favorites/FavoritesDisplay';
 import { SetLoadingFunction } from '../../components/loading/Loading';
-import axios from 'axios';
-import { srdEndpoint } from '../../../../backend/server/server-config';
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -18,7 +16,7 @@ interface Props {
 
 export default function Catalog({ setLoading }: Props) {
     document.title = 'Bonfire Bestiary'
-
+    
     const { templates, freeBeasts, catalogItems, updatingCatalogItems, favorites } = catalogItemStates()
     const userIsLoggedIn = useSelector(isUserLoggedOn)
 
@@ -28,17 +26,7 @@ export default function Catalog({ setLoading }: Props) {
         if (setLoading) {
             setLoading(catalogItems.length > 0)
         }
-        collectGearCache()
     }, [catalogItems])
-
-    async function collectGearCache() {
-        const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
-        console.log(weaponData)
-        const { data: armorData } = await axios.get(srdEndpoint + 'getArmor')
-        console.log(armorData)
-        const { data: shieldData } = await axios.get(srdEndpoint + 'getShields')
-        console.log(shieldData)
-    }
 
     return (
         <div className='card-background catalog'>
