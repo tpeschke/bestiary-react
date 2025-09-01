@@ -12,6 +12,8 @@ interface Props {
 }
 
 export default function SearchResults({ setLoading }: Props) {
+    document.title = 'Search Results - Bonfire Bestiary'
+
     const { searchResults, navigateToRandomResult, sortingMethodInfo, sortingDirectionInfo } = SearchHooks()
 
     useEffect(() => {
