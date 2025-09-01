@@ -34,7 +34,7 @@ export function getWeaponByName(weaponName: string): ProcessedWeapon {
             "size": "M",
             "parry": 0,
             "measure": 0.75,
-            "bonus": false,
+            "bonus": '',
             "recovery": 13,
             "name": "War Hammer"
         }

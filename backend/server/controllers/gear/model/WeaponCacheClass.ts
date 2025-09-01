@@ -37,7 +37,8 @@ export default class WeaponCacheClass {
                     const damage = this.processDamage(dam)
 
                     weaponsDictionary[`${formattedName} (${type})`] = {
-                        damage, type, size, parry, measure, bonus, range,
+                        damage, type, size, parry, measure, bonus, 
+                        range: range ? range : undefined,
                         recovery: rec,
                         name: formattedName,
                     }

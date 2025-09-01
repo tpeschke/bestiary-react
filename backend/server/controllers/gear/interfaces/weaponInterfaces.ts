@@ -15,7 +15,7 @@ export interface ReturnedWeapon {
     parry: number,
     measure: number,
     bonus: string,
-    range: string
+    range: string | undefined
 }
 
 export interface ProcessedWeaponDictionary {
@@ -30,8 +30,8 @@ export interface ProcessedWeapon {
     recovery: number,
     parry: number,
     measure: number,
-    bonus: boolean,
-    range?: number
+    bonus: string,
+    range?: string
 }
 
 export interface DamageInfo {
