@@ -6,6 +6,8 @@ import GearCacheClass from './model/EquipmentCacheClass'
 import { ProcessedArmor } from './interfaces/armorInterfaces'
 import { ProcessedShield } from './interfaces/shieldInterfaces'
 import { ProcessedWeapon } from './interfaces/weaponInterfaces'
+import { Response } from '../../interfaces/apiInterfaces'
+import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
 
 let equipmentCache = new GearCacheClass()
 
@@ -20,14 +22,7 @@ export default async function collectGearCache() {
     equipmentCache.shieldData = shieldData
 }
 
-export async function getWeaponByName(weaponName: string): Promise<ProcessedWeapon> {
-    const weapon: ProcessedWeapon = equipmentCache.getWeaponByName(weaponName)
-    if (weapon) {
-        return weapon
-    }
-    
-    const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
-    equipmentCache.weaponData = weaponData
+export function getWeaponByName(weaponName: string): ProcessedWeapon {
     return equipmentCache.getWeaponByName(weaponName)
 }
 
@@ -37,4 +32,8 @@ export function getShieldByName(shieldName: string): ProcessedShield {
 
 export function getArmorByName(armorName: string): ProcessedArmor {
     return equipmentCache.getArmorByName(armorName)
+}
+
+export async function getWeapon(request: any, response: Response) {
+    checkForContentTypeBeforeSending(response, equipmentCache.getWeaponByName(request.params.weapon))
 }
