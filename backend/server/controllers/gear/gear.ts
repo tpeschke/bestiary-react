@@ -6,8 +6,6 @@ import GearCacheClass from './model/EquipmentCacheClass'
 import { ProcessedArmor } from './interfaces/armorInterfaces'
 import { ProcessedShield } from './interfaces/shieldInterfaces'
 import { ProcessedWeapon } from './interfaces/weaponInterfaces'
-import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
-import { Response, Request } from "../../interfaces/apiInterfaces"
 
 let equipmentCache = new GearCacheClass()
 
@@ -32,8 +30,4 @@ export function getShieldByName(shieldName: string): ProcessedShield {
 
 export function getArmorByName(armorName: string): ProcessedArmor {
     return equipmentCache.getArmorByName(armorName)
-}
-
-export function getLists(request: Request, response: Response) {
-    checkForContentTypeBeforeSending(response, equipmentCache.lists)
 }

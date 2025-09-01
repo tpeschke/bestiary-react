@@ -32,7 +32,6 @@ import collectGearCache from './controllers/gear/gear'
 import searchRoutes from './routes/search'
 import listRoutes from './routes/list'
 import { Profile } from './interfaces/apiInterfaces'
-import gearRoutes from './routes/gear'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -79,7 +78,6 @@ app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
 app.use('/lists', listRoutes)
-app.use('/gear', gearRoutes)
 
 app.use('/info', BeastRoutes)
 
