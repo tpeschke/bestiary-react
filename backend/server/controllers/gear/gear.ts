@@ -20,7 +20,14 @@ export default async function collectGearCache() {
     equipmentCache.shieldData = shieldData
 }
 
-export function getWeaponByName(weaponName: string): ProcessedWeapon {
+export async function getWeaponByName(weaponName: string): Promise<ProcessedWeapon> {
+    const weapon: ProcessedWeapon = equipmentCache.getWeaponByName(weaponName)
+    if (weapon) {
+        return weapon
+    }
+    
+    const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
+    equipmentCache.weaponData = weaponData
     return equipmentCache.getWeaponByName(weaponName)
 }
 
