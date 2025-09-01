@@ -7,7 +7,7 @@ import { calculateDamageAndRecovery } from "./damageAndRecoveryCalculator"
 import { getWeaponByName } from '../../../../server/controllers/gear/gear'
 import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
 
-export default function calculateAndFormatAttackInfo(
+export default async function calculateAndFormatAttackInfo(
     totalPoints: number,
     role: string,
     chosenName: string,
@@ -25,7 +25,7 @@ export default function calculateAndFormatAttackInfo(
     weaponInfo: ProcessedWeapon
 ) {
 
-    const weaponInfoObject = getWeaponInfo(weaponInfo, weaponName)
+    const weaponInfoObject = await getWeaponInfo(weaponInfo, weaponName)
 
     if (weaponInfoObject) {
         const { measure, type, name, bonus, range } = weaponInfoObject
@@ -50,7 +50,7 @@ export default function calculateAndFormatAttackInfo(
     }
 }
 
-function getWeaponInfo(weaponInfo: ProcessedWeapon, weaponName: string) {
+async function getWeaponInfo(weaponInfo: ProcessedWeapon, weaponName: string) {
     if (weaponInfo) { return weaponInfo }
-    return getWeaponByName(weaponName)
+    return await getWeaponByName(weaponName)
 }
