@@ -9,7 +9,7 @@ import { ProcessedWeapon } from './interfaces/weaponInterfaces'
 
 let equipmentCache = new GearCacheClass()
 
-export default async function collectGearCache() {
+export default async () => {
     const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
     equipmentCache.weaponData = weaponData
 
@@ -20,32 +20,14 @@ export default async function collectGearCache() {
     equipmentCache.shieldData = shieldData
 }
 
-export function getWeaponByName(weaponName: string): ProcessedWeapon {
-    if (weaponName === 'War Hammer (C)') {
-        return {
-            "damage": {
-                "dice": [
-                    "d12!",
-                    "d4!"
-                ],
-                "string": "d12!+d4!"
-            },
-            "type": "C",
-            "size": "M",
-            "parry": 0,
-            "measure": 0.75,
-            "bonus": '',
-            "recovery": 13,
-            "name": "War Hammer"
-        }
-    }
+export const getWeaponByName = (weaponName: string): ProcessedWeapon  => {
     return equipmentCache.getWeaponByName(weaponName)
 }
 
-export function getShieldByName(shieldName: string): ProcessedShield {
+export const getShieldByName = (shieldName: string): ProcessedShield => {
     return equipmentCache.getShieldByName(shieldName)
 }
 
-export function getArmorByName(armorName: string): ProcessedArmor {
+export const getArmorByName = (armorName: string): ProcessedArmor => {
     return equipmentCache.getArmorByName(armorName)
 }
