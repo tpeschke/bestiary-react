@@ -54,16 +54,16 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
             <div className='inner-searches-shell'>
                 <div className='rating-shell'>
                     <p>Confrontation Rating</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minConfRate' dictionary={minSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minConfrontationRate' dictionary={minSkullSearchDictionary} />
                     <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxConfRate' dictionary={maxSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxConfrontationRate' dictionary={maxSkullSearchDictionary} />
                 </div>
 
                 <div className='rating-shell'>
                     <p>Combat Rating</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minComRate' dictionary={minSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minCombatRate' dictionary={minSkullSearchDictionary} />
                     <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxComRate' dictionary={maxSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxCombatRate' dictionary={maxSkullSearchDictionary} />
                 </div>
 
                 <div className='rating-shell'>

@@ -13,22 +13,22 @@ export default async function getIDsFromQuery(databaseConnection: any, query: Se
             case "body":
                 idArray.push(databaseConnection.search.queryParams.body(query.body))
                 break;
-            case "minComRate":
+            case "minCombatRate":
                 idArray.push(databaseConnection.search.queryParams.minCombatRating(query.minCombatRate))
                 break;
             case "minChallengeRate":
                 idArray.push(databaseConnection.search.queryParams.minChallengeRating(query.minChallengeRate))
                 break;
-            case "minConfRate":
+            case "minConfrontationRate":
                 idArray.push(databaseConnection.search.queryParams.minConfrontationRating(query.minConfrontationRate))
                 break;
-            case "maxComRate":
+            case "maxCombatRate":
                 idArray.push(databaseConnection.search.queryParams.maxCombatRating(query.maxCombatRate))
                 break;
             case "maxChallengeRate":
                 idArray.push(databaseConnection.search.queryParams.maxChallengeRating(query.maxChallengeRate))
                 break;
-            case "maxConfRate":
+            case "maxConfrontationRate":
                 idArray.push(databaseConnection.search.queryParams.maxConfrontationRating(query.maxConfrontationRate))
                 break;
             case "size":
