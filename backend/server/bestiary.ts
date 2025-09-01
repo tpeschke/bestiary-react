@@ -28,7 +28,7 @@ import BeastRoutes from './routes/beast'
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
-import collectGearCache, { getWeapon } from './controllers/gear/gear'
+import collectGearCache from './controllers/gear/gear'
 import searchRoutes from './routes/search'
 import listRoutes from './routes/list'
 import { Profile } from './interfaces/apiInterfaces'
@@ -78,8 +78,6 @@ app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
 app.use('/lists', listRoutes)
-
-app.get('/gear/:weapon', getWeapon)
 
 app.use('/info', BeastRoutes)
 
