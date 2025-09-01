@@ -1,9 +1,9 @@
 import { Strength } from "../../interfaces/calculationInterfaces";
 import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
-export function getWeaponName(chosenName: string | null, weapon: string): string | null {
-    if (chosenName) {
-        return chosenName
+export function getWeaponName(name: string | null, weapon: string): string | null {
+    if (name) {
+        return name
     } else if (weapon) {
         return weapon
     }
@@ -11,19 +11,19 @@ export function getWeaponName(chosenName: string | null, weapon: string): string
     return null;
 }
 
-export function getDefenseName(chosenName: string, shield: string, armor: string): string {
-    if (chosenName) {
-        return chosenName
+export function getDefenseName(name: string, shield: string, armor: string): string {
+    if (name) {
+        return name
     }
 
-    let name = ''
+    let displayName = ''
     if (shield) { 
-        name += `${shield} Shield`  
-        armor ? name += ', ' : null
+        displayName += `${shield} Shield`  
+        armor ? displayName += ', ' : null
     }
-    if (armor) { name += `${armor} Armor` }
+    if (armor) { displayName += `${armor} Armor` }
 
-    return name;
+    return displayName;
 }
 
 export function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength, role: string): string {
