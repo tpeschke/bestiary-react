@@ -92,15 +92,15 @@ app.get('/*', (request: Request, response: Response) => {
 
 massive(databaseCredentials).then((dbI: any) => {
     app.set('db', dbI)
-    app.listen(server, () => {
+    app.listen(server, async () => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
+
+        await collectGearCache()
 
         collectCatalog(databaseConnection)
         if (collectMonsterCacheOn) {
             collectMonsterCache(databaseConnection)
         }
-
-        collectGearCache()
 
         console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)
     })
