@@ -163,7 +163,6 @@ export const confrontationPrimaryDictionary: SearchObject[] = [
     { id: 2, value: 'Defender' },
     { id: 3, value: 'Fast - Talker' },
     { id: 4, value: 'Feinter' },
-    { id: 5, value: 'Fodder' },
     { id: 6, value: 'Sandbagger' },
     { id: 7, value: 'Corruptor' },
     { id: 8, value: 'Gaslighter' },
@@ -172,7 +171,11 @@ export const confrontationPrimaryDictionary: SearchObject[] = [
 ]
 
 export const confrontationSecondaryDictionary: SearchObject[] = [
-    { id: 32, value: 'Elite' },
+    { id: 44, value: 'Lesser' },
+    { id: 32, value: 'Veteran' },
+    { id: 45, value: 'Champion' },
+    { id: 46, value: 'Officer' },
+    { id: 47, value: 'Tyrant' },
     { id: 33, value: 'Solo' }
 ]
 
@@ -188,8 +191,11 @@ export const combatPrimaryDictionary: SearchObject[] = [
 ]
 
 export const combatSecondaryDictionary: SearchObject[] = [
-    { id: 18, value: 'Fodder' },
-    { id: 31, value: 'Elite' },
+    { id: 18, value: 'Lesser' },
+    { id: 36, value: 'Veteran' },
+    { id: 37, value: 'Champion' },
+    { id: 38, value: 'Officer' },
+    { id: 39, value: 'Tyrant' },
     { id: 21, value: 'Solo' },
 ]
 
@@ -201,11 +207,14 @@ export const skillPrimaryDictionary: SearchObject[] = [
     { id: 27, value: 'Antagonist' },
     { id: 28, value: 'Trap' },
     { id: 29, value: 'Hazard' },
-    { id: 30, value: 'Fodder' }
 ]
 
 export const skillSecondaryDictionary: SearchObject[] = [
-    { id: 34, value: 'Elite' },
+    { id: 40, value: 'Lesser' },
+    { id: 34, value: 'Veteran' },
+    { id: 41, value: 'Champion' },
+    { id: 42, value: 'Officer' },
+    { id: 43, value: 'Tyrant' },
     { id: 35, value: 'Solo' }
 ]
 

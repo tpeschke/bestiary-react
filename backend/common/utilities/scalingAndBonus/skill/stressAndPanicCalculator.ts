@@ -2,21 +2,21 @@ import { Strength } from "../../../interfaces/calculationInterfaces"
 import { primarySkillRoles } from "../../roleInfo/skillRoleInfo"
 
 export function calculateStressAndPanic(role: string, secondaryrole: string, points: number, stressStrength: Strength | '0', panicStrength: Strength) {
-    if (stressStrength === '0') {stressStrength = null}
-    
+    if (stressStrength === '0') { stressStrength = null }
+
     if (role) {
         if (!stressStrength) { stressStrength = primarySkillRoles[role].mental }
         if (!panicStrength) { panicStrength = primarySkillRoles[role].panic }
-    
+
         const stress = calculateStress(secondaryrole, points, stressStrength)
         return {
-            stress, 
+            stress,
             panic: calculatePanic(stress, points, panicStrength)
         }
     }
 
     return {
-        stress: 'N/A', 
+        stress: 'N/A',
         panic: false
     }
 }
@@ -48,15 +48,19 @@ function calculateStress(secondaryrole: string, points: number, strength: Streng
     } else if (strength === 'none' || !strength) {
         return scaling.none
     } else {
-        if (secondaryrole === 'Fodder') {
+        if (secondaryrole === 'Lesser') {
             return Math.ceil((scaling[strength] + (bonus[strength] * points) / 2))
+        } else if (secondaryrole === 'Veteran' || secondaryrole === 'Leader') {
+            return Math.ceil((scaling[strength] + (bonus[strength] * points) / 2.5))
+        } else if (secondaryrole === 'Solo') {
+            return Math.ceil((scaling[strength] + (bonus[strength] * points) / 3))
         }
         return scaling[strength] + (bonus[strength] * points)
     }
 }
 
 function calculatePanic(stress: number | string, points: number, strength: Strength): number | boolean {
-    if (typeof stress === 'string') {  return false }
+    if (typeof stress === 'string') { return false }
 
     const scaling = {
         majSt: .5,

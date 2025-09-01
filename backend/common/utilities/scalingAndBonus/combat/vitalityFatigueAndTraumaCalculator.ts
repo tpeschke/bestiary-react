@@ -62,9 +62,9 @@ function calculateVitality(secondaryrole: string, points: number, strength: Stre
         baseVitality = scaling[strength] + (bonus[strength] * points)
     }
 
-    if (secondaryrole === 'Fodder') {
+    if (secondaryrole === 'Lesser') {
         return Math.ceil(baseVitality / 2)
-    } else if (secondaryrole === 'Elite') {
+    } else if (secondaryrole === 'Veteran' || secondaryrole === 'Leader') {
         return Math.ceil(baseVitality * 2.5)
     } else if (secondaryrole === 'Solo') {
         return Math.ceil(baseVitality * 3.5)
