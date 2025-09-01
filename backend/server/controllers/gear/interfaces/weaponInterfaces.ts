@@ -30,8 +30,8 @@ export interface ProcessedWeapon {
     recovery: number,
     parry: number,
     measure: number,
-    bonus: string,
-    range: string
+    bonus: boolean,
+    range?: number
 }
 
 export interface DamageInfo {

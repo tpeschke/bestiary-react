@@ -21,6 +21,24 @@ export default async function collectGearCache() {
 }
 
 export function getWeaponByName(weaponName: string): ProcessedWeapon {
+    if (weaponName === 'War Hammer (C)') {
+        return {
+            "damage": {
+                "dice": [
+                    "d12!",
+                    "d4!"
+                ],
+                "string": "d12!+d4!"
+            },
+            "type": "C",
+            "size": "M",
+            "parry": 0,
+            "measure": 0.75,
+            "bonus": false,
+            "recovery": 13,
+            "name": "War Hammer"
+        }
+    }
     return equipmentCache.getWeaponByName(weaponName)
 }
 
