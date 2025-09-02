@@ -16,11 +16,12 @@ interface GetBeastQuery {
 
 export async function getGMVersionOfBeast(request: GetRequest, response: Response) {
     const databaseConnection = getDatabaseConnection(request)
+    const gearCache = request.app.get('gearCache')
     const beastID = +request.params.beastId
     const isEditing = request.query ? request.query.edit === 'true' : false
     const userID = request.user?.id
 
-    const beast: Beast = await getGMVersionOfBeastFromDB(databaseConnection, beastID, {isEditing, userID})
+    const beast: Beast = await getGMVersionOfBeastFromDB(databaseConnection, beastID, {isEditing, userID, gearCache})
     
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)

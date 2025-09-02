@@ -96,6 +96,7 @@ massive(databaseCredentials).then((dbI: any) => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
 
         const gearCache = await collectGearCache()
+        app.set('gearCache', gearCache)
 
         collectCatalog(databaseConnection)
         if (collectMonsterCacheOn) {
