@@ -4,7 +4,6 @@ import { getWeaponName } from "../../formatting/formatting"
 import { calculateStatWithFormatting, calculateStat } from "./combatCalculation"
 import { calculateDamageAndRecovery } from "./damageAndRecoveryCalculator"
 
-import { getWeaponByName } from '../../../../server/controllers/gear/gear'
 import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
 
 export default function calculateAndFormatAttackInfo(
@@ -22,10 +21,11 @@ export default function calculateAndFormatAttackInfo(
     recoveryStrength: Strength,
     isSpecial: IsSpecial,
     damageType: DamageType,
-    weaponInfo: ProcessedWeapon
+    weaponInfo: ProcessedWeapon,
+    gearCache?: any
 ) {
 
-    const weaponInfoObject = getWeaponInfo(weaponInfo, weaponName)
+    const weaponInfoObject = weaponInfo ? weaponInfo : gearCache?.getWeaponByName(weaponName)
 
     if (weaponInfoObject) {
         const { measure, type, name, bonus, range } = weaponInfoObject
@@ -48,9 +48,4 @@ export default function calculateAndFormatAttackInfo(
         rangeIncrement: weapontype === 'r' ? calculateStat(rangeIncrement, 'rangeIncrement', role, totalPoints) : null,
         ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, damageType)
     }
-}
-
-function getWeaponInfo(weaponInfo: ProcessedWeapon, weaponName: string) {
-    if (weaponInfo) { return weaponInfo }
-    return getWeaponByName(weaponName)
 }

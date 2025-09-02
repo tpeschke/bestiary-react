@@ -2,32 +2,19 @@ import axios from 'axios'
 
 import { srdEndpoint } from '../../server-config'
 
-import GearCacheClass from './model/EquipmentCacheClass'
-import { ProcessedArmor } from './interfaces/armorInterfaces'
-import { ProcessedShield } from './interfaces/shieldInterfaces'
-import { ProcessedWeapon } from './interfaces/weaponInterfaces'
+import GearCacheClass from './model/GearCacheClass'
 
-let equipmentCache = new GearCacheClass()
+export default async function collectGearCache(): Promise<GearCacheClass> {
+    let GearCache = new GearCacheClass()
 
-export default async () => {
     const { data: weaponData } = await axios.get(srdEndpoint + 'getGroupedWeapons')
-    equipmentCache.weaponData = weaponData
+    GearCache.weaponData = weaponData
 
     const { data: armorData } = await axios.get(srdEndpoint + 'getArmor')
-    equipmentCache.armorData = armorData
+    GearCache.armorData = armorData
 
     const { data: shieldData } = await axios.get(srdEndpoint + 'getShields')
-    equipmentCache.shieldData = shieldData
-}
+    GearCache.shieldData = shieldData
 
-export const getWeaponByName = (weaponName: string): ProcessedWeapon  => {
-    return equipmentCache.getWeaponByName(weaponName)
-}
-
-export const getShieldByName = (shieldName: string): ProcessedShield => {
-    return equipmentCache.getShieldByName(shieldName)
-}
-
-export const getArmorByName = (armorName: string): ProcessedArmor => {
-    return equipmentCache.getArmorByName(armorName)
+    return GearCache
 }

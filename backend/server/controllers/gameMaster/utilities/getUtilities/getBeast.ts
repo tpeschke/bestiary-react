@@ -28,14 +28,16 @@ import { getObstacles } from "./utilities/skillRelatedInfo/getObstacles"
 import { getSkills } from "./utilities/skillRelatedInfo/getSkills"
 import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
+import GearCacheClass from "../../../gear/model/GearCacheClass"
 
 interface GetBeastOptions {
     isEditing: boolean,
-    userID?: number
+    userID?: number,
+    gearCache?: GearCacheClass | undefined
 }
 
 export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, options: GetBeastOptions = { isEditing: false }): Promise<Beast> {
-    const { isEditing, userID } = options
+    const { isEditing, userID, gearCache } = options
 
     const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
@@ -188,7 +190,7 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
     promiseArray.push(getMovement(databaseConnection, beast.id, combatpoints, combatrole).then((movements: (Movement | null)[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(databaseConnection, beast.id, combatpoints, combatrole, size).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }))
+    promiseArray.push(getCombatStats(databaseConnection, beast.id, combatpoints, combatrole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }))
 
     promiseArray.push(getLocationalVitalities(databaseConnection, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 

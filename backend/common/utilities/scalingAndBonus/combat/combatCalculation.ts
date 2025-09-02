@@ -33,11 +33,11 @@ export function calculateDefenseInfo(defenseInfo: any, points: number, role: str
     }
 }
 
-export function calculateAttackInfo(attackInfo: any, points: number, role: string) {
+export function calculateAttackInfo(attackInfo: any, points: number, role: string, gearCache?: any) {
     const { name, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment, weapontype, weaponInfo } = attackInfo
     return {
         ...attackInfo,
-        ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, weapontype, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, weaponInfo),
+        ...calculateAndFormatAttackInfo(points + adjustment, role, name, weapon, measure, attack, weapontype, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, weaponInfo, gearCache),
     }
 }
 

@@ -95,11 +95,11 @@ massive(databaseCredentials).then((dbI: any) => {
     app.listen(server, async () => {
         const databaseConnection = getDatabaseConnectionViaApp(app)
 
-        await collectGearCache()
+        const gearCache = await collectGearCache()
 
         collectCatalog(databaseConnection)
         if (collectMonsterCacheOn) {
-            collectMonsterCache(databaseConnection)
+            collectMonsterCache(databaseConnection, gearCache)
         }
 
         console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)

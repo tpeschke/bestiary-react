@@ -1,6 +1,7 @@
 import { Beast } from '@bestiary/common/interfaces/beast/beast'
 import { consoleLogErrorNoFile } from '../utilities/sendingFunctions'
 import { getGMVersionOfBeastFromDB } from './gameMaster/utilities/getUtilities/getBeast'
+import GearCacheClass from './gear/model/GearCacheClass'
 
 const consoleLogError = consoleLogErrorNoFile('monster cache')
 
@@ -31,17 +32,17 @@ export async function reCacheMonsterIfItExists(databaseConnection: any, beastID:
     return true
 }
 
-export async function collectMonsterCache(databaseConnection: any): Promise<void> {
+export async function collectMonsterCache(databaseConnection: any, gearCache: GearCacheClass): Promise<void> {
     const freeIds: MonsterId[] = await databaseConnection.cache.monster.freeAndUpdating().catch((error: Error) => consoleLogError('get free beasts ids', error))
 
     const numberOfFavoritesToGet = Math.max(100 - freeIds.length, 0)
     const monsterIds: MonsterId[] = [...freeIds, ...await databaseConnection.cache.monster.favorites(numberOfFavoritesToGet).catch((error: Error) => consoleLogError('get free beasts ids', error))]
 
-    getMonsterFromId(databaseConnection, monsterIds, 0)
+    getMonsterFromId(databaseConnection, monsterIds, 0, gearCache)
 }
 
-async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number) {
-    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, {isEditing: false}).catch((error: Error) => consoleLogError('get main', error))
+async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number, gearCache: GearCacheClass) {
+    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, {isEditing: false, gearCache}).catch((error: Error) => consoleLogError('get main', error))
 
     if (beast) {
         monsterCache[monsterIds[index].beastid] = beast
@@ -53,6 +54,6 @@ async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[]
         console.log('------------------------- ')
     } else {
         console.log(`...Collecting Number ${index + 1} of ${monsterIds.length}`)
-        getMonsterFromId(databaseConnection, monsterIds, ++index)
+        getMonsterFromId(databaseConnection, monsterIds, ++index, gearCache)
     }
 }
