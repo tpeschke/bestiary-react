@@ -2,9 +2,8 @@ import { RawCombatStat, DefenseInfo, AttackInfo } from "@bestiary/common/interfa
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { CalculateCombatStatsReturn, calculateStatWithFormatting, calculateDefenseInfo, calculateAttackInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
-import GearCacheClass from "../../../../../../gear/model/GearCacheClass"
 
-export default function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size, gearCache: GearCacheClass | undefined): CalculateCombatStatsReturn {
+export default function calculateCombatStats(combatStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     let defenses: DefenseInfo[] = []
     let attacks: AttackInfo[] = []
     combatStats.forEach(stats => {
@@ -22,7 +21,7 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], comba
     }
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size, mainCombatPoints: number, mainRole: string, gearCache: GearCacheClass | undefined): void {
+function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size, mainCombatPoints: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangedistance: rangeIncrement, showonlydefenses, recovery, measure, rangeddefense: cover, weaponname: chosenName,
         armor, shield, weapon, eua, isspecial, attack, alldefense, flanks, andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry,
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid

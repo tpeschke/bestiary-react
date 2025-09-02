@@ -1,7 +1,6 @@
 import { Beast } from '@bestiary/common/interfaces/beast/beast'
 import { consoleLogErrorNoFile } from '../utilities/sendingFunctions'
 import { getGMVersionOfBeastFromDB } from './gameMaster/utilities/getUtilities/getBeast'
-import GearCacheClass from './gear/model/GearCacheClass'
 
 const consoleLogError = consoleLogErrorNoFile('monster cache')
 
@@ -32,7 +31,7 @@ export async function reCacheMonsterIfItExists(databaseConnection: any, beastID:
     return true
 }
 
-export async function collectMonsterCache(databaseConnection: any, gearCache: GearCacheClass): Promise<void> {
+export async function collectMonsterCache(databaseConnection: any, gearCache: any): Promise<void> {
     const freeIds: MonsterId[] = await databaseConnection.cache.monster.freeAndUpdating().catch((error: Error) => consoleLogError('get free beasts ids', error))
 
     const numberOfFavoritesToGet = Math.max(100 - freeIds.length, 0)
@@ -41,7 +40,7 @@ export async function collectMonsterCache(databaseConnection: any, gearCache: Ge
     getMonsterFromId(databaseConnection, monsterIds, 0, gearCache)
 }
 
-async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number, gearCache: GearCacheClass) {
+async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number, gearCache: any) {
     const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, {isEditing: false, gearCache}).catch((error: Error) => consoleLogError('get main', error))
 
     if (beast) {

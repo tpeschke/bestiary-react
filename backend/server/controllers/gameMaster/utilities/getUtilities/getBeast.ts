@@ -28,12 +28,11 @@ import { getObstacles } from "./utilities/skillRelatedInfo/getObstacles"
 import { getSkills } from "./utilities/skillRelatedInfo/getSkills"
 import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
-import GearCacheClass from "../../../gear/model/GearCacheClass"
 
 interface GetBeastOptions {
     isEditing: boolean,
     userID?: number,
-    gearCache?: GearCacheClass | undefined
+    gearCache?: any | undefined
 }
 
 export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, options: GetBeastOptions = { isEditing: false }): Promise<Beast> {

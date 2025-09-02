@@ -3,9 +3,8 @@ import { RawCombatStat } from "@bestiary/common/interfaces/beast/infoInterfaces/
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateCombatStats from "./utilities/sortAndCalculate"
 import calculateAttacksAndDefenses from "./utilities/calculate"
-import GearCacheClass from "../../../../../gear/model/GearCacheClass"
 
-export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size, gearCache: GearCacheClass | undefined): Promise<CalculateCombatStatsReturn> {
+export async function getCombatStats(databaseConnection: any, beastId: number, combatPoints: number, role: string, size: Size, gearCache: any | undefined): Promise<CalculateCombatStatsReturn> {
     const defenses: RawCombatStat[] = await databaseConnection.beast.defenses.get(beastId)
     
     if (defenses.length > 0) {

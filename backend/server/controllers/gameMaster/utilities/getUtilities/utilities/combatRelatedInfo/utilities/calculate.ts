@@ -2,9 +2,8 @@ import { RawCombatStat, AttackInfo, DefenseInfo } from "@bestiary/common/interfa
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { CalculateCombatStatsReturn, calculateStatWithFormatting, calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
-import GearCacheClass from "../../../../../../gear/model/GearCacheClass"
 
-export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[], defenseStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size, gearCache: GearCacheClass | undefined): CalculateCombatStatsReturn {
+export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[], defenseStats: RawCombatStat[], combatPoints: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     const firstCombatIndex = attackStats[0]
     const initiative = firstCombatIndex ? firstCombatIndex.initiative : 'minWk'
     const roleToUse = firstCombatIndex && firstCombatIndex.role ? firstCombatIndex.role : mainRole
@@ -16,7 +15,7 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
     }
 }
 
-function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, mainRole: string, gearCache: GearCacheClass | undefined): AttackInfo[] {
+function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, mainRole: string, gearCache: any | undefined): AttackInfo[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation,
