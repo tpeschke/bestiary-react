@@ -1,5 +1,10 @@
 import { DamageType } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { SizeCategories } from "./equipmentInterfaces"
+import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+
+export interface WeaponsCache {
+    list: GearCategory[],
+    dictionary: ProcessedWeaponDictionary
+}
 
 export interface ReturnedWeaponType {
     label: string,

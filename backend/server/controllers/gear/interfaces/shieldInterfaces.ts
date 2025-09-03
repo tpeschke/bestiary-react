@@ -1,5 +1,10 @@
 import { DamageReductionObject } from "./armorInterfaces"
-import { SizeCategories } from "./equipmentInterfaces"
+import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+
+export interface ShieldCache {
+    list: GearCategory[],
+    dictionary: ProcessedShieldDictionary
+}
 
 export interface ReturnedShieldInfo {
     dr: string,

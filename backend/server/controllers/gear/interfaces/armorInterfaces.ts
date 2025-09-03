@@ -1,4 +1,9 @@
-import { SizeCategories } from "./equipmentInterfaces"
+import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+
+export interface ArmorCache {
+    list: GearCategory[],
+    dictionary: ProcessedArmorDictionary
+}
 
 export interface ReturnedArmorInfo {
     dr: string,
