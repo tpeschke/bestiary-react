@@ -3,7 +3,7 @@ import ImageNotFound from '../../../../../assets/images/404.png'
 
 import { ArtistInfo } from '../../../interfaces/infoInterfaces/ImageInfoInterfaces'
 
-import { imageBase } from '../../../../../frontend-config'
+import { imageBase, imageURL } from '../../../../../frontend-config'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -26,7 +26,7 @@ export default function FullImage({ imageParam, altText, artistInfo, roleID = ''
     const notFoundImage = ImageNotFound
 
     useEffect(() => {
-        axios.get(roleImage).then(result => setHasRoleArt(result.status === 200)).catch(_ => {setHasRoleArt(false)})
+        axios.get(imageURL + imageParam + roleID).then(({data}) => setHasRoleArt(data.hasImage))
     }, [roleID])
 
     function handleImageError({ currentTarget }: any) {

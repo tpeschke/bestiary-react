@@ -24,13 +24,14 @@ import accessRoutes from './routes/access'
 import playerRoutes from './routes/player'
 import catalogRoutes from './routes/catalog'
 import BeastRoutes from './routes/beast'
+import imageRoutes from './routes/image'
+import searchRoutes from './routes/search'
+import listRoutes from './routes/list'
 
 import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
 import collectGearCache from './controllers/gear/gear'
-import searchRoutes from './routes/search'
-import listRoutes from './routes/list'
 import { Profile } from './interfaces/apiInterfaces'
 
 const app = express()
@@ -78,6 +79,7 @@ app.use('/access', accessRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
 app.use('/lists', listRoutes)
+app.use('/image', imageRoutes)
 
 app.use('/info', BeastRoutes)
 

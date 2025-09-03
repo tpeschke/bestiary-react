@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Icon from '../../../../../components/icon/Icon'
-import { imageBase } from '../../../../../frontend-config';
+import { imageBase, imageURL } from '../../../../../frontend-config';
 import { RoleNameOrderOptions } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 import { UpdateFavoriteFunction } from '../../../hooks/beastHooks';
 import { useDispatch } from 'react-redux';
@@ -26,11 +26,9 @@ export default function NameHeader({ name, beastID, roleID, roleName, roleNameOr
 
     useEffect(() => {
         if (roleID) {
-            axios.get(imageBase + beastID + roleID + '-token')
-                .then(_ => {
-                    setRoleTokenID(roleID)
-                }).catch(_ => {
-                    setRoleTokenID(null)
+            axios.get(imageURL + beastID + roleID + '-token')
+                .then(({ data }) => {
+                    setRoleTokenID(data.hasImage ? roleID : null)
                 })
         }
     }, [roleID])
