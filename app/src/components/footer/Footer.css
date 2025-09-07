@@ -1,4 +1,6 @@
 .footer-background {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     height: 64px;
     padding: 6px 16px;
     background: #795548;
