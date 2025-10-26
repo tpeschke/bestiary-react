@@ -117,10 +117,10 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             styling = 'fa-solid fa-dice'
             break
         case 'log-in':
-            styling = 'fa-solid fa-right-to-bracket'
+            styling = 'fa-solid fa-person-to-portal'
             break
         case 'log-out':
-            styling = 'fa-solid fa-right-from-bracket'
+            styling = 'fa-solid fa-person-from-portal'
             break
         case 'wall':
             styling = 'fa-solid fa-block-brick'
