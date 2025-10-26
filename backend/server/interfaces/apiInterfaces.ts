@@ -30,8 +30,8 @@ export interface Response {
 }
 
 export interface Error {
-    message: string
-    status: number
+    message: string,
+    status?: number
 }
 
 export interface Profile {

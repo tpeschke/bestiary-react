@@ -1,9 +1,6 @@
 import { ArmorCache } from './interfaces/armorInterfaces';
 import { ShieldCache } from './interfaces/shieldInterfaces';
 import { WeaponsCache } from './interfaces/weaponInterfaces';
-import getArmor from './utilities/getArmor';
-import getShield from './utilities/getShields';
-import getWeapons from './utilities/getWeapons';
 
 export default async function collectGearCache(): Promise<any> {
     let armor: ArmorCache = {
@@ -18,6 +15,7 @@ export default async function collectGearCache(): Promise<any> {
         list: [],
         dictionary: {}
     }
+
 
     // armor = await getArmor()
     // shields = await getShield()

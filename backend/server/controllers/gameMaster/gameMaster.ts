@@ -26,6 +26,6 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)
     } else {
-        sendErrorForward('404', { status: 404, message: 'No Entry Found'}, response)
+        sendErrorForward('404', { message: 'No Entry Found'}, response)
     }
 }

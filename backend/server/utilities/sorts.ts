@@ -23,7 +23,7 @@ export function sortOutAnyToTheBottom(a: Conflict, b: Conflict): number {
 export function objectifyItemArray(itemArray: Item[]): Object {
     let itemObject: any = {}
     itemArray.forEach(item => {
-        itemObject[item.itemcategory] = item
+        itemObject[item.category] = item
     })
     return itemObject
 }
