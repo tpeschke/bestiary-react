@@ -113,14 +113,22 @@ function formatItemsForRequest(monsterMaxPoints: number, timesToRoll: number, it
     let itemArray: ItemsToRequest[] = []
     if (items.length > 0) {
         Array.from(Array(timesToRoll).keys()).forEach(_ => {
+
             items.forEach((item: LootItem) => {
-                const { number, chance, detailing, itemcategory, materialrarity, wear } = item
+                const { number, chance, detail, category, rarity, wear } = item
                 const baseChance = generateItemChance(monsterMaxPoints, chance) * multiplier
+
+                const rarityNumberDictionary: {[key: string]: number} = {
+                    'C': 1,
+                    'U': 2,
+                    'R': 3,
+                    'L': 4
+                }
 
                 Array.from(Array(number).keys()).forEach(_ => {
                     const itemChange = Math.floor(Math.random() * 101)
                     if (itemChange <= baseChance) {
-                        itemArray.push({ detailing, itemcategory, materialrarity, wear: rollDice(wear) })
+                        itemArray.push({ detail, category, rarity: rarityNumberDictionary[rarity], wear: rollDice(wear) })
                     }
                 })
             })

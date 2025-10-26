@@ -13,9 +13,9 @@ export interface LootObject {
 export interface LootItem {
     number: number, 
     chance: lootScalingOptions, 
-    detailing: number, 
-    itemcategory: number, 
-    materialrarity: number, 
+    detail: number, 
+    category: number, 
+    rarity: number, 
     wear: string
 }
 
@@ -32,9 +32,9 @@ export interface LootScroll {
 export type LootToRequest = string | ItemsToRequest
 
 export interface ItemsToRequest {
-    detailing: number,
-    itemcategory: number,
-    materialrarity: number,
+    detail: number,
+    category: number,
+    rarity: number,
     wear: number
 }
 

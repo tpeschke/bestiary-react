@@ -37,9 +37,9 @@ export interface Alm {
 export interface Item {
     id?: number,
     beastid: number,
-    itemcategory: number,
-    materialrarity: string,
-    detailing: string,
+    category: number,
+    rarity: string,
+    detail: string,
     wear: string,
     chance: string,
     number: number

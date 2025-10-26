@@ -2,7 +2,7 @@
  * DON'T EXPOSE TO USERS
  * due to eval
  */
-export default function rollDice(diceString: string | number): number {
+export default function rollDice(diceString: string | number = 0): number {
     if (typeof (diceString) === 'number') {
         return getRandomValueByMaxNumber(diceString)
     } else {

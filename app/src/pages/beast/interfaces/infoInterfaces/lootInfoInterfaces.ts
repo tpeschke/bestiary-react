@@ -39,9 +39,9 @@ export interface Alm {
 export interface Item {
     number: number, 
     chance: lootScalingOptions, 
-    detailing: number, 
-    itemcategory: number, 
-    materialrarity: number, 
+    detail: number, 
+    category: number, 
+    rarity: number, 
     wear: string
 }
 export interface Pleroma {

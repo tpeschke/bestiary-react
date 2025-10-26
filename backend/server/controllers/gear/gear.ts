@@ -19,9 +19,9 @@ export default async function collectGearCache(): Promise<any> {
         dictionary: {}
     }
 
-    armor = await getArmor()
-    shields = await getShield()
-    weapons = await getWeapons()
+    // armor = await getArmor()
+    // shields = await getShield()
+    // weapons = await getWeapons()
 
     return {
         armor,
