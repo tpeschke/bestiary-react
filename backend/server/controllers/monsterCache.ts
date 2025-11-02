@@ -1,6 +1,8 @@
 import { Beast } from '@bestiary/common/interfaces/beast/beast'
 import { consoleLogErrorNoFile } from '../utilities/sendingFunctions'
 import { getGMVersionOfBeastFromDB } from './gameMaster/utilities/getUtilities/getBeast'
+import { getFavoriteMonsters, getFreeAndUpdating } from '../db/cache/monster'
+import query from '../db/database'
 
 const consoleLogError = consoleLogErrorNoFile('monster cache')
 
@@ -19,9 +21,9 @@ export function getMonsterFromCache(beastId: number): Beast | null {
     return monsterCache[beastId];
 }
 
-export async function reCacheMonsterIfItExists(databaseConnection: any, beastID: number) {
+export async function reCacheMonsterIfItExists(beastID: number) {
     if (monsterCache[beastID]) {
-        const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, beastID, {isEditing: false}).catch((error: Error) => consoleLogError('get main', error))
+        const beast: Beast | void = await getGMVersionOfBeastFromDB(beastID, {isEditing: false}).catch((error: Error) => consoleLogError('get main', error))
         if (beast) {
             monsterCache[beastID] = beast
             console.log('RE-CACHE COMPLETE')
@@ -31,17 +33,17 @@ export async function reCacheMonsterIfItExists(databaseConnection: any, beastID:
     return true
 }
 
-export async function collectMonsterCache(databaseConnection: any, gearCache: any): Promise<void> {
-    const freeIds: MonsterId[] = await databaseConnection.cache.monster.freeAndUpdating().catch((error: Error) => consoleLogError('get free beasts ids', error))
+export async function collectMonsterCache(gearCache: any): Promise<void> {
+    const freeIds: MonsterId[] = await query(getFreeAndUpdating)
 
     const numberOfFavoritesToGet = Math.max(100 - freeIds.length, 0)
-    const monsterIds: MonsterId[] = [...freeIds, ...await databaseConnection.cache.monster.favorites(numberOfFavoritesToGet).catch((error: Error) => consoleLogError('get free beasts ids', error))]
+    const monsterIds: MonsterId[] = [...freeIds, ...await query(getFavoriteMonsters, numberOfFavoritesToGet)]
 
-    getMonsterFromId(databaseConnection, monsterIds, 0, gearCache)
+    getMonsterFromId(monsterIds, 0, gearCache)
 }
 
-async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[], index: number, gearCache: any) {
-    const beast: Beast | void = await getGMVersionOfBeastFromDB(databaseConnection, monsterIds[index].beastid, {isEditing: false, gearCache}).catch((error: Error) => consoleLogError('get main', error))
+async function getMonsterFromId(monsterIds: MonsterId[], index: number, gearCache: any) {
+    const beast: Beast | void = await getGMVersionOfBeastFromDB(monsterIds[index].beastid, {isEditing: false, gearCache}).catch((error: Error) => consoleLogError('get main', error))
 
     if (beast) {
         monsterCache[monsterIds[index].beastid] = beast
@@ -53,6 +55,6 @@ async function getMonsterFromId(databaseConnection: any, monsterIds: MonsterId[]
         console.log('------------------------- ')
     } else {
         console.log(`...Collecting Number ${index + 1} of ${monsterIds.length}`)
-        getMonsterFromId(databaseConnection, monsterIds, ++index, gearCache)
+        getMonsterFromId(monsterIds, ++index, gearCache)
     }
 }

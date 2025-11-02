@@ -1,0 +1,22 @@
+export const getCharacteristicsForEdit = `select c.*, r.socialrole, r.socialpoints from bbconflict c
+left join bbroles r on r.id = c.socialroleid
+where c.beastid = $1`
+
+export const getMonsterCharacteristics = `select t.*, r.socialrole, r.socialpoints from ( 
+    (select id, value, beastid, type, socialroleid, allroles, trait, severity, strength, adjustment from bbconflict  
+    where beastid = $1 and type != 'h' and type != 't' and type != 'c')
+union 
+    (select id, value, beastid, type, socialroleid, allroles,
+        REPLACE(trait, 'Any', (SELECT conviction FROM srdconvictions s 
+                                ORDER BY random()+bbconflict.id LIMIT 1)) as trait, severity, strength, adjustment 
+        from bbconflict  
+        where beastid = $1 and (type = 't' or type = 'c' or type is null))
+union 
+    (select id, value, beastid, type, socialroleid, allroles,
+        REPLACE(trait, 'Any', (SELECT description FROM srddescriptions s 
+                                ORDER BY random()+bbconflict.id LIMIT 1)) as trait, severity, strength, adjustment
+        from bbconflict  
+        where beastid = $1 and type = 'h')
+      		) t
+left join bbroles r on r.id = t.socialroleid
+order by random();`

@@ -1,26 +1,28 @@
+import { getMonsterPlayerInfo } from "../db/beast/player"
+import query from "../db/database"
+import { addMonsterToUserFavorites, getSingleUserFavorite, getUserFavorites, removeMonsterFromUserFavoriates } from "../db/user/favorites"
+import { addUserNotes, getCountOfUserNotes, getUserNotesForMonster, updateUserNotes } from "../db/user/notes"
 import { Response, Request, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
-import getDatabaseConnection from "../utilities/databaseConnection"
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import { getArtistInfo } from "./gameMaster/utilities/getUtilities/utilities/miscInfo/getMiscInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
 export async function getPlayerVersionOfBeast(request: BasicParamsRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const beastId: number = +request.params.beastId
     const { user } = request
 
     if (user && user.patreon && user.patreon > 3) {
         checkForContentTypeBeforeSending(response, { color: 'green', message: 'You\'re a GM' })
     } else {
-        let [playerInfo] = await databaseConnection.beast.player.info(beastId).catch((error: Error) => sendErrorForward('player version of beast', error, response))
+        let [playerInfo] = await query(getMonsterPlayerInfo, beastId)
 
-        const artistInfo = await getArtistInfo(databaseConnection, playerInfo.id, false)
+        const artistInfo = await getArtistInfo(playerInfo.id, false)
         playerInfo.artistInfo = artistInfo.genericArtistInfo
 
         if (user) {
-            const [notes] = await databaseConnection.user.notes.get(beastId, user.id).catch((error: Error) => sendErrorForward('player notes of beast', error, response))
+            const [notes] = await query(getUserNotesForMonster, [beastId, user.id])
             playerInfo.notes = notes || ''
             checkForContentTypeBeforeSending(response, playerInfo)
         } else {
@@ -42,15 +44,14 @@ interface Body {
 }
 
 export async function addPlayerNotes(request: NoteRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const { user } = request
     const { beastId, notes } = request.body
 
     if (user && notes.id) {
-        await databaseConnection.user.notes.update(notes.id, notes.notes).catch((error: Error) => sendErrorForward('update notes', error, response))
+        await query(updateUserNotes, [notes.id, notes.notes])
         checkForContentTypeBeforeSending(response, { color: 'green', message: 'Notes Saved!', noteId: notes.id })
     } else if (user) {
-        const [count] = await databaseConnection.user.notes.number(user.id).catch((error: Error) => sendErrorForward('check user note count', error, response))
+        const [count] = await query(getCountOfUserNotes, user.id)
 
         const isAboveDefaultNumberOfNotes = count >= 50
         const patreon = user.patreon ?? 0
@@ -59,7 +60,7 @@ export async function addPlayerNotes(request: NoteRequest, response: Response) {
         if (isAboveDefaultNumberOfNotes || isAboveNumberOfNotesForPatrons) {
             request.status(401).send('You need to upgrade your Patreon to add more notes')
         } else {
-            const [result] = await databaseConnection.user.notes.add(beastId, user.id, notes.notes).catch((error: Error) => sendErrorForward('save notes', error, response))
+            const [result] = await query(addUserNotes, [beastId, user.id, notes.notes])
             checkForContentTypeBeforeSending(response, { color: 'green', message: 'Notes Saved!', noteId: result.id })
         }
     } else {
@@ -77,20 +78,19 @@ interface Body {
 }
 
 export async function updateFavoriteStatus(request: FavoriteRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const userID = request.user?.id
     const { beastID, newStatus } = request.body
 
     if (newStatus) {
-        await databaseConnection.user.favorite.add(userID, beastID)
-        const [newFavoriteCatalog] = await databaseConnection.user.favorite.getOne(userID, beastID)
+        await query(addMonsterToUserFavorites, [userID, beastID])
+        const [newFavoriteCatalog] = await query(getSingleUserFavorite, [userID, beastID])
         checkForContentTypeBeforeSending(response, newFavoriteCatalog)
     } else {
-        await databaseConnection.user.favorite.delete(userID, beastID)
+        await query(removeMonsterFromUserFavoriates, [userID, beastID])
         checkForContentTypeBeforeSending(response, {beastID: beastID})
     }
 }
 
-export async function getFavorites(databaseConnection: any, userID: number) {
-    return await databaseConnection.user.favorite.getAll(userID)
+export async function getFavorites(userID: number) {
+    return await query(getUserFavorites, userID)
 }

@@ -2,6 +2,9 @@ import { NormalArchetypeObject, MonsterArchetypeObject, ConflictObject, Conflict
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator";
 import { sortByRank, sortOutAnyToTheBottom } from "../../../../../utilities/sorts";
+import query from "../../../../../db/database";
+import { getCharacteristicsForEdit, getMonsterCharacteristics } from "../../../../../db/beast/conflict";
+import { getRandomArchetype, getRandomMonsterArchetypes } from "../../../../../db/beast/archetype";
 
 interface archetypeInfo {
     archetype: string
@@ -12,13 +15,13 @@ export interface GetArchetypesReturn {
     monsterArchetypes: MonsterArchetypeObject
 }
 
-export async function getArchetypes(databaseConnection: any, isEditing: boolean): Promise<GetArchetypesReturn> {
+export async function getArchetypes(isEditing: boolean): Promise<GetArchetypesReturn> {
     isEditing
-    const normalArchetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.get()
+    const normalArchetypeInfo: archetypeInfo[] = await query(getRandomArchetype)
 
     const chance = Math.floor(Math.random() * 100)
 
-    const monsterArchetypeInfo: archetypeInfo[] = await databaseConnection.beast.archetype.getMonster();
+    const monsterArchetypeInfo: archetypeInfo[] = await query(getRandomMonsterArchetypes)
 
     return {
         normalArchetypes: {
@@ -34,13 +37,13 @@ export async function getArchetypes(databaseConnection: any, isEditing: boolean)
     }
 }
 
-export async function getConflict(databaseConnection: any, beastId: number, isEditing: boolean,
+export async function getConflict(beastId: number, isEditing: boolean,
     traitlimit: number, relationshiplimit: number, flawlimit: number, socialpoints: number): Promise<ConflictObject> {
 
     let conflict: ConflictObject = { descriptions: [], convictions: [], relationships: [], flaws: [], burdens: [] }
 
     if (isEditing) {
-        const characteristics: UnformatedConflict[] = await databaseConnection.beast.conflict.getEdit(beastId)
+        const characteristics: UnformatedConflict[] = await query(getCharacteristicsForEdit, beastId)
 
         characteristics.forEach((characteristic: UnformatedConflict) => {
             if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
@@ -57,7 +60,7 @@ export async function getConflict(databaseConnection: any, beastId: number, isEd
         })
         return conflict
     } else {
-        const characteristics: UnformatedConflict[] = await databaseConnection.beast.conflict.get(beastId)
+        const characteristics: UnformatedConflict[] = await query(getMonsterCharacteristics, beastId)
 
         characteristics.forEach((characteristic: UnformatedConflict) => {
             if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {

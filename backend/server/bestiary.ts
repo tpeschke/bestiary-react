@@ -15,9 +15,9 @@ import massive from 'massive'
 // @ts-ignore
 import path from 'path'
 
-import { server, databaseCredentials, fakeAuth, collectMonsterCacheOn, domain, secret, callbackURL, clientID, clientSecret } from './server-config'
+import { server, fakeAuth, collectMonsterCacheOn, domain, secret, callbackURL, clientID, clientSecret } from './server-config'
 
-import { Error, Response, Request } from './interfaces/apiInterfaces'
+import { Response, Request } from './interfaces/apiInterfaces'
 
 import authRoutesWithoutPassword from './routes/authentication'
 import accessRoutes from './routes/access'
@@ -28,11 +28,12 @@ import imageRoutes from './routes/image'
 import searchRoutes from './routes/search'
 import listRoutes from './routes/list'
 
-import { getDatabaseConnectionViaApp } from './utilities/databaseConnection'
 import { collectCatalog } from './controllers/catalog'
 import { collectMonsterCache } from './controllers/monsterCache'
 import collectGearCache from './controllers/gear/gear'
 import { Profile } from './interfaces/apiInterfaces'
+import { createUser, findSession, findUser } from './db/user/basicSQL'
+import query from './db/database'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -55,9 +56,9 @@ passport.use(new Auth0Strategy({
 }, async (accessToken: string, refreshToken: string, extraParams: Object, profile: Profile, finishingCallback: Function) => {
     accessToken; refreshToken; extraParams;
     const { displayName, user_id: userID } = profile;
-    const [user] = await getDatabaseConnectionViaApp(app).user.find(userID)
+    const [user] = await query(findUser, userID)
     if (!user) {
-        await getDatabaseConnectionViaApp(app).user.create(displayName, userID)
+         await query(createUser, [displayName, userID])
     }
     return finishingCallback(null, user.id)
 }))
@@ -66,7 +67,7 @@ passport.serializeUser((id: any, done: any) => {
     done(null, id)
 })
 passport.deserializeUser(async (id: any, done: any) => {
-    const [user] = await getDatabaseConnectionViaApp(app).user.findSession(id)
+    const [user] = await query(findSession, id)
     done(null, user);
 })
 
@@ -92,19 +93,14 @@ app.get('/*', (request: Request, response: Response) => {
 
 // ================================== \\
 
-massive(databaseCredentials).then((dbI: any) => {
-    app.set('db', dbI)
-    app.listen(server, async () => {
-        const databaseConnection = getDatabaseConnectionViaApp(app)
+app.listen(server, async () => {
+    const gearCache = await collectGearCache()
+    app.set('gearCache', gearCache)
 
-        const gearCache = await collectGearCache()
-        app.set('gearCache', gearCache)
+    collectCatalog()
+    if (collectMonsterCacheOn) {
+        collectMonsterCache(gearCache)
+    }
 
-        collectCatalog(databaseConnection)
-        if (collectMonsterCacheOn) {
-            collectMonsterCache(databaseConnection, gearCache)
-        }
-
-        console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)
-    })
-}).catch((e: Error) => console.log('DB connection error', e))
+    console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)
+})

@@ -1,1 +1,0 @@
-select * from bbreagents where beastid = $1 order by name

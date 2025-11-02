@@ -1,9 +1,11 @@
 import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { calculateRankForSkill } from "@bestiary/common/utilities/scalingAndBonus/skill/skillRankCalculator"
 import { BackendSkill } from "../../../../../../interfaces/beast/GetInterfaces"
+import query from "../../../../../../db/database"
+import { getMonsterSkills } from "../../../../../../db/beast/skill"
 
-export async function getSkills(databaseConnection: any, beastId: number, skillpoints: number): Promise<Skill[]> {
-    const skills: Skill[] = await databaseConnection.beast.skill.get(beastId)
+export async function getSkills(beastId: number, skillpoints: number): Promise<Skill[]> {
+    const skills: Skill[] = await query(getMonsterSkills, beastId)
 
     return skills.map(skill => formatSkills(skillpoints, skill)).sort((a, b) => b.rank - a.rank)
 }

@@ -1,1 +1,0 @@
-select * from bbloot where beastid = $1 order by loot

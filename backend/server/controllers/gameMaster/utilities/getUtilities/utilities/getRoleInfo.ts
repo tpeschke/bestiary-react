@@ -5,6 +5,8 @@ import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/comba
 import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
 import { calculateStressAndPanic } from "@bestiary/common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
 import { sortTemplateRoles } from "../../../../../utilities/sorts"
+import query from "../../../../../db/database"
+import { getMonsterRoleInfo } from "../../../../../db/beast/role"
 
 export interface UnsortedRole {
     id: string,
@@ -42,8 +44,8 @@ export interface UnsortedRole {
     hasmonsterarchetypes: boolean,
 }
 
-export async function getRoles(databaseConnection: any, beastId: number, beastName: string): Promise<Role[]> {
-    const roles: UnsortedRole[] = await databaseConnection.beast.role.get(beastId)
+export async function getRoles(beastId: number, beastName: string): Promise<Role[]> {
+    const roles: UnsortedRole[] = await query(getMonsterRoleInfo, beastId)
 
     if (beastName.includes('Template')) {
         return roles.sort(sortTemplateRoles).map(formatUnsortedRoles)

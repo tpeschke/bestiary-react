@@ -28,6 +28,8 @@ import { getObstacles } from "./utilities/skillRelatedInfo/getObstacles"
 import { getSkills } from "./utilities/skillRelatedInfo/getSkills"
 import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
+import query from "../../../../db/database"
+import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -35,10 +37,10 @@ interface GetBeastOptions {
     gearCache?: any | undefined
 }
 
-export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId: number, options: GetBeastOptions = { isEditing: false }): Promise<Beast> {
+export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBeastOptions = { isEditing: false }): Promise<Beast> {
     const { isEditing, userID, gearCache } = options
 
-    const [unsortedBeastInfo] = await databaseConnection.beast.get(beastId)
+    const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
@@ -163,19 +165,19 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
     let promiseArray: any[] = []
 
     if (userID) {
-        promiseArray.push(getFavorite(databaseConnection, beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
-        promiseArray.push(getNotes(databaseConnection, beast.id, userID).then((notes: Notes) => beast.playerInfo.notes = notes))
+        promiseArray.push(getFavorite(beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
+        promiseArray.push(getNotes(beast.id, userID).then((notes: Notes) => beast.playerInfo.notes = notes))
     }
 
-    promiseArray.push(getScenarios(databaseConnection, beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
-    promiseArray.push(getFolklore(databaseConnection, beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
-    promiseArray.push(getTables(databaseConnection, beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables))
+    promiseArray.push(getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
+    promiseArray.push(getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
+    promiseArray.push(getTables(beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables))
 
-    promiseArray.push(getArtistInfo(databaseConnection, beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
+    promiseArray.push(getArtistInfo(beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
 
-    promiseArray.push(getVariants(databaseConnection, beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
-    promiseArray.push(getLocations(databaseConnection, beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
-    promiseArray.push(getTypes(databaseConnection, beast.id).then((types: BeastType[]) => {
+    promiseArray.push(getVariants(beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
+    promiseArray.push(getLocations(beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
+    promiseArray.push(getTypes(beast.id).then((types: BeastType[]) => {
         const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
         if (isABeast) {
             const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
@@ -184,42 +186,42 @@ export async function getGMVersionOfBeastFromDB(databaseConnection: any, beastId
 
         beast.linkedInfo.types = types
     }))
-    promiseArray.push(getClimates(databaseConnection, beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
+    promiseArray.push(getClimates(beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
 
-    promiseArray.push(getRoles(databaseConnection, beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
+    promiseArray.push(getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
 
-    promiseArray.push(getMovement(databaseConnection, beast.id, combatpoints, combatrole).then((movements: (Movement | null)[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(databaseConnection, beast.id, combatpoints, combatrole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }))
+    promiseArray.push(getMovement(beast.id, combatpoints, combatrole).then((movements: (Movement | null)[]) => beast.combatInfo.movements = movements))
+    promiseArray.push(getCombatStats(beast.id, combatpoints, combatrole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }))
 
-    promiseArray.push(getLocationalVitalities(databaseConnection, beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
+    promiseArray.push(getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 
-    promiseArray.push(getSkills(databaseConnection, beast.id, skillpoints).then((skills: Skill[]) => beast.skillInfo.skills = skills))
-    promiseArray.push(getChallenges(databaseConnection, beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
-    promiseArray.push(getObstacles(databaseConnection, beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
+    promiseArray.push(getSkills(beast.id, skillpoints).then((skills: Skill[]) => beast.skillInfo.skills = skills))
+    promiseArray.push(getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
+    promiseArray.push(getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
-    promiseArray.push(getConflict(databaseConnection, beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
-    promiseArray.push(getArchetypes(databaseConnection, isEditing).then((archetypeInfo: GetArchetypesReturn) => {
+    promiseArray.push(getConflict(beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
+    promiseArray.push(getArchetypes(isEditing).then((archetypeInfo: GetArchetypesReturn) => {
         beast.socialInfo.archetypeInfo = {
             ...beast.socialInfo.archetypeInfo,
             ...archetypeInfo
         }
     }))
 
-    promiseArray.push(getPleroma(databaseConnection, beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
-    promiseArray.push(getSpecificLoots(databaseConnection, beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
+    promiseArray.push(getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
+    promiseArray.push(getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
 
-    promiseArray.push(getLairBasic(databaseConnection, beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))
-    promiseArray.push(getLairAlms(databaseConnection, beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }))
-    promiseArray.push(getLairItems(databaseConnection, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }))
-    promiseArray.push(getLairScrolls(databaseConnection, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }))
+    promiseArray.push(getLairBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))
+    promiseArray.push(getLairAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }))
+    promiseArray.push(getLairItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }))
+    promiseArray.push(getLairScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }))
 
-    promiseArray.push(getCarriedBasic(databaseConnection, beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }))
-    promiseArray.push(getCarriedAlms(databaseConnection, beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }))
-    promiseArray.push(getCarriedItems(databaseConnection, beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }))
-    promiseArray.push(getCarriedScrolls(databaseConnection, beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }))
+    promiseArray.push(getCarriedBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }))
+    promiseArray.push(getCarriedAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }))
+    promiseArray.push(getCarriedItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }))
+    promiseArray.push(getCarriedScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }))
 
-    promiseArray.push(getCasting(databaseConnection, beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
-    promiseArray.push(getSpells(databaseConnection, beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
+    promiseArray.push(getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
+    promiseArray.push(getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
 
     return Promise.all(promiseArray).then(_ => beast)
 }

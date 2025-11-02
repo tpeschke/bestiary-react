@@ -9,6 +9,19 @@ import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../interfa
 import rollDice from "../../../../../../utilities/diceRoller"
 import { isOwner } from "../../../../../../utilities/ownerAccess"
 import { objectifyItemArray } from "../../../../../../utilities/sorts"
+import query from "../../../../../../db/database"
+import { getAllArtists, getMonsterArtist } from "../../../../../../db/beast/artist"
+import { getVariantInfo } from "../../../../../../db/beast/variant"
+import { getAllLocations, getMonsterLocations } from "../../../../../../db/beast/locations"
+import { getMonsterTypes } from "../../../../../../db/beast/type"
+import { getAllClimates, getMonsterClimates } from "../../../../../../db/beast/climate"
+import { getMonsterLocationalVitalities } from "../../../../../../db/beast/locationalVitality"
+import { getMonsterPleroma } from "../../../../../../db/beast/pleroma"
+import { getSpecificMonsterLoot } from "../../../../../../db/loot/specific"
+import { getMonsterLairAlmScripts, getMonsterLairBasicLoot, getMonsterLairItems, getMonsterLairScrolls } from "../../../../../../db/loot/lair"
+import { getMonsterCarriedAlmScript, getMonsterCarriedBasic, getMonsterCarriedItems, getMonsterCarriedScrolls } from "../../../../../../db/loot/carried"
+import { getMonsterCasting } from "../../../../../../db/beast/casting"
+import { getMonsterSpells } from "../../../../../../db/beast/spell"
 
 export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {
@@ -24,8 +37,8 @@ export function hasAppropriatePatreonLevel(user: User | null | undefined, beastP
     return 'player'
 }
 
-export async function getTypes(databaseConnection: any, beastId: number): Promise<BeastType[]> {
-    const beastTypes: BeastType[] = await databaseConnection.beast.type.get(beastId)
+export async function getTypes(beastId: number): Promise<BeastType[]> {
+    const beastTypes: BeastType[] = await query(getMonsterTypes, beastId)
 
     return beastTypes.map(type => {
         return {
@@ -34,22 +47,22 @@ export async function getTypes(databaseConnection: any, beastId: number): Promis
     })
 }
 
-export async function getClimates(databaseConnection: any, beastId: number): Promise<ClimateObject> {
-    const beast: Climate[] = await databaseConnection.beast.climate.get(beastId)
-    const allclimates = await databaseConnection.beast.climate.getAll()
+export async function getClimates(beastId: number): Promise<ClimateObject> {
+    const beast: Climate[] = await query(getMonsterClimates, beastId)
+    const allclimates = await query(getAllClimates)
     return {
         beast,
         allclimates
     }
 }
 
-export async function getArtistInfo(databaseConnection: any, beastId: number, isEditing: boolean): Promise<ArtistObject> {
+export async function getArtistInfo(beastId: number, isEditing: boolean): Promise<ArtistObject> {
     let allartists: ArtistInfo[] = []
     if (isEditing) {
-        allartists = await databaseConnection.beast.artist.getAll(beastId)
+        allartists = await query(getAllArtists, beastId)
     }
 
-    const genericArtistInfo: ArtistInfo[] = await databaseConnection.beast.artist.get(beastId)
+    const genericArtistInfo: ArtistInfo[] = await query(getMonsterArtist, beastId)
 
     return {
         genericArtistInfo: genericArtistInfo[0],
@@ -58,13 +71,13 @@ export async function getArtistInfo(databaseConnection: any, beastId: number, is
     }
 }
 
-export async function getLocations(databaseConnection: any, beastId: number, isEditing: boolean): Promise<LocationObject> {
+export async function getLocations(beastId: number, isEditing: boolean): Promise<LocationObject> {
     let alllocations: Location[] = []
     if (isEditing) {
-        alllocations = await databaseConnection.beast.location.getAll(beastId)
+        alllocations = await query(getAllLocations, beastId)
     }
 
-    const beast: Location[] = await databaseConnection.beast.location.get(beastId)
+    const beast: Location[] = await query(getMonsterLocations, beastId)
 
     return {
         beast,
@@ -72,25 +85,25 @@ export async function getLocations(databaseConnection: any, beastId: number, isE
     }
 }
 
-export async function getVariants(databaseConnection: any, beastId: number): Promise<Variant[]> {
-    return databaseConnection.beast.variant.get(beastId)
+export async function getVariants(beastId: number): Promise<Variant[]> {
+    return query(getVariantInfo, beastId)
 }
 
-export async function getSpecificLoots(databaseConnection: any, beastId: number): Promise<SpecificLoot[]> {
-    return databaseConnection.loot.specific.get(beastId)
+export async function getSpecificLoots(beastId: number): Promise<SpecificLoot[]> {
+    return query(getSpecificMonsterLoot, beastId)
 }
 
-export async function getLairBasic(databaseConnection: any, beastId: number): Promise<Loot> {
-    const [lootInfo] = await databaseConnection.loot.lair.getBasic(beastId)
+export async function getLairBasic(beastId: number): Promise<Loot> {
+    const [lootInfo] = await query(getMonsterLairBasicLoot, beastId)
     return lootInfo
 }
 
-export async function getLairAlms(databaseConnection: any, beastId: number): Promise<Alm[]> {
-    return databaseConnection.loot.lair.getAlm(beastId)
+export async function getLairAlms(beastId: number): Promise<Alm[]> {
+    return query(getMonsterLairAlmScripts, beastId)
 }
 
-export async function getLairItems(databaseConnection: any, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
-    const items: Item[] = await databaseConnection.loot.lair.getItem(beastId)
+export async function getLairItems(beastId: number, isEditing: boolean): Promise<Item[] | Object> {
+    const items: Item[] = await query(getMonsterLairItems, beastId)
 
     if (isEditing) {
         return objectifyItemArray(items)
@@ -99,21 +112,21 @@ export async function getLairItems(databaseConnection: any, beastId: number, isE
     }
 }
 
-export async function getLairScrolls(databaseConnection: any, beastId: number): Promise<Scroll[]> {
-    return databaseConnection.loot.lair.getScroll(beastId)
+export async function getLairScrolls(beastId: number): Promise<Scroll[]> {
+    return query(getMonsterLairScrolls, beastId)
 }
 
-export async function getCarriedBasic(databaseConnection: any, beastId: number): Promise<Loot> {
-    const [lootInfo] = await databaseConnection.loot.carried.getBasic(beastId)
+export async function getCarriedBasic(beastId: number): Promise<Loot> {
+    const [lootInfo] = await query(getMonsterCarriedBasic, beastId)
     return lootInfo
 }
 
-export async function getCarriedAlms(databaseConnection: any, beastId: number): Promise<Alm[]> {
-    return databaseConnection.loot.carried.getAlm(beastId)
+export async function getCarriedAlms(beastId: number): Promise<Alm[]> {
+    return query(getMonsterCarriedAlmScript, beastId)
 }
 
-export async function getCarriedItems(databaseConnection: any, beastId: number, isEditing: boolean): Promise<Item[] | Object> {
-    const items: Item[] = await databaseConnection.loot.carried.getItem(beastId)
+export async function getCarriedItems(beastId: number, isEditing: boolean): Promise<Item[] | Object> {
+    const items: Item[] = await query(getMonsterCarriedItems, beastId)
 
     if (isEditing) {
         return objectifyItemArray(items)
@@ -122,16 +135,16 @@ export async function getCarriedItems(databaseConnection: any, beastId: number, 
     }
 }
 
-export async function getCarriedScrolls(databaseConnection: any, beastId: number): Promise<Scroll[]> {
-    return databaseConnection.loot.carried.getScroll(beastId)
+export async function getCarriedScrolls(beastId: number): Promise<Scroll[]> {
+    return query(getMonsterCarriedScrolls, beastId)
 }
 
-export async function getPleroma(databaseConnection: any, beastId: number): Promise<Pleroma[]> {
-    return databaseConnection.beast.pleroma.get(beastId)
+export async function getPleroma(beastId: number): Promise<Pleroma[]> {
+    return query(getMonsterPleroma, beastId)
 }
 
-export async function getLocationalVitalities(databaseConnection: any, beastId: number): Promise<LocationVitality[]> {
-    const returnedVitalities = await databaseConnection.beast.locationalVitality.get(beastId)
+export async function getLocationalVitalities(beastId: number): Promise<LocationVitality[]> {
+    const returnedVitalities = await query(getMonsterLocationalVitalities, beastId)
 
     return returnedVitalities.map((vitality: LocationVitality) => {
         return {
@@ -141,16 +154,16 @@ export async function getLocationalVitalities(databaseConnection: any, beastId: 
     })
 }
 
-export async function getFolklore(databaseConnection: any, beastId: number): Promise<Folklore[]> {
-    return databaseConnection.beast.folklore.get(beastId)
+export async function getFolklore(beastId: number): Promise<Folklore[]> {
+    return query(getMonsterFolklore, beastId)
 }
 
-export async function getScenarios(databaseConnection: any, beastId: number): Promise<Scenario[]> {
-    return databaseConnection.beast.scenario.get(beastId)
+export async function getScenarios(beastId: number): Promise<Scenario[]> {
+    return query(getMonsterScenarios, beastId)
 }
 
-export async function getCasting(databaseConnection: any, beastId: number): Promise<Casting> {
-    const [casting] = await databaseConnection.beast.casting.get(beastId)
+export async function getCasting(beastId: number): Promise<Casting> {
+    const [casting] = await query(getMonsterCasting, beastId)
     const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
 
     // currently this is a string but, as I migrate monsters, I want to change it over to just use the index so this is just a temporary stopgap
@@ -170,6 +183,5 @@ export async function getCasting(databaseConnection: any, beastId: number): Prom
     }
 }
 
-export async function getSpells(databaseConnection: any, beastId: number): Promise<Spell[]> {
-    return databaseConnection.beast.spell.get(beastId)
-}
+export async function getSpells(beastId: number): Promise<Spell[]> {
+    return query(getMonsterSpells, beastId)}

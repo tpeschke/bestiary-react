@@ -1,16 +1,17 @@
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
+import query from "../../../../../db/database"
 
-export async function getFavorite(databaseConnection: any, beastId: number, userId: number): Promise<boolean> {
+export async function getFavorite(beastId: number, userId: number): Promise<boolean> {
     if (userId) {
-        const result = await databaseConnection.user.favorite.get(userId, beastId)
+        const result = await query(getWhetherMonsterIsFavorite, [userId, beastId])
         return result.length > 0
     } else {
         return false
     }
 }
 
-export async function getNotes(databaseConnection: any, beastId: number, userId: number): Promise<Notes> {
-    const [userNotes] = await databaseConnection.user.notes.get(beastId, userId)
+export async function getNotes(beastId: number, userId: number): Promise<Notes> {
+    const [userNotes] = await query(getUserNotesForMonster, [beastId, userId])
     if (userNotes) {
         return userNotes
     }

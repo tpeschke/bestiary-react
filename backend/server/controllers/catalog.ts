@@ -1,11 +1,10 @@
-import { Request, Response, Error } from "../interfaces/apiInterfaces"
+import { getCatalogTilesByLetter, getFreeCatalogTiles, getRolesForCatalogTile, getTemplateForCatalog, getTemplateRolesForCatalogTile } from "../db/cache/catalog"
+import query from "../db/database"
+import { Request, Response } from "../interfaces/apiInterfaces"
 import { BeastTile, Role } from "../interfaces/catalogInterfaces"
-import getDatabaseConnection from "../utilities/databaseConnection"
 
-import { consoleLogErrorNoFile, checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
+import { checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
 import { getFavorites } from "./player"
-
-const consoleLogError = consoleLogErrorNoFile('catalog')
 
 interface Catalog {
     freeBeasts: BeastTile[],
@@ -20,8 +19,7 @@ let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favor
 export async function getCatalog(request: Request, response: Response) {
     if (request.user?.id) {
         const { id: userID } = request.user
-        const databaseConnection = getDatabaseConnection(request)
-        const favorites = await getFavorites(databaseConnection, userID)
+        const favorites = await getFavorites(userID)
         checkForContentTypeBeforeSending(
             response,
             {
@@ -34,13 +32,13 @@ export async function getCatalog(request: Request, response: Response) {
     }
 }
 
-export async function collectCatalog(databaseConnection: any) {
-    let freeBeasts: BeastTile[] = await databaseConnection.cache.catalog.free().catch((error: Error) => consoleLogError('get free beasts', error))
+export async function collectCatalog() {
+    let freeBeasts: BeastTile[] = await query(getFreeCatalogTiles)
 
     if (freeBeasts.length > 0) { newCache.freeBeasts = freeBeasts }
 
     freeBeasts.forEach(async (beast: BeastTile, index: number) => {
-        beast.roles = await databaseConnection.cache.catalog.role(beast.id).catch((error: Error) => consoleLogError('get roles for free beasts', error))
+        beast.roles = await query(getRolesForCatalogTile, beast.id)
 
         if (!beast.defaultrole && beast.roles.length > 0) { beast.defaultrole = beast.roles[0].id }
 
@@ -55,11 +53,11 @@ export async function collectCatalog(databaseConnection: any) {
         freeBeasts[index] = beast
     })
 
-    let templateBeasts = await databaseConnection.cache.catalog.template().catch((error: Error) => consoleLogError('templates catagory', error))
+    let templateBeasts: BeastTile[] = await query(getTemplateForCatalog)
     if (templateBeasts.length > 0) { newCache.templates = templateBeasts }
 
     templateBeasts.forEach(async (beast: BeastTile, index: number) => {
-        beast.roles = await databaseConnection.cache.catalog.roleTemplate(beast.id).catch((error: Error) => consoleLogError('collect roles for templates', error))
+        beast.roles = await query(getTemplateRolesForCatalogTile, beast.id)
 
         if (!beast.defaultrole && beast.roles.length > 0) { beast.defaultrole = beast.roles[0].id }
 
@@ -74,18 +72,18 @@ export async function collectCatalog(databaseConnection: any) {
         templateBeasts[index] = beast
     })
 
-    collectCache(databaseConnection, 0)
+    collectCache(0)
 }
 
-async function collectCache(databaseConnection: any, index: number) {
+async function collectCache(index: number) {
     let alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     if (alphabet[index]) {
-        let beasts: BeastTile[] = await databaseConnection.cache.catalog.byLetter(alphabet[index]).catch((error: Error) => consoleLogError('get by letter', error))
+        let beasts: BeastTile[] = await query(getCatalogTilesByLetter, alphabet[index])
         if (beasts.length > 0) { newCache.catalogItems.push(beasts) }
 
         beasts.forEach(async (beast: BeastTile, index: number) => {
-            beast.roles = await databaseConnection.cache.catalog.role(beast.id)
+            beast.roles = await query(getRolesForCatalogTile, beast.id)
 
             if (!beast.defaultrole && beast.roles.length > 0) {
                 beast.defaultrole = beast.roles[0].id
@@ -103,7 +101,7 @@ async function collectCache(databaseConnection: any, index: number) {
 
             beasts[index] = beast
         })
-        collectCache(databaseConnection, ++index)
+        collectCache(++index)
     } else {
         catalogCache = newCache
         newCache = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }

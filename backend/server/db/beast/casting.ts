@@ -1,0 +1,1 @@
+export const getMonsterCasting = `select * from bbcasting where beastid = $1`

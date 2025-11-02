@@ -1,0 +1,1 @@
+export const getBasicMonsterInfo = `select * from bbindividualbeast where id = $1`
