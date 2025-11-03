@@ -1,15 +1,17 @@
 import { SearchResult } from "@bestiary/common/interfaces/search"
 import { User } from "../../../interfaces/apiInterfaces"
 import { getRarity } from "../../../utilities/rarity"
+import query from "../../../db/database"
+import { getGMPreview, getPlayerPreview } from "../../../db/search/preview"
 
-export default async function getBeastPreviews(databaseConnection: any, flattenedIDArray: number[], user: User | null | undefined): Promise<SearchResult[]> {
+export default async function getBeastPreviews(flattenedIDArray: number[], user: User | null | undefined): Promise<SearchResult[]> {
     let promiseArray: Promise<SearchResult>[] = []
 
     flattenedIDArray.slice(0, 25).forEach(async (beastID) => {
         if (user?.patreon && user?.patreon >= 3) {
-            promiseArray.push(databaseConnection.search.preview.gm(beastID, user?.id).then(formatResult))
+            promiseArray.push(query(getGMPreview, [beastID, user?.id]).then(formatResult))
         } else {
-            promiseArray.push(databaseConnection.search.preview.player(beastID).then(formatResult))
+            promiseArray.push(query(getPlayerPreview, beastID).then(formatResult))
         }
     })
 

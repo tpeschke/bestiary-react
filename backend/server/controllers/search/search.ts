@@ -17,9 +17,9 @@ export interface SearchReturn {
 }
 
 export default async function search(request: SearchRequest, response: Response) {
-    const idArray = await getIDsFromQuery(databaseConnection, request.query, request.user)
+    const idArray = await getIDsFromQuery(request.query, request.user)
     const flattenedIDArray = flattenIDArray(idArray)
-    const populatedArray = await getBeastPreviews(databaseConnection, flattenedIDArray, request.user)
+    const populatedArray = await getBeastPreviews(flattenedIDArray, request.user)
     
     checkForContentTypeBeforeSending(response, populatedArray)
 }

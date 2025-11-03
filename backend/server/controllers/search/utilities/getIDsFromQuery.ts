@@ -1,81 +1,83 @@
+import query from "../../../db/database";
+import { searchAccess, searchBody, searchChallengeRoles, searchClimate, searchCombatRoles, searchConfrontationRoles, searchMaxChallengeRating, searchMaxCombatRating, searchMaxConfrontationRating, searchMinChallengeRating, searchMinCombatRating, searchName, searchNotes, searchPlayerCanView, searchRarity, searchSize, searchTypes } from "../../../db/search/queryParams";
 import { User } from "../../../interfaces/apiInterfaces";
 import { SearchQuery, SearchReturn } from "../search";
 import getRoleName from "./roleName";
 
-export default async function getIDsFromQuery(query: SearchQuery, user: User | null | undefined): Promise<SearchReturn[][]> {
-    let idArray: SearchReturn[][] = []
+export default async function getIDsFromQuery(searchQuery: SearchQuery, user: User | null | undefined): Promise<SearchReturn[][]> {
+    let idArray: Promise<any[]>[] = []
 
-    for (const item in query) {
+    for (const item in searchQuery) {
         switch (item) {
             case "name":
-                idArray.push(databaseConnection.search.queryParams.name(query.name))
+                idArray.push(query(searchName, searchQuery.name))
                 break;
             case "body":
-                idArray.push(databaseConnection.search.queryParams.body(query.body))
+                idArray.push(query(searchBody, searchQuery.body))
                 break;
             case "minCombatRate":
-                idArray.push(databaseConnection.search.queryParams.minCombatRating(query.minCombatRate))
+                idArray.push(query(searchMinCombatRating, searchQuery.minCombatRate))
                 break;
             case "minChallengeRate":
-                idArray.push(databaseConnection.search.queryParams.minChallengeRating(query.minChallengeRate))
+                idArray.push(query(searchMinChallengeRating, searchQuery.minChallengeRate))
                 break;
             case "minConfrontationRate":
-                idArray.push(databaseConnection.search.queryParams.minConfrontationRating(query.minConfrontationRate))
+                idArray.push(query(searchMinCombatRating, searchQuery.minConfrontationRate))
                 break;
             case "maxCombatRate":
-                idArray.push(databaseConnection.search.queryParams.maxCombatRating(query.maxCombatRate))
+                idArray.push(query(searchMaxCombatRating, searchQuery.maxCombatRate))
                 break;
             case "maxChallengeRate":
-                idArray.push(databaseConnection.search.queryParams.maxChallengeRating(query.maxChallengeRate))
+                idArray.push(query(searchMaxChallengeRating, searchQuery.maxChallengeRate))
                 break;
             case "maxConfrontationRate":
-                idArray.push(databaseConnection.search.queryParams.maxConfrontationRating(query.maxConfrontationRate))
+                idArray.push(query(searchMaxConfrontationRating, searchQuery.maxConfrontationRate))
                 break;
             case "size":
-                idArray.push(databaseConnection.search.queryParams.size(query.size))
+                idArray.push(query(searchSize, searchQuery.size))
                 break;
             case "access":
-                idArray.push(databaseConnection.search.queryParams.access(query.access))
+                idArray.push(query(searchAccess, searchQuery.access))
                 break;
             case "rarity":
-                idArray.push(databaseConnection.search.queryParams.rarity(query.rarity))
+                idArray.push(query(searchRarity, searchQuery.rarity))
                 break;
             case "anyAccess":
-                idArray.push(databaseConnection.search.queryParams.playerView())
+                idArray.push(query(searchPlayerCanView))
                 break;
             case "personalNotes":
                 if (user) {
-                    idArray.push(databaseConnection.search.queryParams.personalNotes(user.id))
+                    idArray.push(query(searchNotes, user.id))
                 }
                 break;
             // TODO: Update to just search using the array so I don't have to iterate through it like this
             case "climate":
-                if (query.climate !== '') {
-                    query.climate.split(',').forEach((climateID: string) => {
-                        idArray.push(databaseConnection.search.queryParams.climate(+climateID))
+                if (searchQuery.climate !== '') {
+                    searchQuery.climate.split(',').forEach((climateID: string) => {
+                        idArray.push(query(searchClimate, +climateID))
                     })
                 }
                 break;
             // TODO: And this one
             case "types":
-                if (query.types !== '') {
-                    query.types.split(',').forEach((typeID: string) => {
-                        idArray.push(databaseConnection.search.queryParams.types(+typeID))
+                if (searchQuery.types !== '') {
+                    searchQuery.types.split(',').forEach((typeID: string) => {
+                        idArray.push(query(searchTypes, +typeID))
                     })
                 }
                 break;
             case "roles":
-                if (query.roles !== '') {
-                    query.roles.split(',').forEach((roleIDString: string) => {
+                if (searchQuery.roles !== '') {
+                    searchQuery.roles.split(',').forEach((roleIDString: string) => {
                         const roleID = +roleIDString
                         const roleName = getRoleName(roleID)
 
                         if (roleID < 11 || roleID === 32 || roleID === 33) {
-                            idArray.push(databaseConnection.search.queryParams.rolesConfrontation(roleName))
+                            idArray.push(query(searchConfrontationRoles, roleName))
                         } else if (roleID > 10 && roleID < 22) {
-                            idArray.push(databaseConnection.search.queryParams.rolesCombat(roleName))
+                            idArray.push(query(searchCombatRoles, roleName))
                         } else {
-                            idArray.push(databaseConnection.search.queryParams.rolesSkill(roleName))
+                            idArray.push(query(searchChallengeRoles, roleName))
                         }
                     })
                 }
