@@ -1,3 +1,5 @@
+import query from "../../../db/database"
+import { getGroupByID, getWeightedGroupLabel } from "../../../db/encounter/group"
 import { GroupInfo, RoleNumbers } from "../../../interfaces/encounterInterfaces"
 
 import { grabRandomElementFromArrayWithIndex } from "../../../utilities/array"
@@ -14,13 +16,13 @@ interface ReturnGroupInfo {
     weight: number
 }
 
-export default async function getGroupInfo(dataBaseConnection: any, beastId: number, numbers: string): Promise<GroupInfo> {
-    const [groupLabel]: ReturnedGroup[] = await dataBaseConnection.encounter.group.getWeighted(beastId)
+export default async function getGroupInfo(beastId: number, numbers: string): Promise<GroupInfo> {
+    const [groupLabel]: ReturnedGroup[] = await query(getWeightedGroupLabel, beastId)
     const totalNumber = getTotalNumber(numbers)
 
     const { label, id: groupId, name: beastName } = groupLabel
     if (label) {
-        const groupInfo: ReturnGroupInfo[] = await dataBaseConnection.encounter.group.getById(beastId, groupId)
+        const groupInfo: ReturnGroupInfo[] = await query(getGroupByID, [beastId, groupId])
 
         if (groupInfo.length > 0) {
             return {

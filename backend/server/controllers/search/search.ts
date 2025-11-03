@@ -1,4 +1,3 @@
-import getDatabaseConnection from "../../utilities/databaseConnection"
 import { Request, Response } from '../../interfaces/apiInterfaces'
 import getIDsFromQuery from "./utilities/getIDsFromQuery"
 import flattenIDArray from "./utilities/flattenIDArray"
@@ -18,8 +17,6 @@ export interface SearchReturn {
 }
 
 export default async function search(request: SearchRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
-
     const idArray = await getIDsFromQuery(databaseConnection, request.query, request.user)
     const flattenedIDArray = flattenIDArray(idArray)
     const populatedArray = await getBeastPreviews(databaseConnection, flattenedIDArray, request.user)

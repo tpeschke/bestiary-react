@@ -1,23 +1,23 @@
 import { Beast } from "@bestiary/common/interfaces/beast/beast";
 import { Request, Response } from "../../../../interfaces/apiInterfaces";
-import getDatabaseConnection from "../../../../utilities/databaseConnection";
 import { isOwner } from "../../../../utilities/ownerAccess";
 import { checkForContentTypeBeforeSending } from "../../../../utilities/sendingFunctions";
 import { reCacheMonsterIfItExists } from "../../../monsterCache";
 import updateAttacks from "./utilities/updateAttacks";
 import updateDefense from "./utilities/updateDefenses";
+import query from "../../../../db/database";
+import { checkIfUserCanEditMonster } from "../../../../db/beast/access";
 
 interface BeastRequest extends Request {
     body: Beast
 }
 
 export async function updateBeast(request: BeastRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const { body: beast, user } = request
     const { id: beastID, combatInfo } = beast
     
-    const result = await databaseConnection.beast.canEdit(beastID)
-    const beastOwnerID = result[0].userid
+    const [result] = await query(checkIfUserCanEditMonster, beastID)
+    const beastOwnerID = result.userid
 
     if (isOwner(user?.id) || beastOwnerID === user?.id) {
         // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
@@ -25,12 +25,12 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         let promiseArray: any = []
 
         const { attacks, defenses } = combatInfo
-        promiseArray.push(updateAttacks(databaseConnection, attacks, beastID))
-        promiseArray.push(updateDefense(databaseConnection, beastID, defenses))
+        promiseArray.push(updateAttacks(attacks, beastID))
+        promiseArray.push(updateDefense(beastID, defenses))
         
         await Promise.all(promiseArray)
 
-        reCacheMonsterIfItExists(databaseConnection, beastID)
+        reCacheMonsterIfItExists(beastID)
 
         checkForContentTypeBeforeSending(response, { beastID })
     } else {

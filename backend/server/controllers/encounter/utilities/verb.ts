@@ -1,8 +1,9 @@
-import { Error } from '../../../interfaces/apiInterfaces'
+import query from '../../../db/database'
+import { getWeightedVerb } from '../../../db/encounter/verb'
 import { Verb } from "../../../interfaces/encounterInterfaces"
 
-export default async function getVerb(dataBaseConnection: any, beastId: number, sendErrorForward: Function): Promise<string> {
-    const [verb]: Verb[] = await dataBaseConnection.encounter.verb.getWeighted(beastId).catch((e: Error) => sendErrorForward('verb weighted', e))
+export default async function getVerb(beastId: number): Promise<string> {
+    const [verb]: Verb[] = await query(getWeightedVerb, beastId)
     if (verb) {
         return verb.verb
     }

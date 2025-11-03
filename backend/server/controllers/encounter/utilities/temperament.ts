@@ -1,8 +1,9 @@
-import { Error } from '../../../interfaces/apiInterfaces'
+import query from "../../../db/database"
+import { getWeightedTemperament } from "../../../db/encounter/temperament"
 import { Temperament } from "../../../interfaces/encounterInterfaces"
 
-export default async function getTemperament(dataBaseConnection: any, beastId: number, sendErrorForward: Function): Promise<Temperament> {
-    const [temperament]: Temperament[] = await dataBaseConnection.encounter.temperament.getWeighted(beastId).catch((e: Error) => sendErrorForward('temperament weighted', e))
+export default async function getTemperament(beastId: number): Promise<Temperament> {
+    const [temperament]: Temperament[] = await query(getWeightedTemperament, beastId)
     if (temperament) {
         return {
             temperament: temperament.temperament,

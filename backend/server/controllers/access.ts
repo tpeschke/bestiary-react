@@ -1,6 +1,8 @@
-import { Response, Request, Error, User } from '../interfaces/apiInterfaces'
+import { checkAccess, checkIfUserCanEditMonster } from '../db/beast/access'
+import { getUserCustomMonsterCount } from '../db/beast/custom'
+import query from '../db/database'
+import { Response, Request, User } from '../interfaces/apiInterfaces'
 
-import getDatabaseConnection from '../utilities/databaseConnection'
 import { isOwner, isJustMainOwner } from '../utilities/ownerAccess'
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 
@@ -21,12 +23,11 @@ interface BeastAccessRequest extends Request {
 }
 
 export async function checkIfPlayerView(request: BeastAccessRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const beastId: number = +request.params.beastId
     const userId = request.user?.id
     const patreon = request.user?.patreon ? request.user.patreon : 0
 
-    const { canplayerview } = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('player can view', error, response))[0]
+    const [{canplayerview}] = await query(checkAccess, beastId)
 
     const body = {
         canView: isJustMainOwner(userId) || patreon >= 3 || canplayerview
@@ -46,9 +47,7 @@ export async function canEditMonster(request: BeastAccessRequest, response: Resp
 }
 
 async function checkIfUserHasPermissions(request: Request, response: Response, beastId: number, user: User) {
-    const databaseConnection = getDatabaseConnection(request)
-
-    const { userid: beastOwnerId } = await databaseConnection.beast.canEdit(beastId).catch((error: Error) => sendErrorForward('custom monster check', error, response))[0]
+    const [{ userid: beastOwnerId }] = await query(checkIfUserCanEditMonster, beastId)
     const { id, patreon = 0 } = user
 
     if (beastOwnerId) {
@@ -57,7 +56,7 @@ async function checkIfUserHasPermissions(request: Request, response: Response, b
         }
         checkForContentTypeBeforeSending(response, body)
     } else {
-        const { count } = await databaseConnection.beast.custom.count(id).catch((error: Error) => sendErrorForward('number of user\'s custom monsters', error, response))[0]
+        const [{ count }] = await query(getUserCustomMonsterCount, id)
 
         const canCreate = patreon >= 5 && count <= (5 + (patreon * 2))
         const canEdit = isOwner(id) || canCreate

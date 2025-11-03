@@ -1,15 +1,17 @@
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import query from "../../../../../db/database"
+import { addDefenseToDB, removeMissingDefenseIDsFromDB, updateDefenseInfo } from "../../../../../db/beast/defenses"
 
-export default async function updateDefense(databaseConnection: any, beastID: number, defenses: DefenseInfo[]) {
+export default async function updateDefense(beastID: number, defenses: DefenseInfo[]) {
     let promiseArray: any[] = []
 
-    await databaseConnection.beast.defenses.delete([beastID, [0, ...defenses.map(defense => defense.id)]])
+    await query(removeMissingDefenseIDsFromDB, [beastID, [0, ...defenses.map(defense => defense.id)]])
 
     defenses.forEach(({ overAllIndex, oldID, id, defensename }) => {
         if (id) {
-            promiseArray.push(databaseConnection.beast.defenses.update(id, oldID, beastID, overAllIndex, defensename))
+            promiseArray.push(query(updateDefenseInfo, [id, oldID, beastID, overAllIndex, defensename]))
         } else {
-            promiseArray.push(databaseConnection.beast.defenses.add(oldID, beastID, overAllIndex, defensename))
+            promiseArray.push(query(addDefenseToDB, [oldID, beastID, overAllIndex, defensename]))
         }
     })
 

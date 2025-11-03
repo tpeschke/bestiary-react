@@ -2,7 +2,7 @@ import { User } from "../../../interfaces/apiInterfaces";
 import { SearchQuery, SearchReturn } from "../search";
 import getRoleName from "./roleName";
 
-export default async function getIDsFromQuery(databaseConnection: any, query: SearchQuery, user: User | null | undefined): Promise<SearchReturn[][]> {
+export default async function getIDsFromQuery(query: SearchQuery, user: User | null | undefined): Promise<SearchReturn[][]> {
     let idArray: SearchReturn[][] = []
 
     for (const item in query) {

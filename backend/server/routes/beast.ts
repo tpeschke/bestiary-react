@@ -1,10 +1,9 @@
 // @ts-ignore
 import express from 'express'
 
-import { Response, Error, BasicParamsRequest } from "../interfaces/apiInterfaces"
+import { Response, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
-import getDatabaseConnection from '../utilities/databaseConnection'
+import { checkForContentTypeBeforeSending } from '../utilities/sendingFunctions'
 import { getPlayerVersionOfBeast } from '../controllers/player'
 import { getMonsterFromCache } from '../controllers/monsterCache'
 import { getGMVersionOfBeast } from '../controllers/gameMaster/gameMaster'
@@ -16,8 +15,8 @@ import { updateBeast } from '../controllers/gameMaster/utilities/updateUtilities
 import { Notes } from '@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
 import { getFavorite, getNotes } from '../controllers/gameMaster/utilities/getUtilities/utilities/getPlayerInfo'
 import { isOwner } from '../utilities/ownerAccess'
-
-const sendErrorForward = sendErrorForwardNoFile('GM route')
+import query from '../db/database'
+import { checkAccess } from '../db/beast/access'
 
 const BeastRoutes = express.Router()
 
@@ -31,10 +30,9 @@ interface ownerAuthBody {
 
 async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
     const { user, body, params } = request
-    const databaseConnection = getDatabaseConnection(request)
     const beastId = body.beastId ?? +params.beastId
 
-    const databaseReturn = await databaseConnection.beast.canView(beastId).catch((error: Error) => sendErrorForward('can view', error, response))
+    const databaseReturn = await query(checkAccess, beastId)
 
     if (databaseReturn?.length > 0) {
         const [viewInfo] = databaseReturn
@@ -47,8 +45,8 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
                 let promiseArray: any = []
 
                 if (user?.id) {
-                    promiseArray.push(getFavorite(databaseConnection, modifiedBeast.id, user?.id).then((isFavorite: boolean) => modifiedBeast.playerInfo.favorite = isFavorite))
-                    promiseArray.push(getNotes(databaseConnection, modifiedBeast.id, user?.id).then((notes: Notes) => modifiedBeast.playerInfo.notes = notes))
+                    promiseArray.push(getFavorite(modifiedBeast.id, user?.id).then((isFavorite: boolean) => modifiedBeast.playerInfo.favorite = isFavorite))
+                    promiseArray.push(getNotes(modifiedBeast.id, user?.id).then((notes: Notes) => modifiedBeast.playerInfo.notes = notes))
                 }
 
                 modifiedBeast.generalInfo.canEdit = isOwner(user?.id) || user?.id === modifiedBeast.generalInfo.beastOwnerId

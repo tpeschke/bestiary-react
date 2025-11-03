@@ -1,35 +1,37 @@
+import query from "../../../db/database";
+import { getEncounterBackUp, getRivalForEncounter } from "../../../db/encounter/complication";
 import { Complication, RivalComplication, Rival, WoundedComplication, LostComplication, BackUp, BackUpComplication } from "../../../interfaces/encounterInterfaces";
 import { grabRandomElementFromArray } from "../../../utilities/array";
 import rollDice from "../../../utilities/diceRoller";
 
-export default async function getComplications(dataBaseConnection: any, beastId: number): Promise<Complication[]> {
+export default async function getComplications(beastId: number): Promise<Complication[]> {
     const hasComplication = Math.floor(Math.random() * 10) > 5
 
     let complicationResultArray: Complication[] = []
 
     if (hasComplication) {
-        await getComplication(complicationResultArray, dataBaseConnection, beastId)
+        await getComplication(complicationResultArray, beastId)
     }
 
     return complicationResultArray
 }
 
-async function getComplication(complicationResultArray: Complication[], dataBaseConnection: any, beastId: number) {
+async function getComplication(complicationResultArray: Complication[], beastId: number) {
     const complication: string = grabRandomElementFromArray(complicationArray)
 
     switch (complication) {
         case RIVAL:
         case UNLIKELY_ALLIES:
-            complicationResultArray.push(await getRival(dataBaseConnection, beastId, complication))
+            complicationResultArray.push(await getRival(beastId, complication))
             break;
         case WOUNDED:
-            complicationResultArray.push(await getWounded(dataBaseConnection, beastId))
+            complicationResultArray.push(await getWounded(beastId))
             break;
         case LOST:
             complicationResultArray.push(getLost())
             break;
         case BACK_UP_COMING:
-            const backUp = await getBackUp(dataBaseConnection, beastId)
+            const backUp = await getBackUp(beastId)
             if (backUp) {
                 complicationResultArray.push(backUp)
             }
@@ -45,8 +47,8 @@ async function getComplication(complicationResultArray: Complication[], dataBase
             complicationResultArray.push({ type: complication })
             break;
         case ROLL_AN_ADDITIONAL_TIME:
-            await getComplication(complicationResultArray, dataBaseConnection, beastId)
-            await getComplication(complicationResultArray, dataBaseConnection, beastId)
+            await getComplication(complicationResultArray, beastId)
+            await getComplication(complicationResultArray, beastId)
             break;
         default:
             break;
@@ -72,8 +74,8 @@ const ENCHANTED_ITEM = 'Enchanted Item'
 
 const complicationArray = [RIVAL, WOUNDED, TRAPPED, INSANE, LOST, DISEASED, TIME_LIMIT, BACK_UP_COMING, POWERFUL_CASTER, INFIGHTING, ROLL_AN_ADDITIONAL_TIME, LARGE, UNLIKELY_ALLIES, ENCHANTED_ITEM]
 
-async function getRival(dataBaseConnection: any, beastId: number, type: string): Promise<RivalComplication> {
-    const [rival]: Rival[] = await dataBaseConnection.encounter.complication.getRival(beastId)
+async function getRival(beastId: number, type: string): Promise<RivalComplication> {
+    const [rival]: Rival[] = await query(getRivalForEncounter, beastId)
 console.log(rival)
     if (rival?.name && rival?.name.includes(',')) {
         const splitName = rival.name.split(', ')
@@ -89,8 +91,8 @@ console.log(rival)
     }
 }
 
-async function getWounded(dataBaseConnection: any, beastId: number): Promise<WoundedComplication> {
-    const [rival]: Rival[] = await dataBaseConnection.encounter.complication.getRival(beastId)
+async function getWounded(beastId: number): Promise<WoundedComplication> {
+    const [rival]: Rival[] = await query(getRivalForEncounter, beastId)
     const woundCategories = ['Hurt', 'Bloodied', 'Wounded', 'Bleeding Out']
     return {
         type: WOUNDED,
@@ -103,8 +105,8 @@ function getLost(): LostComplication {
     return { type: LOST, distance: `${rollDice('10d10')} Miles` }
 }
 
-async function getBackUp(dataBaseConnection: any, beastId: number): Promise<BackUpComplication | null>  {
-    const [backUp]: BackUp[] = await dataBaseConnection.encounter.complication.getBackUp(beastId)
+async function getBackUp(beastId: number): Promise<BackUpComplication | null>  {
+    const [backUp]: BackUp[] = await query(getEncounterBackUp, beastId)
 
     if (backUp) {
         const {id, name, plural} = backUp
