@@ -1,5 +1,6 @@
+import query from "../db/database"
+import { getRandomMonsterEntryFromList } from "../db/list/random"
 import { Request, Response } from "../interfaces/apiInterfaces"
-import getDatabaseConnection from "../utilities/databaseConnection"
 import { checkForContentTypeBeforeSending } from "../utilities/sendingFunctions"
 
 interface GetRandomRequest extends Request {
@@ -11,9 +12,8 @@ interface GetRandomQuery {
 }
 
 export async function getRandomMonsterFromList(request: GetRandomRequest, response: Response) {
-    const databaseConnection = getDatabaseConnection(request)
     const { listId } = request.params
 
-    const [randomBeast] = await databaseConnection.list.random.get(listId)
+    const [randomBeast] = await query(getRandomMonsterEntryFromList, listId)
     checkForContentTypeBeforeSending(response, randomBeast)
 }

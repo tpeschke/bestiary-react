@@ -22,6 +22,8 @@ import { getMonsterLairAlmScripts, getMonsterLairBasicLoot, getMonsterLairItems,
 import { getMonsterCarriedAlmScript, getMonsterCarriedBasic, getMonsterCarriedItems, getMonsterCarriedScrolls } from "../../../../../../db/loot/carried"
 import { getMonsterCasting } from "../../../../../../db/beast/casting"
 import { getMonsterSpells } from "../../../../../../db/beast/spell"
+import { getMonsterScenarios } from "../../../../../../db/beast/scenario"
+import { getMonsterFolklore } from "../../../../../../db/beast/folklore"
 
 export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: number, canPlayerView: boolean): string {
     if (canPlayerView || (user && isOwner(user.id))) {
