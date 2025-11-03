@@ -22,15 +22,13 @@ export default function Header() {
                 {userIsLoggedIn ?
                     <a href={signOutURL}>
                         <button className='transparent-white'>
-                            <Icon iconName='log-out' color='white' margin='right' />
-                            Log Out
+                            <Icon iconName='log-out' color='white' margin='right' tooltip='Log Out' iconSize='h2' />
                         </button>
                     </a>
                     :
                     <a href={signInURL}>
                         <button className='transparent-white'>
-                            <Icon iconName='log-in' color='white' margin='right' />
-                            Log In
+                            <Icon iconName='log-in' color='white' margin='right' tooltip='Log In' iconSize='h2' />
                         </button>
                     </a>
                 }
