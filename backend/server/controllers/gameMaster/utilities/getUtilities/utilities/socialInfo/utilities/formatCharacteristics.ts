@@ -1,6 +1,6 @@
 import { Conflict } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
-import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
+import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
 
 export interface UnformatedConflict {
     id: number,
@@ -10,7 +10,6 @@ export interface UnformatedConflict {
     type: string,
     socialroleid: string,
     socialrole: string,
-    socialpoints: number,
     allroles: boolean,
     severity: number,
     strength: Strength,
@@ -18,8 +17,8 @@ export interface UnformatedConflict {
     deleted?: boolean
 }
 
-export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
-    const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
+export function formatCharacteristics(skullIndex: number, characteristic: UnformatedConflict, role: string): Conflict {
+    const { id, beastid, trait, socialroleid: socialRoleID, allroles: allRoles, type, strength, adjustment } = characteristic
 
     const typeDictionary: any = {
         'h': 'Descriptions',
@@ -29,17 +28,15 @@ export function formatCharacteristics(mainSocialPoints: number, characteristic: 
     }
 
     let formatedCharacteristic = {
-        id, beastid, trait, socialroleid, allroles, strength, adjustment
+        id, beastid, trait, socialRoleID, allRoles, strength, adjustment
     }
 
     if (type === 'b' || type === 'f') {
         return formatedCharacteristic
     } else {
-        const pointsToUse = socialpoints ? socialpoints : mainSocialPoints
-
         return {
             ...formatedCharacteristic,
-            rank: calculateRankForCharacteristic(typeDictionary[type], pointsToUse, strength, adjustment)
+            rank: calculateRankForCharacteristic(typeDictionary[type], skullIndex, role)
         }
     }
 }

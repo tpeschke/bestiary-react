@@ -16,7 +16,7 @@ export interface Beast {
     canplayerview: boolean,
     generalInfo: GeneralInfo,
     imageInfo: ImageInfo,
-    linkedInfo : LinkedInfo,
+    linkedInfo: LinkedInfo,
     roleInfo: RoleInfo,
     combatInfo: CombatInfo,
     skillInfo: SkillInfo,

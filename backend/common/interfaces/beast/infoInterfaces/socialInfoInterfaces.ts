@@ -4,6 +4,8 @@ export default interface SocialInfo {
     socialRole: string,
     socialSecondary: string,
     socialSkulls: number,
+    skullIndex: number,
+    capacity: number[],
     attackInfo: string,
     defenseInfo: string,
     archetypeInfo: ArchetypeInfo,
@@ -23,8 +25,8 @@ export interface Conflict {
     beastid: number,
     trait: string,
     rank?: number,
-    socialroleid: string,
-    allroles: boolean,
+    socialRoleID: string,
+    allRoles: boolean,
     strength: Strength,
     adjustment: number,
     deleted?: boolean
@@ -33,7 +35,7 @@ export interface Conflict {
 export interface ArchetypeInfo {
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean,
-    difficultyDie: string,
+    baseRank: number,
     normalArchetypes?: NormalArchetypeObject,
     monsterArchetypes?: MonsterArchetypeObject
 }

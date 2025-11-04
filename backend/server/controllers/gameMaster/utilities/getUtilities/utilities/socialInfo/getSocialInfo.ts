@@ -1,5 +1,7 @@
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
-import { getDifficultyDie } from "@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
+import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
+import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getSkullNumber from "../getSkulls"
 
 export default function formatSocialInfo(
@@ -11,9 +13,14 @@ export default function formatSocialInfo(
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean
 ): SocialInfo {
+    const socialSkulls = getSkullNumber(socialPoints)
+    const skullIndex = getSkullIndex(socialSkulls)
+
     return {
         socialRole, socialSecondary,
-        socialSkulls: getSkullNumber(socialPoints),
+        socialSkulls,
+        skullIndex,
+        capacity: getCapacity(skullIndex, socialRole, socialSecondary),
         attackInfo: atk_conf ?? '',
         defenseInfo: def_conf ?? '',
         conflicts: {
@@ -25,7 +32,7 @@ export default function formatSocialInfo(
         },
         archetypeInfo: {
             hasArchetypes, hasMonsterArchetypes,
-            difficultyDie: getDifficultyDie(socialPoints)
+            baseRank: getBaseSocialRank(skullIndex)
         }
     }
 }

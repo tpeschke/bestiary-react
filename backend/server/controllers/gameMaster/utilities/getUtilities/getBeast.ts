@@ -46,8 +46,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
-        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes,
-        lootnotes, userid: beastOwnerId } = unsortedBeastInfo
+        def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId
+    } = unsortedBeastInfo
 
     let beast: Beast = {
         id, patreon, canplayerview,
@@ -122,7 +122,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             }
         },
         skillInfo: {
-            skillrole, skillsecondary, 
+            skillrole, skillsecondary,
             skillSkulls: getSkullNumber(skillpoints),
             atk_skill: atk_skill ?? '',
             def_skill: def_skill ?? '',
@@ -155,7 +155,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     }
     let promiseArray: any[] = [
         // skills above here
-        getConflict(beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts),
+        getConflict(beast.id, isEditing, beast.socialInfo.skullIndex, beast.socialInfo.socialRole).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts),
         getArchetypes(isEditing).then((archetypeInfo: GetArchetypesReturn) => {
             beast.socialInfo.archetypeInfo = {
                 ...beast.socialInfo.archetypeInfo,
