@@ -1,41 +1,8 @@
-import { NormalArchetypeObject, MonsterArchetypeObject, ConflictObject, Conflict } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
-import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
-import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator";
-import { sortByRank, sortOutAnyToTheBottom } from "../../../../../utilities/sorts";
-import query from "../../../../../db/database";
-import { getCharacteristicsForEdit, getMonsterCharacteristics } from "../../../../../db/beast/conflict";
-import { getRandomArchetype, getRandomMonsterArchetypes } from "../../../../../db/beast/archetype";
-
-interface archetypeInfo {
-    archetype: string
-}
-
-export interface GetArchetypesReturn {
-    normalArchetypes: NormalArchetypeObject,
-    monsterArchetypes: MonsterArchetypeObject
-}
-
-export async function getArchetypes(isEditing: boolean): Promise<GetArchetypesReturn> {
-    isEditing
-    const normalArchetypeInfo: archetypeInfo[] = await query(getRandomArchetype)
-
-    const chance = Math.floor(Math.random() * 100)
-
-    const monsterArchetypeInfo: archetypeInfo[] = await query(getRandomMonsterArchetypes)
-
-    return {
-        normalArchetypes: {
-            type: 'normal',
-            archetype: normalArchetypeInfo[0].archetype,
-            deviation: chance > 51 && chance < 75,
-            reverse: chance >= 75
-        },
-        monsterArchetypes: {
-            type: 'monster',
-            archetype: monsterArchetypeInfo.map(archetype => archetype.archetype)
-        }
-    }
-}
+import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { getCharacteristicsForEdit, getMonsterCharacteristics } from "../../../../../../../db/beast/conflict"
+import query from "../../../../../../../db/database"
+import { sortByRank, sortOutAnyToTheBottom } from "../../../../../../../utilities/sorts"
+import { UnformatedConflict, formatCharacteristics } from "./formatCharacteristics"
 
 export async function getConflict(beastId: number, isEditing: boolean,
     traitlimit: number, relationshiplimit: number, flawlimit: number, socialpoints: number): Promise<ConflictObject> {
@@ -94,47 +61,5 @@ export async function getConflict(beastId: number, isEditing: boolean,
         conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
 
         return conflict
-    }
-}
-
-export interface UnformatedConflict {
-    id: number,
-    beastid: number,
-    trait: string,
-    value: string,
-    type: string,
-    socialroleid: string,
-    socialrole: string,
-    socialpoints: number,
-    allroles: boolean,
-    severity: number,
-    strength: Strength,
-    adjustment: number,
-    deleted?: boolean
-}
-
-export function formatCharacteristics(mainSocialPoints: number, characteristic: UnformatedConflict): Conflict {
-    const { id, beastid, trait, socialroleid, socialpoints, allroles, type, strength, adjustment } = characteristic
-
-    const typeDictionary: any = {
-        'h': 'Descriptions',
-        't': 'Convictions',
-        'c': 'Convictions', 
-        'd': 'Relationships'
-    }
-
-    let formatedCharacteristic = {
-        id, beastid, trait, socialroleid, allroles, strength, adjustment
-    }
-
-    if (type === 'b' || type === 'f') {
-        return formatedCharacteristic
-    } else {
-        const pointsToUse = socialpoints ? socialpoints : mainSocialPoints
-
-        return {
-            ...formatedCharacteristic,
-            rank: calculateRankForCharacteristic(typeDictionary[type], pointsToUse, strength, adjustment)
-        }
     }
 }

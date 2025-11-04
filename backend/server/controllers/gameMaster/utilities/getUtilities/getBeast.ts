@@ -11,7 +11,6 @@ import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
 import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
-import { getDifficultyDie } from "@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator"
 import { calculateStressAndPanic } from "@bestiary/common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../interfaces/lootInterfaces"
 import { Challenge, Obstacle } from "../../../../interfaces/skillInterfaces"
@@ -19,7 +18,6 @@ import { isOwner } from "../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../utilities/rarity"
 import { getChallenges } from "./utilities/skillRelatedInfo/getChallenges"
 import { getCombatStats } from "./utilities/combatRelatedInfo/getCombatInfo"
-import { getConflict, getArchetypes, GetArchetypesReturn } from "./utilities/getConfrontationInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
 import getTables from "./utilities/getTables"
@@ -30,6 +28,9 @@ import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import query from "../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
+import formatSocialInfo from "./utilities/socialInfo/getSocialInfo"
+import { getArchetypes, GetArchetypesReturn } from "./utilities/socialInfo/utilities/getArchetypes"
+import { getConflict } from "./utilities/socialInfo/utilities/getConflict"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -44,8 +45,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, panicstrength: panic, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
-        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare,
-        devotionshare: relationshipshare, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId } = unsortedBeastInfo
+        def_skill, traitlimit, devotionlimit: relationshiplimit, flawlimit, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes,
+        lootnotes, userid: beastOwnerId } = unsortedBeastInfo
 
     let beast: Beast = {
         id, patreon, canplayerview,
@@ -130,20 +131,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             challenges: [],
         },
         socialInfo: {
-            traitlimit, relationshiplimit, flawlimit, passionlimit, socialrole, socialsecondary, socialpoints, descriptionshare, convictionshare, relationshipshare,
-            atk_conf: atk_conf ?? '',
-            def_conf: def_conf ?? '',
-            conflicts: {
-                descriptions: [],
-                convictions: [],
-                relationships: [],
-                flaws: [],
-                burdens: []
-            },
-            archetypeInfo: {
-                hasarchetypes, hasmonsterarchetypes,
-                difficultyDie: getDifficultyDie(socialpoints)
-            }
+            ...formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, hasarchetypes, hasmonsterarchetypes)
         },
         lootInfo: {
             lootnotes,
@@ -162,12 +150,17 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             spells: [],
         }
     }
-    let promiseArray: any[] = []
-
-    if (userID) {
-        promiseArray.push(getFavorite(beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
-        promiseArray.push(getNotes(beast.id, userID).then((notes: Notes) => beast.playerInfo.notes = notes))
-    }
+    let promiseArray: any[] = [
+        // skills above here
+        getConflict(beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts),
+        getArchetypes(isEditing).then((archetypeInfo: GetArchetypesReturn) => {
+            beast.socialInfo.archetypeInfo = {
+                ...beast.socialInfo.archetypeInfo,
+                ...archetypeInfo
+            }
+        })
+        // pleroma and loot below here
+    ]
 
     promiseArray.push(getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
     promiseArray.push(getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
@@ -181,7 +174,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
         if (isABeast) {
             const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
-            beast.socialInfo.def_conf += beastBonus
+            beast.socialInfo.defenseInfo += beastBonus
         }
 
         beast.linkedInfo.types = types
@@ -199,14 +192,6 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     promiseArray.push(getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges))
     promiseArray.push(getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles))
 
-    promiseArray.push(getConflict(beast.id, isEditing, traitlimit, relationshiplimit, flawlimit, socialpoints).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts))
-    promiseArray.push(getArchetypes(isEditing).then((archetypeInfo: GetArchetypesReturn) => {
-        beast.socialInfo.archetypeInfo = {
-            ...beast.socialInfo.archetypeInfo,
-            ...archetypeInfo
-        }
-    }))
-
     promiseArray.push(getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
     promiseArray.push(getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
 
@@ -222,6 +207,11 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
     promiseArray.push(getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
     promiseArray.push(getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
+
+    if (userID) {
+        promiseArray.push(getFavorite(beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
+        promiseArray.push(getNotes(beast.id, userID).then((notes: Notes) => beast.playerInfo.notes = notes))
+    }
 
     return Promise.all(promiseArray).then(_ => beast)
 }

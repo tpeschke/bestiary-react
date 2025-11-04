@@ -1,18 +1,11 @@
 import { Strength } from "../../calculationInterfaces"
 
 export default interface SocialInfo {
-    traitlimit: number,
-    relationshiplimit: number,
-    flawlimit: number,
-    passionlimit: number,
-    socialrole: string,
-    socialsecondary: string,
-    socialpoints: number,
-    descriptionshare: number,
-    convictionshare: number,
-    relationshipshare: number,
-    atk_conf: string,
-    def_conf: string,
+    socialRole: string,
+    socialSecondary: string,
+    socialSkulls: number,
+    attackInfo: string,
+    defenseInfo: string,
     archetypeInfo: ArchetypeInfo,
     conflicts: ConflictObject,
 }
@@ -38,8 +31,8 @@ export interface Conflict {
 }
 
 export interface ArchetypeInfo {
-    hasarchetypes: boolean,
-    hasmonsterarchetypes: boolean,
+    hasArchetypes: boolean,
+    hasMonsterArchetypes: boolean,
     difficultyDie: string,
     normalArchetypes?: NormalArchetypeObject,
     monsterArchetypes?: MonsterArchetypeObject

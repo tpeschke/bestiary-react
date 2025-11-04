@@ -20,13 +20,13 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
 
     const tooltip = "This indicates how dangerous this entry is.\nRed Skulls represent a particularly dangerous entry"
 
-    const applicableStatModifierByTitle: {[key: string]: string} = {
+    const applicableStatModifierByTitle: { [key: string]: string } = {
         Combat: 'Vitality',
         Skills: 'Nerve',
         Confrontation: 'Relationships'
     }
 
-    const secondaryRoleTooltipDictionary: {[key: string]: string} = {
+    const secondaryRoleTooltipDictionary: { [key: string]: string } = {
         Lesser: `This Secondary Role means that this entry has normal stats for its Skull Rating except that is has half the ${applicableStatModifierByTitle[title]}.`,
         Veteran: `This Secondary Role means that this entry is built to require 2 or more characters to fight it at one time.`,
         Champion: `This Secondary Role means that this entry is meant to be taken on by only 1 enemy at a time.`,
@@ -53,21 +53,5 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
 }
 
 function getSkullNumber(points: number): number[] {
-    if (points <= 3) {
-        return [...Array(1).keys()]
-    } else if (points <= 8) {
-        return [...Array(2).keys()]
-    } else if (points <= 13) {
-        return [...Array(3).keys()]
-    } else if (points <= 18) {
-        return [...Array(4).keys()]
-    } else if (points <= 23) {
-        return [...Array(5).keys()]
-    } else if (points <= 28) {
-        return [...Array(6).keys()]
-    } else if (points <= 33) {
-        return [...Array(7).keys()]
-    } else {
-        return [...Array(8).keys()]
-    }
+    return [...Array(points).keys()]
 }
