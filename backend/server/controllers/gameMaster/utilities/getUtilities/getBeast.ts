@@ -16,21 +16,22 @@ import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../interfaces/lo
 import { Challenge, Obstacle } from "../../../../interfaces/skillInterfaces"
 import { isOwner } from "../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../utilities/rarity"
-import { getChallenges } from "./utilities/skillRelatedInfo/getChallenges"
-import { getCombatStats } from "./utilities/combatRelatedInfo/getCombatInfo"
+import { getChallenges } from "./utilities/skillInfo/getChallenges"
+import { getCombatStats } from "./utilities/combatInfo/getCombatInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
 import getTables from "./utilities/getTables"
 import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
-import { getObstacles } from "./utilities/skillRelatedInfo/getObstacles"
-import { getSkills } from "./utilities/skillRelatedInfo/getSkills"
-import getMovement from "./utilities/combatRelatedInfo/utilities/getMovement"
+import { getObstacles } from "./utilities/skillInfo/getObstacles"
+import { getSkills } from "./utilities/skillInfo/getSkills"
+import getMovement from "./utilities/combatInfo/utilities/getMovement"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import query from "../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
 import formatSocialInfo from "./utilities/socialInfo/getSocialInfo"
 import { getArchetypes, GetArchetypesReturn } from "./utilities/socialInfo/utilities/getArchetypes"
 import { getConflict } from "./utilities/socialInfo/utilities/getConflict"
+import getSkullNumber from "./utilities/getSkulls"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -103,7 +104,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         combatInfo: {
-            tactics, combatpoints, combatrole, combatsecondary,
+            tactics, combatrole, combatsecondary,
+            combatSkulls: getSkullNumber(combatpoints),
             sp_atk: sp_atk ?? '',
             sp_def: sp_def ?? '',
             initiative: '+0',
@@ -120,7 +122,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             }
         },
         skillInfo: {
-            skillrole, skillsecondary, skillpoints,
+            skillrole, skillsecondary, 
+            skillSkulls: getSkullNumber(skillpoints),
             atk_skill: atk_skill ?? '',
             def_skill: def_skill ?? '',
             stressStrength: stress,

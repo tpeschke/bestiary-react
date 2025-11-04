@@ -8,7 +8,7 @@ export default interface SkillInfo {
     panicStrength: Strength,
     skillrole: string,
     skillsecondary: string,
-    skillpoints: number,
+    skillSkulls: number,
     atk_skill: string,
     def_skill: string,
     skills: Skill[],

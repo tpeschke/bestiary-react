@@ -5,7 +5,7 @@ export default interface CombatInfo {
     sp_atk: string,
     sp_def: string,
     tactics: string,
-    combatpoints: number,
+    combatSkulls: number,
     combatrole: string,
     combatsecondary: string,
     vitalityInfo: VitalityInfo,
