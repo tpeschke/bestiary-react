@@ -1,11 +1,10 @@
-import { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/combat/movement";
 import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator";
-import CombatInfo from "../../../interfaces/infoInterfaces/combatInfoInterfaces";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -18,8 +17,8 @@ export default class CombatInfoClass {
         return this.entryCombatInfo
     }
 
-    get combatPoints(): number {
-        return this.entryCombatInfo.combatpoints
+    get combatSkulls(): number {
+        return this.entryCombatInfo.combatSkulls
     }
 
     public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo {
@@ -27,7 +26,7 @@ export default class CombatInfoClass {
     }
 
     private formatCombatInfo = (size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo => {
-        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatpoints: points, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatSkulls: points, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
         
         const combatrole = selectedRole ? selectedRole.combatInfo.combatrole : role
         const combatsecondary = selectedRole ? selectedRole.combatInfo.combatsecondary : secondary
@@ -44,7 +43,8 @@ export default class CombatInfoClass {
 
         return {
             ...this.entryCombatInfo,
-            combatrole, combatsecondary, combatpoints,
+            combatrole, combatsecondary, 
+            combatSkulls: this.combatSkulls,
             sp_atk, sp_def,
             vitalityInfo: {
                 ...vitalityInfo,

@@ -56,8 +56,8 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
     const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue: fatigueStrength, largeweapons: vitalityStrength, knockback, singledievitality, noknockback, rollundertrauma,
-        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints, socialrole,
-        socialsecondary, attack_conf, defense_conf, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
+        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints: socialSkulls, socialrole: socialRole,
+        socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
 
     return {
         id,
@@ -82,7 +82,7 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressstrength, panicstrength)
         },
         socialInfo: {
-            socialpoints, socialrole, socialsecondary, attack_conf, defense_conf,
+            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,
             hasarchetypes, hasmonsterarchetypes
         }
     }

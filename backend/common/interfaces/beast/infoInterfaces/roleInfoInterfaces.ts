@@ -47,11 +47,11 @@ export interface RoleSkillInfo {
 }
 
 export interface RoleSocialInfo {
-    socialpoints: number,
-    socialrole: string,
-    socialsecondary: string,
-    attack_conf: string,
-    defense_conf: string,
+    socialSkulls: number,
+    socialRole: string,
+    socialSecondary: string,
+    attackInfo: string,
+    defenseInfo: string,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
 }

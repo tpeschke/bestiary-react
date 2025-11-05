@@ -86,11 +86,11 @@ function formatOption({ innerProps, label }: any) {
 }
 
 function formatRoleName(socialInfo: RoleSocialInfo, skillInfo: RoleSkillInfo, combatInfo: RoleCombatInfo): string {
-    const { socialrole, socialsecondary } = socialInfo
+    const { socialRole, socialSecondary } = socialInfo
     const { skillrole, skillsecondary } = skillInfo
     const { combatrole, combatsecondary } = combatInfo
 
-    const socialRoleName = formatSingleRoleNamePair(socialrole, socialsecondary)
+    const socialRoleName = formatSingleRoleNamePair(socialRole, socialSecondary)
     const skillRoleName = formatSingleRoleNamePair(skillrole, skillsecondary)
     const combatRoleName = formatSingleRoleNamePair(combatrole, combatsecondary)
 

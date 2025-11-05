@@ -8,9 +8,9 @@ import RoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoI
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import FullImage from "../../../../../components/UI/fullImage/fullImage"
 import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction } from "../../../../../hooks/beastHooks"
-import CombatInfo from "../../../../../interfaces/infoInterfaces/combatInfoInterfaces"
 import ImageInfo from "../../../../../interfaces/infoInterfaces/ImageInfoInterfaces"
-import SocialInfo from "../../../../../interfaces/infoInterfaces/socialInfo"
+import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
 interface Props {
     beastId: number,

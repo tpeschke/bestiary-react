@@ -4,7 +4,7 @@ import RoleTitle from "../../../roleTitle/RoleTitle"
 import SpecialInfo from "../specialInfo/specialInfo"
 import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
-import SocialInfo from "../../../../../../../interfaces/infoInterfaces/socialInfo"
+import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
 interface Props {
     socialInfo: SocialInfo
@@ -14,7 +14,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const [hasArchetypes, setHasArchetypes] = useState(false);
     const [hasCharacteristics, setHasCharacteristics] = useState(false);
 
-    const { socialrole, socialpoints, conflicts, atk_conf, def_conf, socialsecondary, archetypeInfo } = socialInfo
+    const { socialRole, socialSkulls, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo } = socialInfo
 
     useEffect(() => {
         const { conflicts } = socialInfo
@@ -32,28 +32,28 @@ export default function ConfrontationSection({ socialInfo }: Props) {
 
     }, [])
 
-    const showDefenseSection = !!(def_conf && def_conf !== '')
-    const showAttackSection = !!(atk_conf && atk_conf !== '')
+    const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
+    const showAttackSection = !!(attackInfo && attackInfo !== '')
 
     // When there is nothing to display in this section, this border helps visually separate it from the next section
     const hasBottomBorder = !(showDefenseSection || showAttackSection || hasCharacteristics || hasArchetypes)
 
     return (
         <>
-            <RoleTitle title='Confrontation' points={socialpoints} role={socialrole} secondaryRole={socialsecondary} hasBottomBorder={hasBottomBorder} />
+            <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} hasBottomBorder={hasBottomBorder} />
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={def_conf} />
+                    <SpecialInfo info={defenseInfo} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={atk_conf} />
+                    <SpecialInfo info={attackInfo} />
                 </>
             }
-            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialpoints} setHasArchetypes={setHasArchetypes} />
+            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} setHasArchetypes={setHasArchetypes} />
             {hasCharacteristics && <CharacteristicsDisplay characteristicInfo={conflicts} />}
         </>
     )

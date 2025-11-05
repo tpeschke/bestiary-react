@@ -1,7 +1,7 @@
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
-import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
 
 export default function formatSocialInfo(

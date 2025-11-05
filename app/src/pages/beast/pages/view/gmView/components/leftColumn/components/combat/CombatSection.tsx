@@ -8,7 +8,7 @@ import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import Pair, { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
-import CombatInfo from "../../../../../../../interfaces/infoInterfaces/combatInfoInterfaces"
+import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
-    const { combatrole, combatpoints, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, attacks, defenses, tactics, initiative } = combatInfo
+    const { combatrole, combatSkulls, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, attacks, defenses, tactics, initiative } = combatInfo
     const { vitality, fatigue, rollundertrauma, notrauma, trauma, knockback, noknockback, locationalVitalities, weaponbreakagevitality, isincorporeal } = vitalityInfo
 
     let vitalityString = `${vitality}`
@@ -39,7 +39,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
 
     return (
         <>
-            <RoleTitle title='Combat' points={combatpoints} role={combatrole} secondaryRole={combatsecondary} />
+            <RoleTitle title='Combat' skulls={combatSkulls} role={combatrole} secondaryRole={combatsecondary} />
             <Pair title={"Vitality (Fatigue)"} info={vitalityString} format={{ heading: true }} icon={vitalityIconSetting} />
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />

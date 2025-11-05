@@ -3,7 +3,7 @@ import { calculateMovements } from "@bestiary/common/utilities/scalingAndBonus/c
 import query from "../../../../../../../db/database"
 import { getMonsterMovement } from "../../../../../../../db/beast/movement"
 
-export default async function getMovement(beastId: number, combatpoints: number, role: string): Promise<(Movement | null)[]> {
+export default async function getMovement(beastId: number, combatpoints: number, role: string): Promise<(Movement)[]> {
     const movements: RawMovement[] = await query(getMonsterMovement, beastId)
     return calculateMovements(movements, combatpoints, role)
 }

@@ -13,24 +13,24 @@ interface Props {
 }
 
 export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Props) {
-    const { hasarchetypes, hasmonsterarchetypes, normalArchetypes, monsterArchetypes, difficultyDie } = archetypeInfo
+    const { hasArchetypes, hasMonsterArchetypes, normalArchetypes, monsterArchetypes, baseRank } = archetypeInfo
 
     const [currentHasMonsterArchetype, setCurrentHasMonsterArchetypes] = useState(false)
     const [currentHasArchetype, setCurrentHasArchetypes] = useState(false)
 
     useEffect(() => {
-        if (currentHasMonsterArchetype !== hasmonsterarchetypes) {
-            setCurrentHasMonsterArchetypes(hasmonsterarchetypes)
-            setHasArchetypes(hasmonsterarchetypes)
-        } else if (currentHasArchetype !== hasarchetypes) {
-            setCurrentHasArchetypes(hasarchetypes)
-            setHasArchetypes(hasarchetypes)
+        if (currentHasMonsterArchetype !== hasMonsterArchetypes) {
+            setCurrentHasMonsterArchetypes(hasMonsterArchetypes)
+            setHasArchetypes(hasMonsterArchetypes)
+        } else if (currentHasArchetype !== hasArchetypes) {
+            setCurrentHasArchetypes(hasArchetypes)
+            setHasArchetypes(hasArchetypes)
         }
     })
 
     let tooltip = ''
     let iconName: IconName = 'd20'
-    if (hasarchetypes) {
+    if (hasArchetypes) {
         if (normalArchetypes?.reverse) {
             tooltip = "Completely reverse this Archetype.\nExample: 'Rogue with a heart of gold' > 'A nice guy with a vile heart'"
             iconName = 'reversal'
@@ -40,7 +40,7 @@ export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Pr
         }
     }
 
-    const hasSomethingToDisplay = hasmonsterarchetypes || hasarchetypes
+    const hasSomethingToDisplay = hasMonsterArchetypes || hasArchetypes
 
     return (
         <>
@@ -49,18 +49,18 @@ export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Pr
                     <h3>Archetype Info</h3>
                     <Body>
                         <>
-                            {hasmonsterarchetypes &&
+                            {hasMonsterArchetypes &&
                                 <div className='monster-archetype-shell'>
                                     <div>
                                         {monsterArchetypes?.archetype.map((archetype, index) => <p key={index}>{archetype}</p>)}
                                     </div>
-                                    <p>{difficultyDie}</p>
+                                    <p>{baseRank}</p>
                                 </div>
                             }
-                            {(hasarchetypes && normalArchetypes) &&
+                            {(hasArchetypes && normalArchetypes) &&
                                 <span>
                                     {tooltip && <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />}
-                                    <Pair title={normalArchetypes?.archetype} info={difficultyDie} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
+                                    <Pair title={normalArchetypes?.archetype} info={baseRank} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
                                 </span>
                             }
                         </>

@@ -4,14 +4,14 @@ import Icon from "../../../../../../../components/icon/Icon";
 
 interface Props {
     title: string,
-    points?: number,
+    skulls?: number,
     role?: string,
     secondaryRole?: string,
     hasBottomBorder?: boolean
 }
 
-export default function RoleTitle({ title, points, role, secondaryRole, hasBottomBorder }: Props) {
-    const showRightSide = (points || points === 0) && role
+export default function RoleTitle({ title, skulls, role, secondaryRole, hasBottomBorder }: Props) {
+    const showRightSide = (skulls || skulls === 0) && role
 
     let shellClass = 'role-shell'
     if (hasBottomBorder) {
@@ -44,14 +44,10 @@ export default function RoleTitle({ title, points, role, secondaryRole, hasBotto
                 <div className="skull-frame">
                     <p><span data-tooltip-id="my-tooltip" data-tooltip-content={secondaryTooltip}>{secondaryRole ? `${secondaryRole} ` : ''} </span>{role} </p>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
-                        {getSkullNumber(points).map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)}
+                        {[...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)}
                     </span>
                 </div>
             }
         </div>
     )
-}
-
-function getSkullNumber(points: number): number[] {
-    return [...Array(points).keys()]
 }

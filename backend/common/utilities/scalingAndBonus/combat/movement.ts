@@ -12,7 +12,7 @@ export function calculateMovements(movements: RawMovement[], combatpoints: numbe
                 stroll: 0, walk: 0, jog: 0, run: 0, sprint: 0
             }
 
-            const calculatedMovement: Movement | null = calculateMovement(reformattedMovement, combatpoints, mainRole)
+            const calculatedMovement: Movement | undefined = calculateMovement(reformattedMovement, combatpoints, mainRole)
             if (calculatedMovement) {
                 movements.push(calculatedMovement)
             }
@@ -22,12 +22,12 @@ export function calculateMovements(movements: RawMovement[], combatpoints: numbe
     }, [])
 }
 
-export default function calculateMovement(movement: Movement, combatpoints: number, mainRole: string): Movement | null {
+export default function calculateMovement(movement: Movement, combatpoints: number, mainRole: string): Movement | undefined {
     const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
 
     const roleToUse = role ? role : mainRole
 
-    if (!roleToUse) { return null }
+    if (!roleToUse) { return undefined }
 
     const specificScalingStrength = primaryCombatRoles[roleToUse].meleeCombatStats.movement
 

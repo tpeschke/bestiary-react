@@ -1,19 +1,19 @@
 import { Spell } from "../../interfaces/infoInterfaces/castingInfo";
-import CombatInfo from "../../interfaces/infoInterfaces/combatInfoInterfaces";
 import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
-import SocialInfo from "../../interfaces/infoInterfaces/socialInfo";
 import { BeastInfo } from "../../interfaces/viewInterfaces";
 
-import { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import { Skill } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { calculateRankForCharacteristic, CharacteristicWithRanks, getDifficultyDie } from '@bestiary/common/utilities/scalingAndBonus/confrontation/confrontationCalculator'
 import { calculateStressAndPanic } from '@bestiary/common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
 import { calculateRankForSkill } from '@bestiary/common/utilities/scalingAndBonus/skill/skillRankCalculator'
+import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
+import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
+import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
 
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
@@ -21,6 +21,7 @@ import alertInfo from "../../../../components/alert/alerts";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
 import CombatInfoClass from "./components/CombatInfoClass";
+import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -49,7 +50,7 @@ export default class GMBeastClass {
     private selectedModifier: number
 
     constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null) {
-        const { id, patreon, canplayerview, generalInfo, playerInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo, 
+        const { id, patreon, canplayerview, generalInfo, playerInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo,
             castingInfo, roleModifier, } = beastInfo
 
         this.entryID = id
@@ -129,10 +130,10 @@ export default class GMBeastClass {
     }
 
     get maxPoints(): number {
-        const { combatPoints } = this.entryCombatInfo
-        const { skillpoints } = this.entrySkillInfo
-        const { socialpoints } = this.entrySocialInfo
-        return Math.max(combatPoints + this.selectedModifier, skillpoints + this.selectedModifier, socialpoints + this.selectedModifier)
+        const { combatSkulls } = this.entryCombatInfo
+        const { skillSkulls } = this.entrySkillInfo
+        const { socialSkulls } = this.entrySocialInfo
+        return Math.max(combatSkulls + this.selectedModifier, skillSkulls + this.selectedModifier, socialSkulls + this.selectedModifier)
     }
 
     get generalInfo(): GeneralInfo {
@@ -154,8 +155,8 @@ export default class GMBeastClass {
     }
 
     get socialInfo(): SocialInfo {
-        const { conflicts, socialrole: role, socialsecondary: secondary, socialpoints: points, archetypeInfo } = this.entrySocialInfo
-        const { hasarchetypes: mainHasArchetypes, hasmonsterarchetypes: mainHasMonsterarchetypes } = archetypeInfo
+        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex } = this.entrySocialInfo
+        const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
             const { descriptions, convictions, relationships, flaws, burdens } = conflicts
@@ -163,27 +164,28 @@ export default class GMBeastClass {
 
             const roleSelected = this.isRoleSelected()
 
-            const socialrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialrole : role
-            const socialsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialsecondary : secondary
-            const socialpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialpoints : points) + this.selectedModifier
+            const socialRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRole : role
+            const socialSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSecondary : secondary
+            const socialSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
 
-            const hasarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
-            const hasmonsterarchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
+            const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
+            const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
 
             return {
                 ...this.entrySocialInfo,
-                socialrole, socialsecondary, socialpoints,
+                socialRole, socialSecondary,
+                socialSkulls,
                 archetypeInfo: {
                     ...archetypeInfo,
-                    hasarchetypes, hasmonsterarchetypes,
-                    difficultyDie: getDifficultyDie(socialpoints)
+                    hasArchetypes, hasMonsterArchetypes,
+                    baseRank: getBaseSocialRank(skullIndex)
                 },
                 conflicts: {
-                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', socialpoints, roleID), []),
-                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', socialpoints, roleID), []),
-                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', socialpoints, roleID), []),
-                    flaws: flaws.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles),
-                    burdens: burdens.filter((info: Conflict) => !info.socialroleid || info.socialroleid === roleID || info.allroles)
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, role), []),
+                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, role), []),
+                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, role), []),
+                    flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
+                    burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)
                 }
             }
         }
@@ -191,12 +193,12 @@ export default class GMBeastClass {
         return this.socialInfo
     }
 
-    private adjustCharacteristicRank = (type: CharacteristicWithRanks, points: number, roleID: string) => {
+    private adjustCharacteristicRank = (type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
-            if (!characteristic.socialroleid || characteristic.socialroleid === roleID || characteristic.allroles) {
+            if (!characteristic.socialRoleID || characteristic.socialRoleID === roleID || characteristic.allRoles) {
                 characteristics.push({
                     ...characteristic,
-                    rank: calculateRankForCharacteristic(type, points, characteristic.strength, characteristic.adjustment)
+                    rank: calculateRankForCharacteristic(type, skullIndex, role)
                 })
             }
             return characteristics
@@ -204,23 +206,23 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skills, skillrole: role, skillsecondary: secondary, skillpoints: points, stressStrength: mainStressStrength, panicStrength: mainPanicStrength } = this.entrySkillInfo
+        const { skills, skillrole: role, skillsecondary: secondary, skillSkulls: points, stressStrength: mainStressStrength, panicStrength: mainPanicStrength } = this.entrySkillInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
 
         const skillrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillrole : role
         const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
-        const skillpoints = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedModifier
+        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedModifier
 
         const stressStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.stressStrength : mainStressStrength
         const panicStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.panicStrength : mainPanicStrength
 
         return {
             ...this.entrySkillInfo,
-            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressStrength, panicStrength),
-            skillrole, skillsecondary, skillpoints,
-            skills: skills?.reduce(this.adjustSkillRank(skillpoints, roleID), [])
+            ...calculateStressAndPanic(skillrole, skillsecondary, skillSkulls, stressStrength, panicStrength),
+            skillrole, skillsecondary, skillSkulls,
+            skills: skills?.reduce(this.adjustSkillRank(skillSkulls, roleID), [])
         }
     }
 
