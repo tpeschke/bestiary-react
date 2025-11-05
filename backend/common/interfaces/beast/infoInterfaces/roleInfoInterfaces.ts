@@ -48,6 +48,8 @@ export interface RoleSkillInfo {
 
 export interface RoleSocialInfo {
     socialSkulls: number,
+    skullIndex: number,
+    capacity: number[],
     socialRole: string,
     socialSecondary: string,
     attackInfo: string,

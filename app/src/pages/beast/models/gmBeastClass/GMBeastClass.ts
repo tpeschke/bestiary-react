@@ -22,6 +22,7 @@ import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSp
 import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
 import CombatInfoClass from "./components/CombatInfoClass";
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -155,7 +156,7 @@ export default class GMBeastClass {
     }
 
     get socialInfo(): SocialInfo {
-        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex } = this.entrySocialInfo
+        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex } = this.entrySocialInfo
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
@@ -166,7 +167,9 @@ export default class GMBeastClass {
 
             const socialRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRole : role
             const socialSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSecondary : secondary
+
             const socialSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
+            const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.selectedModifier
 
             const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
@@ -175,15 +178,16 @@ export default class GMBeastClass {
                 ...this.entrySocialInfo,
                 socialRole, socialSecondary,
                 socialSkulls,
+                capacity: getCapacity(skullIndex, socialRole, socialSecondary),
                 archetypeInfo: {
                     ...archetypeInfo,
                     hasArchetypes, hasMonsterArchetypes,
                     baseRank: getBaseSocialRank(skullIndex)
                 },
                 conflicts: {
-                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, role), []),
-                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, role), []),
-                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, role), []),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, socialRole), []),
+                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, socialRole), []),
+                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
                     burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)
                 }

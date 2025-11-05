@@ -7,6 +7,9 @@ import { calculateStressAndPanic } from "@bestiary/common/utilities/scalingAndBo
 import { sortTemplateRoles } from "../../../../../utilities/sorts"
 import query from "../../../../../db/database"
 import { getMonsterRoleInfo } from "../../../../../db/beast/role"
+import getSkullNumber from "./getSkulls"
+import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 
 export interface UnsortedRole {
     id: string,
@@ -56,8 +59,11 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
     const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue: fatigueStrength, largeweapons: vitalityStrength, knockback, singledievitality, noknockback, rollundertrauma,
-        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints: socialSkulls, socialrole: socialRole,
+        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
+
+    const socialSkulls = getSkullNumber(socialPoints)
+    const skullIndex = getSkullIndex(socialSkulls)
 
     return {
         id,
@@ -82,7 +88,8 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressstrength, panicstrength)
         },
         socialInfo: {
-            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,
+            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo, skullIndex,
+            capacity: getCapacity(skullIndex, socialRole, socialSecondary),
             hasarchetypes, hasmonsterarchetypes
         }
     }

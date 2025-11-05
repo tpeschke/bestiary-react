@@ -2,7 +2,6 @@ export default function calculateDescriptionRank(skullIndex: number = 0, role: s
     const rankDictionary = [ 0, 0, 0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36 ]
 
     const roleIndexModifier = getRoleIndexModifier(role)
-
     const modifiedIndex = skullIndex + roleIndexModifier
 
     if (modifiedIndex < 0) {
@@ -11,6 +10,7 @@ export default function calculateDescriptionRank(skullIndex: number = 0, role: s
     if (modifiedIndex > rankDictionary.length) {
         return rankDictionary[rankDictionary.length - 1]
     }
+    
     return rankDictionary[modifiedIndex]
 }
 

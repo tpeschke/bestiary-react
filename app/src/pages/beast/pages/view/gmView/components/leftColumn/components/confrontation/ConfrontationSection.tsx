@@ -5,6 +5,7 @@ import SpecialInfo from "../specialInfo/specialInfo"
 import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import CapacityDisplay from "./components/CapacityDisplay"
 
 interface Props {
     socialInfo: SocialInfo
@@ -14,7 +15,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const [hasArchetypes, setHasArchetypes] = useState(false);
     const [hasCharacteristics, setHasCharacteristics] = useState(false);
 
-    const { socialRole, socialSkulls, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo } = socialInfo
+    const { socialRole, socialSkulls, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
 
     useEffect(() => {
         const { conflicts } = socialInfo
@@ -53,6 +54,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                     <SpecialInfo info={attackInfo} />
                 </>
             }
+            <CapacityDisplay capacity={capacity} />
             <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} setHasArchetypes={setHasArchetypes} />
             {hasCharacteristics && <CharacteristicsDisplay characteristicInfo={conflicts} />}
         </>
