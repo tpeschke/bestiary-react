@@ -9,10 +9,9 @@ import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInte
 import { Skill } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { calculateStressAndPanic } from '@bestiary/common/utilities/scalingAndBonus/skill/stressAndPanicCalculator'
+import calculateStress from '@bestiary/common/utilities/scalingAndBonus/skill/calculateStress'
 import { calculateRankForSkill } from '@bestiary/common/utilities/scalingAndBonus/skill/skillRankCalculator'
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
-import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
 
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
@@ -210,32 +209,31 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skills, skillrole: role, skillsecondary: secondary, skillSkulls: points, stressStrength: mainStressStrength, panicStrength: mainPanicStrength } = this.entrySkillInfo
+        const { skills, skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index } = this.entrySkillInfo
         const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
         const roleSelected = this.isRoleSelected()
 
-        const skillrole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillrole : role
-        const skillsecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillsecondary : secondary
-        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillpoints : points) + this.selectedModifier
+        const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
+        const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
 
-        const stressStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.stressStrength : mainStressStrength
-        const panicStrength = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.panicStrength : mainPanicStrength
+        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSkulls : skulls) + this.selectedModifier
+        const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skullIndex : index) + this.selectedModifier
 
         return {
             ...this.entrySkillInfo,
-            ...calculateStressAndPanic(skillrole, skillsecondary, skillSkulls, stressStrength, panicStrength),
-            skillrole, skillsecondary, skillSkulls,
-            skills: skills?.reduce(this.adjustSkillRank(skillSkulls, roleID), [])
+            stress: calculateStress(skillRole, skillSecondary, skullIndex),
+            skillRole, skillSecondary, skillSkulls,
+            skills: skills?.reduce(this.adjustSkillRank(skullIndex, roleID), [])
         }
     }
 
-    private adjustSkillRank = (points: number, roleID: string) => {
+    private adjustSkillRank = (skullIndex: number, roleID: string) => {
         return (skills: Skill[], skill: Skill): Skill[] => {
             if (!skill.skillroleid || skill.skillroleid === roleID || skill.allroles) {
                 skills.push({
                     ...skill,
-                    rank: calculateRankForSkill(points, skill.strength, skill.adjustment)
+                    rank: calculateRankForSkill(skullIndex)
                 })
             }
             return skills

@@ -13,31 +13,28 @@ interface Props {
 }
 
 export default function SkillSection({ skillInfo }: Props) {
-    const { skillrole, skillSkulls, skills, atk_skill, def_skill, skillsecondary, panic, stress, obstacles, challenges } = skillInfo
-
-    let stressString = `${stress}`
-    if (panic) { stressString = `(${panic}) ` + stressString }
+    const { skillRole, skillSkulls, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
 
     const showSkillSection = skills.length > 0
-    const showDefenseSection = def_skill && def_skill !== ''
-    const showAttackSection = atk_skill && atk_skill !== ''
+    const showDefenseSection = defenseInfo && defenseInfo !== ''
+    const showAttackSection = attackInfo && attackInfo !== ''
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
     return (
         <>
-            <RoleTitle title="Skills" skulls={skillSkulls} role={skillrole} secondaryRole={skillsecondary} />
-            <Pair title={"Nerve (Panic)"} info={stressString} format={{ heading: true, noBorder: hasBottomBorder }} />
+            <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
+            <Pair title={"Stress Threshold"} info={stress} format={{ heading: true, noBorder: hasBottomBorder }} />
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={def_skill} />
+                    <SpecialInfo info={defenseInfo} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={atk_skill} />
+                    <SpecialInfo info={attackInfo} />
                 </>
             }
             {showSkillSection &&
