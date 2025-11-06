@@ -1,9 +1,7 @@
 import { Challenge, Obstacle } from "../../../../server/interfaces/skillInterfaces";
-import { Strength } from "../../calculationInterfaces";
 
 export default interface SkillInfo {
     stress: number | string,
-    stressStrength: Strength,
     skillRole: string,
     skillSecondary: string,
     skillSkulls: number,

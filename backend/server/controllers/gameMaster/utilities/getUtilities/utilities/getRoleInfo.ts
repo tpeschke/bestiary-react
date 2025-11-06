@@ -3,7 +3,7 @@ import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoI
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
-import { calculateStressAndPanic } from "@bestiary/common/utilities/scalingAndBonus/skill/stressAndPanicCalculator"
+import calculateStress from "@bestiary/common/utilities/scalingAndBonus/skill/calculateStress"
 import { sortTemplateRoles } from "../../../../../utilities/sorts"
 import query from "../../../../../db/database"
 import { getMonsterRoleInfo } from "../../../../../db/beast/role"
@@ -59,11 +59,14 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
     const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue: fatigueStrength, largeweapons: vitalityStrength, knockback, singledievitality, noknockback, rollundertrauma,
-        isincorporeal, weaponbreakagevitality, panicstrength, stressstrength, skillpoints, skillrole, attack_skill, defense_skill, skillsecondary, socialpoints: socialPoints, socialrole: socialRole,
+        isincorporeal, weaponbreakagevitality, skillpoints: skillPoints, skillrole: skillRole, attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
 
     const socialSkulls = getSkullNumber(socialPoints)
-    const skullIndex = getSkullIndex(socialSkulls)
+    const socialSkullIndex = getSkullIndex(socialSkulls)
+
+    const skillSkulls = getSkullNumber(skillPoints)
+    const skillSkullIndex = getSkullIndex(skillSkulls)
 
     return {
         id,
@@ -82,14 +85,16 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             initiative: '+20'
         },
         skillInfo: {
-            skillpoints, skillrole, attack_skill, defense_skill, skillsecondary,
-            stressStrength: stressstrength,
-            panicStrength: panicstrength,
-            ...calculateStressAndPanic(skillrole, skillsecondary, skillpoints, stressstrength, panicstrength)
+            skillRole, skillSecondary, skillSkulls,
+            attackInfo: attack_skill, 
+            defenseInfo: defense_skill,
+            skullIndex: skillSkullIndex,
+            stress: calculateStress(skillRole, skillSecondary, skillSkullIndex)
         },
         socialInfo: {
-            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo, skullIndex,
-            capacity: getCapacity(skullIndex, socialRole, socialSecondary),
+            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,
+            skullIndex: socialSkullIndex,
+            capacity: getCapacity(socialSkullIndex, socialRole, socialSecondary),
             hasarchetypes, hasmonsterarchetypes
         }
     }

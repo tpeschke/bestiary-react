@@ -1,6 +1,7 @@
-import query from "../../../../../../db/database";
-import { getMonsterObstacles, getObstacleComplications, getObstaclePairs } from "../../../../../../db/skill/obstacle";
-import { Obstacle, Complication, Pair } from "../../../../../../interfaces/skillInterfaces";
+import query from "../../../../../../../db/database";
+import { getMonsterObstacles, getObstacleComplications, getObstaclePairs } from "../../../../../../../db/skill/obstacle";
+import { Obstacle, Complication, Pair } from "../../../../../../../interfaces/skillInterfaces";
+
 
 export async function getObstacles(beastId: number): Promise<Obstacle[]> {
     let obstacles: Obstacle[] = await query(getMonsterObstacles, beastId)

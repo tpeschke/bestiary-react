@@ -1,4 +1,3 @@
-import { Strength } from "../../calculationInterfaces";
 import { VitalityInfo } from "./combatInfoInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
@@ -35,15 +34,13 @@ export interface RoleCombatInfo {
 }
 
 export interface RoleSkillInfo {
-    panic: number | boolean,
     stress: number | string,
-    stressStrength: Strength,
-    panicStrength: Strength,
-    skillpoints: number,
-    skillrole: string,
-    skillsecondary: string
-    attack_skill: string,
-    defense_skill: string,
+    skillSkulls: number,
+    skullIndex: number,
+    skillRole: string,
+    skillSecondary: string
+    attackInfo: string,
+    defenseInfo: string,
 }
 
 export interface RoleSocialInfo {
