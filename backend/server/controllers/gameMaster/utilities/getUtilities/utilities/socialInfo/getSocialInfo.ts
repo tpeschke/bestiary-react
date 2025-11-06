@@ -7,8 +7,8 @@ import getSkullNumber from "../getSkulls"
 export default function formatSocialInfo(
     socialRole: string,
     socialSecondary: string,
-    atk_conf: string | null,
-    def_conf: string | null,
+    attackInfo: string | null,
+    defenseInfo: string | null,
     socialPoints: number,
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean
@@ -21,8 +21,8 @@ export default function formatSocialInfo(
         socialSkulls,
         skullIndex,
         capacity: getCapacity(skullIndex, socialRole, socialSecondary),
-        attackInfo: atk_conf ?? '',
-        defenseInfo: def_conf ?? '',
+        attackInfo: attackInfo ?? '',
+        defenseInfo: defenseInfo ?? '',
         conflicts: {
             descriptions: [],
             convictions: [],

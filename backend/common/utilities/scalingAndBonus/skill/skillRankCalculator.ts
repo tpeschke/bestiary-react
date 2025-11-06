@@ -1,35 +1,12 @@
-import { Strength } from "../../../interfaces/calculationInterfaces"
-import { ScalingObject } from "../combat/combatScaling"
 
-export function calculateRankForSkill(points: number, strength: Strength, adjustment: number = 0): number {
-    const scaling: ScalingObject = {
-        majSt: 1.25,
-        minSt: 1,
-        minWk: .75,
-        majWk: .5,
-        none: 0
-    }
+export function calculateRankForSkill(skullIndex: number): number {
+    const rankDictionary = [ -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36 ]
 
-    const base: ScalingObject = {
-        majSt: 7,
-        minSt: 5,
-        minWk: 3,
-        majWk: 1,
-        none: 0
+    if (skullIndex < 0) {
+        return rankDictionary[0]
     }
-
-    if (strength === 'one') {
-        return 1
-    } else if (strength === 'noneStr') {
-        return 5
-    } else if (strength === 'noneWk') {
-        return 0
-    } else if (strength === 'none' || !strength) {
-        return 3
-    } else if (base[strength] && scaling[strength]) {
-        return Math.ceil(base[strength] + (scaling[strength] * (points + adjustment)))
-    } else {
-        
-        return Math.ceil(base.minWk + (scaling.minWk * (points + adjustment)))
+    if (skullIndex > rankDictionary.length) {
+        return rankDictionary[rankDictionary.length - 1]
     }
+    return rankDictionary[skullIndex]
 }
