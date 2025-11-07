@@ -125,7 +125,28 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         }
     }
     let promiseArray: any[] = [
-        // get roles above here
+        getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios),
+        getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores),
+        getTables(beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables),
+
+        getArtistInfo(beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo),
+
+        getVariants(beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants),
+        getLocations(beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations),
+        getTypes(beast.id).then((types: BeastType[]) => {
+            const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
+            if (isABeast) {
+                const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
+                beast.socialInfo.defenseInfo += beastBonus
+            }
+
+            beast.linkedInfo.types = types
+        }),
+        getClimates(beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates),
+
+        getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles),
+
+
         getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
 
@@ -141,46 +162,24 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
                 ...beast.socialInfo.archetypeInfo,
                 ...archetypeInfo
             }
-        })
-        // pleroma and loot below here
+        }),
+        
+        getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma),
+        getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots),
+
+        getLairBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }),
+        getLairAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }),
+        getLairItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }),
+        getLairScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }),
+
+        getCarriedBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }),
+        getCarriedAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }),
+        getCarriedItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }),
+        getCarriedScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }),
+
+        getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting),
+        getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells)
     ]
-
-    promiseArray.push(getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios))
-    promiseArray.push(getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores))
-    promiseArray.push(getTables(beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables))
-
-    promiseArray.push(getArtistInfo(beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo))
-
-    promiseArray.push(getVariants(beast.id).then((variants: Variant[]) => beast.linkedInfo.variants = variants))
-    promiseArray.push(getLocations(beast.id, isEditing).then((locations: LocationObject) => beast.linkedInfo.locations = locations))
-    promiseArray.push(getTypes(beast.id).then((types: BeastType[]) => {
-        const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
-        if (isABeast) {
-            const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
-            beast.socialInfo.defenseInfo += beastBonus
-        }
-
-        beast.linkedInfo.types = types
-    }))
-    promiseArray.push(getClimates(beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
-
-    promiseArray.push(getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
-
-    promiseArray.push(getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
-    promiseArray.push(getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))
-
-    promiseArray.push(getLairBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, ...basicLoot }))
-    promiseArray.push(getLairAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, alms }))
-    promiseArray.push(getLairItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, items }))
-    promiseArray.push(getLairScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.lairLoot = { ...beast.lootInfo.lairLoot, scrolls }))
-
-    promiseArray.push(getCarriedBasic(beast.id).then((basicLoot: Loot) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, ...basicLoot }))
-    promiseArray.push(getCarriedAlms(beast.id).then((alms: Alm[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, alms }))
-    promiseArray.push(getCarriedItems(beast.id, isEditing).then((items: Item[] | Object) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, items }))
-    promiseArray.push(getCarriedScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }))
-
-    promiseArray.push(getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting))
-    promiseArray.push(getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells))
 
     if (userID) {
         promiseArray.push(getFavorite(beast.id, userID).then((isFavorite: boolean) => beast.playerInfo.favorite = isFavorite))
