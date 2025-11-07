@@ -2,12 +2,13 @@ import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/
 import { Strength } from "../../calculationInterfaces"
 
 export default interface CombatInfo {
-    sp_atk: string,
-    sp_def: string,
+    attackInfo: string,
+    defenseInfo: string,
     tactics: string,
     combatSkulls: number,
-    combatrole: string,
-    combatsecondary: string,
+    skullIndex: number,
+    combatRole: string,
+    combatSecondary: string,
     vitalityInfo: VitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
@@ -196,16 +197,13 @@ export interface VitalityInfo {
     locationalVitalities: LocationVitality[],
     vitality: string | number,
     trauma: number | boolean
-    fatigue: string | number | boolean,
-    vitalityStrength: Strength,
-    fatigueStrength: Strength,
-    notrauma: boolean,
+    noTrauma: boolean,
     knockback: number,
-    singledievitality: boolean,
-    noknockback: boolean,
-    rollundertrauma: number,
-    isincorporeal: boolean,
-    weaponbreakagevitality: boolean,
+    singleDieVitality: boolean,
+    noKnockback: boolean,
+    rollUnderTrauma: number,
+    isIncorporeal: boolean,
+    weaponBreakageVitality: boolean,
 }
 
 export interface LocationVitality {

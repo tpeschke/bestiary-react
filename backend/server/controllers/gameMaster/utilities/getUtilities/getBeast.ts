@@ -10,28 +10,26 @@ import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoI
 import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
-import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../interfaces/lootInterfaces"
 import { Challenge, Obstacle } from "../../../../interfaces/skillInterfaces"
 import { isOwner } from "../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../utilities/rarity"
-import { getCombatStats } from "./utilities/combatInfo/getCombatInfo"
+import { getCombatStats } from "./utilities/combatInfo/weaponInfo/getCombatInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
 import getTables from "./utilities/getTables"
 import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
-import getMovement from "./utilities/combatInfo/utilities/getMovement"
-import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
+import getMovement from "./utilities/combatInfo/weaponInfo/utilities/getMovement"
 import query from "../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
 import formatSocialInfo from "./utilities/socialInfo/getSocialInfo"
 import { getArchetypes, GetArchetypesReturn } from "./utilities/socialInfo/utilities/getArchetypes"
 import { getConflict } from "./utilities/socialInfo/utilities/getConflict"
-import getSkullNumber from "./utilities/getSkulls"
 import { getChallenges } from "./utilities/skillInfo/utilities/getChallenges"
 import { getObstacles } from "./utilities/skillInfo/utilities/getObstacles"
 import { getSkills } from "./utilities/skillInfo/utilities/getSkills"
 import formatSkillInfo from "./utilities/skillInfo/getSkillInfo"
+import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -44,8 +42,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
-        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, fatiguestrength: fatigue, notrauma, knockback, singledievitality, noknockback,
-        rollundertrauma, isincorporeal, weaponbreakagevitality, largeweapons, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
+        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
+        rollundertrauma, isincorporeal, weaponbreakagevitality, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId
     } = unsortedBeastInfo
 
@@ -103,24 +101,10 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             rolenameorder, defaultrole,
             roles: []
         },
-        combatInfo: {
-            tactics, combatrole, combatsecondary,
-            combatSkulls: getSkullNumber(combatpoints),
-            sp_atk: sp_atk ?? '',
-            sp_def: sp_def ?? '',
-            initiative: '+0',
-            attacks: [],
-            defenses: [],
-            movements: [],
-            vitalityInfo: {
-                notrauma, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
-                vitalityStrength: largeweapons,
-                fatigueStrength: fatigue,
-                knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, largeweapons, fatigue),
-                locationalVitalities: []
-            }
-        },
+        combatInfo: formatCombatInfo(
+            tactics, combatrole, combatsecondary, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality, 
+            noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
+        ),
         skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, atk_skill, def_skill, stress),
         socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, hasarchetypes, hasmonsterarchetypes),
         lootInfo: {

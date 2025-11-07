@@ -182,8 +182,6 @@ export const confrontationSecondaryDictionary: SearchObject[] = [
 export const combatPrimaryDictionary: SearchObject[] = [
     { id: 11, value: 'Artillery' },
     { id: 12, value: 'Brute' },
-    { id: 13, value: 'Captain' },
-    { id: 14, value: 'Controller' },
     { id: 15, value: 'Defender' },
     { id: 16, value: 'Duelist' },
     { id: 19, value: 'Shock' },

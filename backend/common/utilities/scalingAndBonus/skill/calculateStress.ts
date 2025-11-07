@@ -1,5 +1,7 @@
+import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
+
 export default function calculateStress(role: string, secondaryRole: string, skullIndex: number): number | string {
-    return modifiedCapacity(getBaseStress(skullIndex, role), secondaryRole)
+    return calculateSecondaryRoleEffect(getBaseStress(skullIndex, role), secondaryRole)
 }
 
 function getBaseStress(skullIndex: number, role: string): number {
@@ -35,19 +37,5 @@ function getRoleIndexModifier(role: string): number {
             return -3
         default:
             return 0
-    }
-}
-
-function modifiedCapacity(baseCapacity: number, secondaryRole: string | null) {
-    switch (secondaryRole) {
-        case 'Lesser':
-            return baseCapacity * 0.5
-        case 'Veteran':
-        case 'Officer':
-            return baseCapacity * 2.5
-        case 'Solo':
-            return baseCapacity * 3.5
-        default:
-            return baseCapacity
     }
 }

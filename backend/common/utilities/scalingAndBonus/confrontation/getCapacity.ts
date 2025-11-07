@@ -1,5 +1,7 @@
+import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
+
 export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null): number[] {
-    const baseCapacity = modifiedCapacity(getBaseCapacity(skullIndex, role), secondaryRole)
+    const baseCapacity = calculateSecondaryRoleEffect(getBaseCapacity(skullIndex, role), secondaryRole)
 
     const no = Math.floor(baseCapacity * 0.1)
     const noBut = Math.ceil(baseCapacity * 0.5)
@@ -51,19 +53,5 @@ function getRoleIndexModifier(role: string): number {
             return -4
         default:
             return 0
-    }
-}
-
-function modifiedCapacity(baseCapacity: number, secondaryRole: string | null) {
-    switch (secondaryRole) {
-        case 'Lesser':
-            return baseCapacity * 0.5
-        case 'Veteran':
-        case 'Officer':
-            return baseCapacity * 2.5
-        case 'Solo':
-            return baseCapacity * 3.5
-        default:
-            return baseCapacity
     }
 }
