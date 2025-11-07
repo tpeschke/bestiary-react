@@ -1,10 +1,9 @@
 import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/combat/movement";
-import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator";
+import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -26,44 +25,44 @@ export default class CombatInfoClass {
     }
 
     private formatCombatInfo = (size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo => {
-        const { attacks, defenses, movements, combatrole: role, combatsecondary: secondary, combatSkulls: points, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
         
-        const combatrole = selectedRole ? selectedRole.combatInfo.combatrole : role
-        const combatsecondary = selectedRole ? selectedRole.combatInfo.combatsecondary : secondary
-        const combatpoints = (selectedRole ? selectedRole.combatInfo.combatpoints : points) + selectedModifier
+        const combatRole = selectedRole ? selectedRole.combatInfo.combatrole : role
+        const combatSecondary = selectedRole ? selectedRole.combatInfo.combatsecondary : secondary
+        const skulls = (selectedRole ? selectedRole.combatInfo.combatSkulls : combatSkulls) + selectedModifier
         
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
         
-        let { sp_atk, sp_def} = this.entryCombatInfo
+        let { attackInfo, defenseInfo} = this.entryCombatInfo
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
-            if (attack) {  sp_atk += attack }
-            if (defense) { sp_def += defense }
+            if (attack) {  attackInfo += attack }
+            if (defense) { defenseInfo += defense }
         }
 
         return {
             ...this.entryCombatInfo,
-            combatrole, combatsecondary, 
-            combatSkulls: this.combatSkulls,
-            sp_atk, sp_def,
+            combatRole, combatSecondary, 
+            combatSkulls: skulls,
+            attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityInfo.vitalityStrength, vitalityInfo.fatigueStrength),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skulls),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(combatpoints, roleID, combatrole), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(combatpoints, roleID, combatrole, size), []),
-            movements: movements.reduce(this.adjustMovementInfo(combatpoints, roleID, combatrole), [])
+            attacks: attacks.reduce(this.adjustAttackInfo(skulls, roleID, combatRole), []),
+            defenses: defenses.reduce(this.adjustDefenseInfo(skulls, roleID, combatRole, size), []),
+            movements: movements.reduce(this.adjustMovementInfo(skulls, roleID, combatRole), [])
         }
     }
 
-    private adjustAttackInfo = (points: number, roleID: string | null, role: string) => {
+    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!roleID || attack.roleid === roleID) {
                 if (attack.infoType === 'weapon') {
                     attackInfo.push({
                         ...attack,
-                        ...calculateAttackInfo({ ...attack.scalingInfo, weaponInfo: attack.weaponInfo }, points, role),
+                        ...calculateAttackInfo({ ...attack.scalingInfo, weaponInfo: attack.weaponInfo }, skulls, role),
                         weaponName: attack.weaponName
                     })
                 } else if (attack.infoType === 'reference') {
@@ -89,7 +88,7 @@ export default class CombatInfoClass {
 
     private adjustMovementInfo = (points: number, roleID: string | null, role: string) => {
         return (movementInfo: Movement[], movement: Movement): Movement[] => {
-            if (!movement?.roleid || movement?.roleid === roleID || movement?.allroles) {
+            if (!movement?.roleId || movement?.roleId === roleID || movement?.allRoles) {
                 const calculatedMovement = calculateMovement(movement, points, role)
                 if (calculatedMovement) { movementInfo.push(calculatedMovement) }
             }
@@ -104,18 +103,15 @@ export default class CombatInfoClass {
     private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
         return {
             locationalVitalities: mainVitalityInfo.locationalVitalities,
-            fatigue: this.getDefault<string | number | boolean>(roleVitalityInfo.fatigue, mainVitalityInfo.fatigue),
-            notrauma: this.getDefault<boolean>(roleVitalityInfo.notrauma, mainVitalityInfo.notrauma),
+            noTrauma: this.getDefault<boolean>(roleVitalityInfo.noTrauma, mainVitalityInfo.noTrauma),
             knockback: this.getDefault<number>(roleVitalityInfo.knockback, mainVitalityInfo.knockback),
-            singledievitality: this.getDefault<boolean>(roleVitalityInfo.singledievitality, mainVitalityInfo.singledievitality),
-            noknockback: this.getDefault<boolean>(roleVitalityInfo.noknockback, mainVitalityInfo.noknockback),
-            rollundertrauma: this.getDefault<number>(roleVitalityInfo.rollundertrauma, mainVitalityInfo.rollundertrauma),
-            isincorporeal: this.getDefault<boolean>(roleVitalityInfo.isincorporeal, mainVitalityInfo.isincorporeal),
-            weaponbreakagevitality: this.getDefault<boolean>(roleVitalityInfo.weaponbreakagevitality, mainVitalityInfo.weaponbreakagevitality),
+            singleDieVitality: this.getDefault<boolean>(roleVitalityInfo.singleDieVitality, mainVitalityInfo.singleDieVitality),
+            noKnockback: this.getDefault<boolean>(roleVitalityInfo.noKnockback, mainVitalityInfo.noKnockback),
+            rollUnderTrauma: this.getDefault<number>(roleVitalityInfo.rollUnderTrauma, mainVitalityInfo.rollUnderTrauma),
+            isIncorporeal: this.getDefault<boolean>(roleVitalityInfo.isIncorporeal, mainVitalityInfo.isIncorporeal),
+            weaponBreakageVitality: this.getDefault<boolean>(roleVitalityInfo.weaponBreakageVitality, mainVitalityInfo.weaponBreakageVitality),
             vitality: this.getDefault<string | number>(roleVitalityInfo.vitality, mainVitalityInfo.vitality),
-            trauma: this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma),
-            vitalityStrength: this.getDefault<Strength>(roleVitalityInfo.vitalityStrength, mainVitalityInfo.vitalityStrength),
-            fatigueStrength: this.getDefault<Strength>(roleVitalityInfo.fatigueStrength, roleVitalityInfo.fatigueStrength)
+            trauma: this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma)
         }
     }
 }

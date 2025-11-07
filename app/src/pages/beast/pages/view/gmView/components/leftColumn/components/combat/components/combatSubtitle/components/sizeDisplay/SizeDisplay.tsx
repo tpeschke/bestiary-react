@@ -4,12 +4,12 @@ import Pair from "../../../../../../../../../../../components/UI/pair/Pair"
 interface Props {
     size: Size,
     knockback: number,
-    noknockback: boolean
+    noKnockback: boolean
 }
 
-export default function SizeDisplay({ size, knockback, noknockback }: Props) {
+export default function SizeDisplay({ size, knockback, noKnockback }: Props) {
     let knockbackString = `${knockback} `
-    if (noknockback || !knockback) {
+    if (noKnockback || !knockback) {
         knockbackString = `N `
     }
 

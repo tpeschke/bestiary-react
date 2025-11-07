@@ -14,29 +14,29 @@ interface Props {
 
 interface TraumaInfo {
     trauma: number | boolean,
-    notrauma: boolean,
-    rollundertrauma: number
+    noTrauma: boolean,
+    rollUnderTrauma: number
 }
 
 interface KnockbackInfo {
     knockback: number,
-    noknockback: boolean,
+    noKnockback: boolean,
     size: Size
 }
 
 export default function CombatSubtitle({ traumaInfo, initiative, knockbackInfo }: Props) {
-    const { trauma, notrauma, rollundertrauma } = traumaInfo
-    const { knockback, noknockback, size } = knockbackInfo
+    const { trauma, noTrauma, rollUnderTrauma } = traumaInfo
+    const { knockback, noKnockback, size } = knockbackInfo
 
-    const showSection = trauma || notrauma || knockback || size
+    const showSection = trauma || noTrauma || knockback || size
 
     return (
         <>
             {showSection &&
                 <Body>
                     <div className="combat-subtitle-shell">
-                        <TraumaDisplay trauma={trauma} notrauma={notrauma} rollundertrauma={rollundertrauma} />
-                        <SizeDisplay size={size} knockback={knockback} noknockback={noknockback} />
+                        <TraumaDisplay trauma={trauma} noTrauma={noTrauma} rollUnderTrauma={rollUnderTrauma} />
+                        <SizeDisplay size={size} knockback={knockback} noKnockback={noKnockback} />
                         <Pair title="Initiative" info={initiative} format={{ title: 'none', titleJustified: 'right' }} />
                     </div>
                 </Body>

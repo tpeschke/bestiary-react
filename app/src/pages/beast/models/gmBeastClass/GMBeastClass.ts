@@ -10,8 +10,6 @@ import { Skill } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/skill/calculateStress'
-import { calculateRankForSkill } from '@bestiary/common/utilities/scalingAndBonus/skill/skillRankCalculator'
-import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
 
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
@@ -22,6 +20,8 @@ import CastingClass from "../../pages/view/gmView/components/weirdshaping/models
 import CombatInfoClass from "./components/CombatInfoClass";
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
+import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
+import getSkillRank from "@bestiary/common/utilities/scalingAndBonus/skill/getSkillRank"
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -233,7 +233,7 @@ export default class GMBeastClass {
             if (!skill.skillroleid || skill.skillroleid === roleID || skill.allroles) {
                 skills.push({
                     ...skill,
-                    rank: calculateRankForSkill(skullIndex)
+                    rank: getSkillRank(skullIndex)
                 })
             }
             return skills
@@ -309,7 +309,7 @@ export default class GMBeastClass {
             return this.roleInfo.roles[this.selectRoleIndex].combatInfo.combatrole
         }
 
-        return this.combatInfo.combatrole
+        return this.combatInfo.combatRole
     }
 
     get modifierIndex() {

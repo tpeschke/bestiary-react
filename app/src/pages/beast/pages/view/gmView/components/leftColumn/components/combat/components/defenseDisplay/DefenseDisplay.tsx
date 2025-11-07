@@ -3,13 +3,13 @@ import SpecialInfo from "../../../specialInfo/specialInfo"
 import DefenseStats from "./components/DefenseStats"
 
 interface Props {
-    sp_def: string,
+    defenseInfo: string,
     defenses: DefenseInfo[]
 }
 
-export default function DefenseDisplay({ sp_def, defenses }: Props) {
+export default function DefenseDisplay({ defenseInfo, defenses }: Props) {
     const hasDefenses = defenses.length > 0
-    const hasSpecialDefenses = !!sp_def
+    const hasSpecialDefenses = !!defenseInfo
 
     const showSection = hasSpecialDefenses || hasDefenses
 
@@ -23,7 +23,7 @@ export default function DefenseDisplay({ sp_def, defenses }: Props) {
             {showSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={sp_def} />
+                    <SpecialInfo info={defenseInfo} />
                     {defenses.map((defense, index) => <DefenseStats key={index} defenseStats={defense} showDefenseNameBanner={showDefenseNameBanner} />)}
                 </>
             }

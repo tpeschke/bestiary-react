@@ -38,7 +38,7 @@ export interface WeaponInfo {
     situation: string | undefined,
     tactic: string | undefined,
     beastId: number,
-    roleId?: string,
+    roleid?: string,
     info: string,
     name: string,
     chosenName: string,
@@ -53,7 +53,13 @@ export interface WeaponInfo {
     rangeIncrement: string,
     isSpecial: IsSpecial,
     overAllIndex: number,
-    weaponInfo: ProcessedWeapon
+    weaponInfo: ProcessedWeapon,
+    scalingInfo: { 
+        swarmbonus: boolean, 
+        name: string, 
+        weapon: string, 
+        weapontype: DamageType
+    }
 }
 
 export interface DefenseInfo {

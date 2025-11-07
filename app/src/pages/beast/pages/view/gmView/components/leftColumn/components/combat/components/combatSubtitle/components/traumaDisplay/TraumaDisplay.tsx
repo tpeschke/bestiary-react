@@ -3,13 +3,13 @@ import './TraumaDisplay.css'
 
 interface Props {
     trauma: number | boolean,
-    notrauma: boolean,
-    rollundertrauma: number
+    noTrauma: boolean,
+    rollUnderTrauma: number
 }
 
-export default function TraumaDisplay({ trauma, notrauma, rollundertrauma }: Props) {
-    const traumaString = `${trauma} (${rollundertrauma})`
-    const showTrauma = !notrauma && trauma
+export default function TraumaDisplay({ trauma, noTrauma, rollUnderTrauma }: Props) {
+    const traumaString = `${trauma} (${rollUnderTrauma})`
+    const showTrauma = !noTrauma && trauma
 
     return (
         <>

@@ -16,49 +16,45 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
-    const { combatrole, combatSkulls, sp_atk, sp_def, combatsecondary, vitalityInfo, movements, attacks, defenses, tactics, initiative } = combatInfo
-    const { vitality, fatigue, rollundertrauma, notrauma, trauma, knockback, noknockback, locationalVitalities, weaponbreakagevitality, isincorporeal } = vitalityInfo
-
-    let vitalityString = `${vitality}`
-    if (fatigue && fatigue < vitality) { vitalityString = `(${fatigue}) ` + vitalityString }
-    if (fatigue && fatigue >= vitality) { vitalityString = `(N) ` + vitalityString }
+    const { combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks, defenses, tactics, initiative } = combatInfo
+    const { vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality, isIncorporeal } = vitalityInfo
 
     const traumaInfo = {
         trauma,
-        notrauma,
-        rollundertrauma
+        noTrauma,
+        rollUnderTrauma
     }
 
     const knockbackInfo = {
         knockback,
-        noknockback,
+        noKnockback,
         size
     }
 
-    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponbreakagevitality, isincorporeal)
+    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
 
     return (
         <>
-            <RoleTitle title='Combat' skulls={combatSkulls} role={combatrole} secondaryRole={combatsecondary} />
-            <Pair title={"Vitality (Fatigue)"} info={vitalityString} format={{ heading: true }} icon={vitalityIconSetting} />
+            <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />
+            <Pair title={"Vitality (Fatigue)"} info={vitality} format={{ heading: true }} icon={vitalityIconSetting} />
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} sp_def={sp_def} />
-            <AttackDisplay attacks={attacks} sp_atk={sp_atk} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
             <Movement movements={movements} />
             <TacticsAndStrategy tactics={tactics} />
         </>
     )
 }
 
-function getVitalityIconSetting(weaponbreakagevitality: boolean, isincorporeal: boolean): PairIconSettings | null {
-    if (weaponbreakagevitality) {
+function getVitalityIconSetting(weaponBreakageVitality: boolean, isIncorporeal: boolean): PairIconSettings | null {
+    if (weaponBreakageVitality) {
         return {
             iconName: 'crack',
             tooltip: 'This creature only takes damage when it would take Wear on a 1-to-1 basis'
         }
 
-    } else if (isincorporeal) {
+    } else if (isIncorporeal) {
         return {
             iconName: 'ghost',
             tooltip: 'This creature takes no damage from any source except those specifically called out'
