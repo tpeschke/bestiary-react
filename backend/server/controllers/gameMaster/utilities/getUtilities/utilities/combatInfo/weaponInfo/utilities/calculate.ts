@@ -10,30 +10,32 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
     }
 }
 
-function calculateAttacks(stats: RawCombatStat[], mainCombatPoints: number, mainRole: string, gearCache: any | undefined): AttackInfo[] {
+function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, gearCache: any | undefined): AttackInfo[] {
     return stats.map((stat, index) => {
-        const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial, attack,
-            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, combatpoints: combatPoints, oldID, attackid, situation,
+        const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial: isSpecial, attack,
+            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
             tactic, reference, attackrole, weapontype
         } = stat
 
         const roleToUse = role ? role : mainRole
         const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
-        const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
         if (reference) {
             return {
                 id: attackid,
                 infoType: 'reference',
                 overAllIndex: index,
-                roleid: roleid ? roleid : attackrole,
+                roleid: roleid ?? attackrole,
                 tactic, reference, situation
             }
         } else {
             return {
-                ...calculateAttackInfo({ beastid, roleid, info, swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, isspecial, damageType, adjustment, weapontype }, pointsToUse, roleToUse, gearCache),
+                ...calculateAttackInfo(
+                    { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype }, 
+                    skullIndex, roleToUse, gearCache
+                ),
                 situation, tactic,
-                oldID: id ? id : oldID,
+                oldID: id ?? oldID,
                 overAllIndex: index,
                 id: attackid,
                 infoType: 'weapon',

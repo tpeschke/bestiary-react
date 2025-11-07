@@ -1,24 +1,19 @@
 import { IsSpecial, DamageType, Type } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Strength } from "../../../interfaces/calculationInterfaces"
 import { getWeaponName } from "../../formatting/formatting"
-import { calculateStatWithFormatting, calculateStat } from "./combatCalculation"
-import { calculateDamageAndRecovery } from "./damageAndRecoveryCalculator"
 
 import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
+import getAttackMod from "./utilities/getAttackMod"
+import getRangeIncrement from "./utilities/getRangeIncrement"
+import getDamage from "./utilities/getDamage"
+import getRecovery from "./utilities/getRecovery"
+import getMeasure from "./utilities/getMeasure"
 
 export default function calculateAndFormatAttackInfo(
-    totalPoints: number,
+    skullIndex: number,
     role: string,
     chosenName: string,
     weaponName: string,
-    measure: Strength,
-    attack: Strength,
     weapontype: Type,
-    rangeIncrement: Strength,
-    slashingDamage: Strength,
-    crushingDamage: Strength,
-    piercingDamage: Strength,
-    recoveryStrength: Strength,
     isSpecial: IsSpecial,
     damageType: DamageType,
     weaponInfo: ProcessedWeapon,
@@ -34,18 +29,22 @@ export default function calculateAndFormatAttackInfo(
             measure, type, bonus, weaponInfo: weaponInfoObject,
             name: getWeaponName(chosenName, name),
             weaponName: name,
-            attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
-            rangeIncrement: range ? calculateStat(rangeIncrement, 'rangeIncrement', role, totalPoints) : null,
-            ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, type)
+            attack: getAttackMod(range, role, skullIndex),
+            rangeIncrement: range ? getRangeIncrement(range, role, skullIndex) : null,
+            damage: getDamage(isSpecial, range, type, role, skullIndex),
+            recovery: getRecovery(range, role, skullIndex)
         }
     }
 
+    const isRanged = weapontype === 'r'
     return {
         name: chosenName,
         type: damageType,
-        measure: calculateStat(measure, 'measure', role, totalPoints),
-        attack: calculateStatWithFormatting(attack, 'attack', role, totalPoints),
-        rangeIncrement: weapontype === 'r' ? calculateStat(rangeIncrement, 'rangeIncrement', role, totalPoints) : null,
-        ...calculateDamageAndRecovery(slashingDamage, crushingDamage, piercingDamage, recoveryStrength, role, totalPoints, isSpecial, damageType)
+        measure: getMeasure(isRanged, role, skullIndex),
+        attack: getAttackMod(isRanged, role, skullIndex),
+        rangeIncrement: isRanged ? getRangeIncrement(isRanged, role, skullIndex) : null,
+        damage: getDamage(isSpecial, isRanged, damageType, role, skullIndex),
+        recovery: getRecovery(isRanged, role, skullIndex)
     }
 }
+
