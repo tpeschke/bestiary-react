@@ -2,11 +2,11 @@ import { IsSpecial, DamageType, Type } from "../../../interfaces/beast/infoInter
 import { getWeaponName } from "../../formatting/formatting"
 
 import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
-import getAttackMod from "./utilities/getAttackMod"
-import getRangeIncrement from "./utilities/getRangeIncrement"
-import getDamage from "./utilities/getDamage"
-import getRecovery from "./utilities/getRecovery"
-import getMeasure from "./utilities/getMeasure"
+import getAttackMod from "./attackUtilities/getAttackMod"
+import getRangeIncrement from "./attackUtilities/getRangeIncrement"
+import getDamage from "./attackUtilities/getDamage"
+import getRecovery from "./attackUtilities/getRecovery"
+import getMeasure from "./attackUtilities/getMeasure"
 
 export default function calculateAndFormatAttackInfo(
     skullIndex: number,
@@ -16,7 +16,7 @@ export default function calculateAndFormatAttackInfo(
     weapontype: Type,
     isSpecial: IsSpecial,
     damageType: DamageType,
-    weaponInfo: ProcessedWeapon,
+    weaponInfo: ProcessedWeapon | null,
     gearCache?: any
 ) {
 

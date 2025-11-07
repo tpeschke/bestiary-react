@@ -12,7 +12,7 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
 
 function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, gearCache: any | undefined): AttackInfo[] {
     return stats.map((stat, index) => {
-        const { id, beastid, roleid, info, adjustment, swarmbonus, rangedistance: rangeIncrement, recovery, measure, weaponname: chosenName, weapon, isspecial: isSpecial, attack,
+        const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
             tactic, reference, attackrole, weapontype
         } = stat
@@ -31,7 +31,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
         } else {
             return {
                 ...calculateAttackInfo(
-                    { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype }, 
+                    { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
                     skullIndex, roleToUse, gearCache
                 ),
                 situation, tactic,
@@ -39,29 +39,29 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 overAllIndex: index,
                 id: attackid,
                 infoType: 'weapon',
-                scalingInfo: { swarmbonus, name: chosenName, weapon, measure, attack, rangeIncrement, slashingDamage, crushingDamage, piercingDamage, recovery, damageType, adjustment, weapontype }
+                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype }
             }
         }
     })
 }
 
-function calculateDefenses(stats: RawCombatStat[], size: Size, mainCombatPoints: number, mainRole: string): DefenseInfo[] {
+function calculateDefenses(stats: RawCombatStat[], size: Size, skullIndex: number, mainRole: string): DefenseInfo[] {
     return stats.map((stat, index) => {
-        const { id, beastid, roleid, info, adjustment, addsizemod, tdr, swarmbonus, rangeddefense: cover, armor, shield, eua, alldefense, flanks,
-            andcrushing: parryStaticDR, andslashing: parrySlashDR, weaponsmallslashing: slashingDR, weaponsmallcrushing: staticDR, weaponsmallpiercing: parry, role,
-            combatpoints: combatPoints, oldID, defenseid, defensename
+        const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, armor, shield, eua, role,
+            oldID, defenseid, defensename
         } = stat
 
         const roleToUse = role ? role : mainRole
-        const pointsToUse = combatPoints ? combatPoints : mainCombatPoints
 
         return {
-            ...calculateDefenseInfo({ beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, info }, pointsToUse, roleToUse, addsizemod, size),
+            ...calculateDefenseInfo(
+                { beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, info },
+                skullIndex, roleToUse, addsizemod, size),
             overAllIndex: index,
             oldID: id ? id : oldID,
             defensename,
             id: defenseid,
-            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: defensename, alldefense, adjustment, flanks, parry, cover, parryStaticDR, parrySlashDR, slashingDR, staticDR, addsizemod }
+            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: defensename, addsizemod }
         }
     })
 }
