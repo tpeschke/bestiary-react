@@ -102,7 +102,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality, 
+            tactics, combatrole, combatsecondary, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
             noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, atk_skill, def_skill, stress),
@@ -125,7 +125,12 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         }
     }
     let promiseArray: any[] = [
-        // locational vitalities above here
+        // get roles above here
+        getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
+        getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
+
+        getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
+
         getSkills(beast.id, beast.skillInfo.skullIndex).then((skills: Skill[]) => beast.skillInfo.skills = skills),
         getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges),
         getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles),
@@ -160,11 +165,6 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     promiseArray.push(getClimates(beast.id).then((climates: ClimateObject) => beast.linkedInfo.climates = climates))
 
     promiseArray.push(getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles))
-
-    promiseArray.push(getMovement(beast.id, combatpoints, combatrole).then((movements: Movement[]) => beast.combatInfo.movements = movements))
-    promiseArray.push(getCombatStats(beast.id, combatpoints, combatrole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }))
-
-    promiseArray.push(getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities))
 
     promiseArray.push(getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma))
     promiseArray.push(getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots))

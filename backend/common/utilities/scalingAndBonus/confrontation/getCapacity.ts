@@ -1,7 +1,11 @@
 import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
+import getModBySkullIndex from "../getModBySkullIndex"
 
 export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null): number[] {
-    const baseCapacity = calculateSecondaryRoleEffect(getBaseCapacity(skullIndex, role), secondaryRole)
+    const capacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
+    const roleIndexModifier = getRoleIndexModifier(role)
+
+    const baseCapacity = calculateSecondaryRoleEffect(getModBySkullIndex(skullIndex, roleIndexModifier, capacityDictionary), secondaryRole)
 
     const no = Math.floor(baseCapacity * 0.1)
     const noBut = Math.ceil(baseCapacity * 0.5)
@@ -14,21 +18,6 @@ export default function getCapacity(skullIndex: number = 0, role: string, second
         yesBut,
         yes
     ]
-}
-
-function getBaseCapacity(skullIndex: number, role: string): number {
-    const capacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
-    const roleIndexModifier = getRoleIndexModifier(role)
-
-    const modifiedIndex = skullIndex + roleIndexModifier
-
-    if (modifiedIndex < 0) {
-        return capacityDictionary[0]
-    }
-    if (modifiedIndex > capacityDictionary.length) {
-        return capacityDictionary[capacityDictionary.length - 1]
-    }
-    return capacityDictionary[modifiedIndex]
 }
 
 function getRoleIndexModifier(role: string): number {

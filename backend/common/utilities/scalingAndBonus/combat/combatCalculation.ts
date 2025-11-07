@@ -7,13 +7,11 @@ import calculateAndFormatAttackInfo from "./attackCalculator"
 import allScalingAndBonuses, { ScalingObject } from "./combatScaling"
 
 export interface CalculateCombatStatsReturn {
-    initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[]
 }
 
 export interface CalculateCombatStatsReturn {
-    initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[]
 }

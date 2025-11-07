@@ -2,7 +2,7 @@ import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalIn
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
-import { calculateVitalityFatigueAndTrauma } from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityFatigueAndTraumaCalculator"
+import calculateVitalityFatigueAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
 import calculateStress from "@bestiary/common/utilities/scalingAndBonus/skill/calculateStress"
 import { sortTemplateRoles } from "../../../../../utilities/sorts"
 import query from "../../../../../db/database"
@@ -58,9 +58,9 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 }
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
-    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, fatigue: fatigueStrength, largeweapons: vitalityStrength, knockback, singledievitality, noknockback, rollundertrauma,
-        isincorporeal, weaponbreakagevitality, skillpoints: skillPoints, skillrole: skillRole, attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
-        socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma } = unsortedRole
+    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatpoints, knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
+        isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole, attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
+        socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma: noTrauma } = unsortedRole
 
     const socialSkulls = getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
@@ -76,10 +76,9 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
         combatInfo: {
             attack, defense, combatrole, combatsecondary, combatpoints,
             vitalityInfo: {
-                notrauma, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality,
-                vitalityStrength, fatigueStrength,
+                noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints, vitalityStrength, fatigueStrength),
+                ...calculateVitalityFatigueAndTrauma(combatrole, combatsecondary, combatpoints),
                 locationalVitalities: []
             },
             initiative: '+20'

@@ -159,22 +159,16 @@ export interface RawCombatStat {
 
 export interface Movement {
     id: number,
-    beastid: number,
+    beastId: number,
     type: string,
     stroll: number | null,
     walk: number | null,
     jog: number | null,
     run: number | null,
     sprint: number | null,
-    roleid: string,
+    roleId: string,
     role: string,
-    allroles: boolean,
-    adjustment: number,
-    strollstrength: Strength, 
-    walkstrength: Strength, 
-    jogstrength: Strength, 
-    runstrength: Strength, 
-    sprintstrength: Strength
+    allRoles: boolean,
 }
 
 export interface RawMovement {

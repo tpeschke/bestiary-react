@@ -1,18 +1,16 @@
 import { RawMovement, Movement } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Strength } from "../../../interfaces/calculationInterfaces"
-import { primaryCombatRoles } from "../../roleInfo/combatRoleInfo"
 
-export function calculateMovements(movements: RawMovement[], combatpoints: number, mainRole: string) {
+export function calculateMovements(movements: RawMovement[], skullIndex: number, mainRole: string) {
     return movements.reduce((movements: Movement[], movement: RawMovement) => {
         if (movement) {
-            const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
+            const { id, beastid: beastId, role, type, roleid: roleId, allroles: allRoles } = movement
 
             const reformattedMovement: Movement = {
-                id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment,
+                id, beastId, role, type, roleId, allRoles,
                 stroll: 0, walk: 0, jog: 0, run: 0, sprint: 0
             }
 
-            const calculatedMovement: Movement | undefined = calculateMovement(reformattedMovement, combatpoints, mainRole)
+            const calculatedMovement: Movement | undefined = calculateMovement(reformattedMovement, skullIndex, mainRole)
             if (calculatedMovement) {
                 movements.push(calculatedMovement)
             }
@@ -22,69 +20,58 @@ export function calculateMovements(movements: RawMovement[], combatpoints: numbe
     }, [])
 }
 
-export default function calculateMovement(movement: Movement, combatpoints: number, mainRole: string): Movement | undefined {
-    const { id, beastid, role, type, strollstrength, walkstrength, jogstrength, runstrength, sprintstrength, roleid, allroles, adjustment = 0 } = movement
+export default function calculateMovement(movement: Movement, skullIndex: number, mainRole: string): Movement | undefined {
+    const { id, beastId, role, type, roleId, allRoles } = movement
 
     const roleToUse = role ? role : mainRole
 
-    if (!roleToUse) { return undefined }
-
-    const specificScalingStrength = primaryCombatRoles[roleToUse].meleeCombatStats.movement
-
-    const roleScalingStrength = primaryCombatRoles[roleToUse].meleeCombatStats.movement
-    const scalingToUse = specificScalingStrength ? specificScalingStrength : roleScalingStrength
-
-    let stroll = calculateSpeed(strollstrength ?? scalingToUse, combatpoints + adjustment, 0)
-    let walk = calculateSpeed(walkstrength ?? scalingToUse, combatpoints + adjustment, stroll)
-    let jog = calculateSpeed(jogstrength ?? scalingToUse, combatpoints + adjustment, walk, 2)
-    let run = calculateSpeed(runstrength ?? scalingToUse, combatpoints + adjustment, jog, 2)
-    let sprint = calculateSpeed(sprintstrength ?? scalingToUse, combatpoints + adjustment, run, 2)
+    const stroll = calculateSpeed(roleToUse, skullIndex, 0)
+    const walk = calculateSpeed(roleToUse, skullIndex, stroll)
+    const jog = calculateSpeed(roleToUse, skullIndex, walk)
+    const run = calculateSpeed(roleToUse, skullIndex, jog)
+    const sprint = calculateSpeed(roleToUse, skullIndex, run)
 
     return {
-        id, beastid, roleid, allroles,
-        stroll, walk, jog, run, sprint,
-        adjustment, role,
-        strollstrength, walkstrength, jogstrength, runstrength, sprintstrength,
+        id, beastId, roleId, allRoles,
+        stroll, walk, jog, run, sprint, role,
         type: type ?? 'Land'
     }
 }
 
-function calculateSpeed(strength: Strength, points: number, baseSpeed: number, multiplier: number = 1): number {
-    const scaling = {
-        majSt: 3 * multiplier,
-        minSt: 2.5 * multiplier,
-        none: 2.5 * multiplier,
-        minWk: 2 * multiplier,
-        majWk: 1 * multiplier
-    }
-
-    const bonus = {
-        majSt: .075,
-        minSt: .05,
-        none: 0,
-        minWk: .025,
-        majWk: .01
-    }
-
-    if (!baseSpeed) { baseSpeed = 0 }
-
-    if (strength === 'x') {
-        return 0
-    } else if (strength === 'one') {
-        return 1
-    } else if (strength === 'noneStr') {
-        baseSpeed += scaling.majSt
-    } else if (strength === 'noneWk') {
-        baseSpeed += scaling.majWk
-    } else if (strength === 'none' || !strength) {
-        baseSpeed += scaling.none
-    } else {
-        baseSpeed += (scaling[strength] + (bonus[strength] * points))
-    }
-
-    return roundToNearestTwoPointFive(baseSpeed)
+function calculateSpeed(role: string, skullIndex: number, baseSpeed: number): number {
+    return getRawSpeed(role, skullIndex) + baseSpeed
 }
 
-function roundToNearestTwoPointFive(x: number) {
-    return Math.ceil(x / 2.5) * 2.5
+function getRawSpeed(role: string, skullIndex: number){
+    const initiativeDictionary = [2, 2, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7]
+    const roleIndexModifier = getRoleIndexModifier(role)
+
+    const modifiedIndex = skullIndex + roleIndexModifier
+
+    if (modifiedIndex < 0) {
+        return initiativeDictionary[0]
+    }
+    if (modifiedIndex > initiativeDictionary.length) {
+        return initiativeDictionary[initiativeDictionary.length - 1]
+    }
+    return initiativeDictionary[modifiedIndex]
+}
+
+function getRoleIndexModifier(role: string): number {
+    switch (role) {
+        case 'Artillery':
+            return -2
+        case 'Brute':
+            return 0
+        case 'Defender':
+            return -4
+        case 'Duelist':
+            return 2
+        case 'Shock':
+            return 2
+        case 'Skirmisher':
+            return 4
+        default:
+            return 0
+    }
 }

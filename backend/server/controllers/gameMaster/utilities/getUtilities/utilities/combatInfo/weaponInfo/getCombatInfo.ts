@@ -8,14 +8,14 @@ import { getMonsterDefenses } from "../../../../../../../db/beast/defenses"
 import { getMonsterAttacks } from "../../../../../../../db/beast/attacks"
 import { getMonsterCombatStats } from "../../../../../../../db/beast/combatStat"
 
-export async function getCombatStats(beastId: number, combatPoints: number, role: string, size: Size, gearCache: any | undefined): Promise<CalculateCombatStatsReturn> {
+export async function getCombatStats(beastId: number, skullindex: number, role: string, size: Size, gearCache: any | undefined): Promise<CalculateCombatStatsReturn> {
     const defenses: RawCombatStat[] = await query(getMonsterDefenses, beastId)
     
     if (defenses.length > 0) {
         const combatStats: RawCombatStat[] = await query(getMonsterAttacks, beastId)
-        return calculateAttacksAndDefenses(combatStats, defenses, combatPoints, role, size, gearCache)
+        return calculateAttacksAndDefenses(combatStats, defenses, skullindex, role, size, gearCache)
     } else {
         const combatStats: RawCombatStat[] = await query(getMonsterCombatStats, beastId)
-        return calculateCombatStats(combatStats, combatPoints, role, size, gearCache)
+        return calculateCombatStats(combatStats, skullindex, role, size, gearCache)
     }
 }

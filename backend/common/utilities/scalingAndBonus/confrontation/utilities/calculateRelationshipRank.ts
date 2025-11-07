@@ -1,17 +1,10 @@
+import getModBySkullIndex from "../../getModBySkullIndex"
+
 export default function calculateRelationshipRank(skullIndex: number = 0, role: string): number {
     const rankDictionary = [ 1, 2, 3, 4, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44 ]
-
     const roleIndexModifier = getRoleIndexModifier(role)
 
-    const modifiedIndex = skullIndex + roleIndexModifier
-
-    if (modifiedIndex < 0) {
-        return rankDictionary[0]
-    }
-    if (modifiedIndex > rankDictionary.length) {
-        return rankDictionary[rankDictionary.length - 1]
-    }
-    return rankDictionary[modifiedIndex]
+    return getModBySkullIndex(skullIndex, roleIndexModifier, rankDictionary)
 }
 
 function getRoleIndexModifier(role: string): number {

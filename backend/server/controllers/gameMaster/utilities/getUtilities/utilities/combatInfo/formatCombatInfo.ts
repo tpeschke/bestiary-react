@@ -4,6 +4,7 @@ import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIn
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
+import getInitiative from "./utilities/getInitiative"
 
 export default function formatCombatInfo(
     tactics: string,
@@ -30,8 +31,7 @@ export default function formatCombatInfo(
         skullIndex,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
-        // TODO
-        initiative: '+0',
+        initiative: getInitiative(combatRole, skullIndex),
         attacks: [],
         defenses: [],
         movements: [],

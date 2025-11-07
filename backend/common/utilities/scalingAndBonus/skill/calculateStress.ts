@@ -1,22 +1,11 @@
 import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
+import getModBySkullIndex from "../getModBySkullIndex"
 
 export default function calculateStress(role: string, secondaryRole: string, skullIndex: number): number | string {
-    return calculateSecondaryRoleEffect(getBaseStress(skullIndex, role), secondaryRole)
-}
-
-function getBaseStress(skullIndex: number, role: string): number {
     const stressDictionary = [2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57]
     const roleIndexModifier = getRoleIndexModifier(role)
 
-    const modifiedIndex = skullIndex + roleIndexModifier
-
-    if (modifiedIndex < 0) {
-        return stressDictionary[0]
-    }
-    if (modifiedIndex > stressDictionary.length) {
-        return stressDictionary[stressDictionary.length - 1]
-    }
-    return stressDictionary[modifiedIndex]
+    return calculateSecondaryRoleEffect(getModBySkullIndex(skullIndex, roleIndexModifier, stressDictionary), secondaryRole)
 }
 
 function getRoleIndexModifier(role: string): number {
