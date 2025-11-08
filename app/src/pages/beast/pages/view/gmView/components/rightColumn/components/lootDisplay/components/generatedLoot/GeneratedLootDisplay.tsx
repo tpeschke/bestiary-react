@@ -50,11 +50,12 @@ export default function GeneratedLootDisplay({ lairLoot: lairParams, carriedLoot
 
     return (
         <div className="generated-loot-shell">
-            <h3>Carried Loot</h3>
-            {carriedLoot && formatLootDisplay(carriedLoot, 'carried')}
-
             <h3>Lair Loot</h3>
             {lairLoot && formatLootDisplay(lairLoot, 'lair')}
+
+            <h3>Carried Loot</h3>
+            <p className='warning'>This is only for non-standard versions of the entry (Unique / Greater / Dread / THE)</p>
+            {carriedLoot && formatLootDisplay(carriedLoot, 'carried')}
 
             <div className='input-shell'>
                 <p>Number of Enemies: </p>
