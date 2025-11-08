@@ -13,7 +13,7 @@ export default function calculateAndFormatAttackInfo(
     role: string,
     chosenName: string,
     weaponName: string,
-    weapontype: Type,
+    weaponType: Type,
     isSpecial: IsSpecial,
     damageType: DamageType,
     weaponInfo: ProcessedWeapon | null,
@@ -36,7 +36,7 @@ export default function calculateAndFormatAttackInfo(
         }
     }
 
-    const isRanged = weapontype === 'r'
+    const isRanged = weaponType === 'r'
     return {
         name: chosenName,
         type: damageType,
