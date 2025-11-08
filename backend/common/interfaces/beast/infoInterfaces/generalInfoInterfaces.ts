@@ -34,7 +34,7 @@ export interface Folklore {
 export interface Rarity {
     rarityId: number,
     rarityName: string,
-    modifier?: string
+    difficulty?: string
 }
 
 export interface TablesObject {

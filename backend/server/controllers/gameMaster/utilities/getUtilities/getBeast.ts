@@ -18,7 +18,7 @@ import { getCombatStats } from "./utilities/combatInfo/weaponInfo/getCombatInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
 import getTables from "./utilities/getTables"
-import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getPleroma, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
+import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
 import getMovement from "./utilities/combatInfo/weaponInfo/utilities/getMovement"
 import query from "../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
@@ -30,6 +30,7 @@ import { getObstacles } from "./utilities/skillInfo/utilities/getObstacles"
 import { getSkills } from "./utilities/skillInfo/utilities/getSkills"
 import formatSkillInfo from "./utilities/skillInfo/getSkillInfo"
 import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
+import getPleroma from "./utilities/lootInfo/getPleroma"
 
 interface GetBeastOptions {
     isEditing: boolean,

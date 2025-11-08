@@ -24,12 +24,6 @@ export interface Folklore {
     truth: string
 }
 
-export interface Rarity {
-    rarityId: number,
-    rarityName: string,
-    modifier?: string
-}
-
 export interface TablesObject {
     appearance: Table[],
     habitat: Table[],

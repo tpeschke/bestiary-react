@@ -3,7 +3,6 @@ import { LocationVitality } from "@bestiary/common/interfaces/beast/infoInterfac
 import { Folklore, Scenario } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject, ArtistInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { BeastType, ClimateObject, Climate, Variant, LocationObject, Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
-import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
 import { User } from "../../../../../../interfaces/apiInterfaces"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../interfaces/lootInterfaces"
 import rollDice from "../../../../../../utilities/diceRoller"
@@ -16,7 +15,6 @@ import { getAllLocations, getMonsterLocations } from "../../../../../../db/beast
 import { getMonsterTypes } from "../../../../../../db/beast/type"
 import { getAllClimates, getMonsterClimates } from "../../../../../../db/beast/climate"
 import { getMonsterLocationalVitalities } from "../../../../../../db/beast/locationalVitality"
-import { getMonsterPleroma } from "../../../../../../db/beast/pleroma"
 import { getSpecificMonsterLoot } from "../../../../../../db/loot/specific"
 import { getMonsterLairAlmScripts, getMonsterLairBasicLoot, getMonsterLairItems, getMonsterLairScrolls } from "../../../../../../db/loot/lair"
 import { getMonsterCarriedAlmScript, getMonsterCarriedBasic, getMonsterCarriedItems, getMonsterCarriedScrolls } from "../../../../../../db/loot/carried"
@@ -139,10 +137,6 @@ export async function getCarriedItems(beastId: number, isEditing: boolean): Prom
 
 export async function getCarriedScrolls(beastId: number): Promise<Scroll[]> {
     return query(getMonsterCarriedScrolls, beastId)
-}
-
-export async function getPleroma(beastId: number): Promise<Pleroma[]> {
-    return query(getMonsterPleroma, beastId)
 }
 
 export async function getLocationalVitalities(beastId: number): Promise<LocationVitality[]> {

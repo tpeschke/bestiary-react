@@ -18,5 +18,4 @@ export function getDifficultyBySkullValue(skullValue: number) {
     }
 
     return difficultyDictionary[skullValue]
-
 }

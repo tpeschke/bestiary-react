@@ -1,32 +1,41 @@
-export default function calculatePrice(difficulty: string, harvest: string, rarityModifier?: string): string {
-    if (difficulty?.toUpperCase() === 'N/A' && harvest?.toUpperCase() === 'N/A') {
+export default function calculatePrice(harvestDifficulty: string | null, positionModifier: string, difficulty?: string): string {
+    if (positionModifier?.toUpperCase() === 'N/A' && harvestDifficulty?.toUpperCase() === 'N/A') {
         return 'Priceless'
     }
 
-    if (!harvest && !difficulty) {
-        difficulty = '1d0'
-    } else if (!difficulty) {
-        difficulty = harvest
+    if (!harvestDifficulty && difficulty) {
+        harvestDifficulty = difficulty
+    } else if (!harvestDifficulty) {
+        harvestDifficulty = '0 - s1 (d0 / d6 / d20)'
     }
 
-    if (!harvest) { harvest = '1d0' }
-    if (!rarityModifier) { rarityModifier = '1d0' }
-
-    const totaledArray = [rarityModifier, ...harvest.split('+'), ...difficulty.split('+')]
-    const totalPrice = totaledArray.reduce(collectAverage, 0)
-
-    if (totalPrice <= 0) {
-        return '0 sc'
-    }
-
-    return totalPrice + ' sc'
+    return (getObstacleSCValue(harvestDifficulty) + getPositionSCValue(positionModifier)) + ' sc'
 }
 
-function collectAverage(total: number, value: string): number {
-    if (value === '0' || value.toUpperCase() === 'N/A') { return total}
+function getObstacleSCValue(harvestDifficulty: string) {
+    const difficultyDictionary: { [key: string]: number } = {
+        '0 - s1 (d0 / d6 / d20)': 5,
+        '6 - s1 (d4 / d8 / d12)': 10,
+        '9 - s1 (d6 / d10 / d10)': 15,
+        '12 - s1 (d8 / d12 / d8)': 20,
+        '15 - n (d10 / d20 / d6)': 25,
+        '18 - n (d12 / d20+d4 / d4)': 30,
+        '30 - n (d20 / d20+d6 / d0)': 35
+    }
 
-    if (value.substring(value.length - 1) === '!') { value = value.substring(0, value.length - 1) }
+    return difficultyDictionary[harvestDifficulty]
+}
 
-    const [number, maxDiceValue] = value.split('d')
-    return total + ((number ? +number : 1) * (+maxDiceValue / 2))
+function getPositionSCValue(positionModifier: string) {
+    const positionDictionary: { [key: string]: number } = {
+        '': 0,
+        '+1 Pos': 2,
+        '+2 Pos': 5,
+        '+3 Pos': 8,
+        '+4 Pos': 10,
+        '+5 Pos': 13,
+        '+6 Pos': 15,
+    }
+
+    return positionDictionary[positionModifier]
 }

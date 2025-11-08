@@ -3,7 +3,7 @@ import { Rarity } from "@bestiary/common/interfaces/beast/infoInterfaces/general
 interface RarityDictionaryObject {
     [key: number]: {
         rarityName: string,
-        modifier: string
+        difficulty: string
     }
 }
 
@@ -11,19 +11,19 @@ export function getRarity(rarityId: number): Rarity {
     const rarityDictionary: RarityDictionaryObject = {
         1: {
             rarityName: 'Legendary',
-            modifier: '2d20'
+            difficulty: '30 - n (d20 / d20+d6 / d0)'
         },
         3: {
             rarityName: 'Rare',
-            modifier: 'd20'
+            difficulty: '15 - n (d10 / d20 / d6)'
         },
         5: {
             rarityName: 'Uncommon',
-            modifier: 'd10'
+            difficulty: '9 - s1 (d6 / d10 / d10)'
         },
         10: {
             rarityName: 'Common',
-            modifier: '0'
+            difficulty: '0 - s1 (d0 / d6 / d20)'
         }
     }
 

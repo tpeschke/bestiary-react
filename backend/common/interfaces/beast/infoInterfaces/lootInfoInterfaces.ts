@@ -13,7 +13,7 @@ export interface Pleroma {
     beastid: number,
     name: string,
     spell: string,
-    difficulty: string,
-    harvest: string,
+    positionModifier: string,
+    harvestDifficulty: string,
     deleted: boolean
 }

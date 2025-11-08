@@ -2,9 +2,9 @@ import './MiscInfoDisplay.css'
 
 import Body from '../../../../../../../components/UI/body/Body'
 import Pair from '../../../../../../../components/UI/pair/Pair'
-import { Rarity } from '../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 import ClimatesDisplay from './climates/ClimatesDisplay'
 import { Climate } from '../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
+import { Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {
     miscInfo: MiscInfo
@@ -40,11 +40,11 @@ export default function MiscInfoDisplay({ miscInfo }: Props) {
     )
 }
 
-function formatRarityString({ rarityName, modifier}: Rarity): string {
+function formatRarityString({ rarityName, difficulty}: Rarity): string {
     let rarityString = rarityName
 
-    if (modifier) {
-        rarityString += ` (+${modifier})`
+    if (difficulty) {
+        rarityString += ` (${difficulty})`
     }
 
     return rarityString

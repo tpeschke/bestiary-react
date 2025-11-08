@@ -1,3 +1,5 @@
+import { Pleroma } from '@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces'
+
 export default interface LootInfo {
     lootnotes: string,
     lairLoot: Loot,
@@ -43,15 +45,6 @@ export interface Item {
     category: number, 
     rarity: number, 
     wear: string
-}
-export interface Pleroma {
-    id: number,
-    beastid: number,
-    name: string,
-    spell: string,
-    difficulty: string,
-    harvest: string,
-    deleted: boolean
 }
 
 export type ReturnedLoot = ReturnedAlmScript | ReturnedEnchantedItem | ReturnedPotion | ReturnedTalisman | ReturnedScroll | ReturnedGenericLoot
