@@ -2,12 +2,14 @@ import '../ObstaclesDisplay.css'
 import Icon from '../../../../../../../../../../../../components/icon/Icon';
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay';
 import { Complication, Obstacle, Pair } from '../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces';
+import { getDifficultyBySkullValue } from '../../../../../../../../../../utilities/getDifficulty';
 
 interface Props {
-    obstacle: Obstacle | null
+    obstacle: Obstacle | null,
+    skillSkulls: number
 }
 
-export default function ObstacleDisplay({ obstacle }: Props) {
+export default function ObstacleDisplay({ obstacle, skillSkulls }: Props) {
     if (!obstacle) { return <></> }
 
     const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
@@ -22,8 +24,11 @@ export default function ObstacleDisplay({ obstacle }: Props) {
                 </thead>
                 <tbody>
                     {difficulty && <tr className='standard-row'>
-                        <td><strong>Risk</strong></td>
-                        <td>{difficulty}</td>
+                        <td><strong>Difficulty</strong></td>
+                        <td>
+                            {skillSkulls && difficulty !== 'Universal' ? getDifficultyBySkullValue(skillSkulls) + '\n' : ''}
+                            {difficulty}
+                        </td>
                     </tr>}
                     {time && <tr className='standard-row'>
                         <td><strong>Time</strong></td>

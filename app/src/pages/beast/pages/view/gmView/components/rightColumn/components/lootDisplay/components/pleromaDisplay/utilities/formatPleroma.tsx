@@ -8,11 +8,11 @@ import formatHarvest from "./formatHarvest"
 export default function formatPleroma({ name, difficulty, spell, harvest }: Pleroma, { modifier, rarityId }: Rarity): DrawerObject {
     return {
         label: name,
-        subtitle: `ID Risk: +${difficulty}+${modifier}`,
+        subtitle: `ID Diff: +${difficulty}+${modifier}`,
         innards: (
             <div className='pleroma-description-shell'>
                 <Pair title="Spell" info={spell} />
-                <Pair title="Harvest Risk" info={formatHarvest(harvest, difficulty)} />
+                <Pair title="Harvest Diff" info={formatHarvest(harvest, difficulty)} />
                 <Pair title="SP Bonus" info={calculateSpellPointBonus(rarityId)} />
                 <Pair title="Check Bonus" info={calculateCheckBonus(rarityId)} />
                 <Pair title="Price" info={calculatePrice(harvest, difficulty, modifier)} />

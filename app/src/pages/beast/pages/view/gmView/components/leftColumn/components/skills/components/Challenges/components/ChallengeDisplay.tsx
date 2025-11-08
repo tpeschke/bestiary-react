@@ -6,12 +6,13 @@ import { Challenge, Obstacle } from "../../../../../../../../../../interfaces/in
 
 interface Props {
     challenge: Challenge,
-    index: number
+    index: number,
+    skillSkulls: number
 }
 
 mermaid.initialize({ theme: "neutral" });
 
-export function ChallengeDisplay({ challenge, index }: Props) {
+export function ChallengeDisplay({ challenge, index, skillSkulls }: Props) {
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
     const { name, flowchart, obstacles } = challenge
@@ -53,7 +54,7 @@ export function ChallengeDisplay({ challenge, index }: Props) {
             <h6>{name}</h6>
             <div id={`${index}`} ref={mermaidRef}></div>
             <Tooltip id={`${name}-obstacle-tooltip`}>
-                <ObstacleDisplay obstacle={obstacleInTooltip} />
+                <ObstacleDisplay obstacle={obstacleInTooltip} skillSkulls={skillSkulls} />
             </Tooltip>
         </>
     )
