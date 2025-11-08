@@ -186,7 +186,7 @@ export default function beastHooks(): Return {
         if (beastInfo) {
             const modifiedBeastInfo: BeastInfo = {
                 ...beastInfo,
-                roleModifier: newRoleModifier * 5
+                roleModifier: newRoleModifier
             }
 
             setBeast(new GMBeastClass(modifiedBeastInfo, null, null))

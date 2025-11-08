@@ -325,7 +325,7 @@ export default class GMBeastClass {
     }
 
     get modifierIndex() {
-        return this.selectedModifier / 5
+        return this.selectedModifier
     }
 
     public copyQuickLink = (): void => {
