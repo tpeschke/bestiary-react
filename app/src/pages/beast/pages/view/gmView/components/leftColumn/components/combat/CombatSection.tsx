@@ -36,7 +36,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
     return (
         <>
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />
-            <Pair title={"Vitality (Fatigue)"} info={vitality} format={{ heading: true }} icon={vitalityIconSetting} />
+            <Pair title={"Vitality"} info={vitality} format={{ heading: true }} icon={vitalityIconSetting} />
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
             <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />

@@ -25,25 +25,28 @@ export default class CombatInfoClass {
     }
 
     private formatCombatInfo = (size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo => {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
-        
-        const combatRole = selectedRole ? selectedRole.combatInfo.combatrole : role
-        const combatSecondary = selectedRole ? selectedRole.combatInfo.combatsecondary : secondary
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+
+        const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
+        const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
+
         const skulls = (selectedRole ? selectedRole.combatInfo.combatSkulls : combatSkulls) + selectedModifier
-        
+        const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex) + selectedModifier
+
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
-        
-        let { attackInfo, defenseInfo} = this.entryCombatInfo
+
+        let { attackInfo, defenseInfo } = this.entryCombatInfo
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
-            if (attack) {  attackInfo += attack }
+            if (attack) { attackInfo += attack }
             if (defense) { defenseInfo += defense }
         }
 
         return {
             ...this.entryCombatInfo,
-            combatRole, combatSecondary, 
+            combatRole, combatSecondary,
             combatSkulls: skulls,
+            skullIndex,
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
@@ -66,7 +69,7 @@ export default class CombatInfoClass {
                         weaponName: attack.weaponName
                     })
                 } else if (attack.infoType === 'reference') {
-                    attackInfo.push({...attack})
+                    attackInfo.push({ ...attack })
                 }
             }
             return attackInfo

@@ -306,7 +306,7 @@ export default class GMBeastClass {
 
     get combatRoleType(): string | null {
         if (this.selectRoleIndex >= 0) {
-            return this.roleInfo.roles[this.selectRoleIndex].combatInfo.combatrole
+            return this.roleInfo.roles[this.selectRoleIndex].combatInfo.combatRole
         }
 
         return this.combatInfo.combatRole

@@ -22,7 +22,7 @@ export interface UnsortedRole {
     defense: string,
     notrauma: boolean,
     secondaryrole: string,
-    combatSkulls: number,
+    combatpoints: number,
     fatigue: Strength,
     largeweapons: Strength,
     knockback: number,
@@ -58,9 +58,12 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 }
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
-    const { id, name, role: combatrole, size, hash, attack, defense, secondaryrole: combatsecondary, combatSkulls, knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
+    const { id, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary, knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
         isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole, attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma: noTrauma } = unsortedRole
+
+    const combatSkulls = getSkullNumber(combatPoints)
+    const combatSkullIndex = getSkullIndex(combatSkulls)
 
     const socialSkulls = getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
@@ -74,11 +77,13 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             name, size, hash
         },
         combatInfo: {
-            attack, defense, combatrole, combatsecondary, combatSkulls,
+            attack, defense, combatRole, combatSecondary, 
+            combatSkulls,
+            skullIndex: combatSkullIndex,
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityAndTrauma(combatrole, combatsecondary, combatSkulls),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls),
                 locationalVitalities: []
             },
             initiative: '+20'

@@ -27,9 +27,10 @@ export interface RoleCombatInfo {
     attack: string,
     defense: string,
     initiative: string,
-    combatrole: string,
-    combatsecondary: string,
+    combatRole: string,
+    combatSecondary: string,
     combatSkulls: number,
+    skullIndex: number,
     vitalityInfo: VitalityInfo
 }
 

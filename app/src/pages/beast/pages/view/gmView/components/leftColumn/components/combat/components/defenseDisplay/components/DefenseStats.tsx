@@ -21,7 +21,7 @@ export default function DefenseStat({ defenseStats, showDefenseNameBanner }: Pro
             <div className='defense-stats-inner-shell'>
                 <div>
                     <p>Def</p>
-                    <p>{defense} <span data-tooltip-id="my-tooltip" data-tooltip-content="Parry Information (Parry / Flanks)">({parry} / {flanks > 0 ? flanks : 1})</span></p>
+                    <p>{defense} <span data-tooltip-id="my-tooltip" data-tooltip-content="Parry Information (Parry / Flanks)">(P: {parry} / F: {flanks})</span></p>
                 </div>
                 <div>
                     <p>Cover</p>

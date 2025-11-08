@@ -9,7 +9,7 @@ export default function formatDRString(staticDR: number, slashDR: string): strin
         if (drString !== '') {
             drString += ' +'
         }
-        drString += `${slashDR}/d`
+        drString += `${slashDR}`
     }
 
     if (drString === '') { return '0' }
