@@ -8,13 +8,13 @@ export default function getDamage(isSpecial: IsSpecial, isRanged: boolean, damag
 
     switch (damageType) {
         case 'C':
-            return getCrushingDamage(roleIndexModifier, skullIndex) + isSpecial === 'kinda' ? '*' : ''
+            return getCrushingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         case 'P':
-            return getPiercingDamage(roleIndexModifier, skullIndex) + isSpecial === 'kinda' ? '*' : ''
+            return getPiercingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         case 'S':
-            return getSlashingDamage(roleIndexModifier, skullIndex) + isSpecial === 'kinda' ? '*' : ''
+            return getSlashingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         default:
-            return getCrushingDamage(roleIndexModifier, skullIndex) + isSpecial === 'kinda' ? '*' : ''
+            return getCrushingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
     }
 }
 

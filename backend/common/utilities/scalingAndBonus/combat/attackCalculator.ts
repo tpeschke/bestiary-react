@@ -19,7 +19,6 @@ export default function calculateAndFormatAttackInfo(
     weaponInfo: ProcessedWeapon | null,
     gearCache?: any
 ) {
-
     const weaponInfoObject = weaponInfo ? weaponInfo : gearCache?.weapons.dictionary[weaponName]
 
     if (weaponInfoObject) {

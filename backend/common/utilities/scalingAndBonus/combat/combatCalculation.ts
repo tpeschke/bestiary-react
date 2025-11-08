@@ -3,7 +3,7 @@ import { AttackInfo, DefenseInfo } from "../../../interfaces/beast/infoInterface
 import { getDefenseName } from "../../formatting/formatting"
 import calculateAndFormatAttackInfo from "./attackCalculator"
 import getDefense from "./defenseUtilities/getDefense"
-import getFlanks from "./defenseUtilities/getFlankts"
+import getFlanks from "./defenseUtilities/getFlanks"
 import getParry from "./defenseUtilities/getParry"
 import getCover from "./defenseUtilities/getCover"
 import { calculateParryDR } from "./defenseUtilities/getParryDR"
@@ -38,9 +38,9 @@ export function calculateDefenseInfo(defenseInfo: any, skullIndex: number, role:
 }
 
 export function calculateAttackInfo(attackInfo: any, skullIndex: number, role: string, gearCache?: any) {
-    const { name, weapon, isSpecial, damageType, weapontype, weaponInfo } = attackInfo
+    const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
     return {
         ...attackInfo,
-        ...calculateAndFormatAttackInfo(skullIndex, role, name, weapon, weapontype, isSpecial, damageType, weaponInfo, gearCache),
+        ...calculateAndFormatAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, gearCache),
     }
 }
