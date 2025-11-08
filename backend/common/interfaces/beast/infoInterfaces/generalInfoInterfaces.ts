@@ -15,7 +15,7 @@ export default interface GeneralInfo {
     meta: string,
     size: Size,
     rarity: Rarity,
-    tables: TablesObject,
+    tables: TablesObject
 }
 
 export interface Scenario {

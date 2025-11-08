@@ -124,6 +124,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             spells: [],
         }
     }
+
     let promiseArray: any[] = [
         getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios),
         getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores),

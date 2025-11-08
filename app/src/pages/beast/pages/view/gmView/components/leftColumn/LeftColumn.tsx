@@ -11,6 +11,7 @@ import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction } from "../../..
 import ImageInfo from "../../../../../interfaces/infoInterfaces/ImageInfoInterfaces"
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import Pair from "../../../../../components/UI/pair/Pair"
 
 interface Props {
     beastId: number,
@@ -27,16 +28,18 @@ interface Props {
     modifierIndex: number,
     copyQuickLink: Function,
     hasModifier: boolean,
-    selectedRoleID: string | null
+    selectedRoleID: string | null,
+    gritDie: string
 }
 
 export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
-    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID }: Props) {
+    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, gritDie }: Props) {
 
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} roleID={selectedRoleID} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
+            <Pair title={"Grit Die"} info={gritDie} format={{ heading: true, noBorder: true }} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />

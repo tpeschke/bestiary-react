@@ -136,6 +136,18 @@ export default class GMBeastClass {
         return Math.max(combatSkulls + this.selectedModifier, skillSkulls + this.selectedModifier, socialSkulls + this.selectedModifier)
     }
 
+    get gritDie(): string {
+        const { combatSkulls } = this.entryCombatInfo
+        const { skillSkulls } = this.entrySkillInfo
+        const { socialSkulls } = this.entrySocialInfo
+
+        const average = Math.floor([combatSkulls, skillSkulls, socialSkulls].reduce((a, b) => a + b) / 3)
+
+        const gritDieDictionary = ['', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4', 'd0']
+
+        return gritDieDictionary[average]
+    }
+ 
     get generalInfo(): GeneralInfo {
         const { size: mainSize } = this.entryGeneralInfo
 
