@@ -1,10 +1,9 @@
 import './PleromaDisplay.css'
 
-import { Pleroma } from "../../../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces"
-
 import Drawers from "../../../../../../../../../../../components/drawers/Drawers"
-import { Rarity } from "../../../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces"
 import formatPleroma from './utilities/formatPleroma'
+import { Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
+import { Pleroma } from '@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces'
 
 interface Props {
     pleroma: Pleroma[],

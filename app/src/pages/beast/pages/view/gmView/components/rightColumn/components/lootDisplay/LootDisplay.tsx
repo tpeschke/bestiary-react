@@ -1,14 +1,13 @@
 import './LootDisplay.css'
 
-import { Rarity } from '../../../../../../../interfaces/infoInterfaces/generalInfoInterfaces'
 import LootInfo from '../../../../../../../interfaces/infoInterfaces/lootInfoInterfaces'
-
 import PleromaDisplay from './components/pleromaDisplay/PleromaDisplay'
 import SpecificLootDisplay from './components/specificLoot/SpecificLootDisplay'
 import Body from '../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import GeneratedLootDisplay from './components/generatedLoot/GeneratedLootDisplay'
 import Loading from '../../../../../../../../../components/loading/Loading'
+import { Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {
     lootInfo: LootInfo,
