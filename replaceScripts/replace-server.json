@@ -1,5 +1,5 @@
 {
-    "files": "backend/server/dist/bestiary.js",
+    "files": "backend/server/dist/server/bestiary.js",
     "from": "//../../app/dist/g",
-    "to": "/../../../app/dist"
+    "to": "/../../../../app/dist"
 }
