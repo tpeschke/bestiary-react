@@ -66,7 +66,7 @@ export default class CombatInfoClass {
                     attackInfo.push({
                         ...attack,
                         ...calculateAttackInfo(attack, skulls, role, null),
-                        weaponName: attack.weaponName
+                        weaponName: attack.weapon?.split(' (')[0]
                     })
                 } else if (attack.infoType === 'reference') {
                     attackInfo.push({ ...attack })

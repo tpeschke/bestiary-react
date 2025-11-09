@@ -3,14 +3,19 @@ import { getItemBySkullIndex } from "../../getModBySkullIndex"
 
 export default function getDamage(isSpecial: IsSpecial, isRanged: boolean, damageType: DamageType, role: string, skullIndex: number) {
     if (isSpecial === 'yes') { return '*' }
-    
+
     const roleIndexModifier = getRoleIndexModifier(isRanged, role)
 
     switch (damageType) {
         case 'C':
             return getCrushingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         case 'P':
-            return getPiercingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
+        case 'Ps':
+            return getPiercingStabbyDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
+        case 'Pg':
+            return getPiercingGougeyDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
+        case 'Pp':
+            return getPiercingPokeyDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         case 'S':
             return getSlashingDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
         default:
@@ -64,9 +69,25 @@ function getCrushingDamage(roleIndexModifier: number, skullIndex: number) {
     return getItemBySkullIndex(skullIndex, roleIndexModifier, crushingDictionary)
 }
 
-function getPiercingDamage(roleIndexModifier: number, skullIndex: number) {
+function getPiercingStabbyDamage(roleIndexModifier: number, skullIndex: number) {
+    const PiercingDictionary = [
+        '1d6!', '1d6!+1d2!', '1d8!', '1d8!+1d2!', '1d8!+1d4!', '1d8!+1d6!', '2d8!', '2d8!+1d4!', '2d8!+1d6!', '3d8!', '3d8!+1d4!', '3d8!+1d6!', '3d8!', '4d8!', '4d8!+1d4!', '4d8!+1d6!', '5d8!', '5d8!+1d4!', '5d8!+1d6!', '6d8!', '6d8!+1d4!', '6d8!+1d6!', '7d8!'
+    ]
+
+    return getItemBySkullIndex(skullIndex, roleIndexModifier, PiercingDictionary)
+}
+
+function getPiercingPokeyDamage(roleIndexModifier: number, skullIndex: number) {
     const PiercingDictionary = [
         '1d4!', '1d4!', '1d6!', '1d6!+1d4!', '2d6!', '2d6!+1d4!', '3d6!', '3d6!+1d4!', '4d6!', '4d6!+1d4!', '5d6!', '5d6!+1d4!', '6d6!', '7d6!', '7d6!+1d4!', '8d6!', '8d6!+1d4!', '9d6!', '9d6!+1d4!', '10d6!', '10d6!+1d4!', '11d6!', '11d6!+1d4!'
+    ]
+
+    return getItemBySkullIndex(skullIndex, roleIndexModifier, PiercingDictionary)
+}
+
+function getPiercingGougeyDamage(roleIndexModifier: number, skullIndex: number) {
+    const PiercingDictionary = [
+        'd8!', 'd8!', '1d10!', '1d10!', '1d12!', '1d12!+1d4!', '1d12!+1d6!', '1d12!+1d8!', '1d12!+1d10!', '2d12!', '2d12!+1d4!', '2d12!+1d6!', '2d12!+1d8!', '2d12!+1d10!', '3d12!', '3d12!+1d4!', '3d12!+1d6!', '3d12!+1d8!', '3d12!+1d10!', '4d12!', '4d12!+1d4!', '4d12!+1d6!', '4d12!+1d8!'
     ]
 
     return getItemBySkullIndex(skullIndex, roleIndexModifier, PiercingDictionary)

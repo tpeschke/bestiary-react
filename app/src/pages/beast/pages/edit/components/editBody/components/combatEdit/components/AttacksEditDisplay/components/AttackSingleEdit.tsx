@@ -20,7 +20,6 @@ export default function AttackSingleEdit({
     combatRoleType,
     removeAttack
 }: Props) {
-    console.log(attackInfo)
     const { name, weapon, overAllIndex, situation, tactic, damageType } = attackInfo
 
     return (
