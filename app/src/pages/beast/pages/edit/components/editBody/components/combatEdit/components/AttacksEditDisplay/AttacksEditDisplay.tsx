@@ -17,7 +17,12 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType }: Props) {
-    const getCorrectAttackEditOption = (attackInfo: AttackInfo, updateAttackInfo: UpdateCombatInfoFunction, combatRoleType: string | null) => {
+
+    function getCorrectAttackEditOption(
+        attackInfo: AttackInfo,
+        updateAttackInfo: UpdateCombatInfoFunction,
+        combatRoleType: string | null
+    ) {
         if (attackInfo.infoType === 'weapon') {
             return (
                 <AttackSingleEdit
@@ -33,6 +38,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     attackReference={attackInfo}
                     updateAttackInfo={updateAttackInfo}
                     combatRoleType={combatRoleType}
+                    removeAttack={removeAttack}
                 />
             )
         }
@@ -46,10 +52,12 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     <div></div>
                     <p>Name</p>
                     <p>Weapon</p>
+                    <p className='input-header'>Damage Type</p>
                     <p className='input-header'>Situation</p>
                     <p className='input-header'>Reference</p>
                     <p className='input-header'>Tactic</p>
                 </div>
+
                 {attacks.map((attack: AttackInfo, index: number) => {
                     const nextUp = attacks[index - 1]?.overAllIndex
                     const nextDown = attacks[index + 1]?.overAllIndex
@@ -62,6 +70,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                         </div>
                     )
                 })}
+
                 <div className='add-attack-button-shell'>
                     <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
                 </div>

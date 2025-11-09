@@ -247,18 +247,17 @@ export default function beastHooks(): Return {
                 ...beast.beastInfo,
                 combatInfo: {
                     ...beast.beastInfo.combatInfo,
-                    attacks: beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackInfo[], attack: AttackInfo, index: number) => {
+                    attacks: beast.beastInfo.combatInfo.attacks.map((attack: AttackInfo, index: number) => {
                         if (index == overAllIndex) {
                             const valueToChangeTo = value === attack[key as keyof AttackInfo] ? null : value
-                            attacks.push({
+                            return {
                                 ...attack,
                                 [key]: valueToChangeTo
-                            })
+                            }
                         } else {
-                            attacks.push(attack)
+                            return attack
                         }
-                        return attacks
-                    }, [])
+                    })
                 }
             }
 

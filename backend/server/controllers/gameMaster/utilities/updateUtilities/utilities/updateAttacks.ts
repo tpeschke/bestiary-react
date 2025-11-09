@@ -18,12 +18,12 @@ export default async function updateAttacks(attacks: AttackInfo[], beastID: numb
     return Promise.all(promiseArray)
 }
 
-async function upsertWeaponAttack (attack: WeaponInfo, beastID: number) {
-    const { overAllIndex, oldID, id, situation, tactic, roleid } = attack
+async function upsertWeaponAttack(attack: WeaponInfo, beastID: number) {
+    const { overAllIndex, oldID, id, situation, tactic, roleid, damageType } = attack
     if (id) {
-        return query(updateWeaponInfo, [id, oldID, overAllIndex, situation, tactic, beastID])
+        return query(updateWeaponInfo, [id, oldID, overAllIndex, situation, tactic, damageType, beastID])
     } else {
-        return query(addWeaponToDB, [oldID, overAllIndex, situation, tactic, roleid, beastID])
+        return query(addWeaponToDB, [oldID, overAllIndex, situation, tactic, roleid, damageType, beastID])
     }
 }
 

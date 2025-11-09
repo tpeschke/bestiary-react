@@ -1,5 +1,4 @@
 import { Strength } from "../../interfaces/calculationInterfaces";
-import { primaryCombatRoles } from "../roleInfo/combatRoleInfo";
 
 export function getWeaponName(chosenName: string | null, weapon: string): string | null {
     if (chosenName) {
@@ -26,14 +25,10 @@ export function getDefenseName(name: string, shield: string, armor: string): str
     return displayName;
 }
 
-export function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength, role: string): string {
+export function getDamageType(slashingDamage: Strength, crushingDamage: Strength, piercingDamage: Strength): string {
     if (slashingDamage) { return 'S' }
     if (crushingDamage) { return 'C' }
-    if (piercingDamage) { return 'P' }
-
-    if (role) {
-        return primaryCombatRoles[role].meleeCombatStats.preferreddamage.substring(0, 1).toUpperCase();
-    }
+    if (piercingDamage) { return 'Ps' }
 
     return 'S'
 }

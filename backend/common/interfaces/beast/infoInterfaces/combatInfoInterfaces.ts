@@ -16,7 +16,7 @@ export default interface CombatInfo {
     movements: Movement[],
 }
 
-export type DamageType = 'P' | 'C' | 'S'
+export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
 export type AttackInfo = AttackReference | WeaponInfo
@@ -48,7 +48,7 @@ export interface WeaponInfo {
     measure: number,
     attack: string,
     damage: string,
-    type: DamageType,
+    damageType: DamageType,
     recovery: number,
     rangeIncrement: string,
     isSpecial: IsSpecial,
@@ -113,6 +113,7 @@ export interface RawCombatStat {
     piercingweapons: Strength,
     slashingweapons: Strength,
     crushingweapons: Strength,
+    damagetype: string,
     weaponsmallpiercing: Strength,
     weaponsmallslashing: Strength,
     weaponsmallcrushing: Strength,

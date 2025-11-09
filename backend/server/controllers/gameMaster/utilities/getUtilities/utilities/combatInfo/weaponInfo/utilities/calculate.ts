@@ -14,11 +14,11 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
-            tactic, reference, attackrole, weapontype
+            tactic, reference, attackrole, weapontype, damagetype
         } = stat
 
         const roleToUse = role ? role : mainRole
-        const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
+        const damageType = damagetype ?? getDamageType(slashingDamage, crushingDamage, piercingDamage)
 
         if (reference) {
             return {

@@ -1,9 +1,11 @@
 import Select from 'react-select'
-import { WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { DamageType, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { RemoveCombatFunction, UpdateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
 import getSituationOptions from "./utilities/situationOptions"
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 import Icon from '../../../../../../../../../../../components/icon/Icon'
+import getDamageTypeOptions, { getDamageTypeLabel, getDamageTypeValue } from './utilities/damageTypeOptions'
+import { useEffect, useState } from 'react'
 
 interface Props {
     attackInfo: WeaponInfo,
@@ -18,12 +20,21 @@ export default function AttackSingleEdit({
     combatRoleType,
     removeAttack
 }: Props) {
-    const { name, weapon, overAllIndex, situation, tactic } = attackInfo
+    console.log(attackInfo)
+    const { name, weapon, overAllIndex, situation, tactic, damageType } = attackInfo
 
     return (
         <div className='attack-edit-row'>
             <p>{name ? name : ''}</p>
             <p>{weapon ? weapon : ''}</p>
+            <div className='attack-edit-select-shell'>
+                <Select
+                    isSearchable
+                    value={{label: getDamageTypeLabel(damageType), value: getDamageTypeValue(damageType)}}
+                    options={getDamageTypeOptions()}
+                    onChange={(event: any) => updateAttackInfo('damageType', event.value, overAllIndex)}
+                />
+            </div>
             <div className='attack-edit-select-shell'>
                 <Select
                     isSearchable

@@ -3,11 +3,11 @@ import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalIn
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { CalculateCombatStatsReturn, calculateDefenseInfo, calculateAttackInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
 
-export default function calculateCombatStats(combatStats: RawCombatStat[], skullindex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
+export default function calculateCombatStats(combatStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     let defenses: DefenseInfo[] = []
     let attacks: AttackInfo[] = []
     combatStats.forEach(stats => {
-        calculateSingleCombatInfo(stats, defenses, attacks, size, skullindex, mainRole, gearCache)
+        calculateSingleCombatInfo(stats, defenses, attacks, size, skullIndex, mainRole, gearCache)
     })
 
     return {
@@ -16,13 +16,13 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
     }
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size, skullindex: number, mainRole: string, gearCache: any | undefined): void {
+function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[], attacks: AttackInfo[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, eua, isspecial: isSpecial,
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid
     } = stats
 
     const roleToUse = role ?? mainRole
-    const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage, roleToUse)
+    const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage)
 
     if (roleToUse) {
         defenses.push({
@@ -30,7 +30,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
                 {
                     id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, info
                 },
-                skullindex, roleToUse, addsizemod, size
+                skullIndex, roleToUse, addsizemod, size
             ),
             overAllIndex: defenses.length,
             oldID: id ?? oldID,
@@ -44,7 +44,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
                 {
                     beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType
                 },
-                skullindex, roleToUse, gearCache
+                skullIndex, roleToUse, gearCache
             ),
             oldID: id ?? oldID,
             overAllIndex: attacks.length,

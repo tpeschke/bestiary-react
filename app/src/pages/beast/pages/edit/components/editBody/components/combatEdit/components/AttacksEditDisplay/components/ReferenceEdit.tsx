@@ -1,22 +1,30 @@
 import Select from 'react-select'
 import { AttackReference } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import getSituationOptions from './utilities/situationOptions'
-import { UpdateCombatInfoFunction } from '../../../../../../../../../hooks/beastHooks'
+import { RemoveCombatFunction, UpdateCombatInfoFunction } from '../../../../../../../../../hooks/beastHooks'
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
+import Icon from '../../../../../../../../../../../components/icon/Icon'
 
 interface Props {
     attackReference: AttackReference,
     combatRoleType: string | null,
     updateAttackInfo: UpdateCombatInfoFunction,
+    removeAttack: RemoveCombatFunction
 }
 
-export default function ReferenceEdit({ attackReference, combatRoleType, updateAttackInfo }: Props) {
+export default function ReferenceEdit({ 
+    attackReference, 
+    combatRoleType, 
+    updateAttackInfo,
+    removeAttack 
+}: Props) {
     const { reference, overAllIndex, situation, tactic } = attackReference
 
     return (
         <div className='attack-edit-row'>
             <p></p>
             <p></p>
+            <p className='input-header'></p>
             <div className='attack-edit-select-shell'>
                 <Select
                     isSearchable
@@ -41,6 +49,9 @@ export default function ReferenceEdit({ attackReference, combatRoleType, updateA
                     onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
                 />
             </div>
+            <button className="orange" onClick={_ => removeAttack(overAllIndex)}>
+                <Icon iconName='trash' color='white' />
+            </button>
         </div>
     )
 }
