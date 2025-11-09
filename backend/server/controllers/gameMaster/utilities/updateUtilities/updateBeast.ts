@@ -22,12 +22,14 @@ export async function updateBeast(request: BeastRequest, response: Response) {
     if (isOwner(user?.id) || beastOwnerID === user?.id) {
         // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
         // const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
-        let promiseArray: any = []
 
         const { attacks, defenses } = combatInfo
-        promiseArray.push(updateAttacks(attacks, beastID))
-        promiseArray.push(updateDefense(beastID, defenses))
         
+        let promiseArray: any = [
+            updateAttacks(attacks, beastID),
+            updateDefense(beastID, defenses)
+        ]
+
         await Promise.all(promiseArray)
 
         reCacheMonsterIfItExists(beastID)

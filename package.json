@@ -12,7 +12,8 @@
     "replace-server": "replace-in-file --configFile=replaceScripts/replace-server.json --verbose",
     "lint": "eslint .",
     "preview": "vite preview --port 4545",
-    "server": "npx tsx backend/server/bestiary.ts"
+    "server": "npx tsx backend/server/bestiary.ts",
+    "host": "pm2 restart backend/server/dist/server/bestiary.js"
   },
   "workspaces": [
     "app",
