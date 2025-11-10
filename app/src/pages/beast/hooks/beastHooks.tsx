@@ -233,6 +233,11 @@ export default function beastHooks(): Return {
         return await savePlayerNotes(beastId, notes)
     }
 
+    const updateBeastInfo = (modifiedBeastInfo: any) => {
+        dispatch(cacheMonster(modifiedBeastInfo))
+        setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+    }
+
     const updateFavorite = async (): Promise<FavoriteReturn | null> => {
         if (beast) {
             const favoriteReturn = await updateFavoriteStatus(beast.id, !beast.favorite)
@@ -245,8 +250,7 @@ export default function beastHooks(): Return {
                 },
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
             return favoriteReturn
         }
 
@@ -263,8 +267,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -278,8 +281,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -303,8 +305,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -325,8 +326,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -350,8 +350,7 @@ export default function beastHooks(): Return {
                     attacks
                 },
             }
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -365,8 +364,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -390,8 +388,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -405,8 +402,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -431,8 +427,7 @@ export default function beastHooks(): Return {
                 },
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
@@ -446,8 +441,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            dispatch(cacheMonster(modifiedBeastInfo))
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            updateBeastInfo(modifiedBeastInfo)
         }
     }
 
