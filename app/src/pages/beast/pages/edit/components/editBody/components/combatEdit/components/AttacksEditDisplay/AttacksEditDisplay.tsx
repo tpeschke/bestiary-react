@@ -1,7 +1,7 @@
 import { AttackInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Icon from '../../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../../../components/UI/body/Body'
-import { UpdateOrderFunction, UpdateCombatInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/beastHooks'
+import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
@@ -10,7 +10,7 @@ import ReferenceEdit from './components/ReferenceEdit'
 interface Props {
     attacks: AttackInfo[],
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: UpdateCombatInfoFunction,
+    updateAttackInfo: UpdateAttackDefenseInfoFunction,
     addAttack: AddAttackFunction,
     removeAttack: RemoveCombatFunction,
     combatRoleType: string | null
@@ -20,7 +20,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
 
     function getCorrectAttackEditOption(
         attackInfo: AttackInfo,
-        updateAttackInfo: UpdateCombatInfoFunction,
+        updateAttackInfo: UpdateAttackDefenseInfoFunction,
         combatRoleType: string | null
     ) {
         if (attackInfo.infoType === 'weapon') {

@@ -1,6 +1,6 @@
 import Select from 'react-select'
 import { DamageType, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { RemoveCombatFunction, UpdateCombatInfoFunction } from "../../../../../../../../../hooks/beastHooks"
+import { RemoveCombatFunction, UpdateAttackDefenseInfoFunction } from "../../../../../../../../../hooks/beastHooks"
 import getSituationOptions from "./utilities/situationOptions"
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 import Icon from '../../../../../../../../../../../components/icon/Icon'
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 interface Props {
     attackInfo: WeaponInfo,
-    updateAttackInfo: UpdateCombatInfoFunction
+    updateAttackInfo: UpdateAttackDefenseInfoFunction
     combatRoleType: string | null,
     removeAttack: RemoveCombatFunction
 }

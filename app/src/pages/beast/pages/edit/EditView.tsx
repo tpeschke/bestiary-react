@@ -8,8 +8,8 @@ interface Props {
 }
 
 export default function EditView({ setLoading }: Props) {
-    const { beast, updateSelectedRole, updateBeast, updateCombatInfoFunctions } = beastHooks();
-    
+    const { beast, updateSelectedRole, updateBeast, updateSocialInfoFunctions, updateCombatInfoFunctions, updateSkillInfoFunctions } = beastHooks();
+
     useEffect(() => {
         if (setLoading) {
             setLoading(!!beast)
@@ -18,8 +18,15 @@ export default function EditView({ setLoading }: Props) {
 
     return (
         <div className='card-background'>
-            {beast && 
-                <EditBody beast={beast} updateSelectedRole={updateSelectedRole} updateBeast={updateBeast} updateCombatInfoFunctions={updateCombatInfoFunctions} />
+            {beast &&
+                <EditBody
+                    beast={beast}
+                    updateSelectedRole={updateSelectedRole}
+                    updateBeast={updateBeast}
+                    updateSocialInfoFunctions={updateSocialInfoFunctions}
+                    updateCombatInfoFunctions={updateCombatInfoFunctions}
+                    updateSkillInfoFunctions={updateSkillInfoFunctions}
+                />
             }
         </div>
     )

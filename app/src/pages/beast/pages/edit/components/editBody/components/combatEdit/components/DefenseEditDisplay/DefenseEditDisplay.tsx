@@ -2,12 +2,12 @@ import './DefenseEditDisplay.css'
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../../components/UI/body/Body"
-import { RemoveCombatFunction, UpdateCombatInfoFunction, UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
+import { RemoveCombatFunction, UpdateAttackDefenseInfoFunction, UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
 import MoveOrderButton from "../AttacksEditDisplay/components/MoveOrderButton"
 
 interface Props {
     defenses: DefenseInfo[],
-    updateDefenseInfo: UpdateCombatInfoFunction,
+    updateDefenseInfo: UpdateAttackDefenseInfoFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
 }
@@ -39,7 +39,7 @@ function DefenseEdit(
     nextDown: number,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
-    updateDefenseInfo: UpdateCombatInfoFunction
+    updateDefenseInfo: UpdateAttackDefenseInfoFunction
 ) {
     return (
         <div key={index} className="defense-edit-row">

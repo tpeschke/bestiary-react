@@ -5,3 +5,7 @@
     line-height: 100%;
     padding-bottom: 15px;
 }
+
+.edit-body-shell .edit-body-display select {
+    margin-top: 15px;
+}

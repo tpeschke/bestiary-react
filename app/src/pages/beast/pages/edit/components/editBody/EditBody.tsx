@@ -1,24 +1,38 @@
 import './editBody.css'
 import { useState } from "react";
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
-import { UpdateBeastFunction, UpdateCombatInfoFunctionsObject, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
+import { UpdateBeastFunction, UpdateCombatInfoFunctionsObject, UpdateSelectedRoleFunction, UpdateSkillInfoFunctionsObject, UpdateSocialInfoFunctionsObject } from "../../../../hooks/beastHooks";
 import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
 import CombatEdit from "./components/combatEdit/CombatEdit";
-import Tabs from "../tabs/TabsDisplay";
+import Tabs from "./components/tabs/TabsDisplay";
+import SkullSelection from './components/SkullSelection';
 
 interface Props {
     beast: GMBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateBeast: UpdateBeastFunction,
+    updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject
+    updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject
 }
 
-export default function EditBody({ beast, updateSelectedRole, updateBeast, updateCombatInfoFunctions }: Props) {
+export default function EditBody({ 
+    beast, 
+    updateSelectedRole, 
+    updateBeast, 
+    updateSocialInfoFunctions, 
+    updateCombatInfoFunctions,
+    updateSkillInfoFunctions
+}: Props) {
     const [tabIndex, setTabIndex] = useState(1)
 
-    const { generalInfo, combatInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
+    const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
+
+    const { updateSocialInfo } = updateSocialInfoFunctions
+    const { updateCombatInfo } = updateCombatInfoFunctions
+    const { updateSkillInfo } = updateSkillInfoFunctions
 
     return (
         <div className="edit-body-shell">
@@ -30,17 +44,20 @@ export default function EditBody({ beast, updateSelectedRole, updateBeast, updat
                 {tabIndex === 0 &&
                     <>
                         <h1>Confrontation</h1>
+                        <SkullSelection keyValue='socialSkulls' currentSkullValue={socialInfo.socialSkulls} updateSkull={updateSocialInfo}/>
                     </>
                 }
                 {tabIndex === 1 &&
                     <>
                         <h1>Combat</h1>
+                        <SkullSelection keyValue='combatSkulls' currentSkullValue={combatInfo.combatSkulls} updateSkull={updateCombatInfo} />
                         <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} />
                     </>
                 }
                 {tabIndex === 2 &&
                     <>
                         <h1>Challenge</h1>
+                        <SkullSelection keyValue='skillSkulls' currentSkullValue={skillInfo.skillSkulls} updateSkull={updateSkillInfo}/>
                     </>
                 }
             </div>
