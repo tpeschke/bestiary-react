@@ -23,6 +23,7 @@ export interface UnsortedRole {
     notrauma: boolean,
     secondaryrole: string,
     combatpoints: number,
+    combatskulls: number,
     fatigue: Strength,
     largeweapons: Strength,
     knockback: number,
@@ -34,11 +35,13 @@ export interface UnsortedRole {
     panicstrength: Strength,
     stressstrength: Strength,
     skillpoints: number,
+    skillskulls: number,
     skillrole: string,
     attack_skill: string,
     defense_skill: string,
     skillsecondary: string,
     socialpoints: number,
+    socialskulls: number,
     socialrole: string,
     socialsecondary: string,
     attack_conf: string,
@@ -58,17 +61,22 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
 }
 
 function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
-    const { id, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary, knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
-        isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole, attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
-        socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes, notrauma: noTrauma } = unsortedRole
+    const {
+        id, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary,
+        knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
+        isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole,
+        attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
+        socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes,
+        notrauma: noTrauma, socialskulls, combatskulls, skillskulls
+    } = unsortedRole
 
-    const combatSkulls = getSkullNumber(combatPoints)
+    const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
     const combatSkullIndex = getSkullIndex(combatSkulls)
 
-    const socialSkulls = getSkullNumber(socialPoints)
+    const socialSkulls = socialskulls ?? getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
 
-    const skillSkulls = getSkullNumber(skillPoints)
+    const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
 
     return {
@@ -77,7 +85,7 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             name, size, hash
         },
         combatInfo: {
-            attack, defense, combatRole, combatSecondary, 
+            attack, defense, combatRole, combatSecondary,
             combatSkulls,
             skullIndex: combatSkullIndex,
             vitalityInfo: {
@@ -90,7 +98,7 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
         },
         skillInfo: {
             skillRole, skillSecondary, skillSkulls,
-            attackInfo: attack_skill, 
+            attackInfo: attack_skill,
             defenseInfo: defense_skill,
             skullIndex: skillSkullIndex,
             stress: calculateStress(skillRole, skillSecondary, skillSkullIndex)
