@@ -19,6 +19,8 @@ import { CatalogTile } from "../../catalog/catalogInterfaces";
 import { shiftAttackOrder } from "./utilities/updateAttacks";
 import { shiftDefenseOrder } from "./utilities/updateDefenses";
 import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
+import { RoleCombatInfo, RoleSkillInfo, RoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -258,13 +260,46 @@ export default function beastHooks(): Return {
     }
 
     const updateSocialInfo = (key: string, value: string | number) => {
-        if (beast) {
+        if (beast && beast.selectedRole) {
+            let modifiedSocialInfo: RoleSocialInfo = {
+                ...beast.selectedRole.socialInfo,
+                [key]: value
+            }
+
+            if (key === 'socialSkulls' && typeof value === 'number') {
+                modifiedSocialInfo.skullIndex = getSkullIndex(value)
+            }
+
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
-                socialInfo: {
-                    ...beast.beastInfo.socialInfo,
-                    [key]: value
+                roleInfo: {
+                    ...beast.beastInfo.roleInfo,
+                    roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
+                        if (index === beast.selectedRoleIndex) {
+                            return {
+                                ...role,
+                                socialInfo: modifiedSocialInfo
+                            }
+                        }
+                        return role
+                    })
                 }
+            }
+
+            updateBeastInfo(modifiedBeastInfo)
+        } else if (beast) {
+            let modifiedSocialInfo = {
+                ...beast.beastInfo.socialInfo,
+                [key]: value
+            }
+
+            if (key === 'socialSkulls' && typeof value === 'number') {
+                modifiedSocialInfo.skullIndex = getSkullIndex(value)
+            }
+
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                socialInfo: modifiedSocialInfo
             }
 
             updateBeastInfo(modifiedBeastInfo)
@@ -272,13 +307,46 @@ export default function beastHooks(): Return {
     }
 
     const updateCombatInfo = (key: string, value: string | number) => {
-        if (beast) {
+        if (beast && beast.selectedRole) {
+            let modifiedCombatInfo: RoleCombatInfo = {
+                ...beast.selectedRole.combatInfo,
+                [key]: value
+            }
+
+            if (key === 'combatSkulls' && typeof value === 'number') {
+                modifiedCombatInfo.skullIndex = getSkullIndex(value)
+            }
+
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
-                combatInfo: {
-                    ...beast.beastInfo.combatInfo,
-                    [key]: value
+                roleInfo: {
+                    ...beast.beastInfo.roleInfo,
+                    roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
+                        if (index === beast.selectedRoleIndex) {
+                            return {
+                                ...role,
+                                combatInfo: modifiedCombatInfo
+                            }
+                        }
+                        return role
+                    })
                 }
+            }
+
+            updateBeastInfo(modifiedBeastInfo)
+        } else if (beast) {
+            let modifiedCombatInfo = {
+                ...beast.beastInfo.combatInfo,
+                [key]: value
+            }
+
+            if (key === 'combatSkulls' && typeof value === 'number') {
+                modifiedCombatInfo.skullIndex = getSkullIndex(value)
+            }
+
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                combatInfo: modifiedCombatInfo
             }
 
             updateBeastInfo(modifiedBeastInfo)
@@ -432,13 +500,46 @@ export default function beastHooks(): Return {
     }
 
     const updateSkillInfo = (key: string, value: string | number) => {
-        if (beast) {
+        if (beast && beast.selectedRole) {
+            let modifiedSkillInfo: RoleSkillInfo = {
+                ...beast.selectedRole.skillInfo,
+                [key]: value
+            }
+
+            if (key === 'skillSkulls' && typeof value === 'number') {
+                modifiedSkillInfo.skullIndex = getSkullIndex(value)
+            }
+
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
-                skillInfo: {
-                    ...beast.beastInfo.skillInfo,
-                    [key]: value
+                roleInfo: {
+                    ...beast.beastInfo.roleInfo,
+                    roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
+                        if (index === beast.selectedRoleIndex) {
+                            return {
+                                ...role,
+                                skillInfo: modifiedSkillInfo
+                            }
+                        }
+                        return role
+                    })
                 }
+            }
+
+            updateBeastInfo(modifiedBeastInfo)
+        } else if (beast) {
+            let modifiedSkillInfo = {
+                ...beast.beastInfo.skillInfo,
+                [key]: value
+            }
+
+            if (key === 'skillSkulls' && typeof value === 'number') {
+                modifiedSkillInfo.skullIndex = getSkullIndex(value)
+            }
+
+            const modifiedBeastInfo: any = {
+                ...beast.beastInfo,
+                skillInfo: modifiedSkillInfo
             }
 
             updateBeastInfo(modifiedBeastInfo)

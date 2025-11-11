@@ -1,6 +1,6 @@
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import query from "../../../../../db/database"
-import { addDefenseToDB, removeMissingDefenseIDsFromDB, updateDefenseInfo } from "../../../../../db/beast/defenses"
+import query from "../../../../../../db/database"
+import { addDefenseToDB, removeMissingDefenseIDsFromDB, updateDefenseInfo } from "../../../../../../db/beast/defenses"
 
 export default async function updateDefense(beastID: number, defenses: DefenseInfo[]) {
     let promiseArray: any[] = []

@@ -19,8 +19,8 @@ export default function Tabs({ setTabIndex, tabIndex }: Props) {
                 tabs.map((tab, index) => {
                     return (
                         <>
-                            <button key={index} className={index === tabIndex ? 'active' : ''} onClick={_ => setTabIndex(index)}>{tab}</button>
-                            <div className='space'></div>
+                            <button key={`${index}t`} className={index === tabIndex ? 'active' : ''} onClick={_ => setTabIndex(index)}>{tab}</button>
+                            <div key={`${index}s`} className='space'></div>
                         </>
                     )
                 })

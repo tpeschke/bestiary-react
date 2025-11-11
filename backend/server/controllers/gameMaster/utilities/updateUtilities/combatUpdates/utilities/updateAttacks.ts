@@ -1,6 +1,6 @@
 import { AttackInfo, AttackReference, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import query from "../../../../../db/database"
-import { addReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateWeaponInfo } from "../../../../../db/beast/attacks"
+import query from "../../../../../../db/database"
+import { addReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateWeaponInfo } from "../../../../../../db/beast/attacks"
 
 export default async function updateAttacks(attacks: AttackInfo[], beastID: number) {
     let promiseArray: any[] = []

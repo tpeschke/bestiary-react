@@ -147,7 +147,7 @@ export default class GMBeastClass {
 
         return gritDieDictionary[average]
     }
- 
+
     get generalInfo(): GeneralInfo {
         const { size: mainSize } = this.entryGeneralInfo
 
@@ -282,6 +282,14 @@ export default class GMBeastClass {
             }
             return spells
         }
+    }
+
+    get selectedRole(): Role | null {
+        if (this.selectRoleIndex >= 0) {
+            return this.roleInfo.roles[this.selectRoleIndex]
+        }
+
+        return null
     }
 
     get roleInfo(): RoleInfo {

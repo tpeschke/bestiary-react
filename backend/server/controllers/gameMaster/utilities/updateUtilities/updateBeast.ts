@@ -3,10 +3,9 @@ import { Request, Response } from "../../../../interfaces/apiInterfaces";
 import { isOwner } from "../../../../utilities/ownerAccess";
 import { checkForContentTypeBeforeSending } from "../../../../utilities/sendingFunctions";
 import { reCacheMonsterIfItExists } from "../../../monsterCache";
-import updateAttacks from "./utilities/updateAttacks";
-import updateDefense from "./utilities/updateDefenses";
 import query from "../../../../db/database";
 import { checkIfUserCanEditMonster } from "../../../../db/beast/access";
+import updateCombatInfo from "./combatUpdates/updateCombatInfo";
 
 interface BeastRequest extends Request {
     body: Beast
@@ -23,11 +22,10 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
         // const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
 
-        const { attacks, defenses } = combatInfo
-        
         let promiseArray: any = [
-            updateAttacks(attacks, beastID),
-            updateDefense(beastID, defenses)
+            // Social Info
+            updateCombatInfo(beastID, combatInfo)
+            // Skill Info
         ]
 
         await Promise.all(promiseArray)
