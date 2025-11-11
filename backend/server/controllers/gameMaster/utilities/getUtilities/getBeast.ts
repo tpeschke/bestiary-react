@@ -44,8 +44,9 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
-        rollundertrauma, isincorporeal, weaponbreakagevitality, stressstrength: stress, skillrole, skillsecondary, skillpoints, atk_skill,
-        def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId
+        rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, skillsecondary, skillpoints, atk_skill,
+        def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId,
+        combatskulls, socialskulls, skillskulls
     } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -103,11 +104,11 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
+            tactics, combatrole, combatsecondary, combatskulls, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
             noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
-        skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, atk_skill, def_skill, stress),
-        socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, hasarchetypes, hasmonsterarchetypes),
+        skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, skillskulls, atk_skill, def_skill),
+        socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, hasarchetypes, hasmonsterarchetypes),
         lootInfo: {
             lootnotes,
             lairLoot: {},

@@ -6,6 +6,8 @@ import { reCacheMonsterIfItExists } from "../../../monsterCache";
 import query from "../../../../db/database";
 import { checkIfUserCanEditMonster } from "../../../../db/beast/access";
 import updateCombatInfo from "./combatUpdates/updateCombatInfo";
+import updateSocialInfo from "./socialUpdates/updateSocialInfo";
+import updateSkillInfo from "./skillUpdates/updateSkillInfo";
 
 interface BeastRequest extends Request {
     body: Beast
@@ -13,7 +15,7 @@ interface BeastRequest extends Request {
 
 export async function updateBeast(request: BeastRequest, response: Response) {
     const { body: beast, user } = request
-    const { id: beastID, combatInfo } = beast
+    const { id: beastID, combatInfo, socialInfo, skillInfo } = beast
     
     const [result] = await query(checkIfUserCanEditMonster, beastID)
     const beastOwnerID = result.userid
@@ -22,10 +24,12 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
         // const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
 
+        // TODO Role Info
+
         let promiseArray: any = [
-            // Social Info
-            updateCombatInfo(beastID, combatInfo)
-            // Skill Info
+            updateSocialInfo(beastID, socialInfo),
+            updateCombatInfo(beastID, combatInfo),
+            updateSkillInfo(beastID, skillInfo)
         ]
 
         await Promise.all(promiseArray)

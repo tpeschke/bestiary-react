@@ -10,10 +10,11 @@ export default function formatSocialInfo(
     attackInfo: string | null,
     defenseInfo: string | null,
     socialPoints: number,
+    socialSkulls: number,
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean
 ): SocialInfo {
-    const socialSkulls = getSkullNumber(socialPoints)
+    socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
 
     return {

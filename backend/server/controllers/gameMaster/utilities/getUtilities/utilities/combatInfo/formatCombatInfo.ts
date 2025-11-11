@@ -10,6 +10,7 @@ export default function formatCombatInfo(
     tactics: string,
     combatRole: string,
     combatSecondary: string,
+    combatSkulls: number,
     combatPoints: number,
     attackInfo: string,
     defenseInfo: string,
@@ -22,7 +23,7 @@ export default function formatCombatInfo(
     weaponBreakageVitality: boolean,
     size: Size
 ): CombatInfo {
-    const combatSkulls = getSkullNumber(combatPoints)
+    combatSkulls = combatSkulls ?? getSkullNumber(combatPoints)
     const skullIndex = getSkullIndex(combatSkulls)
 
     return {
