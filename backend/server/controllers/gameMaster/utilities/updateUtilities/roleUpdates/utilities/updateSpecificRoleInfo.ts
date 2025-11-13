@@ -4,12 +4,12 @@ import updateBasicRoleCombatInfo from "./utilities/utilities/updateBasicRoleComb
 import updateBasicRoleSkillInfo from "./utilities/utilities/updateBasicRoleSkillInfo";
 
 export default async function updateSpecificRoleInfo(beastID: number, role: Role) {
-    const { socialInfo, combatInfo, skillInfo } = role
+    const { id, socialInfo, combatInfo, skillInfo } = role
 
     let promiseArray: Promise<any>[] = [
-        updateBasicRoleSocialInfo(beastID, socialInfo),
-        updateBasicRoleCombatInfo(beastID, combatInfo),
-        updateBasicRoleSkillInfo(beastID, skillInfo)
+        updateBasicRoleSocialInfo(beastID, id, socialInfo),
+        updateBasicRoleCombatInfo(beastID, id, combatInfo),
+        updateBasicRoleSkillInfo(beastID, id, skillInfo)
     ]
 
     return Promise.all(promiseArray)
