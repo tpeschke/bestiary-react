@@ -27,7 +27,7 @@ export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
-export type UpdateBeastFunction = () => void
+export type SaveBeastFunction = () => void
 
 interface UpdateFavoriteReturnBase {
     type: 'delete' | 'add'
@@ -55,7 +55,7 @@ interface Return {
     updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject,
-    updateBeast: UpdateBeastFunction
+    saveBeast: SaveBeastFunction
 }
 
 export type UpdateSkillInfoFunctionsObject = {
@@ -293,7 +293,7 @@ export default function beastHooks(): Return {
         }
     }
 
-    const updateBeast = async () => {
+    const saveBeast = async () => {
         if (beast) {
             showPendingAlert(async () => {
                 const { data } = await axios.post(beastURL + '/save', beast.beastInfo)
@@ -323,6 +323,6 @@ export default function beastHooks(): Return {
         updateSkillInfoFunctions: {
             updateSkillInfo
         },
-        updateBeast,
+        saveBeast,
     }
 }

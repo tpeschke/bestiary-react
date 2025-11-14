@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function EditView({ setLoading }: Props) {
-    const { beast, updateSelectedRole, updateBeast, updateSocialInfoFunctions, updateCombatInfoFunctions, updateSkillInfoFunctions } = beastHooks();
+    const { beast, updateSelectedRole, saveBeast, updateSocialInfoFunctions, updateCombatInfoFunctions, updateSkillInfoFunctions } = beastHooks();
 
     useEffect(() => {
         if (setLoading) {
@@ -22,7 +22,7 @@ export default function EditView({ setLoading }: Props) {
                 <EditBody
                     beast={beast}
                     updateSelectedRole={updateSelectedRole}
-                    updateBeast={updateBeast}
+                    saveBeast={saveBeast}
                     updateSocialInfoFunctions={updateSocialInfoFunctions}
                     updateCombatInfoFunctions={updateCombatInfoFunctions}
                     updateSkillInfoFunctions={updateSkillInfoFunctions}

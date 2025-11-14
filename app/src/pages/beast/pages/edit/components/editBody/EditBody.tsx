@@ -1,7 +1,7 @@
 import './editBody.css'
 import { useState } from "react";
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
-import { UpdateBeastFunction, UpdateCombatInfoFunctionsObject, UpdateSelectedRoleFunction, UpdateSkillInfoFunctionsObject, UpdateSocialInfoFunctionsObject } from "../../../../hooks/beastHooks";
+import { SaveBeastFunction, UpdateCombatInfoFunctionsObject, UpdateSelectedRoleFunction, UpdateSkillInfoFunctionsObject, UpdateSocialInfoFunctionsObject } from "../../../../hooks/beastHooks";
 import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
 import CombatEdit from "./components/combatEdit/CombatEdit";
@@ -11,7 +11,7 @@ import SkullSelection from './components/SkullSelection';
 interface Props {
     beast: GMBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
-    updateBeast: UpdateBeastFunction,
+    saveBeast: SaveBeastFunction,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject
     updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject
@@ -20,7 +20,7 @@ interface Props {
 export default function EditBody({ 
     beast, 
     updateSelectedRole, 
-    updateBeast, 
+    saveBeast, 
     updateSocialInfoFunctions, 
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
@@ -63,7 +63,7 @@ export default function EditBody({
             </div>
 
             <h2 className="border">Save</h2>
-            <button className="orange" onClick={updateBeast}>Save Entry</button>
+            <button className="orange" onClick={saveBeast}>Save Entry</button>
         </div>
     )
 }
