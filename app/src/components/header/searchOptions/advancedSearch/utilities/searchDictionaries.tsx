@@ -198,7 +198,7 @@ export const combatSecondaryDictionary: SearchObject[] = [
 ]
 
 export const skillPrimaryDictionary: SearchObject[] = [
-    { id: 22, value: 'Hunter' },
+    { id: 22, value: ' ' },
     { id: 23, value: 'Prey' },
     { id: 24, value: 'Controller' },
     { id: 25, value: 'Lock' },

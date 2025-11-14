@@ -101,7 +101,7 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             attackInfo: attack_skill,
             defenseInfo: defense_skill,
             skullIndex: skillSkullIndex,
-            stress: calculateStress(skillRole, skillSecondary, skillSkullIndex)
+            stress: calculateStress(skillSecondary, skillSkullIndex)
         },
         socialInfo: {
             socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,

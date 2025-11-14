@@ -20,7 +20,7 @@ export default function getRoleName(roleID: number): string {
         'Shock',
         'Skirmisher',
         'Solo', // Combat
-        'Hunter',
+        ' ',
         'Prey',
         'Controller',
         'Lock',

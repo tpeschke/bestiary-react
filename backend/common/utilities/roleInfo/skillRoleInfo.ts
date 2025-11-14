@@ -10,7 +10,7 @@ interface RoleObject {
 }
 
 export const primarySkillRoles: PrimarySkillRolesObject = {
-    'Hunter': {
+    ' ': {
         mental: 'minSt',
         panic: 'majSt'
     },

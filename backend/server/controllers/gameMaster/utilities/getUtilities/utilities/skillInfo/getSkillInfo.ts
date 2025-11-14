@@ -19,7 +19,7 @@ export default function formatSkillInfo(
         skillSkulls: getSkullNumber(skillSkulls),
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
-        stress: calculateStress(skillRole, skillSecondary, skullIndex),
+        stress: calculateStress(skillSecondary, skullIndex),
         skills: [],
         obstacles: [],
         challenges: [],

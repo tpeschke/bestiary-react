@@ -234,7 +234,7 @@ export default class GMBeastClass {
 
         return {
             ...this.entrySkillInfo,
-            stress: calculateStress(skillRole, skillSecondary, skullIndex),
+            stress: calculateStress(skillSecondary, skullIndex),
             skillRole, skillSecondary, skillSkulls,
             skills: skills?.reduce(this.adjustSkillRank(skullIndex, roleID), [])
         }
