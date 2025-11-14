@@ -1,25 +1,25 @@
-import { RoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { RoleSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import { UpdateFunction } from "./interfaces/updateInterfaces"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { UpdateFunction } from "./interfaces/updateInterfaces"
 
-export type UpdateSocialInfoFunctionsObject = {
-    updateSocialInfo: UpdateFunction
+export type UpdateSkillInfoFunctionsObject = {
+    updateSkillInfo: UpdateFunction
 }
 
-export default function getUpdateSocialInfoFunctions(
+export default function getUpdateSkillInfoFunctions(
     beast: GMBeastClass | undefined, updateBeastInfo: Function
-): UpdateSocialInfoFunctionsObject {
+): UpdateSkillInfoFunctionsObject {
     return {
-        updateSocialInfo: (key: string, value: string | number) => {
+        updateSkillInfo: (key: string, value: string | number) => {
             if (beast && beast.selectedRole) {
-                let modifiedSocialInfo: RoleSocialInfo = {
-                    ...beast.selectedRole.socialInfo,
+                let modifiedSkillInfo: RoleSkillInfo = {
+                    ...beast.selectedRole.skillInfo,
                     [key]: value
                 }
 
-                if (key === 'socialSkulls' && typeof value === 'number') {
-                    modifiedSocialInfo.skullIndex = getSkullIndex(value)
+                if (key === 'skillSkulls' && typeof value === 'number') {
+                    modifiedSkillInfo.skullIndex = getSkullIndex(value)
                 }
 
                 const modifiedBeastInfo: any = {
@@ -30,7 +30,7 @@ export default function getUpdateSocialInfoFunctions(
                             if (index === beast.selectedRoleIndex) {
                                 return {
                                     ...role,
-                                    socialInfo: modifiedSocialInfo
+                                    skillInfo: modifiedSkillInfo
                                 }
                             }
                             return role
@@ -40,18 +40,18 @@ export default function getUpdateSocialInfoFunctions(
 
                 updateBeastInfo(modifiedBeastInfo)
             } else if (beast) {
-                let modifiedSocialInfo = {
-                    ...beast.beastInfo.socialInfo,
+                let modifiedSkillInfo = {
+                    ...beast.beastInfo.skillInfo,
                     [key]: value
                 }
 
-                if (key === 'socialSkulls' && typeof value === 'number') {
-                    modifiedSocialInfo.skullIndex = getSkullIndex(value)
+                if (key === 'skillSkulls' && typeof value === 'number') {
+                    modifiedSkillInfo.skullIndex = getSkullIndex(value)
                 }
 
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
-                    socialInfo: modifiedSocialInfo
+                    skillInfo: modifiedSkillInfo
                 }
 
                 updateBeastInfo(modifiedBeastInfo)

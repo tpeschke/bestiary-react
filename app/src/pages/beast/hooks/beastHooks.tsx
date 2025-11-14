@@ -16,18 +16,16 @@ import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import { SetPlayerNotes } from "../components/notes/notesDisplay";
 import { CatalogTile } from "../../catalog/catalogInterfaces";
-import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import { RoleSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { UpdateFunction } from "./updateUtilities/updateInterfaces";
 import getUpdateSocialInfoFunctions, { UpdateSocialInfoFunctionsObject } from "./updateUtilities/updateSocialInfo";
 import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from "./updateUtilities/updateCombatInfo";
+import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 
-export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
-
 export type SaveBeastFunction = () => void
+
+export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
 interface UpdateFavoriteReturnBase {
     type: 'delete' | 'add'
@@ -56,10 +54,6 @@ interface Return {
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject,
     saveBeast: SaveBeastFunction
-}
-
-export type UpdateSkillInfoFunctionsObject = {
-    updateSkillInfo: UpdateFunction
 }
 
 export default function beastHooks(): Return {
@@ -121,10 +115,12 @@ export default function beastHooks(): Return {
 
     const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
     const [updateCombatInfoFunctions, setUpdateCombatInfoFunctions] = useState<UpdateCombatInfoFunctionsObject>(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
+    const [updateSkillInfoFunctions, setUpdateSkillInfoFunctions] = useState<UpdateSkillInfoFunctionsObject>(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
 
     useEffect(() => {
         setUpdateSocialInfoFunctions(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
         setUpdateCombatInfoFunctions(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
+        setUpdateSkillInfoFunctions(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
     }, [beast])
 
     function scrollToTop() {
@@ -246,53 +242,6 @@ export default function beastHooks(): Return {
         return null
     }
 
-    const updateSkillInfo = (key: string, value: string | number) => {
-        if (beast && beast.selectedRole) {
-            let modifiedSkillInfo: RoleSkillInfo = {
-                ...beast.selectedRole.skillInfo,
-                [key]: value
-            }
-
-            if (key === 'skillSkulls' && typeof value === 'number') {
-                modifiedSkillInfo.skullIndex = getSkullIndex(value)
-            }
-
-            const modifiedBeastInfo: any = {
-                ...beast.beastInfo,
-                roleInfo: {
-                    ...beast.beastInfo.roleInfo,
-                    roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
-                        if (index === beast.selectedRoleIndex) {
-                            return {
-                                ...role,
-                                skillInfo: modifiedSkillInfo
-                            }
-                        }
-                        return role
-                    })
-                }
-            }
-
-            updateBeastInfo(modifiedBeastInfo)
-        } else if (beast) {
-            let modifiedSkillInfo = {
-                ...beast.beastInfo.skillInfo,
-                [key]: value
-            }
-
-            if (key === 'skillSkulls' && typeof value === 'number') {
-                modifiedSkillInfo.skullIndex = getSkullIndex(value)
-            }
-
-            const modifiedBeastInfo: any = {
-                ...beast.beastInfo,
-                skillInfo: modifiedSkillInfo
-            }
-
-            updateBeastInfo(modifiedBeastInfo)
-        }
-    }
-
     const saveBeast = async () => {
         if (beast) {
             showPendingAlert(async () => {
@@ -320,9 +269,7 @@ export default function beastHooks(): Return {
         updateFavorite,
         updateSocialInfoFunctions,
         updateCombatInfoFunctions,
-        updateSkillInfoFunctions: {
-            updateSkillInfo
-        },
+        updateSkillInfoFunctions,
         saveBeast,
     }
 }

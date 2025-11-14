@@ -4,7 +4,7 @@ import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIn
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
-import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from "./updateInterfaces"
+import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
 
 export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
