@@ -7,7 +7,9 @@ export type UpdateSocialInfoFunctionsObject = {
     updateSocialInfo: UpdateFunction
 }
 
-export default function getUpdateSocialInfoFunctions(beast: GMBeastClass | undefined, updateBeastInfo: Function): UpdateSocialInfoFunctionsObject {
+export default function getUpdateSocialInfoFunctions(
+    beast: GMBeastClass | undefined, updateBeastInfo: Function
+): UpdateSocialInfoFunctionsObject {
     return {
         updateSocialInfo: (key: string, value: string | number) => {
             if (beast && beast.selectedRole) {
@@ -15,11 +17,11 @@ export default function getUpdateSocialInfoFunctions(beast: GMBeastClass | undef
                     ...beast.selectedRole.socialInfo,
                     [key]: value
                 }
-    
+
                 if (key === 'socialSkulls' && typeof value === 'number') {
                     modifiedSocialInfo.skullIndex = getSkullIndex(value)
                 }
-    
+
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     roleInfo: {
@@ -35,23 +37,23 @@ export default function getUpdateSocialInfoFunctions(beast: GMBeastClass | undef
                         })
                     }
                 }
-    
+
                 updateBeastInfo(modifiedBeastInfo)
             } else if (beast) {
                 let modifiedSocialInfo = {
                     ...beast.beastInfo.socialInfo,
                     [key]: value
                 }
-    
+
                 if (key === 'socialSkulls' && typeof value === 'number') {
                     modifiedSocialInfo.skullIndex = getSkullIndex(value)
                 }
-    
+
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     socialInfo: modifiedSocialInfo
                 }
-    
+
                 updateBeastInfo(modifiedBeastInfo)
             }
         }
