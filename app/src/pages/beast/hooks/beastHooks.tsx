@@ -16,11 +16,13 @@ import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import { SetPlayerNotes } from "../components/notes/notesDisplay";
 import { CatalogTile } from "../../catalog/catalogInterfaces";
-import { shiftAttackOrder } from "./utilities/updateAttacks";
-import { shiftDefenseOrder } from "./utilities/updateDefenses";
+import { shiftAttackOrder } from "./updateUtilities/utilities/updateAttacks";
+import { shiftDefenseOrder } from "./updateUtilities/utilities/updateDefenses";
 import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { RoleCombatInfo, RoleSkillInfo, RoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import { UpdateFunction } from "./updateUtilities/updateInterfaces";
+import getUpdateSocialInfoFunctions, { UpdateSocialInfoFunctionsObject } from "./updateUtilities/updateSocialInfo";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -29,7 +31,6 @@ export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
 export type UpdateOrderFunction = (overAllIndex: number, overAllIndexToMoveTo: number) => void
 export type RemoveCombatFunction = (indexToRemove: number) => void
-export type UpdateFunction = (key: string, value: string | number) => void
 export type UpdateAttackDefenseInfoFunction = (key: string, value: string, overAllIndex: number) => void
 export type AddAttackFunction = (newAttack: AttackInfo) => void
 
@@ -64,10 +65,6 @@ interface Return {
     updateBeast: UpdateBeastFunction
 }
 
-export type UpdateSocialInfoFunctionsObject = {
-    updateSocialInfo: UpdateFunction
-}
-
 export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
@@ -97,6 +94,11 @@ export default function beastHooks(): Return {
     const dispatch = useDispatch()
 
     const beastCache = useSelector((state: any) => state.beastCache.cache)
+
+    const updateBeastInfo = (modifiedBeastInfo: any) => {
+        dispatch(cacheMonster(modifiedBeastInfo))
+        setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+    }
 
     useEffect(() => {
         handleBackwardsCompatibilityWithOldUrl()
@@ -134,6 +136,12 @@ export default function beastHooks(): Return {
             setCurrentBeastId(beastId)
         }
     }, [beastId, searchParams]);
+
+    const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
+
+    useEffect(() => {
+        setUpdateSocialInfoFunctions(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
+    }, [beast])
 
     function scrollToTop() {
         window.scrollTo(0, 0)
@@ -235,11 +243,6 @@ export default function beastHooks(): Return {
         return await savePlayerNotes(beastId, notes)
     }
 
-    const updateBeastInfo = (modifiedBeastInfo: any) => {
-        dispatch(cacheMonster(modifiedBeastInfo))
-        setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
-    }
-
     const updateFavorite = async (): Promise<FavoriteReturn | null> => {
         if (beast) {
             const favoriteReturn = await updateFavoriteStatus(beast.id, !beast.favorite)
@@ -257,53 +260,6 @@ export default function beastHooks(): Return {
         }
 
         return null
-    }
-
-    const updateSocialInfo = (key: string, value: string | number) => {
-        if (beast && beast.selectedRole) {
-            let modifiedSocialInfo: RoleSocialInfo = {
-                ...beast.selectedRole.socialInfo,
-                [key]: value
-            }
-
-            if (key === 'socialSkulls' && typeof value === 'number') {
-                modifiedSocialInfo.skullIndex = getSkullIndex(value)
-            }
-
-            const modifiedBeastInfo: any = {
-                ...beast.beastInfo,
-                roleInfo: {
-                    ...beast.beastInfo.roleInfo,
-                    roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
-                        if (index === beast.selectedRoleIndex) {
-                            return {
-                                ...role,
-                                socialInfo: modifiedSocialInfo
-                            }
-                        }
-                        return role
-                    })
-                }
-            }
-
-            updateBeastInfo(modifiedBeastInfo)
-        } else if (beast) {
-            let modifiedSocialInfo = {
-                ...beast.beastInfo.socialInfo,
-                [key]: value
-            }
-
-            if (key === 'socialSkulls' && typeof value === 'number') {
-                modifiedSocialInfo.skullIndex = getSkullIndex(value)
-            }
-
-            const modifiedBeastInfo: any = {
-                ...beast.beastInfo,
-                socialInfo: modifiedSocialInfo
-            }
-
-            updateBeastInfo(modifiedBeastInfo)
-        }
     }
 
     const updateCombatInfo = (key: string, value: string | number) => {
@@ -571,9 +527,7 @@ export default function beastHooks(): Return {
         updateRoleModifier,
         updateNotes,
         updateFavorite,
-        updateSocialInfoFunctions: {
-            updateSocialInfo
-        },
+        updateSocialInfoFunctions,
         updateCombatInfoFunctions: {
             updateCombatInfo,
             updateAttackOrder,
