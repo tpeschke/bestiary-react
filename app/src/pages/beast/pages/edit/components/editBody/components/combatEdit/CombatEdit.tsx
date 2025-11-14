@@ -1,7 +1,7 @@
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/beastHooks"
 import AttacksEditDisplay from "./components/AttacksEditDisplay/AttacksEditDisplay"
 import DefenseEditDisplay from "./components/DefenseEditDisplay/DefenseEditDisplay"
+import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/updateUtilities/updateCombatInfo"
 
 interface Props {
     combatInfo: CombatInfo,

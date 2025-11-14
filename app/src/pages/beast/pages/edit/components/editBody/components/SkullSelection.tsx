@@ -1,4 +1,4 @@
-import { UpdateFunction } from "../../../../../hooks/beastHooks"
+import { UpdateFunction } from "../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 
 interface Props {
     currentSkullValue: number,

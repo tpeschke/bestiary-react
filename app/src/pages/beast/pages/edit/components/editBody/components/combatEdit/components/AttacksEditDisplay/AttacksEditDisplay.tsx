@@ -1,11 +1,11 @@
 import { AttackInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Icon from '../../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../../../components/UI/body/Body'
-import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/beastHooks'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
 import ReferenceEdit from './components/ReferenceEdit'
+import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 
 interface Props {
     attacks: AttackInfo[],

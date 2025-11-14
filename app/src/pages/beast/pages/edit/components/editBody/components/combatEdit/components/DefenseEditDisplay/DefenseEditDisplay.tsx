@@ -2,8 +2,8 @@ import './DefenseEditDisplay.css'
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../../components/UI/body/Body"
-import { RemoveCombatFunction, UpdateAttackDefenseInfoFunction, UpdateOrderFunction } from "../../../../../../../../hooks/beastHooks"
 import MoveOrderButton from "../AttacksEditDisplay/components/MoveOrderButton"
+import { UpdateAttackDefenseInfoFunction, UpdateOrderFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 
 interface Props {
     defenses: DefenseInfo[],

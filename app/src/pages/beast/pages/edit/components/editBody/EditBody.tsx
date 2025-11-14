@@ -1,12 +1,15 @@
 import './editBody.css'
 import { useState } from "react";
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
-import { SaveBeastFunction, UpdateCombatInfoFunctionsObject, UpdateSelectedRoleFunction, UpdateSkillInfoFunctionsObject, UpdateSocialInfoFunctionsObject } from "../../../../hooks/beastHooks";
+import { SaveBeastFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
 import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
 import CombatEdit from "./components/combatEdit/CombatEdit";
 import Tabs from "./components/tabs/TabsDisplay";
 import SkullSelection from './components/SkullSelection';
+import { UpdateCombatInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateCombatInfo';
+import { UpdateSkillInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateSkillInfo';
+import { UpdateSocialInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateSocialInfo';
 
 interface Props {
     beast: GMBeastClass,
