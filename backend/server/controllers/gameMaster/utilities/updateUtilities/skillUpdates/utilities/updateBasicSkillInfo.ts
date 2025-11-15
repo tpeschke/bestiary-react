@@ -3,10 +3,10 @@ import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 
 export default async function updateBasicSkillInfo(beastID: number, skillInfo: SkillInfo) {
     const sqlQuery = `update bbindividualbeast
-    set skillskulls = $2
+    set skillskulls = $2, skillrole = $3, skillsecondary = $4
     where id = $1`
 
-    const { skillSkulls } = skillInfo
+    const { skillSkulls, skillRole, skillSecondary } = skillInfo
 
-    return query(sqlQuery, [beastID, skillSkulls])
+    return query(sqlQuery, [beastID, skillSkulls, skillRole, skillSecondary])
 }
