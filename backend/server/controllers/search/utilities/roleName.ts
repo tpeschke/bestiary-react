@@ -1,52 +1,82 @@
-export default function getRoleName(roleID: number): string {
+export function getSocialRoleName(roleID: string | number): string {
+    roleID = +roleID
+
     const roleArray = [
         null,
         'Striker',
         'Defender',
         'Fast-Talker',
         'Feinter',
-        null,
         'Sandbagger',
         'Corruptor',
         'Gaslighter',
         'Enabler',
-        'Opportunist',
+        'Opportunist', // 9
+        'Lesser',
+        'Veteran',
+        'Champion',
+        'Officer',
+        'Tyrant',
+        'Solo', // 15
+    ]
+
+    const roleName = roleArray[roleID]
+
+    if (roleName) {
+        return roleName
+    }
+    return ''
+}
+
+export function getCombatRoleName(roleID: string | number): string {
+    roleID = +roleID
+
+    const roleArray = [
+        null,
         'Artillery',
         'Brute',
-        'Captain',
-        'Controller',
         'Defender',
         'Duelist',
         'Shock',
-        'Skirmisher',
-        'Solo', // Combat
-        ' ',
-        'Prey',
-        'Controller',
-        'Lock',
-        null,
-        'Antagonist',
-        'Trap',
-        'Hazard',
-        'Lesser', // Combat
-        'Veteran', // Combat
-        'Veteran', // Confrontation
-        'Solo', // Confrontation
-        'Veteran', // Skill
-        'Solo', // Skill
-        'Solo', // Skill
-        'Champion', // Combat
-        'Officer', // Combat
-        'Tyrant', // Combat
-        'Lesser', // Skill
-        'Champion', // Skill
-        'Officer', // Skill
-        'Tyrant', // Skill
-        'Lesser', // Confrontation
-        'Champion', // Confrontation
-        'Officer', // Confrontation
-        'Tyrant', // Confrontation 47
+        'Skirmisher', // 6
+        'Lesser',
+        'Veteran',
+        'Champion',
+        'Officer',
+        'Tyrant',
+        'Solo', // 12
     ]
+
+    const roleName = roleArray[roleID]
+
+    if (roleName) {
+        return roleName
+    }
+    return ''
+}
+
+export function getSkillRoleName(roleID: string | number): string {
+    roleID = +roleID
+
+    const roleArray = [
+        null,
+        'Generalist',
+        'Lock',
+        'Athlete',
+        'Loremaster',
+        'Strategist',
+        'Street-Rat',
+        'Survivalist',
+        'Trader',
+        'Weirdling', // 9
+        'Lesser',
+        'Veteran',
+        'Champion',
+        'Officer',
+        'Tyrant',
+        'Solo', // 15
+    ]
+
     const roleName = roleArray[roleID]
 
     if (roleName) {

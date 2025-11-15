@@ -2,7 +2,7 @@ import query from "../../../db/database";
 import { searchAccess, searchBody, searchChallengeRoles, searchClimate, searchCombatRoles, searchConfrontationRoles, searchMaxChallengeRating, searchMaxCombatRating, searchMaxConfrontationRating, searchMinChallengeRating, searchMinCombatRating, searchName, searchNotes, searchPlayerCanView, searchRarity, searchSize, searchTypes } from "../../../db/search/queryParams";
 import { User } from "../../../interfaces/apiInterfaces";
 import { SearchQuery, SearchReturn } from "../search";
-import getRoleName from "./roleName";
+import { getCombatRoleName, getSkillRoleName, getSocialRoleName } from "./roleName";
 
 export default async function getIDsFromQuery(searchQuery: SearchQuery, user: User | null | undefined): Promise<SearchReturn[][]> {
     let idArray: Promise<any[]>[] = []
@@ -52,33 +52,48 @@ export default async function getIDsFromQuery(searchQuery: SearchQuery, user: Us
                 break;
             // TODO: Update to just search using the array so I don't have to iterate through it like this
             case "climate":
-                if (searchQuery.climate !== '') {
-                    searchQuery.climate.split(',').forEach((climateID: string) => {
+                if (typeof searchQuery.climate === 'string') {
+                    idArray.push(query(searchClimate, +searchQuery.climate))
+                } else if (searchQuery.climate) {
+                    searchQuery.climate.forEach((climateID: string) => {
                         idArray.push(query(searchClimate, +climateID))
                     })
                 }
                 break;
             // TODO: And this one
             case "types":
-                if (searchQuery.types !== '') {
-                    searchQuery.types.split(',').forEach((typeID: string) => {
+                if (typeof searchQuery.types === 'string') {
+                    idArray.push(query(searchTypes, +searchQuery.types))
+                } else if (searchQuery.types) {
+                    searchQuery.types.forEach((typeID: string) => {
                         idArray.push(query(searchTypes, +typeID))
                     })
                 }
                 break;
-            case "roles":
-                if (searchQuery.roles !== '') {
-                    searchQuery.roles.split(',').forEach((roleIDString: string) => {
-                        const roleID = +roleIDString
-                        const roleName = getRoleName(roleID)
-
-                        if (roleID < 11 || roleID === 32 || roleID === 33) {
-                            idArray.push(query(searchConfrontationRoles, roleName))
-                        } else if (roleID > 10 && roleID < 22) {
-                            idArray.push(query(searchCombatRoles, roleName))
-                        } else {
-                            idArray.push(query(searchChallengeRoles, roleName))
-                        }
+            case "socialRoles":
+                if (typeof searchQuery.socialRoles === 'string') {
+                    idArray.push(query(searchConfrontationRoles, getSocialRoleName(searchQuery.socialRoles)))
+                } else if (searchQuery.socialRoles) {
+                    searchQuery.socialRoles.forEach((roleIDString: string) => {
+                        idArray.push(query(searchConfrontationRoles, getSocialRoleName(roleIDString)))
+                    })
+                }
+                break;
+            case "combatRoles":
+                if (typeof searchQuery.combatRoles === 'string') {
+                    idArray.push(query(searchCombatRoles, getCombatRoleName(searchQuery.combatRoles)))
+                } else if (searchQuery.combatRoles) {
+                    searchQuery.combatRoles.forEach((roleIDString: string) => {
+                        idArray.push(query(searchCombatRoles, getCombatRoleName(roleIDString)))
+                    })
+                }
+                break;
+            case "skillRoles":
+                if (typeof searchQuery.skillRoles === 'string') {
+                    idArray.push(query(searchChallengeRoles, getSkillRoleName(searchQuery.skillRoles)))
+                } else if (searchQuery.skillRoles) {
+                    searchQuery.skillRoles.forEach((roleIDString: string) => {
+                        idArray.push(query(searchChallengeRoles, getSkillRoleName(roleIDString)))
                     })
                 }
                 break;

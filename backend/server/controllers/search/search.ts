@@ -9,7 +9,24 @@ interface SearchRequest extends Request {
 }
 
 export interface SearchQuery {
-    [key: string]: string
+    name?: string,
+    body?: string,
+    minCombatRate?: string,
+    minChallengeRate?: string,
+    minConfrontationRate?: string,
+    maxCombatRate?: string,
+    maxChallengeRate?: string,
+    maxConfrontationRate?: string,
+    size?: string,
+    access?: string,
+    rarity?: string
+    anyAccess?: string,
+    personalNotes?: string,
+    types?: string | string[],
+    climate?: string | string[],
+    socialRoles?: string | string[],
+    combatRoles?: string | string[],
+    skillRoles?: string | string[],
 }
 
 export interface SearchReturn {

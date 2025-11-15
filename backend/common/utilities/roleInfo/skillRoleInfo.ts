@@ -10,15 +10,15 @@ interface RoleObject {
 }
 
 export const primarySkillRoles: PrimarySkillRolesObject = {
-    ' ': {
+    'Generalist': {
         mental: 'minSt',
         panic: 'majSt'
     },
-    'Prey': {
+    'Athlete': {
         mental: 'majSt',
         panic: 'majWk'
     },
-    'Controller': {
+    'Loremaster': {
         mental: 'majSt',
         panic: 'majSt'
     },
@@ -26,15 +26,15 @@ export const primarySkillRoles: PrimarySkillRolesObject = {
         mental: 'minWk',
         panic: 'minWk'
     },
-    'Antagonist': {
+    'Strategist': {
         mental: 'minWk',
         panic: 'majSt'
     },
-    'Trap': {
+    'Street-Rat': {
         mental: 'minSt',
         panic: 'minSt'
     },
-    'Hazard': {
+    'Survivalist': {
         mental: 'minSt',
         panic: 'minSt'
     },

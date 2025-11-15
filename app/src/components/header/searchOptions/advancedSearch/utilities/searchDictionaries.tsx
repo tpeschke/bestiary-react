@@ -161,59 +161,61 @@ export const climateSearchDictionary = [
 export const confrontationPrimaryDictionary: SearchObject[] = [
     { id: 1, value: 'Striker' },
     { id: 2, value: 'Defender' },
-    { id: 3, value: 'Fast - Talker' },
+    { id: 3, value: 'Fast-Talker' },
     { id: 4, value: 'Feinter' },
-    { id: 6, value: 'Sandbagger' },
-    { id: 7, value: 'Corruptor' },
-    { id: 8, value: 'Gaslighter' },
-    { id: 9, value: 'Enabler' },
-    { id: 10, value: 'Opportunist' }
+    { id: 5, value: 'Sandbagger' },
+    { id: 6, value: 'Corruptor' },
+    { id: 7, value: 'Gaslighter' },
+    { id: 8, value: 'Enabler' },
+    { id: 9, value: 'Opportunist' }
 ]
 
 export const confrontationSecondaryDictionary: SearchObject[] = [
-    { id: 44, value: 'Lesser' },
-    { id: 32, value: 'Veteran' },
-    { id: 45, value: 'Champion' },
-    { id: 46, value: 'Officer' },
-    { id: 47, value: 'Tyrant' },
-    { id: 33, value: 'Solo' }
+    { id: 10, value: 'Lesser' },
+    { id: 11, value: 'Veteran' },
+    { id: 12, value: 'Champion' },
+    { id: 13, value: 'Officer' },
+    { id: 14, value: 'Tyrant' },
+    { id: 15, value: 'Solo' }
 ]
 
 export const combatPrimaryDictionary: SearchObject[] = [
-    { id: 11, value: 'Artillery' },
-    { id: 12, value: 'Brute' },
-    { id: 15, value: 'Defender' },
-    { id: 16, value: 'Duelist' },
-    { id: 19, value: 'Shock' },
-    { id: 20, value: 'Skirmisher' }
+    { id: 1, value: 'Artillery' },
+    { id: 2, value: 'Brute' },
+    { id: 3, value: 'Defender' },
+    { id: 4, value: 'Duelist' },
+    { id: 5, value: 'Shock' },
+    { id: 6, value: 'Skirmisher' }
 ]
 
 export const combatSecondaryDictionary: SearchObject[] = [
-    { id: 18, value: 'Lesser' },
-    { id: 36, value: 'Veteran' },
-    { id: 37, value: 'Champion' },
-    { id: 38, value: 'Officer' },
-    { id: 39, value: 'Tyrant' },
-    { id: 21, value: 'Solo' },
+    { id: 7, value: 'Lesser' },
+    { id: 8, value: 'Veteran' },
+    { id: 9, value: 'Champion' },
+    { id: 10, value: 'Officer' },
+    { id: 11, value: 'Tyrant' },
+    { id: 12, value: 'Solo' },
 ]
 
 export const skillPrimaryDictionary: SearchObject[] = [
-    { id: 22, value: ' ' },
-    { id: 23, value: 'Prey' },
-    { id: 24, value: 'Controller' },
-    { id: 25, value: 'Lock' },
-    { id: 27, value: 'Antagonist' },
-    { id: 28, value: 'Trap' },
-    { id: 29, value: 'Hazard' },
+    { id: 1, value: 'Generalist' },
+    { id: 2, value: 'Lock' },
+    { id: 3, value: 'Athlete' },
+    { id: 4, value: 'Loremaster' },
+    { id: 5, value: 'Strategist' },
+    { id: 6, value: 'Street-Rat' },
+    { id: 7, value: 'Survivalist' },
+    { id: 8, value: 'Trader' },
+    { id: 9, value: 'Weirdling' },
 ]
 
 export const skillSecondaryDictionary: SearchObject[] = [
-    { id: 40, value: 'Lesser' },
-    { id: 34, value: 'Veteran' },
-    { id: 41, value: 'Champion' },
-    { id: 42, value: 'Officer' },
-    { id: 43, value: 'Tyrant' },
-    { id: 35, value: 'Solo' }
+    { id: 10, value: 'Lesser' },
+    { id: 11, value: 'Veteran' },
+    { id: 12, value: 'Champion' },
+    { id: 13, value: 'Officer' },
+    { id: 14, value: 'Tyrant' },
+    { id: 15, value: 'Solo' }
 ]
 
 export const typeSearchDictionary: SearchObject[] = [
