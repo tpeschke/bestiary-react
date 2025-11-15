@@ -9,3 +9,12 @@
 .edit-body-shell .edit-body-display select {
     margin-top: 15px;
 }
+
+.edit-body-shell .role-and-skull-shell {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-body-shell .role-and-skull-shell select:first-child {
+    margin-right: 15px;
+}
