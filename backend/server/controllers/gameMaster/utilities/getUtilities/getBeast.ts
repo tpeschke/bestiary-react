@@ -7,7 +7,6 @@ import { Variant, LocationObject, BeastType, ClimateObject } from "@bestiary/com
 import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
-import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../interfaces/lootInterfaces"
@@ -27,7 +26,6 @@ import { getArchetypes, GetArchetypesReturn } from "./utilities/socialInfo/utili
 import { getConflict } from "./utilities/socialInfo/utilities/getConflict"
 import { getChallenges } from "./utilities/skillInfo/utilities/getChallenges"
 import { getObstacles } from "./utilities/skillInfo/utilities/getObstacles"
-import { getSkills } from "./utilities/skillInfo/utilities/getSkills"
 import formatSkillInfo from "./utilities/skillInfo/getSkillInfo"
 import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
 import getPleroma from "./utilities/lootInfo/getPleroma"
@@ -154,7 +152,6 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
 
-        getSkills(beast.id, beast.skillInfo.skullIndex).then((skills: Skill[]) => beast.skillInfo.skills = skills),
         getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges),
         getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles),
 

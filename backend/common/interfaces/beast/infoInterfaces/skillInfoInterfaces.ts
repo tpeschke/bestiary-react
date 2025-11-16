@@ -8,18 +8,18 @@ export default interface SkillInfo {
     skullIndex: number,
     attackInfo: string,
     defenseInfo: string,
-    skills: Skill[],
+    skills: SkillObject,
     obstacles: Obstacle[],
     challenges: Challenge[],
 }
 
+export interface SkillObject {
+    preferred?: Skill[],
+    weakness?: Skill[],
+    everythingElse?: number
+}
+
 export interface Skill {
-    id: number,
-    beastid: number,
     skill: string,
-    rank: number,
-    skillroleid: string,
-    skillrole: string,
-    allroles: boolean,
-    deleted?: boolean
+    rank: number
 }

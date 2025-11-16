@@ -1,3 +1,5 @@
+import './SkillSection.css'
+
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import SkillsDisplay from "./components/SkillsDisplay"
 import SpecialInfo from "../specialInfo/specialInfo"
@@ -7,7 +9,6 @@ import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 import Body from "../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../components/UI/pair/Pair"
 
-
 interface Props {
     skillInfo: SkillInfo
 }
@@ -15,7 +16,7 @@ interface Props {
 export default function SkillSection({ skillInfo }: Props) {
     const { skillRole, skillSkulls, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
 
-    const showSkillSection = skills.length > 0
+    const showSkillSection = skills.preferred || skills.weakness || skills.everythingElse || skills.everythingElse === 0
     const showDefenseSection = defenseInfo && defenseInfo !== ''
     const showAttackSection = attackInfo && attackInfo !== ''
 

@@ -1,0 +1,20 @@
+.skill-object {
+    display: flex;
+}
+
+.skill-object>div {
+    width: 100%;
+}
+
+.skill-object>div>div p:last-child {
+    text-align: center;
+}
+
+.skill-object-shell>.pair-shell {
+    border-top: 2px solid #f3f3f3;
+    padding-top: 3px;
+}
+
+.skill-object-shell .pair-shell {
+    margin-bottom: 2px;
+}

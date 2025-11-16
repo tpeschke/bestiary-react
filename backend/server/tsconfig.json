@@ -5,5 +5,5 @@
   "extends": "../../tsconfig.json",
   "include": [
     "./"
-, "../common/utilities/scalingAndBonus/confrontation/getBaseSocialRank.ts"  ]
+, "../common/utilities/scalingAndBonus/confrontation/getBaseSocialRank.ts", "../common/utilities/scalingAndBonus/skill/getSkills.ts"  ]
 }

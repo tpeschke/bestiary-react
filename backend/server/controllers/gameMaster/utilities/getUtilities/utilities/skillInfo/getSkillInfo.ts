@@ -2,6 +2,7 @@ import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 import getSkullNumber from "../getSkulls";
 import calculateStress from "@bestiary/common/utilities/scalingAndBonus/skill/calculateStress";
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
+import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
 
 export default function formatSkillInfo(
     skillRole: string, 
@@ -20,7 +21,7 @@ export default function formatSkillInfo(
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
         stress: calculateStress(skillSecondary, skullIndex),
-        skills: [],
+        skills: getSkills(skillRole, skullIndex),
         obstacles: [],
         challenges: [],
     }

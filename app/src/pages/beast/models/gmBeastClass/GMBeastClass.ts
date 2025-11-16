@@ -6,7 +6,6 @@ import PlayerSpecificInfo from "../../interfaces/infoInterfaces/playerSpecificIn
 import { BeastInfo } from "../../interfaces/viewInterfaces";
 
 import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
-import { Skill } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/skill/calculateStress'
@@ -21,7 +20,7 @@ import CombatInfoClass from "./components/CombatInfoClass";
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
-import getSkillRank from "@bestiary/common/utilities/scalingAndBonus/skill/getSkillRank"
+import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -221,8 +220,7 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skills, skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index } = this.entrySkillInfo
-        const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
+        const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index } = this.entrySkillInfo
 
         const roleSelected = this.isRoleSelected()
 
@@ -236,19 +234,7 @@ export default class GMBeastClass {
             ...this.entrySkillInfo,
             stress: calculateStress(skillSecondary, skullIndex),
             skillRole, skillSecondary, skillSkulls,
-            skills: skills?.reduce(this.adjustSkillRank(skullIndex, roleID), [])
-        }
-    }
-
-    private adjustSkillRank = (skullIndex: number, roleID: string) => {
-        return (skills: Skill[], skill: Skill): Skill[] => {
-            if (!skill.skillroleid || skill.skillroleid === roleID || skill.allroles) {
-                skills.push({
-                    ...skill,
-                    rank: getSkillRank(skullIndex)
-                })
-            }
-            return skills
+            skills: getSkills(skillRole, skullIndex)
         }
     }
 
