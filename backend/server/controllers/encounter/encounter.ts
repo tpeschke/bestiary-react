@@ -22,7 +22,7 @@ interface NumbersReturn {
 
 export default async function getRandomEncounter(request: BasicParamsRequest, response: Response) {
     let promiseArray: any[] = []
-    let encounterObject: Encounter = { }
+    let encounterObject: Encounter = {}
     const beastId = +request.params.beastId
 
     promiseArray.push(getVerb(beastId).then((verb: string) => encounterObject.verb = verb))
@@ -34,14 +34,17 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
     encounterObject.time = getTime()
     encounterObject.objectives = getObjectives()
     encounterObject.battlefield = getBattlefieldAndPattern()
-    
+
     const [numbersReturn]: NumbersReturn[] = await query(getNumberOfMonstersWeighted, beastId)
 
     if (numbersReturn) {
         const { numbers, miles } = numbersReturn
-    
+
         encounterObject.milesFromLair = getDistanceFromLair(miles)
         encounterObject.group = await getGroupInfo(beastId, numbers)
+    } else {
+        encounterObject.milesFromLair = getDistanceFromLair("d10")
+        encounterObject.group = await getGroupInfo(beastId, "d4 * 2")
     }
 
     Promise.all(promiseArray).then(_ => {
