@@ -21,10 +21,6 @@ export default class CombatInfoClass {
     }
 
     public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo {
-        return this.formatCombatInfo(size, roleID, selectedRole, selectedModifier)
-    }
-
-    private formatCombatInfo = (size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo => {
         const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
@@ -50,12 +46,12 @@ export default class CombatInfoClass {
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skulls),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(skulls, roleID, combatRole), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(skulls, roleID, combatRole, size), []),
-            movements: movements.reduce(this.adjustMovementInfo(skulls, roleID, combatRole), [])
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole), []),
+            defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
+            movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
     }
 
