@@ -31,20 +31,18 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
     }, [roleInfo, selectedRoleIndex]);
 
     useEffect(() => {
-        if (!roleOptions && roleInfo.roles.length > 0) {
-            const { roles } = roleInfo
+        const { roles } = roleInfo
 
-            const options = roles.map(({ generalInfo, combatInfo, skillInfo, socialInfo, id: roleId }: Role): any => {
-                const { name } = generalInfo
+        const options = roles.map(({ generalInfo, combatInfo, skillInfo, socialInfo, id: roleId }: Role): any => {
+            const { name } = generalInfo
 
-                const roleName = formatRoleName(socialInfo, skillInfo, combatInfo)
+            const roleName = formatRoleName(socialInfo, skillInfo, combatInfo)
 
-                return { value: roleId, label: `${name} : ${roleName}` }
-            })
+            return { value: roleId, label: `${name} : ${roleName}` }
+        })
 
-            setRoleOptions(options)
-        }
-    }, [roleOptions, currentSelectedOption])
+        setRoleOptions(options)
+    }, [roleInfo])
 
     function updateRoleId(selectedOption: OptionProp | undefined) {
         if (selectedOption) {
@@ -55,7 +53,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
 
     return (
         <div className="role-select-shell">
-            {roleOptions && (
+            {roleOptions && roleOptions.length > 0 && (
                 <>
                     <h2>Role</h2>
                     <Select
@@ -64,7 +62,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
                         components={{ Option: formatOption }}
                         options={roleOptions}
                         onChange={(event: any) => updateRoleId(event)} />
-                    {copyQuickLink && <QuickLink copyQuickLink={copyQuickLink} hasModifier={hasModifier}/>}
+                    {copyQuickLink && <QuickLink copyQuickLink={copyQuickLink} hasModifier={hasModifier} />}
                 </>
             )}
         </div>

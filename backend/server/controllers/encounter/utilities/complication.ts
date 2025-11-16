@@ -76,18 +76,30 @@ const complicationArray = [RIVAL, WOUNDED, TRAPPED, INSANE, LOST, DISEASED, TIME
 
 async function getRival(beastId: number, type: string): Promise<RivalComplication> {
     const [rival]: Rival[] = await query(getRivalForEncounter, beastId)
-console.log(rival)
-    if (rival?.name && rival?.name.includes(',')) {
-        const splitName = rival.name.split(', ')
-        rival.name = `${splitName[1]} ${splitName[0]}`
-    }
-    if (!rival?.plural) {
-        rival.plural = rival.name += 's'
+    console.log(rival)
+    if (rival) {
+        if (rival?.name && rival?.name.includes(',')) {
+            const splitName = rival.name.split(', ')
+            rival.name = `${splitName[1]} ${splitName[0]}`
+        }
+        if (!rival?.plural) {
+            rival.plural = rival.name += 's'
+        }
+
+        return {
+            type,
+            actors: rival
+        }
     }
 
     return {
         type,
-        actors: rival
+        actors: {
+            id: beastId,
+            name: "Rival of the Same Entry",
+            plural: "Rival of the Same Entry",
+            number: "d6"
+        }
     }
 }
 
@@ -105,11 +117,11 @@ function getLost(): LostComplication {
     return { type: LOST, distance: `${rollDice('10d10')} Miles` }
 }
 
-async function getBackUp(beastId: number): Promise<BackUpComplication | null>  {
+async function getBackUp(beastId: number): Promise<BackUpComplication | null> {
     const [backUp]: BackUp[] = await query(getEncounterBackUp, beastId)
 
     if (backUp) {
-        const {id, name, plural} = backUp
+        const { id, name, plural } = backUp
 
         let rank: string = '';
         let rankPlural: string = '';
@@ -122,8 +134,8 @@ async function getBackUp(beastId: number): Promise<BackUpComplication | null>  {
         } else if (!plural && rank && rank.toUpperCase() !== 'NONE') {
             rankPlural = rank += 's'
         }
-    
-    
+
+
         return {
             id, name, plural, rank, rankPlural,
             type: BACK_UP_COMING,
