@@ -36,12 +36,9 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
     const showAttackSection = !!(attackInfo && attackInfo !== '')
 
-    // When there is nothing to display in this section, this border helps visually separate it from the next section
-    const hasBottomBorder = !(showDefenseSection || showAttackSection || hasCharacteristics || hasArchetypes)
-
     return (
         <>
-            <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} hasBottomBorder={hasBottomBorder} />
+            <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
