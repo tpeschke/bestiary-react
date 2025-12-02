@@ -18,7 +18,7 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
         shellClass += ' title-bottom-border'
     }
 
-    const tooltip = "This indicates how dangerous this entry is.\nRed Skulls represent a particularly dangerous entry"
+    const tooltip = "This indicates how dangerous this entry is.\nTranslucent Skulls represent a particularly easy entry.\nRed Skulls represent a particularly dangerous entry."
 
     const applicableStatModifierByTitle: { [key: string]: string } = {
         Combat: 'Vitality',
@@ -44,10 +44,17 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
                 <div className="skull-frame">
                     <p><span data-tooltip-id="my-tooltip" data-tooltip-content={secondaryTooltip}>{secondaryRole ? `${secondaryRole} ` : ''} </span>{role} </p>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
-                        {[...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)}
+                        {formatSkullsForDisplay(tooltip, skulls)}
                     </span>
                 </div>
             }
         </div>
     )
+}
+
+function formatSkullsForDisplay(tooltip: string, skulls: number) {
+    if (skulls === 0) {
+        return <Icon iconName="skull-outline" iconSize='h2' tooltip={tooltip} />
+    }
+    return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)
 }

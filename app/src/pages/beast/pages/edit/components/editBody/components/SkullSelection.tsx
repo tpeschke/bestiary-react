@@ -8,13 +8,13 @@ interface Props {
 
 export default function SkullSelection({ currentSkullValue = 1, updateSkull, keyValue }: Props) {
     const skullArray = [
+        ' ',
         '💀',
         '💀💀',
         '💀💀💀',
         '💀💀💀💀',
         '💀💀💀💀💀',
         '💀💀💀💀💀💀',
-        '💀💀💀💀💀💀💀'
     ]
     return (
         <select onChange={event => updateSkull(keyValue, +event.target.value)} value={currentSkullValue}>

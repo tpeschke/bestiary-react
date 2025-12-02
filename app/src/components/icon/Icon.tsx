@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack'
+export type IconName = 'plus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray'
 
@@ -61,6 +61,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break;
         case 'skull':
             styling = "fa-solid fa-skull";
+            break;
+        case 'skull-outline':
+            styling = "fa-regular fa-skull"
             break;
         case 'downArrow':
             styling = "fa-solid fa-arrow-down";
