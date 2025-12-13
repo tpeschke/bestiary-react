@@ -4,12 +4,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface sliceState {
-  cache: beastCache
+  cache: BeastCache
 }
 
-interface beastCache {
-    [key: string]: GMBeastClass
-} 
+interface BeastCache {
+  [key: string]: BeastCacheObject
+}
+
+interface BeastCacheObject {
+    id: number,
+    beastInfo: Promise<GMBeastClass>
+  }
 
 const initialState: sliceState = {
   cache: {}
@@ -19,7 +24,7 @@ export const beastCacheSlice = createSlice({
   name: 'beastCacheSlice',
   initialState,
   reducers: {
-    cacheMonster: (state: any, {payload}: PayloadAction<GMBeastClass>) => {
+    cacheMonster: (state: any, { payload }: PayloadAction<BeastCacheObject>) => {
       state.cache[`${payload.id}`] = payload
     },
     removeMonsterFromCache: (state: any, { payload }: PayloadAction<number>) => {

@@ -72,7 +72,10 @@ export default function beastHooks(): Return {
     const beastCache = useSelector((state: any) => state.beastCache.cache)
 
     const updateBeastInfo = (modifiedBeastInfo: any) => {
-        dispatch(cacheMonster(modifiedBeastInfo))
+        dispatch(cacheMonster({
+            id: modifiedBeastInfo.id,
+            beastInfo: modifiedBeastInfo
+        }))
         setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
     }
 
@@ -85,31 +88,35 @@ export default function beastHooks(): Return {
             const roleId = searchParams.get("roleId")
             const modifier = searchParams.get("modifier")
 
-            const beast = getBeastFromCache(beastId, roleId, modifier)
+            getBeastFromCache(beastId, roleId, modifier).then(beast => {
+                if (beast) {
+                    document.title = `${beast.generalInfo.name} - Bonfire Bestiary`
+                    setBeast(beast)
+                    scrollToTop()
+                } else {
+                    axios.get(beastURL + '/' + beastId).then(({ data }) => {
+                        if (data.generalInfo) {
+                            document.title = `${data.generalInfo.name} - Bonfire Bestiary`
+                            setBeast(new GMBeastClass(data, roleId, modifier))
+                            dispatch(cacheMonster({
+                                id: data.id,
+                                beastInfo: data
+                            }))
+                            scrollToTop()
+                        } else {
+                            document.title = `${data.name} - Bonfire Bestiary`
+                            setPlayerBeast(new PlayerBeastClass(data))
+                            scrollToTop()
+                        }
+                        if (data.color === 'red') {
+                            alertInfo(data)
+                            navigate(`/`)
+                        }
+                    })
+                }
+                setCurrentBeastId(beastId)
+            })
 
-            if (beast) {
-                document.title = `${beast.generalInfo.name} - Bonfire Bestiary`
-                setBeast(beast)
-                scrollToTop()
-            } else {
-                axios.get(beastURL + '/' + beastId).then(({ data }) => {
-                    if (data.generalInfo) {
-                        document.title = `${data.generalInfo.name} - Bonfire Bestiary`
-                        setBeast(new GMBeastClass(data, roleId, modifier))
-                        dispatch(cacheMonster(data))
-                        scrollToTop()
-                    } else {
-                        document.title = `${data.name} - Bonfire Bestiary`
-                        setPlayerBeast(new PlayerBeastClass(data))
-                        scrollToTop()
-                    }
-                    if (data.color === 'red') {
-                        alertInfo(data)
-                        navigate(`/`)
-                    }
-                })
-            }
-            setCurrentBeastId(beastId)
         }
     }, [beastId, searchParams]);
 
@@ -158,8 +165,8 @@ export default function beastHooks(): Return {
     * Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
     * So you have to retrieve the data and then transfer it to the GMBeastClass
     */
-    function getBeastFromCache(beastId: string, roleId: string | null, modifier: string | null): null | GMBeastClass {
-        const beastFromCache = beastCache[beastId]
+    async function getBeastFromCache(beastId: string, roleId: string | null, modifier: string | null): Promise<GMBeastClass | null> {
+        const beastFromCache = await beastCache[beastId]?.beastInfo
         if (beastFromCache) {
             return new GMBeastClass(beastFromCache, roleId, modifier)
         }

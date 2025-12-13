@@ -9,6 +9,13 @@ export const store = configureStore({
     user: userReducer,
     beastCache: beastCacheReducer
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['beastCacheSlice/cacheMonster', 'beastCacheSlice/removeMonsterFromCache'],
+        ignoredPaths: ['beastCache']
+      },
+    })
 })
 
 export type RootState = ReturnType<typeof store.getState>
