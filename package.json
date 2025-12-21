@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "preview": "vite preview --port 4545",
     "server": "npx tsx backend/server/bestiary.ts",
-    "host": "pm2 restart backend/server/dist/server/bestiary.js"
+    "restart-server": "pm2 restart backend/server/dist/server/bestiary.js",
+    "host": "git pull && npm run build && npm run restart-server"
   },
   "workspaces": [
     "app",
