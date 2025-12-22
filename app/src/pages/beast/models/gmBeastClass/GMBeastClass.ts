@@ -142,7 +142,7 @@ export default class GMBeastClass {
 
         const average = Math.floor([combatSkulls, skillSkulls, socialSkulls].reduce((a, b) => a + b) / 3)
 
-        const gritDieDictionary = ['', 'd20', 'd12', 'd10', 'd8', 'd6', 'd4', 'd0']
+        const gritDieDictionary = ['d20', 'd12', 'd10', 'd8', 'd6', 'd4', 'd0']
 
         return gritDieDictionary[average]
     }
