@@ -19,19 +19,26 @@ export default function Header() {
                     <img src={logo} />
                     <h1>Bonfire Bestiary</h1>
                 </Link>
-                {userIsLoggedIn ?
-                    <a href={signOutURL}>
+                <div className='header-nav'>
+                    <Link to="/encounters">
                         <button className='transparent-white'>
-                            <Icon iconName='log-out' color='white' margin='right' tooltip='Log Out' iconSize='h2' />
+                            <Icon iconName='brush-hammer' color='white' margin='right' tooltip='Encounter Design Guidelines' iconSize='h2' />
                         </button>
-                    </a>
-                    :
-                    <a href={signInURL}>
-                        <button className='transparent-white'>
-                            <Icon iconName='log-in' color='white' margin='right' tooltip='Log In' iconSize='h2' />
-                        </button>
-                    </a>
-                }
+                    </Link>
+                    {userIsLoggedIn ?
+                        <a href={signOutURL}>
+                            <button className='transparent-white'>
+                                <Icon iconName='log-out' color='white' margin='right' tooltip='Log Out' iconSize='h2' />
+                            </button>
+                        </a>
+                        :
+                        <a href={signInURL}>
+                            <button className='transparent-white'>
+                                <Icon iconName='log-in' color='white' margin='right' tooltip='Log In' iconSize='h2' />
+                            </button>
+                        </a>
+                    }
+                </div>
             </div>
             <SearchOptions />
         </>
