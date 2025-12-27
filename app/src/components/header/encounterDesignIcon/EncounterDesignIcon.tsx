@@ -5,13 +5,12 @@ import Icon from '../../icon/Icon'
 export default function EncounterDesignIcon() {
     return (
         <div className='encounter-design-icon'>
-            <Link to="/encounters">
-                <button className='transparent-white'>
-                    <Icon iconName='brush-hammer' color='white' tooltip='Encounter Design Guidelines' iconSize='h2' />
-                </button>
-            </Link>
+            <button className='transparent-white'>
+                <Icon iconName='brush-hammer' color='white' iconSize='h2' />
+            </button>
 
             <ul className='encounter-options-dropdown'>
+                <p>Encounter Building Guidelines</p>
                 <Link to="/encounters/confrontations">
                     <li><Icon iconName='theater-masks' margin='right' /> Confrontations</li>
                 </Link>

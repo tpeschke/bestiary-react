@@ -27,10 +27,6 @@
     color: white;
 }
 
-.header-background i:hover {
-    color: #d9dee0
-}
-
 .header-background .header-nav {
     display: flex;
 }

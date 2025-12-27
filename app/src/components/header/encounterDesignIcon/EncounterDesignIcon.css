@@ -4,11 +4,12 @@
 
 .encounter-design-icon ul {
     display: none;
+    width: 207px;
     position: absolute;
     right: 0;
-    background: whitesmoke;
+    background: white;
     border-radius: 5px;
-    padding: 5px 0;
+    padding: 0;
     list-style-type: none;
     color: black;
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
@@ -16,12 +17,20 @@
 
 .encounter-design-icon:hover ul {
     display: unset;
-} 
+}
 
-.encounter-design-icon ul a {
+.encounter-design-icon ul a,
+.encounter-design-icon ul p {
     margin: 0;
     padding: 5px 15px;
     font-size: 15px;
+}
+
+.encounter-design-icon ul p {
+    font-size: 14px;
+    background: #f3f3f3;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .encounter-design-icon ul a:hover {

@@ -6,7 +6,6 @@ import Catalog from "../pages/catalog/Catalog";
 import ListHome from "../pages/list/ListHome";
 import SearchResults from "../pages/searchResults/SearchResults";
 import OwnerAuth from "./auth/OwnerAuth";
-import EncounterDesignHome from "../pages/encounterDesign/EncounterDesignHome";
 import ConfrontationsEncounterDesign from "../pages/encounterDesign/confrontations/ConfrontationsEncounterDesign";
 import CombatsEncounterDesign from "../pages/encounterDesign/combats/CombatsEncounterDesign";
 import ChallengesEncounterDesign from "../pages/encounterDesign/challenges/ChallengesEncounterDesign";
@@ -67,9 +66,6 @@ export default function AllRoutes() {
                 } />
             </Route>
             <Route path='encounters'>
-                <Route index element={
-                    <EncounterDesignHome />
-                } />
                 <Route path='confrontations' element={
                     <ConfrontationsEncounterDesign />
                 } />
@@ -79,6 +75,7 @@ export default function AllRoutes() {
                 <Route path='challenges' element={
                     <ChallengesEncounterDesign />
                 } />
+                <Route index element={<Navigate to='/' replace />} />
             </Route>
             <Route path='lists'>
                 <Route path=':listId/directlyTo' element={
