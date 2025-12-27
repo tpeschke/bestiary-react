@@ -70,6 +70,10 @@
     padding: 15px 25px
 }
 
+.drawer-innards>div {
+    width: 100%;
+}
+
 .drawer-innards .pleroma-description-shell {
     width: 100%;
 }

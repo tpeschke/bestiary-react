@@ -27,7 +27,6 @@ export default function Drawers({ children, closeDrawer = false }: Props) {
             {Children.map(children, (child, index) => {
                 return cloneElement(child, { isOpen: openIndex === index, index, openDrawer: setOpenIndex })
             })}
-            {/* {drawerInnards.map(({ label, subtitle, innards }, index) => <Drawer key={index} label={label} subtitle={subtitle} innards={innards} isOpen={openIndex === index} index={index} openDrawer={setOpenIndex} />)} */}
         </div>
     )
 }

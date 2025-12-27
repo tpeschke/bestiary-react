@@ -12,7 +12,7 @@ interface Props {
     openDrawer?: Function
 }
 
-export default function Drawer({ label, subtitle, children, isOpen, index = 0, openDrawer = () => {} }: Props) {
+export default function Drawer({ label, subtitle, children, isOpen, index = 0, openDrawer = () => { } }: Props) {
     let classShellString = 'drawer-shell'
     isOpen ? classShellString += ' open' : ''
 
@@ -20,8 +20,13 @@ export default function Drawer({ label, subtitle, children, isOpen, index = 0, o
 
     const indexToSetTo: null | number = isOpen ? null : index
 
+    const toggleDrawer = (event: any) => {
+        event.stopPropagation()
+        openDrawer(indexToSetTo)
+    }
+
     return (
-        <div className={classShellString} onClick={_ => openDrawer(indexToSetTo)}>
+        <div className={classShellString} onClick={toggleDrawer}>
             <div className='drawer-header-shell'>
                 <h3>{label}</h3>
                 {subtitle && <p>{subtitle}</p>}
