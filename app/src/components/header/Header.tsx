@@ -8,6 +8,7 @@ import { isUserLoggedOn } from '../../redux/slices/userSlice';
 import SearchOptions from './searchOptions/SearchOptions';
 import Icon from '../icon/Icon';
 import { signInURL, signOutURL } from '../../frontend-config';
+import EncounterDesignIcon from './encounterDesignIcon/EncounterDesignIcon';
 
 export default function Header() {
     const userIsLoggedIn = useSelector(isUserLoggedOn)
@@ -20,11 +21,7 @@ export default function Header() {
                     <h1>Bonfire Bestiary</h1>
                 </Link>
                 <div className='header-nav'>
-                    <Link to="/encounters">
-                        <button className='transparent-white'>
-                            <Icon iconName='brush-hammer' color='white' tooltip='Encounter Design Guidelines' iconSize='h2' />
-                        </button>
-                    </Link>
+                    <EncounterDesignIcon />
                     {userIsLoggedIn ?
                         <a href={signOutURL}>
                             <button className='transparent-white'>
