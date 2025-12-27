@@ -12,21 +12,21 @@ export default function RoleSearch({ stopPropagationAndCaptureQueryFromCheckBoxF
         <div className='search-roles-shell'>
             <div>
                 <h4>Confrontation Roles</h4>
-                {confrontationPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id, event)} />)}
+                {confrontationPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id)} />)}
                 <p className='italic'>Secondaries</p>
-                {confrontationSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id, event)} />)}
+                {confrontationSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id)} />)}
             </div>
             <div>
                 <h4>Combat Roles</h4>
-                {combatPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('combatColes', id, event)} />)}
+                {combatPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('combatRoles', id)} />)}
                 <p className='italic'>Secondaries</p>
-                {combatSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('combatColes', id, event)} />)}
+                {combatSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('combatRoles', id)} />)}
             </div>
             <div>
                 <h4>Challenge Roles</h4>
-                {skillPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('skillRoles', id, event)} />)}
+                {skillPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('skillRoles', id)} />)}
                 <p className='italic'>Secondaries</p>
-                {skillSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={(event: any) => stopPropagationAndCaptureQueryFromCheckBoxForArray('skillRoles', id, event)} />)}
+                {skillSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('skillRoles', id)} />)}
             </div>
         </div>
     )
