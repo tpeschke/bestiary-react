@@ -6,9 +6,9 @@ import Catalog from "../pages/catalog/Catalog";
 import ListHome from "../pages/list/ListHome";
 import SearchResults from "../pages/searchResults/SearchResults";
 import OwnerAuth from "./auth/OwnerAuth";
-import ConfrontationsEncounterDesign from "../pages/encounterDesign/confrontations/ConfrontationsEncounterDesign";
-import CombatsEncounterDesign from "../pages/encounterDesign/combats/CombatsEncounterDesign";
-import ChallengesEncounterDesign from "../pages/encounterDesign/challenges/ChallengesEncounterDesign";
+import ConfrontationsEncounterDesign from "../pages/encounterDesign/pages/confrontations/ConfrontationsEncounterDesign";
+import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/CombatsEncounterDesign";
+import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
 
 export default function AllRoutes() {
     return (

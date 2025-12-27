@@ -11,14 +11,14 @@ interface Props {
 }
 
 export default function PleromaDisplay({ pleroma, rarity }: Props) {
-    const formattedPleroma = pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))
-
     return (
         <div className='pleroma-display-shell'>
             <h3>Pleroma</h3>
             {pleroma.length > 0 ? (
-                <Drawers drawerInnards={formattedPleroma} />
-            ): (
+                <Drawers>
+                    {pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))}
+                </Drawers>
+            ) : (
                 <p className="italic">This entry has no Pleroma</p>
             )}
         </div>

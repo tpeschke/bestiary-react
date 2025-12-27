@@ -1,21 +1,18 @@
 import './DrawerSearch.css'
 
-import { DrawerObject } from "../../../../../drawers/Drawers";
-import { StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction } from "../../AdvancedSearchInnards";
 import { typeSearchDictionary } from "../../utilities/searchDictionaries";
 import Checkbox from '../../../../../checkbox/Checkbox';
 
-export default function TypeSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray: StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction): DrawerObject {
-    return {
-        label: 'Types',
-        innards: formatTypes(stopPropagationAndCaptureQueryFromCheckBoxForArray)
-    }
+interface Props {
+    stopPropagationAndCaptureQueryFromCheckBoxForArray: Function
 }
 
-function formatTypes(stopPropagationAndCaptureQueryFromCheckBoxForArray: Function) {
+export default function TypeSearch({ stopPropagationAndCaptureQueryFromCheckBoxForArray }: Props) {
     return (
         <>
-            {typeSearchDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('types', id)} />)}
+            {typeSearchDictionary.map(({ id, value }, index) => {
+                return <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('types', id)} />
+            })}
         </>
     )
 }

@@ -31,7 +31,7 @@
     margin-top: 5px;
 }
 
-.drawer-shell h3 {
+.drawer-header-shell>h3 {
     padding: 15px
 }
 
@@ -59,7 +59,7 @@
 }
 
 .drawer-shell > div > h3, .drawer-shell > div > p, .drawer-shell .drawer-header-shell > div {
-    width: 25%;
+    width: 30%;
 }
 
 .drawer-shell .icon-shell {
@@ -75,6 +75,6 @@
 }
 
 .drawer-innards h3 {
-    color: #222;
+    color: #607d8b;
     font-size: 13px;
 }

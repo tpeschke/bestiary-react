@@ -1,15 +1,13 @@
-import { DrawerObject } from "../../../../../../../../../../../../components/drawers/Drawers"
 import Pair from "../../../../../../../../../../components/UI/pair/Pair"
 import calculatePrice from "./calculatePrice"
 import formatHarvest from "./formatHarvest"
 import { Pleroma } from '@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces'
 import { Rarity } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import Drawer from "../../../../../../../../../../../../components/drawers/components/Drawer"
 
-export default function formatPleroma({ name, harvestDifficulty, spell, positionModifier }: Pleroma, { difficulty, rarityId }: Rarity): DrawerObject {
-    return {
-        label: name,
-        subtitle: `ID Diff: ${difficulty} ${positionModifier}`,
-        innards: (
+export default function formatPleroma({ name, harvestDifficulty, spell, positionModifier }: Pleroma, { difficulty, rarityId }: Rarity) {
+    return (
+        <Drawer label={name} subtitle={`ID Diff: ${difficulty} ${positionModifier}`}>
             <div className='pleroma-description-shell'>
                 <Pair title="Spell" info={spell} />
                 <Pair title="Harvest Diff" info={formatHarvest(harvestDifficulty, positionModifier, difficulty)} />
@@ -17,8 +15,8 @@ export default function formatPleroma({ name, harvestDifficulty, spell, position
                 <Pair title="Check Bonus" info={calculateCheckBonus(rarityId)} />
                 <Pair title="Price" info={calculatePrice(harvestDifficulty, positionModifier, difficulty)} />
             </div>
-        )
-    }
+        </Drawer>
+    )
 }
 
 function calculateSpellPointBonus(rarityId: number): string {

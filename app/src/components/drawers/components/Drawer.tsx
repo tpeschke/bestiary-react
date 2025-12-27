@@ -6,13 +6,13 @@ import { JSX } from 'react'
 interface Props {
     label: string,
     subtitle?: string,
-    innards: JSX.Element,
-    isOpen: boolean,
-    index: number,
-    openDrawer: Function
+    children: JSX.Element,
+    isOpen?: boolean,
+    index?: number,
+    openDrawer?: Function
 }
 
-export default function Drawer({ label, subtitle, innards, isOpen, index, openDrawer }: Props) {
+export default function Drawer({ label, subtitle, children, isOpen, index = 0, openDrawer = () => {} }: Props) {
     let classShellString = 'drawer-shell'
     isOpen ? classShellString += ' open' : ''
 
@@ -30,7 +30,7 @@ export default function Drawer({ label, subtitle, innards, isOpen, index, openDr
                 </div>
             </div>
             <div className='drawer-innards'>
-                {innards}
+                {children}
             </div>
         </div>
     )

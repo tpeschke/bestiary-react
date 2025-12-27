@@ -1,21 +1,20 @@
 import Drawer from './components/Drawer'
 import './Drawers.css'
 
-import { JSX, useEffect, useState } from 'react'
+import { Children, cloneElement, JSX, useEffect, useState } from 'react'
 
 interface Props {
-    drawerInnards: DrawerObject[],
+    children: JSX.Element | JSX.Element[],
     closeDrawer?: boolean
 }
 
-export interface DrawerObject {
-    label: string,
+export interface DrawerObject extends JSX.Element {
     subtitle?: string,
-    innards: JSX.Element
+    children: JSX.Element
 }
 
-export default function Drawers({ drawerInnards, closeDrawer = false }: Props) {
-    const [openIndex, setOpenIndex] = useState<number|null>(null)
+export default function Drawers({ children, closeDrawer = false }: Props) {
+    const [openIndex, setOpenIndex] = useState<number | null>(null)
 
     useEffect(() => {
         if (closeDrawer) {
@@ -25,7 +24,10 @@ export default function Drawers({ drawerInnards, closeDrawer = false }: Props) {
 
     return (
         <div className='drawers-shell'>
-            {drawerInnards.map(({ label, subtitle, innards }, index) => <Drawer key={index} label={label} subtitle={subtitle} innards={innards} isOpen={openIndex === index} index={index} openDrawer={setOpenIndex} />)}
+            {Children.map(children, (child, index) => {
+                return cloneElement(child, { isOpen: openIndex === index, index, openDrawer: setOpenIndex })
+            })}
+            {/* {drawerInnards.map(({ label, subtitle, innards }, index) => <Drawer key={index} label={label} subtitle={subtitle} innards={innards} isOpen={openIndex === index} index={index} openDrawer={setOpenIndex} />)} */}
         </div>
     )
 }

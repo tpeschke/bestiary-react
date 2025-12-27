@@ -4,6 +4,7 @@ import Drawers, { DrawerObject } from "../../../drawers/Drawers";
 import AdvancedSearchInnards from './AdvancedSearchInnards';
 import { CaptureQueryArrayFunction, CaptureQueryFunction } from './interfaces/SearchInterfaces';
 import SearchStatusHook from '../../../../hooks/SearchStatusHook';
+import Drawer from '../../../drawers/components/Drawer';
 
 interface Props {
     captureQuery: CaptureQueryFunction,
@@ -15,14 +16,11 @@ export default function AdvancedSearch({ captureQuery, captureQueryArray }: Prop
 
     return (
         <div className='advanced-search-shell'>
-            <Drawers drawerInnards={[AdvancedSearchDraw(captureQuery, captureQueryArray)]} closeDrawer={!isOnSearch}/>
+            <Drawers closeDrawer={!isOnSearch}>
+                <Drawer label='Advanced Search'>
+                    <AdvancedSearchInnards captureQuery={captureQuery} captureQueryArray={captureQueryArray} />
+                </Drawer>
+            </Drawers>
         </div>
     )
-}
-
-function AdvancedSearchDraw(captureQuery: CaptureQueryFunction, captureQueryArray: CaptureQueryArrayFunction): DrawerObject {
-    return {
-        label: 'Advanced Search',
-        innards: AdvancedSearchInnards({captureQuery, captureQueryArray})
-    }
 }

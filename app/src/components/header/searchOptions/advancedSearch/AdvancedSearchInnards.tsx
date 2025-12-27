@@ -8,6 +8,7 @@ import Checkbox from '../../../checkbox/Checkbox'
 import RoleSearch from './components/drawers/RoleSearch'
 import TypeSearch from './components/drawers/TypeSearch'
 import SearchStatusHook from '../../../../hooks/SearchStatusHook'
+import Drawer from '../../../drawers/components/Drawer'
 
 export type StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction = (param: QueryArrayParams, id: number, event: any) => StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction
 type StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction = (id: number, event: any) => void
@@ -18,6 +19,11 @@ interface Props {
 }
 
 export type StopPropagationAndCaptureQuery = (param: QueryBasicParams, event: any) => void
+
+interface Props {
+    captureQuery: CaptureQueryFunction,
+    captureQueryArray: CaptureQueryArrayFunction
+}
 
 export default function AdvancedSearchInnards({ captureQuery, captureQueryArray }: Props) {
     const { isOnSearch } = SearchStatusHook()
@@ -77,10 +83,17 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
             <Checkbox label='Anyone Can View?' onClick={stopPropagationAndCaptureQueryFromCheckBox('anyAccess')} />
             <Checkbox label='Has Personal Notes?' onClick={stopPropagationAndCaptureQueryFromCheckBox('personalNotes')} />
 
-            <Drawers
-                drawerInnards={[ClimateSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray), RoleSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray), TypeSearch(stopPropagationAndCaptureQueryFromCheckBoxForArray)]}
-                closeDrawer={!isOnSearch}
-            />
+            <Drawers closeDrawer={!isOnSearch}>
+                <Drawer label='Climates'>
+                    <ClimateSearch stopPropagationAndCaptureQueryFromCheckBoxForArray={stopPropagationAndCaptureQueryFromCheckBoxForArray} />
+                </Drawer>
+                <Drawer label='Roles'>
+                    <RoleSearch stopPropagationAndCaptureQueryFromCheckBoxForArray={stopPropagationAndCaptureQueryFromCheckBoxForArray} />
+                </Drawer>
+                <Drawer label='Types'>
+                    <TypeSearch stopPropagationAndCaptureQueryFromCheckBoxForArray={stopPropagationAndCaptureQueryFromCheckBoxForArray} />
+                </Drawer>
+            </Drawers>
         </div>
     )
 }
