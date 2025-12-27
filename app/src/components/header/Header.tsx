@@ -22,19 +22,19 @@ export default function Header() {
                 <div className='header-nav'>
                     <Link to="/encounters">
                         <button className='transparent-white'>
-                            <Icon iconName='brush-hammer' color='white' margin='right' tooltip='Encounter Design Guidelines' iconSize='h2' />
+                            <Icon iconName='brush-hammer' color='white' tooltip='Encounter Design Guidelines' iconSize='h2' />
                         </button>
                     </Link>
                     {userIsLoggedIn ?
                         <a href={signOutURL}>
                             <button className='transparent-white'>
-                                <Icon iconName='log-out' color='white' margin='right' tooltip='Log Out' iconSize='h2' />
+                                <Icon iconName='log-out' color='white' tooltip='Log Out' iconSize='h2' />
                             </button>
                         </a>
                         :
                         <a href={signInURL}>
                             <button className='transparent-white'>
-                                <Icon iconName='log-in' color='white' margin='right' tooltip='Log In' iconSize='h2' />
+                                <Icon iconName='log-in' color='white' tooltip='Log In' iconSize='h2' />
                             </button>
                         </a>
                     }

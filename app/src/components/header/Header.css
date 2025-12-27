@@ -34,3 +34,7 @@
 .header-background .header-nav {
     display: flex;
 }
+
+.header-nav a {
+    margin-left: 10px;
+}
