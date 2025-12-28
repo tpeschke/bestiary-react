@@ -7,6 +7,8 @@ import TypeI from './steps/TypeI/TypeI'
 import TypeII from './steps/TypeII/TypeII'
 
 export default function ConfrontationsEncounterDesign(){
+    document.title = 'Confrontation Design - Bonfire Bestiary'
+
     return (
         <div className='card-background encounter-design-page'>
             <TopHeader name='Confrontations' />

@@ -97,13 +97,23 @@ export default function Step4() {
                         <td>4d4!</td>
                         <td>2d6!</td>
                         <td>1d8!+1d4!</td>
-                        <td>1d12!+1d12!</td>
+                        <td>1d12!</td>
                         <td>1d10!</td>
                         <td>10</td>
                         <td>5</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(1)}</th>
+                        <td>4d4!+1d2!</td>
+                        <td>2d6!+d4!</td>
+                        <td>1d8!+1d6!</td>
+                        <td>1d12!+1d4!</td>
+                        <td>1d10!+1</td>
+                        <td>9</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <th>{formatSkulls(2)}</th>
                         <td>5d4!</td>
                         <td>3d6!</td>
                         <td>2d8!</td>
@@ -113,7 +123,7 @@ export default function Step4() {
                         <td>4</td>
                     </tr>
                     <tr>
-                        <th>{formatSkulls(2)}</th>
+                        <th>{formatSkulls(3)}</th>
                         <td>5d4!+1d2!</td>
                         <td>3d6!+1d4!</td>
                         <td>2d8!+1d4!</td>
@@ -123,7 +133,7 @@ export default function Step4() {
                         <td>3</td>
                     </tr>
                     <tr>
-                        <th>{formatSkulls(3)}</th>
+                        <th>{formatSkulls(4)}</th>
                         <td>6d4!</td>
                         <td>4d6!</td>
                         <td>2d8!+1d6!</td>
@@ -133,7 +143,7 @@ export default function Step4() {
                         <td>3</td>
                     </tr>
                     <tr>
-                        <th>{formatSkulls(4)}</th>
+                        <th>{formatSkulls(5)}</th>
                         <td>6d4!+1d2!</td>
                         <td>4d6!+1d4!</td>
                         <td>3d8!</td>
@@ -143,22 +153,12 @@ export default function Step4() {
                         <td>2</td>
                     </tr>
                     <tr>
-                        <th>{formatSkulls(5)}</th>
+                        <th>{formatSkulls(6)}</th>
                         <td>7d4!</td>
                         <td>5d6!</td>
                         <td>3d8!+1d4!</td>
                         <td>2d12!+1d4!</td>
                         <td>1d20!+2</td>
-                        <td>4</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <th>{formatSkulls(6)}</th>
-                        <td>7d4!+1d2!</td>
-                        <td>5d6!+1d4!</td>
-                        <td>3d8!+1d6!</td>
-                        <td>2d12!+1d6!</td>
-                        <td>1d20!+3</td>
                         <td>4</td>
                         <td>2</td>
                     </tr>

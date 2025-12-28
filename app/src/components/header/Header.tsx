@@ -21,8 +21,7 @@ export default function Header() {
                     <h1>Bonfire Bestiary</h1>
                 </Link>
                 <div className='header-nav'>
-                    {/* TODO uncomment when the encounter guidelines are finished */}
-                    {/* <EncounterDesignIcon /> */}
+                    <EncounterDesignIcon />
                     {userIsLoggedIn ?
                         <a href={signOutURL}>
                             <button className='transparent-white'>

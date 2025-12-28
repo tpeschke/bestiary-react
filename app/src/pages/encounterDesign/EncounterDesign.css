@@ -41,3 +41,11 @@
     margin-left: 15px;
     float: right
 }
+
+.encounter-design-page table .bottom-border {
+    border-bottom: 1px solid black;
+}
+
+.encounter-design-page table .gray {
+    background: lightgray;
+}

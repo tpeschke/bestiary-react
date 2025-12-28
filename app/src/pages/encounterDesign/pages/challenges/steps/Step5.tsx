@@ -11,7 +11,7 @@ export default function Step5() {
             <p>Generally, s1 is considered the default with what you should select.</p>
             <p>You can also select Skulls 1 or 2 higher than the baseline if you want more variety but the average should be the Skull level you selected. You should never go higher than 2 because of the way that math of the game works; going higher than that can make an Obstacle unbeatable for the characters.</p>
             <h2>d0s</h2>
-            <p>I like to put the three dice in front of my players while we’re resolving an Obstacle; for the d0, I represent it with a coin (technically a d2 but it’s close enough).</p>
+            <p>I like to put the three dice in front of my players while we’re resolving an Obstacle; for the d0, I represent it with a chip.</p>
             <h2 className="italic">Example</h2>
             <p className="italic">The Blade is legendary but we’ll say that the players had an initial lead that started them on this path to searching libraries in the area so that initial hurdle is what kept people from finding it earlier. That being said, this might still be a tricky task so I’m going to go with 3 Skulls, which means that the default Difficulty is going to be 9 - s1 (d6 / d10 / d10).</p>
             <p className="italic">I’m actually not going to mess with that; it’s good enough for me.</p>
@@ -28,22 +28,25 @@ export default function Step5() {
                         <th>Master</th>
                         <th>Grandmaster</th>
                         <th>Legendary</th>
+                        <th>Mythic</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr className="bottom-border">
                         <th>Default Dice Array</th>
-                        <td>0 - X (d0 / d6 / d20)</td>
-                        <td>6 - X (d4 / d8 / d12)</td>
-                        <td>9 - X (d6 / d10 / d10)</td>
-                        <td>12 - X (d8 / d12 / d8)</td>
-                        <td>15 - X (d10 / d20 / d6)</td>
-                        <td>18 - X (d12 / d20+d4 / d4)</td>
+                        <td>0 - X (d0 / d4 / d20)</td>
+                        <td>3 - X (d2 / d6 / d12)</td>
+                        <td>6 - X (d4 / d8 / d10)</td>
+                        <td>9 - X (d6 / d10 / d8)</td>
+                        <td>12 - X (d8 / d12 / d6)</td>
+                        <td>15 - X (d10 / d20 / d4)</td>
+                        <td>18 - X (d12 / d20+d4 / d2)</td>
                         <td>30 - X (d20 / d20+d6 / d0)</td>
                     </tr>
                     <tr>
                         <th>{<Icon iconName="skull-outline" iconSize='h2' />}</th>
-                        <td>s1</td>
+                        <td className="gray">s1</td>
+                        <td>n (-1 Pos)</td>
                         <td>w1 (-2 Pos)</td>
                         <td>h (-5 Pos)</td>
                         <td>h (-5 Pos)</td>
@@ -53,73 +56,80 @@ export default function Step5() {
                     </tr>
                     <tr>
                         <th>{formatSkulls(1)}</th>
-                        <th> </th>
-                        <th>s1</th>
-                        <th>n (-1 Pos) / w1 (-2 Pos)</th>
-                        <th> </th>
-                        <th>w1 (-2 Pos)</th>
-                        <th> </th>
-                        <th> </th>
+                        <td> </td>
+                        <td className="gray">s1</td>
+                        <td>n (-1 Pos)</td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(2)}</th>
-                        <th> </th>
-                        <th>l (+3 Pos)</th>
-                        <th>s1</th>
-                        <th>n (-1 Pos) / w1 (-2 Pos)</th>
-                        <th>w1 (-2 Pos)</th>
-                        <th>w1 (-2 Pos)</th>
-                        <th> </th>
+                        <td> </td>
+                        <td> </td>
+                        <td className="gray">s1</td>
+                        <td>n (-1 Pos) / w1 (-2 Pos)</td>
+                        <td> </td>
+                        <td>w1 (-2 Pos)</td>
+                        <td> </td>
+                        <td> </td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(3)}</th>
-                        <th> </th>
-                        <th> </th>
-                        <th>l (+3 Pos)</th>
-                        <th>s1</th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
+                        <td> </td>
+                        <td> </td>
+                        <td>l (+3 Pos)</td>
+                        <td className="gray">s1</td>
+                        <td>n (-1 Pos) / w1 (-2 Pos)</td>
+                        <td>w1 (-2 Pos)</td>
+                        <td>w1 (-2 Pos)</td>
+                        <td> </td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(4)}</th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                        <th>l (+3 Pos)</th>
-                        <th>n</th>
-                        <th> </th>
-                        <th> </th>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>l (+3 Pos)</td>
+                        <td className="gray">s1</td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(5)}</th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                        <th> </th>
-                        <th>s1 (+1 Pos)</th>
-                        <th>n</th>
-                        <th> </th>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>l (+3 Pos)</td>
+                        <td className="gray">n</td>
+                        <td> </td>
+                        <td> </td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(6)}</th>
-                        <th>Untrained</th>
-                        <th>Novice</th>
-                        <th>Journey</th>
-                        <th>Expert</th>
-                        <th>Master</th>
-                        <th>Grandmaster</th>
-                        <th>Legendary</th>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>s1 (+1 Pos)</td>
+                        <td className="gray">n</td>
+                        <td>h (-5 Pos)</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(7)}</th>
-                        <th>Untrained</th>
-                        <th>Novice</th>
-                        <th>Journey</th>
-                        <th>Expert</th>
-                        <th>Master</th>
-                        <th>Grandmaster</th>
-                        <th>n</th>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td className="gray">n</td>
                     </tr>
                 </tbody>
             </table>

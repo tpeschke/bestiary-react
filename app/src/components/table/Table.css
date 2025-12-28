@@ -16,10 +16,6 @@ thead {
     font-size: 15px;
 }
 
-thead th {
-    padding: 3px;
-}
-
 tr.header-row {
     background: #4b4b4b;
     color: white;
