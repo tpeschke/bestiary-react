@@ -5,6 +5,14 @@
 .encounter-design-page .drawer-innards h1 {
     padding: 5px 0;
     font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.encounter-design-page .drawer-innards h2 {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 5px 0;
+    letter-spacing: 1px;
 }
 
 .encounter-design-page p {
@@ -15,4 +23,16 @@
 .encounter-design-page img {
     float: right;
     width: 50%;
+}
+
+.encounter-design-page tr, .encounter-design-page tr th {
+    text-align: center;
+}
+
+.encounter-design-page tbody tr:nth-child(even) {
+    background: whitesmoke;
+}
+
+.encounter-design-page tr th:first-child {
+    text-align: left;
 }

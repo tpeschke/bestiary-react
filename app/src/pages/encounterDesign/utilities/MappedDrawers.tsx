@@ -1,13 +1,22 @@
 import { JSX } from "react";
 import Drawer from "../../../components/drawers/components/Drawer";
+import Drawers from "../../../components/drawers/Drawers";
 
-export interface Step {
+interface Step {
     label: string,
     child: JSX.Element
 }
 
-export default function mapDrawers(steps: Step[]) {
-    return steps.map(({ label, child }, index) => formatStep(label, child, index))
+interface Props {
+    steps: Step[]
+}
+
+export default function MappedDrawers({ steps }: Props) {
+    return (
+        <Drawers>
+            {steps.map(({ label, child }, index) => formatStep(label, child, index))}
+        </Drawers>
+    )
 }
 
 function formatStep(label: string, child: JSX.Element, index: number) {

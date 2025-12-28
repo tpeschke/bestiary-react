@@ -1,7 +1,7 @@
 import Drawers from "../../../../../../components/drawers/Drawers";
 import Step0 from "./steps/Step0";
 import Step1 from "./steps/Step1";
-import mapDrawers from "../../../../utilities/mapDrawers";
+import MappedDrawers from "../../../../utilities/MappedDrawers";
 
 export default function TypeI() {
     const steps = [
@@ -15,10 +15,6 @@ export default function TypeI() {
         }
     ]
 
-    return (
-        <Drawers>
-            {mapDrawers(steps)}
-        </Drawers>
-    )
+    return <MappedDrawers steps={steps} />
 }
 
