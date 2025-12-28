@@ -1,3 +1,11 @@
+.encounter-design-page {
+    min-height: calc(100vh - 280px);
+}
+
+.card-background {
+    min-height: unset;
+}
+
 .encounter-design-page .Name-Header {
     margin-bottom: 15px;
 }
@@ -69,4 +77,16 @@
 
 .encounter-design-page .objective-tables td {
     text-align: left;
+}
+
+.encounter-design-page .frame {
+    background: lightcoral;
+    border-radius: 5px;
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.encounter-design-page .frame img {
+    float: unset;
+    width: 100%;
 }

@@ -1,4 +1,4 @@
-import ObjectiveTables from "./components/objectiveTables";
+import ObjectiveTables from "./components/ObjectiveTables";
 
 export default function Step2() {
     return (

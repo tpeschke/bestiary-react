@@ -29,9 +29,11 @@ export default function CombatsEncounterDesign() {
     ]
 
     return (
-        <div className='card-background encounter-design-page'>
-            <TopHeader name='Combats' />
-            <MappedDrawers steps={steps} />
+        <div className='encounter-design-page'>
+            <div className='card-background'>
+                <TopHeader name='Combats' />
+                <MappedDrawers steps={steps} />
+            </div>
         </div>
     )
 }
