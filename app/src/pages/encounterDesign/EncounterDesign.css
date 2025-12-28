@@ -36,3 +36,8 @@
 .encounter-design-page tr th:first-child {
     text-align: left;
 }
+
+.encounter-design-page table.float-right {
+    margin-left: 15px;
+    float: right
+}

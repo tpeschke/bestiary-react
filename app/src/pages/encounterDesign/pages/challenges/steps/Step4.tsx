@@ -1,4 +1,5 @@
 import Icon from "../../../../../components/icon/Icon";
+import formatSkulls from "../../../utilities/FormatSkulls";
 
 export default function Step4() {
     return (
@@ -94,82 +95,82 @@ export default function Step4() {
                     <tr>
                         <th>{<Icon iconName="skull-outline" iconSize='h2' />}</th>
                         <td>4d4!</td>
-                        <th>2d6!</th>
-                        <th>1d8!+1d4!</th>
-                        <th>1d12!+1d12!</th>
-                        <th>1d10!</th>
-                        <th>10</th>
-                        <th>5</th>
+                        <td>2d6!</td>
+                        <td>1d8!+1d4!</td>
+                        <td>1d12!+1d12!</td>
+                        <td>1d10!</td>
+                        <td>10</td>
+                        <td>5</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(1)}</th>
                         <td>5d4!</td>
-                        <th>3d6!</th>
-                        <th>2d8!</th>
-                        <th>1d12!+1d6!</th>
-                        <th>1d12!</th>
-                        <th>8</th>
-                        <th>4</th>
+                        <td>3d6!</td>
+                        <td>2d8!</td>
+                        <td>1d12!+1d6!</td>
+                        <td>1d12!</td>
+                        <td>8</td>
+                        <td>4</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(2)}</th>
                         <td>5d4!+1d2!</td>
-                        <th>3d6!+1d4!</th>
-                        <th>2d8!+1d4!</th>
-                        <th>1d12!+1d8!</th>
-                        <th>1d12!+1</th>
-                        <th>7</th>
-                        <th>3</th>
+                        <td>3d6!+1d4!</td>
+                        <td>2d8!+1d4!</td>
+                        <td>1d12!+1d8!</td>
+                        <td>1d12!+1</td>
+                        <td>7</td>
+                        <td>3</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(3)}</th>
                         <td>6d4!</td>
-                        <th>4d6!</th>
-                        <th>2d8!+1d6!</th>
-                        <th>1d12!+1d10!</th>
-                        <th>1d20!</th>
-                        <th>6</th>
-                        <th>3</th>
+                        <td>4d6!</td>
+                        <td>2d8!+1d6!</td>
+                        <td>1d12!+1d10!</td>
+                        <td>1d20!</td>
+                        <td>6</td>
+                        <td>3</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(4)}</th>
                         <td>6d4!+1d2!</td>
-                        <th>4d6!+1d4!</th>
-                        <th>3d8!</th>
-                        <th>2d12!</th>
-                        <th>1d20!+1</th>
-                        <th>5</th>
-                        <th>2</th>
+                        <td>4d6!+1d4!</td>
+                        <td>3d8!</td>
+                        <td>2d12!</td>
+                        <td>1d20!+1</td>
+                        <td>5</td>
+                        <td>2</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(5)}</th>
                         <td>7d4!</td>
-                        <th>5d6!</th>
-                        <th>3d8!+1d4!</th>
-                        <th>2d12!+1d4!</th>
-                        <th>1d20!+2</th>
-                        <th>4</th>
-                        <th>2</th>
+                        <td>5d6!</td>
+                        <td>3d8!+1d4!</td>
+                        <td>2d12!+1d4!</td>
+                        <td>1d20!+2</td>
+                        <td>4</td>
+                        <td>2</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(6)}</th>
                         <td>7d4!+1d2!</td>
-                        <th>5d6!+1d4!</th>
-                        <th>3d8!+1d6!</th>
-                        <th>2d12!+1d6!</th>
-                        <th>1d20!+3</th>
-                        <th>4</th>
-                        <th>2</th>
+                        <td>5d6!+1d4!</td>
+                        <td>3d8!+1d6!</td>
+                        <td>2d12!+1d6!</td>
+                        <td>1d20!+3</td>
+                        <td>4</td>
+                        <td>2</td>
                     </tr>
                     <tr>
                         <th>{formatSkulls(7)}</th>
                         <td>9d4!+1d2!</td>
-                        <th>7d6!+1d4!</th>
-                        <th>4d8!+1d4!</th>
-                        <th>3d12!</th>
-                        <th>1d20!+6</th>
-                        <th>3</th>
-                        <th>1</th>
+                        <td>7d6!+1d4!</td>
+                        <td>4d8!+1d4!</td>
+                        <td>3d12!</td>
+                        <td>1d20!+6</td>
+                        <td>3</td>
+                        <td>1</td>
                     </tr>
                 </tbody>
             </table>
@@ -200,8 +201,4 @@ export default function Step4() {
             </ol>
         </div>
     )
-}
-
-function formatSkulls(number: number) {
-    return [...Array(number).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'black'} />)
 }
