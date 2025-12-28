@@ -49,19 +49,19 @@ export default class CombatInfoClass {
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole), []),
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
     }
 
-    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string) => {
+    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!roleID || attack.roleid === roleID) {
                 if (attack.infoType === 'weapon') {
                     attackInfo.push({
                         ...attack,
-                        ...calculateAttackInfo(attack, skulls, role, null),
+                        ...calculateAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
                         weaponName: attack.weapon?.split(' (')[0]
                     })
                 } else if (attack.infoType === 'reference') {

@@ -11,7 +11,7 @@ export default function getDefense(addSizeMod: boolean, size: Size = 'Medium', r
         return defenseMod
     }
 
-    const defenseModDictionary = {
+    const defenseSizeModDictionary = {
         Fine: 12,
         Diminutive: 9,
         Tiny: 6,
@@ -24,7 +24,7 @@ export default function getDefense(addSizeMod: boolean, size: Size = 'Medium', r
         Colossal: -15
     }
 
-    return defenseMod + defenseModDictionary[size]
+    return defenseMod + defenseSizeModDictionary[size]
 }
 
 function getRoleIndexModifier(role: string): number {

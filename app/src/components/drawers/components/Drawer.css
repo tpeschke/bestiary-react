@@ -58,10 +58,6 @@
     text-align: right;
 }
 
-.drawer-shell > div > h3, .drawer-shell > div > p, .drawer-shell .drawer-header-shell > div {
-    width: 30%;
-}
-
 .drawer-shell .icon-shell {
     padding: 15px;
 }

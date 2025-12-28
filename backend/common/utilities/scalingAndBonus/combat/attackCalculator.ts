@@ -7,6 +7,7 @@ import getRangeIncrement from "./attackUtilities/getRangeIncrement"
 import getDamage from "./attackUtilities/getDamage"
 import getRecovery from "./attackUtilities/getRecovery"
 import getMeasure from "./attackUtilities/getMeasure"
+import { Size } from "../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export default function calculateAndFormatAttackInfo(
     skullIndex: number,
@@ -17,6 +18,8 @@ export default function calculateAndFormatAttackInfo(
     isSpecial: IsSpecial,
     damageType: DamageType,
     weaponInfo: ProcessedWeapon | null,
+    addSizeMod: boolean, 
+    size: Size = 'Medium',
     gearCache?: any
 ) {
     const weaponInfoObject = weaponInfo ? weaponInfo : gearCache?.weapons.dictionary[weaponName]
@@ -39,7 +42,7 @@ export default function calculateAndFormatAttackInfo(
     return {
         name: chosenName,
         type: damageType,
-        measure: getMeasure(isRanged, role, skullIndex),
+        measure: getMeasure(addSizeMod, size, isRanged, role, skullIndex),
         attack: getAttackMod(isRanged, role, skullIndex),
         rangeIncrement: isRanged ? getRangeIncrement(isRanged, role, skullIndex) : null,
         damage: getDamage(isSpecial, isRanged, damageType, role, skullIndex),

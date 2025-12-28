@@ -44,13 +44,13 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: DefenseInfo[]
                 {
                     beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType
                 },
-                skullIndex, roleToUse, gearCache
+                skullIndex, roleToUse, addsizemod, size, gearCache
             ),
             oldID: id ?? oldID,
             overAllIndex: attacks.length,
             id: attackid,
             infoType: 'weapon',
-            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType }
+            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType, addsizemod }
         })
     }
 }

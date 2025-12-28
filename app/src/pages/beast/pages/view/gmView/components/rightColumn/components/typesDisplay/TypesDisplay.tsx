@@ -18,7 +18,7 @@ export default function TypesDisplay({ types }: Props) {
                 <div className='types-display-shell'>
                     <h2 className='border'>Types</h2>
                     <Drawers>
-                        {types.map(type => formatType(type))}
+                        {types.map((type, index) => formatType(index, type))}
                     </Drawers>
                 </div>
             }
@@ -26,9 +26,9 @@ export default function TypesDisplay({ types }: Props) {
     )
 }
 
-function formatType({ type, description, typeid }: BeastType) {
+function formatType(index: number, { type, description, typeid }: BeastType) {
     return (
-        <Drawer label={type}>
+        <Drawer key={index} label={type}>
             <div className='type-description-shell'>
                 <HTMLDisplay html={description} />
                 <Link to={`/search?types=${typeid}`}>

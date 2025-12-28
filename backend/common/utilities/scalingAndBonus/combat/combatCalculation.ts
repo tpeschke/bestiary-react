@@ -20,8 +20,8 @@ export interface CalculateCombatStatsReturn {
 }
 
 export function calculateDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
-    const { 
-        beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, info 
+    const {
+        beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, info
     } = defenseInfo
 
     return {
@@ -37,10 +37,10 @@ export function calculateDefenseInfo(defenseInfo: any, skullIndex: number, role:
     }
 }
 
-export function calculateAttackInfo(attackInfo: any, skullIndex: number, role: string, gearCache?: any) {
+export function calculateAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any) {
     const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
     return {
         ...attackInfo,
-        ...calculateAndFormatAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, gearCache),
+        ...calculateAndFormatAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
     }
 }

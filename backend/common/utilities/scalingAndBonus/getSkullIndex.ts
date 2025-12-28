@@ -15,6 +15,7 @@ export default function getSkullIndex(skullValue: number): number {
         case 2:
             return 6
         case 1:
+            return 5
         default:
             return 4 
     }

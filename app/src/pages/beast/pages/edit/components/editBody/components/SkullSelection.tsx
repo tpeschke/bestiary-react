@@ -8,17 +8,18 @@ interface Props {
 
 export default function SkullSelection({ currentSkullValue = 1, updateSkull, keyValue }: Props) {
     const skullArray = [
-        ' ',
-        '💀',
-        '💀💀',
-        '💀💀💀',
-        '💀💀💀💀',
-        '💀💀💀💀💀',
-        '💀💀💀💀💀💀',
+        ' ',                // Untrained
+        '💀',               // Novice
+        '💀💀',             // Journeyman
+        '💀💀💀',           // Expert
+        '💀💀💀💀',         // Master
+        '💀💀💀💀💀',       // GrandMaster
+        '💀💀💀💀💀💀',     // Legendary
+        '💀💀💀💀💀💀💀',     // Mythic
     ]
     return (
         <select onChange={event => updateSkull(keyValue, +event.target.value)} value={currentSkullValue}>
-            {skullArray.map((skull, index) => <option key={index} value={index + 1}>{skull}</option>)}
+            {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
         </select>
     )
 }

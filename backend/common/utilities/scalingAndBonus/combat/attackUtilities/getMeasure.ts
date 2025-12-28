@@ -1,10 +1,30 @@
+import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import getModBySkullIndex from "../../getModBySkullIndex"
 
-export default function getMeasure(isRanged: boolean, role: string, skullIndex: number) {
+export default function getMeasure(addSizeMod: boolean, size: Size = 'Medium', isRanged: boolean, role: string, skullIndex: number) {
     const measureDictionary = [0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     const roleIndexModifier = getRoleIndexModifier(isRanged, role)
 
-    return getModBySkullIndex(skullIndex, roleIndexModifier, measureDictionary)
+    const measure = getModBySkullIndex(skullIndex, roleIndexModifier, measureDictionary)
+
+    if (!addSizeMod) {
+        return measure
+    }
+
+    const measureSizeModDictionary = {
+        Fine: -4,
+        Diminutive: -3,
+        Tiny: -2,
+        Small: -1,
+        Medium: 0,
+        Large: 1,
+        Huge: 2,
+        Giant: 3,
+        Enormous: 4,
+        Colossal: 5
+    }
+
+    return measure + measureSizeModDictionary[size]
 }
 
 function getRoleIndexModifier(isRanged: boolean, role: string): number {

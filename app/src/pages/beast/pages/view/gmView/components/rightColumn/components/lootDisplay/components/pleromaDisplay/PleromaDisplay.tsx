@@ -16,7 +16,7 @@ export default function PleromaDisplay({ pleroma, rarity }: Props) {
             <h3>Pleroma</h3>
             {pleroma.length > 0 ? (
                 <Drawers>
-                    {pleroma.map((singlePleroma: Pleroma) => formatPleroma(singlePleroma, rarity))}
+                    {pleroma.map((singlePleroma: Pleroma, index: number) => formatPleroma(index, singlePleroma, rarity))}
                 </Drawers>
             ) : (
                 <p className="italic">This entry has no Pleroma</p>

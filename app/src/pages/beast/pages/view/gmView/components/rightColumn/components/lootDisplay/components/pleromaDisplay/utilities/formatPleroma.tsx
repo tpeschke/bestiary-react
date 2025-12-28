@@ -5,9 +5,9 @@ import { Pleroma } from '@bestiary/common/interfaces/beast/infoInterfaces/lootIn
 import { Rarity } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import Drawer from "../../../../../../../../../../../../components/drawers/components/Drawer"
 
-export default function formatPleroma({ name, harvestDifficulty, spell, positionModifier }: Pleroma, { difficulty, rarityId }: Rarity) {
+export default function formatPleroma(index: number, { name, harvestDifficulty, spell, positionModifier }: Pleroma, { difficulty, rarityId }: Rarity) {
     return (
-        <Drawer label={name} subtitle={`ID Diff: ${difficulty} ${positionModifier}`}>
+        <Drawer key={index} label={name} subtitle={`ID Diff: ${difficulty} ${positionModifier}`}>
             <div className='pleroma-description-shell'>
                 <Pair title="Spell" info={spell} />
                 <Pair title="Harvest Diff" info={formatHarvest(harvestDifficulty, positionModifier, difficulty)} />

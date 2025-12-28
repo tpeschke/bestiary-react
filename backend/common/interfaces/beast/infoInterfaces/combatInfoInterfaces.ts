@@ -58,7 +58,8 @@ export interface WeaponInfo {
         swarmbonus: boolean, 
         name: string, 
         weapon: string, 
-        weapontype: DamageType
+        weapontype: DamageType,
+        addsizemod: boolean
     }
 }
 

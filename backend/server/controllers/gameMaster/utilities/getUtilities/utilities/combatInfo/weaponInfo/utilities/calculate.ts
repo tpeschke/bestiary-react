@@ -5,16 +5,16 @@ import { CalculateCombatStatsReturn, calculateAttackInfo, calculateDefenseInfo }
 
 export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[], defenseStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     return {
-        attacks: calculateAttacks(attackStats, skullIndex, mainRole, gearCache),
+        attacks: calculateAttacks(attackStats, skullIndex, mainRole, size, gearCache),
         defenses: calculateDefenses(defenseStats, size, skullIndex, mainRole)
     }
 }
 
-function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, gearCache: any | undefined): AttackInfo[] {
+function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): AttackInfo[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
-            tactic, reference, attackrole, weapontype, damagetype
+            tactic, reference, attackrole, weapontype, damagetype, addsizemod
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -32,14 +32,14 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             return {
                 ...calculateAttackInfo(
                     { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
-                    skullIndex, roleToUse, gearCache
+                    skullIndex, roleToUse, addsizemod, size, gearCache
                 ),
                 situation, tactic,
                 oldID: id ?? oldID,
                 overAllIndex: index,
                 id: attackid,
                 infoType: 'weapon',
-                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype }
+                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype, addsizemod }
             }
         }
     })
