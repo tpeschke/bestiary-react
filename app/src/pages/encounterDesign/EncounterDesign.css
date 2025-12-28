@@ -25,7 +25,14 @@
     width: 50%;
 }
 
-.encounter-design-page tr, .encounter-design-page tr th {
+.encounter-design-page img.inline {
+    float: unset;
+    width: 25%;
+    margin: 5px 15px;
+}
+
+.encounter-design-page tr,
+.encounter-design-page tr th {
     text-align: center;
 }
 
@@ -48,4 +55,18 @@
 
 .encounter-design-page table .gray {
     background: lightgray;
+}
+
+.encounter-design-page .objective-tables {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.encounter-design-page .objective-tables>div {
+    width: 30%;
+}
+
+.encounter-design-page .objective-tables td {
+    text-align: left;
 }
