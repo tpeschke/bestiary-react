@@ -12,6 +12,7 @@ import ImageInfo from "../../../../../interfaces/infoInterfaces/ImageInfoInterfa
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import Pair from "../../../../../components/UI/pair/Pair"
+import TacticsAndStrategy from "./components/combat/components/tacticsAndStrategy/TacticsAndStrategy"
 
 interface Props {
     beastId: number,
@@ -44,6 +45,7 @@ export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, 
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
             <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
+            <TacticsAndStrategy tactics={combatInfo.tactics} />
         </>
     )
 }

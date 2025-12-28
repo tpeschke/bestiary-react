@@ -1,7 +1,5 @@
 import Body from "../../../../../../../../../components/UI/body/Body"
 import HTMLDisplay from "../../../../../../../../../components/UI/htmlDisplay/htmlDisplay"
-import RoleTitle from "../../../../../roleTitle/RoleTitle"
-
 
 interface Props {
     tactics: string
@@ -14,7 +12,8 @@ export default function TacticsAndStrategy({ tactics }: Props) {
         <>
             {showSection &&
                 <>
-                    <RoleTitle title='Tactics & Strategies' />
+                    <br />
+                    <h2 className="border">Tactics & Strategies</h2>
                     <Body>
                         <HTMLDisplay html={tactics} />
                     </Body>
