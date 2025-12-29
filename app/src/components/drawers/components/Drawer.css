@@ -10,6 +10,10 @@
     background: #e1e7ea; 
 }
 
+.drawer-shell .drawer-shell .drawer-shell {
+    background: #f3f3f3;
+}
+
 .drawer-shell > div:first-child:hover {
     background: #e1e7ea;
 }
