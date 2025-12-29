@@ -97,6 +97,65 @@
     flex-wrap: wrap;
 }
 
-.encounter-design-page .battlefield-preferences > div {
+.encounter-design-page .battlefield-preferences>div {
     min-width: 100px;
+}
+
+.encounter-design-page .explanations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between
+}
+
+.encounter-design-page .explanation {
+    display: flex;
+    justify-content: space-between;
+    width: 49%;
+    min-width: 390px;
+}
+
+.encounter-design-page .explanation-images img {
+    width: 100px;
+}
+
+.encounter-design-page .combat-calculator {
+    border-radius: 5px;
+    padding: 16px;
+    background: white;
+    margin: 16px 0;
+    cursor: auto;
+}
+
+.encounter-design-page .combat-calculator>div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.encounter-design-page .combat-calculator>div>div:first-child {
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.encounter-design-page .combat-calculator input {
+    background: #e1e7ea;
+    border-radius: 5px;
+    margin: 0 5px 5px 0;
+    min-width: 100px;
+    text-align: center;
+}
+
+.encounter-design-page .combat-calculator>div>div:first-child input {
+    text-align: left;
+}
+
+.encounter-design-page .combat-calculator span {
+    display: flex;
+}
+
+.encounter-design-page .bottom-border {
+    border-bottom: 1px solid #e1e7ea;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
 }

@@ -3,6 +3,7 @@ import SubStep1 from "./step4steps/SubStep1";
 import SubStep2 from "./step4steps/SubStep2";
 import SubStep3 from "./step4steps/SubStep3";
 import SubStep4 from "./step4steps/SubStep4";
+import SubStep5 from "./step4steps/SubStep5";
 
 export default function Step4() {
     const steps = [
@@ -21,6 +22,10 @@ export default function Step4() {
         {
             label: "Step 4.4: Select / Roll for Pattern(s)",
             child: <SubStep4 />
+        },
+        {
+            label: "Step 4.5: Place Patterns",
+            child: <SubStep5 />
         }
     ]
 

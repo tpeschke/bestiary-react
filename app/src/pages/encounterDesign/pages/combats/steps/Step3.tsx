@@ -1,7 +1,7 @@
-import blankSquare from '../../../../../assets/images/encounterDesign/blank square.jpg'
-import oppositeSquare from '../../../../../assets/images/encounterDesign/opposite square.jpg'
-import cornersSquare from '../../../../../assets/images/encounterDesign/corners square.jpg'
-import exampleSquare from '../../../../../assets/images/encounterDesign/example square.jpg'
+import blankSquare from '../../../../../assets/images/encounterDesign/roleSelection/blank square.jpg'
+import oppositeSquare from '../../../../../assets/images/encounterDesign/roleSelection/opposite square.jpg'
+import cornersSquare from '../../../../../assets/images/encounterDesign/roleSelection/corners square.jpg'
+import exampleSquare from '../../../../../assets/images/encounterDesign/roleSelection/example square.jpg'
 
 export default function Step3() {
     return (

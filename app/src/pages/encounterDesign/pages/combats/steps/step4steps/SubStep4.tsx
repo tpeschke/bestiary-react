@@ -91,8 +91,8 @@ export default function SubStep4() {
 function formatBattlefieldNotes([good, bad]: string[][]) {
     return (
         <>
-            {good.map(field => <p>+ {field}</p>)}
-            {bad.map(field => <p>- {field}</p>)}
+            {good.map((field, index) => <p key={index}>+ {field}</p>)}
+            {bad.map((field, index) => <p key={index}>- {field}</p>)}
         </>
     )
 }
