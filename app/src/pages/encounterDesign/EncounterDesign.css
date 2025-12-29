@@ -90,3 +90,13 @@
     float: unset;
     width: 100%;
 }
+
+.encounter-design-page .battlefield-preferences {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.encounter-design-page .battlefield-preferences > div {
+    min-width: 100px;
+}
