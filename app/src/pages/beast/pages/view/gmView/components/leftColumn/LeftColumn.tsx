@@ -30,17 +30,17 @@ interface Props {
     copyQuickLink: Function,
     hasModifier: boolean,
     selectedRoleID: string | null,
-    gritDie: string
+    selfDoubtDie: string
 }
 
 export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
-    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, gritDie }: Props) {
+    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie }: Props) {
 
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} roleID={selectedRoleID} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
-            <Pair title={"Grit Die"} info={gritDie} format={{ heading: true, noBorder: true }} />
+            <Pair title={"Self-Doubt Die"} info={selfDoubtDie} format={{ heading: true, noBorder: true }} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
