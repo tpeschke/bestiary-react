@@ -7,6 +7,7 @@ import Step2 from './steps/Step2'
 import Step3 from './steps/Step3'
 import Step4 from './steps/Step4'
 import Step5 from './steps/Step5'
+import Step6 from './steps/Step6'
 
 export default function CombatsEncounterDesign() {
     document.title = 'Combat Design - Bonfire Bestiary'
@@ -35,6 +36,10 @@ export default function CombatsEncounterDesign() {
         {
             label: "Step 5: Determine & Place Enemies & Player Characters",
             child: <Step5 />
+        },
+        {
+            label: "Step 6: Smudge",
+            child: <Step6 />
         }
     ]
 
