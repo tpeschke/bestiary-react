@@ -11,7 +11,7 @@ export default function Step2() {
             <br />
             <p>It takes a bit of horse-sense that’s developed through actually using the system but you’ll learn as you go (or might discover it as you get to Step 3).</p>
             <h1>Different Routes</h1>
-            <p>You can give your players more options by offering different routes to the same goal. This works especially well for physical Challenges, like travel. You can reflavor a Dungeon Map, found in <a href="https://bonfire.stone-fish.com/gms/2-6">Chapter 2.6 of the GMG</a> to determine these routes.</p>
+            <p>You can give your players more options by offering different routes to the same goal. This works especially well for physical Challenges, like travel. You can reflavor a Dungeon Map, found in <a href="https://bonfire.stone-fish.com/gms/2-6" target="_blank">Chapter 2.6 of the GMG</a> to determine these routes.</p>
             <p>The only change you might make is to have the routes share the same start and goal and the rooms are Obstacles / steps. It can help you get ideas of what challenges you can throw at the players</p>
             <p>Monster Challenges</p>
             <p>Lock monsters will often times have Obstacles and / or Challenges already associated with them, which you can view in their entry; you can just take these wholesale or use them as a basis for creating a more complex Challenge (how would the Giant Spider Challenge change if it was part of a Challenge focused on looting the ruins of an ancient city?).</p>

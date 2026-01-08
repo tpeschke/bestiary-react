@@ -5,7 +5,7 @@ export default function Introduction() {
             <p>Starting out, most of the Confrontations you’ll be running will be the players convincing an NPC but, as the players get more into the system, they’ll be more open to having their character convinced.</p>
             <p>So the procedure will focus on the players convincing NPCs but will note when things are different for when things are going in the opposite direction. Likewise, the example under each step will be player-attacking focused but a second example of players defending will be provided at the end.</p>
             <h1>Multi-step Confrontations</h1>
-            <p>You can set up a multi-step Confrontation by reflavoring a Dungeon Map, found in <a href="https://bonfire.stone-fish.com/gms/2-6">Chapter 2.6 of the GMG</a> with each room representing a person in a relationship web that the characters have to convince, or get through in, in turn.</p>
+            <p>You can set up a multi-step Confrontation by reflavoring a Dungeon Map, found in <a href="https://bonfire.stone-fish.com/gms/2-6" target="_blank">Chapter 2.6 of the GMG</a> with each room representing a person in a relationship web that the characters have to convince, or get through in, in turn.</p>
         </div>
     )
 }
