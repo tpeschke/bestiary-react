@@ -11,6 +11,7 @@ export default function StrategyEdit({ }: Props) {
             Obstacles
             Skill Challenges
             Common Allies
+            Other
         </>
     )
 }

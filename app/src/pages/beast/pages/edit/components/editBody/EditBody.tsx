@@ -14,8 +14,8 @@ import SocialRoleSelect from './components/socialEdit/SocialRoleSelect';
 import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
 import StrategyEdit from './components/strategyEdit/StrategyEdit';
-import GeneralInfoEdit from './components/generalInfoEdit/generalInfoEdit';
 import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateGeneralInfo';
+import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
 
 interface Props {
     beast: GMBeastClass,
@@ -36,7 +36,7 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(0)
+    const [tabIndex, setTabIndex] = useState(4)
 
     const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
