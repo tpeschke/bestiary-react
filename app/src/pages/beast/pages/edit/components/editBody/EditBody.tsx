@@ -14,7 +14,7 @@ import SocialRoleSelect from './components/socialEdit/SocialRoleSelect';
 import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
 import StrategyEdit from './components/strategyEdit/StrategyEdit';
-import MainInfoEdit from './components/MainInfoEdit/MainInfoEdit';
+import GeneralInfoEdit from './components/generalInfoEdit/generalInfoEdit';
 
 interface Props {
     beast: GMBeastClass,
@@ -52,7 +52,7 @@ export default function EditBody({
                 {tabIndex === 0 &&
                     <>
                         <h1>Main Info</h1>
-                        <MainInfoEdit />
+                        <GeneralInfoEdit />
                     </>
                 }
                 {tabIndex === 1 &&

@@ -1,10 +1,10 @@
-import './MainInfoEdit.css'
+import './GeneralInfoEdit.css'
 
 interface Props {
 
 }
 
-export default function MainInfoEdit({ }: Props) {
+export default function GeneralInfoEdit({ }: Props) {
     return (
         <div className="main-info-edit">
             <h2 className="border">Palette</h2>

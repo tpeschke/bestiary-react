@@ -1,7 +1,7 @@
 import { Beast } from "@bestiary/common/interfaces/beast/beast"
 import { Casting, Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
 import { Movement, LocationVitality } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Scenario, Folklore, TablesObject } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Scenario, Folklore, TablesObject, Palette } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { Variant, LocationObject, BeastType, ClimateObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
@@ -17,7 +17,7 @@ import { getCombatStats } from "./utilities/combatInfo/weaponInfo/getCombatInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
 import getTables from "./utilities/getTables"
-import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/miscInfo/getMiscInfo"
+import { getScenarios, getFolklore, getArtistInfo, getVariants, getLocations, getTypes, getClimates, getLocationalVitalities, getSpecificLoots, getLairBasic, getLairAlms, getLairItems, getLairScrolls, getCarriedBasic, getCarriedAlms, getCarriedItems, getCarriedScrolls, getCasting, getSpells } from "./utilities/generalInfo/miscInfo/getMiscInfo"
 import getMovement from "./utilities/combatInfo/weaponInfo/utilities/getMovement"
 import query from "../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../db/beast/basicSQL"
@@ -29,6 +29,7 @@ import { getObstacles } from "./utilities/skillInfo/utilities/getObstacles"
 import formatSkillInfo from "./utilities/skillInfo/getSkillInfo"
 import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
 import getPleroma from "./utilities/lootInfo/getPleroma"
+import getPalette from "./utilities/generalInfo/getPalette"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -67,6 +68,14 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
                 attack: [],
                 defense: [],
                 appearance: []
+            },
+            palette: {
+                drives: null,
+                needs: null,
+                defenses: null,
+                logistics: null,
+                methods: null,
+                groupDescriptions: null
             }
         },
         imageInfo: {
@@ -128,6 +137,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     let promiseArray: any[] = [
         getScenarios(beast.id).then((scenarios: Scenario[]) => beast.generalInfo.scenarios = scenarios),
         getFolklore(beast.id).then((folklores: Folklore[]) => beast.generalInfo.folklores = folklores),
+        getPalette(beast.id).then((palette: Palette) => beast.generalInfo.palette = palette),
         getTables(beast.id).then((tables: TablesObject) => beast.generalInfo.tables = tables),
 
         getArtistInfo(beast.id, isEditing).then((artistInfo: ArtistObject) => beast.imageInfo.artistInfo = artistInfo),

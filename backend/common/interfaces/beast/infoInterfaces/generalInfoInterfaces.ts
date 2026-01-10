@@ -15,7 +15,8 @@ export default interface GeneralInfo {
     meta: string,
     size: Size,
     rarity: Rarity,
-    tables: TablesObject
+    tables: TablesObject,
+    palette: Palette
 }
 
 export interface Scenario {
@@ -35,6 +36,15 @@ export interface Rarity {
     rarityId: number,
     rarityName: string,
     difficulty?: string
+}
+
+export interface Palette {
+    drives: string | null,
+    needs: string | null,
+    defenses: string | null,
+    logistics: string | null,
+    methods: string | null,
+    groupDescriptions: string | null
 }
 
 export interface TablesObject {
