@@ -21,7 +21,7 @@ export default function PaletteInfoDisplay({ palette }: Props) {
 
     const needsIcon: PairIconSettings = {
         iconName: 'info',
-        tooltip: 'These are things that the monster can\'t go without. \nIf denied these things, they’ll slowly die.'
+        tooltip: 'These are things that the monster can\'t go without.\nIf denied these things, they’ll slowly die.'
     }
 
     const defensesIcon: PairIconSettings = {
@@ -36,12 +36,12 @@ export default function PaletteInfoDisplay({ palette }: Props) {
 
     const methodsIcon: PairIconSettings = {
         iconName: 'info',
-        tooltip: 'How it responds to threats, and/or moves towards its Drive\nAfter the players attack, this is how the monster responds.'
+        tooltip: 'How it responds to threats, and/or moves towards its Drive.\nAfter the players attack, this is how the monster responds.'
     }
 
     const groupDescriptionsIcon: PairIconSettings = {
         iconName: 'info',
-        tooltip: 'How you would describe a monster\'s defenses, logistics, equipment, and how you would describe how they act in a group\nPlayers can leverage this to help their war, influencing the whole in ways they can’t influence an individual or smaller group.'
+        tooltip: 'How you would describe a monster\'s defenses, logistics, equipment, and how you would describe how they act in a group.\nPlayers can leverage this to help their war, influencing the whole in ways they can’t influence an individual or smaller group.'
     }
 
     return (
