@@ -39,6 +39,7 @@ export interface Rarity {
 }
 
 export interface Palette {
+    id?: number,
     drives: string | null,
     needs: string | null,
     defenses: string | null,
