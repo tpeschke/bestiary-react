@@ -6,7 +6,7 @@ set drives = $3, needs = $4, defenses = $5, logistics = $6, methods = $7, groupD
 where beastID = $1 and id = $2`
 
 const addPaletteSQL = `insert into bbPalette (beastID, drives, needs, defenses, logistics, methods, groupDescriptions)
-values ($1, $2, $3, $4, $5, $6, Z$7)`
+values ($1, $2, $3, $4, $5, $6, $7)`
 
 export default async function updatePalette(beastID: number, palette: Palette) {
     const { id, drives, needs, defenses, logistics, methods, groupDescriptions } = palette

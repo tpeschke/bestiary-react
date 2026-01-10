@@ -19,6 +19,7 @@ import { CatalogTile } from "../../catalog/catalogInterfaces";
 import getUpdateSocialInfoFunctions, { UpdateSocialInfoFunctionsObject } from "./updateUtilities/updateSocialInfo";
 import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from "./updateUtilities/updateCombatInfo";
 import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
+import getUpdateGeneralInfoFunctions, { UpdateGeneralInfoFunctionsObject } from "./updateUtilities/updateGeneralInfo";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -50,6 +51,7 @@ interface Return {
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
     updateFavorite: UpdateFavoriteFunction,
+    updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
     updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject,
@@ -120,11 +122,13 @@ export default function beastHooks(): Return {
         }
     }, [beastId, searchParams]);
 
+    const [updateGeneralInfoFunctions, setUpdateGeneralInfoFunctions] = useState<UpdateGeneralInfoFunctionsObject>(getUpdateGeneralInfoFunctions(beast, updateBeastInfo))
     const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
     const [updateCombatInfoFunctions, setUpdateCombatInfoFunctions] = useState<UpdateCombatInfoFunctionsObject>(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
     const [updateSkillInfoFunctions, setUpdateSkillInfoFunctions] = useState<UpdateSkillInfoFunctionsObject>(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
 
     useEffect(() => {
+        setUpdateGeneralInfoFunctions(getUpdateGeneralInfoFunctions(beast, updateBeastInfo))
         setUpdateSocialInfoFunctions(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
         setUpdateCombatInfoFunctions(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
         setUpdateSkillInfoFunctions(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
@@ -274,6 +278,7 @@ export default function beastHooks(): Return {
         updateRoleModifier,
         updateNotes,
         updateFavorite,
+        updateGeneralInfoFunctions,
         updateSocialInfoFunctions,
         updateCombatInfoFunctions,
         updateSkillInfoFunctions,

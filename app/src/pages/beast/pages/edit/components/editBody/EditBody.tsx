@@ -15,11 +15,13 @@ import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
 import StrategyEdit from './components/strategyEdit/StrategyEdit';
 import GeneralInfoEdit from './components/generalInfoEdit/generalInfoEdit';
+import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateGeneralInfo';
 
 interface Props {
     beast: GMBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
     saveBeast: SaveBeastFunction,
+    updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject,
     updateCombatInfoFunctions: UpdateCombatInfoFunctionsObject
     updateSkillInfoFunctions: UpdateSkillInfoFunctionsObject
@@ -29,6 +31,7 @@ export default function EditBody({
     beast,
     updateSelectedRole,
     saveBeast,
+    updateGeneralInfoFunctions,
     updateSocialInfoFunctions,
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
@@ -52,7 +55,7 @@ export default function EditBody({
                 {tabIndex === 0 &&
                     <>
                         <h1>Main Info</h1>
-                        <GeneralInfoEdit />
+                        <GeneralInfoEdit generalInfo={generalInfo} updateGeneralInfoFunctions={updateGeneralInfoFunctions} />
                     </>
                 }
                 {tabIndex === 1 &&
