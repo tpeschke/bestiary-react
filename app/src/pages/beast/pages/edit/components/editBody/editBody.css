@@ -1,3 +1,7 @@
+.edit-body-shell h3 {
+    background: unset;
+}
+
 .edit-body-shell .edit-body-display h1 {
     color: gray;
     font-size: 25px;

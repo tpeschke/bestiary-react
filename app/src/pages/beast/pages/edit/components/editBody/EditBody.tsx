@@ -13,6 +13,8 @@ import { UpdateSocialInfoFunctionsObject } from '../../../../hooks/updateUtiliti
 import SocialRoleSelect from './components/socialEdit/SocialRoleSelect';
 import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
+import StrategyEdit from './components/strategyEdit/StrategyEdit';
+import MainInfoEdit from './components/MainInfoEdit/MainInfoEdit';
 
 interface Props {
     beast: GMBeastClass,
@@ -31,7 +33,7 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(2)
+    const [tabIndex, setTabIndex] = useState(0)
 
     const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
@@ -49,6 +51,12 @@ export default function EditBody({
             <div className='edit-body-display'>
                 {tabIndex === 0 &&
                     <>
+                        <h1>Main Info</h1>
+                        <MainInfoEdit />
+                    </>
+                }
+                {tabIndex === 1 &&
+                    <>
                         <h1>Confrontation</h1>
                         <div className='role-and-skull-shell'>
                             <SocialRoleSelect updateSocialInfo={updateSocialInfo} primaryRole={socialInfo.socialRole} secondaryRole={socialInfo.socialSecondary} />
@@ -56,7 +64,7 @@ export default function EditBody({
                         </div>
                     </>
                 }
-                {tabIndex === 1 &&
+                {tabIndex === 2 &&
                     <>
                         <h1>Combat</h1>
                         <div className='role-and-skull-shell'>
@@ -66,13 +74,19 @@ export default function EditBody({
                         <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} />
                     </>
                 }
-                {tabIndex === 2 &&
+                {tabIndex === 3 &&
                     <>
                         <h1>Challenge</h1>
                         <div className='role-and-skull-shell'>
                             <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={skillInfo.skillRole} secondaryRole={skillInfo.skillSecondary} />
                             <SkullSelection keyValue='skillSkulls' currentSkullValue={skillInfo.skillSkulls} updateSkull={updateSkillInfo} />
                         </div>
+                    </>
+                }
+                {tabIndex === 4 &&
+                    <>
+                        <h1>Strategies</h1>
+                        <StrategyEdit />
                     </>
                 }
             </div>

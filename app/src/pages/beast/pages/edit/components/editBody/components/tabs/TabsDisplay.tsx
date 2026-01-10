@@ -8,9 +8,11 @@ interface Props {
 
 export default function Tabs({ setTabIndex, tabIndex }: Props) {
     const tabs: string[] = [
+        'Main Info',
         'Confrontations',
         'Combats',
-        'Challenges'
+        'Challenges',
+        'Strategies'
     ]
 
     return (

@@ -1,5 +1,5 @@
 .tabs-shell {
-    margin: 0 0 15px;
+    margin: 15px 0;
     display: flex;
 }
 
@@ -7,7 +7,9 @@
     margin: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border: 1px solid #e1e7ea;
+    border: 1px solid #f3f3f3;
+    background: #f3f3f3;
+    white-space: nowrap;
 }
 
 .tabs-shell button:hover {
