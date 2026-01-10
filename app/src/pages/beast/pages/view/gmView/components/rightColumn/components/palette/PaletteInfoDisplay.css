@@ -1,0 +1,24 @@
+.palette-display-shell .body-shell {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.palette-display-shell .pair-shell {
+    flex-direction: column;
+    width: 49%;
+}
+
+.palette-display-shell .pair-shell>p {
+    width: unset;
+}
+
+.palette-display-shell .pair-shell h3 {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 500px) {
+    .palette-display-shell .pair-shell {
+        width: 100%;
+    }
+}

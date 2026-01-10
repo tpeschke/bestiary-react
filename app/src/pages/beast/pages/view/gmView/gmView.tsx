@@ -21,7 +21,7 @@ interface Props {
 export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
     const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
         selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie } = beast
-    const { name, appearance, intro, habitat, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
+    const { name, appearance, intro, habitat, palette, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
     const { beast: locationsInfo } = locations
@@ -41,7 +41,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
                     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie
                 })}
-                RightColumn={RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
+                RightColumn={RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
             <CanEditButton canEdit={canEdit} beastID={id} />

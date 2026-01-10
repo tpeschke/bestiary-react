@@ -18,10 +18,13 @@ import EncounterDisplay from './components/encounterDisplay/EncounterDisplay';
 import PlayerDisplayInfo from './components/playerInfo/PlayerDisplayInfo';
 import { Notes } from '@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces';
 import { SetPlayerNotes } from '../../../../../components/notes/notesDisplay';
+import PaletteInfoDisplay from './components/palette/PaletteInfoDisplay';
+import { Palette } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces';
 
 interface Props {
     intro: string
     appearance: string,
+    palette: Palette,
     habitat: string,
     folklores: Folklore[],
     scenarios: Scenario[],
@@ -36,7 +39,7 @@ interface Props {
     updateNotes: SetPlayerNotes
 }
 
-export default function RightColumn({ appearance, intro, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes }: Props) {
+export default function RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes }: Props) {
     const showIntroSection = intro && intro !== ''
 
     return (
@@ -50,6 +53,7 @@ export default function RightColumn({ appearance, intro, habitat, folklores, sce
             <InfoDisplay section="Appearance" info={appearance} />
             <CommonFolklore folklores={folklores} />
             <HabitatDisplay info={habitat} scenarios={scenarios} />
+            <PaletteInfoDisplay palette={palette} />
             <EncounterDisplay />
             <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />
             <MiscInfoDisplay miscInfo={miscInfo} />

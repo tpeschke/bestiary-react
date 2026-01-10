@@ -10,7 +10,6 @@ interface Props {
     miscInfo: MiscInfo
 }
 
-
 export interface MiscInfo {
     senses: string,
     diet: string,
