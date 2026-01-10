@@ -5,7 +5,7 @@ import { addUserNotes, getCountOfUserNotes, getUserNotesForMonster, updateUserNo
 import { Response, Request, BasicParamsRequest } from "../interfaces/apiInterfaces"
 
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
-import { getArtistInfo } from "./gameMaster/utilities/getUtilities/utilities/miscInfo/getMiscInfo"
+import { getArtistInfo } from "./gameMaster/utilities/getUtilities/utilities/generalInfo/miscInfo/getMiscInfo"
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
