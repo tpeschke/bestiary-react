@@ -103,7 +103,7 @@ export default function HoardDisplay({ hoard }: Props) {
                     <p>{rich[1]}</p>
                 </div>
                 <div>
-                    <p>Mythic (d4 + 6)</p>
+                    <p>Mythic (d4 + 8)</p>
                     <p>10</p>
                     <p>{mythic[0]}</p>
                 </div>
