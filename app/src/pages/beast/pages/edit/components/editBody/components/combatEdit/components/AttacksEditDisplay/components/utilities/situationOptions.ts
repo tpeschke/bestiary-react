@@ -46,6 +46,7 @@ const situationDictionary: GroupType[] = [
             { value: 'Engaged with Multiple Enemies', label: 'Engaged with Multiple Enemies' },
             { value: 'Engaged with Shield User', label: 'Engaged with Shield User' },
             { value: 'Engaged with No Weapon', label: 'Engaged with No Weapon' },
+            { value: 'Ally Already Engaged', label: 'Ally Already Engaged' },
             { value: 'Adjacent to Ally', label: 'Adjacent to Ally' },
             { value: 'At Distance', label: 'At Distance' },
             { value: 'When Closing', label: 'When Closing' },

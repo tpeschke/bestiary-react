@@ -160,7 +160,6 @@ export async function getScenarios(beastId: number): Promise<Scenario[]> {
 
 export async function getCasting(beastId: number): Promise<Casting> {
     const [casting] = await query(getMonsterCasting, beastId)
-    const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
 
     // currently this is a string but, as I migrate monsters, I want to change it over to just use the index so this is just a temporary stopgap
     const defaultTypeIndexDictionary: { [key: string]: number } = {
@@ -172,12 +171,24 @@ export async function getCasting(beastId: number): Promise<Casting> {
         'Blood Pact': 5
     }
 
+    if (casting) {
+        const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
+
+        return {
+            spellnumberdie, beastid,
+            defaulttype: defaultTypeIndexDictionary[defaulttype],
+            castingTypesArray: [augur, wild, vancian, manifesting, commanding, bloodpact]
+        }
+    }
+
     return {
-        spellnumberdie, beastid,
-        defaulttype: defaultTypeIndexDictionary[defaulttype],
-        castingTypesArray: [augur, wild, vancian, manifesting, commanding, bloodpact]
+        spellnumberdie: '', 
+        beastid: beastId,
+        defaulttype: 1,
+        castingTypesArray: []
     }
 }
 
 export async function getSpells(beastId: number): Promise<Spell[]> {
-    return query(getMonsterSpells, beastId)}
+    return query(getMonsterSpells, beastId)
+}
