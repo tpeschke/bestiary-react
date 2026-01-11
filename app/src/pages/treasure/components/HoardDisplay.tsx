@@ -19,10 +19,10 @@ export interface Hoard {
 
 export default function HoardDisplay({ hoard }: Props) {
     const { hoardType, baseline, applicableTables, consumables, extraTreasure, notes } = hoard
-    const [pitiful, poor, average, rich, mythic] = extraTreasure
+    const [dismal, poor, average, rich, mythic] = extraTreasure
 
     const treasureLevels: string[] = [
-        'Pitiful', 'Poor', 'Average', 'Rich', 'Mythic'
+        'Dismal', 'Poor', 'Average', 'Rich', 'Mythic'
     ]
 
     return (
@@ -58,19 +58,19 @@ export default function HoardDisplay({ hoard }: Props) {
             <div className="treasure-extras">
                 <h3>Extra Treasure</h3>
                 <div>
-                    <p>Pitiful (d4)</p>
+                    <p>Dismal (d4)</p>
                     <p>1</p>
                     <p>Nothing Extra</p>
                 </div>
                 <div>
                     <p></p>
                     <p>2</p>
-                    <p>{pitiful[0]}</p>
+                    <p>{dismal[0]}</p>
                 </div>
                 <div className="bottom-border">
                     <p></p>
                     <p>3</p>
-                    <p>{pitiful[1]}</p>
+                    <p>{dismal[1]}</p>
                 </div>
                 <div>
                     <p>Poor (d4 + 2)</p>
