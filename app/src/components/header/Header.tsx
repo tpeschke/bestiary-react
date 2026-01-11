@@ -22,6 +22,11 @@ export default function Header() {
                 </Link>
                 <div className='header-nav'>
                     <EncounterDesignIcon />
+                    <Link to="/treasure">
+                        <button className='transparent-white'>
+                            <Icon iconName='treasure' color='white' tooltip='Treasure Hoards' iconSize='h2' />
+                        </button>
+                    </Link>
                     {userIsLoggedIn ?
                         <a href={signOutURL}>
                             <button className='transparent-white'>

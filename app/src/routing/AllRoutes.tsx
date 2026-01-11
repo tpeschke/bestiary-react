@@ -9,6 +9,7 @@ import OwnerAuth from "./auth/OwnerAuth";
 import ConfrontationsEncounterDesign from "../pages/encounterDesign/pages/confrontations/ConfrontationsEncounterDesign";
 import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/CombatsEncounterDesign";
 import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
+import TreasurePage from "../pages/treasure/TreasurePage";
 
 export default function AllRoutes() {
     return (
@@ -77,6 +78,9 @@ export default function AllRoutes() {
                 } />
                 <Route index element={<Navigate to='/' replace />} />
             </Route>
+            <Route path='treasure' element={
+                <TreasurePage />
+            } />
             <Route path='lists'>
                 <Route path=':listId/directlyTo' element={
                     <Loading>

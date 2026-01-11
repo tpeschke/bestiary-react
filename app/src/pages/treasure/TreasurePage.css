@@ -1,0 +1,80 @@
+.treasure-page {
+    min-height: calc(100vh - 280px);
+}
+
+.treasure-page .card-background {
+    min-height: unset;
+}
+
+.treasure-page .hoard-cards-shell {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.treasure-page .card-background.hoard-card {
+    width: 47%;
+    min-width: 375px;
+}
+
+.treasure-page .hoard-card h2.border {
+    margin-top: 0;
+}
+
+.treasure-page .hoard-card h3 {
+    background: transparent;
+}
+
+.treasure-page .hoard-card p {
+    text-indent: 10px;
+}
+
+.treasure-page .hoard-card .upper-card {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.treasure-page .hoard-card .upper-card>div:first-child {
+    min-width: 50%;
+}
+
+.treasure-page .hoard-card .upper-card>div>div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.treasure-page .treasure-extras>div {
+    display: flex;
+}
+
+.treasure-page .treasure-extras>div p {
+    width: 96px;
+    text-align: left;
+}
+
+.treasure-page .treasure-extras>div p:nth-child(2) {
+    text-align: center;
+    width: 50px;
+}
+
+.treasure-page .treasure-extras>div p:last-child {
+    width: calc(100% - 146px);
+    text-indent: 0;
+}
+
+.treasure-page .treasure-extras .bottom-border {
+    border-bottom: 1px solid lightgray;
+}
+
+.hoard-card #notes {
+    text-indent: 0;
+    margin-top: 25px;
+}
+
+@media(max-width: 1098px) {
+    .treasure-page .card-background.hoard-card {
+        width: 100%;
+    }
+}
