@@ -45,7 +45,7 @@ export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, 
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />
             <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
-            <StrategiesNLimits strategiesNLimits={combatInfo.strategiesNLimits} />
+            <StrategiesNLimits strategiesNLimits={combatInfo.strategiesNLimits} limitNotes={combatInfo.limitNotes} />
         </>
     )
 }

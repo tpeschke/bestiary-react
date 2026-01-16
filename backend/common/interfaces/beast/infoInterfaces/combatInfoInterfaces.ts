@@ -13,6 +13,7 @@ export default interface CombatInfo {
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
     movements: Movement[],
+    limitNotes: string,
     strategiesNLimits?: StrategyNLimits[]
 }
 

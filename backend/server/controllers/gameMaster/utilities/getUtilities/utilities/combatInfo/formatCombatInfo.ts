@@ -7,6 +7,7 @@ import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBon
 import getInitiative from "./utilities/getInitiative"
 
 export default function formatCombatInfo(
+    limitNotes: string,
     combatRole: string,
     combatSecondary: string,
     combatSkulls: number,
@@ -26,7 +27,7 @@ export default function formatCombatInfo(
     const skullIndex = getSkullIndex(combatSkulls)
 
     return {
-        combatRole, combatSecondary,
+        combatRole, combatSecondary, limitNotes,
         combatSkulls,
         skullIndex,
         attackInfo: attackInfo ?? '',

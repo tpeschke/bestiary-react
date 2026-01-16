@@ -1,12 +1,32 @@
 import { StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { UpdateFunction } from "../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
+import { EditorProvider } from "@tiptap/react"
+import MenuBar from "../../../../../../components/textEditor/menuBar"
+import StarterKit from "@tiptap/starter-kit"
+import TextStyle from '@tiptap/extension-text-style'
+import ListItem from '@tiptap/extension-list-item'
 
 interface Props {
     strategiesNLimits: StrategyNLimits[] | undefined,
+    limitNotes: string,
     updateCombatInfo: UpdateFunction
 }
 
-export default function StrategyEdit({ strategiesNLimits, updateCombatInfo }: Props) {
+export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limitNotes }: Props) {
+    const extensions = [
+        // @ts-ignore
+        TextStyle.configure({ types: [ListItem.name] }),
+        StarterKit.configure({
+            bulletList: {
+                keepMarks: true,
+                keepAttributes: false,
+            },
+            orderedList: {
+                keepMarks: true,
+                keepAttributes: false,
+            },
+        })
+    ]
 
     function updateStrategies(indexToChange: number, key: string, value: string | number) {
         const alteredStrategies = strategiesNLimits?.map((strategy, index) => {
@@ -23,7 +43,7 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo }: Pr
     }
 
     function updateStrategiesOnClick(indexToChange: number, key: string, event: any) {
-        const {checked} = event.target
+        const { checked } = event.target
 
         const alteredStrategies = strategiesNLimits?.map((strategy, index) => {
             if (index === indexToChange) {
@@ -71,6 +91,9 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo }: Pr
                     })}
                 </tbody>
             </table>
+
+            <br/>
+            <EditorProvider onBlur={({ editor }) => updateCombatInfo('limitNotes', editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={limitNotes}></EditorProvider>
 
             <h2 className="border">Strategies</h2>
             Obstacles
