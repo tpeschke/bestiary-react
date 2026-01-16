@@ -3,6 +3,8 @@ import HoardDisplay, { Hoard } from './components/HoardDisplay'
 import './TreasurePage.css'
 
 export default function TreasurePage() {
+    window.scrollTo(0, 0)
+    
     const hoards: Hoard[] = [
         {
             hoardType: 'Coins',
