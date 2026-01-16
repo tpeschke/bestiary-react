@@ -8,6 +8,7 @@ import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, A
 
 export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
+    updateNonRoleInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
     updateAttackInfo: UpdateAttackDefenseInfoFunction,
     addAttack: AddAttackFunction,
@@ -65,6 +66,25 @@ export default function getUpdateCombatInfoFunctions(
                     combatInfo: modifiedCombatInfo
                 }
 
+                updateBeastInfo(modifiedBeastInfo)
+            }
+        },
+        updateNonRoleInfo: (key: string, value: any) => {
+            if (beast) {
+                let modifiedCombatInfo = {
+                    ...beast.beastInfo.combatInfo,
+                    [key]: value
+                }
+    
+                if (key === 'combatSkulls' && typeof value === 'number') {
+                    modifiedCombatInfo.skullIndex = getSkullIndex(value)
+                }
+    
+                const modifiedBeastInfo: any = {
+                    ...beast.beastInfo,
+                    combatInfo: modifiedCombatInfo
+                }
+    
                 updateBeastInfo(modifiedBeastInfo)
             }
         },

@@ -67,7 +67,7 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
                                         <td>{group}</td>
                                         <td className="center-text">{returnDashIfNull(chaos)}{chaosNote ? '*' : ''}</td>
                                         <td className="center-text">{formatDiminish(diminish)}</td>
-                                        <td className="center-text">{returnDashIfNull(strategies)}{strategiesNote ? '*' : ''}</td>
+                                        <td className="center-text">{returnDashIfNull(strategies)}{strategiesNote ? chaosNote ? '**' : '*' : ''}</td>
                                         <td className="center-text">{returnDashIfNull(baselineStrategies)}</td>
                                         <td>{returnDashIfNull(treasure)}</td>
                                     </tr>

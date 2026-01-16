@@ -40,9 +40,10 @@ export default function EditBody({
 
     const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
+    const { strategiesNLimits, limitNotes } = combatInfo
 
     const { updateSocialInfo } = updateSocialInfoFunctions
-    const { updateCombatInfo } = updateCombatInfoFunctions
+    const { updateCombatInfo, updateNonRoleInfo } = updateCombatInfoFunctions
     const { updateSkillInfo } = updateSkillInfoFunctions
 
     return (
@@ -89,7 +90,7 @@ export default function EditBody({
                 {tabIndex === 4 &&
                     <>
                         <h1>Strategies</h1>
-                        <StrategyEdit strategiesNLimits={combatInfo.strategiesNLimits} limitNotes={combatInfo.limitNotes} updateCombatInfo={updateCombatInfo}/>
+                        <StrategyEdit strategiesNLimits={strategiesNLimits} limitNotes={limitNotes} updateCombatInfo={updateNonRoleInfo}/>
                     </>
                 }
             </div>

@@ -29,33 +29,37 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limi
     ]
 
     function updateStrategies(indexToChange: number, key: string, value: string | number) {
-        const alteredStrategies = strategiesNLimits?.map((strategy, index) => {
-            if (index === indexToChange) {
-                return {
-                    ...strategy,
-                    [key]: value
+        if (strategiesNLimits) {
+            const alteredStrategies = strategiesNLimits.map((strategy, index) => {
+                if (index === indexToChange) {
+                    return {
+                        ...strategy,
+                        [key]: value
+                    }
                 }
-            }
-            return strategy
-        })
-
-        updateCombatInfo('strategiesNLimits', alteredStrategies)
+                return strategy
+            })
+    
+            updateCombatInfo('strategiesNLimits', alteredStrategies)
+        }
     }
 
     function updateStrategiesOnClick(indexToChange: number, key: string, event: any) {
         const { checked } = event.target
 
-        const alteredStrategies = strategiesNLimits?.map((strategy, index) => {
-            if (index === indexToChange) {
-                return {
-                    ...strategy,
-                    [key]: checked
+        if (strategiesNLimits) {
+            const alteredStrategies = strategiesNLimits.map((strategy, index) => {
+                if (index === indexToChange) {
+                    return {
+                        ...strategy,
+                        [key]: checked
+                    }
                 }
-            }
-            return strategy
-        })
-
-        updateCombatInfo('strategiesNLimits', alteredStrategies)
+                return strategy
+            })
+    
+            updateCombatInfo('strategiesNLimits', alteredStrategies)
+        }
     }
 
     return (
@@ -82,10 +86,10 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limi
                                 <td className="center-text"><input type="number" onChange={event => updateStrategies(index, 'chaos', +event.target.value)} value={chaos ?? 0} /></td>
                                 <td className="center-text"><input type="checkbox" defaultChecked={chaosNote} onClick={event => updateStrategiesOnClick(index, 'chaosNote', event)} /></td>
                                 <td className="center-text"><input type="number" onChange={event => updateStrategies(index, 'diminish', +event.target.value)} value={diminish ?? 0} /></td>
-                                <td className="center-text"><input type="text" onChange={event => updateStrategies(index, 'strategies', event.target.value)} value={strategies ?? ""} /></td>
-                                <td className="center-text"><input type="checkbox" defaultChecked={strategiesNote} /></td>
-                                <td className="center-text"><input type="text" onChange={event => updateStrategies(index, 'baselineStrategies', event.target.value)} value={baselineStrategies ?? ""} /></td>
-                                <td><input type="text" onChange={event => updateStrategies(index, 'treasure', event.target.value)} value={treasure ?? ""} /></td>
+                                <td className="center-text"><input onChange={event => updateStrategies(index, 'strategies', event.target.value)} value={strategies ?? ""} /></td>
+                                <td className="center-text"><input type="checkbox" defaultChecked={strategiesNote} onClick={event => updateStrategiesOnClick(index, 'strategiesNote', event)} /></td>
+                                <td className="center-text"><input onChange={event => updateStrategies(index, 'baselineStrategies', event.target.value)} value={baselineStrategies ?? ""} /></td>
+                                <td><input onChange={event => updateStrategies(index, 'treasure', event.target.value)} value={treasure ?? ""} /></td>
                             </tr>
                         )
                     })}
