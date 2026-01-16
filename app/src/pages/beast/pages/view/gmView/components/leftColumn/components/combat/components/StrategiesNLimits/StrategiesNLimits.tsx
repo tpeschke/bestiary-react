@@ -31,6 +31,10 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
     const baselineStrategiesTooltip = 'This is base number of Strategies that this group has already employed in / near their base of operations.'
     const treasureTooltip = 'See the Treasure page (via the chest icon in the header) for more info\n(or just click since this is a link to it).'
 
+    if (strategiesNLimits?.length === 0) {
+        return <></>
+    }
+
     return (
         <>
             <br />
