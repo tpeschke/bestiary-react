@@ -2,14 +2,14 @@ import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatI
 import updateAttacks from "./utilities/updateAttacks";
 import updateDefense from "./utilities/updateDefenses";
 import updateBasicCombatInfo from "./utilities/updateBasicCombatInfo";
+import updateStrategiesNLimits from "./utilities/updateStrategiesNLimits";
 
 export default async function updateCombatInfo(beastID: number, combatInfo: CombatInfo) {
     const { attacks, defenses, strategiesNLimits } = combatInfo
 
-    console.log(strategiesNLimits)
-
     let promiseArray: Promise<any>[] = [
         updateBasicCombatInfo(beastID, combatInfo),
+        updateStrategiesNLimits(strategiesNLimits),
         updateAttacks(beastID, attacks),
         updateDefense(beastID, defenses)
     ]

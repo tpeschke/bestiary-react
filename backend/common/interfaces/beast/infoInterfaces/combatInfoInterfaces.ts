@@ -200,6 +200,7 @@ export interface LocationVitality {
 export interface StrategyNLimits {
     id: number,
     beastID: number,
+    groupID: number,
     group: string,
     chaos: number | null,
     chaosNote: boolean,

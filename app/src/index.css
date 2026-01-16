@@ -14,19 +14,87 @@
 	src: url('./assets/fonts/HamletOrNot.ttf') format("truetype");
 }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -37,8 +105,17 @@ time, mark, audio, video {
 }
 
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
 
@@ -46,7 +123,8 @@ body {
 	line-height: 1;
 }
 
-ol, ul {
+ol,
+ul {
 	list-style: none;
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
@@ -54,30 +132,38 @@ ol, ul {
 }
 
 li {
-    padding: 2px 0px;
+	padding: 2px 0px;
 }
 
-ol.horizontal-list, ul.horizontal-list {
+ol.horizontal-list,
+ul.horizontal-list {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
 
-ol.horizontal-list li, ul.horizontal-list li {
+ol.horizontal-list li,
+ul.horizontal-list li {
 	margin-right: 25px;
 	min-width: 25%;
 }
 
-ul ul, ol ol, ul ol, ol ul {
+ul ul,
+ol ol,
+ul ol,
+ol ul {
 	margin-left: 5px;
 }
 
-blockquote, q {
+blockquote,
+q {
 	quotes: none;
 }
 
-blockquote:before, blockquote:after,
-q:before, q:after {
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
 	content: '';
 	content: none;
 }
@@ -87,12 +173,15 @@ table {
 	border-spacing: 0;
 }
 
-th, td {
+th,
+td {
 	font-family: "Source Sans 3", sans-serif;
-	padding: 3px 5px
+	padding: 3px 5px;
+	vertical-align: bottom
 }
 
-h1, h2 {
+h1,
+h2 {
 	font-family: 'HamletOrNot';
 }
 
@@ -122,7 +211,7 @@ h4 {
 	font-family: 'oldClaude';
 	font-weight: bold;
 	font-size: 13px;
-    color: #434343;
+	color: #434343;
 }
 
 h5 {
@@ -136,7 +225,8 @@ h6 {
 	font-size: 14px;
 }
 
-p, label {
+p,
+label {
 	font-family: "Source Sans 3", sans-serif;
 	font-size: 13px;
 	min-height: 1px;
@@ -150,13 +240,15 @@ strong {
 	text-transform: uppercase;
 }
 
-a, .fake-link {
+a,
+.fake-link {
 	text-decoration: none;
 	cursor: pointer;
 	color: #41555f;
 }
 
-a:hover, .fake-link:hover {
+a:hover,
+.fake-link:hover {
 	color: #607d8b;
 }
 
@@ -191,17 +283,17 @@ select * {
 input {
 	font-family: 'oldClaude';
 	border: unset;
-    border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
 	transition: .6s;
 }
 
 input[type=number] {
-    text-align: right;
+	text-align: right;
 }
 
 input:focus-visible {
 	border-bottom: 1px solid black;
-    outline: none;
+	outline: none;
 }
 
 button {
@@ -218,7 +310,8 @@ button:hover {
 	background: #c9cfd1;
 }
 
-button:disabled, button:disabled:hover {
+button:disabled,
+button:disabled:hover {
 	background: white;
 	cursor: unset;
 }
@@ -233,7 +326,7 @@ button.blue:hover {
 }
 
 button.orange {
-    background: #ff5722;
+	background: #ff5722;
 	color: white;
 }
 

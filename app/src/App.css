@@ -33,3 +33,13 @@
 .center-text input {
   text-align: center;
 }
+
+table.light-weight-table thead {
+  background: transparent;
+  color: #222;
+  border-bottom: 1px solid lightgray;
+}
+
+table.light-weight-table tbody tr:nth-child(odd) {
+  background: #f3f3f3;
+}
