@@ -22,7 +22,7 @@ export default function getUpdateCombatInfoFunctions(
     updateBeastInfo: Function
 ): UpdateCombatInfoFunctionsObject {
     return {
-        updateCombatInfo: (key: string, value: string | number) => {
+        updateCombatInfo: (key: string, value: any) => {
             if (beast && beast.selectedRole) {
                 let modifiedCombatInfo: RoleCombatInfo = {
                     ...beast.selectedRole.combatInfo,

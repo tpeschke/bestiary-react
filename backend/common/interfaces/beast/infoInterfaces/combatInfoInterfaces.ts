@@ -4,7 +4,6 @@ import { Strength } from "../../calculationInterfaces"
 export default interface CombatInfo {
     attackInfo: string,
     defenseInfo: string,
-    tactics: string,
     combatSkulls: number,
     skullIndex: number,
     combatRole: string,
@@ -14,6 +13,7 @@ export default interface CombatInfo {
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
     movements: Movement[],
+    strategiesNLimits?: StrategyNLimits[]
 }
 
 export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
@@ -195,4 +195,18 @@ export interface LocationVitality {
     deleted: boolean,
     roleid: string,
     allroles: boolean
+}
+
+export interface StrategyNLimits {
+    id: number,
+    beastID: number,
+    group: string,
+    chaos: number | null,
+    chaosNote: boolean,
+    diminish: number,
+    strategies: string | null,
+    strategiesNote: boolean,
+    baselineStrategies: string | null
+    treasure: string | null,
+    notes: string
 }

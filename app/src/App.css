@@ -25,3 +25,11 @@
   overflow: hidden;
   min-height: calc(100vh - 329px);
 }
+
+.center-text {
+  text-align: center;
+}
+
+.center-text input {
+  text-align: center;
+}

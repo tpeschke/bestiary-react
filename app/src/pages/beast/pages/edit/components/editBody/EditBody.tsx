@@ -89,7 +89,7 @@ export default function EditBody({
                 {tabIndex === 4 &&
                     <>
                         <h1>Strategies</h1>
-                        <StrategyEdit />
+                        <StrategyEdit strategiesNLimits={combatInfo.strategiesNLimits} updateCombatInfo={updateCombatInfo}/>
                     </>
                 }
             </div>

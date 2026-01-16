@@ -1,6 +1,6 @@
 import { Beast } from "@bestiary/common/interfaces/beast/beast"
 import { Casting, Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
-import { Movement, LocationVitality } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Movement, LocationVitality, StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Scenario, Folklore, TablesObject, Palette } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { Variant, LocationObject, BeastType, ClimateObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
@@ -30,6 +30,7 @@ import formatSkillInfo from "./utilities/skillInfo/getSkillInfo"
 import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
 import getPleroma from "./utilities/lootInfo/getPleroma"
 import getPalette from "./utilities/generalInfo/getPalette"
+import getStrategiesNLimits from "./utilities/combatInfo/getStrategiesNLimits"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -42,7 +43,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
-        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
+        sp_def, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId,
         combatskulls, socialskulls, skillskulls
@@ -111,7 +112,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatskulls, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
+            combatrole, combatsecondary, combatskulls, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
             noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, skillskulls, atk_skill, def_skill),
@@ -159,6 +160,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
+        getStrategiesNLimits(beast.id).then((strategiesNLimits: StrategyNLimits[]) => beast.combatInfo.strategiesNLimits = strategiesNLimits),
 
         getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
 

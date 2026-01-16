@@ -4,7 +4,9 @@ import updateDefense from "./utilities/updateDefenses";
 import updateBasicCombatInfo from "./utilities/updateBasicCombatInfo";
 
 export default async function updateCombatInfo(beastID: number, combatInfo: CombatInfo) {
-    const { attacks, defenses } = combatInfo
+    const { attacks, defenses, strategiesNLimits } = combatInfo
+
+    console.log(strategiesNLimits)
 
     let promiseArray: Promise<any>[] = [
         updateBasicCombatInfo(beastID, combatInfo),
