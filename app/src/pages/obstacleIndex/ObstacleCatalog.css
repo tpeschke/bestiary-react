@@ -1,0 +1,8 @@
+.obstacle-tile-row {
+    overflow: unset;
+    flex-wrap: wrap;
+}
+
+.card-background.catalog .obstacle-tile-row button {
+    margin: 5px 10px 5px 0;
+}
