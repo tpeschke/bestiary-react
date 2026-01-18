@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Loading from "../components/loading/Loading";
-import EditView from "../pages/beast/pages/edit/EditView";
-import View from "../pages/beast/pages/view/View";
-import Catalog from "../pages/catalog/Catalog";
+import EditView from "../pages/bestiary/beast/pages/edit/EditView";
+import View from "../pages/bestiary/beast/pages/view/View";
+import Catalog from "../pages/bestiary/catalog/Catalog";
 import ListHome from "../pages/list/ListHome";
-import SearchResults from "../pages/searchResults/SearchResults";
+import SearchResults from "../pages/bestiary/searchResults/SearchResults";
 import OwnerAuth from "./auth/OwnerAuth";
 import ConfrontationsEncounterDesign from "../pages/encounterDesign/pages/confrontations/ConfrontationsEncounterDesign";
 import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/CombatsEncounterDesign";

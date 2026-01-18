@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { getRandomNumber, getRandomString } from '../../../../utilities/randomGenerator';
-import { PlayerBeastInfo } from '../../../../../pages/beast/interfaces/viewInterfaces';
-import PlayerBeastClass from '../../../../../pages/beast/models/PlayerBeastClass';
+import { PlayerBeastInfo } from '../../../../../pages/bestiary/beast/interfaces/viewInterfaces';
+import PlayerBeastClass from '../../../../../pages/bestiary/beast/models/PlayerBeastClass';
 
 describe('Blank PlayerBeastClass', () => {
     const emptyTestClass: PlayerBeastInfo = {
