@@ -1,0 +1,43 @@
+import { Beast } from "@bestiary/common/interfaces/beast/beast";
+import { Request, Response } from "../../../../../interfaces/apiInterfaces";
+import { isOwner } from "../../../../../utilities/ownerAccess";
+import { checkForContentTypeBeforeSending } from "../../../../../utilities/sendingFunctions";
+import { reCacheMonsterIfItExists } from "../../../monsterCache";
+import query from "../../../../../db/database";
+import { checkIfUserCanEditMonster } from "../../../../../db/beast/access";
+import updateCombatInfo from "./combatUpdates/updateCombatInfo";
+import updateSocialInfo from "./socialUpdates/updateSocialInfo";
+import updateSkillInfo from "./skillUpdates/updateSkillInfo";
+import updateRoleInfo from "./roleUpdates/updateRoleInfo";
+import updateGeneralInfo from "./generalUpdates/updateGeneralInfo";
+
+interface BeastRequest extends Request {
+    body: Beast
+}
+
+export async function updateBeast(request: BeastRequest, response: Response) {
+    const { body: beast, user } = request
+    const { id: beastID, combatInfo, socialInfo, skillInfo, roleInfo, generalInfo } = beast
+
+    const [result] = await query(checkIfUserCanEditMonster, beastID)
+    const beastOwnerID = result.userid
+
+    if (isOwner(user?.id) || beastOwnerID === user?.id) {
+        // If my fellow collaborator or I save a monster, we don't want it to save the user id since then it won't appear in the main catalog 
+        // const userIDToSaveUnder = isOwner(user?.id) ? null : user?.id
+
+        await Promise.all([
+            updateGeneralInfo(beastID, generalInfo),
+            updateRoleInfo(beastID, roleInfo),
+            updateSocialInfo(beastID, socialInfo),
+            updateCombatInfo(beastID, combatInfo),
+            updateSkillInfo(beastID, skillInfo)
+        ])
+
+        reCacheMonsterIfItExists(beastID)
+
+        checkForContentTypeBeforeSending(response, { beastID })
+    } else {
+        checkForContentTypeBeforeSending(response, { color: 'red', message: "You don't own this entry so can't edit it", type: 'message' })
+    }
+}

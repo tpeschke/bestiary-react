@@ -21,19 +21,20 @@ import { Response, Request } from './interfaces/apiInterfaces'
 
 import authRoutesWithoutPassword from './routes/authentication'
 import accessRoutes from './routes/access'
-import playerRoutes from './routes/player'
-import catalogRoutes from './routes/catalog'
-import BeastRoutes from './routes/beast'
-import imageRoutes from './routes/image'
-import searchRoutes from './routes/search'
+import playerRoutes from './routes/bestiary/player'
+import catalogRoutes from './routes/bestiary/catalog'
+import BeastRoutes from './routes/bestiary/beast'
+import imageRoutes from './routes/bestiary/image'
+import searchRoutes from './routes/bestiary/search'
 import listRoutes from './routes/list'
 
-import { collectCatalog } from './controllers/catalog'
-import { collectMonsterCache } from './controllers/monsterCache'
-import collectGearCache from './controllers/gear/gear'
+import { collectCatalog } from './controllers/bestiary/catalog'
+import { collectMonsterCache } from './controllers/bestiary/monsterCache'
+import collectGearCache from './controllers/bestiary/gear/gear'
 import { Profile } from './interfaces/apiInterfaces'
 import { createUser, findSession, findUser } from './db/user/basicSQL'
 import query from './db/database'
+import obstaclesCatalog from './routes/obstacles/obstaclesCatalog'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -75,14 +76,18 @@ passport.deserializeUser(async (id: any, done: any) => {
 app.use(fakeAuth)
 
 app.use('/auth', authRoutesWithoutPassword(passport))
-app.use('/catalog', catalogRoutes)
+
 app.use('/access', accessRoutes)
+
+app.use('/catalog', catalogRoutes)
+app.use('/info', BeastRoutes)
 app.use('/player', playerRoutes)
 app.use('/searchAPI', searchRoutes)
-app.use('/lists', listRoutes)
 app.use('/image', imageRoutes)
 
-app.use('/info', BeastRoutes)
+app.use('/lists', listRoutes)
+
+app.use('/obstacles-catalog', obstaclesCatalog)
 
 // ================================== \\
 
