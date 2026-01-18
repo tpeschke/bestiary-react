@@ -1,7 +1,7 @@
 import query from '../../../db/database';
 import { getNumberOfMonstersWeighted } from '../../../db/encounter/number';
 import { BasicParamsRequest, Response } from '../../../interfaces/apiInterfaces'
-import { Complication, Encounter, SignObject, Temperament } from '../../../interfaces/encounterInterfaces';
+import { Complication, Encounter, SignObject, Temperament } from '../../../interfaces/bestiary/encounterInterfaces';
 
 import { checkForContentTypeBeforeSending } from '../../../utilities/sendingFunctions';
 import getBattlefieldAndPattern from './utilities/battlefield';

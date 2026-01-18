@@ -1,4 +1,4 @@
-import { ObjectiveObject } from "../../../../interfaces/encounterInterfaces"
+import { ObjectiveObject } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 import { grabRandomElementFromArray } from "../../../../utilities/array"
 

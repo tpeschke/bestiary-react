@@ -1,9 +1,9 @@
 // @ts-ignore
 import express from 'express'
-import { getCatalog } from '../../controllers/bestiary/catalog'
+import { getObstacleCatalog } from '../../controllers/obstacleIndex/ObstacleCatalog'
 
 const obstaclesCatalog = express.Router()
 
-obstaclesCatalog.get('/all', getCatalog)
+obstaclesCatalog.get('/', getObstacleCatalog)
 
 export default obstaclesCatalog

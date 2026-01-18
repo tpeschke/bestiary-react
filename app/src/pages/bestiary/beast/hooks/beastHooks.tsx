@@ -10,7 +10,7 @@ import GMBeastClass from "../models/gmBeastClass/GMBeastClass";
 import { beastURL } from "../../../../frontend-config";
 import alertInfo, { showPendingAlert } from "../../../../components/alert/alerts";
 
-import { cacheMonster, removeMonsterFromCache } from "../../../../redux/slices/beastCacheSlice";
+import { cacheMonster, removeMonsterFromCache } from "../../../../redux/slices/bestiary/beastCacheSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";

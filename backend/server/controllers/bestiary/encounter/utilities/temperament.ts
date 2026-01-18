@@ -1,6 +1,6 @@
 import query from "../../../../db/database"
 import { getWeightedTemperament } from "../../../../db/encounter/temperament"
-import { Temperament } from "../../../../interfaces/encounterInterfaces"
+import { Temperament } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 export default async function getTemperament(beastId: number): Promise<Temperament> {
     const [temperament]: Temperament[] = await query(getWeightedTemperament, beastId)

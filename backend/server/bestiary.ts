@@ -35,6 +35,7 @@ import { Profile } from './interfaces/apiInterfaces'
 import { createUser, findSession, findUser } from './db/user/basicSQL'
 import query from './db/database'
 import obstaclesCatalog from './routes/obstacles/obstaclesCatalog'
+import { collectObstacleCatalog } from './controllers/obstacleIndex/ObstacleCatalog'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -106,6 +107,8 @@ app.listen(server, async () => {
     if (collectMonsterCacheOn) {
         collectMonsterCache(gearCache)
     }
+
+    collectObstacleCatalog()
 
     console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)
 })

@@ -1,4 +1,4 @@
-import { Loot, SpecificLoot } from "../../../../server/interfaces/lootInterfaces";
+import { Loot, SpecificLoot } from "../../../../server/interfaces/bestiary/lootInterfaces";
 
 export default interface LootInfo {
     lootnotes: string,

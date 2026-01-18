@@ -4,7 +4,7 @@ import { Folklore, Scenario } from "@bestiary/common/interfaces/beast/infoInterf
 import { ArtistObject, ArtistInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { BeastType, ClimateObject, Climate, Variant, LocationObject, Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { User } from "../../../../../../../../interfaces/apiInterfaces"
-import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../../../interfaces/lootInterfaces"
+import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../../../interfaces/bestiary/lootInterfaces"
 import rollDice from "../../../../../../../../utilities/diceRoller"
 import { isOwner } from "../../../../../../../../utilities/ownerAccess"
 import { objectifyItemArray } from "../../../../../../../../utilities/sorts"

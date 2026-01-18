@@ -9,7 +9,7 @@ import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSp
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
-import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/lootInterfaces"
+import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/bestiary/lootInterfaces"
 import { Challenge, Obstacle } from "../../../../../interfaces/skillInterfaces"
 import { isOwner } from "../../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../../utilities/rarity"

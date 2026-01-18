@@ -7,7 +7,7 @@ import { imageBase, imageURL } from '../../../../../../frontend-config';
 import { RoleNameOrderOptions } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 import { UpdateFavoriteFunction } from '../../../hooks/beastHooks';
 import { useDispatch } from 'react-redux';
-import { addToFavorites, removeFromFavorites } from '../../../../../../redux/slices/catalogSlice';
+import { addToFavorites, removeFromFavorites } from '../../../../../../redux/slices/bestiary/catalogSlice';
 
 interface Props {
     name: string,

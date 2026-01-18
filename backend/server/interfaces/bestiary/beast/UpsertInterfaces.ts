@@ -7,8 +7,8 @@ import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootIn
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
-import { SpecificLoot, Loot } from "../lootInterfaces";
-import { Obstacle, Challenge } from "../skillInterfaces";
+import { SpecificLoot, Loot } from "../../lootInterfaces";
+import { Obstacle, Challenge } from "../../skillInterfaces";
 
 export interface upsertParameters {
     roles: Role[],

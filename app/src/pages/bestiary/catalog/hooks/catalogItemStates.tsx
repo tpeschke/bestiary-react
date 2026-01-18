@@ -7,7 +7,7 @@ import { catalogURL } from '../../../../frontend-config'
 
 import { CatalogTile } from '../catalogInterfaces';
 
-import { saveCatalog } from '../../../../redux/slices/catalogSlice';
+import { saveCatalog } from '../../../../redux/slices/bestiary/catalogSlice';
 
 export default function catalogItemStates() {
     const templates: CatalogTile[] = useSelector((state: RootState) => state.catalog.templates)

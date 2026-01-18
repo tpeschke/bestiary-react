@@ -1,4 +1,4 @@
-import { BattlefieldObject } from "../../../../interfaces/encounterInterfaces"
+import { BattlefieldObject } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 import { grabRandomElementFromArray } from "../../../../utilities/array"
 

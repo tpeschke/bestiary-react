@@ -1,6 +1,6 @@
 import query from "../../../../db/database"
 import { getGroupByID, getWeightedGroupLabel } from "../../../../db/encounter/group"
-import { GroupInfo, RoleNumbers } from "../../../../interfaces/encounterInterfaces"
+import { GroupInfo, RoleNumbers } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 import { grabRandomElementFromArrayWithIndex } from "../../../../utilities/array"
 import rollDice from "../../../../utilities/diceRoller"

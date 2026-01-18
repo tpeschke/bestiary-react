@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import catalogReducer from './slices/catalogSlice'
+import catalogReducer from './slices/bestiary/catalogSlice'
 import userReducer from './slices/userSlice'
-import beastCacheReducer from './slices/beastCacheSlice'
+import beastCacheReducer from './slices/bestiary/beastCacheSlice'
+import ObstacleCatalogReducer from './slices/obstacles/obstacleCatalog'
 
 export const store = configureStore({
   reducer: {
     catalog: catalogReducer,
     user: userReducer,
-    beastCache: beastCacheReducer
+    beastCache: beastCacheReducer,
+    obstacleCatalog: ObstacleCatalogReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

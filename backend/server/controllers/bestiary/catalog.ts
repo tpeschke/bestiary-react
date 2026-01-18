@@ -1,7 +1,7 @@
 import { getCatalogTilesByLetter, getFreeCatalogTiles, getRolesForCatalogTile, getTemplateForCatalog, getTemplateRolesForCatalogTile } from "../../db/cache/catalog"
 import query from "../../db/database"
 import { Request, Response } from "../../interfaces/apiInterfaces"
-import { BeastTile, Role } from "../../interfaces/catalogInterfaces"
+import { BeastTile, Role } from "../../interfaces/bestiary/catalogInterfaces"
 
 import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
 import { getFavorites } from "./player"
@@ -105,8 +105,8 @@ async function collectCache(index: number) {
     } else {
         catalogCache = newCache
         newCache = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
-        console.log('------------------------- ')
+        console.log('---------------------------------- ')
         console.log('--- Bestiary Catalog Collected --- ')
-        console.log('------------------------- ')
+        console.log('---------------------------------- ')
     }
 }

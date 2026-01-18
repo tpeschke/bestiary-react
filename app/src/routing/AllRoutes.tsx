@@ -69,7 +69,9 @@ export default function AllRoutes() {
             </Route>
             <Route path='obstacles'>
                 <Route index element={
-                    <ObstacleCatalog />
+                    <Loading>
+                        <ObstacleCatalog />
+                    </Loading>
                 } />
                 <Route index element={<Navigate to='/obstacles' replace />} />
             </Route>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { CatalogTile } from '../../catalogInterfaces'
 import { beastURL, imageBase } from '../../../../../frontend-config'
 import TileIcon from './components/TileIcon';
-import { cacheMonster } from '../../../../../redux/slices/beastCacheSlice';
+import { cacheMonster } from '../../../../../redux/slices/bestiary/beastCacheSlice';
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
