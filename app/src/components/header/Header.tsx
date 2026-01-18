@@ -1,5 +1,4 @@
 import './Header.css'
-import logo from '../../assets/images/BonfireLogo.png'
 
 import { useSelector } from 'react-redux'
 
@@ -9,6 +8,7 @@ import SearchOptions from './searchOptions/SearchOptions';
 import Icon from '../icon/Icon';
 import { signInURL, signOutURL } from '../../frontend-config';
 import EncounterDesignIcon from './encounterDesignIcon/EncounterDesignIcon';
+import AppName from './appName/AppName';
 
 export default function Header() {
     const userIsLoggedIn = useSelector(isUserLoggedOn)
@@ -16,10 +16,7 @@ export default function Header() {
     return (
         <>
             <div className='header-background'>
-                <Link to="/">
-                    <img src={logo} />
-                    <h1>Bonfire Bestiary</h1>
-                </Link>
+                <AppName />
                 <div className='header-nav'>
                     <EncounterDesignIcon />
                     <Link to="/treasure">

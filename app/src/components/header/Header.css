@@ -34,3 +34,11 @@
 .header-nav a {
     margin-left: 10px;
 }
+
+.header-background .app-name-component {
+    display: flex;
+}
+
+.header-background .app-name-component button {
+    margin-left: 15px;
+}

@@ -10,6 +10,7 @@ import ConfrontationsEncounterDesign from "../pages/encounterDesign/pages/confro
 import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/CombatsEncounterDesign";
 import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
 import TreasurePage from "../pages/treasure/TreasurePage";
+import ObstacleCatalog from "../pages/obstacleIndex/ObstacleCatalog";
 
 export default function AllRoutes() {
     return (
@@ -65,6 +66,12 @@ export default function AllRoutes() {
                         <View />
                     </Loading>
                 } />
+            </Route>
+            <Route path='obstacles'>
+                <Route index element={
+                    <ObstacleCatalog />
+                } />
+                <Route index element={<Navigate to='/obstacles' replace />} />
             </Route>
             <Route path='encounters'>
                 <Route path='confrontations' element={
