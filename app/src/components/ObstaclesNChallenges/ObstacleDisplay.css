@@ -1,0 +1,8 @@
+.obstacle-shell table {
+    width: 350px;
+    opacity: 1;
+}
+
+.obstacle-shell tr td:first-child {
+    width: 25%;
+}

@@ -1,7 +1,7 @@
 import mermaid from "mermaid";
 import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import ObstacleDisplay from "../../Obstacles/components/ObstacleDisplay";
+import ObstacleDisplay from "../../../../../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay";
 import { Challenge, Obstacle } from "../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces";
 
 interface Props {

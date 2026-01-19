@@ -36,6 +36,7 @@ import { createUser, findSession, findUser } from './db/user/basicSQL'
 import query from './db/database'
 import obstaclesCatalog from './routes/obstacles/obstaclesCatalog'
 import { collectObstacleCatalog } from './controllers/obstacleIndex/ObstacleCatalog'
+import obstacles from './routes/obstacles/obstacles'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -89,6 +90,7 @@ app.use('/image', imageRoutes)
 app.use('/lists', listRoutes)
 
 app.use('/obstacles-catalog', obstaclesCatalog)
+app.use('/obstacle', obstacles)
 
 // ================================== \\
 

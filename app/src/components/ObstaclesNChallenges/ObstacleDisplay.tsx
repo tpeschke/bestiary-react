@@ -1,8 +1,8 @@
-import '../ObstaclesDisplay.css'
-import Icon from '../../../../../../../../../../../../../components/icon/Icon';
-import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay';
-import { Complication, Obstacle, Pair } from '../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces';
-import { getDifficultyBySkullValue } from '../../../../../../../../../../utilities/getDifficulty';
+import './ObstacleDisplay.css'
+import Icon from '../icon/Icon';
+import HTMLDisplay from '../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay';
+import { Complication, Obstacle, Pair } from '../../pages/bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces';
+import { getDifficultyBySkullValue } from '../../pages/bestiary/beast/utilities/getDifficulty';
 
 interface Props {
     obstacle: Obstacle | null,

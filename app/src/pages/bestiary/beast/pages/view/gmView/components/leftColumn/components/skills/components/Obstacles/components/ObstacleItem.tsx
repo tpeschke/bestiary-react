@@ -1,5 +1,5 @@
 import { Tooltip } from "react-tooltip"
-import ObstacleDisplay from "./ObstacleDisplay"
+import ObstacleDisplay from "../../../../../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay"
 import Icon from "../../../../../../../../../../../../../components/icon/Icon"
 import { Obstacle } from "../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces"
 
