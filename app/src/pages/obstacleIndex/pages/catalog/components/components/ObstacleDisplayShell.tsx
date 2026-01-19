@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import { SetLoadingFunction } from "../../../../components/loading/Loading"
-import ObstacleDisplay from "../../../../components/ObstaclesNChallenges/ObstacleDisplay"
-import { Obstacle } from "../../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces"
+import { SetLoadingFunction } from "../../../../../../components/loading/Loading"
+import ObstacleDisplay from "../../../../../../components/ObstaclesNChallenges/ObstacleDisplay"
+import { Obstacle } from "../../../../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces"
 
 interface DisplayShellProps {
     setLoading?: SetLoadingFunction,

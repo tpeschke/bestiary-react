@@ -1,7 +1,7 @@
 import { ObstacleTile } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import axios from "axios"
-import Icon from "../../../../components/icon/Icon"
-import { obstacleSingleURL } from "../../../../frontend-config"
+import Icon from "../../../../../../components/icon/Icon"
+import { obstacleSingleURL } from "../../../../../../frontend-config"
 
 interface TileProps {
     tile: ObstacleTile,
@@ -19,7 +19,6 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
         return (
             <>
                 <button onMouseEnter={_ => setObstacle()} data-tooltip-id="catalog-obstacle-tooltip">
-                    <Icon iconName="warning" margin='right' />
                     {name}
                 </button>
             </>

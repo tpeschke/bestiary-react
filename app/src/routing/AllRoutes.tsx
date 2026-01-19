@@ -10,7 +10,7 @@ import ConfrontationsEncounterDesign from "../pages/encounterDesign/pages/confro
 import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/CombatsEncounterDesign";
 import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
 import TreasurePage from "../pages/treasure/TreasurePage";
-import ObstacleCatalog from "../pages/obstacleIndex/ObstacleCatalog";
+import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalog";
 
 export default function AllRoutes() {
     return (

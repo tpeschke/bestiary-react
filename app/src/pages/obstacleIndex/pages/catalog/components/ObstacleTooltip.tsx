@@ -1,6 +1,6 @@
 import { Tooltip } from "react-tooltip"
-import Loading from "../../../components/loading/Loading"
-import { Obstacle } from "../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces"
+import Loading from "../../../../../components/loading/Loading"
+import { Obstacle } from "../../../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces"
 import ObstacleDisplayShell from "./components/ObstacleDisplayShell"
 
 interface Props {

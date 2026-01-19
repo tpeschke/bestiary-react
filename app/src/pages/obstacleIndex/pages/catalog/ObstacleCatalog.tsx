@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
-import Loading, { SetLoadingFunction } from '../../components/loading/Loading'
 import './ObstacleCatalog.css'
-import obstacleCatalogHook from './hooks/obstacleCatalogHook'
 import { ObstacleTile } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
 import ObstacleRow from './components/ObstacleRow'
-import { Tooltip } from 'react-tooltip'
-import { Obstacle } from '../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces'
-import ObstacleDisplay from '../../components/ObstaclesNChallenges/ObstacleDisplay'
 import ObstacleTooltip from './components/ObstacleTooltip'
+import { SetLoadingFunction } from '../../../../components/loading/Loading'
+import { Obstacle } from '../../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces'
+import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
 
 interface Props {
     setLoading?: SetLoadingFunction
