@@ -28,9 +28,8 @@ export default function ChallengePage({ setLoading }: Props) {
 
     return (
         <div className='card-background'>
-            {challenge && <ChallengeDisplay challenge={challenge} index={0} skillSkulls={0} title="full" />}
-            {/* TODO Show notes */}
             {/* TODO check beast view */}
+            {challenge && <ChallengeDisplay challenge={challenge} index={0} skillSkulls={0} title="full" />}
             {/* Links to related monsters */}
         </div>
     )
