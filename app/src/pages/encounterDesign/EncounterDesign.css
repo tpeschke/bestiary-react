@@ -2,7 +2,7 @@
     min-height: calc(100vh - 280px);
 }
 
-.card-background {
+.encounter-design-page .card-background {
     min-height: unset;
 }
 

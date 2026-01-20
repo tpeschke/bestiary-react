@@ -1,7 +1,7 @@
 import "./ChallengesDisplay.css"
 import { ChallengeDisplay } from "../../../../../../../../../../../../components/ObstaclesNChallenges/ChallengeDisplay";
 import Body from "../../../../../../../../../components/UI/body/Body";
-import { Challenge } from "../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces";
+import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 
 interface Props {
     challenges: Challenge[],

@@ -2,10 +2,10 @@ import './ChallengeDisplay.css'
 import mermaid from "mermaid";
 import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { Challenge, Obstacle } from "../../../../backend/server/interfaces/skillInterfaces";
 import ObstacleDisplay from "./ObstacleDisplay";
 import NameHeader from "../../pages/bestiary/beast/components/UI/nameHeader/nameHeader";
 import HTMLDisplay from "../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay";
+import { Challenge, Obstacle } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
 
 interface Props {
     title?: 'full',
@@ -56,10 +56,11 @@ export function ChallengeDisplay({ challenge, index, skillSkulls, title }: Props
     return (
         <>
             {title === 'full' ? (<NameHeader name={name} />) : (<h6>{name}</h6>)}
+            <div className={title === 'full' ? "full-float" : ""} id={`${index}`} ref={mermaidRef}></div>
             <div className={title === 'full' ? "notes-margin" : ""}>
+                {title === 'full' && <h2 className="border">Notes</h2>}
                 <HTMLDisplay html={notes} />
             </div>
-            <div id={`${index}`} ref={mermaidRef}></div>
             <Tooltip id={`${name}-obstacle-tooltip`}>
                 <ObstacleDisplay obstacle={obstacleInTooltip} skillSkulls={skillSkulls} />
             </Tooltip>

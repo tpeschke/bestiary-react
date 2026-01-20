@@ -1,0 +1,12 @@
+.challenge-page-shell {
+    min-height: calc(100vh - 280px);
+}
+
+.challenge-page-shell .card-background {
+    min-height: unset;
+}
+
+.related-beasts {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -1,6 +1,6 @@
+import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import query from "../../db/database"
 import { Response, Request } from "../../interfaces/apiInterfaces"
-import { Challenge } from "../../interfaces/skillInterfaces"
 import { sendErrorForwardNoFile, checkForContentTypeBeforeSending } from "../../utilities/sendingFunctions"
 import { getObstacleFromChallengeFlowchart } from "../bestiary/gameMaster/utilities/getUtilities/utilities/skillInfo/utilities/getChallenges"
 
