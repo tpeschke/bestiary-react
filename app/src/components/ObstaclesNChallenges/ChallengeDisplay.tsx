@@ -1,10 +1,13 @@
 import mermaid from "mermaid";
 import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import ObstacleDisplay from "../../../../../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay";
-import { Challenge, Obstacle } from "../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces";
+import { Challenge, Obstacle } from "../../../../backend/server/interfaces/skillInterfaces";
+import ObstacleDisplay from "./ObstacleDisplay";
+import Header from "../header/Header";
+import NameHeader from "../../pages/bestiary/beast/components/UI/nameHeader/nameHeader";
 
 interface Props {
+    title?: 'full',
     challenge: Challenge,
     index: number,
     skillSkulls: number
@@ -12,7 +15,7 @@ interface Props {
 
 mermaid.initialize({ theme: "neutral" });
 
-export function ChallengeDisplay({ challenge, index, skillSkulls }: Props) {
+export function ChallengeDisplay({ challenge, index, skillSkulls, title }: Props) {
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
     const { name, flowchart, obstacles } = challenge
@@ -51,7 +54,7 @@ export function ChallengeDisplay({ challenge, index, skillSkulls }: Props) {
 
     return (
         <>
-            <h6>{name}</h6>
+            {title === 'full' ? (<NameHeader name={name} />) : (<h6>{name}</h6>)}
             <div id={`${index}`} ref={mermaidRef}></div>
             <Tooltip id={`${name}-obstacle-tooltip`}>
                 <ObstacleDisplay obstacle={obstacleInTooltip} skillSkulls={skillSkulls} />

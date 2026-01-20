@@ -2,6 +2,7 @@ import { ObstacleTile } from "@bestiary/common/interfaces/obstacles/obstacleCata
 import axios from "axios"
 import Icon from "../../../../../../components/icon/Icon"
 import { obstacleSingleURL } from "../../../../../../frontend-config"
+import { Link } from "react-router-dom"
 
 interface TileProps {
     tile: ObstacleTile,
@@ -9,10 +10,10 @@ interface TileProps {
 }
 
 export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
-    const { obstacleid, name } = tile
+    const { obstacleid, challengeid, name } = tile
 
     const setObstacle = () => {
-        setObstacleToDisplay(axios.get(obstacleSingleURL + obstacleid).then(({data}) => data))
+        setObstacleToDisplay(axios.get(obstacleSingleURL + obstacleid).then(({ data }) => data))
     }
 
     if (obstacleid) {
@@ -26,9 +27,11 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
     }
 
     return (
-        <button className="blue">
-            <Icon iconName="chart" color="white" margin='right' />
-            {name}
-        </button>
+        <Link to={`/obstacles/challenge/${challengeid}`}>
+            <button className="blue">
+                <Icon iconName="chart" color="white" margin='right' />
+                {name}
+            </button>
+        </Link>
     )
 }

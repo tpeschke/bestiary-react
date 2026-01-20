@@ -11,6 +11,7 @@ import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/Comba
 import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
 import TreasurePage from "../pages/treasure/TreasurePage";
 import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalog";
+import ChallengePage from "../pages/obstacleIndex/pages/challenge/ChallengePage";
 
 export default function AllRoutes() {
     return (
@@ -72,6 +73,11 @@ export default function AllRoutes() {
                     <Loading>
                         <ObstacleCatalog />
                     </Loading>
+                } />
+                <Route path='challenge/:challengeId' element={
+                    <OwnerAuth>
+                        <ChallengePage />
+                    </OwnerAuth>
                 } />
                 <Route index element={<Navigate to='/obstacles' replace />} />
             </Route>

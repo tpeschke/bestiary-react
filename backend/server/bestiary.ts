@@ -36,7 +36,8 @@ import { createUser, findSession, findUser } from './db/user/basicSQL'
 import query from './db/database'
 import obstaclesCatalog from './routes/obstacles/obstaclesCatalog'
 import { collectObstacleCatalog } from './controllers/obstacleIndex/ObstacleCatalog'
-import obstacles from './routes/obstacles/obstacles'
+import obstacleRoutes from './routes/obstacles/obstacles'
+import challengeRoutes from './routes/obstacles/challenges'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -90,12 +91,13 @@ app.use('/image', imageRoutes)
 app.use('/lists', listRoutes)
 
 app.use('/obstacles-catalog', obstaclesCatalog)
-app.use('/obstacle', obstacles)
+app.use('/obstacle', obstacleRoutes)
+app.use('/challenge', challengeRoutes)
 
 // ================================== \\
 
 app.use(express.static(__dirname + `/../../app/dist`));
-app.get('/*', (request: Request, response: Response) => {
+app.get('/*', (_: Request, response: Response) => {
     response.sendFile(path.join(__dirname + '/../../app/dist/index.html'))
 })
 

@@ -2,8 +2,8 @@
 import express from 'express'
 import { getObstaclesById } from '../../controllers/obstacleIndex/obstacles'
 
-const obstacles = express.Router()
+const obstacleRoutes = express.Router()
 
-obstacles.get('/:obstacleId', getObstaclesById)
+obstacleRoutes.get('/:obstacleId', getObstaclesById)
 
-export default obstacles
+export default obstacleRoutes

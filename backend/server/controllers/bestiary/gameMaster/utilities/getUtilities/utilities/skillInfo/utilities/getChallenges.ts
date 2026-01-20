@@ -19,7 +19,7 @@ export async function getChallenges(beastId: number): Promise<Challenge[]> {
     return []
 }
 
-async function getObstacleFromChallengeFlowchart(flowchart: string) {
+export async function getObstacleFromChallengeFlowchart(flowchart: string) {
     let obstaclesArray: string[] = []
 
     let currentObstacleName = ""

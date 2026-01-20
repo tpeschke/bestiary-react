@@ -6,7 +6,14 @@ export interface Challenge {
     flowchart: string,
     type: string,
     notes: string,
-    obstacles: ObstacleNameObject
+    obstacles: ObstacleNameObject,
+    relatedBeasts?: RelatedBeasts[]
+}
+
+interface RelatedBeasts {
+    id: number,
+    beastid: number,
+    name: string
 }
 
 interface ObstacleNameObject {
