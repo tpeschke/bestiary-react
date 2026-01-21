@@ -1,8 +1,8 @@
 import query from "../../db/database";
 import { Response, Request } from "../../interfaces/apiInterfaces"
 import { getObstacleComplications, getObstaclePairs } from "../../db/skill/obstacle";
-import { Obstacle } from "../../interfaces/skillInterfaces";
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../utilities/sendingFunctions";
+import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 

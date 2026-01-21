@@ -1,4 +1,5 @@
-import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+import { SizeCategories } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { GearCategory } from "./equipmentInterfaces"
 
 export interface ArmorCache {
     list: GearCategory[],

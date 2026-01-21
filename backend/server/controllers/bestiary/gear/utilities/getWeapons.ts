@@ -1,7 +1,8 @@
 import axios from "axios"
-import { srdEndpoint } from "../../../server-config"
 import { GearCategory } from "../interfaces/equipmentInterfaces"
-import { ProcessedWeaponDictionary, ReturnedWeaponType, ReturnedWeapon, DamageInfo } from "../interfaces/weaponInterfaces"
+import { ProcessedWeaponDictionary, ReturnedWeaponType, ReturnedWeapon } from "../interfaces/weaponInterfaces"
+import { srdEndpoint } from "../../../../server-config"
+import { DamageInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 
 export default async function getWeapons() {
     // I can't guarantee that each weapon will remain at the same index, even alphabetically, so I'm generating an index of the keys that I can 

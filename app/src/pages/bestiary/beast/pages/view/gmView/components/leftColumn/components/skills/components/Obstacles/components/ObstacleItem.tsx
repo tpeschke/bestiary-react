@@ -1,7 +1,7 @@
 import { Tooltip } from "react-tooltip"
 import ObstacleDisplay from "../../../../../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay"
 import Icon from "../../../../../../../../../../../../../components/icon/Icon"
-import { Obstacle } from "../../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces"
+import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 
 interface Props {
     obstacle: Obstacle,

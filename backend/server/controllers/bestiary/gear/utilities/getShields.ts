@@ -1,9 +1,9 @@
 import axios from "axios"
-import { srdEndpoint } from "../../../server-config"
 import { MEDIUM } from "../interfaces/armorInterfaces"
 import { GearCategory } from "../interfaces/equipmentInterfaces"
 import { ProcessedShieldDictionary, ReturnedShieldInfo, SMALL, LARGE } from "../interfaces/shieldInterfaces"
 import { processDR } from "./getArmor"
+import { srdEndpoint } from "../../../../server-config"
 
 export default async function getShield() {
     const { data: shieldData } = await axios.get(srdEndpoint + 'getShields')

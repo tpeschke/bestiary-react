@@ -1,6 +1,6 @@
 import { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces';
-import { UnsortedRole } from '../controllers/gameMaster/utilities/getUtilities/utilities/getRoleInfo';
 import { Item } from "../interfaces/bestiary/lootInterfaces";
+import { UnsortedRole } from '../controllers/bestiary/gameMaster/utilities/getUtilities/utilities/getRoleInfo';
 
 export function sortByRank(a: Conflict, b: Conflict): number {
     if (a.rank && b.rank) {

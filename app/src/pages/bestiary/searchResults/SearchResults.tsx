@@ -5,7 +5,7 @@ import { SearchResult } from '@bestiary/common/interfaces/search'
 import { useEffect } from 'react'
 import ResultCard from './components/resultCard/ResultCard'
 import SearchTopBar from './components/SearchTopBar/SearchTopBar'
-import { SetLoadingFunction } from '../../components/loading/Loading'
+import { SetLoadingFunction } from '../../../components/loading/Loading'
 
 interface Props {
     setLoading?: SetLoadingFunction

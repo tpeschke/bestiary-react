@@ -1,7 +1,7 @@
+import { Challenge, Obstacle, Complication, Pair } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import query from "../../../../../../../../db/database"
 import { getMonsterChallenges } from "../../../../../../../../db/skill/challenge"
 import { getObstacleByName, getObstacleComplications, getObstaclePairs } from "../../../../../../../../db/skill/obstacle"
-import { Challenge, Obstacle, Complication, Pair } from "../../../../../../../../interfaces/skillInterfaces"
 
 export async function getChallenges(beastId: number): Promise<Challenge[]> {
     const challenges = await query(getMonsterChallenges, beastId)

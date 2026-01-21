@@ -1,5 +1,5 @@
-import { DamageType } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+import { DamageType, ProcessedWeapon, SizeCategories } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { GearCategory } from "./equipmentInterfaces"
 
 export interface WeaponsCache {
     list: GearCategory[],
@@ -27,19 +27,3 @@ export interface ProcessedWeaponDictionary {
     [key: string]: ProcessedWeapon
 }
 
-export interface ProcessedWeapon {
-    name: string,
-    type: DamageType,
-    damage: DamageInfo,
-    size: SizeCategories,
-    recovery: number,
-    parry: number,
-    measure: number,
-    bonus: string,
-    range?: string
-}
-
-export interface DamageInfo {
-    dice: string[],
-    string: string,
-}

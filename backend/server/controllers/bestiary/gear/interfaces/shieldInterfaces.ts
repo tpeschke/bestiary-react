@@ -1,5 +1,6 @@
+import { SizeCategories } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { DamageReductionObject } from "./armorInterfaces"
-import { GearCategory, SizeCategories } from "./equipmentInterfaces"
+import { GearCategory } from "./equipmentInterfaces"
 
 export interface ShieldCache {
     list: GearCategory[],

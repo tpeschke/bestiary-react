@@ -10,7 +10,6 @@ import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoI
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/bestiary/lootInterfaces"
-import { Challenge, Obstacle } from "../../../../../interfaces/skillInterfaces"
 import { isOwner } from "../../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../../utilities/rarity"
 import { getCombatStats } from "./utilities/combatInfo/weaponInfo/getCombatInfo"
@@ -31,6 +30,7 @@ import formatCombatInfo from "./utilities/combatInfo/formatCombatInfo"
 import getPleroma from "./utilities/lootInfo/getPleroma"
 import getPalette from "./utilities/generalInfo/getPalette"
 import getStrategiesNLimits from "./utilities/combatInfo/getStrategiesNLimits"
+import { Challenge, Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 
 interface GetBeastOptions {
     isEditing: boolean,

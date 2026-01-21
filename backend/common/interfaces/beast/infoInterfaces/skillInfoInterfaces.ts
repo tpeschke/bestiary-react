@@ -1,4 +1,4 @@
-import { Challenge, Obstacle } from "../../../../server/interfaces/skillInterfaces";
+import { Obstacle, Challenge } from "../../obstacles/obstacleCatalog"
 
 export default interface SkillInfo {
     stress: number | string,

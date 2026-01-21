@@ -1,7 +1,6 @@
-import { IsSpecial, DamageType, Type } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { IsSpecial, DamageType, Type, ProcessedWeapon } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { getWeaponName } from "../../formatting/formatting"
 
-import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
 import getAttackMod from "./attackUtilities/getAttackMod"
 import getRangeIncrement from "./attackUtilities/getRangeIncrement"
 import getDamage from "./attackUtilities/getDamage"

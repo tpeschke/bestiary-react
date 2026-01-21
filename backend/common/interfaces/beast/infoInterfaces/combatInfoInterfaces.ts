@@ -1,4 +1,3 @@
-import { ProcessedWeapon } from "../../../../server/controllers/gear/interfaces/weaponInterfaces"
 import { Strength } from "../../calculationInterfaces"
 
 export default interface CombatInfo {
@@ -16,6 +15,25 @@ export default interface CombatInfo {
     limitNotes: string,
     strategiesNLimits?: StrategyNLimits[]
 }
+
+export interface ProcessedWeapon {
+    name: string,
+    type: DamageType,
+    damage: DamageInfo,
+    size: SizeCategories,
+    recovery: number,
+    parry: number,
+    measure: number,
+    bonus: string,
+    range?: string
+}
+
+export interface DamageInfo {
+    dice: string[],
+    string: string,
+}
+
+export type SizeCategories = 'S' | 'M' | 'L'
 
 export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
 export type IsSpecial = 'yes' | 'no' | 'kinda'

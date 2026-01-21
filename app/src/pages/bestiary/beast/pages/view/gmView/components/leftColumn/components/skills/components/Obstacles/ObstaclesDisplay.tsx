@@ -1,5 +1,5 @@
+import { Obstacle } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
 import Body from '../../../../../../../../../components/UI/body/Body'
-import { Obstacle } from '../../../../../../../../../interfaces/infoInterfaces/skillInfoInterfaces'
 import './ObstaclesDisplay.css'
 
 import ObstacleItem from "./components/ObstacleItem"
