@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { SetLoadingFunction } from "../../../../../../components/loading/Loading"
 import ObstacleDisplay from "../../../../../../components/ObstaclesNChallenges/ObstacleDisplay"
-import { Obstacle } from "../../../../../bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces"
+import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 
 interface DisplayShellProps {
     setLoading?: SetLoadingFunction,
@@ -20,5 +20,5 @@ export default function ObstacleDisplayShell({ setLoading, obstacleToDisplay }: 
         }
     }, [setLoading])
 
-    return <ObstacleDisplay obstacle={obstacle} skillSkulls={0} />
+    return <ObstacleDisplay obstacle={obstacle} skillSkulls={0} lowerText="Click on the Button to Copy a shortcut to this Obstacle." />
 }

@@ -74,12 +74,16 @@ export default function AllRoutes() {
                         <ObstacleCatalog />
                     </Loading>
                 } />
-                <Route path='challenge/:challengeId' element={
-                    <OwnerAuth>
-                        <ChallengePage />
-                    </OwnerAuth>
+                <Route path=':obstacleId' element={
+                    <Loading>
+                        <ObstacleCatalog />
+                    </Loading>
                 } />
-                <Route index element={<Navigate to='/obstacles' replace />} />
+                <Route path='challenge/:challengeId' element={
+                    <Loading>
+                        <ChallengePage />
+                    </Loading>
+                } />
             </Route>
             <Route path='encounters'>
                 <Route path='confrontations' element={

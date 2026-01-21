@@ -18,8 +18,8 @@ export default function ChallengePage({ setLoading }: Props) {
 
     useEffect(() => {
         if (setLoading) {
+            setLoading(false)
             axios.get(challengeSingleURL + challengeId).then(({ data }) => {
-                console.log(data)
                 setLoading(data)
                 setChallenge(data)
                 document.title = data.name + ' - Bonfire Obstacle Index'

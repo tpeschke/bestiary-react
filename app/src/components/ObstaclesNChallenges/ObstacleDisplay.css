@@ -6,3 +6,8 @@
 .obstacle-shell tr td:first-child {
     width: 25%;
 }
+
+.obstacle-shell > p {
+    text-align: center;
+    margin-top: 5px;
+}

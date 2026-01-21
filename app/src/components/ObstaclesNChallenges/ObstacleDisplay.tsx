@@ -1,15 +1,16 @@
 import './ObstacleDisplay.css'
 import Icon from '../icon/Icon';
 import HTMLDisplay from '../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay';
-import { Complication, Obstacle, Pair } from '../../pages/bestiary/beast/interfaces/infoInterfaces/skillInfoInterfaces';
 import { getDifficultyBySkullValue } from '../../pages/bestiary/beast/utilities/getDifficulty';
+import { Obstacle, Pair, Complication } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
 
 interface Props {
     obstacle: Obstacle | null,
-    skillSkulls: number
+    skillSkulls: number,
+    lowerText?: string
 }
 
-export default function ObstacleDisplay({ obstacle, skillSkulls }: Props) {
+export default function ObstacleDisplay({ obstacle, skillSkulls, lowerText }: Props) {
     if (!obstacle) { return <></> }
 
     const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
@@ -87,6 +88,7 @@ export default function ObstacleDisplay({ obstacle, skillSkulls }: Props) {
                     )}
                 </tbody>
             </table>
+            {lowerText && <p className='italic'>{lowerText}</p>}
         </div>
     )
 }
