@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart'
+export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray'
 
@@ -169,6 +169,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'chart':
             styling = "fa-solid fa-chart-diagram"
+            break
+        case 'edit':
+            styling = "fa-solid fa-pen-to-square"
             break
         default:
             break;

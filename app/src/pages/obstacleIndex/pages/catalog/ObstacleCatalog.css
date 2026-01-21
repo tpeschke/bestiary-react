@@ -24,3 +24,11 @@
     background: white;
     border-radius: 5px;
 }
+
+.obstacle-tile {
+    margin-right: 10px;
+}
+
+.card-background.catalog .obstacle-tile-row .obstacle-tile button {
+    margin: 5px 0;
+}

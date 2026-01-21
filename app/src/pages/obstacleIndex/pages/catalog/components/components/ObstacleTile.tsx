@@ -4,6 +4,8 @@ import Icon from "../../../../../../components/icon/Icon"
 import { obstacleSingleURL } from "../../../../../../frontend-config"
 import { Link } from "react-router-dom"
 import alertInfo from "../../../../../../components/alert/alerts"
+import { useSelector } from "react-redux"
+import { isOwner } from "../../../../../../redux/slices/userSlice"
 
 interface TileProps {
     tile: ObstacleTile,
@@ -11,6 +13,8 @@ interface TileProps {
 }
 
 export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
+    const userIsOwner = useSelector(isOwner)
+
     const { obstacleid, challengeid, name } = tile
 
     const setObstacle = () => {
@@ -51,11 +55,14 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
 
     if (obstacleid) {
         return (
-            <>
-                <button onClick={_ => copyQuickLink()} onMouseEnter={_ => setObstacle()} data-tooltip-id="catalog-obstacle-tooltip">
+            <div className="obstacle-tile" onMouseEnter={_ => setObstacle()} data-tooltip-id="catalog-obstacle-tooltip">
+                <button onClick={_ => copyQuickLink()}>
                     {name}
                 </button>
-            </>
+                {userIsOwner && (
+                    <button className="orange"><Icon iconName="edit" color="white" /></button>
+                )}
+            </div>
         )
     }
 
