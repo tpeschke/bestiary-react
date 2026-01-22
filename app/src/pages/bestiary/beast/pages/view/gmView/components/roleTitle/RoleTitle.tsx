@@ -44,7 +44,7 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
                 <div className="skull-frame">
                     <p><span data-tooltip-id="my-tooltip" data-tooltip-content={secondaryTooltip}>{secondaryRole ? `${secondaryRole} ` : ''} </span>{role} </p>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
-                        {formatSkullsForDisplay(tooltip, skulls)}
+                        {formatSkullsForDisplay(skulls)}
                     </span>
                 </div>
             }
@@ -52,9 +52,9 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
     )
 }
 
-function formatSkullsForDisplay(tooltip: string, skulls: number) {
+function formatSkullsForDisplay(skulls: number) {
     if (skulls === 0) {
-        return <Icon iconName="skull-outline" iconSize='h2' tooltip={tooltip} />
+        return <Icon iconName="skull-outline" iconSize='h2'/>
     }
-    return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} tooltip={tooltip} />)
+    return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'}/>)
 }

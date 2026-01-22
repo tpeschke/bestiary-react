@@ -10,7 +10,7 @@ export default function QuickLink({ copyQuickLink, hasModifier }: Props) {
 
     return (
         <button onClick={_ => copyQuickLink()} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
-            <Icon iconName="link" tooltip={tooltip} />
+            <Icon iconName="link" />
         </button>
     )
 }
