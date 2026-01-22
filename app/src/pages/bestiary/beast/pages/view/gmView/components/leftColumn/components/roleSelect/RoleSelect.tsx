@@ -22,7 +22,7 @@ interface OptionProp {
 export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleIndex, copyQuickLink, hasModifier = false }: Props) {
     const [currentSelectedOption, setCurrentSelectedOption] = useState<OptionProp | null>(null)
     const [roleOptions, setRoleOptions] = useState<OptionProp[] | null>(null)
-
+console.log(currentSelectedOption)
     useEffect(() => {
         const { roles } = roleInfo
         if (roles.length > 0) {
@@ -62,7 +62,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
                     <div className='role-options'>
                         {roleOptions.map(option => {
                             return (
-                                <button key={option.roleID} onClick={_ => updateRole(option)}>
+                                <button disabled={currentSelectedOption?.roleID === option.roleID} key={option.roleID} onClick={_ => updateRole(option)}>
                                     {option.roleName}
                                     <span>{option.rolesString} </span>
                                 </button>

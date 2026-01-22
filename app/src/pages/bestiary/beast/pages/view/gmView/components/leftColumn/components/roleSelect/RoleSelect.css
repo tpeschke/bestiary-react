@@ -28,7 +28,7 @@
     width: 49%;
 }
 
-.role-select-shell .role-options button:hover {
+.role-select-shell .role-options button:hover:enabled {
     background: #f3f3f3;
 }
 
