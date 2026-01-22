@@ -241,5 +241,10 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             </>
         )
     }
-    return <i onClick={onClick} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
+
+    if (tooltip) {
+        return <i onClick={onClick} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip} className={styling}></i>
+    }
+
+    return <i onClick={onClick} className={styling}></i>
 }

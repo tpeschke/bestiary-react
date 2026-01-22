@@ -15,8 +15,8 @@ export default function AppName() {
             </Link>
 
             <Link to={isObstacleIndex ? "/" : "/obstacles"}>
-                <button className='transparent-white'>
-                    <Icon iconName={isObstacleIndex ? 'monster' : 'book'} color='white' tooltip={isObstacleIndex ? 'Bestiary' : 'Obstacle Index'} iconSize='h2' />
+                <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content={isObstacleIndex ? 'Bestiary' : 'Obstacle Index'}>
+                    <Icon iconName={isObstacleIndex ? 'monster' : 'book'} color='white' iconSize='h2' />
                 </button>
             </Link>
         </div>

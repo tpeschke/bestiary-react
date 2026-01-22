@@ -20,20 +20,20 @@ export default function Header() {
                 <div className='header-nav'>
                     <EncounterDesignIcon />
                     <Link to="/treasure">
-                        <button className='transparent-white'>
-                            <Icon iconName='treasure' color='white' tooltip='Treasure Hoards' iconSize='h2' />
+                        <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Treasure Hoards'>
+                            <Icon iconName='treasure' color='white' iconSize='h2' />
                         </button>
                     </Link>
                     {userIsLoggedIn ?
                         <a href={signOutURL}>
-                            <button className='transparent-white'>
-                                <Icon iconName='log-out' color='white' tooltip='Log Out' iconSize='h2' />
+                            <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Log Out'>
+                                <Icon iconName='log-out' color='white' iconSize='h2' />
                             </button>
                         </a>
                         :
                         <a href={signInURL}>
-                            <button className='transparent-white'>
-                                <Icon iconName='log-in' color='white' tooltip='Log In' iconSize='h2' />
+                            <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Log In'>
+                                <Icon iconName='log-in' color='white' iconSize='h2' />
                             </button>
                         </a>
                     }
