@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function TraumaDisplay({ trauma, noTrauma, rollUnderTrauma }: Props) {
-    const traumaString = `${trauma} (${rollUnderTrauma})`
+    const traumaString = `${trauma} (${rollUnderTrauma} - w1)`
     const showTrauma = !noTrauma && trauma
 
     return (
@@ -16,7 +16,7 @@ export default function TraumaDisplay({ trauma, noTrauma, rollUnderTrauma }: Pro
             {showTrauma &&
                 <div className="trauma-pair-shell">
                     <div>
-                        <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip='What you need to roll under for the Trauma Check' /><p>)</p>
+                        <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip="The result of this Check determines the number of seconds this enemy is Trauma'd for" /><p>)</p>
                     </div>
                     <p>{traumaString}</p>
                 </div>
