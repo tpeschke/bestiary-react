@@ -22,7 +22,7 @@ interface OptionProp {
 export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleIndex, copyQuickLink, hasModifier = false }: Props) {
     const [currentSelectedOption, setCurrentSelectedOption] = useState<OptionProp | null>(null)
     const [roleOptions, setRoleOptions] = useState<OptionProp[] | null>(null)
-console.log(currentSelectedOption)
+
     useEffect(() => {
         const { roles } = roleInfo
         if (roles.length > 0) {

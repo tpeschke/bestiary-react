@@ -68,7 +68,7 @@ export default class GMBeastClass {
         this.selectedModifier = this.getSelectedModifier(roleModifier, modifier)
 
         this.castingTypeInfo = new CastingClass(castingInfo?.casting)
-        this.entrySpells = castingInfo.spells
+        this.entrySpells = castingInfo?.spells ?? []
 
         this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
     }

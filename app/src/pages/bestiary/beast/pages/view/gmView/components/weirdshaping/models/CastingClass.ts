@@ -8,23 +8,25 @@ export interface CastingDisplayType {
 const castingTypeDictionary = ['Augury', 'Wild Magic', 'Vancian', 'Manifesting', 'Adamic Commanding', 'Blood Pact']
 
 export default class CastingClass {
-    private castingTypesArray: boolean[]
-    private filteredCastingTypes: CastingDisplayType[]
-    private defaulttype: number | null
+    private castingTypesArray: boolean[] = []
+    private filteredCastingTypes: CastingDisplayType[] = []
+    private defaulttype: number | null = null
 
-    private spellnumberdie: string
+    private spellnumberdie: string = ''
 
-    private intialSelected: number;
+    private initialSelected: number = 0;
 
-    constructor(castingInfo: Casting) {
-        const { castingTypesArray, spellnumberdie, defaulttype } = castingInfo
-
-        this.castingTypesArray = castingTypesArray
-        this.spellnumberdie = spellnumberdie
-        this.defaulttype = defaulttype
-
-        this.filteredCastingTypes = this.filterCastingTypes()
-        this.intialSelected = this.getInitialSelected()
+    constructor(castingInfo: Casting | null) {
+        if (castingInfo) {
+            const { castingTypesArray, spellnumberdie, defaulttype } = castingInfo
+    
+            this.castingTypesArray = castingTypesArray
+            this.spellnumberdie = spellnumberdie
+            this.defaulttype = defaulttype
+    
+            this.filteredCastingTypes = this.filterCastingTypes()
+            this.initialSelected = this.getInitialSelected()
+        }
     }
 
     get castingTypes(): boolean[] {
@@ -39,8 +41,8 @@ export default class CastingClass {
         return this.defaulttype
     }
 
-    get getIntialSelected(): number {
-        return this.intialSelected
+    get getinitialSelected(): number {
+        return this.initialSelected
     }
 
     get getSpellNumberDie(): string {
