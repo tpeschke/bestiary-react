@@ -37,9 +37,9 @@ export default function ChallengePage({ setLoading }: Props) {
                     <>
                         <h2 className="border">Related Bestiary Entries</h2>
                         <div className="related-beasts">
-                            {challenge?.relatedBeasts?.map(({ beastid, name }) => {
+                            {challenge?.relatedBeasts?.map(({ beastid, name }, index) => {
                                 return (
-                                    <Link to={`/beast/${beastid}`}>
+                                    <Link key={index} to={`/beast/${beastid}`}>
                                         <button>{name}</button>
                                     </Link>
                                 )

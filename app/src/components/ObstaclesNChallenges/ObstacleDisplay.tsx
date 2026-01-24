@@ -69,9 +69,9 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                         <td>{success}</td>
                     </tr>}
                     {pairsOne && (
-                        pairsOne.map(({ name, body }: Pair) => {
+                        pairsOne.map(({ name, body }: Pair, index) => {
                             return (
-                                <tr className='standard-row'>
+                                <tr key={index} className='standard-row'>
                                     <td><strong>{name}</strong></td>
                                     <td>{body}</td>
                                 </tr>
