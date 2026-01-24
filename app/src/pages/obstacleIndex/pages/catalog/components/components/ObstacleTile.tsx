@@ -61,7 +61,7 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
                 </button>
                 {userIsOwner && (
                     <Link to={`edit/${obstacleid}`}>
-                        <button className="orange"><Icon iconName="edit" color="white" /></button>
+                        <button><Icon iconName="edit" /></button>
                     </Link>
                 )}
             </div>

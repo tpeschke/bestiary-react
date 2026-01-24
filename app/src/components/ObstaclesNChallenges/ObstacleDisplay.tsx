@@ -24,7 +24,9 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                 </thead>
                 <tbody>
                     <tr className='standard-row'>
-                        <td><strong>Difficulty</strong></td>
+                        <td>
+                            <strong>Difficulty</strong>
+                        </td>
                         <td>
                             {difficulty !== 'Universal' ? getDifficultyBySkullValue(skull) + '\n' : ''}
                             {difficulty}
