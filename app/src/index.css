@@ -177,7 +177,7 @@ th,
 td {
 	font-family: "Source Sans 3", sans-serif;
 	padding: 3px 5px;
-	vertical-align: bottom
+	white-space: break-spaces;
 }
 
 h1,

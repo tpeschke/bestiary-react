@@ -1,12 +1,12 @@
-export function getDifficultyBySkullValue(skullValue: number) {
+export function getDifficultyBySkullValue(skullValue: number = 0) {
     const difficultyDictionary = [
-        null,
-        '0 - s1 (d0 / d6 / d20)',
-        '6 - s1 (d4 / d8 / d12)',
-        '9 - s1 (d6 / d10 / d10)',
-        '12 - s1 (d8 / d12 / d8)',
-        '15 - n (d10 / d20 / d6)',
-        '18 - n (d12 / d20+d4 / d4)',
+        '0 - s1 (d0 / d4 / d20)',
+        '3 - s1 (d2 / d6 / d12)',
+        '6 - s1 (d4 / d8 / d10)',
+        '9 - s1 (d6 / d10 / d8)',
+        '12 - s1 (d8 / d12 / d6)',
+        '15 - n (d10 / d20 / d4)',
+        '18 - n (d12 / d20+d4 / d2)',
         '30 - n (d20 / d20+d6 / d0)'
     ]
 

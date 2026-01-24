@@ -5,10 +5,9 @@ import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 
 interface Props {
     obstacle: Obstacle,
-    skillSkulls: number
 }
 
-export default function ObstacleItem({ obstacle, skillSkulls }: Props) {
+export default function ObstacleItem({ obstacle }: Props) {
     return (
         <>
             <p data-tooltip-id={obstacle.stringid}>
@@ -16,7 +15,7 @@ export default function ObstacleItem({ obstacle, skillSkulls }: Props) {
                 <Icon iconName="eye" margin='left' />
             </p>
             <Tooltip id={obstacle.stringid}>
-                <ObstacleDisplay obstacle={obstacle} skillSkulls={skillSkulls} />
+                <ObstacleDisplay obstacle={obstacle} />
             </Tooltip>
         </>
     )

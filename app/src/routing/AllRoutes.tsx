@@ -86,7 +86,7 @@ export default function AllRoutes() {
                     </Loading>
                 } />
                 <Route path='edit/:obstacleId' element={
-                    <OwnerAuth>
+                    <OwnerAuth destination="/obstacles">
                         <EditObstacle />
                     </OwnerAuth>
                 } />

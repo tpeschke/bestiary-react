@@ -30,7 +30,7 @@ export default function ChallengePage({ setLoading }: Props) {
     return (
         <div className='challenge-page-shell'>
             <div className='card-background'>
-                {challenge && <ChallengeDisplay challenge={challenge} index={0} skillSkulls={0} title="full" />}
+                {challenge && <ChallengeDisplay challenge={challenge} index={0} title="full" />}
                 <h2 className="border">Related Bestiary Entries</h2>
                 <div className="related-beasts">
                     {challenge?.relatedBeasts?.map(({ beastid, name }) => {

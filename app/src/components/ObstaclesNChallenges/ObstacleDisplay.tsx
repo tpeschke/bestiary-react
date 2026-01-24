@@ -6,14 +6,13 @@ import { Obstacle, Pair, Complication } from '@bestiary/common/interfaces/obstac
 
 interface Props {
     obstacle: Obstacle | null,
-    skillSkulls: number,
     lowerText?: string
 }
 
-export default function ObstacleDisplay({ obstacle, skillSkulls, lowerText }: Props) {
+export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
     if (!obstacle) { return <></> }
 
-    const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
+    const { name, skull, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
 
     return (
         <div className="obstacle-shell">
@@ -27,7 +26,7 @@ export default function ObstacleDisplay({ obstacle, skillSkulls, lowerText }: Pr
                     {difficulty && <tr className='standard-row'>
                         <td><strong>Difficulty</strong></td>
                         <td>
-                            {skillSkulls && difficulty !== 'Universal' ? getDifficultyBySkullValue(skillSkulls) + '\n' : ''}
+                            {difficulty !== 'Universal' ? getDifficultyBySkullValue(skull) + '\n' : ''}
                             {difficulty}
                         </td>
                     </tr>}

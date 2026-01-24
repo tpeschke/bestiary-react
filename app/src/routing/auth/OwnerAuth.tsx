@@ -6,16 +6,17 @@ import Loading from "../../components/loading/Loading";
 
 interface Props {
     children: JSX.Element,
+    destination?: string
 }
 
-export default function OwnerAuth({ children }: Props) {
+export default function OwnerAuth({ children, destination = '/' }: Props) {
     const userIsOwner = useSelector(isOwner)
     const userInfoHasBeenFetched = useSelector(infoHasBeenFetched)
     const navigate = useNavigate()
 
     useEffect(() => {
         if (userInfoHasBeenFetched && !userIsOwner) {
-            navigate('/')
+            navigate(destination)
         }
     }, [children, userInfoHasBeenFetched])
 

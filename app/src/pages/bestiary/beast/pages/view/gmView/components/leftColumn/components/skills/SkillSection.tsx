@@ -46,8 +46,8 @@ export default function SkillSection({ skillInfo }: Props) {
                     </Body>
                 </>
             }
-            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles} skillSkulls={skillSkulls} />}
-            {challenges.length > 0 && <ChallengesDisplay challenges={challenges} skillSkulls={skillSkulls} />}
+            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles}/>}
+            {challenges.length > 0 && <ChallengesDisplay challenges={challenges}/>}
         </>
     )
 }

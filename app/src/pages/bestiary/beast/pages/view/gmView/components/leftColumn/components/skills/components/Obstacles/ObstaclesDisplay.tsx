@@ -5,17 +5,16 @@ import './ObstaclesDisplay.css'
 import ObstacleItem from "./components/ObstacleItem"
 
 interface Props {
-    obstacles: Obstacle[],
-    skillSkulls: number
+    obstacles: Obstacle[]
 }
 
-export default function ObstaclesDisplay({ obstacles, skillSkulls }: Props) {
+export default function ObstaclesDisplay({ obstacles }: Props) {
     return (
         <div className='obstacles-display-shell'>
             <h3>Obstacles</h3>
             <Body>
                 <>
-                    {obstacles.map((obstacle, index) => <ObstacleItem key={index} obstacle={obstacle} skillSkulls={skillSkulls} />)}
+                    {obstacles.map((obstacle, index) => <ObstacleItem key={index} obstacle={obstacle} />)}
                 </>
             </Body>
         </div>

@@ -20,5 +20,5 @@ export default function ObstacleDisplayShell({ setLoading, obstacleToDisplay }: 
         }
     }, [setLoading])
 
-    return <ObstacleDisplay obstacle={obstacle} skillSkulls={0} lowerText="Click on the Button to Copy a shortcut to this Obstacle." />
+    return <ObstacleDisplay obstacle={obstacle} lowerText="Click on the Button to Copy a shortcut to this Obstacle." />
 }

@@ -57,7 +57,7 @@ export default function ObstacleCatalog({ setLoading }: Props) {
             </div>
             {obstacleShortcut && showDialog && (
                 <div className='obstacle-shortcut-dialog' onClick={closeDialog}>
-                    <ObstacleDisplay obstacle={obstacleShortcut} skillSkulls={0} />
+                    <ObstacleDisplay obstacle={obstacleShortcut} />
                 </div>
             )}
         </>

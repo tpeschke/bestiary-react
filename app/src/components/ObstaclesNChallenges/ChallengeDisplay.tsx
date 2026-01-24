@@ -10,13 +10,12 @@ import { Challenge, Obstacle } from '@bestiary/common/interfaces/obstacles/obsta
 interface Props {
     title?: 'full',
     challenge: Challenge,
-    index: number,
-    skillSkulls: number
+    index: number
 }
 
 mermaid.initialize({ theme: "neutral" });
 
-export function ChallengeDisplay({ challenge, index, skillSkulls, title }: Props) {
+export function ChallengeDisplay({ challenge, index, title }: Props) {
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
     const { name, flowchart, obstacles, notes } = challenge
@@ -62,7 +61,7 @@ export function ChallengeDisplay({ challenge, index, skillSkulls, title }: Props
                 <HTMLDisplay html={notes} />
             </div>
             <Tooltip id={`${name}-obstacle-tooltip`}>
-                <ObstacleDisplay obstacle={obstacleInTooltip} skillSkulls={skillSkulls} />
+                <ObstacleDisplay obstacle={obstacleInTooltip} />
             </Tooltip>
         </>
     )
