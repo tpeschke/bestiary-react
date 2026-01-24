@@ -12,6 +12,7 @@ import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges
 import TreasurePage from "../pages/treasure/TreasurePage";
 import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalog";
 import ChallengePage from "../pages/obstacleIndex/pages/challenge/ChallengePage";
+import EditObstacle from "../pages/obstacleIndex/pages/edit/EditObstacle";
 
 export default function AllRoutes() {
     return (
@@ -83,6 +84,11 @@ export default function AllRoutes() {
                     <Loading>
                         <ChallengePage />
                     </Loading>
+                } />
+                <Route path='edit/:obstacleId' element={
+                    <OwnerAuth>
+                        <EditObstacle />
+                    </OwnerAuth>
                 } />
             </Route>
             <Route path='encounters'>

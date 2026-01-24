@@ -12,9 +12,7 @@ interface GetRequest extends Request {
     }
 }
 
-const getObstacles = `select * from obBase b
-left join bbBeastSingleObstacle o on b.id = o.obstacleID
-where b.id = $1`
+const getObstacles = `select * from obBase b where id = $1`
 
 export async function getObstaclesById(request: GetRequest, response: Response) {
     const obstacleId: number = +request.params.obstacleId
