@@ -27,20 +27,26 @@ export default function ChallengePage({ setLoading }: Props) {
         }
     }, [challengeId])
 
+    const hasRelatedBeasts = challenge?.relatedBeasts && challenge?.relatedBeasts?.length > 0
+
     return (
         <div className='challenge-page-shell'>
             <div className='card-background'>
                 {challenge && <ChallengeDisplay challenge={challenge} index={0} title="full" />}
-                <h2 className="border">Related Bestiary Entries</h2>
-                <div className="related-beasts">
-                    {challenge?.relatedBeasts?.map(({ beastid, name }) => {
-                        return (
-                            <Link to={`/beast/${beastid}`}>
-                                <button>{name}</button>
-                            </Link>
-                        )
-                    })}
-                </div>
+                {hasRelatedBeasts && (
+                    <>
+                        <h2 className="border">Related Bestiary Entries</h2>
+                        <div className="related-beasts">
+                            {challenge?.relatedBeasts?.map(({ beastid, name }) => {
+                                return (
+                                    <Link to={`/beast/${beastid}`}>
+                                        <button>{name}</button>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )

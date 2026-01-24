@@ -55,11 +55,13 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
     return (
         <>
             {title === 'full' ? (<NameHeader name={name} />) : (<h6>{name}</h6>)}
+
             <div className={title === 'full' ? "full-float" : ""} id={`${index}`} ref={mermaidRef}></div>
-            <div className={title === 'full' ? "notes-margin" : ""}>
+            
+            {notes && <div className={title === 'full' ? "notes-margin" : ""}>
                 {title === 'full' && <h2 className="border">Notes</h2>}
                 <HTMLDisplay html={notes} />
-            </div>
+            </div>}
             <Tooltip id={`${name}-obstacle-tooltip`}>
                 <ObstacleDisplay obstacle={obstacleInTooltip} />
             </Tooltip>
