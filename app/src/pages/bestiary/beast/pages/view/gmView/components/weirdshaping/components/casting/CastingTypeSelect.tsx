@@ -17,7 +17,7 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
 
     useEffect(() => {
         if (!selected) {
-            setSelected(castingTypes.getIntialSelected)
+            setSelected(castingTypes.getInitialSelected)
         }
     }, [])
 

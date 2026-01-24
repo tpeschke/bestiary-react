@@ -25,7 +25,7 @@ export default class CastingClass {
             this.defaulttype = defaulttype
     
             this.filteredCastingTypes = this.filterCastingTypes()
-            this.initialSelected = this.getInitialSelected()
+            this.initialSelected = this.getInitialCastingType()
         }
     }
 
@@ -41,7 +41,7 @@ export default class CastingClass {
         return this.defaulttype
     }
 
-    get getinitialSelected(): number {
+    get getInitialSelected(): number {
         return this.initialSelected
     }
 
@@ -61,7 +61,7 @@ export default class CastingClass {
         }, []);
     }
 
-    private getInitialSelected(): number {
+    private getInitialCastingType(): number {
         if (this.defaulttype === null) {
             return Math.floor(Math.random() * this.filteredCastingTypes.length)
         }
