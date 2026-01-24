@@ -23,13 +23,13 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {difficulty && <tr className='standard-row'>
+                    <tr className='standard-row'>
                         <td><strong>Difficulty</strong></td>
                         <td>
                             {difficulty !== 'Universal' ? getDifficultyBySkullValue(skull) + '\n' : ''}
                             {difficulty}
                         </td>
-                    </tr>}
+                    </tr>
                     {time && <tr className='standard-row'>
                         <td><strong>Time</strong></td>
                         <td>{time}</td>
