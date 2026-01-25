@@ -6,6 +6,7 @@ import ObstacleDisplay from "./ObstacleDisplay";
 import NameHeader from "../../pages/bestiary/beast/components/UI/nameHeader/nameHeader";
 import HTMLDisplay from "../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay";
 import { Challenge, Obstacle } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
+import { Link } from 'react-router-dom';
 
 interface Props {
     title?: 'full',
@@ -18,7 +19,7 @@ mermaid.initialize({ theme: "neutral" });
 export function ChallengeDisplay({ challenge, index, title }: Props) {
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
-    const { name, flowchart, obstacles, notes } = challenge
+    const { id, name, flowchart, obstacles, notes } = challenge
     const mermaidRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -54,10 +55,16 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
 
     return (
         <>
-            {title === 'full' ? (<NameHeader name={name} />) : (<h6>{name}</h6>)}
+            {title === 'full' ? (
+                <NameHeader name={name} />
+            ) : (
+                <Link to={`/obstacles/challenge/${id}`} target="_blank">
+                    <h6>{name}</h6>
+                </Link>
+            )}
 
-            <div className={title === 'full' ? "full-float" : ""} id={`${index}`} ref={mermaidRef}></div>
-            
+            <div className="flow-chart" id={`${index}`} ref={mermaidRef}></div>
+
             {notes && <div className={title === 'full' ? "notes-margin" : ""}>
                 {title === 'full' && <h2 className="border">Notes</h2>}
                 <HTMLDisplay html={notes} />

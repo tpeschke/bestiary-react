@@ -39,7 +39,7 @@ export default function ChallengePage({ setLoading }: Props) {
                         <div className="related-beasts">
                             {challenge?.relatedBeasts?.map(({ beastid, name }, index) => {
                                 return (
-                                    <Link key={index} to={`/beast/${beastid}`}>
+                                    <Link key={index} to={`/beast/${beastid}`} target="_blank">
                                         <button>{name}</button>
                                     </Link>
                                 )
