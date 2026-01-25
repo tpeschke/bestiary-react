@@ -11,6 +11,7 @@ import { obstacleSingleURL } from '../../../../frontend-config'
 import ObstacleDisplay from '../../../../components/ObstaclesNChallenges/ObstacleDisplay'
 import { useSelector } from 'react-redux'
 import { getUserPatreon, isUserLoggedOn } from '../../../../redux/slices/userSlice'
+import alertInfo from '../../../../components/alert/alerts'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -37,7 +38,13 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
     useEffect(() => {
         if (obstacleId) {
-            axios.get(obstacleSingleURL + obstacleId).then(({ data }) => setObstacleShortcut(data))
+            axios.get(obstacleSingleURL + obstacleId).then(({ data }) => {
+                if (data.message) {
+                    alertInfo(data)
+                } else {
+                    setObstacleShortcut(data)
+                }
+            })
         }
     }, [obstacleId])
 
