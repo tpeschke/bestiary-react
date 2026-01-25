@@ -57,6 +57,54 @@ export default function EditObstacle({ setLoading }: Props) {
         }
     }
 
+    const exampleObstacle = {
+        "complicationsingle": null,
+        "difficulty": "",
+        "failure": "slip and fall, dealing d2 damage and obviously delaying the person",
+        "information": null,
+        "name": "Algae in a Standing Pool",
+        "notes": null,
+        "success": null,
+        "threshold": "4",
+        "time": null,
+        "type": "obstacle",
+        "stringid": "uMehr8XUjinu1i5cFnTFDvwRFTQ2LKBs8W3E53gq8ps5CCCJXH",
+        "id": 99,
+        "skull": 0,
+        "complications": [
+            {
+                "name": "1",
+                "body": "Boot gets stuck in slime",
+                "index": 0,
+                "stringid": "uMehr8XUjinu1i5cFnTFDvwRFTQ2LKBs8W3E53gq8ps5CCCJXH",
+                "id": 81
+            },
+            {
+                "name": "2",
+                "body": "Player slips but is able to catch themselves. They're now on all fours and covered in algae",
+                "index": 1,
+                "stringid": "uMehr8XUjinu1i5cFnTFDvwRFTQ2LKBs8W3E53gq8ps5CCCJXH",
+                "id": 83
+            },
+            {
+                "name": "3",
+                "body": "Piece of equipment drops into the slime and gets waterlogged",
+                "index": 2,
+                "stringid": "uMehr8XUjinu1i5cFnTFDvwRFTQ2LKBs8W3E53gq8ps5CCCJXH",
+                "id": 82
+            },
+            {
+                "name": "4",
+                "body": "Player has grabbed onto another player to steady themselves, unbalancing both of them",
+                "index": 3,
+                "stringid": "uMehr8XUjinu1i5cFnTFDvwRFTQ2LKBs8W3E53gq8ps5CCCJXH",
+                "id": 84
+            }
+        ],
+        "pairsTwo": [],
+        "pairsOne": []
+    }
+
     return (
         <>
             {obstacle && (

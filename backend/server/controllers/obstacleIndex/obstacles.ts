@@ -4,8 +4,7 @@ import { getObstacleComplications, getObstaclePairs } from "../../db/skill/obsta
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../utilities/sendingFunctions";
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import { isOwner } from "../../utilities/ownerAccess";
-import updateSkull from "./updateUtilities/updateSkull";
-import updateDifficulty from "./updateUtilities/updateDifficulty";
+import updateBasicObstacleInfo from "./updateUtilities/updateBasicObstacleInfo";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -49,11 +48,10 @@ export async function saveObstacle(request: saveRequest, response: Response) {
     const { body: obstacle, user } = request
 
     if (isOwner(user?.id)) {
-        const { id: obstacleId, skull, difficulty } = obstacle
+        const { id: obstacleId } = obstacle
 
         await Promise.all([
-            updateSkull(obstacleId, skull),
-            updateDifficulty(obstacleId, difficulty)
+            updateBasicObstacleInfo(obstacleId, obstacle),
         ])
 
         checkForContentTypeBeforeSending(response, { obstacleId })
