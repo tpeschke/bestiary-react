@@ -5,7 +5,7 @@ import { obstacleSingleURL } from "../../../../../../frontend-config"
 import { Link } from "react-router-dom"
 import alertInfo from "../../../../../../components/alert/alerts"
 import { useSelector } from "react-redux"
-import { isOwner } from "../../../../../../redux/slices/userSlice"
+import { getUserPatreon, isOwner } from "../../../../../../redux/slices/userSlice"
 
 interface TileProps {
     tile: ObstacleTile,
@@ -14,11 +14,19 @@ interface TileProps {
 
 export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
     const userIsOwner = useSelector(isOwner)
+    const userPatreon = useSelector(getUserPatreon)
 
     const { obstacleid, challengeid, name } = tile
 
     const setObstacle = () => {
-        setObstacleToDisplay(axios.get(obstacleSingleURL + obstacleid).then(({ data }) => data))
+        setObstacleToDisplay(axios.get(obstacleSingleURL + obstacleid).then(({ data }) => {
+            if (data.message) {
+                alertInfo(data)
+                return null
+            } else {
+                return data
+            }
+        }))
     }
 
     const copyQuickLink = () => {
@@ -53,7 +61,15 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
         return `${origin}${pathname}/${obstacleid}`
     }
 
-    if (obstacleid) {
+    if (obstacleid && userPatreon < 5) {
+        return (
+            <div className="obstacle-tile">
+                <button disabled={true}>
+                    {name}
+                </button>
+            </div>
+        )
+    } else if (obstacleid) {
         return (
             <div className="obstacle-tile" onMouseEnter={_ => setObstacle()} data-tooltip-id="catalog-obstacle-tooltip">
                 <button onClick={_ => copyQuickLink()}>
@@ -70,7 +86,7 @@ export default function Tile({ tile, setObstacleToDisplay }: TileProps) {
 
     return (
         <Link to={`/obstacles/challenge/${challengeid}`}>
-            <button className="blue">
+            <button className="blue" disabled={userPatreon < 5}>
                 <Icon iconName="chart" color="white" margin='right' />
                 {name}
             </button>

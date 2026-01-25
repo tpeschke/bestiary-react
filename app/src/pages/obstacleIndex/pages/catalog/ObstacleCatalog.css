@@ -32,3 +32,9 @@
 .card-background.catalog .obstacle-tile-row .obstacle-tile button {
     margin: 5px 0;
 }
+
+.obstacle-catalog h2.warning {
+    font-style: unset;
+    text-align: center;
+    margin: 15px 0;
+}

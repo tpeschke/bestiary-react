@@ -325,6 +325,11 @@ button.blue:hover {
 	background: #63747d;
 }
 
+button.blue:disabled:hover {
+	background: #8aa0ab;
+	cursor: default;
+}
+
 button.orange {
 	background: #ff5722;
 	color: white;

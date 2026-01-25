@@ -15,9 +15,9 @@ export default function GMAuth({ children, destination = '/' }: Props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // if (userInfoHasBeenFetched && userPatreon < 5) {
-        //     navigate(destination)
-        // }
+        if (userInfoHasBeenFetched && userPatreon < 5) {
+            navigate(destination)
+        }
     }, [children, userInfoHasBeenFetched])
 
     return (

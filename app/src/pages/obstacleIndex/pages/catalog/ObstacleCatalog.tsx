@@ -9,6 +9,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { obstacleSingleURL } from '../../../../frontend-config'
 import ObstacleDisplay from '../../../../components/ObstaclesNChallenges/ObstacleDisplay'
+import { useSelector } from 'react-redux'
+import { getUserPatreon, isUserLoggedOn } from '../../../../redux/slices/userSlice'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -16,6 +18,9 @@ interface Props {
 
 export default function ObstacleCatalog({ setLoading }: Props) {
     document.title = 'Bonfire Obstacle Index'
+
+    const userLoggedIn = useSelector(isUserLoggedOn)
+    const userPatreon = useSelector(getUserPatreon)
 
     const navigate = useNavigate()
     const { obstacleId } = useParams()
@@ -45,7 +50,10 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
     return (
         <>
-            <div className='card-background catalog'>
+            <div className='card-background catalog obstacle-catalog'>
+                {!userLoggedIn && <h2 className='warning'>You Need to be Logged On to View the Obstacles & Challenges on this Pages</h2>}
+                {(userLoggedIn && userPatreon < 5) && <h2 className='warning'>You Need to Upgrade Your Patreon to View the Obstacles & Challenges on this Pages</h2>}
+
                 {catalogItems.reduce((filteredArray: any[], catalogItem: ObstacleTile[], index: number) => {
                     if (catalogItem.length > 0) {
                         filteredArray.push(<ObstacleRow key={index} row={catalogItem} setObstacleToDisplay={setObstacleToDisplay} />)
