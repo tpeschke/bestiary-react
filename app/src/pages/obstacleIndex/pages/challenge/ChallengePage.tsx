@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import { SetLoadingFunction } from "../../../../components/loading/Loading"
 import axios from "axios"
 import { challengeSingleURL } from "../../../../frontend-config"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { ChallengeDisplay } from "../../../../components/ObstaclesNChallenges/ChallengeDisplay"
 import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
+import alertInfo from '../../../../components/alert/alerts'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -13,16 +14,22 @@ interface Props {
 
 export default function ChallengePage({ setLoading }: Props) {
     const { challengeId } = useParams()
-
+    const navigate = useNavigate()
+    
     const [challenge, setChallenge] = useState<Challenge | null>(null)
 
     useEffect(() => {
         if (setLoading) {
             setLoading(false)
             axios.get(challengeSingleURL + challengeId).then(({ data }) => {
-                setLoading(data)
-                setChallenge(data)
-                document.title = data.name + ' - Bonfire Obstacle Index'
+                if (data.message) {
+                    alertInfo(data)
+                    navigate('/obstacles')
+                } else {
+                    setLoading(data)
+                    setChallenge(data)
+                    document.title = data.name + ' - Bonfire Obstacle Index'
+                }
             })
         }
     }, [challengeId])

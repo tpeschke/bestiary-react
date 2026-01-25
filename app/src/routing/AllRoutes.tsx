@@ -13,6 +13,7 @@ import TreasurePage from "../pages/treasure/TreasurePage";
 import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalog";
 import ChallengePage from "../pages/obstacleIndex/pages/challenge/ChallengePage";
 import EditObstacle from "../pages/obstacleIndex/pages/edit/EditObstacle";
+import GMAuth from "./auth/GMAuth";
 
 export default function AllRoutes() {
     return (
@@ -81,9 +82,9 @@ export default function AllRoutes() {
                     </Loading>
                 } />
                 <Route path='challenge/:challengeId' element={
-                    <Loading>
+                    <GMAuth destination="/obstacles">
                         <ChallengePage />
-                    </Loading>
+                    </GMAuth>
                 } />
                 <Route path='edit/:obstacleId' element={
                     <OwnerAuth destination="/obstacles">
