@@ -4,4 +4,6 @@
 
 .flow-chart {
     background: white;
+    display: flex;
+    justify-content: center;
 }
