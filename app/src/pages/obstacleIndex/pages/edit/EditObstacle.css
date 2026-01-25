@@ -5,20 +5,54 @@
 
 .edit-obstacle-body {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     margin: 15px 0;
 }
 
 .edit-obstacle-body>div {
     display: flex;
-    width: 45%;
+    flex-direction: column;
+    width: 49%;
+}
+
+.edit-obstacle-body>div>div {
+    display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+}
+
+.edit-obstacle-body>div>div *:nth-child(2) {
+    width: 65%;
 }
 
 .edit-obstacle-body textarea {
     width: 50%;
     height: 100px;
     font-family: "Source Sans 3", sans-serif;
+    border: 1px solid lightgray
 }
 
+.obstacle-table {
+    flex-direction: column;
+}
+
+.obstacle-table div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+    /* This is my punishment for wanting to us the > instead of assigning a class name */
+    width: unset !important;
+}
+
+.obstacle-table div:first-child {
+    margin-top: 10px;
+}
+
+.obstacle-table p {
+    margin-right: 5px;
+}
+
+.obstacle-table input {
+    width: 95% !important;
+}
