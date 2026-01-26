@@ -5,7 +5,7 @@ import Icon from "../../icon/Icon";
 export default function AppName() {
     const location = useLocation();
 
-    const isObstacleIndex = location.pathname.substring(1,10) === "obstacles"
+    const isObstacleIndex = location.pathname.substring(1, 10) === "obstacles"
 
     return (
         <div className="app-name-component">
@@ -19,6 +19,14 @@ export default function AppName() {
                     <Icon iconName={isObstacleIndex ? 'monster' : 'book'} color='white' iconSize='h2' />
                 </button>
             </Link>
+
+            {isObstacleIndex && (
+                <Link to={"/obstacles/edit/0"}>
+                    <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Add Obstacle'>
+                        <Icon iconName='plus' color='white' iconSize='h2' />
+                    </button>
+                </Link>
+            )}
         </div>
     )
 }

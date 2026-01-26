@@ -1,8 +1,11 @@
 import query from "../../db/database"
 import { Request, Response } from "../../interfaces/apiInterfaces"
-import { ObstacleTile } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
+import { Obstacle, ObstacleTile } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
 
 import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
+import { isOwner } from "../../utilities/ownerAccess"
+import updateBasicObstacleInfo from "./updateUtilities/updateBasicObstacleInfo"
+import updateComplications from "./updateUtilities/updateComplications"
 
 let catalogCache: ObstacleTile[][] = []
 let newCache: ObstacleTile[][] = []
@@ -41,5 +44,29 @@ async function collectCache(index: number) {
         console.log('---------------------------------- ')
         console.log('--- Obstacle Catalog Collected --- ')
         console.log('---------------------------------- ')
+    }
+}
+
+interface saveRequest extends Request {
+    body: Obstacle
+}
+
+export async function saveObstacle(request: saveRequest, response: Response) {
+    const { user } = request
+    let { body: obstacle } = request
+
+    if (isOwner(user?.id)) {
+        const { id: obstacleId, complications, stringid } = obstacle
+
+        await Promise.all([
+            updateBasicObstacleInfo(obstacleId, obstacle),
+            updateComplications(stringid, complications)
+        ])
+
+        collectObstacleCatalog()
+
+        checkForContentTypeBeforeSending(response, { obstacleId })
+    } else {
+        checkForContentTypeBeforeSending(response, { color: 'red', message: "You Can't Edit Obstacles", type: 'message' })
     }
 }

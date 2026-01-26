@@ -28,7 +28,7 @@ interface ObstacleNameObject {
 
 export interface Obstacle {
     id: number,
-    beastid: number,
+    beastid?: number,
     obstacleid: number,
     name: string,
     skull: number,

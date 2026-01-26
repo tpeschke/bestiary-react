@@ -3,10 +3,7 @@ import { Response, Request } from "../../interfaces/apiInterfaces"
 import { getObstacleComplications, getObstaclePairs } from "../../db/skill/obstacle";
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../utilities/sendingFunctions";
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
-import { isOwner } from "../../utilities/ownerAccess";
-import updateBasicObstacleInfo from "./updateUtilities/updateBasicObstacleInfo";
 import makeID from "../../utilities/makeID";
-import updateComplications from "./updateUtilities/updateComplications";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -20,11 +17,11 @@ const getObstacles = `select * from obBase b where id = $1`
 
 export async function getObstaclesById(request: GetRequest, response: Response) {
     const patreon = request.user?.patreon
+    const obstacleId = +request.params.obstacleId
 
     if (patreon && patreon < 5) {
         checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Patreon to View Obstacles' })
-    } else {
-        const obstacleId: number = +request.params.obstacleId
+    } else if (patreon && patreon >= 5 && obstacleId > 0) {
 
         let [obstacle] = await query(getObstacles, obstacleId) as Obstacle[]
 
@@ -39,29 +36,24 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         } else {
             sendErrorForward('404', { message: 'No Obstacle Found' }, response)
         }
-    }
-}
+    } else if (patreon && patreon >= 5 && obstacleId === 0) {
+        const newObstacle: Obstacle = {
+            id: 0,
+            obstacleid: 0,
+            name: 'New Obstacle',
+            skull: 0,
+            difficulty: '',
+            notes: '',
+            complicationsingle: '',
+            failure: '',
+            information: '',
+            success: '',
+            threshold: '',
+            time: '',
+            type: 'obstacle',
+            stringid: makeID(50)
+        }
 
-interface saveRequest extends Request {
-    body: Obstacle
-}
-
-export async function saveObstacle(request: saveRequest, response: Response) {
-    const { user } = request
-    let { body: obstacle } = request
-
-    if (isOwner(user?.id)) {
-        const { id: obstacleId, complications } = obstacle
-
-        obstacle.stringid = obstacle.stringid ?? makeID(50)
-
-        await Promise.all([
-            updateBasicObstacleInfo(obstacleId, obstacle),
-            updateComplications(obstacle.stringid, complications)
-        ])
-
-        checkForContentTypeBeforeSending(response, { obstacleId })
-    } else {
-        checkForContentTypeBeforeSending(response, { color: 'red', message: "You Can't Edit Obstacles", type: 'message' })
+        checkForContentTypeBeforeSending(response, newObstacle)
     }
 }

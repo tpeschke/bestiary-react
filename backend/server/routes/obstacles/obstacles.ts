@@ -1,6 +1,7 @@
 // @ts-ignore
 import express from 'express'
-import { getObstaclesById, saveObstacle } from '../../controllers/obstacleIndex/obstacles'
+import { getObstaclesById } from '../../controllers/obstacleIndex/obstacles'
+import { saveObstacle } from '../../controllers/obstacleIndex/ObstacleCatalog'
 
 const obstacleRoutes = express.Router()
 
