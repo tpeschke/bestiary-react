@@ -5,6 +5,8 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import { isOwner } from "../../utilities/ownerAccess";
 import updateBasicObstacleInfo from "./updateUtilities/updateBasicObstacleInfo";
+import makeID from "../../utilities/makeID";
+import updateComplications from "./updateUtilities/updateComplications";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -45,13 +47,17 @@ interface saveRequest extends Request {
 }
 
 export async function saveObstacle(request: saveRequest, response: Response) {
-    const { body: obstacle, user } = request
+    const { user } = request
+    let { body: obstacle } = request
 
     if (isOwner(user?.id)) {
-        const { id: obstacleId } = obstacle
+        const { id: obstacleId, complications } = obstacle
+
+        obstacle.stringid = obstacle.stringid ?? makeID(50)
 
         await Promise.all([
             updateBasicObstacleInfo(obstacleId, obstacle),
+            updateComplications(obstacle.stringid, complications)
         ])
 
         checkForContentTypeBeforeSending(response, { obstacleId })
