@@ -41,18 +41,18 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                         <td><strong>Ease</strong></td>
                         <td>{threshold}</td>
                     </tr>}
-                    {complicationsingle && <tr className='standard-row'>
+                    {(complicationsingle || complications.length === 1) && <tr className='standard-row'>
                         <td><strong>Complication</strong></td>
-                        <td>{complicationsingle}</td>
+                        <td>{complicationsingle ? complicationsingle : complications[0].body}</td>
                     </tr>}
-                    {complications.length > 0 && (
+                    {complications.length > 1 && (
                         <>
                             <tr className='standard-row'>
                                 <td colSpan={2}><strong>Complications</strong></td>
                             </tr>
                             {complications.map(({ name, body }: Complication, index) => {
                                 return (
-                                    <tr key={index} className='standard-row'>
+                                    <tr key={index} className='standard-row complication-row'>
                                         <td>{name}</td>
                                         <td>{body}</td>
                                     </tr>

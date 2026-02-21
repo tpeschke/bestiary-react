@@ -11,3 +11,7 @@
     text-align: center;
     margin-top: 5px;
 }
+
+.obstacle-shell .complication-row td:first-child {
+    text-align: right;
+}
