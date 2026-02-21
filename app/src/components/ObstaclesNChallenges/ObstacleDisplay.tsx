@@ -3,19 +3,74 @@ import Icon from '../icon/Icon';
 import HTMLDisplay from '../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay';
 import { getDifficultyBySkullValue } from '../../pages/bestiary/beast/utilities/getDifficulty';
 import { Obstacle, Pair, Complication } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
+import SkullSelection from '../../pages/bestiary/beast/pages/edit/components/editBody/components/SkullSelection';
+import { useState } from 'react';
+import alertInfo from '../alert/alerts';
 
 interface Props {
     obstacle: Obstacle | null,
-    lowerText?: string
+    lowerText?: string,
+    modifiedSkull?: number | null,
+    hideCustomizations?: boolean
 }
 
-export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
+export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false }: Props) {
     if (!obstacle) { return <></> }
 
-    const { name, skull, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacle;
+    const [obstacleToShow, setObstacleToShow] = useState(obstacle)
+
+    const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacleToShow;
+    
+    let { skull } = obstacleToShow
+    skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
+
+    const updateSkull = (key: string, value: any) => {
+        const newObstacleToShow = {
+            ...obstacleToShow,
+            [key]: value
+        }
+        setObstacleToShow(newObstacleToShow)
+    }
+
+    const copyQuickLink = (event: any, addSkull: boolean = false) => {
+        event.stopPropagation()
+
+        let textArea = getTextArea()
+        const url = getURL(addSkull)
+
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            alertInfo({ color: "green", message: `"${name}" ${addSkull ? `@ ${skull} Skulls` : ""} shortcut successfully copied`, type: 'message' })
+        } catch (err) {
+            alertInfo({ color: "red", message: `Unable to copy "${name}" shortcut`, type: 'message' })
+        }
+        document.body.removeChild(textArea);
+    }
+
+    const getTextArea = () => {
+        let textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+
+        return textArea
+    }
+
+    const getURL = (addSkull: boolean = false) => {
+        const { origin, pathname } = window.location
+        if (addSkull) {
+            return `${origin}${pathname}?skull=${skull}`
+        }
+        return `${origin}${pathname}`
+    }
 
     return (
-        <div className="obstacle-shell">
+        <div className="obstacle-shell" onClick={event => event.stopPropagation()}>
             <table>
                 <thead>
                     <tr>
@@ -23,6 +78,11 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                     </tr>
                 </thead>
                 <tbody>
+                    {!hideCustomizations && <tr className='standard-row'>
+                        <td colSpan={2}>
+                            <SkullSelection currentSkullValue={skull} updateSkull={updateSkull} keyValue='skull' />
+                        </td>
+                    </tr>}
                     <tr className='standard-row'>
                         <td>
                             <strong>Difficulty</strong>
@@ -89,6 +149,8 @@ export default function ObstacleDisplay({ obstacle, lowerText }: Props) {
                     )}
                 </tbody>
             </table>
+            {!hideCustomizations && <button onClick={copyQuickLink}><Icon iconName='link' /></button>}
+            {obstacle.skull !== skull && <button onClick={event => copyQuickLink(event, true)}><Icon iconName='link' /><Icon iconName='plus' /><Icon iconName='skull' /></button>}
             {lowerText && <p className='italic'>{lowerText}</p>}
         </div>
     )

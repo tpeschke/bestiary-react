@@ -11,7 +11,7 @@ export function getDifficultyBySkullValue(skullValue: number = 0) {
     ]
 
     if (!skullValue || skullValue < 1) {
-        return difficultyDictionary[1]
+        return difficultyDictionary[0]
     }
     if (skullValue > difficultyDictionary.length) {
         return difficultyDictionary[difficultyDictionary.length - 1]

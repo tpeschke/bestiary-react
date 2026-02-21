@@ -1,3 +1,7 @@
+.obstacle-shell select {
+    width: 100%;
+}
+
 .obstacle-shell table {
     width: 350px;
     opacity: 1;

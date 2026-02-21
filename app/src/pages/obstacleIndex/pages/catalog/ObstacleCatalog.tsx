@@ -5,7 +5,7 @@ import ObstacleRow from './components/ObstacleRow'
 import ObstacleTooltip from './components/ObstacleTooltip'
 import { SetLoadingFunction } from '../../../../components/loading/Loading'
 import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import { obstacleSingleURL } from '../../../../frontend-config'
 import ObstacleDisplay from '../../../../components/ObstaclesNChallenges/ObstacleDisplay'
@@ -33,11 +33,23 @@ export default function ObstacleCatalog({ setLoading }: Props) {
         }
     }, [catalogItems])
 
+    const [searchParams] = useSearchParams();
+
     const [obstacleShortcut, setObstacleShortcut] = useState<Obstacle | null>(null)
+    const [modifiedSkull, setModifiedSkull] = useState<null | number>(null)
     const [showDialog, setShowDialog] = useState(true)
 
     useEffect(() => {
         if (obstacleId) {
+            setShowDialog(true)
+
+            const skullFromParam = searchParams.get("skull")
+            if (skullFromParam && !isNaN(+skullFromParam)) {
+                setModifiedSkull(+skullFromParam)
+            } else {
+                setModifiedSkull(null)
+            }
+
             axios.get(obstacleSingleURL + obstacleId).then(({ data }) => {
                 if (data.message) {
                     alertInfo(data)
@@ -50,10 +62,9 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
     const closeDialog = () => {
         setShowDialog(false)
+        setObstacleShortcut(null)
         navigate(`/obstacles`)
     }
-
-    const [obstacleToDisplay, setObstacleToDisplay] = useState<Promise<Obstacle | null>>(new Promise(resolve => resolve(null)))
 
     return (
         <>
@@ -63,16 +74,14 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
                 {catalogItems.reduce((filteredArray: any[], catalogItem: ObstacleTile[], index: number) => {
                     if (catalogItem.length > 0) {
-                        filteredArray.push(<ObstacleRow key={index} row={catalogItem} setObstacleToDisplay={setObstacleToDisplay} />)
+                        filteredArray.push(<ObstacleRow key={index} row={catalogItem} />)
                     }
                     return filteredArray
                 }, [])}
-
-                <ObstacleTooltip obstacleToDisplay={obstacleToDisplay} />
             </div>
             {obstacleShortcut && showDialog && (
                 <div className='obstacle-shortcut-dialog' onClick={closeDialog}>
-                    <ObstacleDisplay obstacle={obstacleShortcut} />
+                    <ObstacleDisplay obstacle={obstacleShortcut} modifiedSkull={modifiedSkull} />
                 </div>
             )}
         </>

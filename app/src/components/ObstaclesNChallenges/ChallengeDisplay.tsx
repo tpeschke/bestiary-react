@@ -70,7 +70,7 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
                 <HTMLDisplay html={notes} />
             </div>}
             <Tooltip id={`${name}-obstacle-tooltip`}>
-                <ObstacleDisplay obstacle={obstacleInTooltip} />
+                <ObstacleDisplay obstacle={obstacleInTooltip} hideCustomizations={true} />
             </Tooltip>
         </>
     )
