@@ -2,7 +2,7 @@ import './ObstacleDisplay.css'
 import Icon from '../icon/Icon';
 import HTMLDisplay from '../../pages/bestiary/beast/components/UI/htmlDisplay/htmlDisplay';
 import { getDifficultyBySkullValue } from '../../pages/bestiary/beast/utilities/getDifficulty';
-import { Obstacle, Pair, Complication } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
+import { Obstacle, Pair, Complication, SkullVariant } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
 import SkullSelection from '../../pages/bestiary/beast/pages/edit/components/editBody/components/SkullSelection';
 import { useState } from 'react';
 import alertInfo from '../alert/alerts';
@@ -19,8 +19,8 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
-    const { name, difficulty, time, threshold, complicationsingle, complications = [], failure, success, information, notes, pairsOne } = obstacleToShow;
-    
+    const { name, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
+
     let { skull } = obstacleToShow
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
 
@@ -146,6 +146,22 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                                 <HTMLDisplay html={notes} />
                             </td>
                         </tr>
+                    )}
+
+                    {skullVariants.length && (
+                        <>
+                            <tr className='standard-row'>
+                                <td colSpan={2}><strong>Variants</strong></td>
+                            </tr>
+                            {skullVariants.map(({ skullValue, body }: SkullVariant, index) => {
+                                return (
+                                    <tr key={index} className='standard-row complication-row'>
+                                        <td>{skullValue} <Icon iconName='skull' /></td>
+                                        <td>{body}</td>
+                                    </tr>
+                                )
+                            })}
+                        </>
                     )}
                 </tbody>
             </table>
