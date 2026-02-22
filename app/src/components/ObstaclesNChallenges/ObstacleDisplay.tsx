@@ -148,7 +148,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </tr>
                     )}
 
-                    {skullVariants.length && (
+                    {skullVariants.length > 0 && (
                         <>
                             <tr className='standard-row'>
                                 <td colSpan={2}><strong>Variants</strong></td>
@@ -161,6 +161,9 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                                     </tr>
                                 )
                             })}
+                            <tr>
+                                <td colSpan={2} className='italic'>These are suggestions; variations within variations exist that might further modify the Skull value of an Obstacle.</td>
+                            </tr>
                         </>
                     )}
                 </tbody>
