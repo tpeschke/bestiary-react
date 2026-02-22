@@ -64,7 +64,7 @@ export default function EditObstacle({ setLoading }: Props) {
     const addObstacleComplications = (event: any) => {
         const { value } = event.target
 
-        if (obstacle && obstacle.complications) {
+        if (value !== "" && obstacle && obstacle.complications) {
             const newObstacle: Obstacle = {
                 ...obstacle,
                 complications: [
@@ -80,7 +80,7 @@ export default function EditObstacle({ setLoading }: Props) {
             }
 
             setObstacle(newObstacle)
-        } else if (obstacle) {
+        } else if (value !== "" && obstacle) {
             const newObstacle: Obstacle = {
                 ...obstacle,
                 complications: [{
@@ -97,6 +97,63 @@ export default function EditObstacle({ setLoading }: Props) {
 
         event.target.value = null
     }
+
+    const updateObstacleSkullVariant = (index: number, key: string, value: string) => {
+        if (obstacle) {
+            const newObstacle: Obstacle = {
+                ...obstacle,
+                skullVariants: obstacle.skullVariants?.map((variant, variantIndex) => {
+                    if (index === variantIndex) {
+                        return {
+                            ...variant,
+                            [key]: key === "skullValue" ? +value : value
+                        }
+                    }
+                    return variant
+                })
+            }
+
+            setObstacle(newObstacle)
+        }
+    }
+
+    const addObstacleSkullVariant = (key: string, event: any) => {
+        const { value } = event.target
+
+        if (value !== "" && obstacle && obstacle.skullVariants) {
+            const newObstacle: Obstacle = {
+                ...obstacle,
+                skullVariants: [
+                    ...obstacle.skullVariants,
+                    {
+                        body: "",
+                        skullValue: 0,
+                        stringid: '',
+                        id: 0,
+                        [key]: key === "skullValue" ? +value : value
+                    }
+                ]
+            }
+
+            setObstacle(newObstacle)
+        } else if (value !== "" && obstacle) {
+            const newObstacle: Obstacle = {
+                ...obstacle,
+                skullVariants: [{
+                    body: "",
+                    skullValue: 0,
+                    stringid: '',
+                    id: 0,
+                    [key]: key === "skullValue" ? +value : value
+                }]
+            }
+
+            setObstacle(newObstacle)
+        }
+
+        event.target.value = null
+    }
+
 
     const saveObstacle = () => {
         if (obstacle) {
@@ -141,8 +198,6 @@ export default function EditObstacle({ setLoading }: Props) {
                                 <h2>Ease</h2>
                                 <input value={obstacle.threshold} onChange={event => updateObstacleValue('threshold', event.target.value)} />
                             </div>
-                        </div>
-                        <div>
                             <h2>Complications</h2>
                             <div className='obstacle-table'>
                                 {obstacle.complications?.map(({ index, body }) => {
@@ -155,6 +210,23 @@ export default function EditObstacle({ setLoading }: Props) {
                                 })}
                                 <div>
                                     <input onBlur={event => addObstacleComplications(event)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2>Skull Variants</h2>
+                            <div className='obstacle-table skull-variants'>
+                                {obstacle.skullVariants?.map(({ id, skullValue, body }, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <input onChange={event => updateObstacleSkullVariant(index, "skullValue", event.target.value)} value={skullValue} type='number' />
+                                            <input onChange={event => updateObstacleSkullVariant(index, "body", event.target.value)} value={body} />
+                                        </div>
+                                    )
+                                })}
+                                <div>
+                                    <input onBlur={event => addObstacleSkullVariant("skullValue", event)} placeholder='Skull' />
+                                    <input onBlur={event => addObstacleSkullVariant("body", event)} placeholder='Variants' />
                                 </div>
                             </div>
                             <div>

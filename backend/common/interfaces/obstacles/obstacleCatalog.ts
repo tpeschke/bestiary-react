@@ -45,6 +45,7 @@ export interface Obstacle {
     complications?: Complication[],
     pairsOne?: Pair[]
     pairsTwo?: Pair[]
+    skullVariants?: SkullVariant[]
 }
 
 export interface Complication {
@@ -62,4 +63,11 @@ export interface Pair {
     index: number,
     id: number,
     stringid: string
+}
+
+export interface SkullVariant {
+    id: number,
+    skullValue: number,
+    stringid: string,
+    body: string
 }

@@ -6,6 +6,7 @@ import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctio
 import { isOwner } from "../../utilities/ownerAccess"
 import updateBasicObstacleInfo from "./updateUtilities/updateBasicObstacleInfo"
 import updateComplications from "./updateUtilities/updateComplications"
+import updateSkullVariants from "./updateUtilities/updateSkullVariants"
 
 let catalogCache: ObstacleTile[][] = []
 let newCache: ObstacleTile[][] = []
@@ -56,11 +57,12 @@ export async function saveObstacle(request: saveRequest, response: Response) {
     let { body: obstacle } = request
 
     if (isOwner(user?.id)) {
-        const { id: obstacleId, complications, stringid } = obstacle
+        const { id: obstacleId, complications, stringid, skullVariants } = obstacle
 
         await Promise.all([
             updateBasicObstacleInfo(obstacleId, obstacle),
-            updateComplications(stringid, complications)
+            updateComplications(stringid, complications),
+            updateSkullVariants(stringid, skullVariants)
         ])
 
         collectObstacleCatalog()

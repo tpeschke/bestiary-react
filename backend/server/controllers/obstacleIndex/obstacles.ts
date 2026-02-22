@@ -1,6 +1,6 @@
 import query from "../../db/database";
 import { Response, Request } from "../../interfaces/apiInterfaces"
-import { getObstacleComplications, getObstaclePairs } from "../../db/skill/obstacle";
+import { getObstacleComplications, getObstaclePairs, getSkullVariants } from "../../db/skill/obstacle";
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../utilities/sendingFunctions";
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import makeID from "../../utilities/makeID";
@@ -28,6 +28,10 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         if (obstacle) {
             await Promise.all([
                 query(getObstacleComplications, obstacle.stringid).then((returnedComplications: any) => obstacle.complications = returnedComplications),
+                query(getSkullVariants, obstacle.stringid).then((returnedSkullVariants: any) => obstacle.skullVariants = returnedSkullVariants.map((variant: any) => ({
+                    ...variant,
+                    skullValue: variant.skullvalue
+                }))),
                 query(getObstaclePairs, [obstacle.stringid, 'pairone']).then((returnedPairs: any) => obstacle.pairsOne = returnedPairs),
                 query(getObstaclePairs, [obstacle.stringid, 'pairotwo']).then((returnedPairs: any) => obstacle.pairsTwo = returnedPairs)
             ])

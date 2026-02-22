@@ -45,6 +45,11 @@
     width: unset !important;
 }
 
+.obstacle-table.skull-variants div input:first-child {
+    margin-right: 15px;
+    width: 50px !important;
+}
+
 .obstacle-table div:first-child {
     margin-top: 10px;
 }
