@@ -4,7 +4,7 @@ import query from "../../../db/database";
 const addSkullVariantSQL = `insert into obSkullVariant (stringId, skullValue, body)
 values ($1, $2, $3)`
 
-const updateSkullVariantSQL = `update obComplications
+const updateSkullVariantSQL = `update obSkullVariant
 set skullValue = $3, body = $4 
 where stringId = $1 and id = $2`
 
