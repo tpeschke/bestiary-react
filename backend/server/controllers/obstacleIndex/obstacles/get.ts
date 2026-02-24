@@ -1,9 +1,9 @@
-import query from "../../db/database";
-import { Response, Request } from "../../interfaces/apiInterfaces"
-import { getObstacleComplications, getObstaclePairs, getSkullVariants } from "../../db/skill/obstacle";
-import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../utilities/sendingFunctions";
+import query from "../../../db/database";
+import { Response, Request } from "../../../interfaces/apiInterfaces"
+import { getObstacleComplications, getObstaclePairs, getSkullVariants } from "../../../db/skill/obstacle";
+import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
-import makeID from "../../utilities/makeID";
+import makeID from "../../../utilities/makeID";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 

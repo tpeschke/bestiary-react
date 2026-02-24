@@ -13,7 +13,8 @@ export default interface CombatInfo {
     defenses: DefenseInfo[],
     movements: Movement[],
     limitNotes: string,
-    strategiesNLimits?: StrategyNLimits[]
+    strategiesNLimits?: StrategyNLimits[],
+    options: StrategicOptions
 }
 
 export interface ProcessedWeapon {
@@ -229,4 +230,34 @@ export interface StrategyNLimits {
     baselineStrategies: string | null
     treasure: string | null,
     notes: string
+}
+
+export interface StrategicOptions {
+    obstacles: StrategicObstacles[],
+    commonAllies: CommonAllies[],
+    customs: Custom[],
+    other: OtherStrategicOption[]
+}
+
+export interface StrategicObstacles {
+    id: number,
+    obstacleid: number,
+    label: string | null,
+    obstaclename: string
+}
+
+export interface CommonAllies {
+    id: number,
+    name: string
+}
+
+export interface Custom {
+    id: number,
+    label: string,
+    emotion: string
+}
+
+export interface OtherStrategicOption {
+    id: number,
+    label: string
 }

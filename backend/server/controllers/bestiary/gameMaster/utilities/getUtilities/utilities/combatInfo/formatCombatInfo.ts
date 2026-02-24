@@ -41,6 +41,12 @@ export default function formatCombatInfo(
             knockback: calculateKnockBack(knockback, size),
             ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
             locationalVitalities: []
+        },
+        options: {
+            obstacles: [],
+            commonAllies: [],
+            customs: [],
+            other: []
         }
     }
 }

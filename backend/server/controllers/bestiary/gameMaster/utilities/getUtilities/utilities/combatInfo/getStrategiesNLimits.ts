@@ -16,7 +16,7 @@ export default async function getStrategiesNLimits(beastID: number): Promise<Str
             strategiesNote: strategiesnote,
             chaosNote: chaosnote,
             groupID: labelid,
-            beastID: beastid,
+            beastID: beastid
         }
     })
 }

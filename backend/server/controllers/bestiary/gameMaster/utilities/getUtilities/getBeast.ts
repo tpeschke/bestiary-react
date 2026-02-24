@@ -1,6 +1,6 @@
 import { Beast } from "@bestiary/common/interfaces/beast/beast"
 import { Casting, Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
-import { Movement, LocationVitality, StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Movement, LocationVitality, StrategyNLimits, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Scenario, Folklore, TablesObject, Palette } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { Variant, LocationObject, BeastType, ClimateObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
@@ -31,6 +31,7 @@ import getPleroma from "./utilities/lootInfo/getPleroma"
 import getPalette from "./utilities/generalInfo/getPalette"
 import getStrategiesNLimits from "./utilities/combatInfo/getStrategiesNLimits"
 import { Challenge, Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
+import getStrategicOptions from "./utilities/combatInfo/getStrategicOptions"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -161,6 +162,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
         getStrategiesNLimits(beast.id).then((strategiesNLimits: StrategyNLimits[]) => beast.combatInfo.strategiesNLimits = strategiesNLimits),
+        getStrategicOptions(beast.id).then((options: StrategicOptions) => beast.combatInfo.options = options),
 
         getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
 
@@ -189,7 +191,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         getCarriedScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }),
 
         getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting),
-        getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells)
+        getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells),        
     ]
 
     if (userID) {
