@@ -1,7 +1,7 @@
-import { StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { UpdateFunction } from "../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
+import { StrategicOptions, StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import { EditorProvider } from "@tiptap/react"
-import MenuBar from "../../../../../../components/textEditor/menuBar"
+import MenuBar from "../../../../../../../components/textEditor/menuBar"
 import StarterKit from "@tiptap/starter-kit"
 import TextStyle from '@tiptap/extension-text-style'
 import ListItem from '@tiptap/extension-list-item'
@@ -98,12 +98,6 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limi
 
             <br/>
             <EditorProvider onBlur={({ editor }) => updateCombatInfo('limitNotes', editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={limitNotes}></EditorProvider>
-
-            <h2 className="border">Strategies</h2>
-            Obstacles
-            Skill Challenges
-            Common Allies
-            Other
         </>
     )
 }

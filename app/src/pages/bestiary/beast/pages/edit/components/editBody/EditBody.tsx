@@ -13,9 +13,10 @@ import { UpdateSocialInfoFunctionsObject } from '../../../../hooks/updateUtiliti
 import SocialRoleSelect from './components/socialEdit/SocialRoleSelect';
 import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
-import StrategyEdit from './components/strategyEdit/StrategyEdit';
+import StrategyEdit from './components/strategyTab/strategyEdit/StrategyEdit';
 import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateGeneralInfo';
 import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
+import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/strategicOptions';
 
 interface Props {
     beast: GMBeastClass,
@@ -40,7 +41,7 @@ export default function EditBody({
 
     const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
     const { name } = generalInfo
-    const { strategiesNLimits, limitNotes } = combatInfo
+    const { strategiesNLimits, limitNotes, options } = combatInfo
 
     const { updateSocialInfo } = updateSocialInfoFunctions
     const { updateCombatInfo, updateNonRoleInfo } = updateCombatInfoFunctions
@@ -91,6 +92,7 @@ export default function EditBody({
                     <>
                         <h1>Strategies</h1>
                         <StrategyEdit strategiesNLimits={strategiesNLimits} limitNotes={limitNotes} updateCombatInfo={updateNonRoleInfo}/>
+                        <StrategicOptionsDisplay options={options} updateCombatInfo={updateNonRoleInfo}/>
                     </>
                 }
             </div>

@@ -1,0 +1,27 @@
+span.add-strategic-obstacles-shell {
+    display: flex;
+    align-items: center;
+}
+
+span.add-strategic-obstacles-shell input {
+    margin-right: 10px;
+}
+
+span.add-strategic-obstacles-shell ._3tcyg {
+    position: relative;
+}
+
+span.add-strategic-obstacles-shell ._WbEAz {
+    position: absolute;
+    background: whitesmoke;
+    min-width: 100%;
+}
+
+span.add-strategic-obstacles-shell ._WbEAz ul {
+    list-style-type: none;
+    padding: 0
+}
+
+span.add-strategic-obstacles-shell ._WbEAz ul li {
+    padding: 5px
+}
