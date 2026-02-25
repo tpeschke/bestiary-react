@@ -1,6 +1,6 @@
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import Movement from "./components/movement/MovementInfo"
-import TacticsAndStrategy from "./components/StrategiesNLimits/StrategiesNLimits"
+import TacticsAndStrategy from "../StrategiesNLimits/StrategiesNLimits"
 import DefenseDisplay from "./components/defenseDisplay/DefenseDisplay"
 import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"

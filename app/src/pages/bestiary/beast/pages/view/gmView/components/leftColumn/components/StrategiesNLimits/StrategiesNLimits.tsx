@@ -1,6 +1,6 @@
 import { StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import Body from "../../../../../../../../../components/UI/body/Body"
-import HTMLDisplay from "../../../../../../../../../components/UI/htmlDisplay/htmlDisplay"
+import Body from "../../../../../../../components/UI/body/Body"
+import HTMLDisplay from "../../../../../../../components/UI/htmlDisplay/htmlDisplay"
 import { Link } from "react-router-dom"
 
 interface Props {

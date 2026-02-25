@@ -1,0 +1,17 @@
+.strategic-options-component h3 {
+    background: unset;
+}
+
+.strategic-options-component > div {
+    padding: 0 5px
+}
+
+.strategic-options-component button {
+    background-color: #f3f3f3;
+    margin-bottom: 5px;
+    padding: 3px 10px;
+}
+
+.strategic-options-component button:hover {
+    background-color: #e1e7ea;
+}

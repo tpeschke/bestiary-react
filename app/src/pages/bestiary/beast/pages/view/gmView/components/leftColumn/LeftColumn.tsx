@@ -12,7 +12,8 @@ import ImageInfo from "../../../../../interfaces/infoInterfaces/ImageInfoInterfa
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import Pair from "../../../../../components/UI/pair/Pair"
-import StrategiesNLimits from "./components/combat/components/StrategiesNLimits/StrategiesNLimits"
+import StrategiesNLimits from "./components/StrategiesNLimits/StrategiesNLimits"
+import StrategicOptionsDisplay from "./components/StrategicOptions"
 
 interface Props {
     beastId: number,
@@ -46,6 +47,7 @@ export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, 
             <CombatSection combatInfo={combatInfo} size={size} />
             <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
             <StrategiesNLimits strategiesNLimits={combatInfo.strategiesNLimits} limitNotes={combatInfo.limitNotes} />
+            <StrategicOptionsDisplay options={combatInfo.options} skillSkulls={skillInfo.skillSkulls} />
         </>
     )
 }

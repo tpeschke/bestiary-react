@@ -11,10 +11,12 @@ interface Props {
     obstacle: Obstacle | null,
     lowerText?: string,
     modifiedSkull?: number | null,
-    hideCustomizations?: boolean
+    hideCustomizations?: boolean,
+    hideVariants?: boolean,
+    hideLinks?: boolean
 }
 
-export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false }: Props) {
+export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false, hideVariants = false, hideLinks = false }: Props) {
     if (!obstacle) { return <></> }
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
@@ -69,6 +71,13 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
         return `${origin}${pathname}`
     }
 
+    function formatSkullsForDisplay(skulls: number) {
+        if (skulls === 0) {
+            return <Icon iconName="skull-outline" iconSize='h2' />
+        }
+        return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} />)
+    }
+
     return (
         <div className="obstacle-shell" onClick={event => event.stopPropagation()}>
             <table>
@@ -81,6 +90,11 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                     {!hideCustomizations && <tr className='standard-row'>
                         <td colSpan={2}>
                             <SkullSelection currentSkullValue={skull} updateSkull={updateSkull} keyValue='skull' />
+                        </td>
+                    </tr>}
+                    {hideCustomizations && <tr className='standard-row'>
+                        <td colSpan={2}>
+                            {formatSkullsForDisplay(skull)}
                         </td>
                     </tr>}
                     <tr className='standard-row'>
@@ -148,7 +162,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </tr>
                     )}
 
-                    {skullVariants.length > 0 && (
+                    {(!hideVariants && skullVariants.length > 0) && (
                         <>
                             <tr className='standard-row'>
                                 <td colSpan={2}><strong>Variants</strong></td>
@@ -169,7 +183,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                 </tbody>
             </table>
             {!hideCustomizations && <button onClick={copyQuickLink}><Icon iconName='link' /></button>}
-            {obstacle.skull !== skull && <button onClick={event => copyQuickLink(event, true)}><Icon iconName='link' /><Icon iconName='plus' /><Icon iconName='skull' /></button>}
+            {(!hideLinks && obstacle.skull !== skull) && <button onClick={event => copyQuickLink(event, true)}><Icon iconName='link' /><Icon iconName='plus' /><Icon iconName='skull' /></button>}
             {lowerText && <p className='italic'>{lowerText}</p>}
         </div>
     )

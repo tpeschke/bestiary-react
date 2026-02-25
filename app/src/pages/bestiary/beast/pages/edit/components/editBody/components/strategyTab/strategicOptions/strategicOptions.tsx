@@ -12,21 +12,22 @@ interface Props {
     updateCombatInfo: UpdateFunction
 }
 
-export default function StrategicOptionsDisplay({ options }: Props) {
+export default function StrategicOptionsDisplay({ options, updateCombatInfo }: Props) {
     const { obstacles } = options
 
     function addObstacle() {
-        // const alteredStrategies = strategiesNLimits.map((strategy, index) => {
-        //     if (index === indexToChange) {
-        //         return {
-        //             ...strategy,
-        //             [key]: value
-        //         }
-        //     }
-        //     return strategy
-        // })
+        const fullNewObstacle = {
+            ...newObstacle
+        }
 
-        // updateCombatInfo('strategiesNLimits', alteredStrategies)
+        const alteredOptions = {
+            ...options,
+            obstacles: [...obstacles, fullNewObstacle]
+        }
+
+        updateCombatInfo('options', alteredOptions)
+        setObstacleOptions([])
+        setNewObstacle({...newObstacleTemplate})
     }
 
     const newObstacleTemplate = {
@@ -40,7 +41,7 @@ export default function StrategicOptionsDisplay({ options }: Props) {
         ...newObstacleTemplate
     })
 
-    const [obstacleOptions, setObstacleOptions] = useState<{ obstactleid: number, obstaclename: string }[]>([])
+    const [obstacleOptions, setObstacleOptions] = useState<{ obstacleid: number, obstaclename: string }[]>([])
     const [timeOutID, setTimeOutId] = useState<any | null>(null)
 
     const searchObstacleOptions = async (searchString: string) => {
@@ -68,13 +69,16 @@ export default function StrategicOptionsDisplay({ options }: Props) {
         <>
             <h2 className="border">Strategies</h2>
             <h3>Obstacles</h3>
+            {obstacles.map(obstacle => {
+                return <p key={(obstacle.label ?? '') + obstacle.id + obstacle.obstacleid}>{obstacle.label} ({obstacle.obstaclename})</p>
+            })}
             <span className='add-strategic-obstacles-shell'>
                 <input placeholder="Obstacle Label" onChange={event => setNewObstacle({
                     ...newObstacle,
                     label: event.target.value
                 })} />
-                <ComboBox defaultValue={newObstacle.label ?? ''} onSelect={option => addObstacleInfo(option)} onChange={event => searchObstacleOptions(event.target.value)} placeholder="Obstacle Name" options={obstacleOptions.map(option => option.obstaclename)} enableAutocomplete />
-                <button><Icon iconName='plus' tooltip='Add Obstacle' /></button>
+                <ComboBox onSelect={option => addObstacleInfo(option)} onChange={event => searchObstacleOptions(event.target.value)} placeholder="Obstacle Name" options={obstacleOptions.map(option => option.obstaclename)} enableAutocomplete />
+                <button onClick={addObstacle}><Icon iconName='plus' tooltip='Add Obstacle' /></button>
             </span>
 
             <h3>Common Allies</h3>

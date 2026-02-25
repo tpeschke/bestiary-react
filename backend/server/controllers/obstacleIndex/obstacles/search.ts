@@ -8,8 +8,8 @@ interface GetRequest extends Request {
     }
 }
 
-const searchObstaclesByName = `select b.id as obstactleid, name as obstaclename from obskullvariant sk
-join obbase b on b.stringid = sk.stringid 
+const searchObstaclesByName = `select b.id as obstacleID, name as obstacleName from obSkullVariant sk
+right join oBbase b on b.stringid = sk.stringid 
 where Upper(body) like Upper(( '%' || $1 || '%' )) or Upper(name) like Upper(( '%' || $1 || '%' ))
 group by b.id
 order by name;`
