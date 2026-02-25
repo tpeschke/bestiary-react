@@ -1,3 +1,9 @@
+.strategic-options-component > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .strategic-options-component h3 {
     background: unset;
 }

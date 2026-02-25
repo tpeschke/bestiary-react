@@ -6,6 +6,7 @@ export default interface SocialInfo {
     socialSkulls: number,
     skullIndex: number,
     capacity: number[],
+    baseConvictionRank: number,
     attackInfo: string,
     defenseInfo: string,
     archetypeInfo: ArchetypeInfo,

@@ -189,6 +189,7 @@ export default class GMBeastClass {
                 socialRole, socialSecondary,
                 socialSkulls,
                 capacity: getCapacity(skullIndex, socialRole, socialSecondary),
+                baseConvictionRank: calculateRankForCharacteristic('Convictions', skullIndex, role),
                 archetypeInfo: {
                     ...archetypeInfo,
                     hasArchetypes, hasMonsterArchetypes,
@@ -206,7 +207,7 @@ export default class GMBeastClass {
 
         return this.socialInfo
     }
-
+    
     private adjustCharacteristicRank = (type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
             if (!characteristic.socialRoleID || characteristic.socialRoleID === roleID || characteristic.allRoles) {

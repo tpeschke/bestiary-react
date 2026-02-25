@@ -8,14 +8,16 @@ import axios from 'axios';
 import alertInfo from '../../../../../../../../../components/alert/alerts';
 import { obstacleSingleURL } from '../../../../../../../../../frontend-config';
 import LoadingIndicator from '../../../../../../../../../components/loading/components/LoadingIndicator';
+import Icon from '../../../../../../../../../components/icon/Icon';
 
 interface Props {
     options: StrategicOptions,
-    skillSkulls: number
+    skillSkulls: number,
+    baseConvictionRank: number
 }
 
-export default function StrategicOptionsDisplay({ options, skillSkulls }: Props) {
-    const { obstacles } = options
+export default function StrategicOptionsDisplay({ options, skillSkulls, baseConvictionRank }: Props) {
+    const { obstacles, customs } = options
 
     const [obstacleCache, setObstacleCache] = useState<{ [key: string]: Obstacle }>({})
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
@@ -54,6 +56,18 @@ export default function StrategicOptionsDisplay({ options, skillSkulls }: Props)
                                 {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
                             </Tooltip>
                         </>
+                    )
+                })}
+            </div>
+            
+            <span>
+                <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
+                <p>Rank {baseConvictionRank}</p>
+            </span>
+            <div>
+                {customs.map(({ id, label, attack, defense }) => {
+                    return (
+                        <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}\nDef: ${defense}`}>{label}</button>
                     )
                 })}
             </div>

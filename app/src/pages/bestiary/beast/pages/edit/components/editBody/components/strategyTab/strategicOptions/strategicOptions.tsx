@@ -1,12 +1,8 @@
 import './strategicOptions.css'
-import { StrategicObstacles, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces";
-import { useState } from "react";
-import ComboBox from 'react-responsive-combo-box'
-import axios from "axios";
-import { obstacleSearchByNameURL } from "../../../../../../../../../../frontend-config";
-import Icon from '../../../../../../../../../../components/icon/Icon';
 import AddStrategicObstaclesDisplay from './components/addStrategicObstacles';
+import AddStrategicCustomsDisplay from './components/addCustoms';
 
 interface Props {
     options: StrategicOptions,
@@ -19,8 +15,7 @@ export default function StrategicOptionsDisplay({ options, updateCombatInfo }: P
         <>
             <h2 className="border">Strategies</h2>
             <AddStrategicObstaclesDisplay options={options} updateCombatInfo={updateCombatInfo} />
-
-            <h3>Customs</h3>
+            <AddStrategicCustomsDisplay options={options} updateCombatInfo={updateCombatInfo} />
 
             <h3>Other</h3>
         </>
