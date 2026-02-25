@@ -68,8 +68,8 @@ export default function AddStrategicObstaclesDisplay({ options, updateCombatInfo
         <>
             <h3>Obstacles</h3>
             <ul>
-                {obstacles.map(obstacle => {
-                    return <li key={(obstacle.label ?? '') + obstacle.id + obstacle.obstacleid}>{obstacle.label} ({obstacle.obstaclename})</li>
+                {obstacles.map(({label, id, obstacleid, obstaclename}) => {
+                    return <li key={(label ?? '') + id + obstacleid}>{label} {obstaclename && `(${obstaclename})`}</li>
                 })}
             </ul>
             <span className='add-strategic-obstacles-shell'>

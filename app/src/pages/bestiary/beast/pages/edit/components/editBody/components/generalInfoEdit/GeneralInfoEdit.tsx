@@ -49,6 +49,16 @@ export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunction
 
     const [entryOptions, setEntryOptions] = useState<{ id: number, name: string }[]>([])
 
+    const formatName = (name: string, plural: string | null) => {
+        if (plural) {
+            return plural
+        } else if (name.includes(',')) {
+            const [front, back] = name.split(',')
+            return `${back} ${front}s`
+        }
+        return name + 's'
+    }
+
     return (
         <div className="main-info-edit">
             <h2 className="border">Palette</h2>
@@ -67,7 +77,7 @@ export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunction
             <h3>Common Allies</h3>
             <div className='common-allies-shell'>
                 {commonAllies.map(({ allyid, name, plural }) => {
-                    return <Link key={allyid} to={`/beast/${allyid}`} target='_blank'>{plural ? plural : name + 's'}</Link>
+                    return <Link key={allyid} to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
                 })}
             </div>
             <ComboBox

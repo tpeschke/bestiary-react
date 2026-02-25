@@ -2,7 +2,7 @@ import { StrategicObstacles } from "@bestiary/common/interfaces/beast/infoInterf
 import query from "../../../../../../../../db/database";
 
 const getStrategicObstaclesSQL = `select so.id, obstacleid, label, name as obstaclename from bbStrategicObstacles so
-join obbase b on b.id = so.obstacleid
+left join obbase b on b.id = so.obstacleid
 where beastid = $1`
 
 export default async function getStrategicObstacles(beastID: number): Promise<StrategicObstacles[]> {

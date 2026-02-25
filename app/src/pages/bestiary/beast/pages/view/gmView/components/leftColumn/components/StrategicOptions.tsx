@@ -46,40 +46,54 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
 
     return (
         <div className='strategic-options-component'>
-            <h3>Obstacles</h3>
-            <div>
-                {obstacles.map(obstacle => {
-                    return (
-                        <Fragment key={obstacle.id}>
-                            <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
-                            <Tooltip id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>
-                                {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
-                            </Tooltip>
-                        </Fragment>
-                    )
-                })}
-            </div>
+            {obstacles.length > 0 && (
+                <>
+                    <h3>Obstacles</h3>
+                    <div>
+                        {obstacles.map(obstacle => {
+                            if (!obstacle.obstaclename) return <p key={obstacle.id}>{obstacle.label}</p>
 
-            <span>
-                <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
-                <p>Rank {baseConvictionRank}</p>
-            </span>
-            <div>
-                {customs.map(({ id, label, attack, defense }) => {
-                    return (
-                        <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}\nDef: ${defense}`}>{label}</button>
-                    )
-                })}
-            </div>
+                            return (
+                                <Fragment key={obstacle.id}>
+                                    <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                                    <Tooltip id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>
+                                        {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
+                                    </Tooltip>
+                                </Fragment>
+                            )
+                        })}
+                    </div>
+                </>
+            )}
 
-            <h3>Other Options</h3>
-            <div>
-                {other.map(({ id, label, tooltip }, index) => {
-                    if (tooltip) return <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>{label}</button>
+            {customs.length > 0 && (
+                <>
+                    <span>
+                        <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
+                        <p>Rank {baseConvictionRank}</p>
+                    </span>
+                    <div>
+                        {customs.map(({ id, label, attack, defense }) => {
+                            return (
+                                <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}\nDef: ${defense}`}>{label}</button>
+                            )
+                        })}
+                    </div>
+                </>
+            )}
 
-                    return <p key={id}>{label}</p>
-                })}
-            </div>
+            {other.length > 0 && (
+                <>
+                    <h3>Other Options</h3>
+                    <div>
+                        {other.map(({ id, label, tooltip }, index) => {
+                            if (tooltip) return <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>{label}</button>
+
+                            return <p key={id}>{label}</p>
+                        })}
+                    </div>
+                </>
+            )}
         </div>
     )
 }
