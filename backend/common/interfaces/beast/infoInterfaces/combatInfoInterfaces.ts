@@ -254,5 +254,6 @@ export interface Custom {
 
 export interface OtherStrategicOption {
     id: number,
-    label: string
+    label: string,
+    tooltip: string | null
 }

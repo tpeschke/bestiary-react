@@ -1,9 +1,6 @@
-import { Custom, StrategicObstacles, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { Custom, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { useState } from "react";
-import ComboBox from 'react-responsive-combo-box'
-import axios from "axios";
 import Icon from "../../../../../../../../../../../components/icon/Icon";
-import { obstacleSearchByNameURL } from "../../../../../../../../../../../frontend-config";
 import { UpdateFunction } from "../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces";
 
 interface Props {
@@ -24,7 +21,6 @@ export default function AddStrategicCustomsDisplay({ options, updateCombatInfo }
             customs: [...customs, fullNewCustom]
         }
         updateCombatInfo('options', alteredOptions)
-        setObstacleOptions([])
         setNewCustom({ ...newCustomTemplate })
     }
 
@@ -38,30 +34,6 @@ export default function AddStrategicCustomsDisplay({ options, updateCombatInfo }
     const [newCustom, setNewCustom] = useState<Custom>({
         ...newCustomTemplate
     })
-
-    const [obstacleOptions, setObstacleOptions] = useState<{ obstacleid: number, obstaclename: string }[]>([])
-    const [timeOutID, setTimeOutId] = useState<any | null>(null)
-
-    const searchObstacleOptions = async (searchString: string) => {
-        clearTimeout(timeOutID)
-
-        if (searchString !== '') {
-            setTimeOutId(setTimeout(async () => {
-                const result = await axios.get(obstacleSearchByNameURL + searchString)
-                setObstacleOptions(result.data)
-            }, 500))
-        } else {
-            setObstacleOptions([])
-        }
-    }
-
-    const addCustomsInfo = (option: string) => {
-        const obstacle = obstacleOptions.find((fullOption) => fullOption.obstaclename === option)
-        setNewCustom({
-            ...newCustom,
-            ...obstacle
-        })
-    }
 
     return (
         <>

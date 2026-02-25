@@ -3,6 +3,7 @@ import { StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfac
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces";
 import AddStrategicObstaclesDisplay from './components/addStrategicObstacles';
 import AddStrategicCustomsDisplay from './components/addCustoms';
+import AddStrategicOtherDisplay from './components/addOther';
 
 interface Props {
     options: StrategicOptions,
@@ -16,8 +17,7 @@ export default function StrategicOptionsDisplay({ options, updateCombatInfo }: P
             <h2 className="border">Strategies</h2>
             <AddStrategicObstaclesDisplay options={options} updateCombatInfo={updateCombatInfo} />
             <AddStrategicCustomsDisplay options={options} updateCombatInfo={updateCombatInfo} />
-
-            <h3>Other</h3>
+            <AddStrategicOtherDisplay options={options} updateCombatInfo={updateCombatInfo} />
         </>
     )
 } 
