@@ -54,7 +54,7 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
 
 function formatSkullsForDisplay(skulls: number) {
     if (skulls === 0) {
-        return <Icon iconName="skull-outline" iconSize='h2' color={'white'}/>
+        return <Icon iconName="skull-outline" iconSize='h2' color='gray'/>
     }
     return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'}/>)
 }
