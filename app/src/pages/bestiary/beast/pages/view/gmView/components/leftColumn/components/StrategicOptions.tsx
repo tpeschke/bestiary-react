@@ -21,8 +21,9 @@ export default function StrategicOptionsDisplay({ options, skillSkulls }: Props)
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
     async function showPopup(obstacle: StrategicObstacles) {
-        const { obstacleid } = obstacle
         setObstacleInTooltip(null)
+
+        const { obstacleid } = obstacle
 
         if (obstacleCache[obstacleid]) {
             setObstacleInTooltip(obstacleCache[obstacleid])
@@ -46,11 +47,15 @@ export default function StrategicOptionsDisplay({ options, skillSkulls }: Props)
             <h3>Obstacles</h3>
             <div>
                 {obstacles.map(obstacle => {
-                    return <button onMouseOver={_ => showPopup(obstacle)} onMouseLeave={_ => setObstacleInTooltip(null)} data-tooltip-id='strategic-obstacle-tooltip' key={obstacle.id}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                    return (
+                        <>
+                            <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`} key={obstacle.id}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                            <Tooltip id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>
+                                {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
+                            </Tooltip>
+                        </>
+                    )
                 })}
-                <Tooltip id={`strategic-obstacle-tooltip`}>
-                    {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
-                </Tooltip>
             </div>
         </div>
     )
