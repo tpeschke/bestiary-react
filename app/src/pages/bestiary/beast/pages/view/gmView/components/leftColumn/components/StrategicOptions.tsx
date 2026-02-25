@@ -1,5 +1,5 @@
 import { Obstacle } from '@bestiary/common/interfaces/obstacles/obstacleCatalog';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import './strategicOptions.css'
 import { StrategicObstacles, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Tooltip } from 'react-tooltip';
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function StrategicOptionsDisplay({ options, skillSkulls, baseConvictionRank }: Props) {
-    const { obstacles, customs } = options
+    const { obstacles, customs, other } = options
 
     const [obstacleCache, setObstacleCache] = useState<{ [key: string]: Obstacle }>({})
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
@@ -50,16 +50,16 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
             <div>
                 {obstacles.map(obstacle => {
                     return (
-                        <>
-                            <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`} key={obstacle.id}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                        <Fragment key={obstacle.id}>
+                            <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
                             <Tooltip id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>
                                 {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
                             </Tooltip>
-                        </>
+                        </Fragment>
                     )
                 })}
             </div>
-            
+
             <span>
                 <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
                 <p>Rank {baseConvictionRank}</p>
@@ -69,6 +69,15 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
                     return (
                         <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}\nDef: ${defense}`}>{label}</button>
                     )
+                })}
+            </div>
+
+            <h3>Other Options</h3>
+            <div>
+                {other.map(({ id, label, tooltip }, index) => {
+                    if (tooltip) return <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>{label}</button>
+
+                    return <p key={id}>{label}</p>
                 })}
             </div>
         </div>

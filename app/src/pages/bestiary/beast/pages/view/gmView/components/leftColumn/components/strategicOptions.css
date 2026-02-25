@@ -9,7 +9,13 @@
 }
 
 .strategic-options-component > div {
-    padding: 0 5px
+    padding: 0 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.strategic-options-component > div > p {
+    padding: 3px 10px
 }
 
 .strategic-options-component button {
