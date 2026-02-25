@@ -1,10 +1,12 @@
 import { StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import updateStrategicObstacles from "./utilities/updateStrategicObstacles";
+import updateStrategicCustoms from "./utilities/updateStrategicCustoms";
 
 export default async function updateStrategicOptions(beastID: number, options: StrategicOptions): Promise<any[]> {
-    const { obstacles } = options
+    const { obstacles, customs } = options
 
     return Promise.all([
-        updateStrategicObstacles(beastID, obstacles)
+        updateStrategicObstacles(beastID, obstacles),
+        updateStrategicCustoms(beastID, customs)
     ])
 }

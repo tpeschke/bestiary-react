@@ -248,7 +248,8 @@ export interface StrategicObstacles {
 export interface Custom {
     id: number,
     label: string,
-    emotion: string
+    attack: string,
+    defense: string,
 }
 
 export interface OtherStrategicOption {

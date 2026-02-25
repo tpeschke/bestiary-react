@@ -1,16 +1,17 @@
 import { StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import getStrategicObstacles from "./utilities/getStrategicObstacles";
+import getStrategicCustoms from "./utilities/getStrategicCustoms";
 
 export default async function getStrategicOptions(beastID: number): Promise<StrategicOptions> {
     let options: StrategicOptions = {
         obstacles: [],
-        commonAllies: [],
         customs: [],
         other: []
     }
 
     await Promise.all([
-        getStrategicObstacles(beastID).then(obstacles => options.obstacles = obstacles)
+        getStrategicObstacles(beastID).then(obstacles => options.obstacles = obstacles),
+        getStrategicCustoms(beastID).then(customs => options.customs = customs)
     ])
 
     return options
