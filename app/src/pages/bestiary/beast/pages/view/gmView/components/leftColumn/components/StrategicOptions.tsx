@@ -49,7 +49,7 @@ export default function StrategicOptionsDisplay({ options, skillSkulls }: Props)
                     return <button onMouseOver={_ => showPopup(obstacle)} onMouseLeave={_ => setObstacleInTooltip(null)} data-tooltip-id='strategic-obstacle-tooltip' key={obstacle.id}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
                 })}
                 <Tooltip id={`strategic-obstacle-tooltip`}>
-                    {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} hideLinks={true} /> : <LoadingIndicator stylings='' secondary={true} />}
+                    {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
                 </Tooltip>
             </div>
         </div>

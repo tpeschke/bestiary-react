@@ -13,10 +13,9 @@ interface Props {
     modifiedSkull?: number | null,
     hideCustomizations?: boolean,
     hideVariants?: boolean,
-    hideLinks?: boolean
 }
 
-export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false, hideVariants = false, hideLinks = false }: Props) {
+export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false, hideVariants = false }: Props) {
     if (!obstacle) { return <></> }
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
@@ -183,7 +182,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                 </tbody>
             </table>
             {!hideCustomizations && <button onClick={copyQuickLink}><Icon iconName='link' /></button>}
-            {(!hideLinks && obstacle.skull !== skull) && <button onClick={event => copyQuickLink(event, true)}><Icon iconName='link' /><Icon iconName='plus' /><Icon iconName='skull' /></button>}
+            {(!hideCustomizations && obstacle.skull !== skull) && <button onClick={event => copyQuickLink(event, true)}><Icon iconName='link' /><Icon iconName='plus' /><Icon iconName='skull' /></button>}
             {lowerText && <p className='italic'>{lowerText}</p>}
         </div>
     )
