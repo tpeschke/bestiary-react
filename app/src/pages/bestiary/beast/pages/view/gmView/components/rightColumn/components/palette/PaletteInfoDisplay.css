@@ -18,6 +18,25 @@
     margin-bottom: 5px;
 }
 
+.palette-display-shell .pair-shell.full-width {
+    width: 100%;
+}
+
+.palette-display-shell .pair-shell.full-width>div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.palette-display-shell .pair-shell.full-width>div>a {
+    font-size: 13px;
+    font-family: "Source Sans 3", sans-serif;
+    white-space: nowrap;
+}
+
+.palette-display-shell .pair-shell.full-width>div>p {
+    margin-right: 3px;
+}
+
 @media (max-width: 500px) {
     .palette-display-shell .pair-shell {
         width: 100%;

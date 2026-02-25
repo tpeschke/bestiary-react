@@ -5,7 +5,8 @@ const getPaletteSQL = `select * from bbPalette where beastID = $1`
 
 const getCommonAlliesSQL = `select ca.*, name, plural from bbCommonAllies ca
 join bbIndividualBeast m on m.id = ca.allyID
-where beastID = $1`
+where beastID = $1
+order by name`
 
 export default async function getPalette(beastID: number): Promise<Palette> {
     const [palette] = await query(getPaletteSQL, beastID)
@@ -14,6 +15,7 @@ export default async function getPalette(beastID: number): Promise<Palette> {
     if (palette) {
         return {
             ...palette,
+            commonAllies,
             groupDescriptions: palette.groupdescriptions
         }
     }

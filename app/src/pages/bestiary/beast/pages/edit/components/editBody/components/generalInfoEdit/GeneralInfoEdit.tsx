@@ -1,6 +1,11 @@
 import GeneralInfo from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 import './GeneralInfoEdit.css'
 import { UpdateGeneralInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateGeneralInfo'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import ComboBox from 'react-responsive-combo-box'
+import { searchURL } from '../../../../../../../../../frontend-config'
+import axios from 'axios'
 
 interface Props {
     generalInfo: GeneralInfo,
@@ -10,7 +15,39 @@ interface Props {
 export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunctions }: Props) {
     const { palette } = generalInfo
     const { updatePaletteInfo } = updateGeneralInfoFunctions
-    const { drives, needs, defenses, logistics, methods, groupDescriptions } = palette
+    const { drives, needs, defenses, logistics, methods, groupDescriptions, commonAllies } = palette
+
+    const updateCommonAllies = (option: string) => {
+        const newAlly = entryOptions.find((fullOption) => fullOption.name === option)
+        if (newAlly) {
+            const { id, name } = newAlly
+            const newCommonAllies = [...commonAllies, {
+                id: 0,
+                beastid: 0,
+                allyid: id,
+                name,
+                plural: null
+            }]
+            updatePaletteInfo('commonAllies', newCommonAllies)
+        }
+    }
+
+    const [timeOutID, setTimeOutId] = useState<any | null>(null)
+
+    const updateCommonAlliesOptions = async (name: string) => {
+        clearTimeout(timeOutID)
+
+        if (name !== '') {
+            setTimeOutId(setTimeout(async () => {
+                const { data }: any = await axios.get(searchURL + `?name=${name}`)
+                setEntryOptions(data)
+            }, 500))
+        } else {
+            setEntryOptions([])
+        }
+    }
+
+    const [entryOptions, setEntryOptions] = useState<{ id: number, name: string }[]>([])
 
     return (
         <div className="main-info-edit">
@@ -28,7 +65,18 @@ export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunction
             <h3>Group Descriptions</h3>
             <input placeholder='Group Descriptions' value={groupDescriptions ? groupDescriptions : ''} onChange={event => updatePaletteInfo('groupDescriptions', event.target.value)} />
             <h3>Common Allies</h3>
-            
+            <div className='common-allies-shell'>
+                {commonAllies.map(({ allyid, name, plural }) => {
+                    return <Link key={allyid} to={`/beast/${allyid}`} target='_blank'>{plural ? plural : name + 's'}</Link>
+                })}
+            </div>
+            <ComboBox
+                onSelect={option => updateCommonAllies(option)}
+                onChange={(event: any) => updateCommonAlliesOptions(event.target.value)}
+                placeholder="Entry Name"
+                options={entryOptions.map(option => option.name)}
+                enableAutocomplete
+            />
         </div>
     )
 }

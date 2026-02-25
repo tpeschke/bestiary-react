@@ -2,13 +2,15 @@ import './PaletteInfoDisplay.css'
 import { Palette } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Pair, { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
+import { Link } from 'react-router-dom'
+import { Fragment } from 'react/jsx-runtime'
 
 interface Props {
     palette: Palette
 }
 
 export default function PaletteInfoDisplay({ palette }: Props) {
-    const { drives, needs, defenses, logistics, methods, groupDescriptions } = palette
+    const { drives, needs, defenses, logistics, methods, groupDescriptions, commonAllies } = palette
 
     if (!drives && !needs && !defenses && !logistics && !methods && !groupDescriptions) {
         return <></>
@@ -44,6 +46,16 @@ export default function PaletteInfoDisplay({ palette }: Props) {
         tooltip: 'How you would describe a monster\'s defenses, logistics, equipment, and how you would describe how they act in a group.\nPlayers can leverage this to help their war, influencing the whole in ways they can’t influence an individual or smaller group.'
     }
 
+    const formatName = (name: string, plural: string | null) => {
+        if (plural) {
+            return plural
+        } else if (name.includes(',')) {
+            const [front, back] = name.split(',')
+            return `${back} ${front}s`
+        }
+        return name + 's'
+    }
+
     return (
         <div className='palette-display-shell'>
             <h2 className='border'>Palette</h2>
@@ -55,6 +67,21 @@ export default function PaletteInfoDisplay({ palette }: Props) {
                     {logistics && <Pair title='Logistics' info={logistics} icon={logisticsIcon} />}
                     {methods && <Pair title='Methods' info={methods} icon={methodsIcon} />}
                     {groupDescriptions && <Pair title='Group Descriptions' info={groupDescriptions} icon={groupDescriptionsIcon} />}
+                    {commonAllies.length > 0 && (
+                        <div className='pair-shell full-width'>
+                            <h3>Common Allies</h3>
+                            <div>
+                                {commonAllies.map(({ allyid, name, plural }, index) => {
+                                    return (
+                                        <Fragment key={allyid}>
+                                            <Link to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
+                                            {index < commonAllies.length - 1 && <p>, </p>}
+                                        </Fragment>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </>
             </Body>
         </div>

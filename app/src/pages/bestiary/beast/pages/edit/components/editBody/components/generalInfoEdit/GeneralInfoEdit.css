@@ -2,3 +2,30 @@
     width: 100%;
     margin-bottom: 10px;
 }
+
+.main-info-edit .common-allies-shell {
+    margin-bottom: 5px;
+}
+
+.main-info-edit .common-allies-shell a {
+    margin: 0 5px
+}
+
+.main-info-edit ._3tcyg {
+    position: relative;
+}
+
+.main-info-edit ._WbEAz {
+    position: absolute;
+    background: whitesmoke;
+    min-width: 100%;
+}
+
+.main-info-edit ._WbEAz ul {
+    list-style-type: none;
+    padding: 0
+}
+
+.main-info-edit ._WbEAz ul li {
+    padding: 5px
+}

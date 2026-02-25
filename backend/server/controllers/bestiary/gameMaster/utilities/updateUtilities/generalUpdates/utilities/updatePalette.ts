@@ -28,7 +28,7 @@ async function updateBasicPalette(beastID: number, palette: Palette) {
 }
 
 const addCommonAlly = `insert into bbCommonAllies (beastID, allyID)
-values $1, $2`
+values ($1, $2)`
 
 async function updateCommonAllies(beastID: number, commonAllies: CommonAllies[]) {
     return commonAllies.map(({id, allyid}) => {
