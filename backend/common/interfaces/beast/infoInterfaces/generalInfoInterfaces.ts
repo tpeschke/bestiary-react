@@ -45,7 +45,16 @@ export interface Palette {
     defenses: string | null,
     logistics: string | null,
     methods: string | null,
-    groupDescriptions: string | null
+    groupDescriptions: string | null,
+    commonAllies: CommonAllies[],
+}
+
+export interface CommonAllies {
+    id: number,
+    beastid: number,
+    allyid: number,
+    name: string,
+    plural: string | null
 }
 
 export interface TablesObject {

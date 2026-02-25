@@ -77,7 +77,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
                 defenses: null,
                 logistics: null,
                 methods: null,
-                groupDescriptions: null
+                groupDescriptions: null,
+                commonAllies: []
             }
         },
         imageInfo: {

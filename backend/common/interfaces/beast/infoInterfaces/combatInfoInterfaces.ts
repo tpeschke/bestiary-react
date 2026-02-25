@@ -234,7 +234,6 @@ export interface StrategyNLimits {
 
 export interface StrategicOptions {
     obstacles: StrategicObstacles[],
-    commonAllies: CommonAllies[],
     customs: Custom[],
     other: OtherStrategicOption[]
 }
@@ -244,11 +243,6 @@ export interface StrategicObstacles {
     obstacleid: number,
     label: string | null,
     obstaclename: string
-}
-
-export interface CommonAllies {
-    id: number,
-    name: string
 }
 
 export interface Custom {

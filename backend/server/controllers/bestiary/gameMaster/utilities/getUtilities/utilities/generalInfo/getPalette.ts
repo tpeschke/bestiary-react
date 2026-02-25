@@ -3,8 +3,13 @@ import query from "../../../../../../../db/database"
 
 const getPaletteSQL = `select * from bbPalette where beastID = $1`
 
+const getCommonAlliesSQL = `select ca.*, name, plural from bbCommonAllies ca
+join bbIndividualBeast m on m.id = ca.allyID
+where beastID = $1`
+
 export default async function getPalette(beastID: number): Promise<Palette> {
     const [palette] = await query(getPaletteSQL, beastID)
+    const commonAllies = await query(getCommonAlliesSQL, beastID)
 
     if (palette) {
         return {
@@ -19,6 +24,7 @@ export default async function getPalette(beastID: number): Promise<Palette> {
         defenses: null,
         logistics: null,
         methods: null,
-        groupDescriptions: null
+        groupDescriptions: null,
+        commonAllies
     }
 }

@@ -27,6 +27,8 @@ export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunction
             <input placeholder='Methods' value={methods ? methods : ''} onChange={event => updatePaletteInfo('methods', event.target.value)} />
             <h3>Group Descriptions</h3>
             <input placeholder='Group Descriptions' value={groupDescriptions ? groupDescriptions : ''} onChange={event => updatePaletteInfo('groupDescriptions', event.target.value)} />
+            <h3>Common Allies</h3>
+            
         </div>
     )
 }
