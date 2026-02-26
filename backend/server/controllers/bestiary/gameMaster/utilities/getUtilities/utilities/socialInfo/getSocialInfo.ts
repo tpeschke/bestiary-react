@@ -22,6 +22,7 @@ export default function formatSocialInfo(
         socialSkulls,
         skullIndex,
         capacity: getCapacity(skullIndex, socialRole, socialSecondary),
+        baseConvictionRank: 0,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
         conflicts: {

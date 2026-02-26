@@ -44,7 +44,6 @@ export default function formatCombatInfo(
         },
         options: {
             obstacles: [],
-            commonAllies: [],
             customs: [],
             other: []
         }
