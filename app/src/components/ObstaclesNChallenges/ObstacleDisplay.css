@@ -7,6 +7,10 @@
     opacity: 1;
 }
 
+.obstacle-shell tr th {
+	font-family: 'oldClaude';
+}
+
 .obstacle-shell tr td:first-child {
     width: 25%;
 }
