@@ -75,7 +75,7 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
                     <div>
                         {customs.map(({ id, label, attack, defense }) => {
                             return (
-                                <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}\nDef: ${defense}`}>{label}</button>
+                                <button key={id} data-tooltip-id="my-tooltip" data-tooltip-content={`Atk: ${attack}${defense && `\nDef: ${defense}`}`}>{label}</button>
                             )
                         })}
                     </div>
