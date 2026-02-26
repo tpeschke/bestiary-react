@@ -46,6 +46,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             obstacleid: 0,
             name: 'New Obstacle',
             skull: 0,
+            prompt: null,
             difficulty: '',
             notes: '',
             complicationsingle: '',

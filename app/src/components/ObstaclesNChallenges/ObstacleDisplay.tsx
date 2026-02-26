@@ -20,7 +20,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
-    const { name, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
+    const { name, prompt, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
 
     let { skull } = obstacleToShow
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
@@ -95,6 +95,10 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         <td colSpan={2}>
                             {formatSkullsForDisplay(skull)}
                         </td>
+                    </tr>}
+                    {prompt && <tr className='standard-row'>
+                        <td><strong>Prompt <Icon iconName='info' tooltip="When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position\nIf they do something that doesn't, -2 Position"/></strong></td>
+                        <td>{prompt}</td>
                     </tr>}
                     <tr className='standard-row'>
                         <td>

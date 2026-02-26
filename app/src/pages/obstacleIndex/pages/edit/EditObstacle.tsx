@@ -186,6 +186,10 @@ export default function EditObstacle({ setLoading }: Props) {
                                 <SkullSelection currentSkullValue={obstacle.skull} updateSkull={updateObstacleValue} keyValue="skull" />
                             </div>
                             <div>
+                                <h2>Prompt</h2>
+                                <input value={obstacle.prompt ?? ''} onChange={event => updateObstacleValue('prompt', event.target.value)} />
+                            </div>
+                            <div>
                                 <h2>Difficulty</h2>
                                 <textarea value={obstacle.difficulty} onChange={event => updateObstacleValue('difficulty', event.target.value)} />
                             </div>
