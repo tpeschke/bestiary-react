@@ -11,15 +11,15 @@ export function getRarity(rarityId: number): Rarity {
     const rarityDictionary: RarityDictionaryObject = {
         1: {
             rarityName: 'Legendary',
-            difficulty: '30 - n (d20 / d20+d6 / d0)'
+            difficulty: '18 - n (d12 / d20+d4 / d2)'
         },
         3: {
             rarityName: 'Rare',
-            difficulty: '15 - n (d10 / d20 / d6)'
+            difficulty: '12 - s1 (d8 / d12 / d6)'
         },
         5: {
             rarityName: 'Uncommon',
-            difficulty: '9 - s1 (d6 / d10 / d10)'
+            difficulty: '6 - s1 (d4 / d8 / d10)'
         },
         10: {
             rarityName: 'Common',
