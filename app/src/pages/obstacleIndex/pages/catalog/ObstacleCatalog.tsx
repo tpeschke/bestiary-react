@@ -38,7 +38,7 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
     const [obstacleShortcut, setObstacleShortcut] = useState<Obstacle | null>(null)
     const [modifiedSkull, setModifiedSkull] = useState<null | number>(null)
-    const [showDialog, setShowDialog] = useState(true)
+    const [showDialog, setShowDialog] = useState(false)
 
     useEffect(() => {
         if (obstacleId) {
