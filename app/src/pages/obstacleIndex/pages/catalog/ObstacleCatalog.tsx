@@ -12,6 +12,7 @@ import ObstacleDisplay from '../../../../components/ObstaclesNChallenges/Obstacl
 import { useSelector } from 'react-redux'
 import { getUserPatreon, isUserLoggedOn } from '../../../../redux/slices/userSlice'
 import alertInfo from '../../../../components/alert/alerts'
+import LoadingIndicator from '../../../../components/loading/components/LoadingIndicator'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -79,9 +80,10 @@ export default function ObstacleCatalog({ setLoading }: Props) {
                     return filteredArray
                 }, [])}
             </div>
-            {obstacleShortcut && showDialog && (
+            {showDialog && (
                 <div className='obstacle-shortcut-dialog' onClick={closeDialog}>
-                    <ObstacleDisplay obstacle={obstacleShortcut} modifiedSkull={modifiedSkull} />
+                    {!obstacleShortcut && <LoadingIndicator stylings={''} secondary={false} />}
+                    {obstacleShortcut && <ObstacleDisplay obstacle={obstacleShortcut} modifiedSkull={modifiedSkull} />}
                 </div>
             )}
         </>
