@@ -53,7 +53,7 @@ export default function AddStrategicOtherDisplay({ options, updateCombatInfo }: 
                     ...newCustom,
                     tooltip: event.target.value
                 })} />
-                <button onClick={addOther}><Icon iconName='plus' tooltip='Add Custom' /></button>
+                <button onClick={addOther}><Icon iconName='plus' tooltip='Add Other Option' /></button>
             </span>
         </>
     )

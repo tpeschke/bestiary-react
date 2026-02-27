@@ -127,10 +127,10 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                             <tr className='standard-row'>
                                 <td colSpan={2}><strong>Complications</strong></td>
                             </tr>
-                            {complications.map(({ name, body }: Complication, index) => {
+                            {complications.map(({ body }: Complication, index) => {
                                 return (
                                     <tr key={index} className='standard-row complication-row'>
-                                        <td>{name}</td>
+                                        <td>{index + 1}</td>
                                         <td>{body}</td>
                                     </tr>
                                 )
