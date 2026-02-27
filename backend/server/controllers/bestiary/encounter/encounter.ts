@@ -1,7 +1,7 @@
 import query from '../../../db/database';
 import { getNumberOfMonstersWeighted } from '../../../db/encounter/number';
 import { BasicParamsRequest, Response } from '../../../interfaces/apiInterfaces'
-import { Complication, Encounter, SignObject, Temperament } from '../../../interfaces/bestiary/encounterInterfaces';
+import { Complication, Encounter, SignObject, Reaction } from '../../../interfaces/bestiary/encounterInterfaces';
 
 import { checkForContentTypeBeforeSending } from '../../../utilities/sendingFunctions';
 import getBattlefieldAndPattern from './utilities/battlefield';
@@ -11,7 +11,7 @@ import getDistanceFromLair from './utilities/lair';
 import getNoun from './utilities/noun';
 import getObjectives from './utilities/objective';
 import getSigns from './utilities/sign';
-import getTemperament from './utilities/temperament';
+import getReaction from './utilities/reaction';
 import getTime from './utilities/time';
 import getVerb from './utilities/verb';
 
@@ -27,7 +27,7 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
 
     promiseArray.push(getVerb(beastId).then((verb: string) => encounterObject.verb = verb))
     promiseArray.push(getNoun(beastId).then((noun: string) => encounterObject.noun = noun))
-    promiseArray.push(getTemperament(beastId).then((temperament: Temperament) => encounterObject.temperament = temperament))
+    promiseArray.push(getReaction(beastId).then((reaction: Reaction) => encounterObject.reaction = reaction))
     promiseArray.push(getSigns(beastId).then((signs: SignObject) => encounterObject.signs = signs))
     promiseArray.push(getComplications(beastId).then((complications: Complication[]) => encounterObject.complications = complications))
 

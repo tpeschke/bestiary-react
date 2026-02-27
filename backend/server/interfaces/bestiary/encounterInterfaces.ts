@@ -1,7 +1,7 @@
 export interface Encounter {
     verb?: string,
     time?: string,
-    temperament?: Temperament,
+    reaction?: Reaction,
     signs?: SignObject,
     objectives?: ObjectiveObject,
     complications?: Complication[],
@@ -11,19 +11,16 @@ export interface Encounter {
     group?: GroupInfo
 }
 
+export interface Reaction {
+    temperament: ReactionTemperamentOptions,
+    result: string,
+}
+
+export type ReactionTemperamentOptions = "Friendly" | "Neutral" | "Hostile" | "Unpredictable"
+
 export interface ObjectiveObject {
     player: string,
     enemy: string
-}
-
-export interface TemperamentObject {
-    beastTemperaments: Temperament[],
-    allTemperaments: Temperament[]
-}
-
-export interface Temperament {
-    temperament: string,
-    tooltip: string,
 }
 
 export interface GroupWeight {

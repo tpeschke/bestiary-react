@@ -3,7 +3,7 @@ import './EncounterDisplay.css'
 import NumberAppearingDisplay from "./components/NumberAppearingDisplay";
 import ObjectivesDisplay from "./components/ObjectiveDisplay";
 import SignDisplay from "./components/SignDisplay";
-import TemperamentDisplay from "./components/TemperamentDisplay";
+import ReactionDisplay from "./components/ReactionDisplay";
 import TimeDisplay from "./components/TimeDisplay";
 import VerbNounDisplay from "./components/VerbNounDisplay";
 import encounterHooks from "./hooks/EncounterHooks";
@@ -44,7 +44,7 @@ function EncounterShell({ setLoading }: Props) {
     }, [setLoading, encounterInfo])
 
     if (encounterInfo) {
-        const { signs, group, objectives, verb, noun, temperament, time, battlefield, complications } = encounterInfo
+        const { signs, group, objectives, verb, noun, reaction, time, battlefield, complications } = encounterInfo
 
         return (
             <>
@@ -57,7 +57,7 @@ function EncounterShell({ setLoading }: Props) {
                                 <ObjectivesDisplay objectives={objectives} />
                                 <VerbNounDisplay verb={verb} noun={noun} />
                                 <div className="pair-shell encounter-display-pair">
-                                    <TemperamentDisplay temperamentInfo={temperament} />
+                                    <ReactionDisplay reactionInfo={reaction} />
                                     <TimeDisplay time={time} />
                                 </div>
                                 <BattlefieldDisplay battlefieldInfo={battlefield} />

@@ -1,7 +1,7 @@
 export interface Encounter {
     verb: string,
     time: string,
-    temperament: Temperament,
+    reaction: Reaction,
     signs: SignObject,
     objectives: ObjectiveObject,
     complications: Complication[],
@@ -11,9 +11,9 @@ export interface Encounter {
     group: GroupInfo
 }
 
-export interface Temperament {
+export interface Reaction {
     temperament: string,
-    tooltip: string,
+    result: string,
 }
 
 export interface ObjectiveObject {
