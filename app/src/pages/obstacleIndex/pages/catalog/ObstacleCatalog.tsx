@@ -26,7 +26,7 @@ export default function ObstacleCatalog({ setLoading }: Props) {
 
     const navigate = useNavigate()
     const { obstacleId } = useParams()
-    const { catalogItems } = obstacleCatalogHook()
+    const { catalogItems, obstacleCache, saveToCache } = obstacleCatalogHook()
 
     useEffect(() => {
         if (setLoading) {
@@ -51,13 +51,18 @@ export default function ObstacleCatalog({ setLoading }: Props) {
                 setModifiedSkull(null)
             }
 
-            axios.get(obstacleSingleURL + obstacleId).then(({ data }) => {
-                if (data.message) {
-                    alertInfo(data)
-                } else {
-                    setObstacleShortcut(data)
-                }
-            })
+            if (obstacleCache[+obstacleId]) {
+                setObstacleShortcut(obstacleCache[+obstacleId])
+            } else {
+                axios.get(obstacleSingleURL + obstacleId).then(({ data }) => {
+                    if (data.message) {
+                        alertInfo(data)
+                    } else {
+                        saveToCache(data)
+                        setObstacleShortcut(data)
+                    }
+                })
+            }
         }
     }, [obstacleId])
 

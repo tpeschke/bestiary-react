@@ -9,6 +9,7 @@ import alertInfo from '../../../../../../../../../components/alert/alerts';
 import { obstacleSingleURL } from '../../../../../../../../../frontend-config';
 import LoadingIndicator from '../../../../../../../../../components/loading/components/LoadingIndicator';
 import Icon from '../../../../../../../../../components/icon/Icon';
+import obstacleCatalogHook from '../../../../../../../../obstacleIndex/hooks/obstacleCatalogHook';
 
 interface Props {
     options: StrategicOptions,
@@ -19,7 +20,8 @@ interface Props {
 export default function StrategicOptionsDisplay({ options, skillSkulls, baseConvictionRank }: Props) {
     const { obstacles, customs, other } = options
 
-    const [obstacleCache, setObstacleCache] = useState<{ [key: string]: Obstacle }>({})
+    const { obstacleCache, saveToCache } = obstacleCatalogHook()
+
     const [obstacleInTooltip, setObstacleInTooltip] = useState<Obstacle | null>(null);
 
     async function showPopup(obstacle: StrategicObstacles) {
@@ -36,10 +38,7 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
                 alertInfo(data)
             } else {
                 setObstacleInTooltip(data)
-                setObstacleCache({
-                    ...obstacleCache,
-                    [data.id]: data
-                })
+                saveToCache(data)
             }
         }
     }

@@ -7,30 +7,42 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { ChallengeDisplay } from "../../../../components/ObstaclesNChallenges/ChallengeDisplay"
 import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import alertInfo from '../../../../components/alert/alerts'
+import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
 
 interface Props {
     setLoading?: SetLoadingFunction
 }
 
 export default function ChallengePage({ setLoading }: Props) {
+    const { challengeCache, saveChallengeToCache } = obstacleCatalogHook()
+
     const { challengeId } = useParams()
     const navigate = useNavigate()
-    
+
     const [challenge, setChallenge] = useState<Challenge | null>(null)
 
     useEffect(() => {
         if (setLoading) {
             setLoading(false)
-            axios.get(challengeSingleURL + challengeId).then(({ data }) => {
-                if (data.message) {
-                    alertInfo(data)
-                    navigate('/obstacles')
-                } else {
-                    setLoading(data)
-                    setChallenge(data)
-                    document.title = data.name + ' - Bonfire Obstacle Index'
-                }
-            })
+
+            if (challengeId && challengeCache[+challengeId]) {
+                const challenge = challengeCache[+challengeId]
+                setLoading(true)
+                setChallenge(challenge)
+                document.title = challenge.name + ' - Bonfire Obstacle Index'
+            } else {
+                axios.get(challengeSingleURL + challengeId).then(({ data }) => {
+                    if (data.message) {
+                        alertInfo(data)
+                        navigate('/obstacles')
+                    } else {
+                        setLoading(data)
+                        saveChallengeToCache(data)
+                        setChallenge(data)
+                        document.title = data.name + ' - Bonfire Obstacle Index'
+                    }
+                })
+            }
         }
     }, [challengeId])
 

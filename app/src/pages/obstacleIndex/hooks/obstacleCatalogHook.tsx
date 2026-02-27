@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { obstacleCatalogURL } from '../../../frontend-config'
 
-import { ObstacleTile } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
+import { Challenge, Obstacle, ObstacleTile } from '@bestiary/common/interfaces/obstacles/obstacleCatalog'
 
-import { saveObstacleCatalog } from '../../../redux/slices/obstacles/obstacleCatalog';
+import { cacheChallenge, cacheObstacle, saveObstacleCatalog } from '../../../redux/slices/obstacles/obstacleCatalog';
 
 export default function obstacleCatalogHook() {
     const catalogItems: ObstacleTile[][] = useSelector((state: RootState) => state.obstacleCatalog.catalog)
+    const obstacleCache: {[key: number]: Obstacle} = useSelector((state: RootState) => state.obstacleCatalog.obstacleCache)
+    const challengeCache: {[key: number]: Challenge} = useSelector((state: RootState) => state.obstacleCatalog.challengeCache)
 
     const dispatch = useDispatch()
 
@@ -22,7 +24,19 @@ export default function obstacleCatalogHook() {
         }
     }, [catalogItems]);
 
+    const saveToCache = (obstacle: Obstacle) => {
+        dispatch(cacheObstacle(obstacle))
+    }
+
+    const saveChallengeToCache = (challenge: Challenge) => {
+        dispatch(cacheChallenge(challenge))
+    }
+
     return {
-        catalogItems
+        catalogItems,
+        obstacleCache,
+        challengeCache,
+        saveToCache,
+        saveChallengeToCache
     }
 }
