@@ -78,21 +78,21 @@ passport.deserializeUser(async (id: any, done: any) => {
 // ================================== \\
 app.use(fakeAuth)
 
-app.use('/auth', authRoutesWithoutPassword(passport))
+app.use('/api/auth', authRoutesWithoutPassword(passport))
 
-app.use('/access', accessRoutes)
+app.use('/api/access', accessRoutes)
 
-app.use('/catalog', catalogRoutes)
-app.use('/info', BeastRoutes)
-app.use('/player', playerRoutes)
-app.use('/searchAPI', searchRoutes)
-app.use('/image', imageRoutes)
+app.use('/api/catalog', catalogRoutes)
+app.use('/api/info', BeastRoutes)
+app.use('/api/player', playerRoutes)
+app.use('/api/searchAPI', searchRoutes)
+app.use('/api/image', imageRoutes)
 
-app.use('/lists', listRoutes)
+app.use('/api/lists', listRoutes)
 
-app.use('/obstacles-catalog', obstaclesCatalog)
-app.use('/obstacle', obstacleRoutes)
-app.use('/challenge', challengeRoutes)
+app.use('/api/obstacles-catalog', obstaclesCatalog)
+app.use('/api/obstacle', obstacleRoutes)
+app.use('/api/challenge', challengeRoutes)
 
 // ================================== \\
 
