@@ -78,7 +78,7 @@ passport.deserializeUser(async (id: any, done: any) => {
 // ================================== \\
 app.use(fakeAuth)
 
-app.use('/api/auth', authRoutesWithoutPassword(passport))
+app.use('/auth', authRoutesWithoutPassword(passport))
 
 app.use('/api/access', accessRoutes)
 
