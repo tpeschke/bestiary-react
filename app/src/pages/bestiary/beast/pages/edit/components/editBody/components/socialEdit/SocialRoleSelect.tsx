@@ -16,7 +16,8 @@ export default function SocialRoleSelect({ updateSocialInfo, primaryRole, second
         'Enabler',
         'Instructor',
         'Obdurate',
-        'Zealot'
+        'Zealot',
+        'No Personality'
     ]
 
     return <RoleSelects

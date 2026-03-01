@@ -34,6 +34,10 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
     const showAttackSection = !!(attackInfo && attackInfo !== '')
 
+    if (socialRole === 'No Personality') {
+        return <RoleTitle title='Confrontation' hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
+    }
+
     return (
         <>
             <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />

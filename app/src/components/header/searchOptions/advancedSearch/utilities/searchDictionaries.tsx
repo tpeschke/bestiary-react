@@ -175,15 +175,16 @@ export const confrontationPrimaryDictionary: SearchObject[] = [
     { id: 6, value: 'Instructor' },
     { id: 7, value: 'Obdurate' },
     { id: 8, value: 'Zealot' },
+    { id: 9, value: 'No Personality' },
 ]
 
 export const confrontationSecondaryDictionary: SearchObject[] = [
-    { id: 9, value: 'Lesser' },
-    { id: 10, value: 'Veteran' },
-    { id: 11, value: 'Champion' },
-    { id: 12, value: 'Officer' },
-    { id: 13, value: 'Tyrant' },
-    { id: 14, value: 'Solo' }
+    { id: 10, value: 'Lesser' },
+    { id: 11, value: 'Veteran' },
+    { id: 12, value: 'Champion' },
+    { id: 13, value: 'Officer' },
+    { id: 14, value: 'Tyrant' },
+    { id: 15, value: 'Solo' }
 ]
 
 export const combatPrimaryDictionary: SearchObject[] = [
