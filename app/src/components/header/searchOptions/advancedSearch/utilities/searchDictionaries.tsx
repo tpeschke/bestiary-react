@@ -167,24 +167,23 @@ export const climateSearchDictionary = [
 ]
 
 export const confrontationPrimaryDictionary: SearchObject[] = [
-    { id: 1, value: 'Striker' },
-    { id: 2, value: 'Defender' },
-    { id: 3, value: 'Fast-Talker' },
-    { id: 4, value: 'Feinter' },
-    { id: 5, value: 'Sandbagger' },
-    { id: 6, value: 'Corruptor' },
-    { id: 7, value: 'Gaslighter' },
-    { id: 8, value: 'Enabler' },
-    { id: 9, value: 'Opportunist' }
+    { id: 1, value: 'Advocate' },
+    { id: 2, value: 'Bully' },
+    { id: 3, value: 'Charmer' },
+    { id: 4, value: 'Empath' },
+    { id: 5, value: 'Enabler' },
+    { id: 6, value: 'Instructor' },
+    { id: 7, value: 'Obdurate' },
+    { id: 8, value: 'Zealot' },
 ]
 
 export const confrontationSecondaryDictionary: SearchObject[] = [
-    { id: 10, value: 'Lesser' },
-    { id: 11, value: 'Veteran' },
-    { id: 12, value: 'Champion' },
-    { id: 13, value: 'Officer' },
-    { id: 14, value: 'Tyrant' },
-    { id: 15, value: 'Solo' }
+    { id: 9, value: 'Lesser' },
+    { id: 10, value: 'Veteran' },
+    { id: 11, value: 'Champion' },
+    { id: 12, value: 'Officer' },
+    { id: 13, value: 'Tyrant' },
+    { id: 14, value: 'Solo' }
 ]
 
 export const combatPrimaryDictionary: SearchObject[] = [

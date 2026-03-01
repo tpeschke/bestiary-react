@@ -22,24 +22,22 @@ export default function getCapacity(skullIndex: number = 0, role: string, second
 
 function getRoleIndexModifier(role: string): number {
     switch (role) {
-        case 'Striker':
-            return -2
-        case 'Defender':
+        case 'Advocate':
             return 0
-        case 'Support':
+        case 'Bully':
             return 1
-        case 'Corruptor':
-            return -1
-        case 'Gaslighter':
+        case 'Charmer':
+            return 1
+        case 'Empath':
             return -2
         case 'Enabler':
-            return -1
-        case 'Opportunist':
+            return -3
+        case 'Instructor':
+            return 2
+        case 'Obdurate':
             return 0
-        case 'Know-it-All':
-            return -2
-        case 'Dialectician':
-            return -4
+        case 'Zealot':
+            return -3
         default:
             return 0
     }

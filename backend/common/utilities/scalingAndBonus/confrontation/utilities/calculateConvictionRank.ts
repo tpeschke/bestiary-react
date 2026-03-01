@@ -9,24 +9,22 @@ export default function calculateConvictionRank(skullIndex: number = 0, role: st
 
 function getRoleIndexModifier(role: string): number {
     switch (role) {
-        case 'Striker':
-            return -2
-        case 'Defender':
+        case 'Advocate':
             return 1
-        case 'Support':
+        case 'Bully':
             return 2
-        case 'Corruptor':
-            return 4
-        case 'Gaslighter':
-            return 0
+        case 'Charmer':
+            return -1
+        case 'Empath':
+            return -3
         case 'Enabler':
-            return 3
-        case 'Opportunist':
-            return -4
-        case 'Know-it-All':
             return 2
-        case 'Dialectician':
-            return -4
+        case 'Instructor':
+            return 0
+        case 'Obdurate':
+            return 3
+        case 'Zealot':
+            return 1
         default:
             return 0
     }

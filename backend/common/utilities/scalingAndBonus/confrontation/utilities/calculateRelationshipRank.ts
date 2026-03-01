@@ -9,24 +9,22 @@ export default function calculateRelationshipRank(skullIndex: number = 0, role: 
 
 function getRoleIndexModifier(role: string): number {
     switch (role) {
-        case 'Striker':
-            return 0
-        case 'Defender':
-            return 3
-        case 'Support':
+        case 'Advocate':
             return 2
-        case 'Corruptor':
-            return -2
-        case 'Gaslighter':
+        case 'Bully':
+            return 0
+        case 'Charmer':
+            return 0
+        case 'Empath':
             return 2
         case 'Enabler':
             return 0
-        case 'Opportunist':
-            return 0
-        case 'Know-it-All':
-            return 0
-        case 'Dialectician':
-            return -4
+        case 'Instructor':
+            return 1
+        case 'Obdurate':
+            return -1
+        case 'Zealot':
+            return 3
         default:
             return 0
     }

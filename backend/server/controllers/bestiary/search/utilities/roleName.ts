@@ -3,21 +3,20 @@ export function getSocialRoleName(roleID: string | number): string {
 
     const roleArray = [
         null,
-        'Striker',
-        'Defender',
-        'Fast-Talker',
-        'Feinter',
-        'Sandbagger',
-        'Corruptor',
-        'Gaslighter',
+        'Advocate',
+        'Bully',
+        'Charmer',
+        'Empath',
         'Enabler',
-        'Opportunist', // 9
+        'Instructor',
+        'Obdurate',
+        'Zealot', // 8
         'Lesser',
         'Veteran',
         'Champion',
         'Officer',
         'Tyrant',
-        'Solo', // 15
+        'Solo', // 14
     ]
 
     const roleName = roleArray[roleID]

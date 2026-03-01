@@ -9,17 +9,16 @@ interface Props {
 
 export default function SocialRoleSelect({ updateSocialInfo, primaryRole, secondaryRole }: Props) {
     const primaryDictionary: string[] = [
-        'Striker',
-        'Defender',
-        'Fast-Talker',
-        'Feinter',
-        'Sandbagger',
-        'Corruptor',
-        'Gaslighter',
+        'Advocate',
+        'Bully',
+        'Charmer',
+        'Empath',
         'Enabler',
-        'Opportunist'
+        'Instructor',
+        'Obdurate',
+        'Zealot'
     ]
-    
+
     return <RoleSelects
         updateFunction={updateSocialInfo}
         primaryRole={primaryRole}
