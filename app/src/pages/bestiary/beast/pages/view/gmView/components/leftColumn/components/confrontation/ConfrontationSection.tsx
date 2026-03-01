@@ -12,24 +12,7 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const [hasArchetypes, setHasArchetypes] = useState(false);
-    const [hasCharacteristics, setHasCharacteristics] = useState(false);
-
     const { socialRole, socialSkulls, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
-
-    useEffect(() => {
-        const { conflicts } = socialInfo
-
-        if (conflicts && !hasCharacteristics) {
-            const { burdens, convictions, relationships, flaws } = conflicts
-            const hasConvictions = convictions.length > 0
-            const hasRelationships = relationships.length > 0
-            const hasFlaws = flaws.length > 0
-            const hasBurdens = burdens.length > 0
-
-            setHasCharacteristics(hasConvictions || hasRelationships || hasFlaws || hasBurdens)
-        }
-    }, [])
 
     const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
     const showAttackSection = !!(attackInfo && attackInfo !== '')
@@ -54,8 +37,8 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 </>
             }
             <CapacityDisplay capacity={capacity} />
-            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} setHasArchetypes={setHasArchetypes} />
-            {hasCharacteristics && <CharacteristicsDisplay characteristicInfo={conflicts} />}
+            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} />
+            <CharacteristicsDisplay characteristicInfo={conflicts} />
         </>
     )
 }

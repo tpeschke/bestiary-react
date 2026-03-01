@@ -9,10 +9,9 @@ import { useEffect, useState } from 'react';
 interface Props {
     archetypeInfo: ArchetypeInfo,
     points: number,
-    setHasArchetypes: Function
 }
 
-export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Props) {
+export default function ArchetypeDisplay({ archetypeInfo }: Props) {
     const { hasArchetypes, hasMonsterArchetypes, normalArchetypes, monsterArchetypes, baseRank } = archetypeInfo
 
     const [currentHasMonsterArchetype, setCurrentHasMonsterArchetypes] = useState(false)
@@ -21,10 +20,8 @@ export default function ArchetypeDisplay({ archetypeInfo, setHasArchetypes }: Pr
     useEffect(() => {
         if (currentHasMonsterArchetype !== hasMonsterArchetypes) {
             setCurrentHasMonsterArchetypes(hasMonsterArchetypes)
-            setHasArchetypes(hasMonsterArchetypes)
         } else if (currentHasArchetype !== hasArchetypes) {
             setCurrentHasArchetypes(hasArchetypes)
-            setHasArchetypes(hasArchetypes)
         }
     })
 
