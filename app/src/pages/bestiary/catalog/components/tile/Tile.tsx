@@ -28,7 +28,7 @@ export default function Tile({ tile }: Props) {
 
     const dispatch = useDispatch()
 
-    function preloadCharacterInfo(beastID: number) {
+    function preloadEntryInfo(beastID: number) {
         clearTimeout(timeOutID)
         setTimeOutID(setTimeout(() => {
             if (!beastCache[beastID])
@@ -41,7 +41,7 @@ export default function Tile({ tile }: Props) {
 
     const tooltip = notupdating ? "This entry isn't being updated currently. If you need it, let Peschke know and he'll update it for you. \nYou can still view it." : null
     return (
-        <Link to={`/beast/${id}`} onMouseEnter={_ => preloadCharacterInfo(id)} onMouseLeave={_ => clearTimeout(timeOutID)}>
+        <Link to={`/beast/${id}`} onMouseEnter={_ => preloadEntryInfo(id)} onMouseLeave={_ => clearTimeout(timeOutID)}>
             <div className={notupdating ? 'tile not-updating' : 'tile'} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
                 <div className='image-frame'>
                     <div className='icon-frame'>
