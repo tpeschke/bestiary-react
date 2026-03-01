@@ -14,7 +14,16 @@ export async function getConflict(beastId: number, isEditing: boolean, socialSku
 }
 
 async function populateNonEditingCharacteristics(beastId: number, socialSkullIndex: number, role: string) {
-    let conflict: ConflictObject = { descriptions: [], convictions: [], relationships: [], flaws: [], burdens: [] }
+    let conflict: ConflictObject = { socialSkillSuites: {
+        empathize: 0,
+        intimidate: 0,
+        lecture: 0,
+        tempt: 0,
+        preferredEmotions: {
+            emotions: [],
+            rank: 0
+        }
+    }, convictions: [], relationships: [], flaws: [], burdens: [] }
     
     const characteristics: UnformatedConflict[] = await query(getMonsterCharacteristics, beastId)
 
@@ -28,11 +37,11 @@ async function populateNonEditingCharacteristics(beastId: number, socialSkullInd
         } else if (characteristic.type === 'b') {
             conflict.burdens.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         } else if (characteristic.type === 'h') {
-            conflict.descriptions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
+            // conflict.descriptions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         }
     })
 
-    conflict.descriptions = conflict.descriptions.sort(sortByRank)
+    // conflict.descriptions = conflict.descriptions.sort(sortByRank)
     conflict.convictions = conflict.convictions.sort(sortByRank)
     conflict.flaws = conflict.flaws.sort(sortOutAnyToTheBottom)
     conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
