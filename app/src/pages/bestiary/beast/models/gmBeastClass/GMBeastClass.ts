@@ -10,6 +10,7 @@ import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInf
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/skill/calculateStress'
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
+import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/confrontation/utilities/getSocialSkillSuites"
 
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
@@ -170,7 +171,7 @@ export default class GMBeastClass {
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
-            const { descriptions, convictions, relationships, flaws, burdens } = conflicts
+            const { convictions, relationships, flaws, burdens } = conflicts
             const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
             const roleSelected = this.isRoleSelected()
@@ -196,7 +197,7 @@ export default class GMBeastClass {
                     baseRank: getBaseSocialRank(skullIndex)
                 },
                 conflicts: {
-                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, socialRole), []),
+                    socialSkillSuites: getSocialSkillSuites(role, skullIndex),
                     convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, socialRole), []),
                     relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),

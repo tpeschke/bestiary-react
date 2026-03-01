@@ -14,11 +14,22 @@ export default interface SocialInfo {
 }
 
 export interface ConflictObject {
-    descriptions: Conflict[],
+    socialSkillSuites: SocialSkillSuitesObject,
     convictions: Conflict[],
     relationships: Conflict[],
     flaws: Conflict[],
     burdens: Conflict[]
+}
+
+export interface SocialSkillSuitesObject {
+    empathize: number,
+    intimidate: number,
+    lecture: number,
+    tempt: number,
+    preferredEmotions: {
+        emotions: string[],
+        rank: number
+    }
 }
 
 export interface Conflict {

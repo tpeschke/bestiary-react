@@ -3,6 +3,7 @@ import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIn
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
+import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/confrontation/utilities/getSocialSkillSuites"
 
 export default function formatSocialInfo(
     socialRole: string,
@@ -26,7 +27,7 @@ export default function formatSocialInfo(
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
         conflicts: {
-            descriptions: [],
+            socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
             convictions: [],
             relationships: [],
             flaws: [],

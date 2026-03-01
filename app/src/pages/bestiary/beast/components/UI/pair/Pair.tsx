@@ -20,10 +20,11 @@ interface Props {
     title: string,
     info?: string | number,
     format?: Format,
-    icon?: PairIconSettings | null
+    icon?: PairIconSettings | null,
+    tooltip?: string | null
 }
 
-export default function Pair({ title, info, format, icon }: Props) {
+export default function Pair({ title, info, format, icon, tooltip }: Props) {
     let shellClassString = "pair-shell"
     format?.heading ? shellClassString += " heading" : null;
     format?.noBorder? shellClassString += " noBorder" : null;
@@ -38,7 +39,7 @@ export default function Pair({ title, info, format, icon }: Props) {
     format?.infoWidth === 'unset' ? infoClassString += ' unsetWith' : null
 
     return (
-        <div className={shellClassString}>
+        <div className={shellClassString} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
             {format?.title === 'none' ?
                 <p className={titleClassString}>{title}</p>
                 :
