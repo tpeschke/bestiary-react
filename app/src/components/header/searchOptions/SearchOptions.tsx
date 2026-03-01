@@ -114,7 +114,7 @@ export default function SearchOptions() {
         <div className='search-options-shell'>
             <span>
                 <Icon iconName='magnifying-glass' margin='right' color='black' />
-                <input onChange={e => captureQuery('name', e.target.value)} placeholder='Search by Name' />
+                <input onChange={e => captureQuery('name', e.target.value)} placeholder='Search by Entry Name' />
                 <AdvancedSearch captureQuery={captureQuery} captureQueryArray={captureQueryArray} />
             </span>
         </div>
