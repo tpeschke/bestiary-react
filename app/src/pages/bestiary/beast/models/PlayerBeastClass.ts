@@ -19,6 +19,10 @@ export default class PlayerBeastClass {
         }
     }
 
+    get generalInfo() {
+        return null
+    }
+
     get id(): number {
         return this.beastInfo?.id ?? 0
     }

@@ -91,9 +91,15 @@ export default function beastHooks(): Return {
             const modifier = searchParams.get("modifier")
 
             getBeastFromCache(beastId, roleId, modifier).then(beast => {
-                if (beast) {
-                    document.title = `${beast.generalInfo.name} - Bonfire Bestiary`
-                    setBeast(beast)
+                if (beast && beast.generalInfo) {
+                    const returnedBeast = new GMBeastClass(beast, roleId, modifier)
+                    document.title = `${returnedBeast.generalInfo.name} - Bonfire Bestiary`
+                    setBeast(returnedBeast)
+                    scrollToTop()
+                } else if (beast) {
+                    const returnedBeast = new PlayerBeastClass(beast)
+                    document.title = `${returnedBeast.name} - Bonfire Bestiary`
+                    setPlayerBeast(returnedBeast)
                     scrollToTop()
                 } else {
                     axios.get(beastURL + '/' + beastId).then(({ data }) => {
@@ -169,12 +175,8 @@ export default function beastHooks(): Return {
     * Redux returns the CastingInfo as a JSON object, instead of the CastingInfo Class, which can cause errors
     * So you have to retrieve the data and then transfer it to the GMBeastClass
     */
-    async function getBeastFromCache(beastId: string, roleId: string | null, modifier: string | null): Promise<GMBeastClass | null> {
-        const beastFromCache = await beastCache[beastId]?.beastInfo
-        if (beastFromCache) {
-            return new GMBeastClass(beastFromCache, roleId, modifier)
-        }
-        return null
+    async function getBeastFromCache(beastId: string, roleId: string | null, modifier: string | null): Promise<any | null> {
+        return await beastCache[beastId]?.beastInfo
     }
 
     const updateSelectedRole = (newRoleId: string): void => {

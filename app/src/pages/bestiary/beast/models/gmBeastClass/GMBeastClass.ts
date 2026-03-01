@@ -71,11 +71,7 @@ export default class GMBeastClass {
         this.castingTypeInfo = new CastingClass(castingInfo?.casting)
         this.entrySpells = castingInfo?.spells ?? []
 
-        if (roleInfo.defaultrole) {
-            this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
-        } else {
-            this.selectRoleIndex = 0
-        }
+        this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
     }
 
     public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
@@ -212,7 +208,7 @@ export default class GMBeastClass {
 
         return this.socialInfo
     }
-    
+
     private adjustCharacteristicRank = (type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
             if (!characteristic.socialRoleID || characteristic.socialRoleID === roleID || characteristic.allRoles) {
