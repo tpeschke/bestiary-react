@@ -1,3 +1,7 @@
+.obstacle-catalog.card-background {
+    min-height: calc(100vh - 225px);
+}
+
 .obstacle-tile-row {
     overflow: unset;
     flex-wrap: wrap;

@@ -14,6 +14,7 @@ import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalo
 import ChallengePage from "../pages/obstacleIndex/pages/challenge/ChallengePage";
 import EditObstacle from "../pages/obstacleIndex/pages/edit/EditObstacle";
 import GMAuth from "./auth/GMAuth";
+import ObstacleSearchResults from "../pages/obstacleIndex/pages/search/ObstacleSearchResults";
 
 export default function AllRoutes() {
     return (
@@ -90,6 +91,11 @@ export default function AllRoutes() {
                     <OwnerAuth destination="/obstacles">
                         <EditObstacle />
                     </OwnerAuth>
+                } />
+                <Route path='search' element={
+                    <Loading>
+                        <ObstacleSearchResults />
+                    </Loading>
                 } />
             </Route>
             <Route path='encounters'>
