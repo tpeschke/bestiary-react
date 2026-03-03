@@ -20,7 +20,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
-    const { name, prompt, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
+    const { id, name, prompt, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
 
     let { skull } = obstacleToShow
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
@@ -63,11 +63,11 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
     }
 
     const getURL = (addSkull: boolean = false) => {
-        const { origin, pathname } = window.location
+        const { origin } = window.location
         if (addSkull) {
-            return `${origin}${pathname}?skull=${skull}`
+            return `${origin}/obstacles/${id}?skull=${skull}`
         }
-        return `${origin}${pathname}`
+        return `${origin}/obstacles/${id}`
     }
 
     function formatSkullsForDisplay(skulls: number) {

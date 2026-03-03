@@ -7,6 +7,10 @@ import { getUserPatreon, isUserLoggedOn } from '../../../../redux/slices/userSli
 import LoadingIndicator from '../../../../components/loading/components/LoadingIndicator'
 import ObstacleSearchHooks from './ObstacleSearchHook'
 import ResultTile from './resultTile/resultTile'
+import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
+import axios from 'axios'
+import alertInfo from '../../../../components/alert/alerts'
+import { obstacleSingleURL } from '../../../../frontend-config'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -19,6 +23,7 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
     const userPatreon = useSelector(getUserPatreon)
 
     const searchResults = ObstacleSearchHooks()
+    const { saveToCache, obstacleCache } = obstacleCatalogHook()
 
     useEffect(() => {
         if (setLoading) {
@@ -29,6 +34,23 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
     const [obstacleShortcut, setObstacleShortcut] = useState<Obstacle | null>(null)
     const [showDialog, setShowDialog] = useState(false)
 
+    const showObstacle = (obstacleID: number) => {
+        setShowDialog(true)
+
+        if (obstacleCache[obstacleID]) {
+            setObstacleShortcut(obstacleCache[obstacleID])
+        } else {
+            axios.get(obstacleSingleURL + obstacleID).then(({ data }) => {
+                if (data.message) {
+                    alertInfo(data)
+                } else {
+                    saveToCache(data)
+                    setObstacleShortcut(data)
+                }
+            })
+        }
+    }
+
     const closeDialog = () => {
         setShowDialog(false)
         setObstacleShortcut(null)
@@ -36,14 +58,16 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
 
     return (
         <>
-            <div className='card-background catalog obstacle-catalog'>
-                {!userLoggedIn && <h2 className='warning'>You Need to be Logged On to View the Obstacles & Challenges on this Pages</h2>}
-                {(userLoggedIn && userPatreon < 5) && <h2 className='warning'>You Need to Upgrade Your Patreon to View the Obstacles & Challenges on this Pages</h2>}
+            <div className='obstacle-catalog obstacle-search-results'>
+                <div className='catalog card-background'>
+                    {!userLoggedIn && <h2 className='warning'>You Need to be Logged On to View the Obstacles & Challenges on this Pages</h2>}
+                    {(userLoggedIn && userPatreon < 5) && <h2 className='warning'>You Need to Upgrade Your Patreon to View the Obstacles & Challenges on this Pages</h2>}
 
-                <div className='row'>
-                    <h1>Results</h1>
-                    <div className='tile-row obstacle-tile-row'>
-                        {(searchResults && searchResults.length > 0) && searchResults.map((tile: ObstacleTile, index: number) => <ResultTile key={index} tile={tile} />)}
+                    <div className='row'>
+                        <h1>Results</h1>
+                        <div className='tile-row obstacle-tile-row'>
+                            {(searchResults && searchResults.length > 0) && searchResults.map((tile: ObstacleTile, index: number) => <ResultTile key={index} tile={tile} showObstacle={showObstacle} />)}
+                        </div>
                     </div>
                 </div>
             </div>

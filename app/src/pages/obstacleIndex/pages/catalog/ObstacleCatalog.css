@@ -1,5 +1,9 @@
-.obstacle-catalog.card-background {
-    min-height: calc(100vh - 225px);
+.obstacle-catalog.obstacle-search-results {
+    min-height: calc(100vh - 175px);
+}
+
+.obstacle-catalog.obstacle-search-results > .card-background {
+    min-height: unset;
 }
 
 .obstacle-tile-row {

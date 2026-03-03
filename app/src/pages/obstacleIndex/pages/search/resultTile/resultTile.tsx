@@ -9,10 +9,11 @@ import { isOwner, getUserPatreon } from "../../../../../redux/slices/userSlice"
 import obstacleCatalogHook from "../../../hooks/obstacleCatalogHook"
 
 interface TileProps {
-    tile: ObstacleTile
+    tile: ObstacleTile,
+    showObstacle: (obstacleID: number) => void
 }
 
-export default function ResultTile({ tile }: TileProps) {
+export default function ResultTile({ tile, showObstacle }: TileProps) {
     const { saveToCache, saveChallengeToCache } = obstacleCatalogHook()
     const userIsOwner = useSelector(isOwner)
     const userPatreon = useSelector(getUserPatreon)
@@ -51,8 +52,8 @@ export default function ResultTile({ tile }: TileProps) {
         )
     } else if (obstacleid) {
         return (
-            <div className="obstacle-tile">
-                    <button>
+            <div className="obstacle-tile" onMouseEnter={_ => prefetchObstacle(obstacleid)}>
+                    <button onClick={_ => showObstacle(obstacleid)}>
                         {name}
                     </button>
                 {userIsOwner && (
