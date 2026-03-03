@@ -1,5 +1,5 @@
 import './AdvancedSearch.css'
-import { sizeSearchDictionary, raritySearchDictionary, accessSearchDictionary, minSkullSearchDictionary, maxSkullSearchDictionary } from './utilities/searchDictionaries'
+import { sizeSearchDictionary, raritySearchDictionary, accessSearchDictionary, skullSearchDictionary } from './utilities/searchDictionaries'
 import SearchSelect from './components/SearchSelect'
 import Drawers from '../../../drawers/Drawers'
 import ClimateSearch from './components/drawers/ClimateSearch'
@@ -60,23 +60,23 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
             <div className='inner-searches-shell'>
                 <div className='rating-shell'>
                     <p>Confrontation Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minConfrontationRate' dictionary={minSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minConfrontationRate' dictionary={skullSearchDictionary} />
                     <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxConfrontationRate' dictionary={maxSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxConfrontationRate' dictionary={skullSearchDictionary} />
                 </div>
 
                 <div className='rating-shell'>
                     <p>Combat Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minCombatRate' dictionary={minSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minCombatRate' dictionary={skullSearchDictionary} />
                     <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxCombatRate' dictionary={maxSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxCombatRate' dictionary={skullSearchDictionary} />
                 </div>
 
                 <div className='rating-shell'>
                     <p>Skill Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minChallengeRate' dictionary={minSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minChallengeRate' dictionary={skullSearchDictionary} />
                     <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxChallengeRate' dictionary={maxSkullSearchDictionary} />
+                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxChallengeRate' dictionary={skullSearchDictionary} />
                 </div>
             </div>
 

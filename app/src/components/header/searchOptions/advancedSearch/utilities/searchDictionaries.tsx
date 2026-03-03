@@ -52,73 +52,38 @@ export const accessSearchDictionary: SearchObject[] = [
     }
 ]
 
-export const minSkullSearchDictionary: SearchObject[] = [
+export const skullSearchDictionary: SearchObject[] = [
     {
         value: 0,
         id: 0
     },
     {
         value: 1,
-        id: 5
+        id: 1
     },
     {
         value: 2,
-        id: 10
+        id: 2
     },
     {
         value: 3,
-        id: 15
-    },
-    {
-        value: 4,
-        id: 20
-    },
-    {
-        value: 5,
-        id: 25
-    },
-    {
-        value: 6,
-        id: 30
-    },
-    {
-        value: 7,
-        id: 34
-    }
-]
-
-export const maxSkullSearchDictionary: SearchObject[] = [
-    {
-        value: 0,
         id: 3
     },
     {
-        value: 1,
-        id: 8
-    },
-    {
-        value: 2,
-        id: 13
-    },
-    {
-        value: 3,
-        id: 18
-    },
-    {
         value: 4,
-        id: 23
+        id: 4
     },
     {
         value: 5,
-        id: 28
+        id: 5
     },
     {
         value: 6,
-        id: 35
+        id: 6
     },
     {
         value: 7,
-        id: 100
+        id: 7
     }
 ]
 

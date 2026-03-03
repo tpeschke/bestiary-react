@@ -18,17 +18,17 @@ export default async function getIDsFromQuery(searchQuery: SearchQuery, user: Us
             case "minCombatRate":
                 idArray.push(query(searchMinCombatRating, searchQuery.minCombatRate))
                 break;
-            case "minChallengeRate":
-                idArray.push(query(searchMinChallengeRating, searchQuery.minChallengeRate))
-                break;
-            case "minConfrontationRate":
-                idArray.push(query(searchMinCombatRating, searchQuery.minConfrontationRate))
-                break;
             case "maxCombatRate":
                 idArray.push(query(searchMaxCombatRating, searchQuery.maxCombatRate))
                 break;
+            case "minChallengeRate":
+                idArray.push(query(searchMinChallengeRating, searchQuery.minChallengeRate))
+                break;
             case "maxChallengeRate":
                 idArray.push(query(searchMaxChallengeRating, searchQuery.maxChallengeRate))
+                break;
+            case "minConfrontationRate":
+                idArray.push(query(searchMinCombatRating, searchQuery.minConfrontationRate))
                 break;
             case "maxConfrontationRate":
                 idArray.push(query(searchMaxConfrontationRating, searchQuery.maxConfrontationRate))

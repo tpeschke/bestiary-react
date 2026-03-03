@@ -5,17 +5,13 @@ interface SearchStatusReturn {
     isOnSearch: boolean
 }
 
-export default function SearchStatusHook(): SearchStatusReturn { 
+export default function SearchStatusHook(): SearchStatusReturn {
     const [isOnSearch, setIsOnSearch] = useState(true)
 
     const location = useLocation()
 
     useEffect(() => {
-        if (location.pathname === '/search') {
-            setIsOnSearch(true)
-        } else if (isOnSearch) {
-            setIsOnSearch(false)
-        }
+        setIsOnSearch(location.pathname === '/search')
     }, [location])
 
     return {
