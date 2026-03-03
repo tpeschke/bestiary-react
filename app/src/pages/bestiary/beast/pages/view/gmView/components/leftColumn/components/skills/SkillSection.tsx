@@ -25,7 +25,7 @@ export default function SkillSection({ skillInfo }: Props) {
     return (
         <>
             <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
-            <Pair title={"Stress Threshold"} info={stress} format={{ heading: true, noBorder: hasBottomBorder }} />
+            {stress.threshold && <Pair title={"Stress Threshold"} info={stress.threshold} format={{ heading: true, noBorder: hasBottomBorder }} />}
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>

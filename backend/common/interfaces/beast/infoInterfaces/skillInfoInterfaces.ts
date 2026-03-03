@@ -1,7 +1,11 @@
+import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { Obstacle, Challenge } from "../../obstacles/obstacleCatalog"
 
 export default interface SkillInfo {
-    stress: number | string,
+    stress: {
+        threshold: number | string | null,
+        strength: Strength
+    },
     skillRole: string,
     skillSecondary: string,
     skillSkulls: number,

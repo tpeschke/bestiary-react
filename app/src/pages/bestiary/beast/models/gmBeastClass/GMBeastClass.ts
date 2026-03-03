@@ -222,7 +222,7 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
-        const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index } = this.entrySkillInfo
+        const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index, stress } = this.entrySkillInfo
 
         const roleSelected = this.isRoleSelected()
 
@@ -234,7 +234,10 @@ export default class GMBeastClass {
 
         return {
             ...this.entrySkillInfo,
-            stress: calculateStress(skillSecondary, skullIndex),
+            stress: {
+                threshold: calculateStress(skillSecondary, skullIndex, stress.strength),
+                strength: stress.strength
+            },
             skillRole, skillSecondary, skillSkulls,
             skills: getSkills(skillRole, skullIndex)
         }
