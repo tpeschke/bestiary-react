@@ -47,7 +47,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId,
-        combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength
+        combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, capacity: capacityStrength
     } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -118,7 +118,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, skillskulls, atk_skill, def_skill, stressThresholdStrength),
-        socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, hasarchetypes, hasmonsterarchetypes),
+        socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, hasarchetypes, hasmonsterarchetypes, capacityStrength),
         lootInfo: {
             lootnotes,
             lairLoot: {},

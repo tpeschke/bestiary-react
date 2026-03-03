@@ -5,7 +5,10 @@ export default interface SocialInfo {
     socialSecondary: string,
     socialSkulls: number,
     skullIndex: number,
-    capacity: number[],
+    capacity: {
+        threshold: number[] | null,
+        strength: Strength
+    },
     baseConvictionRank: number,
     attackInfo: string,
     defenseInfo: string,

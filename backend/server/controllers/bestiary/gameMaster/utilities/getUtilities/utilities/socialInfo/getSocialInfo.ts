@@ -4,6 +4,7 @@ import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontatio
 import getSkullNumber from "../getSkulls"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/confrontation/utilities/getSocialSkillSuites"
+import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 
 export default function formatSocialInfo(
     socialRole: string,
@@ -13,7 +14,8 @@ export default function formatSocialInfo(
     socialPoints: number,
     socialSkulls: number,
     hasArchetypes: boolean,
-    hasMonsterArchetypes: boolean
+    hasMonsterArchetypes: boolean,
+    capacityStrength: Strength
 ): SocialInfo {
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
@@ -22,7 +24,11 @@ export default function formatSocialInfo(
         socialRole, socialSecondary,
         socialSkulls,
         skullIndex,
-        capacity: getCapacity(skullIndex, socialRole, socialSecondary),
+        capacity:
+        {
+            threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacityStrength),
+            strength: capacityStrength
+        },
         baseConvictionRank: 0,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',

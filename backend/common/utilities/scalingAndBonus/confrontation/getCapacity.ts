@@ -1,7 +1,12 @@
+import { Strength } from "../../../interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
 import getModBySkullIndex from "../getModBySkullIndex"
 
-export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null): number[] {
+export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null, capacity: Strength): number[] | null {
+    if (capacity === 'x') {
+        return null
+    }
+    
     const capacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
     const roleIndexModifier = getRoleIndexModifier(role)
 

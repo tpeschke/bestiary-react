@@ -36,7 +36,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                     <SpecialInfo info={attackInfo} />
                 </>
             }
-            <CapacityDisplay capacity={capacity} />
+            {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}
             <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} />
             <CharacteristicsDisplay characteristicInfo={conflicts} />
         </>
