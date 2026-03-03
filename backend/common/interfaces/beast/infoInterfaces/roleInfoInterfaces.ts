@@ -1,3 +1,4 @@
+import { Strength } from "../../calculationInterfaces";
 import { VitalityInfo } from "./combatInfoInterfaces";
 import { Size } from "./generalInfoInterfaces";
 
@@ -35,7 +36,10 @@ export interface RoleCombatInfo {
 }
 
 export interface RoleSkillInfo {
-    stress: number | string,
+    stress: {
+        threshold: number | string | null,
+        strength: Strength
+    },
     skillSkulls: number,
     skullIndex: number,
     skillRole: string,
@@ -47,7 +51,10 @@ export interface RoleSkillInfo {
 export interface RoleSocialInfo {
     socialSkulls: number,
     skullIndex: number,
-    capacity: number[],
+    capacity: {
+        threshold: number[] | null,
+        strength: Strength
+    },
     socialRole: string,
     socialSecondary: string,
     attackInfo: string,

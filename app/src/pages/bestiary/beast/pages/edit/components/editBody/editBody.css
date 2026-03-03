@@ -22,3 +22,8 @@
 .edit-body-shell .role-and-skull-shell select:first-child {
     margin-right: 15px;
 }
+
+.edit-body-shell span.checkbox-span {
+    display: flex;
+    align-items: center;
+}

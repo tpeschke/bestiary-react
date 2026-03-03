@@ -33,7 +33,7 @@ export interface UnsortedRole {
     isincorporeal: boolean,
     weaponbreakagevitality: boolean,
     panicstrength: Strength,
-    stressstrength: Strength,
+    mental: Strength,
     skillpoints: number,
     skillskulls: number,
     skillrole: string,
@@ -48,6 +48,7 @@ export interface UnsortedRole {
     defense_conf: string,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
+    capacity: Strength
 }
 
 export async function getRoles(beastId: number, beastName: string): Promise<Role[]> {
@@ -67,7 +68,7 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
         isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole,
         attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes,
-        notrauma: noTrauma, socialskulls, combatskulls, skillskulls
+        notrauma: noTrauma, socialskulls, combatskulls, skillskulls, capacity: capacityStrength, mental: stressThresholdStrength
     } = unsortedRole
 
     const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
@@ -101,12 +102,18 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             attackInfo: attack_skill,
             defenseInfo: defense_skill,
             skullIndex: skillSkullIndex,
-            stress: calculateStress(skillSecondary, skillSkullIndex)
+            stress: {
+                threshold: calculateStress(skillSecondary, skillSkullIndex, stressThresholdStrength),
+                strength: stressThresholdStrength
+            }
         },
         socialInfo: {
             socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,
             skullIndex: socialSkullIndex,
-            capacity: getCapacity(socialSkullIndex, socialRole, socialSecondary),
+            capacity: {
+                threshold: getCapacity(socialSkullIndex, socialRole, socialSecondary, capacityStrength),
+                strength: capacityStrength
+            },
             hasarchetypes, hasmonsterarchetypes
         }
     }

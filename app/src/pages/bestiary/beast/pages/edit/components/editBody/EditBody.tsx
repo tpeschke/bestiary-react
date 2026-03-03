@@ -17,6 +17,7 @@ import StrategyEdit from './components/strategyTab/strategyEdit/StrategyEdit';
 import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateGeneralInfo';
 import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
 import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/strategicOptions';
+import SocialEdit from './components/socialEdit/SocialEdit';
 
 interface Props {
     beast: GMBeastClass,
@@ -67,6 +68,7 @@ export default function EditBody({
                             <SocialRoleSelect updateSocialInfo={updateSocialInfo} primaryRole={socialInfo.socialRole} secondaryRole={socialInfo.socialSecondary} />
                             <SkullSelection keyValue='socialSkulls' currentSkullValue={socialInfo.socialSkulls} updateSkull={updateSocialInfo} />
                         </div>
+                        <SocialEdit socialInfo={socialInfo} updateSocialInfoFunctions={updateSocialInfoFunctions} />
                     </>
                 }
                 {tabIndex === 2 &&

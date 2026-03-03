@@ -167,7 +167,7 @@ export default class GMBeastClass {
     }
 
     get socialInfo(): SocialInfo {
-        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex, capacity } = this.entrySocialInfo
+        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
         if (conflicts) {
@@ -178,6 +178,8 @@ export default class GMBeastClass {
 
             const socialRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRole : role
             const socialSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSecondary : secondary
+
+            const capacity = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
 
             const socialSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
             const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.selectedModifier
