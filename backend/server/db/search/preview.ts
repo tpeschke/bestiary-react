@@ -6,25 +6,29 @@ export const getGMPreview = `select b.id, b.name, intro, patreon, rarity, b.size
 	CASE WHEN (atk_conf is not null or attack_conf is not null) THEN true ELSE false END as hasConfAttack, 
 	CASE WHEN (def_conf is not null or defense_conf is not null) THEN true ELSE false END as hasConfDefense
 from bbindividualbeast b
-join (	select id, 	min(combatpoints) as mincombat, max(combatpoints) as maxcombat, 
-					min(socialpoints) as minsocial, max(socialpoints) as maxsocial, 
-					min(skillpoints) as minskill, max(skillpoints) as maxskill
+join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
+					min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
+					min(skillSkulls) as minskill, max(skillSkulls) as maxskill
 		from bbindividualbeast b
-		where b.socialpoints >= 0 and NOT EXISTS (	SELECT 1 
+		where b.socialSkulls >= 0 and NOT EXISTS (	SELECT 1 
                    									FROM   bbroles r 
                   									WHERE  b.id = r.beastid
                   									group by b.id)
 		group by b.id
 		union
-		select beastid as id, 	min(combatpoints) as mincombat, max(combatpoints) as maxcombat, 
-								min(socialpoints) as minsocial, max(socialpoints) as maxsocial, 
-								min(skillpoints) as minskill, max(skillpoints) as maxskill
+		select beastid as id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
+								min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
+								min(skillSkulls) as minskill, max(skillSkulls) as maxskill
 		from bbroles r
-		where r.socialpoints >= 0
+		where r.socialSkulls >= 0
 		group by r.beastid
 	) t on t.id = b.id
 left join bbroles r on r.beastid = b.id
-where b.id = $1 and patreon < 20 and (userid is null or userid = $2)
+where 
+	b.id = $1 
+	and patreon < 20 
+	and (userid is null or userid = $2)
+	and notUpdating is false
 order by b.name`
 
 export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, mincombat, maxcombat, minsocial, maxsocial, minskill, maxskill,
@@ -35,23 +39,27 @@ export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.
 	CASE WHEN (atk_conf is not null or attack_conf is not null) THEN true ELSE false END as hasConfAttack, 
 	CASE WHEN (def_conf is not null or defense_conf is not null) THEN true ELSE false END as hasConfDefense
 from bbindividualbeast b
-join (	select id, 	min(combatpoints) as mincombat, max(combatpoints) as maxcombat, 
-					min(socialpoints) as minsocial, max(socialpoints) as maxsocial, 
-					min(skillpoints) as minskill, max(skillpoints) as maxskill
+join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
+					min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
+					min(skillSkulls) as minskill, max(skillSkulls) as maxskill
 		from bbindividualbeast b
-		where b.socialpoints >= 0 and NOT EXISTS (	SELECT 1 
+		where b.socialSkulls >= 0 and NOT EXISTS (	SELECT 1 
                    									FROM   bbroles r 
                   									WHERE  b.id = r.beastid
                   									group by b.id)
 		group by b.id
 		union
-		select beastid as id, 	min(combatpoints) as mincombat, max(combatpoints) as maxcombat, 
-								min(socialpoints) as minsocial, max(socialpoints) as maxsocial, 
-								min(skillpoints) as minskill, max(skillpoints) as maxskill
+		select beastid as id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
+								min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
+								min(skillSkulls) as minskill, max(skillSkulls) as maxskill
 		from bbroles r
-		where r.socialpoints >= 0
+		where r.socialSkulls >= 0
 		group by r.beastid
 	) t on t.id = b.id
 left join bbroles r on r.beastid = b.id
-where t.id = $1 and canplayerview = true and userid is null
+where 
+	t.id = $1 
+	and canplayerview = true 
+	and userid is null
+	and notUpdating is false
 order by b.name`

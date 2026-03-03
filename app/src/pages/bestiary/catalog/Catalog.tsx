@@ -5,7 +5,7 @@ import catalogItemStates from './hooks/catalogItemStates';
 import Row from './components/row/Row';
 import Rows from './components/row/Rows';
 import { useEffect, useState } from 'react';
-import { isUserLoggedOn } from '../../../redux/slices/userSlice';
+import { getUserPatreon, isUserLoggedOn } from '../../../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 import FavoritesDisplay from './components/favorites/FavoritesDisplay';
 import { SetLoadingFunction } from '../../../components/loading/Loading';
@@ -19,6 +19,7 @@ export default function Catalog({ setLoading }: Props) {
     
     const { templates, freeBeasts, catalogItems, updatingCatalogItems, favorites } = catalogItemStates()
     const userIsLoggedIn = useSelector(isUserLoggedOn)
+    const usersPatreon = useSelector(getUserPatreon)
 
     const [showAll, setShowAll] = useState(false)
 
@@ -34,7 +35,7 @@ export default function Catalog({ setLoading }: Props) {
             <FavoritesDisplay userIsLoggedIn={userIsLoggedIn} favorites={favorites} />
             {showAll && <Row catalogTiles={templates} title={'Templates'} />}
             <Rows catalogItems={showAll ? catalogItems : updatingCatalogItems} />
-            <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Show'} Entire Catalog</button>
+            {usersPatreon >= 10 && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Show'} Entire Catalog</button>}
         </div>
     )
 }

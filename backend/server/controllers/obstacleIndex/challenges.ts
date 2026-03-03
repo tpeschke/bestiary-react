@@ -9,7 +9,7 @@ where id = $1`
 
 const getRelatedBeastsSQL = `select s.id, beastID, name from bbSkillBeast s
 join bbIndividualBeast b on b.id = s.beastID
-where s.challengeID = $1`
+where s.challengeID = $1 and b.notUpdating = false`
 
 interface GetRequest extends Request {
     params: {
