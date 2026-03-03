@@ -27,7 +27,7 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
 
     useEffect(() => {
         if (setLoading) {
-            setLoading(!!searchResults && searchResults.length > 0)
+            setLoading(!!searchResults)
         }
     }, [searchResults])
 
@@ -66,7 +66,9 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
                     <div className='row'>
                         <h1>Results</h1>
                         <div className='tile-row obstacle-tile-row'>
-                            {(searchResults && searchResults.length > 0) && searchResults.map((tile: ObstacleTile, index: number) => <ResultTile key={index} tile={tile} showObstacle={showObstacle} />)}
+                            {searchResults && searchResults.length > 0 ? searchResults.map((tile: ObstacleTile, index: number) => <ResultTile key={index} tile={tile} showObstacle={showObstacle} />) : (
+                                <p className='warning'>No results returned</p>
+                            )}
                         </div>
                     </div>
                 </div>

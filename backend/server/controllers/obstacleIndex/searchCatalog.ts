@@ -11,7 +11,7 @@ export interface SearchQuery {
     type?: 'o' | 'c',
 }
 
-const searchJustObstaclesInCatalogSQL = `select b.id as obstacleID, b.name as obstacleName from obSkullVariant sk
+const searchJustObstaclesInCatalogSQL = `select b.id as obstacleID, b.name from obSkullVariant sk
 full join obBase b on b.stringID = sk.stringID
 full join obComplications c on c.stringID = b.stringID
 where 

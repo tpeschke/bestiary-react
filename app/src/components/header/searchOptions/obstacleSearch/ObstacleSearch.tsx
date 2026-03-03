@@ -19,11 +19,9 @@ export default function ObstacleSearch({ clearInputs, clearSelects }: Props) {
     const { isOnSearch } = SearchStatusHook()
 
     const [timeoutID, setTimeoutID] = useState<any | null>(null)
-
     const [queryParams, setQueryParams] = useState<QueryObstacleParamsObject>({})
 
     const navigate = useNavigate()
-    const location = useLocation()
 
     useEffect(() => {
         if (!isOnSearch) {
@@ -63,10 +61,18 @@ export default function ObstacleSearch({ clearInputs, clearSelects }: Props) {
         <span>
             <Icon iconName='magnifying-glass' margin='right' color='black' />
             <input onChange={e => captureQuery('keyword', e.target.value)} placeholder='Search by Key Word' />
-            <div>
+            <div className="obstacle-index-type-search-options">
                 <span>
-                    <input type="checkbox" />
+                    <input type="checkbox" onClick={_ => captureQuery('type', '')} checked={!queryParams.type} />
                     <p>All</p>
+                </span>
+                <span>
+                    <input type="checkbox" onClick={_ => captureQuery('type', 'o')} checked={queryParams.type === 'o'} />
+                    <p>Obstacles</p>
+                </span>
+                <span>
+                    <input type="checkbox" onClick={_ => captureQuery('type', 'c')} checked={queryParams.type === 'c'} />
+                    <p>Challenges</p>
                 </span>
             </div>
         </span>
