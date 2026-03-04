@@ -8,6 +8,7 @@ import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../components/UI/pair/Pair"
+import Icon from '../../../../../../../../../../components/icon/Icon'
 
 interface Props {
     skillInfo: SkillInfo
@@ -15,6 +16,9 @@ interface Props {
 
 export default function SkillSection({ skillInfo }: Props) {
     const { skillRole, skillSkulls, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
+
+    const { threshold, defenseNFleeDice } = stress
+    const { defense, flee } = defenseNFleeDice
 
     const showSkillSection = skills.preferred || skills.weakness || skills.everythingElse || skills.everythingElse === 0
     const showDefenseSection = defenseInfo && defenseInfo !== ''
@@ -25,7 +29,17 @@ export default function SkillSection({ skillInfo }: Props) {
     return (
         <>
             <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
-            {stress.threshold && <Pair title={"Stress Threshold"} info={stress.threshold} format={{ heading: true, noBorder: hasBottomBorder }} />}
+            {threshold && (
+                <div className={"pair-shell heading three" + (hasBottomBorder ? " noBorder" : "")}>
+                    <h3>Stress Threshold</h3>
+                    <p>
+                        <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
+                        <span> / </span>
+                        <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
+                    </p>
+                    <p>{threshold}</p>
+                </div>
+            )}
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
@@ -46,8 +60,8 @@ export default function SkillSection({ skillInfo }: Props) {
                     </Body>
                 </>
             }
-            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles}/>}
-            {challenges.length > 0 && <ChallengesDisplay challenges={challenges}/>}
+            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles} />}
+            {challenges.length > 0 && <ChallengesDisplay challenges={challenges} />}
         </>
     )
 }

@@ -5,6 +5,7 @@ import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoI
 import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -48,7 +49,8 @@ export default class CombatInfoClass {
             vitalityInfo: {
                 ...vitalityInfo,
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
-                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
+                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
+                defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
@@ -116,7 +118,11 @@ export default class CombatInfoClass {
             isIncorporeal: this.getDefault<boolean>(roleVitalityInfo.isIncorporeal, mainVitalityInfo.isIncorporeal),
             weaponBreakageVitality: this.getDefault<boolean>(roleVitalityInfo.weaponBreakageVitality, mainVitalityInfo.weaponBreakageVitality),
             vitality: this.getDefault<string | number>(roleVitalityInfo.vitality, mainVitalityInfo.vitality),
-            trauma: this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma)
+            trauma: this.getDefault<number | boolean>(roleVitalityInfo.trauma, mainVitalityInfo.trauma),
+            defenseNFleeDice: {
+                defense: null,
+                flee: null
+            }
         }
     }
 }

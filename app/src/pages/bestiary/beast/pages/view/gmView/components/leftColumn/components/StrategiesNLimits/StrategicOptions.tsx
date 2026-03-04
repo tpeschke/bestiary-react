@@ -3,13 +3,13 @@ import { Fragment, useState } from 'react';
 import './strategicOptions.css'
 import { StrategicObstacles, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Tooltip } from 'react-tooltip';
-import ObstacleDisplay from '../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay';
+import ObstacleDisplay from '../../../../../../../../../../components/ObstaclesNChallenges/ObstacleDisplay';
 import axios from 'axios';
-import alertInfo from '../../../../../../../../../components/alert/alerts';
-import { obstacleSingleURL } from '../../../../../../../../../frontend-config';
-import LoadingIndicator from '../../../../../../../../../components/loading/components/LoadingIndicator';
-import Icon from '../../../../../../../../../components/icon/Icon';
-import obstacleCatalogHook from '../../../../../../../../obstacleIndex/hooks/obstacleCatalogHook';
+import alertInfo from '../../../../../../../../../../components/alert/alerts';
+import { obstacleSingleURL } from '../../../../../../../../../../frontend-config';
+import LoadingIndicator from '../../../../../../../../../../components/loading/components/LoadingIndicator';
+import Icon from '../../../../../../../../../../components/icon/Icon';
+import obstacleCatalogHook from '../../../../../../../../../obstacleIndex/hooks/obstacleCatalogHook';
 
 interface Props {
     options: StrategicOptions,

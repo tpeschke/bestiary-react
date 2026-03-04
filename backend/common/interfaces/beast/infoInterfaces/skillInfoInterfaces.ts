@@ -1,10 +1,15 @@
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { Obstacle, Challenge } from "../../obstacles/obstacleCatalog"
+import { DiceOptions } from "../beast";
 
 export default interface SkillInfo {
     stress: {
         threshold: number | string | null,
-        strength: Strength
+        strength: Strength,
+        defenseNFleeDice: {
+            defense: DiceOptions,
+            flee: DiceOptions
+        },
     },
     skillRole: string,
     skillSecondary: string,

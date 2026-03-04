@@ -5,6 +5,7 @@ import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/comba
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
 import getInitiative from "./utilities/getInitiative"
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
 
 export default function formatCombatInfo(
     limitNotes: string,
@@ -40,7 +41,8 @@ export default function formatCombatInfo(
             noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
             knockback: calculateKnockBack(knockback, size),
             ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
-            locationalVitalities: []
+            locationalVitalities: [],
+            defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex),
         },
         options: {
             obstacles: [],

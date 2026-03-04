@@ -1,4 +1,4 @@
-export default function getModBySkullIndex(skullIndex: number, roleIndexModifier: number, dictionary: number[]): number {
+export default function getModBySkullIndex<Type = number>(skullIndex: number, roleIndexModifier: number, dictionary: Type[]): Type {
     const modifiedIndex = skullIndex + roleIndexModifier
 
     if (modifiedIndex < 0) {

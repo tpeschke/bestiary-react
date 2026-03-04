@@ -13,7 +13,7 @@ import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatI
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import Pair from "../../../../../components/UI/pair/Pair"
 import StrategiesNLimits from "./components/StrategiesNLimits/StrategiesNLimits"
-import StrategicOptionsDisplay from "./components/StrategicOptions"
+import StrategicOptionsDisplay from "./components/StrategiesNLimits/StrategicOptions"
 
 interface Props {
     beastId: number,

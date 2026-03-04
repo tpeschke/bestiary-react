@@ -3,9 +3,9 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit'
+export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit' | 'run'
 
-type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray'
+type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray' | 'blue'
 
 type IconSize = null | 'h1' | 'h2' | 'small'
 
@@ -173,6 +173,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'edit':
             styling = "fa-solid fa-pen-to-square"
             break
+        case 'run':
+            styling = "fa-solid fa-person-running"
+            break
         default:
             break;
     }
@@ -195,6 +198,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'gray':
             styling += ' gray-icon'
+            break
+        case 'blue':
+            styling += ' blue-icon'
             break
     }
 

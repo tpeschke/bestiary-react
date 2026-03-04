@@ -22,6 +22,7 @@ import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontatio
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
 import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -241,7 +242,8 @@ export default class GMBeastClass {
             ...this.entrySkillInfo,
             stress: {
                 threshold: calculateStress(skillSecondary, skullIndex, stress.strength),
-                strength: stress.strength
+                strength: stress.strength,
+                defenseNFleeDice: getDefenseNFlee(skillRole, skullIndex)
             },
             skillRole, skillSecondary, skillSkulls,
             skills: getSkills(skillRole, skullIndex)

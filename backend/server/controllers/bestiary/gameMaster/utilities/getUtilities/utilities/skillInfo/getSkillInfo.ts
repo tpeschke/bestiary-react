@@ -4,9 +4,10 @@ import calculateStress from "@bestiary/common/utilities/scalingAndBonus/skill/ca
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
 import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee";
 
 export default function formatSkillInfo(
-    skillRole: string, 
+    skillRole: string,
     skillSecondary: string,
     skillPoints: number,
     skillSkulls: number,
@@ -24,7 +25,8 @@ export default function formatSkillInfo(
         defenseInfo: defenseInfo ?? '',
         stress: {
             threshold: calculateStress(skillSecondary, skullIndex, stressThresholdStrength),
-            strength: stressThresholdStrength
+            strength: stressThresholdStrength,
+            defenseNFleeDice: getDefenseNFlee(skillRole, skullIndex),
         },
         skills: getSkills(skillRole, skullIndex),
         obstacles: [],

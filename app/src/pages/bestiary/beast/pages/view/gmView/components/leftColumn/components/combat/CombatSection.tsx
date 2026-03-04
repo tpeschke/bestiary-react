@@ -9,6 +9,7 @@ import LocationVitalities from "./components/locationalVitalities/LocationalVita
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import Pair, { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import Icon from "../../../../../../../../../../components/icon/Icon"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -16,8 +17,16 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
-    const { combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks, defenses, initiative } = combatInfo
-    const { vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality, isIncorporeal } = vitalityInfo
+    const {
+        combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
+        defenses, initiative
+    } = combatInfo
+    const {
+        vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
+        isIncorporeal, defenseNFleeDice
+    } = vitalityInfo
+
+    const { defense, flee } = defenseNFleeDice
 
     const traumaInfo = {
         trauma,
@@ -36,7 +45,15 @@ export default function CombatSection({ combatInfo, size }: Props) {
     return (
         <>
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />
-            <Pair title={"Damage Threshold"} info={vitality} format={{ heading: true }} icon={vitalityIconSetting} />
+            <div className="pair-shell heading three">
+                <h3>Damage Threshold</h3>
+                <p>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
+                    <span> / </span>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
+                </p>
+                <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+            </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
             <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />

@@ -1,4 +1,5 @@
 import { Strength } from "../../calculationInterfaces"
+import { DiceOptions } from "../beast"
 import { Spell } from "./castingInfo"
 
 export default interface CombatInfo {
@@ -85,10 +86,10 @@ export interface WeaponInfo {
     isSpecial: IsSpecial,
     overAllIndex: number,
     weaponInfo: ProcessedWeapon,
-    scalingInfo: { 
-        swarmbonus: boolean, 
-        name: string, 
-        weapon: string, 
+    scalingInfo: {
+        swarmbonus: boolean,
+        name: string,
+        weapon: string,
         weapontype: DamageType,
         addsizemod: boolean
     }
@@ -173,7 +174,7 @@ export interface RawCombatStat {
     adjustment: number,
     tdr: boolean,
     info: string,
-    spellid?: number 
+    spellid?: number
 }
 
 export interface Movement {
@@ -198,10 +199,10 @@ export interface RawMovement {
     combatpoints: number,
     roleid: string,
     allroles: boolean,
-    strollstrength: Strength, 
-    walkstrength: Strength, 
-    jogstrength: Strength, 
-    runstrength: Strength, 
+    strollstrength: Strength,
+    walkstrength: Strength,
+    jogstrength: Strength,
+    runstrength: Strength,
     sprintstrength: Strength
     adjustment: number
 }
@@ -217,6 +218,10 @@ export interface VitalityInfo {
     rollUnderTrauma: number,
     isIncorporeal: boolean,
     weaponBreakageVitality: boolean,
+    defenseNFleeDice: {
+        defense: DiceOptions,
+        flee: DiceOptions
+    },
 }
 
 export interface LocationVitality {

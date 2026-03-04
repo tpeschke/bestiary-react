@@ -3,6 +3,18 @@
     justify-content: space-between;
 }
 
+.pair-shell.three {
+    text-align: center;
+}
+
+.pair-shell.three > * {
+    width: 33%;
+}
+
+.pair-shell.three h3 {
+    text-align: left;
+}
+
 .pair-shell.heading {
     background: #e1e7ea;
     padding: 5px 3px;
@@ -22,7 +34,8 @@
     text-align: right;
 }
 
-.pair-shell>p, .pair-shell>a {
+.pair-shell>p,
+.pair-shell>a {
     width: 50%;
 }
 
@@ -34,11 +47,13 @@
     color: #434343;
 }
 
-.pair-shell p.justifiedRight, .pair-shell h3.justifiedRight {
+.pair-shell p.justifiedRight,
+.pair-shell h3.justifiedRight {
     text-align: right;
     margin-right: 5px;
 }
 
-.pair-shell p.justifiedLeft, .pair-shell h3.justifiedLeft {
+.pair-shell p.justifiedLeft,
+.pair-shell h3.justifiedLeft {
     text-align: left;
 }
