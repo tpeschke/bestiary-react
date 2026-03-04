@@ -1,8 +1,8 @@
 import './SpellsDisplay.css'
-import { Spell } from '../../../../../../../interfaces/infoInterfaces/castingInfo'
 
 import Body from '../../../../../../../components/UI/body/Body'
 import SpellDisplay from './spell/SpellDisplay'
+import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
 
 interface Props {
     spells: Spell[]

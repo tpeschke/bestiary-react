@@ -40,6 +40,7 @@ const situationDictionary: GroupType[] = [
         label: 'General Options',
         options: [
             { value: 'Engaged', label: 'Engaged' },
+            { value: 'Engaged w/ Closet Enemy', label: 'Engaged w/ Closet Enemy' },
             { value: 'Engaged with Ally', label: 'Engaged with Ally' },
             { value: 'Engaged with Light Armor', label: 'Engaged with Light Armor' },
             { value: 'Engaged with Medium / Heavy Armor', label: 'Engaged with Medium / Heavy Armor' },

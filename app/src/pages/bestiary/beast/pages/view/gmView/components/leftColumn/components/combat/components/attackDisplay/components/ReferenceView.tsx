@@ -15,7 +15,7 @@ export default function ReferenceView({ referenceInfo }: Props) {
         <div className='attack-stats-shell'>
             <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6></span>
             <Body>
-                <p className='italic'>As {reference}</p>
+                <p className={`italic ${!tactic && 'bottom-margin'}`}>As {reference}</p>
             </Body>
             {tactic &&
                 <Body>

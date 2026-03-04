@@ -16,7 +16,8 @@
     font-style: italic;
 }
 
-.attack-stats-shell>.attack-stats-inner-shell, .attack-stats-left>div {
+.attack-stats-shell>.attack-stats-inner-shell,
+.attack-stats-left>div {
     display: flex;
     justify-content: space-evenly;
 }
@@ -51,4 +52,18 @@
 
 .attack-stats-shell.spell-reference .body-shell {
     padding: 3px 5px;
+}
+
+.attack-stats-shell .bottom-margin {
+    padding-bottom: 5px;
+}
+
+.spell-display-tooltip .spell-display-shell {
+    margin-right: 0;
+    width: unset;
+    color: black;
+}
+
+.spell-display-tooltip .spell-display-shell i {
+    display: none;
 }
