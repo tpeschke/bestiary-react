@@ -7,7 +7,7 @@ import MoveOrderButton from './components/MoveOrderButton'
 import ReferenceEdit from './components/ReferenceEdit'
 import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import SpellEdit from './components/SpellEdit'
-import { Spell } from '../../../../../../../../interfaces/infoInterfaces/castingInfo'
+import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
 
 interface Props {
     attacks: AttackInfo[],

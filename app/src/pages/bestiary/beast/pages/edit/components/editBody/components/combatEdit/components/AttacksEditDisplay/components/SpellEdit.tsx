@@ -3,8 +3,8 @@ import { SpellReference } from "@bestiary/common/interfaces/beast/infoInterfaces
 import Icon from "../../../../../../../../../../../../components/icon/Icon"
 import { UpdateAttackDefenseInfoFunction, RemoveCombatFunction } from "../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import getSituationOptions from "./utilities/situationOptions"
-import { Spell } from '../../../../../../../../../interfaces/infoInterfaces/castingInfo'
 import getSpellOptions from './utilities/spellOptions'
+import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
 
 interface Props {
     spellReference: SpellReference,

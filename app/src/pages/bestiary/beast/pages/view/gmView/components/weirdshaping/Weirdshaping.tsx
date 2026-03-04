@@ -3,7 +3,7 @@ import './Weirdshaping.css'
 import CastingClass from './models/CastingClass'
 import CastingTypeSelect from './components/casting/CastingTypeSelect'
 import SpellsDisplay from './components/spells/SpellsDisplay'
-import { Spell } from '../../../../../interfaces/infoInterfaces/castingInfo'
+import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
 
 interface Props {
     castingTypes: CastingClass,
