@@ -14,7 +14,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
-            tactic, reference, attackrole, weapontype, damagetype, addsizemod
+            tactic, reference, attackrole, weapontype, damagetype, addsizemod, spellid
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -27,6 +27,14 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 overAllIndex: index,
                 roleid: roleid ?? attackrole,
                 tactic, reference, situation
+            }
+        } else if (spellid) {
+            return {
+                id: attackid,
+                infoType: 'spell',
+                overAllIndex: index,
+                roleid: roleid ?? attackrole,
+                spellid, situation,
             }
         } else {
             return {

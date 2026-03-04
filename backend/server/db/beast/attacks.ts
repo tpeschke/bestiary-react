@@ -2,7 +2,7 @@ export const getMonsterAttacks = `select
 	c.*,
 	coalesce(c.roleid, a.roleid),
 	r.combatpoints, r.role, 
-	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole,
+	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
 	index
 from bbcombatstats c
 left join bbroles r on r.id = c.roleid
@@ -30,3 +30,10 @@ where id = $1`
 
 export const addReferenceToDB = `insert into bbattacks (index, reference, tactic, situation, roleid, beastid)
 values ($1, $2, $3, $4, $5, $6)`
+
+export const updateSpellReferenceInfo = `update bbattacks
+set index = $2, spellid = $3, situation = $4, beastid = $5
+where id = $1`
+
+export const addSpellReferenceToDB = `insert into bbattacks (index, spellid, situation, roleid, beastid)
+values ($1, $2, $3, $4, $5)`

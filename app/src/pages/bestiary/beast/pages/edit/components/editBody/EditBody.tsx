@@ -38,9 +38,9 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(1)
+    const [tabIndex, setTabIndex] = useState(2)
 
-    const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType } = beast
+    const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
 
@@ -78,7 +78,7 @@ export default function EditBody({
                             <CombatRoleSelect updateCombatInfo={updateCombatInfo} primaryRole={combatInfo.combatRole} secondaryRole={combatInfo.combatSecondary} />
                             <SkullSelection keyValue='combatSkulls' currentSkullValue={combatInfo.combatSkulls} updateSkull={updateCombatInfo} />
                         </div>
-                        <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} />
+                        <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} spells={spells} />
                     </>
                 }
                 {tabIndex === 3 &&

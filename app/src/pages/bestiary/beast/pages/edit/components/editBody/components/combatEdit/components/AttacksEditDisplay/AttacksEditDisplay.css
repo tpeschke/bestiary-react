@@ -26,7 +26,7 @@
     font-style: italic ;
 }
 
-.attack-edit-header>p, .attack-edit-row>p {
+.attack-edit-header>p, .attack-edit-row>p, .attack-edit-row  .spell{
     width: 150px;
 }
 

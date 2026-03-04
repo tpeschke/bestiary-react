@@ -1,3 +1,4 @@
+import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 
 export default interface CastingInfo {
     casting: Casting,
@@ -9,18 +10,4 @@ export interface Casting {
     spellnumberdie: string,
     defaulttype: number | null,
     beastid: number
-}
-
-export interface Spell {
-    id: number,
-    name: string,
-    origin: string,
-    shape: string,
-    range: string,
-    interval: string,
-    effect: string,
-    beastid: number,
-    allroles: boolean,
-    roleid: string,
-    resist: string
 }

@@ -127,7 +127,7 @@ export default function getUpdateCombatInfoFunctions(
                         ]
                     }
                 }
-
+            
                 updateBeastInfo(modifiedBeastInfo)
             }
         },

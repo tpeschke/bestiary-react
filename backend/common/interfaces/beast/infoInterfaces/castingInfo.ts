@@ -13,7 +13,7 @@ export interface Casting {
 
 
 export interface Spell {
-    id: number,
+    id: string,
     name: string,
     origin: string,
     shape: string,

@@ -1,4 +1,5 @@
 import { Strength } from "../../calculationInterfaces"
+import { Spell } from "./castingInfo"
 
 export default interface CombatInfo {
     attackInfo: string,
@@ -39,7 +40,7 @@ export type SizeCategories = 'S' | 'M' | 'L'
 export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
-export type AttackInfo = AttackReference | WeaponInfo
+export type AttackInfo = AttackReference | WeaponInfo | SpellReference
 
 export interface AttackReference {
     infoType: 'reference'
@@ -49,6 +50,16 @@ export interface AttackReference {
     tactic?: string,
     overAllIndex: number,
     roleid?: string
+}
+
+export interface SpellReference {
+    infoType: 'spell',
+    id?: number,
+    spellid?: string,
+    situation?: string,
+    overAllIndex: number,
+    roleid?: string,
+    spellInfo?: Spell
 }
 
 export interface WeaponInfo {
@@ -162,6 +173,7 @@ export interface RawCombatStat {
     adjustment: number,
     tdr: boolean,
     info: string,
+    spellid?: number 
 }
 
 export interface Movement {

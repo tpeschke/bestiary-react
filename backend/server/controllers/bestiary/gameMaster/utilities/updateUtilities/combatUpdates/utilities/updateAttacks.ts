@@ -1,6 +1,6 @@
-import { AttackInfo, AttackReference, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackInfo, AttackReference, SpellReference, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import query from "../../../../../../../db/database"
-import { addReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateWeaponInfo } from "../../../../../../../db/beast/attacks"
+import { addReferenceToDB, addSpellReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateSpellReferenceInfo, updateWeaponInfo } from "../../../../../../../db/beast/attacks"
 
 export default async function updateAttacks(beastID: number, attacks: AttackInfo[]) {
     let promiseArray: any[] = []
@@ -12,6 +12,8 @@ export default async function updateAttacks(beastID: number, attacks: AttackInfo
             promiseArray.push(upsertWeaponAttack(attack, beastID))
         } else if (attack.infoType === 'reference') {
             promiseArray.push(upsertReferenceAttack(attack, beastID))
+        } else if (attack.infoType === 'spell') {
+            promiseArray.push(upsertSpellAttack(attack, beastID))
         }
     })
 
@@ -33,5 +35,14 @@ async function upsertReferenceAttack(attack: AttackReference, beastID: number) {
         return query(updateReferenceInfo, [id, overAllIndex, reference, tactic, situation, beastID])
     } else {
         return query(addReferenceToDB, [overAllIndex, reference, tactic, situation, roleid, beastID])
+    }
+}
+
+async function upsertSpellAttack(attack: SpellReference, beastID: number) {
+    const { id, overAllIndex, spellid, roleid, situation } = attack
+    if (id) {
+        return query(updateSpellReferenceInfo, [id, overAllIndex, spellid, situation, beastID])
+    } else {
+        return query(addSpellReferenceToDB, [overAllIndex, spellid, situation, roleid, beastID])
     }
 }

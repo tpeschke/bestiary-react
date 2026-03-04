@@ -6,6 +6,8 @@ import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
 import ReferenceEdit from './components/ReferenceEdit'
 import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import SpellEdit from './components/SpellEdit'
+import { Spell } from '../../../../../../../../interfaces/infoInterfaces/castingInfo'
 
 interface Props {
     attacks: AttackInfo[],
@@ -13,10 +15,13 @@ interface Props {
     updateAttackInfo: UpdateAttackDefenseInfoFunction,
     addAttack: AddAttackFunction,
     removeAttack: RemoveCombatFunction,
-    combatRoleType: string | null
+    combatRoleType: string | null,
+    spells: Spell[]
 }
 
-export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType }: Props) {
+export default function AttacksEditDisplay({
+    attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType, spells
+}: Props) {
 
     function getCorrectAttackEditOption(
         attackInfo: AttackInfo,
@@ -39,6 +44,16 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
                     updateAttackInfo={updateAttackInfo}
                     combatRoleType={combatRoleType}
                     removeAttack={removeAttack}
+                />
+            )
+        } else if (attackInfo.infoType === 'spell') {
+            return (
+                <SpellEdit
+                    spellReference={attackInfo}
+                    updateAttackInfo={updateAttackInfo}
+                    combatRoleType={combatRoleType}
+                    removeAttack={removeAttack}
+                    spells={spells}
                 />
             )
         }
@@ -73,6 +88,7 @@ export default function AttacksEditDisplay({ attacks, updateAttackOrder, updateA
 
                 <div className='add-attack-button-shell'>
                     <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
+                    <button onClick={_ => addAttack({ infoType: 'spell', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Spell</button>
                 </div>
             </>
         </Body>

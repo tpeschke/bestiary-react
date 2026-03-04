@@ -2,6 +2,7 @@ import { AttackInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/com
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import AttackStats from "./components/AttackStats"
 import ReferenceView from "./components/ReferenceView"
+import SpellReferenceView from "./components/SpellReferenceView"
 
 interface Props {
     attackInfo: string,
@@ -21,6 +22,8 @@ export default function AttackDisplay({ attackInfo, attacks }: Props) {
                             return <AttackStats key={index} attackStat={attack} />
                         } else if (attack.infoType === 'reference') {
                             return <ReferenceView key={index} referenceInfo={attack} />
+                        } else if (attack.infoType === 'spell') {
+                            return <SpellReferenceView key={index} spellReferenceInfo={attack} />
                         }
                     })}
                 </>

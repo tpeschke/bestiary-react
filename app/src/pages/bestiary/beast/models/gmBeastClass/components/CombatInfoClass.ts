@@ -1,3 +1,4 @@
+import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
@@ -20,7 +21,7 @@ export default class CombatInfoClass {
         return this.entryCombatInfo.combatSkulls
     }
 
-    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number): CombatInfo {
+    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): CombatInfo {
         const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
@@ -49,13 +50,13 @@ export default class CombatInfoClass {
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size), []),
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
             defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
     }
 
-    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size) => {
+    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size, spells: Spell[]) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!roleID || attack.roleid === roleID) {
                 if (attack.infoType === 'weapon') {
@@ -64,7 +65,12 @@ export default class CombatInfoClass {
                         ...calculateAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
                         weaponName: attack.weapon?.split(' (')[0]
                     })
-                } else if (attack.infoType === 'reference') {
+                } else if (attack.infoType === 'spell') {
+                    attackInfo.push({
+                        ...attack,
+                        spellInfo: spells.filter(spell => attack.spellid === spell.id)[0]
+                    })
+                } else {
                     attackInfo.push({ ...attack })
                 }
             }

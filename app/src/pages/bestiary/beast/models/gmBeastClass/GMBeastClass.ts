@@ -1,4 +1,3 @@
-import { Spell } from "../../interfaces/infoInterfaces/castingInfo";
 import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces";
 import LinkedInfo from "../../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../../interfaces/infoInterfaces/lootInfoInterfaces";
@@ -22,6 +21,7 @@ import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatI
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
 import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
+import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -252,7 +252,7 @@ export default class GMBeastClass {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
         const selectedRole: Role = this.entryRoleInfo.roles[this.selectRoleIndex]
 
-        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier)
+        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier, this.spells)
     }
 
     get linkedInfo(): LinkedInfo {

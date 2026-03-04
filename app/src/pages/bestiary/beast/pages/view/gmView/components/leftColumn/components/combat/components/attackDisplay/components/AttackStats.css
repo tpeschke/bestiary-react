@@ -48,3 +48,7 @@
     margin: 5px 9px;
     border-bottom: 1px solid #e1e7ea;
 }
+
+.attack-stats-shell.spell-reference .body-shell {
+    padding: 3px 5px;
+}
