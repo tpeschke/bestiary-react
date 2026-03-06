@@ -7,7 +7,7 @@ import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctio
 import { getPlayerVersionOfBeast } from '../../controllers/bestiary/player'
 import { getMonsterFromCache } from '../../controllers/bestiary/monsterCache'
 import getLoot from '../../controllers/bestiary/loot/loot'
-import getRandomEncounter from '../../controllers/bestiary/encounter/encounter'
+import getRandomEncounter, { getEditRandomEncounter } from '../../controllers/bestiary/encounter/encounter'
 import { Beast } from '@bestiary/common/interfaces/beast/beast'
 import { hasAppropriatePatreonLevel } from '../../controllers/bestiary/gameMaster/utilities/getUtilities/utilities/generalInfo/miscInfo/getMiscInfo'
 import { updateBeast } from '../../controllers/bestiary/gameMaster/utilities/updateUtilities/updateBeast'
@@ -70,6 +70,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
 
 BeastRoutes.get('/:beastId', checkIfGameMaster)
 BeastRoutes.get('/encounter/:beastId', getRandomEncounter)
+BeastRoutes.get('/editEncounter/:beastId', getEditRandomEncounter)
 
 BeastRoutes.post('/save', updateBeast)
 BeastRoutes.post('/loot', getLoot)

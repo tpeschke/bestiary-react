@@ -18,6 +18,8 @@ import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilit
 import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
 import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/strategicOptions';
 import SocialEdit from './components/socialEdit/SocialEdit';
+import EditRandomEncounters from '../editRandomEncounters/EditRandomEncounters';
+import { EditEncounter } from '../../../view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces';
 
 interface Props {
     beast: GMBeastClass,
@@ -38,15 +40,17 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(2)
+    const [tabIndex, setTabIndex] = useState(5)
 
-    const { generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells } = beast
+    const { id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
 
     const { updateSocialInfo } = updateSocialInfoFunctions
     const { updateCombatInfo, updateNonRoleInfo } = updateCombatInfoFunctions
     const { updateSkillInfo } = updateSkillInfoFunctions
+
+    const [randomEncounterInfo, setRandomEncounterInfo] = useState<EditEncounter | null>(null)
 
     return (
         <div className="edit-body-shell">
@@ -93,14 +97,20 @@ export default function EditBody({
                 {tabIndex === 4 &&
                     <>
                         <h1>Strategies</h1>
-                        <StrategyEdit strategiesNLimits={strategiesNLimits} limitNotes={limitNotes} updateCombatInfo={updateNonRoleInfo}/>
-                        <StrategicOptionsDisplay options={options} updateCombatInfo={updateNonRoleInfo}/>
+                        <StrategyEdit strategiesNLimits={strategiesNLimits} limitNotes={limitNotes} updateCombatInfo={updateNonRoleInfo} />
+                        <StrategicOptionsDisplay options={options} updateCombatInfo={updateNonRoleInfo} />
+                    </>
+                }
+                {tabIndex === 5 &&
+                    <>
+                        <h1>Random Encounters</h1>
+                        <EditRandomEncounters beastID={id} randomEncounterInfo={randomEncounterInfo} setRandomEncounterInfo={setRandomEncounterInfo}/>
                     </>
                 }
             </div>
 
             <h2 className="border">Save</h2>
-            <button className="orange" onClick={saveBeast}>Save Entry</button>
+            <button className="orange" onClick={_ => saveBeast(randomEncounterInfo)}>Save Entry</button>
         </div>
     )
 }

@@ -11,7 +11,18 @@ export interface Encounter {
     group?: GroupInfo
 }
 
+export interface EditEncounter {
+    beastID: number,
+    reaction: EditReaction
+}
+
+export interface EditReaction {
+    id?: number,
+    temperament: ReactionTemperamentOptions,
+}
+
 export interface Reaction {
+    id?: number,
     temperament: ReactionTemperamentOptions,
     result: string,
 }

@@ -20,11 +20,12 @@ import getUpdateSocialInfoFunctions, { UpdateSocialInfoFunctionsObject } from ".
 import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from "./updateUtilities/updateCombatInfo";
 import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
 import getUpdateGeneralInfoFunctions, { UpdateGeneralInfoFunctionsObject } from "./updateUtilities/updateGeneralInfo";
+import { EditEncounter } from "../pages/view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
 
-export type SaveBeastFunction = () => void
+export type SaveBeastFunction = (randomEncounterInfo: EditEncounter | null) => void
 
 export type UpdateFavoriteFunction = () => Promise<FavoriteReturn | null>
 
@@ -255,10 +256,10 @@ export default function beastHooks(): Return {
         return null
     }
 
-    const saveBeast = async () => {
+    const saveBeast = async (randomEncounterInfo: EditEncounter | null) => {
         if (beast) {
             showPendingAlert(async () => {
-                const { data } = await axios.post(beastURL + '/save', beast.beastInfo)
+                const { data } = await axios.post(beastURL + '/save', {beastInfo: beast.beastInfo, randomEncounterInfo})
 
                 if (data.color === 'red') {
                     navigate(`/`)

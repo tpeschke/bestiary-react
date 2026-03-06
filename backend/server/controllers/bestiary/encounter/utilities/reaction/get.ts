@@ -1,6 +1,6 @@
-import query from "../../../../db/database"
-import { Reaction, ReactionTemperamentOptions } from "../../../../interfaces/bestiary/encounterInterfaces"
-import rollDice from "../../../../utilities/diceRoller"
+import query from "../../../../../db/database"
+import { Reaction, ReactionTemperamentOptions } from "../../../../../interfaces/bestiary/encounterInterfaces"
+import rollDice from "../../../../../utilities/diceRoller"
 
 const getReactionInfo = `select *, '' as result from bbReaction where beastID = $1`
 
@@ -9,6 +9,7 @@ export default async function getReaction(beastId: number): Promise<Reaction> {
 
     if (reaction) {
         return {
+            id: reaction.id,
             temperament: reaction.temperament,
             result: getResult(reaction.temperament)
         }

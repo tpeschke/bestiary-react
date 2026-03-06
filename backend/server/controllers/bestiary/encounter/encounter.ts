@@ -11,7 +11,7 @@ import getDistanceFromLair from './utilities/lair';
 import getNoun from './utilities/noun';
 import getObjectives from './utilities/objective';
 import getSigns from './utilities/sign';
-import getReaction from './utilities/reaction';
+import getReaction from './utilities/reaction/get';
 import getTime from './utilities/time';
 import getVerb from './utilities/verb';
 
@@ -50,4 +50,18 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
     Promise.all(promiseArray).then(_ => {
         checkForContentTypeBeforeSending(response, encounterObject)
     })
+}
+
+export async function getEditRandomEncounter(request: BasicParamsRequest, response: Response) {
+    const beastId = +request.params.beastId
+
+    let editEncounter: any = {
+        beastID: beastId
+    }
+
+    await Promise.all([
+        getReaction(beastId).then((reaction: Reaction) => editEncounter.reaction = reaction)
+    ])
+
+    checkForContentTypeBeforeSending(response, editEncounter)
 }
