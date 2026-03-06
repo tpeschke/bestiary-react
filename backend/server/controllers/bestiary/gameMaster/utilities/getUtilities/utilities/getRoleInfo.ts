@@ -93,7 +93,11 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls),
-                locationalVitalities: []
+                locationalVitalities: [],
+                defenseNFleeDice: {
+                    defense: null,
+                    flee: null
+                },
             },
             initiative: '+20'
         },
