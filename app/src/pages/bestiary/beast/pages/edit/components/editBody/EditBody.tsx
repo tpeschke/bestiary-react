@@ -20,6 +20,7 @@ import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/s
 import SocialEdit from './components/socialEdit/SocialEdit';
 import EditRandomEncounters from '../editRandomEncounters/EditRandomEncounters';
 import { EditEncounter } from '../../../view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces';
+import SkillEdit from './components/skillEdit/SkillEdit';
 
 interface Props {
     beast: GMBeastClass,
@@ -40,7 +41,7 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(5)
+    const [tabIndex, setTabIndex] = useState(3)
 
     const { id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells } = beast
     const { name } = generalInfo
@@ -92,6 +93,7 @@ export default function EditBody({
                             <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={skillInfo.skillRole} secondaryRole={skillInfo.skillSecondary} />
                             <SkullSelection keyValue='skillSkulls' currentSkullValue={skillInfo.skillSkulls} updateSkull={updateSkillInfo} />
                         </div>
+                        <SkillEdit skillInfo={skillInfo} updateSkillInfo={updateSkillInfo}/>
                     </>
                 }
                 {tabIndex === 4 &&

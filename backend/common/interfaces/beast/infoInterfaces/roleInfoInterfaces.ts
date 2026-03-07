@@ -1,6 +1,7 @@
 import { Strength } from "../../calculationInterfaces";
 import { VitalityInfo } from "./combatInfoInterfaces";
 import { Size } from "./generalInfoInterfaces";
+import { SkillObject } from "./skillInfoInterfaces";
 
 export type RoleNameOrderOptions = '1' | '2' | '3' | null
 
@@ -46,6 +47,7 @@ export interface RoleSkillInfo {
     skillSecondary: string
     attackInfo: string,
     defenseInfo: string,
+    skills: SkillObject,
 }
 
 export interface RoleSocialInfo {

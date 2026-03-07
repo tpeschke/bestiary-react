@@ -29,6 +29,7 @@ export interface SkillObject {
 }
 
 export interface Skill {
+    id?: number,
     skill: string,
     rank: number
 }

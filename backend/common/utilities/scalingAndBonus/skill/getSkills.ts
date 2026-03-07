@@ -1,7 +1,11 @@
 import { SkillObject } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import getSkillRank from "./getSkillRank"
 
-export default function getSkills(role: string, skullIndex: number): SkillObject {
+export default function getSkills(role: string, skullIndex: number, skillObject: SkillObject): SkillObject {
+    if (skillObject) {
+        return skillObject
+    }
+    
     switch (role) {
         case 'Generalist':
             return {

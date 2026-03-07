@@ -2,9 +2,9 @@ import { RoleSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/
 import query from "../../../../../../../../../db/database";
 
 export default async function updateBasicRoleSkillInfo(beastID: number, roleID: string, roleInfo: RoleSkillInfo) {
-        const sqlQuery = `update bbroles
-        set skillSkulls = $3, skillrole = $4, skillsecondary = $5
-        where beastid = $1 and id = $2`
+        const sqlQuery = `update bbRoles
+        set skillSkulls = $3, skillRole = $4, skillSecondary = $5
+        where beastID = $1 and id = $2`
     
         const { skillSkulls, skillRole, skillSecondary } = roleInfo
     
