@@ -32,6 +32,8 @@ import getPalette from "./utilities/generalInfo/getPalette"
 import getStrategiesNLimits from "./utilities/combatInfo/getStrategiesNLimits"
 import { Challenge, Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import getStrategicOptions from "./utilities/combatInfo/getStrategicOptions"
+import getGenericSkillSuites from "./utilities/skillInfo/utilities/getSkillSuites"
+import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -167,6 +169,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
 
+        getGenericSkillSuites(beast.id, null, beast.skillInfo.skillRole, beast.skillInfo.skullIndex).then((skills: SkillObject) => beast.skillInfo.skills = skills),
         getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges),
         getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles),
 

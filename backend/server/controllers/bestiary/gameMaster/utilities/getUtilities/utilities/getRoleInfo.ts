@@ -10,9 +10,11 @@ import { getMonsterRoleInfo } from "../../../../../../db/beast/role"
 import getSkullNumber from "./getSkulls"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
+import getGenericSkillSuites from "./skillInfo/utilities/getSkillSuites"
 
 export interface UnsortedRole {
     id: string,
+    beastid: number,
     name: string,
     role: string,
     size: Size,
@@ -55,15 +57,15 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
     const roles: UnsortedRole[] = await query(getMonsterRoleInfo, beastId)
 
     if (beastName.includes('Template')) {
-        return roles.sort(sortTemplateRoles).map(formatUnsortedRoles)
+        return Promise.all(roles.sort(sortTemplateRoles).map(formatUnsortedRoles))
     }
 
-    return roles.map(formatUnsortedRoles)
+    return Promise.all(roles.map(formatUnsortedRoles))
 }
 
-function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
+async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
     const {
-        id, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary,
+        id, beastid, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary,
         knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
         isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole,
         attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
@@ -109,7 +111,8 @@ function formatUnsortedRoles(unsortedRole: UnsortedRole): Role {
             stress: {
                 threshold: calculateStress(skillSecondary, skillSkullIndex, stressThresholdStrength),
                 strength: stressThresholdStrength
-            }
+            },
+            skills: await getGenericSkillSuites(beastid, id, skillRole, skillSkullIndex)
         },
         socialInfo: {
             socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,

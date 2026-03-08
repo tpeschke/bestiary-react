@@ -17,7 +17,7 @@ export default interface SkillInfo {
     skullIndex: number,
     attackInfo: string,
     defenseInfo: string,
-    skills: SkillObject,
+    skills?: SkillObject,
     obstacles: Obstacle[],
     challenges: Challenge[],
 }

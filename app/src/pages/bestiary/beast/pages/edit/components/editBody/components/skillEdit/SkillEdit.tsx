@@ -1,3 +1,4 @@
+import Icon from '../../../../../../../../../components/icon/Icon'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import './SkillEdit.css'
 import SkillInfo, { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
@@ -8,6 +9,10 @@ interface Props {
 }
 
 export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
+    if (!skillInfo.skills) {
+        return <></>
+    }
+
     const { skills } = skillInfo
     const { preferred, weakness, everythingElse } = skills
 
@@ -32,13 +37,26 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
         }
     }
 
+    const removeSkillSuite = (key: 'preferred' | 'weakness', indexToRemove: number) => {
+        if (skills && skills[key]) {
+            const newSkillList = skills[key].filter((_, index) => index !== indexToRemove)
+
+            const newSkills = {
+                ...skills,
+                [key]: newSkillList
+            }
+
+            updateSkillInfo('skills', newSkills)
+        }
+    }
+
     return (
         <div className="skill-edit-body">
             <h2>Preferred</h2>
-            {preferred?.map(formatSkillRow('preferred', updateSkillSuite))}
+            {preferred?.map(formatSkillRow('preferred', updateSkillSuite, removeSkillSuite))}
 
             <h2>Weak</h2>
-            {weakness?.map(formatSkillRow('weakness', updateSkillSuite))}
+            {weakness?.map(formatSkillRow('weakness', updateSkillSuite, removeSkillSuite))}
 
             <h2>Everything Else</h2>
             <span>
@@ -52,8 +70,9 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
 }
 
 type UpdateSkillSuite = (key: 'preferred' | 'weakness', indexToChange: number, value: string) => void
+type RemoveSkillSuite = (key: 'preferred' | 'weakness', indexToRemove: number) => void
 
-function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateSkillSuite) {
+function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateSkillSuite, removeSkillSuite: RemoveSkillSuite) {
     return ({ skill, rank }: Skill, index: number) => {
         const skillSuites = ['Athletics', 'Lore', 'Strategy', 'Streetwise', 'Survival', 'Trades', 'Weirdcraft']
 
@@ -70,13 +89,13 @@ function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateS
         return (
             <span key={index}>
                 <select value={skill} onChange={event => updateSkillSuite(key, index, event.target.value)}>
-                    {skillSuites.map(suite => <option value={suite}>{suite} ({suiteStatDictionary[suite]})</option>)}
+                    {skillSuites.map(suite => <option key={suite} value={suite}>{suite} ({suiteStatDictionary[suite]})</option>)}
                 </select>
                 <p>{suiteStatDictionary[skill]}</p>
                 <p>{rank}</p>
-                {/* <button className="orange">
+                <button className="orange" onClick={_ => removeSkillSuite(key, index)}>
                     <Icon iconName='trash' color='white' />
-                </button> */}
+                </button>
             </span>
         )
     }

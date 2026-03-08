@@ -1,11 +1,35 @@
 import { SkillObject } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import getSkillRank from "./getSkillRank"
 
-export default function getSkills(role: string, skullIndex: number, skillObject: SkillObject): SkillObject {
+export default function getSkills(role: string, skullIndex: number, skillObject?: SkillObject): SkillObject {
+    const calcPreferredRankDictionary = [
+        getSkillRank(skullIndex + 3),
+        getSkillRank(skullIndex + 1)
+    ]
+
+    const calcWeakRankDictionary = [
+        getSkillRank(skullIndex - 1),
+        getSkillRank(skullIndex - 3)
+    ]
+
     if (skillObject) {
-        return skillObject
+        return {
+            ...skillObject,
+            preferred: skillObject.preferred?.map((skill, index) => {
+                return {
+                    ...skill,
+                    rank: calcPreferredRankDictionary[index]
+                }
+            }),
+            weakness: skillObject.weakness?.map((skill, index) => {
+                return {
+                    ...skill,
+                    rank: calcWeakRankDictionary[index]
+                }
+            }),
+        }
     }
-    
+
     switch (role) {
         case 'Generalist':
             return {
@@ -18,19 +42,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Athletics',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Survival',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Strategy',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Lore',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -40,19 +64,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Lore',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Strategy',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Athletics',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Streetwise',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -62,19 +86,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Strategy',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Trades',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Weirdcraft',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Survivalist',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -84,19 +108,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Streetwise',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Athletics',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Lore',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Weirdcraft',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -106,19 +130,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Survival',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Weirdcraft',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Strategy',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Streetwise',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -128,19 +152,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Trades',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Lore',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Athletics',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Weirdcraft',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
@@ -150,19 +174,19 @@ export default function getSkills(role: string, skullIndex: number, skillObject:
                 preferred: [
                     {
                         skill: 'Weirdcraft',
-                        rank: getSkillRank(skullIndex + 3)
+                        rank: calcPreferredRankDictionary[0]
                     }, {
                         skill: 'Lore',
-                        rank: getSkillRank(skullIndex + 1)
+                        rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
                         skill: 'Trades',
-                        rank: getSkillRank(skullIndex - 1)
+                        rank: calcWeakRankDictionary[0]
                     }, {
                         skill: 'Athletics',
-                        rank: getSkillRank(skullIndex - 3)
+                        rank: calcWeakRankDictionary[1]
                     }
                 ],
                 everythingElse: getSkillRank(skullIndex)
