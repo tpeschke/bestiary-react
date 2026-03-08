@@ -19,7 +19,7 @@ export default function SkillSection({ skillInfo }: Props) {
     const { threshold, defenseNFleeDice } = stress
     const { defense, flee } = defenseNFleeDice
 
-    const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElse || skills?.everythingElse === 0
+    const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
     const showDefenseSection = defenseInfo && defenseInfo !== ''
     const showAttackSection = attackInfo && attackInfo !== ''
 
