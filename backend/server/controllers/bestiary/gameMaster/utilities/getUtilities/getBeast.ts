@@ -49,7 +49,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
         rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, skillsecondary, skillpoints, atk_skill,
         def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId,
-        combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, capacity: capacityStrength
+        combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, capacity: capacityStrength, everythingelsestrength: everythingElseStrength
     } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -169,7 +169,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getLocationalVitalities(beast.id).then((locationalVitalities: LocationVitality[]) => beast.combatInfo.vitalityInfo.locationalVitalities = locationalVitalities),
 
-        getGenericSkillSuites(beast.id, null, beast.skillInfo.skillRole, beast.skillInfo.skullIndex).then((skills: SkillObject) => beast.skillInfo.skills = skills),
+        getGenericSkillSuites(beast.id, null, beast.skillInfo.skillRole, beast.skillInfo.skullIndex, everythingElseStrength).then((skills: SkillObject) => beast.skillInfo.skills = skills),
         getChallenges(beast.id).then((challenges: Challenge[]) => beast.skillInfo.challenges = challenges),
         getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles),
 

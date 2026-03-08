@@ -2,11 +2,15 @@ import { Skill, SkillObject } from "@bestiary/common/interfaces/beast/infoInterf
 import Pair from "../../../../../../../../components/UI/pair/Pair"
 
 interface Props {
-    skills: SkillObject
+    skills: SkillObject | undefined
 }
 
 export default function SkillsDisplay({ skills }: Props) {
-    const { preferred, weakness, everythingElse } = skills
+    if (!skills) {
+        return <></>
+    }
+
+    const { preferred, weakness, everythingElse, everythingElseStrength } = skills
 
     return (
         <div className={preferred || weakness ? "skill-object-shell" : ''}>
@@ -14,7 +18,7 @@ export default function SkillsDisplay({ skills }: Props) {
                 {preferred && displaySkillArray(preferred)}
                 {weakness && displaySkillArray(weakness)}
             </div>
-            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElse} format={{ title: 'none' }} />
+            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? 'U' : everythingElse} format={{ title: 'none' }} />
         </div>
     )
 }

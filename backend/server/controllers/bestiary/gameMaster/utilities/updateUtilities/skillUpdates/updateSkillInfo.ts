@@ -4,7 +4,7 @@ import updateSkillSuites from "./utilities/updateSkillSuites"
 
 export default async function updateSkillInfo(beastID: number, skillInfo: SkillInfo) {
     let promiseArray: Promise<any>[] = [
-        updateBasicSkillInfo(beastID, skillInfo),
+        updateBasicSkillInfo(beastID, skillInfo, skillInfo.skills?.everythingElseStrength),
         updateSkillSuites(beastID, undefined, skillInfo.skills)
     ]
 

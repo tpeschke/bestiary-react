@@ -25,6 +25,7 @@ export default interface SkillInfo {
 export interface SkillObject {
     preferred?: Skill[],
     weakness?: Skill[],
+    everythingElseStrength: Strength,
     everythingElse?: number
 }
 

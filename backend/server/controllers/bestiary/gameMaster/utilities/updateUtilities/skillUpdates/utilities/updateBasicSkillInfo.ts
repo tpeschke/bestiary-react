@@ -1,12 +1,13 @@
+import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import query from "../../../../../../../db/database";
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 
-export default async function updateBasicSkillInfo(beastID: number, skillInfo: SkillInfo) {
+export default async function updateBasicSkillInfo(beastID: number, skillInfo: SkillInfo, everythingElseStrength?: Strength) {
     const sqlQuery = `update bbIndividualBeast
-    set skillSkulls = $2, skillRole = $3, skillSecondary = $4
+    set skillSkulls = $2, skillRole = $3, skillSecondary = $4, everythingElseStrength = $5
     where id = $1`
 
     const { skillSkulls, skillRole, skillSecondary } = skillInfo
 
-    return query(sqlQuery, [beastID, skillSkulls, skillRole, skillSecondary])
+    return query(sqlQuery, [beastID, skillSkulls, skillRole, skillSecondary, everythingElseStrength])
 }

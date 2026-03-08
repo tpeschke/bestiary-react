@@ -1,7 +1,8 @@
 import { SkillObject } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { Strength } from "../../../interfaces/calculationInterfaces"
 import getSkillRank from "./getSkillRank"
 
-export default function getSkills(role: string, skullIndex: number, skillObject?: SkillObject): SkillObject {
+export default function getSkills(role: string, skullIndex: number, everythingElseStrength: Strength = null, skillObject?: SkillObject): SkillObject {
     const calcPreferredRankDictionary = [
         getSkillRank(skullIndex + 3),
         getSkillRank(skullIndex + 1)
@@ -29,17 +30,21 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                     rank: calcWeakRankDictionary[index]
                 }
             }),
-            everythingElse
+            everythingElse,
+            everythingElseStrength
         }
     }
 
     switch (role) {
         case 'Generalist':
             return {
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Lock':
-            return {}
+            return {
+                everythingElseStrength
+            }
         case 'Athlete':
             return {
                 preferred: [
@@ -60,7 +65,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Loremaster':
             return {
@@ -82,7 +88,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Strategist':
             return {
@@ -104,7 +111,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Street-Rat':
             return {
@@ -126,7 +134,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Survivalist':
             return {
@@ -148,7 +157,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Trader':
             return {
@@ -170,7 +180,8 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         case 'Weirdling':
             return {
@@ -192,9 +203,12 @@ export default function getSkills(role: string, skullIndex: number, skillObject?
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
-                everythingElse
+                everythingElse,
+                everythingElseStrength
             }
         default:
-            return {}
+            return {
+                everythingElseStrength
+            }
     }
 }

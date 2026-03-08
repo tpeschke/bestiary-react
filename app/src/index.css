@@ -321,13 +321,18 @@ button.blue {
 	color: white;
 }
 
+button.blue:disabled {
+	color: gray;
+	background: lightgray;
+}
+
 button.blue:hover {
 	background: #63747d;
 }
 
 button.blue:disabled:hover {
-	background: #8aa0ab;
-	cursor: default;
+	color: gray;
+	background: lightgray;
 }
 
 button.orange {

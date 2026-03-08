@@ -11,6 +11,15 @@
     padding: 3px
 }
 
+.skill-edit-body span.everything-else-shell {
+    justify-content: start;
+}
+
+.skill-edit-body span.everything-else-shell button {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
 .edit-body-shell .skill-edit-body > span > select {
     margin: 0
 }

@@ -7,7 +7,6 @@ import ObstaclesDisplay from "./components/Obstacles/ObstaclesDisplay"
 import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
-import Pair from "../../../../../../../components/UI/pair/Pair"
 import Icon from '../../../../../../../../../../components/icon/Icon'
 
 interface Props {
@@ -20,7 +19,7 @@ export default function SkillSection({ skillInfo }: Props) {
     const { threshold, defenseNFleeDice } = stress
     const { defense, flee } = defenseNFleeDice
 
-    const showSkillSection = skills.preferred || skills.weakness || skills.everythingElse || skills.everythingElse === 0
+    const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElse || skills?.everythingElse === 0
     const showDefenseSection = defenseInfo && defenseInfo !== ''
     const showAttackSection = attackInfo && attackInfo !== ''
 

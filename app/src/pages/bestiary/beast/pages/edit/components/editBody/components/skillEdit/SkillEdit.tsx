@@ -14,7 +14,7 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
     }
 
     const { skills } = skillInfo
-    const { preferred, weakness, everythingElse } = skills
+    const { preferred, weakness, everythingElse, everythingElseStrength } = skills
 
     const updateSkillSuite = (key: 'preferred' | 'weakness', indexToChange: number, value: string) => {
         if (skills && skills[key]) {
@@ -50,6 +50,17 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
         }
     }
 
+    const toggleEverythingElseStrength = () => {
+        if (skills) {
+            const newSkills = {
+                ...skills,
+                everythingElseStrength: skills.everythingElseStrength ? null : 'x'
+            }
+
+            updateSkillInfo('skills', newSkills)
+        }
+    }
+
     return (
         <div className="skill-edit-body">
             <h2>Preferred</h2>
@@ -59,11 +70,10 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
             {weakness?.map(formatSkillRow('weakness', updateSkillSuite, removeSkillSuite))}
 
             <h2>Everything Else</h2>
-            <span>
-                <p>{everythingElse}</p>
-                {/* <button className="orange">
-                    x
-                </button> */}
+            <span className='everything-else-shell'>
+                <button onClick={toggleEverythingElseStrength}>
+                    {everythingElseStrength === 'x' ? 'U' : everythingElse}
+                </button>
             </span>
         </div>
     )

@@ -50,7 +50,8 @@ export interface UnsortedRole {
     defense_conf: string,
     hasarchetypes: boolean,
     hasmonsterarchetypes: boolean,
-    capacity: Strength
+    capacity: Strength,
+    everythingelsestrength: Strength
 }
 
 export async function getRoles(beastId: number, beastName: string): Promise<Role[]> {
@@ -70,7 +71,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
         isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole,
         attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes,
-        notrauma: noTrauma, socialskulls, combatskulls, skillskulls, capacity: capacityStrength, mental: stressThresholdStrength
+        notrauma: noTrauma, socialskulls, combatskulls, skillskulls, capacity: capacityStrength, mental: stressThresholdStrength,
+        everythingelsestrength: everythingElseStrength
     } = unsortedRole
 
     const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
@@ -112,7 +114,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
                 threshold: calculateStress(skillSecondary, skillSkullIndex, stressThresholdStrength),
                 strength: stressThresholdStrength
             },
-            skills: await getGenericSkillSuites(beastid, id, skillRole, skillSkullIndex)
+            skills: await getGenericSkillSuites(beastid, id, skillRole, skillSkullIndex, everythingElseStrength)
         },
         socialInfo: {
             socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,

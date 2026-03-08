@@ -248,7 +248,7 @@ export default class GMBeastClass {
                 defenseNFleeDice: getDefenseNFlee(skillRole, skullIndex)
             },
             skillRole, skillSecondary, skillSkulls,
-            skills: getSkills(skillRole, skullIndex, skills)
+            skills: getSkills(skillRole, skullIndex, skills?.everythingElseStrength, skills)
         }
     }
 
