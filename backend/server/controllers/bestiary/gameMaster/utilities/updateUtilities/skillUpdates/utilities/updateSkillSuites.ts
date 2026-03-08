@@ -13,8 +13,11 @@ export default async function updateSkillSuites(beastID: number, roleID: string 
     return true
 }
 
-const deleteSkillSuiteSQL = `delete from bbSkillSuites 
+const deleteSkillSuiteSQLWithRole = `delete from bbSkillSuites 
 where beastID = $1 and roleID = $2 and key = $3 and Not (id = any($4))`
+
+const deleteSkillSuiteSQLWithoutRole = `delete from bbSkillSuites 
+where beastID = $1 and roleID is null and key = $2 and Not (id = any($3))`
 
 const updateSkillSuiteSQL = `update bbSkillSuites
 set skill = $2, index = $3
@@ -24,7 +27,11 @@ const addSkillSuiteSQL = `insert into bbSkillSuites (beastID, roleID, skill, ind
 values ($1, $2, $3, $4, $5)`
 
 async function updateSkillSuite(beastID: number, roleID: string | undefined, suites: Skill[], key: 'preferred' | 'weakness') {
-    await query(deleteSkillSuiteSQL, [beastID, roleID, key, [0, ...suites.map(suite => suite.id)]])
+    if (roleID) {
+        await query(deleteSkillSuiteSQLWithRole, [beastID, roleID, key, [0, ...suites.map(suite => suite.id)]])
+    } else {
+        await query(deleteSkillSuiteSQLWithoutRole, [beastID, key, [0, ...suites.map(suite => suite.id)]])
+    }
 
     return suites.map(({ id, skill }, index) => {
         if (id) {
