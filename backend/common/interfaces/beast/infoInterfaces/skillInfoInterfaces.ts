@@ -30,6 +30,7 @@ export interface SkillObject {
 
 export interface Skill {
     id?: number,
+    roleid?: string,
     skill: string,
     rank: number
 }

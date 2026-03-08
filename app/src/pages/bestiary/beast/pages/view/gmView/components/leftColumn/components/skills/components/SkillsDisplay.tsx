@@ -23,8 +23,8 @@ function displaySkillArray(array: Skill[]) {
     const [major, minor] = array
     return (
         <div>
-            <Pair title={major.skill} info={major.rank} format={{ title: 'none' }} />
-            <Pair title={minor.skill} info={minor.rank} format={{ title: 'none' }} />
+            {major && <Pair title={major.skill} info={major.rank} format={{ title: 'none' }} />}
+            {minor && <Pair title={minor.skill} info={minor.rank} format={{ title: 'none' }} />}
         </div>
     )
 }
