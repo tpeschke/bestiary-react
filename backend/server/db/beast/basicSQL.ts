@@ -1,1 +1,1 @@
-export const getBasicMonsterInfo = `select * from bbindividualbeast where id = $1`
+export const getBasicMonsterInfo = `select * from bbIndividualBeast where id = $1`

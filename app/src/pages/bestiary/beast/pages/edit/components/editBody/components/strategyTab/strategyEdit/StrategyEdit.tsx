@@ -1,4 +1,4 @@
-import { StrategicOptions, StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { StrategyNLimits } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import { EditorProvider } from "@tiptap/react"
 import MenuBar from "../../../../../../../components/textEditor/menuBar"

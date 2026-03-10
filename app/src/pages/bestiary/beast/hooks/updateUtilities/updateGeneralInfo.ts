@@ -5,6 +5,7 @@ import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedI
 
 export type UpdateGeneralInfoFunctionsObject = {
     updatePaletteInfo: UpdateFunction,
+    updateGeneralInfo: UpdateFunction,
     updateLinkedInfo: UpdateArrayFunction
 }
 
@@ -12,6 +13,19 @@ export default function getUpdateGeneralInfoFunctions(
     beast: GMBeastClass | undefined, updateBeastInfo: Function
 ): UpdateGeneralInfoFunctionsObject {
     return {
+        updateGeneralInfo: (key: string, value: string | number) => {
+            if (beast) {
+                const modifiedBeastInfo: any = {
+                    ...beast.beastInfo,
+                    generalInfo: {
+                        ...beast.beastInfo.generalInfo,
+                        [key]: value
+                    }
+                }
+
+                updateBeastInfo(modifiedBeastInfo)
+            }
+        },
         updatePaletteInfo: (key: string, value: string | number) => {
             if (beast) {
                 let modifiedGeneralInfo: GeneralInfo = {

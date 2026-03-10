@@ -4,6 +4,7 @@ import { UpdateGeneralInfoFunctionsObject } from '../../../../../../hooks/update
 import LinkedInfo from '@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces'
 import PaletteDisplay from './components/Palette'
 import TypeEdit from './components/TypeEdit'
+import AppearanceEdit from './components/Appearance'
 
 interface Props {
     generalInfo: GeneralInfo,
@@ -12,14 +13,15 @@ interface Props {
 }
 
 export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunctions, linkedInfo }: Props) {
-    const { updatePaletteInfo, updateLinkedInfo } = updateGeneralInfoFunctions
-    const { palette } = generalInfo
+    const { updateGeneralInfo, updatePaletteInfo, updateLinkedInfo } = updateGeneralInfoFunctions
+    const { palette, appearance } = generalInfo
 
     const { types } = linkedInfo
 
     return (
         <div className="main-info-edit">
-            <TypeEdit types={types} updateLinkedInfo={updateLinkedInfo}/>
+            <AppearanceEdit updateGeneralInfo={updateGeneralInfo} appearance={appearance} />
+            <TypeEdit types={types} updateLinkedInfo={updateLinkedInfo} />
             <PaletteDisplay palette={palette} updatePaletteInfo={updatePaletteInfo} />
         </div>
     )
