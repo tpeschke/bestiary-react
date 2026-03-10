@@ -5,8 +5,8 @@ interface VitalityAndTrauma {
     trauma: number | boolean
 }
 
-export default function calculateVitalityAndTrauma(role: string, secondaryRole: string, skullIndex: number): VitalityAndTrauma {
-    const vitality = calculateSecondaryRoleEffect(getBaseVitality(skullIndex, role), secondaryRole) 
+export default function calculateVitalityAndTrauma(role: string, secondaryRole: string, skullIndex: number, weaponBreakageVitality: boolean): VitalityAndTrauma {
+    const vitality = calculateSecondaryRoleEffect(getBaseVitality(skullIndex, role, weaponBreakageVitality), secondaryRole)
 
     return {
         vitality,
@@ -14,10 +14,12 @@ export default function calculateVitalityAndTrauma(role: string, secondaryRole: 
     }
 }
 
-function getBaseVitality(skullIndex: number, role: string): number {
-    const vitalityDictionary = [1, 2, 4, 6, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152]
-    const roleIndexModifier = getRoleIndexModifier(role)
+function getBaseVitality(skullIndex: number, role: string, weaponBreakageVitality: boolean): number {
+    const normalVitalityDictionary = [1, 2, 4, 6, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152]
+    const weaponBreakageVitalityDictionary = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8]
 
+    const vitalityDictionary = weaponBreakageVitality ? weaponBreakageVitalityDictionary : normalVitalityDictionary
+    const roleIndexModifier = getRoleIndexModifier(role)
     const modifiedIndex = skullIndex + roleIndexModifier
 
     if (modifiedIndex < 0) {
