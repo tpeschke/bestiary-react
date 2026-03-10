@@ -1,5 +1,4 @@
 import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces";
-import LinkedInfo from "../../interfaces/infoInterfaces/linkedInfoInterfaces";
 import LootInfo from "../../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
 import { BeastInfo } from "../../interfaces/viewInterfaces";
@@ -23,6 +22,7 @@ import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confro
 import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
+import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number

@@ -41,9 +41,11 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(3)
+    const [tabIndex, setTabIndex] = useState(0)
 
-    const { id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells } = beast
+    const { 
+        id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+    } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
 
@@ -63,7 +65,11 @@ export default function EditBody({
                 {tabIndex === 0 &&
                     <>
                         <h1>Main Info</h1>
-                        <GeneralInfoEdit generalInfo={generalInfo} updateGeneralInfoFunctions={updateGeneralInfoFunctions} />
+                        <GeneralInfoEdit 
+                            generalInfo={generalInfo} 
+                            updateGeneralInfoFunctions={updateGeneralInfoFunctions} 
+                            linkedInfo={linkedInfo}
+                        />
                     </>
                 }
                 {tabIndex === 1 &&
@@ -93,7 +99,7 @@ export default function EditBody({
                             <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={skillInfo.skillRole} secondaryRole={skillInfo.skillSecondary} />
                             <SkullSelection keyValue='skillSkulls' currentSkullValue={skillInfo.skillSkulls} updateSkull={updateSkillInfo} />
                         </div>
-                        <SkillEdit skillInfo={skillInfo} updateSkillInfo={updateSkillInfo}/>
+                        <SkillEdit skillInfo={skillInfo} updateSkillInfo={updateSkillInfo} />
                     </>
                 }
                 {tabIndex === 4 &&
@@ -106,7 +112,7 @@ export default function EditBody({
                 {tabIndex === 5 &&
                     <>
                         <h1>Random Encounters</h1>
-                        <EditRandomEncounters beastID={id} randomEncounterInfo={randomEncounterInfo} setRandomEncounterInfo={setRandomEncounterInfo}/>
+                        <EditRandomEncounters beastID={id} randomEncounterInfo={randomEncounterInfo} setRandomEncounterInfo={setRandomEncounterInfo} />
                     </>
                 }
             </div>

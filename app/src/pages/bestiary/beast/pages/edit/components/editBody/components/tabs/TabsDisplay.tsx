@@ -13,7 +13,7 @@ export default function Tabs({ setTabIndex, tabIndex }: Props) {
         'Combats',
         'Challenges',
         'Strategies',
-        'Random Encounters'
+        'Random Encounters',
     ]
 
     return (

@@ -29,3 +29,17 @@
 .main-info-edit ._WbEAz ul li {
     padding: 5px
 }
+
+.main-info-edit button.delete span {
+    display: none;
+	background: #ff5722;
+	color: white;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.main-info-edit button.delete:hover span {
+    display: unset;
+	background: #ff5722;
+	color: white;
+}
