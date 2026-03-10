@@ -12,6 +12,7 @@ import updateRoleInfo from "./roleUpdates/updateRoleInfo";
 import updateGeneralInfo from "./generalUpdates/updateGeneralInfo";
 import { EditEncounter } from "../../../../../interfaces/bestiary/encounterInterfaces";
 import updateEncounter from "./encounterUpdates/updateEncounter";
+import updateLinkedInfo from "./linkedUpdates/updateLinkedInfo";
 
 interface BeastRequest extends Request {
     body: {
@@ -23,7 +24,7 @@ interface BeastRequest extends Request {
 export async function updateBeast(request: BeastRequest, response: Response) {
     const { body, user } = request
     const { beastInfo: beast, randomEncounterInfo } = body
-    const { id: beastID, combatInfo, socialInfo, skillInfo, roleInfo, generalInfo } = beast
+    const { id: beastID, combatInfo, socialInfo, skillInfo, roleInfo, generalInfo, linkedInfo } = beast
 
     const [result] = await query(checkIfUserCanEditMonster, beastID)
     const beastOwnerID = result.userid
@@ -35,6 +36,7 @@ export async function updateBeast(request: BeastRequest, response: Response) {
         await Promise.all([
             updateEncounter(randomEncounterInfo),
             updateGeneralInfo(beastID, generalInfo),
+            updateLinkedInfo(beastID, linkedInfo),
             updateRoleInfo(beastID, roleInfo),
             updateSocialInfo(beastID, socialInfo),
             updateCombatInfo(beastID, combatInfo),

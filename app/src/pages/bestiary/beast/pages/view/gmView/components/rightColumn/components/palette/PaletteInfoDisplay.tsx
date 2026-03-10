@@ -73,7 +73,7 @@ export default function PaletteInfoDisplay({ palette }: Props) {
                             <div>
                                 {commonAllies.map(({ allyid, name, plural }, index) => {
                                     return (
-                                        <Fragment key={allyid}>
+                                        <Fragment key={`${allyid}${index}`}>
                                             <Link to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
                                             {index < commonAllies.length - 1 && <p>, </p>}
                                         </Fragment>

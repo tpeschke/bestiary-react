@@ -73,8 +73,8 @@ export default function PaletteDisplay({ palette, updatePaletteInfo }: Props) {
             <input placeholder='Group Descriptions' value={groupDescriptions ? groupDescriptions : ''} onChange={event => updatePaletteInfo('groupDescriptions', event.target.value)} />
             <h3>Common Allies</h3>
             <div className='common-allies-shell'>
-                {commonAllies.map(({ allyid, name, plural }) => {
-                    return <Link key={allyid} to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
+                {commonAllies.map(({ allyid, name, plural }, index) => {
+                    return <Link key={`${allyid}${index}`} to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
                 })}
             </div>
             <ComboBox

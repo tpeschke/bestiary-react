@@ -8,8 +8,6 @@ interface Props {
 }
 
 export default function TypeEdit({ types, updateLinkedInfo }: Props) {
-    console.log(types)
-
     const deleteType = (typeid: number) => {
         const modifiedTypes = types.filter(type => type.typeid !== typeid)
         updateLinkedInfo('types', modifiedTypes)
