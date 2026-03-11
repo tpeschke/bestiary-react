@@ -25,8 +25,9 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
     useEffect(() => {
         const initializeMermaid = async () => {
             if (mermaidRef.current) {
-                mermaidRef.current.innerHTML = flowchart;
-                const { svg, bindFunctions } = await mermaid.render(`mermaid-diagram-${index}`, flowchart);
+                const purgedFlowchart = flowchart.replace(/\/[^\/]*\//gm, '')
+                mermaidRef.current.innerHTML = purgedFlowchart;
+                const { svg, bindFunctions } = await mermaid.render(`mermaid-diagram-${index}`, purgedFlowchart);
                 mermaidRef.current.innerHTML = svg;
                 bindFunctions?.(mermaidRef.current);
                 setUpEventListeners()

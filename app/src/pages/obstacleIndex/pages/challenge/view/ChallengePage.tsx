@@ -1,19 +1,23 @@
-import './ChallengePage.css'
+import '../ChallengePage.css'
 import { useEffect, useState } from "react"
-import { SetLoadingFunction } from "../../../../components/loading/Loading"
+import { SetLoadingFunction } from "../../../../../components/loading/Loading"
 import axios from "axios"
-import { challengeSingleURL } from "../../../../frontend-config"
+import { challengeSingleURL } from "../../../../../frontend-config"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ChallengeDisplay } from "../../../../components/ObstaclesNChallenges/ChallengeDisplay"
+import { ChallengeDisplay } from "../../../../../components/ObstaclesNChallenges/ChallengeDisplay"
 import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
-import alertInfo from '../../../../components/alert/alerts'
-import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
+import alertInfo from '../../../../../components/alert/alerts'
+import obstacleCatalogHook from '../../../hooks/obstacleCatalogHook'
+import { useSelector } from 'react-redux'
+import { isOwner } from '../../../../../redux/slices/userSlice'
 
 interface Props {
     setLoading?: SetLoadingFunction
 }
 
 export default function ChallengePage({ setLoading }: Props) {
+    const userIsOwner = useSelector(isOwner)
+
     const { challengeCache, saveChallengeToCache } = obstacleCatalogHook()
 
     const { challengeId } = useParams()
@@ -66,6 +70,7 @@ export default function ChallengePage({ setLoading }: Props) {
                         </div>
                     </>
                 )}
+                {userIsOwner && <Link to={`/obstacles/challenge/${challenge?.id}/edit`}><button className='orange'>Edit</button></Link>}
             </div>
         </div>
     )

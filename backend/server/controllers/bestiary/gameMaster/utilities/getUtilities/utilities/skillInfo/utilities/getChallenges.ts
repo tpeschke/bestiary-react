@@ -1,14 +1,26 @@
-import { Challenge, Obstacle, Complication, Pair } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
+import { Challenge, Complication, Obstacle, Pair } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import query from "../../../../../../../../db/database"
 import { getMonsterChallenges } from "../../../../../../../../db/skill/challenge"
-import { getObstacleByName, getObstacleComplications, getObstaclePairs } from "../../../../../../../../db/skill/obstacle"
+import getObstacleFromChallengeFlowchart from "@bestiary/common/utilities/get/getObstaclesFromChallengeFlowchart"
+
+const getObstacleByName = `select * from obBase o
+where name = $1`
+
+const getObstacleComplications = `select * from obComplications
+where stringID = $1
+order by index asc`
+
+const getObstaclePairs = `select * from obPairs
+where stringID = $1 and type = $2
+order by index asc`
 
 export async function getChallenges(beastId: number): Promise<Challenge[]> {
     const challenges = await query(getMonsterChallenges, beastId)
 
     if (challenges.length > 0) {
         return Promise.all(challenges.map(async (challenge: Challenge) => {
-            const obstacles = await getObstacleFromChallengeFlowchart(challenge.flowchart)
+            const obstaclesArray = getObstacleFromChallengeFlowchart(challenge.flowchart)
+            const obstacles = await getObstaclesObject(obstaclesArray)
             return {
                 ...challenge,
                 obstacles
@@ -19,25 +31,7 @@ export async function getChallenges(beastId: number): Promise<Challenge[]> {
     return []
 }
 
-export async function getObstacleFromChallengeFlowchart(flowchart: string) {
-    let obstaclesArray: string[] = []
-
-    let currentObstacleName = ""
-    let isTracking = false
-
-    flowchart.split('').forEach(letter => {
-        if (letter === ')' || letter === ']' || letter === '}') {
-            isTracking = false
-            obstaclesArray.push(currentObstacleName)
-            currentObstacleName = ""
-        } else if (isTracking) {
-            currentObstacleName += letter
-        }
-        if (letter === '(' || letter === '[' || letter === '{') {
-            isTracking = true
-        }
-    })
-
+export async function getObstaclesObject(obstaclesArray: string[]) {
     let obstacles: { [key: string]: Obstacle } = {}
 
     await Promise.all(obstaclesArray.map(async (obstacleName: string) => {

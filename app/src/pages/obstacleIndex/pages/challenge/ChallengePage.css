@@ -10,3 +10,17 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.challenge-page-shell .editable-shell {
+    display: flex;
+}
+
+.challenge-page-shell .editable-info {
+    width: 100%;
+    margin: 0 15px 0 0
+}
+
+.challenge-page-shell .editable-info textarea {
+    width: 100%;
+    height: 50%;
+}

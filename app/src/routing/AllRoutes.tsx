@@ -11,10 +11,11 @@ import CombatsEncounterDesign from "../pages/encounterDesign/pages/combats/Comba
 import ChallengesEncounterDesign from "../pages/encounterDesign/pages/challenges/ChallengesEncounterDesign";
 import TreasurePage from "../pages/treasure/TreasurePage";
 import ObstacleCatalog from "../pages/obstacleIndex/pages/catalog/ObstacleCatalog";
-import ChallengePage from "../pages/obstacleIndex/pages/challenge/ChallengePage";
+import ChallengePage from "../pages/obstacleIndex/pages/challenge/view/ChallengePage";
 import EditObstacle from "../pages/obstacleIndex/pages/edit/EditObstacle";
 import GMAuth from "./auth/GMAuth";
 import ObstacleSearchResults from "../pages/obstacleIndex/pages/search/ObstacleSearchResults";
+import ChallengeEditPage from "../pages/obstacleIndex/pages/challenge/edit/ChallengeEditPage";
 
 export default function AllRoutes() {
     return (
@@ -86,6 +87,11 @@ export default function AllRoutes() {
                     <GMAuth destination="/obstacles">
                         <ChallengePage />
                     </GMAuth>
+                } />
+                <Route path='challenge/:challengeId/edit' element={
+                    <OwnerAuth destination="/obstacles">
+                        <ChallengeEditPage />
+                    </OwnerAuth>
                 } />
                 <Route path='edit/:obstacleId' element={
                     <OwnerAuth destination="/obstacles">

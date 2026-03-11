@@ -2,7 +2,8 @@ import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog
 import query from "../../db/database"
 import { Response, Request } from "../../interfaces/apiInterfaces"
 import { checkForContentTypeBeforeSending } from "../../utilities/sendingFunctions"
-import { getObstacleFromChallengeFlowchart } from "../bestiary/gameMaster/utilities/getUtilities/utilities/skillInfo/utilities/getChallenges"
+import getObstacleFromChallengeFlowchart from "@bestiary/common/utilities/get/getObstaclesFromChallengeFlowchart"
+import { getObstaclesObject } from "../bestiary/gameMaster/utilities/getUtilities/utilities/skillInfo/utilities/getChallenges"
 
 const getChallengesByIdSQL = `select * from obChallenges c
 where id = $1`
@@ -29,7 +30,7 @@ export default async function getChallengesByID(request: GetRequest, response: R
 
         if (challenge) {
             await Promise.all([
-                getObstacleFromChallengeFlowchart(challenge.flowchart).then(obstacles => challenge.obstacles = obstacles),
+                getObstaclesObject(getObstacleFromChallengeFlowchart(challenge.flowchart)).then(obstacles => challenge.obstacles = obstacles),
                 query(getRelatedBeastsSQL, challengeId).then(relatedBeasts => challenge.relatedBeasts = relatedBeasts)
             ])
 
