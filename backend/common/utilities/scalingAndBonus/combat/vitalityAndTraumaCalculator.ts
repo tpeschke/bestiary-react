@@ -5,7 +5,20 @@ interface VitalityAndTrauma {
     trauma: number | boolean
 }
 
-export default function calculateVitalityAndTrauma(role: string, secondaryRole: string, skullIndex: number, weaponBreakageVitality: boolean): VitalityAndTrauma {
+export default function calculateVitalityAndTrauma(
+    role: string,
+    secondaryRole: string,
+    skullIndex: number,
+    weaponBreakageVitality: boolean,
+    singleDieVitality: boolean
+): VitalityAndTrauma {
+    if (singleDieVitality) {
+        return {
+            vitality: 1,
+            trauma: 2
+        }
+    }
+
     const vitality = calculateSecondaryRoleEffect(getBaseVitality(skullIndex, role, weaponBreakageVitality), secondaryRole)
 
     return {

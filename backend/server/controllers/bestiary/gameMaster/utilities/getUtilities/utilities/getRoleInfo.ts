@@ -96,7 +96,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality),
                 locationalVitalities: [],
                 defenseNFleeDice: {
                     defense: null,

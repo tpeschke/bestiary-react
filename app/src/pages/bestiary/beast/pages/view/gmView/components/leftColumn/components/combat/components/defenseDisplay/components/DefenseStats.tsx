@@ -29,7 +29,7 @@ export default function DefenseStat({ defenseStats, showDefenseNameBanner }: Pro
                 </div>
             </div>
             <div className='defense-stats-inner-shell'>
-                <div>
+                <div data-tooltip-id="my-tooltip" data-tooltip-content={parryDR === "EUA" ? "Parries all attacks except Unarmed ones" : null}>
                     <p>Parry DR</p>
                     <p>{parryDR}</p>
                 </div>

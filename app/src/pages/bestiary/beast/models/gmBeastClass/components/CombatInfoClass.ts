@@ -48,7 +48,7 @@ export default class CombatInfoClass {
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex)
             },

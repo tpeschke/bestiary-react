@@ -162,8 +162,10 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles),
 
-        getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
+
+        
+        getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getStrategiesNLimits(beast.id).then((strategiesNLimits: StrategyNLimits[]) => beast.combatInfo.strategiesNLimits = strategiesNLimits),
         getStrategicOptions(beast.id).then((options: StrategicOptions) => beast.combatInfo.options = options),
 
