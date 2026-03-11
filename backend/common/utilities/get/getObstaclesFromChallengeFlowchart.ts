@@ -7,7 +7,7 @@ export default function getObstacleFromChallengeFlowchart(flowchart: string): st
     flowchart.split('').forEach(letter => {
         if (letter === ')' || letter === ']' || letter === '}') {
             isTracking = false
-            obstaclesArray.push(getObstacleName(currentObstacleName))
+            obstaclesArray.push(currentObstacleName)
             currentObstacleName = ""
         } else if (isTracking) {
             currentObstacleName += letter
@@ -18,12 +18,4 @@ export default function getObstacleFromChallengeFlowchart(flowchart: string): st
     })
 
     return obstaclesArray
-}
-
-function getObstacleName(name: string) {
-    if (name.includes('/')) {
-        const [_, obstacle] = name.split('/')
-        return obstacle
-    }
-    return name
 }

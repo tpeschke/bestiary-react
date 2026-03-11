@@ -2,13 +2,15 @@ import { Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import alertInfo from "../../../../../components/alert/alerts";
+import alertInfo, { showPendingAlert } from "../../../../../components/alert/alerts";
 import { SetLoadingFunction } from "../../../../../components/loading/Loading";
 import { ChallengeDisplay } from "../../../../../components/ObstaclesNChallenges/ChallengeDisplay";
 import { challengeSingleURL } from "../../../../../frontend-config";
 import obstacleCatalogHook from "../../../hooks/obstacleCatalogHook";
 import NameHeader from "../../../../bestiary/beast/components/UI/nameHeader/nameHeader";
 import getObstacleFromChallengeFlowchart from "@bestiary/common/utilities/get/getObstaclesFromChallengeFlowchart"
+import { cacheChallenge } from "../../../../../redux/slices/obstacles/obstacleCatalog";
+import { useDispatch } from "react-redux";
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -19,6 +21,7 @@ export default function ChallengeEditPage({ setLoading }: Props) {
 
     const { challengeId } = useParams()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [challenge, setChallenge] = useState<Challenge | null>(null)
     const [obstacleList, setObstacleList] = useState<string[]>([])
@@ -64,6 +67,24 @@ export default function ChallengeEditPage({ setLoading }: Props) {
         }
     }
 
+    const saveChallenge = () => {
+        if (challenge) {
+            showPendingAlert(async () => {
+                const { data } = await axios.post(challengeSingleURL + '/save', { challengeInfo: challenge })
+
+                if (data.color === 'red') {
+                    navigate(`/`)
+                } else if (data.id) {
+                    dispatch(cacheChallenge(data))
+                    navigate(`/obstacles`)
+                    return { data: { color: 'green', type: 'message', message: 'Challenge Saved' } }
+                }
+
+                return { data }
+            })
+        }
+    }
+
     return (
         <div className='challenge-page-shell'>
             <div className='card-background'>
@@ -72,7 +93,7 @@ export default function ChallengeEditPage({ setLoading }: Props) {
                 {challenge && (
                     <div className="editable-shell">
                         <div className="editable-info">
-                            <textarea onChange={event => updateFlowChart(event.target.value)} defaultValue={challenge.flowchart} />
+                            <textarea onBlur={event => updateFlowChart(event.target.value)} defaultValue={challenge.flowchart} />
                             <ul>
                                 {obstacleList.map((obstacle, index) => <li key={index}>{obstacle}</li>)}
                             </ul>
@@ -96,6 +117,7 @@ export default function ChallengeEditPage({ setLoading }: Props) {
                         </div>
                     </>
                 )}
+                <button className="orange" onClick={saveChallenge}>Save</button>
             </div>
         </div>
     )

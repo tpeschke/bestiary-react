@@ -1,18 +1,10 @@
 import { Challenge, Complication, Obstacle, Pair } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import query from "../../../../../../../../db/database"
-import { getMonsterChallenges } from "../../../../../../../../db/skill/challenge"
+import { getMonsterChallenges, getObstacleComplications, getObstaclePairs } from "../../../../../../../../db/skill/challenge"
 import getObstacleFromChallengeFlowchart from "@bestiary/common/utilities/get/getObstaclesFromChallengeFlowchart"
 
 const getObstacleByName = `select * from obBase o
 where name = $1`
-
-const getObstacleComplications = `select * from obComplications
-where stringID = $1
-order by index asc`
-
-const getObstaclePairs = `select * from obPairs
-where stringID = $1 and type = $2
-order by index asc`
 
 export async function getChallenges(beastId: number): Promise<Challenge[]> {
     const challenges = await query(getMonsterChallenges, beastId)
@@ -35,7 +27,7 @@ export async function getObstaclesObject(obstaclesArray: string[]) {
     let obstacles: { [key: string]: Obstacle } = {}
 
     await Promise.all(obstaclesArray.map(async (obstacleName: string) => {
-        let [obstacle]: Obstacle[] = await query(getObstacleByName, obstacleName)
+        let [obstacle]: Obstacle[] = await query(getObstacleByName, getObstacleName(obstacleName))
 
         if (obstacle) {
             let promiseArray: any[] = []
@@ -49,7 +41,7 @@ export async function getObstaclesObject(obstaclesArray: string[]) {
             promiseArray.push(query(getObstaclePairs, [obstacle.stringid, 'pairtwo']).then((returnedPairs: any) => pairsTwo = returnedPairs))
 
             await Promise.all(promiseArray)
-            obstacles[obstacleName] = {
+            obstacles[getLabel(obstacleName)] = {
                 ...obstacle,
                 pairsOne,
                 pairsTwo,
@@ -61,4 +53,20 @@ export async function getObstaclesObject(obstaclesArray: string[]) {
     }))
 
     return obstacles
+}
+
+function getLabel(fullLabel: string) {
+    if (fullLabel.includes('/')) {
+        const [label, _] = fullLabel.split('/')
+        return label
+    }
+    return fullLabel
+}
+
+function getObstacleName(name: string) {
+    if (name.includes('/')) {
+        const [_, obstacle] = name.split('/')
+        return obstacle
+    }
+    return name
 }

@@ -12,13 +12,13 @@ const getRelatedBeastsSQL = `select s.id, beastID, name from bbSkillBeast s
 join bbIndividualBeast b on b.id = s.beastID
 where s.challengeID = $1 and b.notUpdating = false`
 
-interface GetRequest extends Request {
+export interface GetChallengeRequest extends Request {
     params: {
         challengeId: string
     }
 }
 
-export default async function getChallengesByID(request: GetRequest, response: Response) {
+export default async function getChallengesByID(request: GetChallengeRequest, response: Response) {
     const patreon = request.user?.patreon
 
     if (patreon && patreon < 5) {
