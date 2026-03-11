@@ -4,7 +4,7 @@ import ImageNotFound from '../../../../../assets/images/404.png'
 import { Link } from "react-router-dom";
 
 import { CatalogTile } from '../../catalogInterfaces'
-import { beastURL, imageBase } from '../../../../../frontend-config'
+import { beastURL, imageBase, thumbnailImageBase } from '../../../../../frontend-config'
 import TileIcon from './components/TileIcon';
 import { cacheMonster } from '../../../../../redux/slices/bestiary/beastCacheSlice';
 import axios from 'axios';
@@ -20,7 +20,11 @@ export default function Tile({ tile }: Props) {
 
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
-        currentTarget.src = ImageNotFound
+        if (currentTarget.src === thumbnailImageBase + 'thumbnail-' + id) {
+            currentTarget.src = imageBase + id
+        } else {
+            currentTarget.src = ImageNotFound
+        }
     }
 
     const beastCache = useSelector((state: any) => state.beastCache.cache)
@@ -34,7 +38,7 @@ export default function Tile({ tile }: Props) {
             if (!beastCache[beastID])
                 dispatch(cacheMonster({
                     id: beastID,
-                    beastInfo: axios.get(beastURL + '/' + beastID).then(({data}) => data)
+                    beastInfo: axios.get(beastURL + '/' + beastID).then(({ data }) => data)
                 }))
         }, 100))
     }
@@ -47,7 +51,7 @@ export default function Tile({ tile }: Props) {
                     <div className='icon-frame'>
                         <TileIcon canplayerview={canplayerview} patreon={patreon} />
                     </div>
-                    <img src={imageBase + id} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleImageError}></img>
+                    <img src={thumbnailImageBase + 'thumbnail-' + id} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleImageError}></img>
                 </div>
                 <span className='name-frame'>
                     <h2>{name}</h2>
