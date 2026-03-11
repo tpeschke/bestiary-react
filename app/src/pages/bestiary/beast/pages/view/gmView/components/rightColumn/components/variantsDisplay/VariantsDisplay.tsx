@@ -1,5 +1,5 @@
 import Body from "../../../../../../../components/UI/body/Body"
-import { Variant } from "../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces"
+import { Variant } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import VariantDisplay from "./components/VariantDisplay"
 
 interface Props {

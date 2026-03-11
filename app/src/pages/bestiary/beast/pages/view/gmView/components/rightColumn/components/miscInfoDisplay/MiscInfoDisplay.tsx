@@ -3,7 +3,7 @@ import './MiscInfoDisplay.css'
 import Body from '../../../../../../../components/UI/body/Body'
 import Pair from '../../../../../../../components/UI/pair/Pair'
 import ClimatesDisplay from './climates/ClimatesDisplay'
-import { Climate } from '../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
+import { Climate } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {

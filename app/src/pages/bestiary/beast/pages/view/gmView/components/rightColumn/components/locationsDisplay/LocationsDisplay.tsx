@@ -1,5 +1,5 @@
 import Body from "../../../../../../../components/UI/body/Body"
-import { Location } from "../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces"
+import { Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import LocationDisplay from "./components/LocationDisplay"
 
 interface Props {

@@ -1,4 +1,4 @@
-import { Climate } from '../../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
+import { Climate } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import ClimateDisplay from './climateDisplay/ClimateDisplay'
 import './ClimatesDisplay.css'
 

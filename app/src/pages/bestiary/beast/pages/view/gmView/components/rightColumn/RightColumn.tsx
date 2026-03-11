@@ -7,7 +7,7 @@ import HTMLDisplay from "../../../../../components/UI/htmlDisplay/htmlDisplay";
 import CommonFolklore from "./components/commonFolklore/CommonFolklore";
 import InfoDisplay from "./components/infoDisplay/InfoDisplay";
 import TypesDisplay from './components/typesDisplay/TypesDisplay';
-import { BeastType, Location, Variant } from '../../../../../interfaces/infoInterfaces/linkedInfoInterfaces';
+import { BeastType, Location, Variant } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import MiscInfoDisplay, { MiscInfo } from './components/miscInfoDisplay/MiscInfoDisplay';
 import VariantsDisplay from './components/variantsDisplay/VariantsDisplay';
 import LocationsDisplay from './components/locationsDisplay/LocationsDisplay';

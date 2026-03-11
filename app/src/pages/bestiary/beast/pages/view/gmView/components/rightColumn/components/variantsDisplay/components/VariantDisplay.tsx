@@ -1,7 +1,6 @@
 import './VariantDisplay.css'
 
-import { Variant } from '../../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
-
+import { Variant } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Link } from 'react-router-dom'
 
 interface Props {

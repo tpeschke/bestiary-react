@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Climate } from '../../../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
+import { Climate } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import './ClimateDisplay.css'
 
 interface Props {

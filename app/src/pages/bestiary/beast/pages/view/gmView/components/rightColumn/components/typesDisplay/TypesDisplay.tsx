@@ -1,7 +1,6 @@
 import './TypesDisplay.css'
 
-import { BeastType } from "../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces"
-
+import { BeastType } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import Drawers from "../../../../../../../../../../components/drawers/Drawers"
 import HTMLDisplay from '../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { Link } from 'react-router-dom'

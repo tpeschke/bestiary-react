@@ -1,6 +1,7 @@
 import './LocationDisplay.css'
 
-import { Location } from '../../../../../../../../interfaces/infoInterfaces/linkedInfoInterfaces'
+import { Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
+
 
 interface Props {
     locationInfo: Location
