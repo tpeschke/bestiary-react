@@ -1,15 +1,17 @@
 import "./Body.css"
 
-import { JSX } from "react"
+import { JSX, Children } from "react"
 
 interface Props {
-    children: JSX.Element,
+    children: JSX.Element | JSX.Element[],
 }
 
 export default function Body({ children }: Props) {
     return (
         <div className="body-shell">
-            {children}
+            {Children.map(children, (child) => {
+                return child
+            })}
         </div>
     )
 }

@@ -3,6 +3,8 @@ import AttacksEditDisplay from "./components/AttacksEditDisplay/AttacksEditDispl
 import DefenseEditDisplay from "./components/DefenseEditDisplay/DefenseEditDisplay"
 import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/updateUtilities/updateCombatInfo"
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
+import Body from "../../../../../../components/UI/body/Body"
+import DefenseInfoEdit from "./components/DefenseInfo"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -12,20 +14,27 @@ interface Props {
 }
 
 export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, combatRoleType, spells }: Props) {
-    const { updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackInfo, updateDefenseInfo, removeAttack } = updateCombatInfoFunctions
-    const { attacks, defenses } = combatInfo
+    const {
+        updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackInfo, updateDefenseInfo, removeAttack,
+        updateNonRoleInfo
+    } = updateCombatInfoFunctions
+    const { attacks, defenses, defenseInfo } = combatInfo
 
     return (
         <>
             <AttacksEditDisplay
                 attacks={attacks}
-                updateAttackOrder={updateAttackOrder} 
-                addAttack={addAttack} 
-                updateAttackInfo={updateAttackInfo} 
+                updateAttackOrder={updateAttackOrder}
+                addAttack={addAttack}
+                updateAttackInfo={updateAttackInfo}
                 combatRoleType={combatRoleType}
                 removeAttack={removeAttack}
                 spells={spells}
             />
+            <Body>
+                <h2 className="border">Defense Info</h2>
+                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} />
+            </Body>
             <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} />
         </>
     )
