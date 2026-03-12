@@ -1,6 +1,6 @@
+import { User } from "@bestiary/common/interfaces/userInterfaces";
 import query from "../../../../db/database";
 import { searchAccess, searchBody, searchChallengeRoles, searchClimate, searchCombatRoles, searchConfrontationRoles, searchMaxChallengeRating, searchMaxCombatRating, searchMaxConfrontationRating, searchMinChallengeRating, searchMinCombatRating, searchName, searchNotes, searchPlayerCanView, searchRarity, searchSize, searchTypes } from "../../../../db/search/queryParams";
-import { User } from "../../../../interfaces/apiInterfaces";
 import { SearchQuery, SearchReturn } from "../search";
 import { getCombatRoleName, getSkillRoleName, getSocialRoleName } from "./roleName";
 

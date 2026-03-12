@@ -1,7 +1,9 @@
+import { Access } from "@bestiary/common/utilities/get/getAccessLevel"
+
 export interface BeastTile {
     id: number,
     name: string,
-    patreon: number,
+    patreon: Access,
     canplayerview: boolean,
     thumbnail: string,
     hash: string,

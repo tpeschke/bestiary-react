@@ -34,6 +34,7 @@ import { Challenge, Obstacle } from "@bestiary/common/interfaces/obstacles/obsta
 import getStrategicOptions from "./utilities/combatInfo/getStrategicOptions"
 import getGenericSkillSuites from "./utilities/skillInfo/utilities/getSkillSuites"
 import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -53,7 +54,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     } = unsortedBeastInfo
 
     let beast: Beast = {
-        id, patreon, canplayerview,
+        id, canplayerview,
+        patreon: getEntryAccessLevel(patreon),
         playerInfo: {
             favorite: false,
             notes: {

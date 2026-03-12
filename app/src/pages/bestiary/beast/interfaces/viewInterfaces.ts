@@ -2,6 +2,7 @@ import CastingInfo from "./infoInterfaces/castingInfo"
 import ImageInfo, { ArtistInfo } from "./infoInterfaces/ImageInfoInterfaces"
 import LootInfo from "./infoInterfaces/lootInfoInterfaces"
 import PlayerSpecificInfo from "./infoInterfaces/playerSpecificInfoInterfaces"
+import { Access } from "@bestiary/common/utilities/get/getAccessLevel"
 
 import RoleInfo from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces'
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
@@ -20,7 +21,7 @@ export interface PlayerBeastInfo {
 
 export interface BeastInfo {
     id: number,
-    patreon: number,
+    patreon: Access,
     canplayerview: boolean,
     roleModifier: number,
     generalInfo: GeneralInfo,

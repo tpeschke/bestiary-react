@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 import { isUserLoggedOn } from '../../redux/slices/userSlice';
 import SearchOptions from './searchOptions/SearchOptions';
 import Icon from '../icon/Icon';
-import { signInURL, signOutURL } from '../../frontend-config';
+import { signInURL } from '../../frontend-config';
 import EncounterDesignIcon from './encounterDesignIcon/EncounterDesignIcon';
 import AppName from './appName/AppName';
+import AccountInfoIcon from './accountInfo/AccountInfo';
 
 export default function Header() {
     const userIsLoggedIn = useSelector(isUserLoggedOn)
@@ -25,11 +26,7 @@ export default function Header() {
                         </button>
                     </Link>
                     {userIsLoggedIn ?
-                        <a href={signOutURL}>
-                            <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Log Out'>
-                                <Icon iconName='log-out' color='white' iconSize='h2' />
-                            </button>
-                        </a>
+                        <AccountInfoIcon />
                         :
                         <a href={signInURL}>
                             <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Log In'>

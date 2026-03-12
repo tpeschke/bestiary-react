@@ -1,0 +1,53 @@
+.account-info-icon {
+    position: relative;
+    margin-left: 10px;
+}
+
+.account-info-icon ul {
+    overflow: hidden;
+    display: none;
+    width: 207px;
+    position: absolute;
+    right: 0;
+    background: white;
+    border-radius: 5px;
+    padding: 0;
+    list-style-type: none;
+    color: black;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.account-info-icon:hover ul {
+    display: unset;
+}
+
+.account-info-icon:hover ul a {
+    margin: 0;
+}
+
+.account-info-icon ul li,
+.account-info-icon ul p {
+    margin: 0;
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+.account-info-icon ul p {
+    font-size: 14px;
+    background: #f3f3f3;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.account-info-icon ul li:hover {
+    background: lightgray;
+    cursor: pointer;
+}
+
+.account-info-icon ul li {
+    display: flex;
+}
+
+.account-info-icon ul li.top-border {
+    border-top: 1px solid lightgray;
+}

@@ -5,6 +5,7 @@ import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import makeID from "../../../utilities/makeID";
 import { getObstacleComplications, getObstaclePairs } from "../../../db/skill/challenge";
+import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -17,12 +18,12 @@ interface GetRequest extends Request {
 const getObstacles = `select * from obBase b where id = $1`
 
 export async function getObstaclesById(request: GetRequest, response: Response) {
-    const patreon = request.user?.patreon
+    const patreon = getAccessLevel(request.user)
     const obstacleId = +request.params.obstacleId
 
-    if (patreon && patreon < 5) {
-        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Patreon to View Obstacles' })
-    } else if (patreon && patreon >= 5 && obstacleId > 0) {
+    if (patreon === PLAYER) {
+        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Ko-Fi to View Obstacles' })
+    } else if (obstacleId > 0) {
 
         let [obstacle] = await query(getObstacles, obstacleId) as Obstacle[]
 
@@ -41,7 +42,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         } else {
             sendErrorForward('404', { message: 'No Obstacle Found' }, response)
         }
-    } else if (patreon && patreon >= 5 && obstacleId === 0) {
+    } else if (obstacleId === 0) {
         const newObstacle: Obstacle = {
             id: 0,
             obstacleid: 0,

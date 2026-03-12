@@ -1,3 +1,5 @@
+import { User } from "@bestiary/common/interfaces/userInterfaces"
+
 export interface Request {
     app: App,
     user?: User | null,
@@ -16,11 +18,6 @@ interface Parameters {
     beastId: any
     id: number,
     beastid: string,
-}
-
-export interface User {
-    id: number,
-    patreon?: number
 }
 
 export interface Response {

@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import { getUserPatreon, isUserLoggedOn } from '../../../../redux/slices/userSlice'
 import alertInfo from '../../../../components/alert/alerts'
 import LoadingIndicator from '../../../../components/loading/components/LoadingIndicator'
+import { PLAYER } from '@bestiary/common/utilities/get/getAccessLevel'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -75,7 +76,7 @@ export default function ObstacleCatalog({ setLoading }: Props) {
         <>
             <div className='card-background catalog obstacle-catalog'>
                 {!userLoggedIn && <h2 className='warning'>You Need to be Logged On to View the Obstacles & Challenges on this Pages</h2>}
-                {(userLoggedIn && userPatreon < 5) && <h2 className='warning'>You Need to Upgrade Your Patreon to View the Obstacles & Challenges on this Pages</h2>}
+                {(userLoggedIn && userPatreon === PLAYER) && <h2 className='warning'>You Need to Upgrade Your Ko-Fi to View the Obstacles & Challenges on this Pages</h2>}
 
                 {catalogItems.reduce((filteredArray: any[], catalogItem: ObstacleTile[], index: number) => {
                     if (catalogItem.length > 0) {

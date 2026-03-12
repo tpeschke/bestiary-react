@@ -7,6 +7,7 @@ import { getUserPatreon, isOwner } from "../../../../../../redux/slices/userSlic
 import axios from "axios"
 import { challengeSingleURL, obstacleSingleURL } from "../../../../../../frontend-config"
 import obstacleCatalogHook from "../../../../hooks/obstacleCatalogHook"
+import { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel"
 
 interface TileProps {
     tile: ObstacleTile
@@ -41,7 +42,7 @@ export default function Tile({ tile }: TileProps) {
         }
     }
 
-    if (obstacleid && userPatreon < 5) {
+    if (obstacleid && userPatreon === PLAYER) {
         return (
             <div className="obstacle-tile">
                 <button disabled={true}>
@@ -68,7 +69,7 @@ export default function Tile({ tile }: TileProps) {
 
     return (
         <Link to={`/obstacles/challenge/${challengeid}`} onMouseEnter={_ => prefetchChallenge(challengeid)}>
-            <button className="blue" disabled={userPatreon < 5}>
+            <button className="blue" disabled={userPatreon === PLAYER}>
                 <Icon iconName="chart" color="white" margin='right' />
                 {name}
             </button>

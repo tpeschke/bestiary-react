@@ -3,7 +3,6 @@ import { LocationVitality } from "@bestiary/common/interfaces/beast/infoInterfac
 import { Folklore, Scenario } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { ArtistObject, ArtistInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { BeastType, ClimateObject, Climate, Variant, LocationObject, Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
-import { User } from "../../../../../../../../interfaces/apiInterfaces"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../../../interfaces/bestiary/lootInterfaces"
 import rollDice from "../../../../../../../../utilities/diceRoller"
 import { isOwner } from "../../../../../../../../utilities/ownerAccess"
@@ -22,19 +21,17 @@ import { getMonsterCasting } from "../../../../../../../../db/beast/casting"
 import { getMonsterSpells } from "../../../../../../../../db/beast/spell"
 import { getMonsterScenarios } from "../../../../../../../../db/beast/scenario"
 import { getMonsterFolklore } from "../../../../../../../../db/beast/folklore"
+import { User } from "@bestiary/common/interfaces/userInterfaces"
+import getAccessLevel, { Access, GM } from "@bestiary/common/utilities/get/getAccessLevel"
 
-export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: number, canPlayerView: boolean): string {
+export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: Access, canPlayerView: boolean): Access {
+    const accessLevel = getAccessLevel(user)
+
     if (canPlayerView || (user && isOwner(user.id))) {
-        return 'gm'
-    } else if (user && user.patreon) {
-        const effectivePatreon = beastPatron === 0 ? beastPatron + 3 : beastPatron
-        if (effectivePatreon <= user.patreon) {
-            return 'gm'
-        } else {
-            return 'player'
-        }
+        return GM
     }
-    return 'player'
+
+    return accessLevel
 }
 
 export async function getTypes(beastId: number): Promise<BeastType[]> {

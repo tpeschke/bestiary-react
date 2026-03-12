@@ -17,6 +17,7 @@ import { isOwner } from '../../utilities/ownerAccess'
 import query from '../../db/database'
 import { checkAccess } from '../../db/beast/access'
 import { getGMVersionOfBeast } from '../../controllers/bestiary/gameMaster/gameMaster'
+import { Access, getEntryAccessLevel, GM, PLAYER } from '@bestiary/common/utilities/get/getAccessLevel'
 
 const BeastRoutes = express.Router()
 
@@ -36,9 +37,10 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
 
     if (databaseReturn?.length > 0) {
         const [viewInfo] = databaseReturn
-        const viewType: string = hasAppropriatePatreonLevel(user, viewInfo.patreon, viewInfo.canplayerview)
+        const patreon = getEntryAccessLevel(viewInfo.patreon)
+        const viewType: Access = hasAppropriatePatreonLevel(user, patreon, viewInfo.canplayerview)
 
-        if (viewType === 'gm') {
+        if (viewType === GM) {
             const beast: Beast | null = getMonsterFromCache(beastId)
             if (beast) {
                 let modifiedBeast = { ...beast }
@@ -57,7 +59,7 @@ async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
             } else {
                 getGMVersionOfBeast(request, response)
             }
-        } else if (viewType === 'player') {
+        } else if (viewType === PLAYER) {
             getPlayerVersionOfBeast(request, response)
         } else {
             checkForContentTypeBeforeSending(response, { color: "red", message: "You need to log on." })

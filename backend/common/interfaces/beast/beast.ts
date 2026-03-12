@@ -8,10 +8,11 @@ import LootInfo from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo from './infoInterfaces/castingInfo'
 import SocialInfo from './infoInterfaces/socialInfoInterfaces'
 import PlayerSpecificInfo from './infoInterfaces/playerSpecificInfoInterfaces'
+import { Access } from '../../utilities/get/getAccessLevel'
 
 export interface Beast {
     id: number,
-    patreon: number,
+    patreon: Access,
     playerInfo: PlayerSpecificInfo,
     canplayerview: boolean,
     generalInfo: GeneralInfo,

@@ -4,6 +4,7 @@ import { Response, Request } from "../../interfaces/apiInterfaces"
 import { checkForContentTypeBeforeSending } from "../../utilities/sendingFunctions"
 import getObstacleFromChallengeFlowchart from "@bestiary/common/utilities/get/getObstaclesFromChallengeFlowchart"
 import { getObstaclesObject } from "../bestiary/gameMaster/utilities/getUtilities/utilities/skillInfo/utilities/getChallenges"
+import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel"
 
 const getChallengesByIdSQL = `select * from obChallenges c
 where id = $1`
@@ -19,10 +20,10 @@ export interface GetChallengeRequest extends Request {
 }
 
 export default async function getChallengesByID(request: GetChallengeRequest, response: Response) {
-    const patreon = request.user?.patreon
+    const patreon = getAccessLevel(request.user)
 
-    if (patreon && patreon < 5) {
-        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Patreon to View Skill Challenges' })
+    if (patreon === PLAYER) {
+        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Ko-Fi to View Skill Challenges' })
     } else {
         const challengeId: number = +request.params.challengeId
 

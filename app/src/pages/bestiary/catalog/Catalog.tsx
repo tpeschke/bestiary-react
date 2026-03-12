@@ -9,6 +9,7 @@ import { getUserPatreon, isUserLoggedOn } from '../../../redux/slices/userSlice'
 import { useSelector } from 'react-redux';
 import FavoritesDisplay from './components/favorites/FavoritesDisplay';
 import { SetLoadingFunction } from '../../../components/loading/Loading';
+import { EARLY_ACCESS } from '@bestiary/common/utilities/get/getAccessLevel';
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -35,7 +36,7 @@ export default function Catalog({ setLoading }: Props) {
             <FavoritesDisplay userIsLoggedIn={userIsLoggedIn} favorites={favorites} />
             {showAll && <Row catalogTiles={templates} title={'Templates'} />}
             <Rows catalogItems={showAll ? catalogItems : updatingCatalogItems} />
-            {usersPatreon >= 10 && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Show'} Entire Catalog</button>}
+            {usersPatreon >= EARLY_ACCESS && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Show'} Entire Catalog</button>}
         </div>
     )
 }

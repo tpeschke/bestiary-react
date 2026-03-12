@@ -1,3 +1,4 @@
+import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel";
 import query from "../../../db/database";
 import { Response, Request } from "../../../interfaces/apiInterfaces"
 import { checkForContentTypeBeforeSending } from "../../../utilities/sendingFunctions";
@@ -15,12 +16,12 @@ group by b.id
 order by name;`
 
 export async function searchObstacle(request: GetRequest, response: Response) {
-    const patreon = request.user?.patreon
+    const patreon = getAccessLevel(request.user)
     const searchString = request.params.searchString
 
-    if (patreon && patreon < 5) {
-        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Patreon to View Obstacles' })
-    } else if (patreon && patreon >= 5) {
+    if (patreon === PLAYER) {
+        checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Ko-Fi to View Obstacles' })
+    } else {
         checkForContentTypeBeforeSending(response, await query(searchObstaclesByName, searchString))
     }
 }

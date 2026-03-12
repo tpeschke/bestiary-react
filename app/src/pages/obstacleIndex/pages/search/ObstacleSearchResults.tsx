@@ -11,6 +11,7 @@ import obstacleCatalogHook from '../../hooks/obstacleCatalogHook'
 import axios from 'axios'
 import alertInfo from '../../../../components/alert/alerts'
 import { obstacleSingleURL } from '../../../../frontend-config'
+import { PLAYER } from '@bestiary/common/utilities/get/getAccessLevel'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -61,7 +62,7 @@ export default function ObstacleSearchResults({ setLoading }: Props) {
             <div className='obstacle-catalog obstacle-search-results'>
                 <div className='catalog card-background'>
                     {!userLoggedIn && <h2 className='warning'>You Need to be Logged On to View the Obstacles & Challenges on this Pages</h2>}
-                    {(userLoggedIn && userPatreon < 5) && <h2 className='warning'>You Need to Upgrade Your Patreon to View the Obstacles & Challenges on this Pages</h2>}
+                    {(userLoggedIn && userPatreon === PLAYER) && <h2 className='warning'>You Need to Upgrade Your Ko-Fi to View the Obstacles & Challenges on this Pages</h2>}
 
                     <div className='row'>
                         <h1>Results</h1>

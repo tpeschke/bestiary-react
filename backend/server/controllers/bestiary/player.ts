@@ -1,3 +1,4 @@
+import getAccessLevel, { EARLY_ACCESS, GM } from "@bestiary/common/utilities/get/getAccessLevel"
 import { getMonsterPlayerInfo } from "../../db/beast/player"
 import query from "../../db/database"
 import { addMonsterToUserFavorites, getSingleUserFavorite, getUserFavorites, removeMonsterFromUserFavoriates } from "../../db/user/favorites"
@@ -12,8 +13,9 @@ const sendErrorForward = sendErrorForwardNoFile('player controller')
 export async function getPlayerVersionOfBeast(request: BasicParamsRequest, response: Response) {
     const beastId: number = +request.params.beastId
     const { user } = request
+    const patreon = getAccessLevel(user)
 
-    if (user && user.patreon && user.patreon > 3) {
+    if (patreon === GM || patreon === EARLY_ACCESS) {
         checkForContentTypeBeforeSending(response, { color: 'green', message: 'You\'re a GM' })
     } else {
         let [playerInfo] = await query(getMonsterPlayerInfo, beastId)
@@ -58,7 +60,7 @@ export async function addPlayerNotes(request: NoteRequest, response: Response) {
         const isAboveNumberOfNotesForPatrons = count >= (patreon * 30) + 50
 
         if (isAboveDefaultNumberOfNotes || isAboveNumberOfNotesForPatrons) {
-            request.status(401).send('You need to upgrade your Patreon to add more notes')
+            request.status(401).send('You need to upgrade your Ko-Fi to add more notes')
         } else {
             const [result] = await query(addUserNotes, [beastId, user.id, notes.notes])
             checkForContentTypeBeforeSending(response, { color: 'green', message: 'Notes Saved!', noteId: result.id })

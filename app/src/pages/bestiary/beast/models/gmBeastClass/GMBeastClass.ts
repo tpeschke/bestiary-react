@@ -23,6 +23,7 @@ import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkill
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
+import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -30,7 +31,7 @@ interface ModifierIndexDictionaryObject {
 
 export default class GMBeastClass {
     private entryID: number
-    private patreon: number
+    private patreon: Access
     private canplayerview: boolean
 
     private entryGeneralInfo: GeneralInfo

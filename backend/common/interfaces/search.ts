@@ -1,3 +1,4 @@
+import { Access } from '../utilities/get/getAccessLevel'
 import { Size, Rarity} from './beast/infoInterfaces/generalInfoInterfaces'
 
 interface SearchResultBase {
@@ -6,7 +7,7 @@ interface SearchResultBase {
     name: string,
     thumbnail: string,
     intro: string,
-    patreon: number,
+    patreon: Access,
     rarity: Rarity,
     size: Size,
     canplayerview: boolean,
