@@ -35,3 +35,25 @@ export interface Profile {
     displayName: string,
     user_id: string
 }
+
+export interface KofiInfo {
+    verification_token: string,
+    message_id: string,
+    timestamp: string,
+    type: "Subscription",
+    is_public: Boolean,
+    from_name: string,
+    message: string,
+    amount: string, // "3.00" 
+    url: string,
+    email: string,
+    currency: "USD",
+    is_subscription_payment: Boolean,
+    is_first_subscription_payment: Boolean,
+    kofi_transaction_id: string,
+    shop_items: string | null,
+    tier_name: 'Game Master' | 'Early Access' | null,
+    shipping: string | null,
+    discord_username: string,
+    discord_userid: string
+}

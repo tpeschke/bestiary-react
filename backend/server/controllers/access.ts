@@ -1,11 +1,12 @@
 import { checkAccess, checkIfUserCanEditMonster } from '../db/beast/access'
 import { getUserCustomMonsterCount } from '../db/beast/custom'
 import query from '../db/database'
-import { Response, Request } from '../interfaces/apiInterfaces'
+import { Response, Request, KofiInfo } from '../interfaces/apiInterfaces'
 import getAccessLevel, { GM, PLAYER } from "@bestiary/common/utilities/get/getAccessLevel"
 import { isOwner, isJustMainOwner } from '../utilities/ownerAccess'
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from '../utilities/sendingFunctions'
 import { User } from '@bestiary/common/interfaces/userInterfaces'
+import { kofiVerificationToken } from '../server-config'
 
 const sendErrorForward = sendErrorForwardNoFile('access controller')
 
@@ -13,7 +14,7 @@ export async function checkIfLoggedIn(request: Request, response: Response) {
     checkForContentTypeBeforeSending(response, {
         isUserLoggedIn: request.user && request.user.id,
         patreon: request.user?.patreon ? request.user.patreon : 0,
-        koFi:  request.user?.koFi ? request.user.koFi : 0,
+        koFi: request.user?.koFi ? request.user.koFi : 0,
         isOwner: isOwner(request.user?.id),
         system: request.user?.system
     })
@@ -90,4 +91,29 @@ export async function updatePlayerPreference(request: PlayerPreference, response
     await query(updatePlayerPreferenceSQL, [userId, preference])
 
     checkForContentTypeBeforeSending(response, { updated: true })
+}
+
+const updateKofiSQL = `update usersAuth
+set kofi = $2
+where userName = $1`
+
+interface KofiRequest extends Request {
+    body: {
+        data: KofiInfo,
+    }
+}
+
+export async function updateKofiInfo(request: KofiRequest, response: Response) {
+    const { verification_token, from_name, type, tier_name } = request.body.data
+    if (verification_token === kofiVerificationToken) {
+        if (type === 'Subscription' && tier_name === 'Game Master') {
+            query(updateKofiSQL, [from_name, 3])
+        } else if (type === 'Subscription' && tier_name === 'Early Access') {
+            query(updateKofiSQL, [from_name, 8])
+        } else if (type === 'Subscription') {
+            query(updateKofiSQL, [from_name, null])
+        }
+    } else {
+        sendErrorForward('update kofi', { message: "Nice Try" }, response)
+    }
 }
