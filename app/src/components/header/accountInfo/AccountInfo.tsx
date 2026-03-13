@@ -34,6 +34,11 @@ export default function AccountInfoIcon() {
                 <li onClick={_ => setSystemPreference(2)}>{systemPreference === 2 && <Icon iconName='check' margin='right' />} HackMaster</li>
                 <li onClick={_ => setSystemPreference(0)}>{systemPreference === 0 && <Icon iconName='check' margin='right' />} Bonfire</li>
                 <li className='top-border'>
+                    <a href="https://discord.gg/gpzyunjGnr">
+                        <Icon iconName='Discord' margin='right' /> Bestiary Discord
+                    </a>
+                </li>
+                <li className='top-border'>
                     <a href={signOutURL}>
                         <Icon iconName='log-out' margin='right' /> Log Out
                     </a>

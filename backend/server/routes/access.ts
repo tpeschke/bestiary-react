@@ -10,6 +10,6 @@ accessRoutes.get('/playerCanView/:beastId', checkIfPlayerView)
 accessRoutes.get('/canEdit/:beastId', canEditMonster)
 
 accessRoutes.post('/updatePreference/:preference', updatePlayerPreference)
-accessRoutes.posts('/kofi', updateKofiInfo)
+accessRoutes.post('/kofi', updateKofiInfo)
 
 export default accessRoutes
