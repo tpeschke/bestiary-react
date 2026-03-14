@@ -56,6 +56,10 @@
         font-size: 8vw;
     }
 
+    .header-background h1.obstacle-index-header {
+        font-size: 7vw;
+    }
+
     .header-background .header-nav.desktop,
     .app-name-component .nav-icon {
         display: none;

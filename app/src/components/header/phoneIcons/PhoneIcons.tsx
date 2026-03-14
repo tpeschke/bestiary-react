@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { accessURL, signInURL, signOutURL } from "../../../frontend-config";
 import Icon from "../../icon/Icon";
 import AccountInfoIcon from "../accountInfo/AccountInfo";
@@ -12,6 +12,10 @@ interface Props {
 }
 
 export default function PhoneIcons({ userIsLoggedIn }: Props) {
+    const location = useLocation();
+
+    const isObstacleIndex = location.pathname.substring(1, 10) === "obstacles"
+
     const systemPreference = useSelector(getSystemPreference)
     const accessLevel = useSelector(getUserPatreon)
     const dispatch = useDispatch()
@@ -30,6 +34,12 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
                 </button>
 
                 <ul className='account-options-dropdown'>
+                    <li>
+                        <Link to={isObstacleIndex ? "/" : "/obstacles"} className="nav-icon">
+                            <Icon iconName={isObstacleIndex ? 'monster' : 'book'}  margin='right' /> Go to {isObstacleIndex ? 'Bestiary' : 'Obstacle Index'}
+                        </Link>
+                    </li>
+
                     <p>Encounter Building Guidelines</p>
                     <li>
                         <Link to="/encounters/confrontations">

@@ -11,7 +11,7 @@ export default function AppName() {
         <div className="app-name-component">
             <Link to={isObstacleIndex ? "/obstacles" : "/"}>
                 <img src={logo} />
-                <h1>Bonfire {isObstacleIndex ? 'Obstacle Index' : 'Bestiary'}</h1>
+                <h1 className={`${isObstacleIndex && 'obstacle-index-header'}`}>Bonfire {isObstacleIndex ? 'Obstacle Index' : 'Bestiary'}</h1>
             </Link>
 
             <Link to={isObstacleIndex ? "/" : "/obstacles"} className="nav-icon">
