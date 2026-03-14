@@ -29,6 +29,8 @@
 
 .result-sort-shell {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -57,4 +59,18 @@
 
 .is-the-active-sort:hover {
     background: #ec5121;
+}
+
+@media (max-width: 702px) {
+    .result-info-shell {
+        flex-direction: column;
+    }
+
+    .result-info-shell > * {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 592px) {
+    
 }

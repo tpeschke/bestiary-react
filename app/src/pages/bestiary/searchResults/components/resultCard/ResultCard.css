@@ -5,6 +5,7 @@
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .result-card:hover {
@@ -58,10 +59,43 @@
 }
 
 .inner-info-shell .intro-shell {
-    width: calc(100% - 200px);
+    width: calc(100% - 205px);
+    min-width: 200px;
 }
 
 .result-card .misc-info-shell {
     width: 200px;
     margin-left: 5px
+}
+
+@media (max-width: 592px) {
+    .result-card .image-shell {
+        height: unset;
+    }
+
+    .inner-info-shell {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inner-info-shell .intro-shell {
+        width: 100%;
+        min-width: none;
+        margin-bottom: 15px;
+    }
+
+    .result-card .misc-info-shell {
+        width: 100%;
+    }
+}
+
+@media (max-width: 376px) {
+    .result-card {
+        flex-direction: column;
+    }
+
+    .result-card .info-shell {
+        width: 100%;
+        margin: 0;
+    }
 }
