@@ -2,7 +2,7 @@
     min-height: calc(100vh - 125px);
 }
 
-.obstacle-catalog.obstacle-search-results > .card-background {
+.obstacle-catalog.obstacle-search-results>.card-background {
     min-height: unset;
 }
 
@@ -52,8 +52,19 @@
     margin-top: 10px;
 }
 
-.obstacle-index-type-search-options > span {
+.obstacle-index-type-search-options>span {
     display: flex;
     align-items: center;
     margin-right: 15px;
+}
+
+@media (max-width: 426px) {
+    .card-background.catalog .obstacle-tile-row button {
+        font-size: 18px;
+        padding: 10px 15px;
+    }
+
+    .obstacle-index-type-search-options {
+        justify-content: center;
+    }
 }

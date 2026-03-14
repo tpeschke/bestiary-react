@@ -23,3 +23,21 @@
 .obstacle-shell .complication-row td:first-child {
     text-align: right;
 }
+
+@media (max-width: 426px) {
+    .obstacle-shell table {
+        font-size: 15px;
+    }
+
+    .obstacle-shell table th {
+        font-size: 18px;
+    }
+
+    tr.header-row th, tr.standard-row td {
+        padding: 5px
+    }
+
+    .obstacle-shell button {
+        padding: 10px;
+    }
+}
