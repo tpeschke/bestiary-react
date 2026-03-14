@@ -31,6 +31,10 @@
     display: flex;
 }
 
+.header-background .header-nav.mobile {
+    display: none;
+}
+
 .header-nav a {
     margin-left: 10px;
 }
@@ -41,4 +45,23 @@
 
 .header-background .app-name-component button {
     margin-left: 15px;
+}
+
+@media (max-width: 625px) {
+    .header-background img {
+        width: 9vw;
+    }
+
+    .header-background h1 {
+        font-size: 8vw;
+    }
+
+    .header-background .header-nav.desktop,
+    .app-name-component .nav-icon {
+        display: none;
+    }
+
+    .header-background .header-nav.mobile {
+        display: flex;
+    }
 }

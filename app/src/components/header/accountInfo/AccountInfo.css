@@ -51,3 +51,19 @@
 .account-info-icon ul li.top-border {
     border-top: 1px solid lightgray;
 }
+
+@media (max-width: 625px) {
+    .account-info-icon ul {
+        width: 100vw;
+        top: -17px;
+        right: -22px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        z-index: 99;
+    }
+    
+    .account-info-icon ul li {
+        padding: 15px;
+        font-size: 20px;
+    }
+}

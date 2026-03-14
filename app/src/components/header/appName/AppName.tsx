@@ -14,14 +14,14 @@ export default function AppName() {
                 <h1>Bonfire {isObstacleIndex ? 'Obstacle Index' : 'Bestiary'}</h1>
             </Link>
 
-            <Link to={isObstacleIndex ? "/" : "/obstacles"}>
+            <Link to={isObstacleIndex ? "/" : "/obstacles"} className="nav-icon">
                 <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content={isObstacleIndex ? 'Bestiary' : 'Obstacle Index'}>
                     <Icon iconName={isObstacleIndex ? 'monster' : 'book'} color='white' iconSize='h2' />
                 </button>
             </Link>
 
             {isObstacleIndex && (
-                <Link to={"/obstacles/edit/0"}>
+                <Link to={"/obstacles/edit/0"} className="nav-icon">
                     <button className='transparent-white' data-tooltip-id="my-tooltip" data-tooltip-content='Add Obstacle'>
                         <Icon iconName='plus' color='white' iconSize='h2' />
                     </button>
