@@ -43,3 +43,9 @@ table.light-weight-table thead {
 table.light-weight-table tbody tr:nth-child(odd) {
   background: #f3f3f3;
 }
+
+@media (max-width: 768px) {
+  .container {
+    width: 100vw;
+  }
+}

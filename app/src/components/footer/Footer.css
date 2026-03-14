@@ -10,11 +10,32 @@
     justify-content: space-between;
 }
 
+.footer-background > div {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .footer-background a {
     color: white;
 	font-family: "Source Sans 3", sans-serif;
+    text-align: center;
 }
 
 .footer-background a:hover {
     color: #d9dee0;
+}
+
+
+@media (max-width: 440px) {
+    .footer-background {
+        flex-direction: column;
+        height: unset;
+    }
+
+    .footer-background > div {
+        width: 100%;
+        padding: 10px 0
+    }
 }
