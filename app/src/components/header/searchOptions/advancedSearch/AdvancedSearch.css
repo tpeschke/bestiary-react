@@ -14,9 +14,10 @@
 }
 
 .advanced-search-innards-shell .inner-searches-shell {
-    padding: 15px 0;
+    padding: 15px 0 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    flex-wrap: wrap
 }
 
 .advanced-search-innards-shell select {
@@ -28,6 +29,28 @@
 .advanced-search-innards-shell .rating-shell {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 30%;
-    min-width: 225px;
+    min-width: 416px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 426px) {
+    .advanced-search-innards-shell .rating-shell {
+        flex-direction: column;
+        width: 100%;
+        min-width: unset;
+    }
+
+    .inner-searches-shell>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .rating-shell>div,
+    .advanced-search-innards-shell select {
+        width: 100%;
+    }
 }

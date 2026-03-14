@@ -23,3 +23,15 @@
     display: flex;
     align-items: center;
 }
+
+@media (max-width: 426px) {
+    .Name-Header {
+        flex-direction: column;
+        padding: 10px 0 4px;
+        justify-content: center;
+    }
+
+    .Name-Header button.transparent-white {
+        margin-top: 10px;
+    }
+}

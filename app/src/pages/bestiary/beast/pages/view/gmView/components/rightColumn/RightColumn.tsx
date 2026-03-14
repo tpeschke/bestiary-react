@@ -44,6 +44,8 @@ export default function RightColumn({ appearance, intro, palette, habitat, folkl
 
     return (
         <div className='right-column-shell'>
+            <h1>Main Info</h1>
+
             {showIntroSection &&
                 <Body>
                     <HTMLDisplay html={intro} />

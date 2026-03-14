@@ -9,3 +9,18 @@
 .search-options-shell>span>input {
     width: calc(100% - 22px)
 }
+
+@media (max-width: 426px) {
+    .search-options-shell {
+        padding: 16px 0;
+    }
+
+    .search-options-shell > span > i {
+        margin-left: 15px;
+    }
+
+    .search-options-shell > span > input {
+        margin-right: 15px;
+        width: calc(100% - 55px);
+    }
+}

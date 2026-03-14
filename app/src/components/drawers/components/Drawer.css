@@ -82,3 +82,9 @@
     color: #607d8b;
     font-size: 13px;
 }
+
+@media (max-width: 426px) {
+    .drawer-innards {
+        padding: 15px;
+    }
+}

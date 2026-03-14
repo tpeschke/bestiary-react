@@ -6,3 +6,19 @@
 .right-column-shell ul {
     margin-left: 5px;
 }
+
+.right-column-shell>h1 {
+    display: none;
+    background: #8aa0ab;
+    color: white;
+    padding: 18px;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 769px) {
+    .right-column-shell>h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
