@@ -1,9 +1,9 @@
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import getSkullNumber from "../getSkulls";
-import calculateStress from "@bestiary/common/utilities/scalingAndBonus/skill/calculateStress";
+import calculateStress from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress";
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
-import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee";
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 
 export default function formatSkillInfo(
     skillRole: string,

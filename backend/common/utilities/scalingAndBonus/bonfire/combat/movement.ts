@@ -1,4 +1,4 @@
-import { RawMovement, Movement } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { RawMovement, Movement } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 
 export function calculateMovements(movements: RawMovement[], skullIndex: number, mainRole: string) {
     return movements.reduce((movements: Movement[], movement: RawMovement) => {

@@ -1,7 +1,7 @@
 import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import query from "../../../../../../../../db/database";
-import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
-import getSkillRank from "@bestiary/common/utilities/scalingAndBonus/skill/getSkillRank";
+import getSkills from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkills";
+import getSkillRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkillRank";
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 
 const getPreferredSuitesWithRole = `select * from bbSkillSuites

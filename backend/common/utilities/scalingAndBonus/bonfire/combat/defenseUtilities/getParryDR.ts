@@ -1,4 +1,4 @@
-import getModBySkullIndex, { getItemBySkullIndex } from "../../getModBySkullIndex"
+import getModBySkullIndex, { getItemBySkullIndex } from "../../../getModBySkullIndex"
 import formatDRString from "./formatDRString"
 
 export function calculateParryDR(role: string, skullIndex: number, eua: boolean): string {

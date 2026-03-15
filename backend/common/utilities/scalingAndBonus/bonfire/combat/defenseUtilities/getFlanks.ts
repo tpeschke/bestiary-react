@@ -1,7 +1,7 @@
-import getModBySkullIndex from "../../getModBySkullIndex"
+import getModBySkullIndex from "../../../getModBySkullIndex"
 
-export default function getParry(role: string, skullIndex: number): number {
-    const attackDictionary = [0, 0, 0, 0, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
+export default function getFlanks(role: string, skullIndex: number): number {
+    const attackDictionary = [1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8]
     const roleIndexModifier = getRoleIndexModifier(role)
 
     return getModBySkullIndex(skullIndex, roleIndexModifier, attackDictionary)
@@ -14,13 +14,13 @@ function getRoleIndexModifier(role: string): number {
         case 'Brute':
             return -1
         case 'Defender':
-            return 4
+            return 2
         case 'Duelist':
-            return 4
+            return -2
         case 'Shock':
             return 0
         case 'Skirmisher':
-            return 0
+            return -2
         default:
             return 0
     }

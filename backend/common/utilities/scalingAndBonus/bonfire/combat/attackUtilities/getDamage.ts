@@ -1,5 +1,5 @@
-import { DamageType, IsSpecial } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { getItemBySkullIndex } from "../../getModBySkullIndex"
+import { DamageType, IsSpecial } from "../../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { getItemBySkullIndex } from "../../../getModBySkullIndex"
 
 export default function getDamage(isSpecial: IsSpecial, isRanged: boolean, damageType: DamageType, role: string, skullIndex: number) {
     if (isSpecial === 'yes') { return '*' }

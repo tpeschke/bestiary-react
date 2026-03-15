@@ -1,4 +1,4 @@
-import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
+import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { RawCombatStat } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateCombatStats from "./utilities/sortAndCalculate"

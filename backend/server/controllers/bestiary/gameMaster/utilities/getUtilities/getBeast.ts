@@ -8,7 +8,7 @@ import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootIn
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
-import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
+import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/bestiary/lootInterfaces"
 import { isOwner } from "../../../../../utilities/ownerAccess"
 import { getRarity } from "../../../../../utilities/rarity"

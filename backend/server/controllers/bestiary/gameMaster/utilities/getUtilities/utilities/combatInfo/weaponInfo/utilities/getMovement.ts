@@ -1,5 +1,5 @@
 import { Movement, RawMovement } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { calculateMovements } from "@bestiary/common/utilities/scalingAndBonus/combat/movement"
+import { calculateMovements } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement"
 import query from "../../../../../../../../../db/database"
 import { getMonsterMovement } from "../../../../../../../../../db/beast/movement"
 

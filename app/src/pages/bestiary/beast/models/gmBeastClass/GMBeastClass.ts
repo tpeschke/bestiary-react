@@ -6,9 +6,9 @@ import { BeastInfo } from "../../interfaces/viewInterfaces";
 import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import calculateStress from '@bestiary/common/utilities/scalingAndBonus/skill/calculateStress'
-import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
-import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/confrontation/utilities/getSocialSkillSuites"
+import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress'
+import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
+import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
@@ -17,11 +17,11 @@ import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSp
 import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
 import CombatInfoClass from "./components/CombatInfoClass";
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
-import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
-import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
-import getSkills from "@bestiary/common/utilities/scalingAndBonus/skill/getSkills";
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
+import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
+import getSkills from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkills";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
 

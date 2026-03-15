@@ -1,12 +1,12 @@
-import { IsSpecial, DamageType, Type, ProcessedWeapon } from "../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { getWeaponName } from "../../formatting/formatting"
+import { IsSpecial, DamageType, Type, ProcessedWeapon } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { getWeaponName } from "../../../formatting/formatting"
 
 import getAttackMod from "./attackUtilities/getAttackMod"
 import getRangeIncrement from "./attackUtilities/getRangeIncrement"
 import getDamage from "./attackUtilities/getDamage"
 import getRecovery from "./attackUtilities/getRecovery"
 import getMeasure from "./attackUtilities/getMeasure"
-import { Size } from "../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 export default function calculateAndFormatAttackInfo(
     skullIndex: number,

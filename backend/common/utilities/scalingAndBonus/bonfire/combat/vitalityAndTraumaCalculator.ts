@@ -1,4 +1,4 @@
-import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
+import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
 
 interface VitalityAndTrauma {
     vitality: string | number,

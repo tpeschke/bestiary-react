@@ -1,9 +1,9 @@
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import getCapacity from "@bestiary/common/utilities/scalingAndBonus/confrontation/getCapacity"
+import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
-import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/confrontation/getBaseSocialRank"
-import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/confrontation/utilities/getSocialSkillSuites"
+import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
+import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 
 export default function formatSocialInfo(

@@ -1,5 +1,5 @@
-import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import getModBySkullIndex from "../../getModBySkullIndex"
+import { Size } from "../../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import getModBySkullIndex from "../../../getModBySkullIndex"
 
 export default function getDefense(addSizeMod: boolean, size: Size = 'Medium', role: string, skullIndex: number): number {
     const attackDictionary = [-8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]

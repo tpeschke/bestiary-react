@@ -1,4 +1,4 @@
-import getModBySkullIndex, { getItemBySkullIndex } from "../../getModBySkullIndex"
+import getModBySkullIndex, { getItemBySkullIndex } from "../../../getModBySkullIndex"
 import formatDRString from "./formatDRString"
 
 export function calculateDR(role: string, skullIndex: number): string {

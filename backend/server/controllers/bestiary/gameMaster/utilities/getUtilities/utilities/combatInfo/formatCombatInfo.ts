@@ -1,11 +1,11 @@
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullNumber from "../getSkulls"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/combat/knockBackCalculator"
+import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
+import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import getInitiative from "./utilities/getInitiative"
-import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee"
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 
 export default function formatCombatInfo(
     limitNotes: string,

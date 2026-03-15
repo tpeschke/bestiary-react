@@ -1,6 +1,6 @@
 import { Conflict } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
-import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/confrontation/calculateRankForCharacteristic"
+import { calculateRankForCharacteristic } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 
 export interface UnformatedConflict {
     id: number,

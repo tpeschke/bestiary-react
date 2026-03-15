@@ -2,10 +2,10 @@ import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation";
-import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/combat/movement";
-import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/combat/vitalityAndTraumaCalculator"
-import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/getDefenseNFlee";
+import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
+import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
+import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
+import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo

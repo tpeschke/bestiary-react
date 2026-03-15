@@ -1,7 +1,7 @@
 import { RawCombatStat, AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
-import { CalculateCombatStatsReturn, calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/combat/combatCalculation"
+import { CalculateCombatStatsReturn, calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 
 export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[], defenseStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     return {

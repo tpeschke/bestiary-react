@@ -1,4 +1,4 @@
-import getModBySkullIndex from "../../getModBySkullIndex"
+import getModBySkullIndex from "../../../getModBySkullIndex"
 
 export default function calculateRelationshipRank(skullIndex: number = 0, role: string): number {
     const rankDictionary = [-4, -3, -2, -1, -1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]

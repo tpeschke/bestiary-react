@@ -26,7 +26,7 @@ export default function AccountInfoIcon() {
             <ul className='account-options-dropdown'>
                 <li>
                     <Link to={'https://ko-fi.com/bonfirebestiary'} target='_blank'>
-                        <Icon iconName='Ko-fi' margin='right' /> {accessLevel}
+                        <Icon iconName='Ko-fi' margin='right' /> Kofi Tier: {accessLevel}
                     </Link>
                 </li>
                 <p>System Preference</p>

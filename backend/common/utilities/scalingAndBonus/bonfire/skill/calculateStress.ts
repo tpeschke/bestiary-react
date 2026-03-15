@@ -1,6 +1,6 @@
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
-import calculateSecondaryRoleEffect from "../calculateSecondaryRoleEffect"
-import getModBySkullIndex from "../getModBySkullIndex"
+import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
+import getModBySkullIndex from "../../getModBySkullIndex"
 
 export default function calculateStress(secondaryRole: string, skullIndex: number, stressThresholdStrength: Strength): number | string | null {
     if (stressThresholdStrength === 'x') {
