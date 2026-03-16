@@ -1,13 +1,12 @@
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import Movement from "./components/movement/MovementInfo"
-import TacticsAndStrategy from "../StrategiesNLimits/StrategiesNLimits"
 import DefenseDisplay from "./components/defenseDisplay/DefenseDisplay"
 import AttackDisplay from "./components/attackDisplay/AttackDisplay"
 import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 
 import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import Pair, { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
+import { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 
@@ -19,8 +18,9 @@ interface Props {
 export default function CombatSection({ combatInfo, size }: Props) {
     const {
         combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
-        defenses, initiative
+        defenses, initiative, type
     } = combatInfo
+
     const {
         vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
         isIncorporeal, defenseNFleeDice

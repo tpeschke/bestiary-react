@@ -1,3 +1,4 @@
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
@@ -6,12 +7,15 @@ import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/util
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
+import getEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
+    public selectedSystem: SystemOption = 'Bonfire'
 
-    constructor(combatInfo: CombatInfo) {
+    constructor(combatInfo: CombatInfo, system: SystemOption) {
         this.entryCombatInfo = combatInfo
+        this.selectedSystem = system
     }
 
     get rawCombatInfo(): CombatInfo {
@@ -19,7 +23,11 @@ export default class CombatInfoClass {
     }
 
     get combatSkulls(): number {
-        return this.entryCombatInfo.combatSkulls
+        if (this.selectedSystem === 'Bonfire') {
+            return this.entryCombatInfo.combatSkulls
+        } else {
+            return getEPValue(this.entryCombatInfo.combatSkulls)
+        }
     }
 
     public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): CombatInfo {
@@ -42,6 +50,7 @@ export default class CombatInfoClass {
 
         return {
             ...this.entryCombatInfo,
+            type: this.selectedSystem,
             combatRole, combatSecondary,
             combatSkulls: skulls,
             skullIndex,

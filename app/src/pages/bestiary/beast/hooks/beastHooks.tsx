@@ -59,7 +59,7 @@ interface Return {
     saveBeast: SaveBeastFunction
 }
 
-export default function beastHooks(): Return {
+export default function beastHooks(systemPreference?: 0 | 1 | 2): Return {
     const [currentBeastId, setCurrentBeastId] = useState('0')
 
     const [beast, setBeast] = useState<GMBeastClass>()
@@ -79,7 +79,7 @@ export default function beastHooks(): Return {
             id: modifiedBeastInfo.id,
             beastInfo: modifiedBeastInfo
         }))
-        setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+        setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
     }
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export default function beastHooks(): Return {
 
             getBeastFromCache(beastId, roleId, modifier).then(beast => {
                 if (beast && beast.generalInfo) {
-                    const returnedBeast = new GMBeastClass(beast, roleId, modifier)
+                    const returnedBeast = new GMBeastClass(beast, roleId, modifier, systemPreference)
                     document.title = `${returnedBeast.generalInfo.name} - Bonfire Bestiary`
                     setBeast(returnedBeast)
                     scrollToTop()
@@ -106,7 +106,7 @@ export default function beastHooks(): Return {
                     axios.get(beastURL + '/' + beastId).then(({ data }) => {
                         if (data.generalInfo) {
                             document.title = `${data.generalInfo.name} - Bonfire Bestiary`
-                            setBeast(new GMBeastClass(data, roleId, modifier))
+                            setBeast(new GMBeastClass(data, roleId, modifier, systemPreference))
                             dispatch(cacheMonster({
                                 id: data.id,
                                 beastInfo: data
@@ -128,6 +128,12 @@ export default function beastHooks(): Return {
 
         }
     }, [beastId, searchParams]);
+
+    useEffect(() => {
+        if (beast) {
+            setBeast(new GMBeastClass(beast.beastInfo, null, null, systemPreference))
+        }
+    }, [systemPreference])
 
     const [updateGeneralInfoFunctions, setUpdateGeneralInfoFunctions] = useState<UpdateGeneralInfoFunctionsObject>(getUpdateGeneralInfoFunctions(beast, updateBeastInfo))
     const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
@@ -192,7 +198,7 @@ export default function beastHooks(): Return {
                 }
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
         }
     }
 
@@ -205,7 +211,7 @@ export default function beastHooks(): Return {
                 roleModifier: newRoleModifier
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
         }
     }
 
@@ -229,7 +235,7 @@ export default function beastHooks(): Return {
                 },
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null))
+            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
         }
     }
 
@@ -259,7 +265,7 @@ export default function beastHooks(): Return {
     const saveBeast = async (randomEncounterInfo: EditEncounter | null) => {
         if (beast) {
             showPendingAlert(async () => {
-                const { data } = await axios.post(beastURL + '/save', {beastInfo: beast.beastInfo, randomEncounterInfo})
+                const { data } = await axios.post(beastURL + '/save', { beastInfo: beast.beastInfo, randomEncounterInfo })
 
                 if (data.color === 'red') {
                     navigate(`/`)

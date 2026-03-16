@@ -1,13 +1,36 @@
 import { Strength } from "../../calculationInterfaces"
-import { DiceOptions } from "../beast"
+import { DiceOptions, SystemOption } from "../beast"
 import { Spell } from "./castingInfo"
 
-export default interface CombatInfo {
+type CombatInfo = {
+    type: SystemOption,
+    combatRole: string,
+    combatSkulls: number,
+} & (HackMasterCombatInfo | BonfireCombatInfo)
+
+export default CombatInfo
+
+export interface HackMasterCombatInfo {
+    type: 'HackMaster',
     attackInfo: string,
     defenseInfo: string,
-    combatSkulls: number,
     skullIndex: number,
-    combatRole: string,
+    combatSecondary: string,
+    vitalityInfo: VitalityInfo,
+    initiative: string,
+    attacks: AttackInfo[],
+    defenses: DefenseInfo[],
+    movements: Movement[],
+    limitNotes: string,
+    strategiesNLimits?: StrategyNLimits[],
+    options: StrategicOptions
+}
+
+export interface BonfireCombatInfo {
+    type: 'Bonfire',
+    attackInfo: string,
+    defenseInfo: string,
+    skullIndex: number,
     combatSecondary: string,
     vitalityInfo: VitalityInfo,
     initiative: string,

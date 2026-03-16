@@ -24,6 +24,7 @@ import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -33,6 +34,7 @@ export default class GMBeastClass {
     private entryID: number
     private patreon: Access
     private canplayerview: boolean
+    private system: 'HackMaster' | 'Bonfire' = 'Bonfire'
 
     private entryGeneralInfo: GeneralInfo
     private entryPlayerSpecificInfo: PlayerSpecificInfo
@@ -51,9 +53,11 @@ export default class GMBeastClass {
 
     private selectedModifier: number
 
-    constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null) {
+    constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null, system?: 0 | 1 | 2) {
         const { id, patreon, canplayerview, generalInfo, playerInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo,
             castingInfo, roleModifier, } = beastInfo
+
+        this.system = this.getSystemString(system)
 
         this.entryID = id
         this.patreon = patreon
@@ -63,7 +67,7 @@ export default class GMBeastClass {
         this.entryImageInfo = imageInfo
         this.entryLinkedInfo = linkedInfo
         this.entryRoleInfo = roleInfo
-        this.entryCombatInfo = new CombatInfoClass(combatInfo)
+        this.entryCombatInfo = new CombatInfoClass(combatInfo, this.system)
         this.entrySkillInfo = skillInfo
         this.entrySocialInfo = socialInfo
         this.entryLootInfo = lootInfo
@@ -74,6 +78,15 @@ export default class GMBeastClass {
         this.entrySpells = castingInfo?.spells ?? []
 
         this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
+    }
+
+    private getSystemString = (systemNumber?: 0 | 1 | 2): SystemOption => {
+        switch (systemNumber) {
+            case 2:
+                return 'HackMaster'
+            default:
+                return 'Bonfire'
+        }
     }
 
     public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
