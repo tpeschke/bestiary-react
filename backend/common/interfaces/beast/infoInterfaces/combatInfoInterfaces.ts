@@ -2,20 +2,26 @@ import { Strength } from "../../calculationInterfaces"
 import { DiceOptions, SystemOption } from "../beast"
 import { Spell } from "./castingInfo"
 
+export interface BasicCombatInfo {
+    combatRole: string,
+    combatSecondary: string,
+    combatSkulls: number,
+    skullIndex: number,
+    epValue: number,
+    epValueIndex: number,
+
+    attackInfo: string,
+    defenseInfo: string,
+}
+
 type CombatInfo = {
     type: SystemOption,
 } & (HackMasterCombatInfo | BonfireCombatInfo)
 
 export default CombatInfo
 
-export interface HackMasterCombatInfo {
+export interface HackMasterCombatInfo extends BasicCombatInfo {
     type: 'HackMaster',
-    combatRole: string,
-    combatSecondary: string,
-    experienceValue: number,
-    attackInfo: string,
-    defenseInfo: string,
-    skullIndex: number,
     vitalityInfo: VitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
@@ -26,14 +32,8 @@ export interface HackMasterCombatInfo {
     options: StrategicOptions
 }
 
-export interface BonfireCombatInfo {
+export interface BonfireCombatInfo extends BasicCombatInfo {
     type: 'Bonfire',
-    combatRole: string,
-    combatSecondary: string,
-    combatSkulls: number,
-    attackInfo: string,
-    defenseInfo: string,
-    skullIndex: number,
     vitalityInfo: VitalityInfo,
     initiative: string,
     attacks: AttackInfo[],

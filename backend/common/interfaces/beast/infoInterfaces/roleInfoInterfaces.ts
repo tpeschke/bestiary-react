@@ -25,14 +25,16 @@ export interface RoleGeneralInfo {
     hash: string,
 }
 
-export interface RoleCombatInfo {
-    attack: string,
-    defense: string,
-    initiative: string,
+export type RoleCombatInfo = {
     combatRole: string,
     combatSecondary: string,
     combatSkulls: number,
     skullIndex: number,
+    epValue: number,
+    epValueIndex: number,
+    attack: string,
+    defense: string,
+    initiative: string,
     vitalityInfo: VitalityInfo
 }
 

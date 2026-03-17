@@ -7,7 +7,6 @@ import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/util
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
-import getEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -76,13 +75,13 @@ export default class CombatInfoClass {
     }
 
     private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): HackMasterCombatInfo {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, epValue: mainEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
 
-        // const skulls = (selectedRole ? selectedRole.combatInfo.combatSkulls : combatSkulls) + selectedModifier
-        const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex) + selectedModifier
+        const epValue = (selectedRole ? selectedRole.combatInfo.epValue : mainEpValue) + selectedModifier
+        const epValueIndex = (selectedRole ? selectedRole.combatInfo.epValueIndex : mainEpValueIndex) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
@@ -97,19 +96,18 @@ export default class CombatInfoClass {
             ...this.entryCombatInfo,
             type: 'HackMaster',
             combatRole, combatSecondary,
-            // TODO actually calculate & consider roles
-            experienceValue: 18,
-            skullIndex,
+            epValue,
+            epValueIndex,
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, 0, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
-                defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex)
+                defenseNFleeDice: getDefenseNFlee(combatRole, 0)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
-            movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
+            attacks: attacks.reduce(this.adjustAttackInfo(0, roleID, combatRole, size, spells), []),
+            defenses: defenses.reduce(this.adjustDefenseInfo(0, roleID, combatRole, size), []),
+            movements: movements.reduce(this.adjustMovementInfo(0, roleID, combatRole), [])
         }
     }
 
