@@ -11,7 +11,7 @@ import getEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/ge
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
-    public selectedSystem: SystemOption = 'Bonfire'
+    public selectedSystem: SystemOption
 
     constructor(combatInfo: CombatInfo, system: SystemOption) {
         this.entryCombatInfo = combatInfo
@@ -23,6 +23,7 @@ export default class CombatInfoClass {
     }
 
     get combatSkulls(): number {
+        return 6
         if (this.selectedSystem === 'Bonfire') {
             return this.entryCombatInfo.combatSkulls
         } else {

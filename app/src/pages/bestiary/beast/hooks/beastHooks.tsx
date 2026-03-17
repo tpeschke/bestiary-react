@@ -59,7 +59,7 @@ interface Return {
     saveBeast: SaveBeastFunction
 }
 
-export default function beastHooks(systemPreference?: 0 | 1 | 2): Return {
+export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Return {
     const [currentBeastId, setCurrentBeastId] = useState('0')
 
     const [beast, setBeast] = useState<GMBeastClass>()
@@ -131,7 +131,12 @@ export default function beastHooks(systemPreference?: 0 | 1 | 2): Return {
 
     useEffect(() => {
         if (beast) {
-            setBeast(new GMBeastClass(beast.beastInfo, null, null, systemPreference))
+            const updatedBeast = new GMBeastClass(beast.beastInfo, null, null, systemPreference)
+            setBeast(updatedBeast)
+            dispatch(cacheMonster({
+                id: updatedBeast.id,
+                beastInfo: new Promise((resolve) => { resolve(updatedBeast)})
+            }))
         }
     }, [systemPreference])
 

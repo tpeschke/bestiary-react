@@ -11,6 +11,7 @@ import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/genera
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 
 export interface PlayerBeastInfo {
     id: number,
@@ -23,6 +24,7 @@ export interface BeastInfo {
     id: number,
     patreon: Access,
     canplayerview: boolean,
+    system: SystemOption,
     roleModifier: number,
     generalInfo: GeneralInfo,
     playerInfo: PlayerSpecificInfo,

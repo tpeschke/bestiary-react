@@ -24,6 +24,7 @@ import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
+import getSystemString from "@bestiary/common/utilities/get/getSystemString";
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 
 interface ModifierIndexDictionaryObject {
@@ -34,7 +35,7 @@ export default class GMBeastClass {
     private entryID: number
     private patreon: Access
     private canplayerview: boolean
-    private system: 'HackMaster' | 'Bonfire' = 'Bonfire'
+    private system: SystemOption
 
     private entryGeneralInfo: GeneralInfo
     private entryPlayerSpecificInfo: PlayerSpecificInfo
@@ -53,11 +54,11 @@ export default class GMBeastClass {
 
     private selectedModifier: number
 
-    constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null, system?: 0 | 1 | 2) {
+    constructor(beastInfo: BeastInfo, roleId: string | null, modifier: string | null, newSystem?: 0 | 1 | 2) {
         const { id, patreon, canplayerview, generalInfo, playerInfo, imageInfo, linkedInfo, roleInfo, combatInfo, skillInfo, socialInfo, lootInfo,
-            castingInfo, roleModifier, } = beastInfo
+            castingInfo, roleModifier, system } = beastInfo
 
-        this.system = this.getSystemString(system)
+        this.system = newSystem || newSystem === 0 ? getSystemString(newSystem) : system
 
         this.entryID = id
         this.patreon = patreon
@@ -78,15 +79,6 @@ export default class GMBeastClass {
         this.entrySpells = castingInfo?.spells ?? []
 
         this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
-    }
-
-    private getSystemString = (systemNumber?: 0 | 1 | 2): SystemOption => {
-        switch (systemNumber) {
-            case 2:
-                return 'HackMaster'
-            default:
-                return 'Bonfire'
-        }
     }
 
     public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
@@ -118,6 +110,7 @@ export default class GMBeastClass {
             id: this.id,
             patreon: this.patreon,
             canplayerview: this.canplayerview,
+            system: this.system,
             generalInfo: this.entryGeneralInfo,
             playerInfo: this.entryPlayerSpecificInfo,
             imageInfo: this.entryImageInfo,

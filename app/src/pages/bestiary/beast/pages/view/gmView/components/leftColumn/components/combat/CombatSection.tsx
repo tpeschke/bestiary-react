@@ -16,6 +16,7 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
+    console.log(combatInfo)
     const {
         combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
         defenses, initiative, type
@@ -41,7 +42,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
     }
 
     const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
-
+console.log(type, combatSkulls)
     return (
         <>
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />

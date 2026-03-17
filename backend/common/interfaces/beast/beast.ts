@@ -15,6 +15,7 @@ export interface Beast {
     patreon: Access,
     playerInfo: PlayerSpecificInfo,
     canplayerview: boolean,
+    system: SystemOption,
     generalInfo: GeneralInfo,
     imageInfo: ImageInfo,
     linkedInfo: LinkedInfo,

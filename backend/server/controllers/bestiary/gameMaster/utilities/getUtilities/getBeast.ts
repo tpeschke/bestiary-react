@@ -35,15 +35,17 @@ import getStrategicOptions from "./utilities/combatInfo/getStrategicOptions"
 import getGenericSkillSuites from "./utilities/skillInfo/utilities/getSkillSuites"
 import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
+import getSystemString from "@bestiary/common/utilities/get/getSystemString";
 
 interface GetBeastOptions {
     isEditing: boolean,
     userID?: number,
-    gearCache?: any | undefined
+    gearCache?: any | undefined,
+    systemPreference?: 0 | 1 | 2
 }
 
 export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBeastOptions = { isEditing: false }): Promise<Beast> {
-    const { isEditing, userID, gearCache } = options
+    const { isEditing, userID, gearCache, systemPreference } = options
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
@@ -55,6 +57,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
     let beast: Beast = {
         id, canplayerview,
+        system: getSystemString(systemPreference),
         patreon: getEntryAccessLevel(patreon),
         playerInfo: {
             favorite: false,

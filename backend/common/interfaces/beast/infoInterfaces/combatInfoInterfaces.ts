@@ -6,6 +6,7 @@ type CombatInfo = {
     type: SystemOption,
     combatRole: string,
     combatSkulls: number,
+    combatSecondary: string,
 } & (HackMasterCombatInfo | BonfireCombatInfo)
 
 export default CombatInfo
@@ -15,7 +16,6 @@ export interface HackMasterCombatInfo {
     attackInfo: string,
     defenseInfo: string,
     skullIndex: number,
-    combatSecondary: string,
     vitalityInfo: VitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
@@ -31,7 +31,6 @@ export interface BonfireCombatInfo {
     attackInfo: string,
     defenseInfo: string,
     skullIndex: number,
-    combatSecondary: string,
     vitalityInfo: VitalityInfo,
     initiative: string,
     attacks: AttackInfo[],

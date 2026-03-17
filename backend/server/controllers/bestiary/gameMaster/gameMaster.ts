@@ -18,8 +18,9 @@ export async function getGMVersionOfBeast(request: GetRequest, response: Respons
     const beastID = +request.params.beastId
     const isEditing = request.query ? request.query.edit === 'true' : false
     const userID = request.user?.id
+    const systemPreference = request.user?.system
 
-    const beast: Beast = await getGMVersionOfBeastFromDB(beastID, {isEditing, userID, gearCache})
+    const beast: Beast = await getGMVersionOfBeastFromDB(beastID, {isEditing, userID, gearCache, systemPreference})
     
     if (beast) {
         checkForContentTypeBeforeSending(response, beast)

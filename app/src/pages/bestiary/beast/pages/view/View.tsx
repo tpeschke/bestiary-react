@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import GMView from "./gmView/gmView";
 import PlayerView from "./playerView/playerView";
 import { useSelector } from "react-redux";
-import { getSystemPreference } from "../../../../../redux/slices/userSlice";
+import { getSystemPreference, infoHasBeenFetched } from "../../../../../redux/slices/userSlice";
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -13,6 +13,7 @@ interface Props {
 
 export default function View({ setLoading }: Props) {
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+
     const { beast, playerBeast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite } = beastHooks(systemPreference);
 
     useEffect(() => {
