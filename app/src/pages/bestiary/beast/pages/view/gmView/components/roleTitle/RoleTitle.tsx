@@ -5,20 +5,23 @@ import Icon from "../../../../../../../../components/icon/Icon";
 interface Props {
     title: string,
     skulls?: number,
+    epValue?: number,
     role?: string,
     secondaryRole?: string,
     hasBottomBorder?: boolean
 }
 
-export default function RoleTitle({ title, skulls, role, secondaryRole, hasBottomBorder }: Props) {
-    const showRightSide = (skulls || skulls === 0) && role
+export default function RoleTitle({ title, skulls, epValue, role, secondaryRole, hasBottomBorder }: Props) {
+    const showRightSide = (skulls || skulls === 0 || epValue) && role
 
     let shellClass = 'role-shell'
     if (hasBottomBorder) {
         shellClass += ' title-bottom-border'
     }
 
-    const tooltip = "This indicates how dangerous this entry is.\nTranslucent Skulls represent a particularly easy entry.\nRed Skulls represent a particularly dangerous entry."
+    const skullTooltip = "This indicates how dangerous this entry is.\nTranslucent Skulls represent a particularly easy entry.\nRed Skulls represent a particularly dangerous entry."
+    const epTooltip = "This is the Experience Value of this monster when defeated using this system."
+    const tooltip = epValue ? epTooltip : skullTooltip
 
     const applicableStatModifierByTitle: { [key: string]: string } = {
         Combat: 'Vitality',
@@ -44,7 +47,8 @@ export default function RoleTitle({ title, skulls, role, secondaryRole, hasBotto
                 <div className="skull-frame">
                     <p><span data-tooltip-id="my-tooltip" data-tooltip-content={secondaryTooltip}>{secondaryRole ? `${secondaryRole} ` : ''} </span>{role} </p>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
-                        {formatSkullsForDisplay(skulls)}
+                        {(skulls || skulls === 0) && formatSkullsForDisplay(skulls)}
+                        {epValue && <p className="margin-left"> | {epValue} EPs</p>}
                     </span>
                 </div>
             }

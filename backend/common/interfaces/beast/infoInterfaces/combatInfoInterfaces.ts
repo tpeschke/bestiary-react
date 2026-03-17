@@ -4,15 +4,15 @@ import { Spell } from "./castingInfo"
 
 type CombatInfo = {
     type: SystemOption,
-    combatRole: string,
-    combatSkulls: number,
-    combatSecondary: string,
 } & (HackMasterCombatInfo | BonfireCombatInfo)
 
 export default CombatInfo
 
 export interface HackMasterCombatInfo {
     type: 'HackMaster',
+    combatRole: string,
+    combatSecondary: string,
+    experienceValue: number,
     attackInfo: string,
     defenseInfo: string,
     skullIndex: number,
@@ -28,6 +28,9 @@ export interface HackMasterCombatInfo {
 
 export interface BonfireCombatInfo {
     type: 'Bonfire',
+    combatRole: string,
+    combatSecondary: string,
+    combatSkulls: number,
     attackInfo: string,
     defenseInfo: string,
     skullIndex: number,

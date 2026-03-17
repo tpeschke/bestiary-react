@@ -7,7 +7,7 @@ import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
-import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import CombatInfo, { BonfireCombatInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 
 interface Props {
@@ -16,10 +16,19 @@ interface Props {
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
-    console.log(combatInfo)
+    if (combatInfo.type === "Bonfire") {
+        return <BonfireCombatInfoDisplay combatInfo={combatInfo} size={size} />
+    } else if (combatInfo.type === 'HackMaster') {
+        return <HackMasterCombatInfoDisplay combatInfo={combatInfo} size={size} />
+    }
+
+    return <></>
+}
+
+function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMasterCombatInfo, size: Size }) {
     const {
-        combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
-        defenses, initiative, type
+        combatRole, experienceValue, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
+        defenses, initiative
     } = combatInfo
 
     const {
@@ -42,7 +51,55 @@ export default function CombatSection({ combatInfo, size }: Props) {
     }
 
     const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
-console.log(type, combatSkulls)
+
+    return (
+        <>
+            <RoleTitle title='Combat' epValue={experienceValue} role={combatRole} secondaryRole={combatSecondary} />
+            <div className="pair-shell heading three">
+                <h3>Damage Threshold</h3>
+                <p>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
+                    <span> / </span>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
+                </p>
+                <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+            </div>
+            <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
+            <LocationVitalities locationalVitalities={locationalVitalities} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
+            <Movement movements={movements} />
+        </>
+    )
+}
+
+function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCombatInfo, size: Size }) {
+    const {
+        combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
+        defenses, initiative
+    } = combatInfo
+
+    const {
+        vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
+        isIncorporeal, defenseNFleeDice
+    } = vitalityInfo
+
+    const { defense, flee } = defenseNFleeDice
+
+    const traumaInfo = {
+        trauma,
+        noTrauma,
+        rollUnderTrauma
+    }
+
+    const knockbackInfo = {
+        knockback,
+        noKnockback,
+        size
+    }
+
+    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
+
     return (
         <>
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />

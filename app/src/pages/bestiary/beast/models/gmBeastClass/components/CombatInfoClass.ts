@@ -1,6 +1,6 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, VitalityInfo, BonfireCombatInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
@@ -23,16 +23,23 @@ export default class CombatInfoClass {
     }
 
     get combatSkulls(): number {
-        return 6
-        if (this.selectedSystem === 'Bonfire') {
+        if (this.entryCombatInfo.type === 'Bonfire') {
             return this.entryCombatInfo.combatSkulls
         } else {
-            return getEPValue(this.entryCombatInfo.combatSkulls)
+            return 0
         }
     }
 
     public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): CombatInfo {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+        if (this.selectedSystem === 'Bonfire') {
+            return this.getBonfireCombatInfo(size, roleID, selectedRole, selectedModifier, spells)
+        } else {
+            return this.getHackMasterCombatInfo(size, roleID, selectedRole, selectedModifier, spells)
+        }
+    }
+
+    private getBonfireCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): BonfireCombatInfo {
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as BonfireCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
@@ -51,9 +58,47 @@ export default class CombatInfoClass {
 
         return {
             ...this.entryCombatInfo,
-            type: this.selectedSystem,
+            type: 'Bonfire',
             combatRole, combatSecondary,
             combatSkulls: skulls,
+            skullIndex,
+            attackInfo, defenseInfo,
+            vitalityInfo: {
+                ...vitalityInfo,
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality),
+                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
+                defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex)
+            },
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
+            defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
+            movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
+        }
+    }
+
+    private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): HackMasterCombatInfo {
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
+
+        const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
+        const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
+
+        // const skulls = (selectedRole ? selectedRole.combatInfo.combatSkulls : combatSkulls) + selectedModifier
+        const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex) + selectedModifier
+
+        const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
+
+        let { attackInfo, defenseInfo } = this.entryCombatInfo
+        if (selectedRole) {
+            const { attack, defense } = selectedRole.combatInfo
+            if (attack) { attackInfo += attack }
+            if (defense) { defenseInfo += defense }
+        }
+
+        return {
+            ...this.entryCombatInfo,
+            type: 'HackMaster',
+            combatRole, combatSecondary,
+            // TODO actually calculate & consider roles
+            experienceValue: 18,
             skullIndex,
             attackInfo, defenseInfo,
             vitalityInfo: {
