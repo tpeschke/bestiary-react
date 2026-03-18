@@ -23,13 +23,19 @@ export default function RoleTitle({ title, skulls, epValue, role, secondaryRole,
     const epTooltip = "This is the Experience Value of this monster when defeated using this system."
     const tooltip = epValue ? epTooltip : skullTooltip
 
-    const applicableStatModifierByTitle: { [key: string]: string } = {
+    const bonfireApplicableStatModifierByTitle: { [key: string]: string } = {
         Combat: 'Vitality',
         Skills: 'Nerve',
         Confrontation: 'Relationships'
     }
+    const hackMasterApplicableStatModifierByTitle: { [key: string]: string } = {
+        Combat: 'Hit Points',
+        Skills: 'Nerve',
+        Confrontation: 'Relationships'
+    }
+    const applicableStatModifierByTitle = epValue ? hackMasterApplicableStatModifierByTitle : bonfireApplicableStatModifierByTitle
 
-    const secondaryRoleTooltipDictionary: { [key: string]: string } = {
+    const bonfireSecondaryRoleTooltipDictionary: { [key: string]: string } = {
         Lesser: `This Secondary Role means that this entry has normal stats for its Skull Rating except that is has half the ${applicableStatModifierByTitle[title]}.`,
         Veteran: `This Secondary Role means that this entry is built to require 2 or more characters to fight it at one time.`,
         Champion: `This Secondary Role means that this entry is meant to be taken on by only 1 enemy at a time.`,
@@ -37,6 +43,15 @@ export default function RoleTitle({ title, skulls, epValue, role, secondaryRole,
         Tyrant: `This Secondary Role means that this entry gains bonuses from its allies, making it more powerful`,
         Solo: `This Secondary Role means that this entry is built to take on 4 characters.`
     }
+    const hackMasterSecondaryRoleTooltipDictionary: { [key: string]: string } = {
+        Lesser: `This Secondary Role means that this entry has normal stats for its EP value except that is has half the ${applicableStatModifierByTitle[title]}.`,
+        Veteran: `This Secondary Role means that this entry is built to require 2 or more characters to fight it at one time.`,
+        Champion: `This Secondary Role means that this entry is meant to be taken on by only 1 enemy at a time.`,
+        Officer: `This Secondary Role means that this entry gives bonuses to its allies, making all of them more powerful.`,
+        Tyrant: `This Secondary Role means that this entry gains bonuses from its allies, making it more powerful`,
+        Solo: `This Secondary Role means that this entry is built to take on 4 characters.`
+    }
+    const secondaryRoleTooltipDictionary = epValue ? hackMasterSecondaryRoleTooltipDictionary : bonfireSecondaryRoleTooltipDictionary
 
     const secondaryTooltip = secondaryRole ? secondaryRoleTooltipDictionary[secondaryRole] : null
 
@@ -58,7 +73,7 @@ export default function RoleTitle({ title, skulls, epValue, role, secondaryRole,
 
 function formatSkullsForDisplay(skulls: number) {
     if (skulls === 0) {
-        return <Icon iconName="skull-outline" iconSize='h2' color='gray'/>
+        return <Icon iconName="skull-outline" iconSize='h2' color='gray' />
     }
-    return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'}/>)
+    return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} />)
 }
