@@ -1,5 +1,5 @@
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { BonfireRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
@@ -67,7 +67,7 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
     return Promise.all(roles.map(formatUnsortedRoles))
 }
 
-async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
+async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireRole> {
     const {
         id, beastid, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary,
         knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
@@ -105,7 +105,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, 'Bonfire'),
                 locationalVitalities: [],
                 defenseNFleeDice: {
                     defense: null,

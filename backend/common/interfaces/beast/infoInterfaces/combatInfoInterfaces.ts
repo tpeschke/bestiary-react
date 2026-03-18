@@ -22,7 +22,7 @@ export default CombatInfo
 
 export interface HackMasterCombatInfo extends BasicCombatInfo {
     type: 'HackMaster',
-    vitalityInfo: VitalityInfo,
+    vitalityInfo: HackMasterVitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
@@ -34,7 +34,7 @@ export interface HackMasterCombatInfo extends BasicCombatInfo {
 
 export interface BonfireCombatInfo extends BasicCombatInfo {
     type: 'Bonfire',
-    vitalityInfo: VitalityInfo,
+    vitalityInfo: BonfireVitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
     defenses: DefenseInfo[],
@@ -242,11 +242,21 @@ export interface VitalityInfo {
     noKnockback: boolean,
     rollUnderTrauma: number,
     isIncorporeal: boolean,
-    weaponBreakageVitality: boolean,
+    weaponBreakageVitality: boolean
+}
+
+export interface BonfireVitalityInfo extends VitalityInfo {
     defenseNFleeDice: {
         defense: DiceOptions,
         flee: DiceOptions
-    },
+    }
+}
+
+export interface HackMasterVitalityInfo extends VitalityInfo {
+    defenseNFleeDice: {
+        defense: number | null,
+        flee: number | null
+    }
 }
 
 export interface LocationVitality {

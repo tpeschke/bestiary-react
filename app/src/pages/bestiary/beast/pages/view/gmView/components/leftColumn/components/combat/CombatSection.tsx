@@ -52,15 +52,18 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
 
     const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
 
+    const defenseTotal = getTotal(vitality, defense, Math.floor)
+    const fleeTotal = getTotal(vitality, flee, Math.ceil)
+
     return (
         <>
             <RoleTitle title='Combat' epValue={epValue} role={combatRole} secondaryRole={combatSecondary} />
             <div className="pair-shell heading three">
-                <h3>Damage Threshold</h3>
+                <h3>Hit Points</h3>
                 <p>
-                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defenseTotal}</span>
                     <span> / </span>
-                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {fleeTotal}</span>
                 </p>
                 <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
             </div>
@@ -73,6 +76,14 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
     )
 }
 
+function getTotal(vitality: number | string, percentage: number | null, mathFunction: Function) {
+    if (percentage && typeof vitality === 'number') {
+        return mathFunction(percentage * vitality)
+    }
+
+    return 'Always'
+}
+ 
 function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCombatInfo, size: Size }) {
     const {
         combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
