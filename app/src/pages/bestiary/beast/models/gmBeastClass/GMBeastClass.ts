@@ -5,7 +5,7 @@ import { BeastInfo } from "../../interfaces/viewInterfaces";
 
 import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import RoleInfo, { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress'
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"

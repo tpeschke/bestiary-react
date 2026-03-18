@@ -11,18 +11,20 @@ export default interface RoleInfo {
     roles: Role[],
 }
 
-export interface Role {
+export interface BasicRole {
     id: string,
     generalInfo: RoleGeneralInfo,
     skillInfo: RoleSkillInfo,
     socialInfo: RoleSocialInfo
 }
 
-export interface BonfireRole extends Role {
+export type Role = BonfireRole | HackMasterRole
+
+export interface BonfireRole extends BasicRole {
     combatInfo: BonfireRoleCombatInfo,
 }
 
-export interface HackMasterRole extends Role {
+export interface HackMasterRole extends BasicRole {
     combatInfo: HackMasterRoleCombatInfo,
 }
 

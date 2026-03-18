@@ -1,5 +1,5 @@
-import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { RoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { AttackInfo, DefenseInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, RoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
@@ -25,7 +25,7 @@ export default function getUpdateCombatInfoFunctions(
     return {
         updateCombatInfo: (key: string, value: any) => {
             if (beast && beast.selectedRole) {
-                let modifiedCombatInfo: RoleCombatInfo = {
+                let modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo = {
                     ...beast.selectedRole.combatInfo,
                     [key]: value
                 }

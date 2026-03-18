@@ -1,7 +1,7 @@
 import './RoleSelect.css'
 
 import { useEffect, useState } from 'react';
-import RoleInfo, { Role, RoleSocialInfo, RoleSkillInfo, RoleCombatInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
+import RoleInfo, { Role, RoleSocialInfo, RoleSkillInfo, RoleCombatInfo, BonfireRole, HackMasterRole } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 import QuickLink from '../../../../../../../components/QuickLink';
 import { UpdateSelectedRoleFunction } from '../../../../../../../hooks/beastHooks';
 
@@ -79,7 +79,7 @@ export default function RoleSelect({ roleInfo, updateSelectedRole, selectedRoleI
     )
 }
 
-function getSelectedRole(roles: Role[], selectedRoleIndex: number) {
+function getSelectedRole(roles: (Role)[], selectedRoleIndex: number) {
     const { id: roleID, generalInfo, socialInfo, skillInfo, combatInfo } = roles[selectedRoleIndex]
     const { name: roleName } = generalInfo
 
