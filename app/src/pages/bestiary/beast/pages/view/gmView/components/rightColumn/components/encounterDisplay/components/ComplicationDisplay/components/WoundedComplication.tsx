@@ -15,10 +15,6 @@ export default function WoundedComplicationDisplay({ info }: Props) {
                 <p>{type}</p>
             </div>
             <div className='pair-shell'>
-                <h4>Amount</h4>
-                <p>{amount}</p>
-            </div>
-            <div className='pair-shell'>
                 <h4>By</h4>
                 <p>{byWhom.name}</p>
             </div>
