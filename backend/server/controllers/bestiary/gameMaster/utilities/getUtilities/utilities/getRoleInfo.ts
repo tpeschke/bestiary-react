@@ -11,6 +11,9 @@ import getSkullNumber from "./getSkulls"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getGenericSkillSuites from "./skillInfo/utilities/getSkillSuites"
+import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
+import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
+import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
 
 export interface UnsortedRole {
     id: string,
@@ -78,11 +81,15 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
     const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
     const combatSkullIndex = getSkullIndex(combatSkulls)
 
+    const baseCombatEpValue = getBaseEPValue(combatSkulls)
+    const combatEpValueIndex = getEPIndex(baseCombatEpValue)
+
     const socialSkulls = socialskulls ?? getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
 
     const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
+
 
     return {
         id,
@@ -93,6 +100,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Role> {
             attack, defense, combatRole, combatSecondary,
             combatSkulls,
             skullIndex: combatSkullIndex,
+            combatEpValue: calculateSecondaryRoleEffect(baseCombatEpValue, combatSecondary),
+            combatEpValueIndex,
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),

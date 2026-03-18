@@ -1,5 +1,5 @@
-import { SkillObject } from "../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
-import { Strength } from "../../../interfaces/calculationInterfaces"
+import { SkillObject } from "../../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { Strength } from "../../../../interfaces/calculationInterfaces"
 import getSkillRank from "./getSkillRank"
 
 export default function getSkills(role: string, skullIndex: number, everythingElseStrength: Strength = null, skillObject?: SkillObject): SkillObject {

@@ -1,4 +1,4 @@
-import { Strength } from "../../../interfaces/calculationInterfaces"
+import { Strength } from "../../../../interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
 import getModBySkullIndex from "../../getModBySkullIndex"
 

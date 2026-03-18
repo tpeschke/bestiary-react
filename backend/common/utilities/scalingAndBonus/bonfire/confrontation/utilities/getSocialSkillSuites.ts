@@ -1,4 +1,4 @@
-import { SocialSkillSuitesObject } from "../../../../interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { SocialSkillSuitesObject } from "../../../../../interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import calculateConvictionRank from "./calculateConvictionRank"
 import calculateDescriptionRank from "./calculateDescriptionRank"
 
