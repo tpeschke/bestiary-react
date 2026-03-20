@@ -8,6 +8,7 @@ import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfir
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
+import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -63,6 +64,7 @@ export default class CombatInfoClass {
             combatSkulls: skulls,
             skullIndex,
             attackInfo, defenseInfo,
+            initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
             vitalityInfo: {
                 ...vitalityInfo,
                 rollUnderTrauma: calculateRollUnderTrauma(skullIndex, 'Bonfire'),
@@ -101,6 +103,7 @@ export default class CombatInfoClass {
             epValue,
             epValueIndex,
             attackInfo, defenseInfo,
+            initiative: getInitiative(combatRole, epValueIndex, 'HackMaster'),
             vitalityInfo: {
                 ...vitalityInfo,
                 rollUnderTrauma: calculateRollUnderTrauma(epValueIndex, 'HackMaster'),

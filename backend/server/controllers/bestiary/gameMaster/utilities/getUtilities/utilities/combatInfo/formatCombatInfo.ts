@@ -5,7 +5,7 @@ import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
-import getInitiative from "./utilities/getInitiative"
+import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
@@ -42,7 +42,7 @@ export default function formatCombatInfo(
         epValueIndex,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
-        initiative: getInitiative(combatRole, skullIndex),
+        initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
         attacks: [],
         defenses: [],
         movements: [],

@@ -43,18 +43,18 @@ function calculateSpeed(role: string, skullIndex: number, baseSpeed: number): nu
 }
 
 function getRawSpeed(role: string, skullIndex: number){
-    const initiativeDictionary = [2, 2, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7]
+    const movementDictionary = [2, 2, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7]
     const roleIndexModifier = getRoleIndexModifier(role)
 
     const modifiedIndex = skullIndex + roleIndexModifier
 
     if (modifiedIndex < 0) {
-        return initiativeDictionary[0]
+        return movementDictionary[0]
     }
-    if (modifiedIndex > initiativeDictionary.length) {
-        return initiativeDictionary[initiativeDictionary.length - 1]
+    if (modifiedIndex > movementDictionary.length) {
+        return movementDictionary[movementDictionary.length - 1]
     }
-    return initiativeDictionary[modifiedIndex]
+    return movementDictionary[modifiedIndex]
 }
 
 function getRoleIndexModifier(role: string): number {
