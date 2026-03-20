@@ -5,6 +5,7 @@ import './CombatSubtitle.css'
 
 import SizeDisplay from "./components/sizeDisplay/SizeDisplay"
 import TraumaDisplay from "./components/traumaDisplay/TraumaDisplay"
+import { SystemOption } from '@bestiary/common/interfaces/beast/beast'
 
 interface Props {
     traumaInfo: TraumaInfo,
@@ -15,7 +16,8 @@ interface Props {
 interface TraumaInfo {
     trauma: number | boolean,
     noTrauma: boolean,
-    rollUnderTrauma: number
+    rollUnderTrauma: number,
+    type: SystemOption
 }
 
 interface KnockbackInfo {
@@ -25,7 +27,7 @@ interface KnockbackInfo {
 }
 
 export default function CombatSubtitle({ traumaInfo, initiative, knockbackInfo }: Props) {
-    const { trauma, noTrauma, rollUnderTrauma } = traumaInfo
+    const { trauma, noTrauma, rollUnderTrauma, type } = traumaInfo
     const { knockback, noKnockback, size } = knockbackInfo
 
     const showSection = trauma || noTrauma || knockback || size
@@ -35,7 +37,7 @@ export default function CombatSubtitle({ traumaInfo, initiative, knockbackInfo }
             {showSection &&
                 <Body>
                     <div className="combat-subtitle-shell">
-                        <TraumaDisplay trauma={trauma} noTrauma={noTrauma} rollUnderTrauma={rollUnderTrauma} />
+                        <TraumaDisplay type={type} trauma={trauma} noTrauma={noTrauma} rollUnderTrauma={rollUnderTrauma} />
                         <SizeDisplay size={size} knockback={knockback} noKnockback={noKnockback} />
                         <Pair title="Initiative" info={initiative} format={{ title: 'none', titleJustified: 'right' }} />
                     </div>

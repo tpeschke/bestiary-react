@@ -6,6 +6,7 @@ import { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/b
 import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
+import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 
 export default class CombatInfoClass {
@@ -64,6 +65,7 @@ export default class CombatInfoClass {
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
+                rollUnderTrauma: calculateRollUnderTrauma(skullIndex, 'Bonfire'),
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, 'Bonfire'),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
@@ -101,6 +103,7 @@ export default class CombatInfoClass {
             attackInfo, defenseInfo,
             vitalityInfo: {
                 ...vitalityInfo,
+                rollUnderTrauma: calculateRollUnderTrauma(epValueIndex, 'HackMaster'),
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, epValueIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, 'HackMaster'),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getHackMasterDefenseNFlee(combatRole, epValueIndex)

@@ -28,7 +28,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
 function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMasterCombatInfo, size: Size }) {
     const {
         combatRole, epValue, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
-        defenses, initiative
+        defenses, initiative, type
     } = combatInfo
 
     const {
@@ -41,7 +41,8 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
     const traumaInfo = {
         trauma,
         noTrauma,
-        rollUnderTrauma
+        rollUnderTrauma,
+        type
     }
 
     const knockbackInfo = {
@@ -87,7 +88,7 @@ function getTotal(vitality: number | string, percentage: number | null, mathFunc
 function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCombatInfo, size: Size }) {
     const {
         combatRole, combatSkulls, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
-        defenses, initiative
+        defenses, initiative, type
     } = combatInfo
 
     const {
@@ -100,7 +101,8 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
     const traumaInfo = {
         trauma,
         noTrauma,
-        rollUnderTrauma
+        rollUnderTrauma,
+        type
     }
 
     const knockbackInfo = {
