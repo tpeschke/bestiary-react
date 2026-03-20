@@ -90,7 +90,6 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
     const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
 
-
     return {
         id,
         generalInfo: {
@@ -105,7 +104,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, 'Bonfire'),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
                 locationalVitalities: [],
                 defenseNFleeDice: {
                     defense: null,

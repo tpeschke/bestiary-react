@@ -49,7 +49,7 @@ export default function formatCombatInfo(
         vitalityInfo: {
             noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
             knockback: calculateKnockBack(knockback, size),
-            ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, weaponBreakageVitality, singleDieVitality, 'Bonfire'),
+            ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
             locationalVitalities: [],
             defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex),
         },
