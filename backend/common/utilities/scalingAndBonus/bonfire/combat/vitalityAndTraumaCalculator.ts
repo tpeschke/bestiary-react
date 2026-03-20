@@ -1,4 +1,5 @@
 import { SystemOption } from "../../../../interfaces/beast/beast"
+import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
 
 interface VitalityAndTrauma {
@@ -12,6 +13,7 @@ export default function calculateVitalityAndTrauma(
     skullIndex: number,
     weaponBreakageVitality: boolean,
     singleDieVitality: boolean,
+    size: Size,
     system: SystemOption
 ): VitalityAndTrauma {
     if (singleDieVitality && system === 'Bonfire') {
@@ -27,7 +29,20 @@ export default function calculateVitalityAndTrauma(
     }
 
     if (system === 'HackMaster') {
-        const vitality = calculateSecondaryRoleEffect(getHackMasterBaseVitality(skullIndex, role), secondaryRole)
+        const sizeModifierDictionary = {
+            'Fine': 0,
+            'Diminutive': 1,
+            'Tiny': 5,
+            'Small': 10,
+            'Medium': 15,
+            'Large': 20,
+            'Huge': 25,
+            'Giant': 30,
+            'Enormous': 35,
+            'Colossal': 40
+        }
+        
+        const vitality = calculateSecondaryRoleEffect(getHackMasterBaseVitality(skullIndex, role), secondaryRole) + sizeModifierDictionary[size]
 
         return {
             vitality,
