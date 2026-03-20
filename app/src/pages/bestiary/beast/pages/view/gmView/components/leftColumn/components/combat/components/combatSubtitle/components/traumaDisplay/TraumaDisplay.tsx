@@ -13,12 +13,14 @@ export default function TraumaDisplay({ type, trauma, noTrauma, rollUnderTrauma 
     const traumaString = type === 'Bonfire' ? `${trauma} (${rollUnderTrauma} - w1)` : `${trauma} (${rollUnderTrauma})`
     const showTrauma = !noTrauma && trauma
 
+    const tooltip = type === 'Bonfire' ? "The result of this Check determines the number of seconds this enemy is Trauma'd for" : "This number represents what you have to roll under on the d20."
+
     return (
         <>
             {showTrauma &&
                 <div className="trauma-pair-shell">
                     <div>
-                        <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip="The result of this Check determines the number of seconds this enemy is Trauma'd for" /><p>)</p>
+                        <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip={tooltip} /><p>)</p>
                     </div>
                     <p>{traumaString}</p>
                 </div>
