@@ -156,6 +156,7 @@ export interface BonfireDefenseInfo {
 }
 
 export interface HackMasterDefenseInfo {
+    id?: number,
     beastid: number,
     roleid: string,
     system: SystemOption,
@@ -163,9 +164,9 @@ export interface HackMasterDefenseInfo {
     name: string,
     chosenName: string,
     defensename?: string,
-    defense: string,
+    defense: number,
     dr: string,
-    cover: string | undefined,
+    shieldCover?: string | undefined,
     eua: boolean,
     tdr: boolean,
     shield: string,

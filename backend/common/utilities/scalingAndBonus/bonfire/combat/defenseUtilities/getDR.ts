@@ -8,11 +8,11 @@ export function calculateDR(role: string, skullIndex: number): string {
     return formatDRString(staticDR, slashDR)
 }
 
-export function calculateHackMasterDR(role: string, skullIndex: number): number {
+export function calculateHackMasterDR(role: string, skullIndex: number): string {
     const drDictionary = [0, 0, 0, 0, 0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 42]
     const roleIndexModifier = getRoleIndexModifierStaticDR(role)
 
-    return getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary)
+    return `${getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary)}`
 }
 
 function getStaticDR(role: string, skullIndex: number): number {

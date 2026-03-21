@@ -1,5 +1,5 @@
 import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { AttackInfo, DefenseInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackInfo, BonfireDefenseInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { getDefenseName } from "../../../formatting/formatting"
 import calculateAndFormatAttackInfo from "./attackCalculator"
 import getDefense from "./defenseUtilities/getDefense"
@@ -11,12 +11,7 @@ import { calculateDR, calculateHackMasterDR } from "./defenseUtilities/getDR"
 
 export interface CalculateCombatStatsReturn {
     attacks: AttackInfo[],
-    defenses: DefenseInfo[]
-}
-
-export interface CalculateCombatStatsReturn {
-    attacks: AttackInfo[],
-    defenses: DefenseInfo[]
+    defenses: BonfireDefenseInfo[]
 }
 
 export function calculateBonfireDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
@@ -42,14 +37,12 @@ export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: num
         beastid, roleid, armor, shield, eua, tdr, name, info
     } = defenseInfo
 
-    const defense = getDefense(addSizeMod, size, role, skullIndex, 'HackMaster')
-
     return {
         beastid, roleid, armor, shield, eua, tdr, info,
         name: getDefenseName(name, shield, armor),
         chosenName: name,
-        defense: `${defense >= 0 ? '+' : ''}${defense}`,
-        cover: getHackMasterCover(shield),
+        defense: getDefense(addSizeMod, size, role, skullIndex, 'HackMaster'),
+        shieldCover: getHackMasterCover(shield),
         dr: calculateHackMasterDR(role, skullIndex)
     }
 }
