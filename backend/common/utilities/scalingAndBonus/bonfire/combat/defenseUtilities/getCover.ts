@@ -25,3 +25,21 @@ function getRoleIndexModifier(role: string): number {
             return 0
     }
 }
+
+export function getHackMasterCover(shield: string): string | undefined {
+    const shieldDictionary: { [key: string]: string } = {
+        'Buckler': '20',
+        'Clothe': '20',
+        'Figure Eight': '16 (11)',
+        'Heater': '16 (11)',
+        'Hoplon': '16 (11)',
+        'Kite': '16 (11)',
+        'Pavise': '6 (1)',
+        'Round': '19',
+        'Tower': '11 (6)'
+    }
+
+    const cover = shieldDictionary[shield]
+
+    return cover
+}

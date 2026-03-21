@@ -5,9 +5,9 @@ import calculateAndFormatAttackInfo from "./attackCalculator"
 import getDefense from "./defenseUtilities/getDefense"
 import getFlanks from "./defenseUtilities/getFlanks"
 import getParry from "./defenseUtilities/getParry"
-import getCover from "./defenseUtilities/getCover"
+import getCover, { getHackMasterCover } from "./defenseUtilities/getCover"
 import { calculateParryDR } from "./defenseUtilities/getParryDR"
-import { calculateDR } from "./defenseUtilities/getDR"
+import { calculateDR, calculateHackMasterDR } from "./defenseUtilities/getDR"
 
 export interface CalculateCombatStatsReturn {
     attacks: AttackInfo[],
@@ -49,8 +49,8 @@ export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: num
         name: getDefenseName(name, shield, armor),
         chosenName: name,
         defense: `${defense >= 0 ? '+' : ''}${defense}`,
-        cover: getCover(role, skullIndex),
-        dr: calculateDR(role, skullIndex)
+        cover: getHackMasterCover(shield),
+        dr: calculateHackMasterDR(role, skullIndex)
     }
 }
 

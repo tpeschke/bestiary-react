@@ -165,7 +165,7 @@ export interface HackMasterDefenseInfo {
     defensename?: string,
     defense: string,
     dr: string,
-    cover: number,
+    cover: string | undefined,
     eua: boolean,
     tdr: boolean,
     shield: string,
