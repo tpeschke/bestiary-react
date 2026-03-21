@@ -1,7 +1,7 @@
 import { RawCombatStat, AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
-import { CalculateCombatStatsReturn, calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
+import { CalculateCombatStatsReturn, calculateAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 
 export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[], defenseStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     return {
@@ -62,9 +62,10 @@ function calculateDefenses(stats: RawCombatStat[], size: Size, skullIndex: numbe
         const roleToUse = role ? role : mainRole
 
         return {
-            ...calculateDefenseInfo(
+            ...calculateBonfireDefenseInfo(
                 { beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, info },
                 skullIndex, roleToUse, addsizemod, size),
+            system: 'Bonfire',
             overAllIndex: index,
             oldID: id ? id : oldID,
             defensename,

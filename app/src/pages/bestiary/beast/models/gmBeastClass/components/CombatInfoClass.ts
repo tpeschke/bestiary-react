@@ -1,9 +1,9 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import CombatInfo, { LocationVitality, AttackInfo, DefenseInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import CombatInfo, { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { calculateAttackInfo, calculateDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
+import { calculateAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
@@ -73,7 +73,7 @@ export default class CombatInfoClass {
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(skullIndex, roleID, combatRole, size), []),
+            defenses: defenses.reduce(this.adjustBonfireDefenseInfo(skullIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
     }
@@ -112,7 +112,7 @@ export default class CombatInfoClass {
                 defenseNFleeDice: getHackMasterDefenseNFlee(combatRole, epValueIndex)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(epValueIndex, roleID, combatRole, size, spells), []),
-            defenses: defenses.reduce(this.adjustDefenseInfo(epValueIndex, roleID, combatRole, size), []),
+            defenses: defenses.reduce(this.adjustHackMasterDefenseInfo(epValueIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(epValueIndex, roleID, combatRole), [])
         }
     }
@@ -139,12 +139,27 @@ export default class CombatInfoClass {
         }
     }
 
-    private adjustDefenseInfo = (points: number, roleID: string | null, role: string, size: Size) => {
-        return (defenseInfo: DefenseInfo[], defense: DefenseInfo): DefenseInfo[] => {
+    private adjustBonfireDefenseInfo = (points: number, roleID: string | null, role: string, size: Size) => {
+        return (defenseInfo: BonfireDefenseInfo[], defense: BonfireDefenseInfo): BonfireDefenseInfo[] => {
             if (!roleID || defense.roleid === roleID) {
                 defenseInfo.push({
                     ...defense,
-                    ...calculateDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    ...calculateBonfireDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    system: 'Bonfire',
+                    scalingInfo: defense.scalingInfo
+                })
+            }
+            return defenseInfo
+        }
+    }
+
+    private adjustHackMasterDefenseInfo = (points: number, roleID: string | null, role: string, size: Size) => {
+        return (defenseInfo: HackMasterDefenseInfo[], defense: HackMasterDefenseInfo): HackMasterDefenseInfo[] => {
+            if (!roleID || defense.roleid === roleID) {
+                defenseInfo.push({
+                    ...defense,
+                    ...calculateHackMasterDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    system: 'HackMaster',
                     scalingInfo: defense.scalingInfo
                 })
             }

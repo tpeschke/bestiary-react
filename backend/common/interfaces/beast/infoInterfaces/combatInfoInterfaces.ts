@@ -25,7 +25,7 @@ export interface HackMasterCombatInfo extends BasicCombatInfo {
     vitalityInfo: HackMasterVitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
-    defenses: DefenseInfo[],
+    defenses: HackMasterDefenseInfo[],
     movements: Movement[],
     limitNotes: string,
     strategiesNLimits?: StrategyNLimits[],
@@ -37,7 +37,7 @@ export interface BonfireCombatInfo extends BasicCombatInfo {
     vitalityInfo: BonfireVitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
-    defenses: DefenseInfo[],
+    defenses: BonfireDefenseInfo[],
     movements: Movement[],
     limitNotes: string,
     strategiesNLimits?: StrategyNLimits[],
@@ -120,11 +120,14 @@ export interface WeaponInfo {
     }
 }
 
-export interface DefenseInfo {
+export type DefenseInfo = BonfireDefenseInfo | HackMasterDefenseInfo
+
+export interface BonfireDefenseInfo {
     id?: number,
     oldID: number,
     beastid: number,
     roleid: string,
+    system: SystemOption,
     info: string,
     name: string,
     chosenName: string,
@@ -146,6 +149,31 @@ export interface DefenseInfo {
         swarmbonus: boolean,
         eua: boolean,
         tdr: boolean,
+        shield: string,
+        armor: string,
+        addsizemod: boolean
+    }
+}
+
+export interface HackMasterDefenseInfo {
+    beastid: number,
+    roleid: string,
+    system: SystemOption,
+    info: string,
+    name: string,
+    chosenName: string,
+    defensename?: string,
+    defense: string,
+    dr: string,
+    cover: number,
+    eua: boolean,
+    tdr: boolean,
+    shield: string,
+    armor: string,
+    overAllIndex: number,
+    scalingInfo: {
+        name: string | undefined,
+        eua: boolean,
         shield: string,
         armor: string,
         addsizemod: boolean

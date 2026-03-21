@@ -19,7 +19,7 @@ export interface CalculateCombatStatsReturn {
     defenses: DefenseInfo[]
 }
 
-export function calculateDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
+export function calculateBonfireDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
     const {
         beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, info
     } = defenseInfo
@@ -28,11 +28,28 @@ export function calculateDefenseInfo(defenseInfo: any, skullIndex: number, role:
         beastid, roleid, swarmbonus, armor, shield, eua, tdr, info,
         name: getDefenseName(name, shield, armor),
         chosenName: name,
-        defense: getDefense(addSizeMod, size, role, skullIndex),
+        defense: getDefense(addSizeMod, size, role, skullIndex, 'Bonfire'),
         flanks: getFlanks(role, skullIndex),
         parry: getParry(role, skullIndex),
         cover: getCover(role, skullIndex),
         parryDR: calculateParryDR(role, skullIndex, eua),
+        dr: calculateDR(role, skullIndex)
+    }
+}
+
+export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
+    const {
+        beastid, roleid, armor, shield, eua, tdr, name, info
+    } = defenseInfo
+
+    const defense = getDefense(addSizeMod, size, role, skullIndex, 'HackMaster')
+
+    return {
+        beastid, roleid, armor, shield, eua, tdr, info,
+        name: getDefenseName(name, shield, armor),
+        chosenName: name,
+        defense: `${defense >= 0 ? '+' : ''}${defense}`,
+        cover: getCover(role, skullIndex),
         dr: calculateDR(role, skullIndex)
     }
 }
