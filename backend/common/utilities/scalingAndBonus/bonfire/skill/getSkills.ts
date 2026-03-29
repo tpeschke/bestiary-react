@@ -1,19 +1,20 @@
+import { SystemOption } from "../../../../interfaces/beast/beast"
 import { SkillObject } from "../../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Strength } from "../../../../interfaces/calculationInterfaces"
 import getSkillRank from "./getSkillRank"
 
-export default function getSkills(role: string, skullIndex: number, everythingElseStrength: Strength = null, skillObject?: SkillObject): SkillObject {
+export default function getSkills(role: string, skullIndex: number, everythingElseStrength: Strength = null, skillObject?: SkillObject, system: SystemOption = 'Bonfire'): SkillObject {
     const calcPreferredRankDictionary = [
-        getSkillRank(skullIndex + 3),
-        getSkillRank(skullIndex + 1)
+        getSkillRank(skullIndex + 3, system),
+        getSkillRank(skullIndex + 1, system)
     ]
 
     const calcWeakRankDictionary = [
-        getSkillRank(skullIndex - 1),
-        getSkillRank(skullIndex - 3)
+        getSkillRank(skullIndex - 1, system),
+        getSkillRank(skullIndex - 3, system)
     ]
 
-    const everythingElse = getSkillRank(skullIndex)
+    const everythingElse = getSkillRank(skullIndex, system)
 
     if (skillObject) {
         return {

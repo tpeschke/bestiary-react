@@ -69,6 +69,7 @@ export type IsSpecial = 'yes' | 'no' | 'kinda'
 export type AttackInfo = AttackReference | WeaponInfo | SpellReference
 
 export interface AttackReference {
+    system: SystemOption,
     infoType: 'reference'
     id?: number,
     reference: string,

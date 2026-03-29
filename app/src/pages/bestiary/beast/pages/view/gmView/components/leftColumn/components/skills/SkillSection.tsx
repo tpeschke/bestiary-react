@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function SkillSection({ skillInfo }: Props) {
-    const { skillRole, skillSkulls, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
+    const { type, skillRole, skillSkulls, epValue, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
 
     const { threshold, defenseNFleeDice } = stress
     const { defense, flee } = defenseNFleeDice
@@ -25,10 +25,16 @@ export default function SkillSection({ skillInfo }: Props) {
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
+    const showThreshold = threshold && type === 'Bonfire'
+
     return (
         <>
-            <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
-            {threshold && (
+            {type === 'Bonfire' ?
+                <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
+                :
+                <RoleTitle title="Skills" epValue={epValue} role={skillRole} secondaryRole={skillSecondary} />
+            }
+            {showThreshold && (
                 <div className={"pair-shell heading three" + (hasBottomBorder ? " noBorder" : "")}>
                     <h3>Stress Threshold</h3>
                     <p>
@@ -55,7 +61,7 @@ export default function SkillSection({ skillInfo }: Props) {
                 <>
                     <h3>Skills</h3>
                     <Body>
-                        <SkillsDisplay skills={skills} />
+                        <SkillsDisplay skills={skills} type={type} />
                     </Body>
                 </>
             }

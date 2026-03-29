@@ -1,11 +1,13 @@
 import { Skill, SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Pair from "../../../../../../../../components/UI/pair/Pair"
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 
 interface Props {
-    skills: SkillObject | undefined
+    skills: SkillObject | undefined,
+    type: SystemOption
 }
 
-export default function SkillsDisplay({ skills }: Props) {
+export default function SkillsDisplay({ skills, type }: Props) {
     if (!skills) {
         return <></>
     }
@@ -15,20 +17,20 @@ export default function SkillsDisplay({ skills }: Props) {
     return (
         <div className={preferred || weakness ? "skill-object-shell" : ''}>
             <div className="skill-object">
-                {preferred && displaySkillArray(preferred)}
-                {weakness && displaySkillArray(weakness)}
+                {preferred && displaySkillArray(preferred, type)}
+                {weakness && displaySkillArray(weakness, type)}
             </div>
             <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? 'U' : everythingElse} format={{ title: 'none' }} />
         </div>
     )
 }
 
-function displaySkillArray(array: Skill[]) {
+function displaySkillArray(array: Skill[], type: SystemOption) {
     const [major, minor] = array
     return (
         <div>
-            {major && <Pair title={major.skill} info={major.rank} format={{ title: 'none' }} />}
-            {minor && <Pair title={minor.skill} info={minor.rank} format={{ title: 'none' }} />}
+            {major && <Pair title={major.skill} info={major.rank + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />}
+            {minor && <Pair title={minor.skill} info={minor.rank + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />}
         </div>
     )
 }

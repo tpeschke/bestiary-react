@@ -4,6 +4,9 @@ import calculateStress from "@bestiary/common/utilities/scalingAndBonus/bonfire/
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
+import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
+import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex";
+import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect";
 
 export default function formatSkillInfo(
     skillRole: string,
@@ -17,9 +20,15 @@ export default function formatSkillInfo(
     skillSkulls = skillSkulls ?? getSkullNumber(skillPoints)
     const skullIndex = getSkullIndex(skillSkulls)
 
+    const baseEpValue = getBaseEPValue(skillSkulls)
+    const epValueIndex = getEPIndex(baseEpValue)
+
     return {
+        type: 'Bonfire',
         skillRole, skillSecondary, skullIndex,
         skillSkulls: getSkullNumber(skillSkulls),
+        epValue: calculateSecondaryRoleEffect(baseEpValue, skillSecondary),
+        epValueIndex,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',
         stress: {

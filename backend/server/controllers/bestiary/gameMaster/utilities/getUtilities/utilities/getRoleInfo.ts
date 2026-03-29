@@ -89,6 +89,9 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
 
     const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
+    
+    const baseSkillEpValue = getBaseEPValue(skillSkulls)
+    const skillEpValueIndex = getEPIndex(baseSkillEpValue)
 
     return {
         id,
@@ -118,6 +121,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             attackInfo: attack_skill,
             defenseInfo: defense_skill,
             skullIndex: skillSkullIndex,
+            skillEpValue: calculateSecondaryRoleEffect(baseSkillEpValue, skillSecondary),
+            skillEpValueIndex,
             stress: {
                 threshold: calculateStress(skillSecondary, skillSkullIndex, stressThresholdStrength),
                 strength: stressThresholdStrength

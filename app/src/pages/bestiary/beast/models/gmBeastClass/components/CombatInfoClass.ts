@@ -138,7 +138,7 @@ export default class CombatInfoClass {
                         spellInfo: spells.filter(spell => attack.spellid === spell.id)[0]
                     })
                 } else {
-                    attackInfo.push({ ...attack })
+                    attackInfo.push({ ...attack, system })
                 }
             }
             return attackInfo

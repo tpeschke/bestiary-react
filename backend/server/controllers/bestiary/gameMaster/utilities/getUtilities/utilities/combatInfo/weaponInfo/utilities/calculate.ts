@@ -29,6 +29,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             return {
                 id: attackid,
                 infoType: 'reference',
+                system: 'Bonfire',
                 overAllIndex: index,
                 roleid: roleid ?? attackrole,
                 tactic, reference, situation

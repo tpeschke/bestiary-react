@@ -2,14 +2,14 @@ import { AttackReference } from "@bestiary/common/interfaces/beast/infoInterface
 import Body from "../../../../../../../../../../components/UI/body/Body"
 import './AttackStats.css'
 import { getTacticInfo } from "../../../../../../../../../../utilities/tacticOptions"
-import { situationTooltip, tacticTooltip } from "../utilities/situationTooltip"
+import { situationTooltip, bonfireTacticTooltip, hackMasterTacticTooltip } from "../utilities/situationTooltip"
 
 interface Props {
     referenceInfo: AttackReference
 }
 
 export default function ReferenceView({ referenceInfo }: Props) {
-    const { situation, tactic, reference } = referenceInfo
+    const { system, situation, tactic, reference } = referenceInfo
 
     return (
         <div className='attack-stats-shell'>
@@ -19,7 +19,7 @@ export default function ReferenceView({ referenceInfo }: Props) {
             </Body>
             {tactic &&
                 <Body>
-                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
+                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={system === 'Bonfire' ? bonfireTacticTooltip : hackMasterTacticTooltip}>
                         + {getTacticInfo(tactic)}
                     </p>
                 </Body>

@@ -5,7 +5,7 @@ import { BeastInfo } from "../../interfaces/viewInterfaces";
 
 import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import RoleInfo, { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress'
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
@@ -235,6 +235,14 @@ export default class GMBeastClass {
     }
 
     get skillInfo(): SkillInfo {
+        if (this.system === 'HackMaster') {
+            return this.getHackMasterSkillInfo()
+        }
+
+        return this.getBonfireSkillInfo()
+    }
+
+    private getBonfireSkillInfo(): SkillInfo {
         const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index, stress, skills: mainSkills } = this.entrySkillInfo
 
         const roleSelected = this.isRoleSelected()
@@ -249,13 +257,40 @@ export default class GMBeastClass {
 
         return {
             ...this.entrySkillInfo,
+            type: 'Bonfire',
             stress: {
                 threshold: calculateStress(skillSecondary, skullIndex, stress.strength),
                 strength: stress.strength,
                 defenseNFleeDice: getDefenseNFlee(skillRole, skullIndex)
             },
-            skillRole, skillSecondary, skillSkulls,
+            skillRole, skillSecondary, skillSkulls, skullIndex,
             skills: getSkills(skillRole, skullIndex, skills?.everythingElseStrength, skills)
+        }
+    }
+
+    private getHackMasterSkillInfo(): SkillInfo {
+        const { skillRole: role, skillSecondary: secondary, stress, skills: mainSkills, epValue: mainEpValue, epValueIndex: mainEpValueIndex, } = this.entrySkillInfo
+
+        const roleSelected = this.isRoleSelected()
+
+        const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
+        const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
+
+        const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValue : mainEpValue) + this.selectedModifier
+        const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValueIndex : mainEpValueIndex) + this.selectedModifier
+
+        const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
+
+        return {
+            ...this.entrySkillInfo,
+            type: 'HackMaster',
+            stress: {
+                threshold: calculateStress(skillSecondary, epValueIndex, stress.strength),
+                strength: stress.strength,
+                defenseNFleeDice: getDefenseNFlee(skillRole, epValueIndex)
+            },
+            skillRole, skillSecondary, epValue, epValueIndex,
+            skills: getSkills(skillRole, epValueIndex, skills?.everythingElseStrength, skills, 'HackMaster')
         }
     }
 

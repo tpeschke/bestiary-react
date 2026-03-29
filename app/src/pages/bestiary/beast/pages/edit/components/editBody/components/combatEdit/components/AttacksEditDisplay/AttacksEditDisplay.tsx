@@ -87,7 +87,7 @@ export default function AttacksEditDisplay({
                 })}
 
                 <div className='add-attack-button-shell'>
-                    <button onClick={_ => addAttack({ infoType: 'reference', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
+                    <button onClick={_ => addAttack({ infoType: 'reference', system: 'Bonfire', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
                     <button onClick={_ => addAttack({ infoType: 'spell', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Spell</button>
                 </div>
             </>

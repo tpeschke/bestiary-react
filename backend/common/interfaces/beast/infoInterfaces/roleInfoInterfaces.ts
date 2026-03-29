@@ -61,6 +61,8 @@ export interface RoleSkillInfo {
     },
     skillSkulls: number,
     skullIndex: number,
+    skillEpValue: number,
+    skillEpValueIndex: number,
     skillRole: string,
     skillSecondary: string
     attackInfo: string,
