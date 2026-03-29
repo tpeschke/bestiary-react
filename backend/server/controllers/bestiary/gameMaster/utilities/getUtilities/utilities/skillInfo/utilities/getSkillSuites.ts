@@ -27,7 +27,7 @@ export default async function getGenericSkillSuites(beastID: number, roleID: str
     ])
 
     if (preferred.length > 0 || weakness.length > 0) {
-        const everythingElse = getSkillRank(skullIndex)
+        const everythingElse = getSkillRank(skullIndex, 'Bonfire')
 
         return {
             preferred,

@@ -15,19 +15,20 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
     ]
 
     const everythingElse = getSkillRank(skullIndex, system)
-
     if (skillObject) {
         return {
             ...skillObject,
             preferred: skillObject.preferred?.map((skill, index) => {
                 return {
                     ...skill,
+                    skill: getSkill(system, skill.skill),
                     rank: calcPreferredRankDictionary[index]
                 }
             }),
             weakness: skillObject.weakness?.map((skill, index) => {
                 return {
                     ...skill,
+                    skill: getSkill(system, skill.skill),
                     rank: calcWeakRankDictionary[index]
                 }
             }),
@@ -50,19 +51,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Athletics',
+                        skill: getSkill(system, 'Athletics'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Survival',
+                        skill: getSkill(system, 'Survival'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Strategy',
+                        skill: getSkill(system, 'Strategy'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Lore',
+                        skill: getSkill(system, 'Lore'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -73,19 +74,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Lore',
+                        skill: getSkill(system, 'Lore'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Strategy',
+                        skill: getSkill(system, 'Strategy'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Athletics',
+                        skill: getSkill(system, 'Athletics'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Streetwise',
+                        skill: getSkill(system, 'Streetwise'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -96,19 +97,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Strategy',
+                        skill: getSkill(system, 'Strategy'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Trades',
+                        skill: getSkill(system, 'Trades'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Weirdcraft',
+                        skill: getSkill(system, 'Weirdcraft'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Survivalist',
+                        skill: getSkill(system, 'Survivalist'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -119,19 +120,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Streetwise',
+                        skill: getSkill(system, 'Streetwise'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Athletics',
+                        skill: getSkill(system, 'Athletics'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Lore',
+                        skill: getSkill(system, 'Lore'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Weirdcraft',
+                        skill: getSkill(system, 'Weirdcraft'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -142,19 +143,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Survival',
+                        skill: getSkill(system, 'Survival'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Weirdcraft',
+                        skill: getSkill(system, 'Weirdcraft'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Strategy',
+                        skill: getSkill(system, 'Strategy'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Streetwise',
+                        skill: getSkill(system, 'Streetwise'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -165,19 +166,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Trades',
+                        skill: getSkill(system, 'Trades'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Lore',
+                        skill: getSkill(system, 'Lore'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Athletics',
+                        skill: getSkill(system, 'Athletics'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Weirdcraft',
+                        skill: getSkill(system, 'Weirdcraft'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -188,19 +189,19 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
             return {
                 preferred: [
                     {
-                        skill: 'Weirdcraft',
+                        skill: getSkill(system, 'Weirdcraft'),
                         rank: calcPreferredRankDictionary[0]
                     }, {
-                        skill: 'Lore',
+                        skill: getSkill(system, 'Lore'),
                         rank: calcPreferredRankDictionary[1]
                     }
                 ],
                 weakness: [
                     {
-                        skill: 'Trades',
+                        skill: getSkill(system, 'Trades'),
                         rank: calcWeakRankDictionary[0]
                     }, {
-                        skill: 'Athletics',
+                        skill: getSkill(system, 'Athletics'),
                         rank: calcWeakRankDictionary[1]
                     }
                 ],
@@ -212,4 +213,22 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
                 everythingElseStrength
             }
     }
+}
+
+function getSkill(system: SystemOption, skillName: string) {
+    if (system === 'Bonfire') {
+        return skillName
+    }
+
+    const hackMasterSkillTranslator: { [key: string]: string } = {
+        'Athletics': 'Str',
+        'Lore': 'Int',
+        'Strategy': 'Cha',
+        'Streetwise': 'Wis',
+        'Survival': 'Con',
+        'Trades': 'Dex',
+        'Weirdcraft': 'Int'
+    }
+
+    return hackMasterSkillTranslator[skillName]
 }
