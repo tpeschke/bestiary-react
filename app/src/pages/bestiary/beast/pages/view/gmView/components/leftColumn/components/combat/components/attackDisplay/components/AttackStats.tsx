@@ -1,16 +1,27 @@
-import { WeaponInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { BonfireWeaponInfo, HackMasterWeaponInfo, WeaponInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
 import { situationTooltip, tacticTooltip } from '../utilities/situationTooltip'
 import './AttackStats.css'
+import Icon from '../../../../../../../../../../../../../components/icon/Icon'
 
 interface Props {
     attackStat: WeaponInfo
 }
 
 export default function AttackStats({ attackStat }: Props) {
-    const { type, name, weaponName, measure, attack, damage, damageType, recovery, info, situation, tactic, rangeIncrement } = attackStat
+    const { system } = attackStat
+
+    if (system === 'HackMaster') {
+        return hackMasterAttackDisplay(attackStat as HackMasterWeaponInfo)
+    }
+
+    return bonfireAttackDisplay(attackStat as BonfireWeaponInfo)
+}
+
+function bonfireAttackDisplay(attackStat: BonfireWeaponInfo) {
+    const { name, weaponName, measure, attack, damage, damageType, recovery, info, situation, tactic, rangeIncrement } = attackStat
 
     return (
         <div className='attack-stats-shell'>
@@ -48,6 +59,52 @@ export default function AttackStats({ attackStat }: Props) {
                 <Body>
                     <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
                         + {getTacticInfo(tactic)}
+                    </p>
+                </Body>
+            }
+        </div>
+    )
+}
+
+function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
+    const { name, weaponName, measure, attack, damage, shieldDamage, damageType, recovery, info, situation, tactic, rangeIncrement } = attackStat
+
+    return (
+        <div className='attack-stats-shell'>
+            <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
+            {info && <HTMLDisplay html={info} />}
+            <div className='attack-stats-inner-shell'>
+                <div className='attack-stats-left'>
+                    <div>
+                        <div>
+                            <p>{rangeIncrement ? 'RI' : 'Reach'}</p>
+                            <p>{rangeIncrement ? rangeIncrement : measure}</p>
+                        </div>
+                        <div>
+                            <p>Atk</p>
+                            <p>{attack}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>Type</p>
+                            <p>{damageType}</p>
+                        </div>
+                        <div>
+                            <p>Spd</p>
+                            <p>{recovery}</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>Damage</p>
+                    <p>{damage} (<em data-tooltip-id="my-tooltip" data-tooltip-content={'Shield Damage'}><Icon iconName='shield-exclaim' color='dark-gray' /> {shieldDamage}</em>)</p>
+                </div>
+            </div>
+            {tactic &&
+                <Body>
+                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
+                        + {getTacticInfo(tactic, 'HackMaster')}
                     </p>
                 </Body>
             }

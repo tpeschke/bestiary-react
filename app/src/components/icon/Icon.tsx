@@ -3,9 +3,9 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'no-shield' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit' | 'run' | 'user' | 'check' | 'Ko-fi' | 'Discord' | 'hamburger'
+export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'no-shield' | 'shield-exclaim' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit' | 'run' | 'user' | 'check' | 'Ko-fi' | 'Discord' | 'hamburger'
 
-type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray' | 'blue'
+type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray' | 'dark-gray' | 'blue'
 
 type IconSize = null | 'h1' | 'h2' | 'small'
 
@@ -137,6 +137,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
         case 'no-shield':
             styling = "fa-regular fa-shield-slash"
             break
+        case 'shield-exclaim':
+            styling = "fa-solid fa-shield-exclamation"
+            break
         case 'ghost':
             styling = 'fa-solid fa-ghost'
             break
@@ -216,6 +219,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'gray':
             styling += ' gray-icon'
+            break
+        case 'dark-gray':
+            styling += ' dark-gray-icon'
             break
         case 'blue':
             styling += ' blue-icon'

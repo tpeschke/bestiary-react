@@ -50,6 +50,7 @@ export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: num
 export function calculateBonfireAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any): BonfireWeaponInfo {
     const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
     return {
+        system: 'Bonfire',
         ...attackInfo,
         ...calculateAndFormatBonfireAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
     }
@@ -58,6 +59,7 @@ export function calculateBonfireAttackInfo(attackInfo: any, skullIndex: number, 
 export function calculateHackMasterAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any): HackMasterWeaponInfo {
     const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
     return {
+        system: 'HackMaster',
         ...attackInfo,
         ...calculateAndFormatHackMasterAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
     }

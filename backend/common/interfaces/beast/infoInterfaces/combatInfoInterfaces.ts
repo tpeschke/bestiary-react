@@ -91,7 +91,7 @@ export interface SpellReference {
 export type WeaponInfo = BonfireWeaponInfo | HackMasterWeaponInfo
 
 export interface BonfireWeaponInfo {
-    type: 'Bonfire',
+    system: 'Bonfire',
     infoType: 'weapon',
     id?: number,
     oldID: number,
@@ -125,7 +125,7 @@ export interface BonfireWeaponInfo {
 }
 
 export interface HackMasterWeaponInfo {
-    type: 'HackMaster',
+    system: 'HackMaster',
     infoType: 'weapon',
     id?: number,
     oldID: number,

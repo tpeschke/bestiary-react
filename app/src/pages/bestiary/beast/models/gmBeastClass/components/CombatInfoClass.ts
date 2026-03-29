@@ -123,13 +123,13 @@ export default class CombatInfoClass {
                 if (attack.infoType === 'weapon' && system === 'HackMaster') {
                     attackInfo.push({
                         ...attack,
-                        ...calculateBonfireAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
+                        ...calculateHackMasterAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
                         weaponName: attack.weapon?.split(' (')[0]
                     })
                 } else if (attack.infoType === 'weapon') {
                     attackInfo.push({
                         ...attack,
-                        ...calculateHackMasterAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
+                        ...calculateBonfireAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
                         weaponName: attack.weapon?.split(' (')[0]
                     })
                 } else if (attack.infoType === 'spell') {

@@ -67,7 +67,7 @@ function HackMasterDefenseStat(defenseStats: HackMasterDefenseInfo, nameToShow: 
             <div className='defense-stats-inner-shell'>
                 <div>
                     <p>Def</p>
-                    <p>{`${defense >= 0 ? '+' : ''}${defense}`} <Icon iconName={hasShield ? 'shield' : 'no-shield'} color='blue' tooltip={shieldTooltip} /></p>
+                    <p>{`${defense >= 0 ? '+' : ''}${defense}`} <Icon iconName={hasShield ? 'shield' : 'no-shield'} color='dark-gray' tooltip={shieldTooltip} /></p>
                 </div>
                 {!!shieldCover && <div>
                     <p>Cover</p>
