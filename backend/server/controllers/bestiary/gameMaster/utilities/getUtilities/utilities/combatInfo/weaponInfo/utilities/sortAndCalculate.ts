@@ -1,7 +1,7 @@
 import { RawCombatStat, AttackInfo, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
-import { CalculateCombatStatsReturn, calculateAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
+import { CalculateCombatStatsReturn, calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 
 export default function calculateCombatStats(combatStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     let defenses: BonfireDefenseInfo[] = []
@@ -18,7 +18,7 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
 
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackInfo[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, eua, isspecial: isSpecial,
-        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid
+        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, weapontype
     } = stats
 
     const roleToUse = role ?? mainRole
@@ -41,7 +41,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
 
     if (!showonlydefenses && roleToUse) {
         attacks.push({
-            ...calculateAttackInfo(
+            ...calculateBonfireAttackInfo(
                 {
                     beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType
                 },
@@ -51,7 +51,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
             overAllIndex: attacks.length,
             id: attackid,
             infoType: 'weapon',
-            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType, addsizemod }
+            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType, weapontype, addsizemod }
         })
     }
 }

@@ -3,7 +3,7 @@ import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import CombatInfo, { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
-import { calculateAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
+import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterAttackInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
@@ -72,7 +72,7 @@ export default class CombatInfoClass {
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells), []),
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells, 'Bonfire'), []),
             defenses: defenses.reduce(this.adjustBonfireDefenseInfo(skullIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
@@ -111,19 +111,25 @@ export default class CombatInfoClass {
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getHackMasterDefenseNFlee(combatRole, epValueIndex)
             },
-            attacks: attacks.reduce(this.adjustAttackInfo(epValueIndex, roleID, combatRole, size, spells), []),
+            attacks: attacks.reduce(this.adjustAttackInfo(epValueIndex, roleID, combatRole, size, spells, 'HackMaster'), []),
             defenses: defenses.reduce(this.adjustHackMasterDefenseInfo(epValueIndex, roleID, combatRole, size), []),
             movements: movements.reduce(this.adjustMovementInfo(epValueIndex, roleID, combatRole), [])
         }
     }
 
-    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size, spells: Spell[]) => {
+    private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size, spells: Spell[], system: SystemOption) => {
         return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
             if (!roleID || attack.roleid === roleID) {
-                if (attack.infoType === 'weapon') {
+                if (attack.infoType === 'weapon' && system === 'HackMaster') {
                     attackInfo.push({
                         ...attack,
-                        ...calculateAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
+                        ...calculateBonfireAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
+                        weaponName: attack.weapon?.split(' (')[0]
+                    })
+                } else if (attack.infoType === 'weapon') {
+                    attackInfo.push({
+                        ...attack,
+                        ...calculateHackMasterAttackInfo(attack, skulls, role, attack.scalingInfo.addsizemod, size, null),
                         weaponName: attack.weapon?.split(' (')[0]
                     })
                 } else if (attack.infoType === 'spell') {

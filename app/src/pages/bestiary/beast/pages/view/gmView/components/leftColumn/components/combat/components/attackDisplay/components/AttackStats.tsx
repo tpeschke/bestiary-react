@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function AttackStats({ attackStat }: Props) {
-    const { name, weaponName, measure, attack, damage, damageType, recovery, info, situation, tactic, rangeIncrement } = attackStat
+    const { type, name, weaponName, measure, attack, damage, damageType, recovery, info, situation, tactic, rangeIncrement } = attackStat
 
     return (
         <div className='attack-stats-shell'>

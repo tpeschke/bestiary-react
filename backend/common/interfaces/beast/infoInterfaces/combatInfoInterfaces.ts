@@ -88,7 +88,10 @@ export interface SpellReference {
     spellInfo?: Spell
 }
 
-export interface WeaponInfo {
+export type WeaponInfo = BonfireWeaponInfo | HackMasterWeaponInfo
+
+export interface BonfireWeaponInfo {
+    type: 'Bonfire',
     infoType: 'weapon',
     id?: number,
     oldID: number,
@@ -115,7 +118,43 @@ export interface WeaponInfo {
         swarmbonus: boolean,
         name: string,
         weapon: string,
-        weapontype: DamageType,
+        damageType: DamageType,
+        weapontype: Type,
+        addsizemod: boolean
+    }
+}
+
+export interface HackMasterWeaponInfo {
+    type: 'HackMaster',
+    infoType: 'weapon',
+    id?: number,
+    oldID: number,
+    situation: string | undefined,
+    tactic: string | undefined,
+    beastId: number,
+    roleid?: string,
+    info: string,
+    name: string,
+    chosenName: string,
+    weapon: string,
+    weaponName: string,
+    swarmbonus: boolean,
+    measure: number,
+    attack: string,
+    damage: string,
+    shieldDamage: string,
+    damageType: DamageType,
+    recovery: number,
+    rangeIncrement: string,
+    isSpecial: IsSpecial,
+    overAllIndex: number,
+    weaponInfo: ProcessedWeapon,
+    scalingInfo: {
+        swarmbonus: boolean,
+        name: string,
+        weapon: string,
+        damageType: DamageType,
+        weapontype: Type,
         addsizemod: boolean
     }
 }
@@ -200,7 +239,7 @@ export interface RawCombatStat {
     piercingweapons: Strength,
     slashingweapons: Strength,
     crushingweapons: Strength,
-    damagetype: string,
+    damagetype: DamageType,
     weaponsmallpiercing: Strength,
     weaponsmallslashing: Strength,
     weaponsmallcrushing: Strength,
@@ -228,7 +267,7 @@ export interface RawCombatStat {
     adjustment: number,
     tdr: boolean,
     info: string,
-    spellid?: number
+    spellid: string
 }
 
 export interface Movement {

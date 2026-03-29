@@ -1,7 +1,7 @@
 import { RawCombatStat, AttackInfo, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
-import { calculateAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
+import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 
 interface CalculateCombatStatsReturn {
     attacks: AttackInfo[],
@@ -43,7 +43,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             }
         } else {
             return {
-                ...calculateAttackInfo(
+                ...calculateBonfireAttackInfo(
                     { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
                     skullIndex, roleToUse, addsizemod, size, gearCache
                 ),
@@ -51,8 +51,9 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 oldID: id ?? oldID,
                 overAllIndex: index,
                 id: attackid,
+                type: 'Bonfire',
                 infoType: 'weapon',
-                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype, addsizemod }
+                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype, damageType, addsizemod }
             }
         }
     })

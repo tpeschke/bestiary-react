@@ -7,8 +7,9 @@ import getDamage from "./attackUtilities/getDamage"
 import getRecovery from "./attackUtilities/getRecovery"
 import getMeasure from "./attackUtilities/getMeasure"
 import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import getShieldDamage from "../../hackMaster/combat/getShieldDamage"
 
-export default function calculateAndFormatAttackInfo(
+export default function calculateAndFormatBonfireAttackInfo(
     skullIndex: number,
     role: string,
     chosenName: string,
@@ -49,3 +50,45 @@ export default function calculateAndFormatAttackInfo(
     }
 }
 
+export function calculateAndFormatHackMasterAttackInfo(
+    skullIndex: number,
+    role: string,
+    chosenName: string,
+    weaponName: string,
+    weaponType: Type,
+    isSpecial: IsSpecial,
+    damageType: DamageType,
+    weaponInfo: ProcessedWeapon | null,
+    addSizeMod: boolean, 
+    size: Size = 'Medium',
+    gearCache?: any
+) {
+    const weaponInfoObject = weaponInfo ? weaponInfo : gearCache?.weapons.dictionary[weaponName]
+
+    if (weaponInfoObject) {
+        const { measure, type, name, bonus, range, shieldDamage } = weaponInfoObject
+
+        return {
+            measure, type, bonus, weaponInfo: weaponInfoObject,
+            name: getWeaponName(chosenName, name),
+            weaponName: name,
+            attack: getAttackMod(range, role, skullIndex, 'HackMaster'),
+            rangeIncrement: range ? getRangeIncrement(range, role, skullIndex) : null,
+            damage: getDamage(isSpecial, range, type, role, skullIndex, 'HackMaster'),
+            shieldDamage,
+            recovery: getRecovery(range, role, skullIndex, 'HackMaster')
+        }
+    }
+
+    const isRanged = weaponType === 'r'
+    return {
+        name: chosenName,
+        type: damageType,
+        measure: getMeasure(addSizeMod, size, isRanged, role, skullIndex, 'HackMaster'),
+        attack: getAttackMod(isRanged, role, skullIndex),
+        rangeIncrement: isRanged ? getRangeIncrement(isRanged, role, skullIndex) : null,
+        damage: getDamage(isSpecial, isRanged, damageType, role, skullIndex, 'HackMaster'),
+        shieldDamage: getShieldDamage(isRanged, role, skullIndex),
+        recovery: getRecovery(isRanged, role, skullIndex, 'HackMaster')
+    }
+}

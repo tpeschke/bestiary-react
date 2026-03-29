@@ -1,7 +1,7 @@
 import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { AttackInfo, BonfireDefenseInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackInfo, BonfireDefenseInfo, BonfireWeaponInfo, HackMasterWeaponInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { getDefenseName } from "../../../formatting/formatting"
-import calculateAndFormatAttackInfo from "./attackCalculator"
+import calculateAndFormatBonfireAttackInfo, { calculateAndFormatHackMasterAttackInfo } from "./attackCalculator"
 import getDefense from "./defenseUtilities/getDefense"
 import getFlanks from "./defenseUtilities/getFlanks"
 import getParry from "./defenseUtilities/getParry"
@@ -47,10 +47,18 @@ export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: num
     }
 }
 
-export function calculateAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any) {
+export function calculateBonfireAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any): BonfireWeaponInfo {
     const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
     return {
         ...attackInfo,
-        ...calculateAndFormatAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
+        ...calculateAndFormatBonfireAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
+    }
+}
+
+export function calculateHackMasterAttackInfo(attackInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size = 'Medium', gearCache?: any): HackMasterWeaponInfo {
+    const { name, weapon, isSpecial, damageType, weaponType, weaponInfo } = attackInfo
+    return {
+        ...attackInfo,
+        ...calculateAndFormatHackMasterAttackInfo(skullIndex, role, name, weapon, weaponType, isSpecial, damageType, weaponInfo, addSizeMod, size, gearCache),
     }
 }
