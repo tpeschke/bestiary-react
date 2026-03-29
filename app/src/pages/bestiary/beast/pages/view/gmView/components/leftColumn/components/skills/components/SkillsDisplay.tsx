@@ -20,7 +20,7 @@ export default function SkillsDisplay({ skills, type }: Props) {
                 {preferred && displaySkillArray(preferred, type)}
                 {weakness && displaySkillArray(weakness, type)}
             </div>
-            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? 'U' : everythingElse} format={{ title: 'none' }} />
+            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? 'U' : everythingElse + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
         </div>
     )
 }
