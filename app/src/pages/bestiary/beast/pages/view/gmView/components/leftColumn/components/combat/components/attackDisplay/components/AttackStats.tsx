@@ -2,7 +2,7 @@ import { BonfireWeaponInfo, HackMasterWeaponInfo, WeaponInfo } from '@bestiary/c
 import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
-import { situationTooltip, tacticTooltip } from '../utilities/situationTooltip'
+import { situationTooltip, bonfireTacticTooltip, hackMasterTacticTooltip } from '../utilities/situationTooltip'
 import './AttackStats.css'
 import Icon from '../../../../../../../../../../../../../components/icon/Icon'
 
@@ -57,7 +57,7 @@ function bonfireAttackDisplay(attackStat: BonfireWeaponInfo) {
             </div>
             {tactic &&
                 <Body>
-                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
+                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={bonfireTacticTooltip}>
                         + {getTacticInfo(tactic)}
                     </p>
                 </Body>
@@ -103,7 +103,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
             </div>
             {tactic &&
                 <Body>
-                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={tacticTooltip}>
+                    <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={hackMasterTacticTooltip}>
                         + {getTacticInfo(tactic, 'HackMaster')}
                     </p>
                 </Body>
