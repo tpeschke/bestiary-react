@@ -5,6 +5,9 @@ import getSkullNumber from "../getSkulls"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
+import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
+import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
+import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
 
 export default function formatSocialInfo(
     socialRole: string,
@@ -20,10 +23,16 @@ export default function formatSocialInfo(
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
 
+    const baseSocialEpValue = getBaseEPValue(socialSkulls)
+    const epValueIndex = getEPIndex(baseSocialEpValue)
+
     return {
+        type: 'Bonfire',
         socialRole, socialSecondary,
         socialSkulls,
         skullIndex,
+        epValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
+        epValueIndex,
         capacity:
         {
             threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacityStrength),

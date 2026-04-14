@@ -2,12 +2,14 @@ import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces
 import CharacteristicsInfo from "./CharacteristicInfo"
 import Body from "../../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../../components/UI/pair/Pair"
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 
 interface Props {
     characteristicInfo: ConflictObject,
+    type: SystemOption
 }
 
-export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
+export default function CharacteristicsDisplay({ characteristicInfo, type }: Props) {
     const { socialSkillSuites, burdens, relationships, flaws } = characteristicInfo
     const { preferredEmotions, empathize, intimidate, lecture, tempt } = socialSkillSuites
 
@@ -30,10 +32,10 @@ export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
                 <h3>Social Skill Suites</h3>
                 <Body>
                     <div className="conviction-shell">
-                        <Pair title="Empathize" info={empathize} format={{ title: 'none' }} />
-                        <Pair title="Intimidate" info={intimidate} format={{ title: 'none' }} />
-                        <Pair title="Lecture" info={lecture} format={{ title: 'none' }} />
-                        <Pair title="Tempt" info={tempt} format={{ title: 'none' }} />
+                        <Pair title="Empathize" info={empathize + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Intimidate" info={intimidate + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Lecture" info={lecture + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Tempt" info={tempt + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                     </div>
                 </Body>
             </div>
@@ -41,11 +43,11 @@ export default function CharacteristicsDisplay({ characteristicInfo }: Props) {
                 <h3>Preferred Emotions</h3>
                 <Body>
                     <div className="conviction-shell">
-                        {preferredEmotions.emotions.map((emotion, index) => <Pair tooltip="Attack / Defense" key={index} title={`${emotion} / ${emotionPairsDictionary[emotion]}`} info={preferredEmotions.rank} format={{ title: 'none' }} />)}
+                        {preferredEmotions.emotions.map((emotion, index) => <Pair tooltip="Attack / Defense" key={index} title={`${emotion} / ${emotionPairsDictionary[emotion]}`} info={type === 'HackMaster' ? '' : preferredEmotions.rank} format={{ title: 'none' }} />)}
                     </div>
                 </Body>
             </div>
-            {hasRelationships && <CharacteristicsInfo title="Relationships" characteristics={relationships} />}
+            {hasRelationships && <CharacteristicsInfo title="Relationships" characteristics={relationships} type={type} />}
             {hasFlaws && <CharacteristicsInfo title="Flaws" characteristics={flaws} />}
             {hasBurdens && <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} />}
         </>

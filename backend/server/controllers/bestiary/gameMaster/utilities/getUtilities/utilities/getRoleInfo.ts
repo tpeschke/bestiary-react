@@ -87,9 +87,12 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
     const socialSkulls = socialskulls ?? getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
 
+    const baseSocialEpValue = getBaseEPValue(socialSkulls)
+    const socialEpValueIndex = getEPIndex(baseSocialEpValue)
+
     const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
-    
+
     const baseSkillEpValue = getBaseEPValue(skillSkulls)
     const skillEpValueIndex = getEPIndex(baseSkillEpValue)
 
@@ -130,8 +133,11 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             skills: await getGenericSkillSuites(beastid, id, skillRole, skillSkullIndex, everythingElseStrength)
         },
         socialInfo: {
-            socialSkulls, socialRole, socialSecondary, attackInfo, defenseInfo,
+            socialRole, socialSecondary, attackInfo, defenseInfo,
+            socialSkulls,
             skullIndex: socialSkullIndex,
+            socialEpValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
+            socialEpValueIndex,
             capacity: {
                 threshold: getCapacity(socialSkullIndex, socialRole, socialSecondary, capacityStrength),
                 strength: capacityStrength

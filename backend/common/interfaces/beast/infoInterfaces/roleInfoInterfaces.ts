@@ -73,6 +73,8 @@ export interface RoleSkillInfo {
 export interface RoleSocialInfo {
     socialSkulls: number,
     skullIndex: number,
+    socialEpValue: number,
+    socialEpValueIndex: number,
     capacity: {
         threshold: number[] | null,
         strength: Strength

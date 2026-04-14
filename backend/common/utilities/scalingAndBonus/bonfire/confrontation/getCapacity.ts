@@ -1,13 +1,17 @@
+import { SystemOption } from "../../../../interfaces/beast/beast"
 import { Strength } from "../../../../interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
 import getModBySkullIndex from "../../getModBySkullIndex"
 
-export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null, capacity: Strength): number[] | null {
+const bonfireCapacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
+const hackMasterCapacityDictionary = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9]
+
+export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null, capacity: Strength, system: SystemOption = 'Bonfire'): number[] | null {
     if (capacity === 'x') {
         return null
     }
-    
-    const capacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
+
+    const capacityDictionary = system === 'Bonfire' ? bonfireCapacityDictionary : hackMasterCapacityDictionary
     const roleIndexModifier = getRoleIndexModifier(role)
 
     const baseCapacity = calculateSecondaryRoleEffect(getModBySkullIndex(skullIndex, roleIndexModifier, capacityDictionary), secondaryRole)

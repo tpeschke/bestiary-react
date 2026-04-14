@@ -1,10 +1,14 @@
 import { Strength } from "../../calculationInterfaces"
+import { SystemOption } from "../beast"
 
 export default interface SocialInfo {
+    type: SystemOption,
     socialRole: string,
     socialSecondary: string,
     socialSkulls: number,
     skullIndex: number,
+    epValue: number,
+    epValueIndex: number,
     capacity: {
         threshold: number[] | null,
         strength: Strength

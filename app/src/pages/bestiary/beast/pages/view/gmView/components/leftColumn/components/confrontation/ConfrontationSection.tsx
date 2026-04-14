@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const { socialRole, socialSkulls, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
+    const {type, socialRole, socialSkulls, epValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
 
     const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
     const showAttackSection = !!(attackInfo && attackInfo !== '')
@@ -23,7 +23,11 @@ export default function ConfrontationSection({ socialInfo }: Props) {
 
     return (
         <>
-            <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />
+            {type === 'Bonfire' ?
+                <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />
+                :
+                <RoleTitle title="Confrontation" epValue={epValue} role={socialRole} secondaryRole={socialSecondary} />
+            }
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
@@ -37,8 +41,8 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 </>
             }
             {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}
-            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} />
-            <CharacteristicsDisplay characteristicInfo={conflicts} />
+            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls}/>
+            <CharacteristicsDisplay characteristicInfo={conflicts} type={type} />
         </>
     )
 }
