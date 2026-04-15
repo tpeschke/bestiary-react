@@ -3,7 +3,7 @@ import SkillSection from "./components/skills/SkillSection"
 import CombatSection from "./components/combat/CombatSection"
 import RoleSelect from "./components/roleSelect/RoleSelect"
 import RatingModifierDisplay from "./components/RatingModifier/RatingModifierDisplay"
-import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { SaveObject, Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import RoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import FullImage from "../../../../../components/UI/fullImage/fullImage"
@@ -15,6 +15,7 @@ import Pair from "../../../../../components/UI/pair/Pair"
 import StrategiesNLimits from "./components/StrategiesNLimits/StrategiesNLimits"
 import StrategicOptionsDisplay from "./components/StrategiesNLimits/StrategicOptions"
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
+import Saves from "./components/saves/Saves"
 
 interface Props {
     beastId: number,
@@ -33,11 +34,12 @@ interface Props {
     hasModifier: boolean,
     selectedRoleID: string | null,
     selfDoubtDie: string,
-    system: SystemOption
+    system: SystemOption,
+    saves: [SaveObject, SaveObject, SaveObject] | null
 }
 
 export default function LeftColumn({ 
-    beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, system,
+    beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, system, saves,
     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie 
 }: Props) {
         const { baseConvictionRank } = socialInfo
@@ -47,6 +49,7 @@ export default function LeftColumn({
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} roleID={selectedRoleID} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
             {system === 'Bonfire' && <Pair title={"Self-Doubt Die"} info={selfDoubtDie} format={{ heading: true, noBorder: true }} />}
+            <Saves saves={saves} />
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />

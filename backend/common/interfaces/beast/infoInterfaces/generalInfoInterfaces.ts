@@ -19,6 +19,11 @@ export default interface GeneralInfo {
     palette: Palette
 }
 
+export interface SaveObject {
+    label: string,
+    rank: string
+}
+
 export interface Scenario {
     id: number,
     beastid: number,

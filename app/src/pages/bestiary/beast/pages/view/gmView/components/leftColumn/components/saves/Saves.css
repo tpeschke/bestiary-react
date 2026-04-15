@@ -1,0 +1,16 @@
+.save-shell {
+    display: flex;
+    justify-content: space-between;
+}
+
+.body-shell .save-shell .pair-shell {
+    width: 33%;
+}
+
+.body-shell .save-shell .pair-shell p {
+    padding: 0 5px
+}
+
+.body-shell .save-shell .pair-shell p:first-child {
+    text-align: right;
+}

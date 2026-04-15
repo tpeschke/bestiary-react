@@ -10,7 +10,7 @@ import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 
-import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import GeneralInfo, { SaveObject } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../../../components/alert/alerts";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
@@ -26,6 +26,9 @@ import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedI
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
 import getSystemString from "@bestiary/common/utilities/get/getSystemString";
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
+import getPhysicalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getPhysicalSave";
+import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getMentalSave";
+import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -154,6 +157,27 @@ export default class GMBeastClass {
         const selfDoubtDieDictionary = ['d20', 'd12', 'd10', 'd8', 'd6', 'd4', 'd0']
 
         return selfDoubtDieDictionary[average]
+    }
+
+    get saves(): [SaveObject, SaveObject, SaveObject] | null {
+        if (this.system === 'HackMaster') {
+            const { epValueIndex: mainEpValueIndex } = this.entrySocialInfo
+            const roleSelected = this.isRoleSelected()
+            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValueIndex : mainEpValueIndex) + this.selectedModifier
+
+            return [{
+                label: 'Physical',
+                rank: getPhysicalSave(epValueIndex)
+            }, {
+                label: 'Mental',
+                rank: getMentalSave(epValueIndex)
+            }, {
+                label: 'Dodge',
+                rank: getDodgeSave(epValueIndex)
+            }]
+        }
+
+        return null
     }
 
     get generalInfo(): GeneralInfo {

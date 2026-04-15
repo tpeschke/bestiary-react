@@ -22,7 +22,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
     const { 
         generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
         selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie,
-        system 
+        system, saves
     } = beast
     const { name, appearance, intro, habitat, palette, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
@@ -43,7 +43,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
                 LeftColumn={LeftColumn({
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
                     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie,
-                    system
+                    system, saves
                 })}
                 RightColumn={RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />
