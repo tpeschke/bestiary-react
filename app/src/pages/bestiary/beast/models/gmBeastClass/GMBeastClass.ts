@@ -29,6 +29,7 @@ import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import getPhysicalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getPhysicalSave";
 import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getMentalSave";
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
+import calculateDescriptionRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/calculateDescriptionRank";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -286,7 +287,7 @@ export default class GMBeastClass {
                     threshold: getCapacity(epValueIndex, socialRole, socialSecondary, capacity.strength, 'HackMaster'),
                     strength: capacity.strength
                 },
-                baseConvictionRank: calculateRankForCharacteristic('Convictions', epValueIndex, role),
+                baseConvictionRank: 0,
                 archetypeInfo: {
                     ...archetypeInfo,
                     hasArchetypes, hasMonsterArchetypes,

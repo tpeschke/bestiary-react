@@ -10,6 +10,9 @@ import { obstacleSingleURL } from '../../../../../../../../../../frontend-config
 import LoadingIndicator from '../../../../../../../../../../components/loading/components/LoadingIndicator';
 import Icon from '../../../../../../../../../../components/icon/Icon';
 import obstacleCatalogHook from '../../../../../../../../../obstacleIndex/hooks/obstacleCatalogHook';
+import { getSystemPreference } from '../../../../../../../../../../redux/slices/userSlice';
+import { useSelector } from 'react-redux';
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString';
 
 interface Props {
     options: StrategicOptions,
@@ -18,6 +21,8 @@ interface Props {
 }
 
 export default function StrategicOptionsDisplay({ options, skillSkulls, baseConvictionRank }: Props) {
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+
     const { obstacles, customs, other } = options
 
     const { obstacleCache, saveToCache } = obstacleCatalogHook()
@@ -69,7 +74,7 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
                 <>
                     <span>
                         <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
-                        <p>Rank {baseConvictionRank}</p>
+                        {systemPreference === BONFIRE && <p>Rank {baseConvictionRank}</p>}
                     </span>
                     <div>
                         {customs.map(({ id, label, attack, defense }) => {
