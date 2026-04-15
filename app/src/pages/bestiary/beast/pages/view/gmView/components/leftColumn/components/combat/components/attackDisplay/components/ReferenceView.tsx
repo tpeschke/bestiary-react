@@ -20,7 +20,7 @@ export default function ReferenceView({ referenceInfo }: Props) {
             {tactic &&
                 <Body>
                     <p className='italic' data-tooltip-id="my-tooltip" data-tooltip-content={system === 'Bonfire' ? bonfireTacticTooltip : hackMasterTacticTooltip}>
-                        + {getTacticInfo(tactic)}
+                        + {getTacticInfo(tactic, system)}
                     </p>
                 </Body>
             }

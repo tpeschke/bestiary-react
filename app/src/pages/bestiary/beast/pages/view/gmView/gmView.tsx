@@ -19,8 +19,11 @@ interface Props {
 }
 
 export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
-    const { generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
-        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie } = beast
+    const { 
+        generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
+        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie,
+        system 
+    } = beast
     const { name, appearance, intro, habitat, palette, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
@@ -39,7 +42,8 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
             <DoubleColumn
                 LeftColumn={LeftColumn({
                     beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
-                    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie
+                    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie,
+                    system
                 })}
                 RightColumn={RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
             />

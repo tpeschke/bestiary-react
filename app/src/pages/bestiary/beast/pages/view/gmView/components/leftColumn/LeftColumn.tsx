@@ -14,6 +14,7 @@ import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialI
 import Pair from "../../../../../components/UI/pair/Pair"
 import StrategiesNLimits from "./components/StrategiesNLimits/StrategiesNLimits"
 import StrategicOptionsDisplay from "./components/StrategiesNLimits/StrategicOptions"
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 
 interface Props {
     beastId: number,
@@ -31,18 +32,21 @@ interface Props {
     copyQuickLink: Function,
     hasModifier: boolean,
     selectedRoleID: string | null,
-    selfDoubtDie: string
+    selfDoubtDie: string,
+    system: SystemOption
 }
 
-export default function LeftColumn({ beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
-    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie }: Props) {
+export default function LeftColumn({ 
+    beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, system,
+    updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie 
+}: Props) {
         const { baseConvictionRank } = socialInfo
 
     return (
         <>
             <FullImage imageParam={beastId} altText={beastName} artistInfo={imageInfo.artistInfo?.genericArtistInfo} roleID={selectedRoleID} />
             <RoleSelect roleInfo={roleInfo} updateSelectedRole={updateSelectedRole} selectedRoleIndex={selectedRoleIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
-            <Pair title={"Self-Doubt Die"} info={selfDoubtDie} format={{ heading: true, noBorder: true }} />
+            {system === 'Bonfire' && <Pair title={"Self-Doubt Die"} info={selfDoubtDie} format={{ heading: true, noBorder: true }} />}
             <ConfrontationSection socialInfo={socialInfo} />
             <SkillSection skillInfo={skillInfo} />
             <CombatSection combatInfo={combatInfo} size={size} />

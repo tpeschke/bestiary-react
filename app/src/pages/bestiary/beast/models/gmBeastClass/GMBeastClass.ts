@@ -35,7 +35,7 @@ export default class GMBeastClass {
     private entryID: number
     private patreon: Access
     private canplayerview: boolean
-    private system: SystemOption
+    public system: SystemOption
 
     private entryGeneralInfo: GeneralInfo
     private entryPlayerSpecificInfo: PlayerSpecificInfo
