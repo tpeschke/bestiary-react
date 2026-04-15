@@ -7,13 +7,14 @@ import { SystemOption } from '@bestiary/common/interfaces/beast/beast'
 interface Props {
     title: string,
     characteristics: Conflict[],
-    type?: SystemOption
+    type?: SystemOption,
+    tooltip?: string
 }
 
-export default function CharacteristicsInfo({ title, characteristics, type = 'Bonfire' }: Props) {
+export default function CharacteristicsInfo({ title, characteristics, type = 'Bonfire', tooltip }: Props) {
     return (
         <div className='characteristic-info-shell'>
-            <h3>{title}</h3>
+            <h3 data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>{title}</h3>
             <Body>
                 <>
                     {characteristics.map(({ trait, rank }: Conflict, index: number) => <Pair key={index} title={trait} info={type === 'HackMaster' ? '' : rank} format={{ title: 'none' }} />)}

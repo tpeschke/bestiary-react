@@ -40,14 +40,14 @@ export default function CharacteristicsDisplay({ characteristicInfo, type }: Pro
                 </Body>
             </div>
             <div className='characteristic-info-shell'>
-                <h3>Preferred Emotions</h3>
+                <h3 data-tooltip-id="my-tooltip" data-tooltip-content={type !== 'Bonfire' ? "When inflicting the first Emotion or defending against the second Emotion, the Check is made with Advantage." : undefined}>Preferred Emotions</h3>
                 <Body>
                     <div className="conviction-shell">
                         {preferredEmotions.emotions.map((emotion, index) => <Pair tooltip="Attack / Defense" key={index} title={`${emotion} / ${emotionPairsDictionary[emotion]}`} info={type === 'HackMaster' ? '' : preferredEmotions.rank} format={{ title: 'none' }} />)}
                     </div>
                 </Body>
             </div>
-            {hasRelationships && <CharacteristicsInfo title="Relationships" characteristics={relationships} type={type} />}
+            {hasRelationships && <CharacteristicsInfo title="Relationships" characteristics={relationships} type={type} tooltip={type !== 'Bonfire' ? "Relations represent Always / Never situations." : undefined} />}
             {hasFlaws && <CharacteristicsInfo title="Flaws" characteristics={flaws} />}
             {hasBurdens && <CharacteristicsInfo title="Burdens & Injuries" characteristics={burdens} />}
         </>
