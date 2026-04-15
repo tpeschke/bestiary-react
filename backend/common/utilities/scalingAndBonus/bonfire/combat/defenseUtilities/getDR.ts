@@ -15,6 +15,24 @@ export function calculateHackMasterDR(role: string, skullIndex: number): string 
     return `${getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary)}`
 }
 
+export function getHackMasterShieldDR(shield: string): string | undefined {
+    const shieldDictionary: { [key: string]: string } = {
+        'Buckler': '4',
+        'Clothe': '4',
+        'Figure Eight': '6',
+        'Heater': '6',
+        'Hoplon': '6',
+        'Kite': '6',
+        'Pavise': '6',
+        'Round': '4',
+        'Tower': '6'
+    }
+
+    const cover = shieldDictionary[shield]
+
+    return cover
+}
+
 function getStaticDR(role: string, skullIndex: number): number {
     const drDictionary = [0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14]
     const roleIndexModifier = getRoleIndexModifierStaticDR(role)

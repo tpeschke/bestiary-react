@@ -206,6 +206,7 @@ export interface HackMasterDefenseInfo {
     defensename?: string,
     defense: number,
     dr: string,
+    parryDR: string,
     shieldCover?: string | undefined,
     eua: boolean,
     tdr: boolean,
