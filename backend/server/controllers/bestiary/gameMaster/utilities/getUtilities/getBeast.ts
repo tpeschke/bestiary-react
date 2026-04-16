@@ -11,7 +11,7 @@ import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/bestiary/lootInterfaces"
 import { isOwner } from "../../../../../utilities/ownerAccess"
-import { getRarity } from "../../../../../utilities/rarity"
+import { getRarity } from "@bestiary/common/utilities/get/getRarity"
 import { getCombatStats } from "./utilities/combatInfo/weaponInfo/getCombatInfo"
 import { getFavorite, getNotes } from "./utilities/getPlayerInfo"
 import { getRoles } from "./utilities/getRoleInfo"
@@ -67,7 +67,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         },
         generalInfo: {
             name, plural, intro, habitat, appearance, senses, diet, meta, size,
-            rarity: getRarity(rarity),
+            rarity: getRarity(rarity, 'Bonfire'),
             scenarios: [],
             folklores: [],
             beastOwnerId: beastOwnerId,

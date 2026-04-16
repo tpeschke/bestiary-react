@@ -29,7 +29,7 @@ import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import getPhysicalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getPhysicalSave";
 import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getMentalSave";
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
-import calculateDescriptionRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/calculateDescriptionRank";
+import { getRarity } from "@bestiary/common/utilities/get/getRarity"
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -182,14 +182,17 @@ export default class GMBeastClass {
     }
 
     get generalInfo(): GeneralInfo {
-        const { size: mainSize } = this.entryGeneralInfo
+        const { size: mainSize, rarity: baseRarity } = this.entryGeneralInfo
 
         const roleSelected = this.isRoleSelected()
 
         const size = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].generalInfo.size : mainSize
 
+        const rarity = getRarity(baseRarity.rarityId, this.system)
+
         return {
             ...this.entryGeneralInfo,
+            rarity,
             // a Role's size can be null, in which case, it defaults to the default size, so this is what this is doing
             size: size ?? mainSize
         }
