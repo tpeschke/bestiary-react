@@ -8,6 +8,9 @@ import HTMLDisplay from '../../../../../../../components/UI/htmlDisplay/htmlDisp
 import GeneratedLootDisplay from './components/generatedLoot/GeneratedLootDisplay'
 import Loading from '../../../../../../../../../../components/loading/Loading'
 import { Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
+import { useSelector } from 'react-redux'
+import { getSystemPreference } from '../../../../../../../../../../redux/slices/userSlice'
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
     lootInfo: LootInfo,
@@ -16,6 +19,8 @@ interface Props {
 }
 
 export default function LootDisplay({ lootInfo, rarity, maxPoints }: Props) {
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    
     const { pleroma, specificLoots, lootnotes, carriedLoot, lairLoot } = lootInfo
 
     return (
@@ -30,7 +35,7 @@ export default function LootDisplay({ lootInfo, rarity, maxPoints }: Props) {
             <Loading secondary={true}>
                 <GeneratedLootDisplay carriedLoot={carriedLoot} lairLoot={lairLoot} maxPoints={maxPoints}/>
             </Loading>
-            <PleromaDisplay pleroma={pleroma} rarity={rarity} />
+            {systemPreference === BONFIRE && <PleromaDisplay pleroma={pleroma} rarity={rarity} />}
         </>
     )
 }
