@@ -1,5 +1,5 @@
 import './AdvancedSearch.css'
-import { sizeSearchDictionary, raritySearchDictionary, accessSearchDictionary, skullSearchDictionary } from './utilities/searchDictionaries'
+import { sizeSearchDictionary, raritySearchDictionary, accessSearchDictionary } from './utilities/searchDictionaries'
 import SearchSelect from './components/SearchSelect'
 import Drawers from '../../../drawers/Drawers'
 import ClimateSearch from './components/drawers/ClimateSearch'
@@ -9,6 +9,11 @@ import RoleSearch from './components/drawers/RoleSearch'
 import TypeSearch from './components/drawers/TypeSearch'
 import SearchStatusHook from '../../../../hooks/SearchStatusHook'
 import Drawer from '../../../drawers/components/Drawer'
+import { useSelector } from 'react-redux'
+import { getSystemPreference } from '../../../../redux/slices/userSlice'
+import SkullSearch from './components/skullSearch/SkullSearch'
+import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString'
+import EpSearch from './components/skullSearch/EpSearch'
 
 export type StopPropagationAndCaptureQueryFromCheckBoxForArrayFunction = (param: QueryArrayParams, id: number, event: any) => StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction
 type StopPropagationAndCaptureQueryFromCheckBoxForArrayReturnFunction = (id: number, event: any) => void
@@ -26,6 +31,8 @@ interface Props {
 }
 
 export default function AdvancedSearchInnards({ captureQuery, captureQueryArray }: Props) {
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    
     const { isOnSearch } = SearchStatusHook()
 
     function stopPropagationAndCaptureQuery(param: QueryBasicParams, event: any) {
@@ -57,28 +64,8 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
                 <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} label='Access' param='access' dictionary={accessSearchDictionary} />
             </div>
 
-            <div className='inner-searches-shell'>
-                <div className='rating-shell'>
-                    <p>Confrontation Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minConfrontationRate' dictionary={skullSearchDictionary} />
-                    <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxConfrontationRate' dictionary={skullSearchDictionary} />
-                </div>
-
-                <div className='rating-shell'>
-                    <p>Combat Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minCombatRate' dictionary={skullSearchDictionary} />
-                    <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxCombatRate' dictionary={skullSearchDictionary} />
-                </div>
-
-                <div className='rating-shell'>
-                    <p>Skill Skulls</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minChallengeRate' dictionary={skullSearchDictionary} />
-                    <p>-</p>
-                    <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxChallengeRate' dictionary={skullSearchDictionary} />
-                </div>
-            </div>
+            {systemPreference === BONFIRE && <SkullSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
+            {systemPreference === HACKMASTER && <EpSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
 
             <Checkbox label='Anyone Can View?' onClick={stopPropagationAndCaptureQueryFromCheckBox('anyAccess')} />
             <Checkbox label='Has Personal Notes?' onClick={stopPropagationAndCaptureQueryFromCheckBox('personalNotes')} />

@@ -87,6 +87,125 @@ export const skullSearchDictionary: SearchObject[] = [
     }
 ]
 
+export const epSearchDictionary: SearchObject[] = [
+    {
+        value: 10,
+        id: 10
+    },
+    {
+        value: 35,
+        id: 35
+    },
+    {
+        value: 70,
+        id: 70
+    },
+    {
+        value: 140,
+        id: 140
+    },
+    {
+        value: 280,
+        id: 280
+    },
+    {
+        value: 560,
+        id: 560
+    },
+    {
+        value: 765,
+        id: 765
+    },
+    {
+        value: 890,
+        id: 890
+    },
+    {
+        value: 1015,
+        id: 1015
+    },
+    {
+        value: 1145,
+        id: 1145
+    },
+    {
+        value: 1270,
+        id: 1270
+    },
+    {
+        value: 1400,
+        id: 1400
+    },
+    {
+        value: 1525,
+        id: 1525
+    },
+    {
+        value: 1650,
+        id: 1650
+    },
+    {
+        value: 1780,
+        id: 1780
+    },
+    {
+        value: 1905,
+        id: 1905
+    },
+    {
+        value: 2035,
+        id: 2035
+    },
+    {
+        value: 2160,
+        id: 2160
+    },
+    {
+        value: 2285,
+        id: 2285
+    },
+    {
+        value: 2415,
+        id: 2415
+    },
+    {
+        value: 2540,
+        id: 2540
+    },
+    {
+        value: 2665,
+        id: 2665
+    },
+    {
+        value: 2795,
+        id: 2795
+    },
+    {
+        value: 2920,
+        id: 2920
+    },
+    {
+        value: 3050,
+        id: 3050
+    },
+    {
+        value: 3175,
+        id: 3175
+    },
+    {
+        value: 3300,
+        id: 3300
+    },
+    {
+        value: 3430,
+        id: 3430
+    },
+    {
+        value: 3555,
+        id: 3555
+    }
+]
+
 export const climateSearchDictionary = [
     { id: 1, code: 'Af', climate: 'Tropical Rain Forest', examples: 'Indonesia, Colombia, North DRC' },
     { id: 2, code: 'Am', climate: 'Tropical Monsoon', examples: 'Northern Brazil, Thailand Coast, Congo' },

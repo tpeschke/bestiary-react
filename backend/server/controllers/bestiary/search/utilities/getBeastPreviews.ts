@@ -1,9 +1,9 @@
 import { SearchResult } from "@bestiary/common/interfaces/search"
-import { getRarity } from "@bestiary/common/utilities/get/rarity"
 import query from "../../../../db/database"
 import { getGMPreview, getPlayerPreview } from "../../../../db/search/preview"
 import { User } from "@bestiary/common/interfaces/userInterfaces"
 import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel"
+import { getRarity } from "@bestiary/common/utilities/get/getRarity"
 
 export default async function getBeastPreviews(flattenedIDArray: number[], user: User | null | undefined): Promise<SearchResult[]> {
     const patreon = getAccessLevel(user)
