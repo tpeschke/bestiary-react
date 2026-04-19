@@ -2,16 +2,21 @@ import './DrawerSearch.css'
 
 import Checkbox from "../../../../../checkbox/Checkbox";
 import { combatPrimaryDictionary, combatSecondaryDictionary, confrontationPrimaryDictionary, confrontationSecondaryDictionary, skillPrimaryDictionary, skillSecondaryDictionary } from '../../utilities/searchDictionaries';
+import { useSelector } from 'react-redux';
+import { getSystemPreference } from '../../../../../../redux/slices/userSlice';
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString';
 
 interface Props {
     stopPropagationAndCaptureQueryFromCheckBoxForArray: Function
 }
 
 export default function RoleSearch({ stopPropagationAndCaptureQueryFromCheckBoxForArray }: Props) {
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    
     return (
         <div className='search-roles-shell'>
             <div>
-                <h4>Confrontation Roles</h4>
+                <h4>{systemPreference === BONFIRE ? 'Confrontations' : 'Social'} Roles</h4>
                 {confrontationPrimaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id)} />)}
                 <p className='italic'>Secondaries</p>
                 {confrontationSecondaryDictionary.map(({ id, value }, index) => <Checkbox key={index} label={value} onClick={stopPropagationAndCaptureQueryFromCheckBoxForArray('socialRoles', id)} />)}

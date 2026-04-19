@@ -1,7 +1,7 @@
 import Icon from "../../../../../../../../components/icon/Icon"
 import formatSkulls from "../../../../../../utilities/FormatSkulls"
 
-export default function SubStep2() {
+export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
     const ranksForSkulls = [
         [0, 1, 3, 6, 9, 9],
         [0, 1, 3, 6, 9, 9],
@@ -97,7 +97,7 @@ export default function SubStep2() {
             </table>
 
             <h1>Relationships</h1>
-            <p>Applicable Relationships can make a Confrontation way easier or way harder so apply judiciously.</p>
+            <p>Applicable Relationships can make a {encounterTerm} way easier or way harder so apply judiciously.</p>
             <h1>Reputations</h1>
             <p>Only unique NPCs should have Reputations; weirdos, lieutenants, bosses, captains, etc.</p>
             <p>Refer to the following table to determine the number:</p>

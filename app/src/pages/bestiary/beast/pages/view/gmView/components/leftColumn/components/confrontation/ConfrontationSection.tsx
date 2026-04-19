@@ -18,7 +18,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const showAttackSection = !!(attackInfo && attackInfo !== '')
 
     if (socialRole === 'No Personality') {
-        return <RoleTitle title='Confrontation' hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
+        return <RoleTitle title={type === 'Bonfire' ? 'Confrontation' : 'Social'} hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
     }
 
     return (
@@ -26,7 +26,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {type === 'Bonfire' ?
                 <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />
                 :
-                <RoleTitle title="Confrontation" epValue={epValue} role={socialRole} secondaryRole={socialSecondary} />
+                <RoleTitle title="Social" epValue={epValue} role={socialRole} secondaryRole={socialSecondary} />
             }
             {showDefenseSection &&
                 <>

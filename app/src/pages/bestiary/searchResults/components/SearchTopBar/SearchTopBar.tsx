@@ -4,6 +4,9 @@ import { SearchResult } from '@bestiary/common/interfaces/search'
 import { NavigateToRandomResultFunction, SortingDirection, SortingDirectionObject, SortingMethodObject, SortingOptions } from '../../SearchHooks'
 import { copyLink } from '../../utilities/copyLink'
 import Icon from '../../../../../components/icon/Icon'
+import { useSelector } from 'react-redux'
+import { getSystemPreference } from '../../../../../redux/slices/userSlice'
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
     searchResults: SearchResult[],
@@ -16,6 +19,7 @@ type IconSortTypes = 'alpha' | 'number'
 
 export default function SearchTopBar({ searchResults, navigateToRandomResult, sortingMethodInfo, sortingDirectionInfo }: Props) {
     const navigate = useNavigate()
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
 
     const getRandomResultTooltip = 'Go to a random result in this list'
     const linkTooltip = 'Copy a link to these search parameters that goes directly to a random result in this list'
@@ -37,7 +41,7 @@ export default function SearchTopBar({ searchResults, navigateToRandomResult, so
             <div className='result-sort-shell'>
                 {formatSortingOption(handleSortingClick, 'name', 'Name', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'alpha')}
                 <p>|</p>
-                {formatSortingOption(handleSortingClick, 'maxsocial', 'Confrontation', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
+                {formatSortingOption(handleSortingClick, 'maxsocial', systemPreference === BONFIRE ? 'Confrontation' : 'Social', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
                 <p>|</p>
                 {formatSortingOption(handleSortingClick, 'maxcombat', 'Combat', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
                 <p>|</p>

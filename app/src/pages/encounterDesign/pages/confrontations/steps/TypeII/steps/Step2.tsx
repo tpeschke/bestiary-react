@@ -1,10 +1,10 @@
 import emotionsWheel from '../../../../../../../assets/images/emotions-wheel.png'
 
-export default function Step2() {
+export default function Step2({ encounterTerm }: { encounterTerm: string }) {
     return (
         <div>
             <img src={emotionsWheel} />
-            <p>If the players are the attackers in the Confrontation, they’ll choose the Emotion they want to use but you’ll need to decide whether or not it’ll work. Default to ‘yes’ unless there’s a specific reason it wouldn’t (like the monster is immune to the Emotion).</p>
+            <p>If the players are the attackers in the {encounterTerm}, they’ll choose the Emotion they want to use but you’ll need to decide whether or not it’ll work. Default to ‘yes’ unless there’s a specific reason it wouldn’t (like the monster is immune to the Emotion).</p>
             <br />
             <p>Otherwise, review the Emotion Wheel at the beginning of this chapter and choose an Emotion. In 80% of cases, you only need the emotions in the center.</p>
             <br />

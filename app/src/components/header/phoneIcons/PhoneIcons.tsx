@@ -6,6 +6,7 @@ import EncounterDesignIcon from "../encounterDesignIcon/EncounterDesignIcon";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getSystemPreference, getUserPatreon, updateSystemPreference } from "../../../redux/slices/userSlice";
+import { BONFIRE } from "@bestiary/common/utilities/get/getSystemString";
 
 interface Props {
     userIsLoggedIn: boolean
@@ -16,7 +17,7 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
 
     const isObstacleIndex = location.pathname.substring(1, 10) === "obstacles"
 
-    const systemPreference = useSelector(getSystemPreference)
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
     const accessLevel = useSelector(getUserPatreon)
     const dispatch = useDispatch()
 
@@ -43,7 +44,7 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
                     <p>Encounter Building Guidelines</p>
                     <li>
                         <Link to="/encounters/confrontations">
-                            <Icon iconName='theater-masks' margin='right' /> Confrontations
+                            <Icon iconName='theater-masks' margin='right' /> {systemPreference === BONFIRE ? 'Confrontations' : 'Social'}
                         </Link>
                     </li>
                     <li>
