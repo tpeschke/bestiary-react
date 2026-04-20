@@ -331,6 +331,10 @@ export default class GMBeastClass {
         return this.getBonfireSkillInfo()
     }
 
+    get bonfireSkillInfo(): SkillInfo {
+        return this.getBonfireSkillInfo()
+    }
+
     private getBonfireSkillInfo(): SkillInfo {
         const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index, stress, skills: mainSkills } = this.entrySkillInfo
 

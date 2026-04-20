@@ -44,7 +44,7 @@ export default function EditBody({
     const [tabIndex, setTabIndex] = useState(1)
 
     const { 
-        id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, generalInfo, combatInfo, bonfireSkillInfo: skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
