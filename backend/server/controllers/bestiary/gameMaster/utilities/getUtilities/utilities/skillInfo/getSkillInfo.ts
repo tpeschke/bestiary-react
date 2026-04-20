@@ -13,6 +13,7 @@ export default function formatSkillInfo(
     skillSecondary: string,
     skillPoints: number,
     skillSkulls: number,
+    skillEpValue: number,
     attackInfo: string,
     defenseInfo: string,
     stressThresholdStrength: Strength
@@ -20,14 +21,15 @@ export default function formatSkillInfo(
     skillSkulls = skillSkulls ?? getSkullNumber(skillPoints)
     const skullIndex = getSkullIndex(skillSkulls)
 
-    const baseEpValue = getBaseEPValue(skillSkulls)
+    const baseEpValue =  skillEpValue ?? getBaseEPValue(skillSkulls)
     const epValueIndex = getEPIndex(baseEpValue)
 
     return {
         type: 'Bonfire',
         skillRole, skillSecondary, skullIndex,
         skillSkulls: getSkullNumber(skillSkulls),
-        epValue: calculateSecondaryRoleEffect(baseEpValue, skillSecondary),
+        skillEpValue: calculateSecondaryRoleEffect(baseEpValue, skillSecondary),
+        skillRawEpValue: baseEpValue,
         epValueIndex,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',

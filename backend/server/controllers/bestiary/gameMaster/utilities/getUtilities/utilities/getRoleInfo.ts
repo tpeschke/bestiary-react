@@ -106,7 +106,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             combatSkulls,
             skullIndex: combatSkullIndex,
             combatEpValue: calculateSecondaryRoleEffect(baseCombatEpValue, combatSecondary),
-            combatEpValueIndex,
+            combatRawEpValue: baseCombatEpValue,
+            epValueIndex: combatEpValueIndex,
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 knockback: calculateKnockBack(knockback, size),
@@ -125,7 +126,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             defenseInfo: defense_skill,
             skullIndex: skillSkullIndex,
             skillEpValue: calculateSecondaryRoleEffect(baseSkillEpValue, skillSecondary),
-            skillEpValueIndex,
+            skillRawEpValue: baseSkillEpValue,
+            epValueIndex: skillEpValueIndex,
             stress: {
                 threshold: calculateStress(skillSecondary, skillSkullIndex, stressThresholdStrength),
                 strength: stressThresholdStrength
@@ -137,7 +139,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             socialSkulls,
             skullIndex: socialSkullIndex,
             socialEpValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
-            socialEpValueIndex,
+            socialRawEpValue: baseSocialEpValue,
+            epValueIndex: socialEpValueIndex,
             capacity: {
                 threshold: getCapacity(socialSkullIndex, socialRole, socialSecondary, capacityStrength),
                 strength: capacityStrength

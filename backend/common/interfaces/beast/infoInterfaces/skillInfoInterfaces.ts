@@ -8,7 +8,8 @@ export default interface SkillInfo {
     skillSecondary: string,
     skillSkulls: number,
     skullIndex: number,
-    epValue: number,
+    skillEpValue: number,
+    skillRawEpValue: number,
     epValueIndex: number,
     stress: {
         threshold: number | string | null,

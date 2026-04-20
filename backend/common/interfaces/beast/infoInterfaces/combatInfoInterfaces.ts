@@ -7,7 +7,8 @@ export interface BasicCombatInfo {
     combatSecondary: string,
     combatSkulls: number,
     skullIndex: number,
-    epValue: number,
+    combatEpValue: number,
+    combatRawEpValue: number,
     epValueIndex: number,
 
     attackInfo: string,
@@ -206,7 +207,7 @@ export interface HackMasterDefenseInfo {
     defensename?: string,
     defense: number,
     dr: string,
-    parryDR: string,
+    parryDR: string | undefined,
     shieldCover?: string | undefined,
     eua: boolean,
     tdr: boolean,

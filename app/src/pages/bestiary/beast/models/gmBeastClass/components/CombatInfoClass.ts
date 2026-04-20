@@ -79,13 +79,14 @@ export default class CombatInfoClass {
     }
 
     private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: HackMasterRole | null, selectedModifier: number, spells: Spell[]): HackMasterCombatInfo {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, epValue: mainEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatEpValue: mainEpValue, combatRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
 
         const epValue = (selectedRole ? selectedRole.combatInfo.combatEpValue : mainEpValue) + selectedModifier
-        const epValueIndex = (selectedRole ? selectedRole.combatInfo.combatEpValueIndex : mainEpValueIndex) + selectedModifier
+        const rawEpValue = (selectedRole ? selectedRole.combatInfo.combatEpValue : mainRawEpValue)
+        const epValueIndex = (selectedRole ? selectedRole.combatInfo.epValueIndex : mainEpValueIndex) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
@@ -100,8 +101,9 @@ export default class CombatInfoClass {
             ...this.entryCombatInfo,
             type: 'HackMaster',
             combatRole, combatSecondary,
-            epValue,
-            epValueIndex,
+            combatEpValue: epValue,
+            combatRawEpValue: rawEpValue,
+            epValueIndex: epValueIndex,
             attackInfo, defenseInfo,
             initiative: getInitiative(combatRole, epValueIndex, 'HackMaster'),
             vitalityInfo: {

@@ -48,11 +48,12 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { isEditing, userID, gearCache, systemPreference } = options
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
-    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, imagesource, rolenameorder, defaultrole, sp_atk,
-        sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, notrauma, knockback, singledievitality, noknockback,
-        rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, skillsecondary, skillpoints, atk_skill,
-        def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, hasmonsterarchetypes, lootnotes, userid: beastOwnerId,
-        combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, capacity: capacityStrength, everythingelsestrength: everythingElseStrength
+    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, 
+        imagesource, rolenameorder, defaultrole, sp_atk, sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, 
+        notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, 
+        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, 
+        hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, 
+        capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
     } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -120,12 +121,17 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             rolenameorder, defaultrole,
             roles: []
         },
-        combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatskulls, combatpoints, sp_atk, sp_def, notrauma, knockback, singledievitality,
-            noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
+        socialInfo: formatSocialInfo(
+            socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, socialepvalue, hasarchetypes, hasmonsterarchetypes, 
+            capacityStrength
         ),
-        skillInfo: formatSkillInfo(skillrole, skillsecondary, skillpoints, skillskulls, atk_skill, def_skill, stressThresholdStrength),
-        socialInfo: formatSocialInfo(socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, hasarchetypes, hasmonsterarchetypes, capacityStrength),
+        combatInfo: formatCombatInfo(
+            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_def, notrauma, knockback, 
+            singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
+        ),
+        skillInfo: formatSkillInfo(
+            skillrole, skillsecondary, skillpoints, skillskulls, skillepvalue, atk_skill, def_skill, stressThresholdStrength
+        ),
         lootInfo: {
             lootnotes,
             lairLoot: {},

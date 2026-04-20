@@ -2,11 +2,13 @@ import { UpdateFunction } from "../../../../../hooks/updateUtilities/interfaces/
 
 interface Props {
     currentSkullValue: number,
+    currentEPValue?: number,
     updateSkull: UpdateFunction,
-    keyValue: string
+    skullKeyValue: string,
+    epKeyValue?: string
 }
 
-export default function SkullSelection({ currentSkullValue = 1, updateSkull, keyValue }: Props) {
+export default function SkullSelection({ currentSkullValue = 1, currentEPValue, updateSkull, skullKeyValue, epKeyValue }: Props) {
     const skullArray = [
         ' ',                // Untrained
         '💀',               // Novice
@@ -17,9 +19,117 @@ export default function SkullSelection({ currentSkullValue = 1, updateSkull, key
         '💀💀💀💀💀💀',     // Legendary
         '💀💀💀💀💀💀💀',     // Mythic
     ]
+
+    const epArrayBySkull: number[][] = [
+        [
+            10,
+            35,
+            70,
+            140
+        ],
+        [
+            280,
+            560,
+            765,
+            890
+        ],
+        [
+            1015,
+            1145,
+            1270,
+            1400
+        ],
+        [
+            1525,
+            1650,
+            1780,
+            1905
+        ],
+        [
+            2035,
+            2160,
+            2285,
+            2415
+        ],
+        [
+            2540,
+            2665,
+            2795,
+            2920
+        ],
+        [
+            3050,
+            3175,
+            3300,
+            3430
+        ],
+        [
+            3555
+        ],
+    ]
+
+    const epArray = [
+        ...epArrayBySkull[currentSkullValue],
+        10,
+        35,
+        70,
+        140,
+        280,
+        560,
+        765,
+        890,
+        1015,
+        1145,
+        1270,
+        1400,
+        1525,
+        1650,
+        1780,
+        1905,
+        2035,
+        2160,
+        2285,
+        2415,
+        2540,
+        2665,
+        2795,
+        2920,
+        3050,
+        3175,
+        3300,
+        3430,
+        3555
+    ]
+
+    if (!currentEPValue || !epKeyValue) {
+        return (
+            <select
+                onClick={event => event.stopPropagation()}
+                onChange={event => updateSkull(skullKeyValue, +event.target.value)}
+                value={currentSkullValue}
+            >
+                {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
+            </select>
+        )
+    }
+
     return (
-        <select onClick={event => event.stopPropagation()} onChange={event => updateSkull(keyValue, +event.target.value)} value={currentSkullValue}>
-            {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
-        </select>
+        <div>
+            <select
+                onClick={event => event.stopPropagation()}
+                onChange={event => updateSkull(skullKeyValue, +event.target.value)}
+                value={currentSkullValue}
+            >
+                {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
+            </select>
+
+            <select
+                onClick={event => event.stopPropagation()}
+                onChange={event => updateSkull(epKeyValue, +event.target.value)}
+                value={currentEPValue}
+            >
+                {epArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
+            </select>
+        </div>
     )
 }

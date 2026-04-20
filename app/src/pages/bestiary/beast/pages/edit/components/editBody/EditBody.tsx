@@ -41,7 +41,7 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(2)
+    const [tabIndex, setTabIndex] = useState(1)
 
     const { 
         id, generalInfo, combatInfo, skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
@@ -77,7 +77,7 @@ export default function EditBody({
                         <h1>Confrontation</h1>
                         <div className='role-and-skull-shell'>
                             <SocialRoleSelect updateSocialInfo={updateSocialInfo} primaryRole={socialInfo.socialRole} secondaryRole={socialInfo.socialSecondary} />
-                            <SkullSelection keyValue='socialSkulls' currentSkullValue={socialInfo.socialSkulls} updateSkull={updateSocialInfo} />
+                            <SkullSelection skullKeyValue='socialSkulls' epKeyValue='socialEpValue' currentSkullValue={socialInfo.socialSkulls} currentEPValue={socialInfo.socialRawEpValue} updateSkull={updateSocialInfo} />
                         </div>
                         <SocialEdit socialInfo={socialInfo} updateSocialInfoFunctions={updateSocialInfoFunctions} />
                     </>
@@ -87,7 +87,7 @@ export default function EditBody({
                         <h1>Combat</h1>
                         <div className='role-and-skull-shell'>
                             <CombatRoleSelect updateCombatInfo={updateCombatInfo} primaryRole={combatInfo.combatRole} secondaryRole={combatInfo.combatSecondary} />
-                            <SkullSelection keyValue='combatSkulls' currentSkullValue={combatInfo.combatSkulls} updateSkull={updateCombatInfo} />
+                            <SkullSelection skullKeyValue='combatSkulls' epKeyValue='combatEpValue' currentSkullValue={combatInfo.combatSkulls} currentEPValue={combatInfo.combatRawEpValue} updateSkull={updateCombatInfo} />
                         </div>
                         <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} spells={spells} />
                     </>
@@ -97,7 +97,7 @@ export default function EditBody({
                         <h1>Challenge</h1>
                         <div className='role-and-skull-shell'>
                             <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={skillInfo.skillRole} secondaryRole={skillInfo.skillSecondary} />
-                            <SkullSelection keyValue='skillSkulls' currentSkullValue={skillInfo.skillSkulls} updateSkull={updateSkillInfo} />
+                            <SkullSelection skullKeyValue='skillSkulls' epKeyValue='skillEpValue' currentSkullValue={skillInfo.skillSkulls} currentEPValue={skillInfo.skillRawEpValue} updateSkull={updateSkillInfo} />
                         </div>
                         <SkillEdit skillInfo={skillInfo} updateSkillInfo={updateSkillInfo} />
                     </>

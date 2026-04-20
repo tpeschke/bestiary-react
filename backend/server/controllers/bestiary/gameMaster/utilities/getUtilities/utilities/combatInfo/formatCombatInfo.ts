@@ -15,6 +15,7 @@ export default function formatCombatInfo(
     combatRole: string,
     combatSecondary: string,
     combatSkulls: number,
+    combatEpValue: number,
     combatPoints: number,
     attackInfo: string,
     defenseInfo: string,
@@ -30,7 +31,7 @@ export default function formatCombatInfo(
     combatSkulls = combatSkulls ?? getSkullNumber(combatPoints)
     const skullIndex = getSkullIndex(combatSkulls)
 
-    const baseEpValue = getBaseEPValue(combatSkulls)
+    const baseEpValue = combatEpValue ?? getBaseEPValue(combatSkulls)
     const epValueIndex = getEPIndex(baseEpValue)
 
     return {
@@ -38,7 +39,8 @@ export default function formatCombatInfo(
         combatRole, combatSecondary, limitNotes,
         combatSkulls,
         skullIndex,
-        epValue: calculateSecondaryRoleEffect(baseEpValue, combatSecondary),
+        combatEpValue: calculateSecondaryRoleEffect(baseEpValue, combatSecondary),
+        combatRawEpValue: baseEpValue,
         epValueIndex,
         attackInfo: attackInfo ?? '',
         defenseInfo: defenseInfo ?? '',

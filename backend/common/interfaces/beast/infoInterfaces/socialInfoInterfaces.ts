@@ -7,7 +7,8 @@ export default interface SocialInfo {
     socialSecondary: string,
     socialSkulls: number,
     skullIndex: number,
-    epValue: number,
+    socialEpValue: number,
+    socialRawEpValue: number,
     epValueIndex: number,
     capacity: {
         threshold: number[] | null,

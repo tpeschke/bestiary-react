@@ -183,7 +183,7 @@ export default function EditObstacle({ setLoading }: Props) {
                             </div>
                             <div>
                                 <h2>Skull</h2>
-                                <SkullSelection currentSkullValue={obstacle.skull} updateSkull={updateObstacleValue} keyValue="skull" />
+                                <SkullSelection currentSkullValue={obstacle.skull} updateSkull={updateObstacleValue} skullKeyValue="skull" />
                             </div>
                             <div>
                                 <h2>Prompt</h2>

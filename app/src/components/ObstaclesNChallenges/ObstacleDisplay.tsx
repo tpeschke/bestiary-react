@@ -88,7 +88,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                 <tbody>
                     {!hideCustomizations && <tr className='standard-row'>
                         <td colSpan={2}>
-                            <SkullSelection currentSkullValue={skull} updateSkull={updateSkull} keyValue='skull' />
+                            <SkullSelection currentSkullValue={skull} updateSkull={updateSkull} skullKeyValue='skull' />
                         </td>
                     </tr>}
                     {hideCustomizations && <tr className='standard-row'>

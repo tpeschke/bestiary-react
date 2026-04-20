@@ -13,8 +13,13 @@ export default function getUpdateSkillInfoFunctions(
     return {
         updateSkillInfo: (key: string, value: string | number) => {
             if (beast && beast.selectedRole) {
-                let modifiedSkillInfo: RoleSkillInfo = {
+                let modifiedRoleSkillInfo: RoleSkillInfo = {
                     ...beast.selectedRole.skillInfo,
+                    [key]: value
+                }
+
+                let modifiedSkillInfo = {
+                    ...beast.beastInfo.skillInfo,
                     [key]: value
                 }
 
@@ -24,13 +29,14 @@ export default function getUpdateSkillInfoFunctions(
 
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
+                    skillInfo: modifiedSkillInfo,
                     roleInfo: {
                         ...beast.beastInfo.roleInfo,
                         roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
                             if (index === beast.selectedRoleIndex) {
                                 return {
                                     ...role,
-                                    skillInfo: modifiedSkillInfo
+                                    skillInfo: modifiedRoleSkillInfo
                                 }
                             }
                             return role

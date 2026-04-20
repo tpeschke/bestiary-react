@@ -40,7 +40,8 @@ export type RoleCombatInfo = {
     combatSkulls: number,
     skullIndex: number,
     combatEpValue: number,
-    combatEpValueIndex: number,
+    combatRawEpValue: number,
+    epValueIndex: number,
     attack: string,
     defense: string,
     initiative: string,
@@ -62,7 +63,8 @@ export interface RoleSkillInfo {
     skillSkulls: number,
     skullIndex: number,
     skillEpValue: number,
-    skillEpValueIndex: number,
+    skillRawEpValue: number,
+    epValueIndex: number,
     skillRole: string,
     skillSecondary: string
     attackInfo: string,
@@ -74,7 +76,8 @@ export interface RoleSocialInfo {
     socialSkulls: number,
     skullIndex: number,
     socialEpValue: number,
-    socialEpValueIndex: number,
+    socialRawEpValue: number,
+    epValueIndex: number,
     capacity: {
         threshold: number[] | null,
         strength: Strength

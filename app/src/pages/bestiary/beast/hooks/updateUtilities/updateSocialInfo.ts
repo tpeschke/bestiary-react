@@ -13,24 +13,31 @@ export default function getUpdateSocialInfoFunctions(
     return {
         updateSocialInfo: (key: string, value: string | number) => {
             if (beast && beast.selectedRole) {
-                let modifiedSocialInfo: RoleSocialInfo = {
+                let modifiedRoleSocialInfo: RoleSocialInfo = {
                     ...beast.selectedRole.socialInfo,
+                    [key]: value
+                }
+
+                let modifiedSocialInfo = {
+                    ...beast.beastInfo.socialInfo,
                     [key]: value
                 }
 
                 if (key === 'socialSkulls' && typeof value === 'number') {
                     modifiedSocialInfo.skullIndex = getSkullIndex(value)
+                    modifiedSocialInfo.skullIndex = getSkullIndex(value)
                 }
 
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
+                    socialInfo: modifiedSocialInfo,
                     roleInfo: {
                         ...beast.beastInfo.roleInfo,
                         roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
                             if (index === beast.selectedRoleIndex) {
                                 return {
                                     ...role,
-                                    socialInfo: modifiedSocialInfo
+                                    socialInfo: modifiedRoleSocialInfo
                                 }
                             }
                             return role

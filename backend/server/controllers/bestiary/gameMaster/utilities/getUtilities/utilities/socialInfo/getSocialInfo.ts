@@ -16,6 +16,7 @@ export default function formatSocialInfo(
     defenseInfo: string | null,
     socialPoints: number,
     socialSkulls: number,
+    socialEpValue: number,
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean,
     capacityStrength: Strength
@@ -23,7 +24,7 @@ export default function formatSocialInfo(
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
 
-    const baseSocialEpValue = getBaseEPValue(socialSkulls)
+    const baseSocialEpValue = socialEpValue ?? getBaseEPValue(socialSkulls)
     const epValueIndex = getEPIndex(baseSocialEpValue)
 
     return {
@@ -31,7 +32,8 @@ export default function formatSocialInfo(
         socialRole, socialSecondary,
         socialSkulls,
         skullIndex,
-        epValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
+        socialEpValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
+        socialRawEpValue: baseSocialEpValue,
         epValueIndex,
         capacity:
         {
