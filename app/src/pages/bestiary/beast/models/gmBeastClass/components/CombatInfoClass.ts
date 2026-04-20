@@ -85,7 +85,7 @@ export default class CombatInfoClass {
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
 
         const epValue = (selectedRole ? selectedRole.combatInfo.combatEpValue : mainEpValue) + selectedModifier
-        const rawEpValue = (selectedRole ? selectedRole.combatInfo.combatEpValue : mainRawEpValue)
+        const rawEpValue = (selectedRole ? selectedRole.combatInfo.combatRawEpValue : mainRawEpValue)
         const epValueIndex = (selectedRole ? selectedRole.combatInfo.epValueIndex : mainEpValueIndex) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo

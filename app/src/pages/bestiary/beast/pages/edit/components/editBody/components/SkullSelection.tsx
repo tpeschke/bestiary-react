@@ -128,7 +128,7 @@ export default function SkullSelection({ currentSkullValue = 1, currentEPValue, 
                 onChange={event => updateSkull(epKeyValue, +event.target.value)}
                 value={currentEPValue}
             >
-                {epArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
+                {epArray.map((ep, index) => <option key={index} value={ep}>{ep}</option>)}
             </select>
         </div>
     )

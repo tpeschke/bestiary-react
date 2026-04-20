@@ -29,6 +29,7 @@ export interface UnsortedRole {
     secondaryrole: string,
     combatpoints: number,
     combatskulls: number,
+    combatepvalue: number,
     fatigue: Strength,
     largeweapons: Strength,
     knockback: number,
@@ -41,12 +42,14 @@ export interface UnsortedRole {
     mental: Strength,
     skillpoints: number,
     skillskulls: number,
+    skillepvalue: number,
     skillrole: string,
     attack_skill: string,
     defense_skill: string,
     skillsecondary: string,
     socialpoints: number,
     socialskulls: number,
+    socialepvalue: number,
     socialrole: string,
     socialsecondary: string,
     attack_conf: string,
@@ -75,25 +78,25 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
         attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes,
         notrauma: noTrauma, socialskulls, combatskulls, skillskulls, capacity: capacityStrength, mental: stressThresholdStrength,
-        everythingelsestrength: everythingElseStrength
+        everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
     } = unsortedRole
-
-    const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
-    const combatSkullIndex = getSkullIndex(combatSkulls)
-
-    const baseCombatEpValue = getBaseEPValue(combatSkulls)
-    const combatEpValueIndex = getEPIndex(baseCombatEpValue)
 
     const socialSkulls = socialskulls ?? getSkullNumber(socialPoints)
     const socialSkullIndex = getSkullIndex(socialSkulls)
 
-    const baseSocialEpValue = getBaseEPValue(socialSkulls)
+    const baseSocialEpValue = socialepvalue ?? getBaseEPValue(socialSkulls)
     const socialEpValueIndex = getEPIndex(baseSocialEpValue)
+
+    const combatSkulls = combatskulls ?? getSkullNumber(combatPoints)
+    const combatSkullIndex = getSkullIndex(combatSkulls)
+
+    const baseCombatEpValue = combatepvalue ?? getBaseEPValue(combatSkulls)
+    const combatEpValueIndex = getEPIndex(baseCombatEpValue)
 
     const skillSkulls = skillskulls ?? getSkullNumber(skillPoints)
     const skillSkullIndex = getSkullIndex(skillSkulls)
 
-    const baseSkillEpValue = getBaseEPValue(skillSkulls)
+    const baseSkillEpValue = skillepvalue ?? getBaseEPValue(skillSkulls)
     const skillEpValueIndex = getEPIndex(baseSkillEpValue)
 
     return {

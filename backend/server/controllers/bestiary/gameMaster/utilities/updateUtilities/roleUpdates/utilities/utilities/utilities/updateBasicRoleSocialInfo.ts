@@ -3,10 +3,10 @@ import query from "../../../../../../../../../db/database";
 
 export default async function updateBasicRoleSocialInfo(beastID: number, roleID: string, roleInfo: RoleSocialInfo) {
         const sqlQuery = `update bbRoles
-        set socialSkulls = $3, socialRole = $4, socialSecondary = $5, capacity = $6
+        set socialSkulls = $3, socialEpValue = $4, socialRole = $5, socialSecondary = $6, capacity = $7
         where beastID = $1 and id = $2`
     
-        const { socialSkulls, socialRole, socialSecondary, capacity } = roleInfo
+        const { socialSkulls, socialRawEpValue, socialRole, socialSecondary, capacity } = roleInfo
     
-        return query(sqlQuery, [beastID, roleID, socialSkulls, socialRole, socialSecondary, capacity.strength])
+        return query(sqlQuery, [beastID, roleID, socialSkulls, socialRawEpValue, socialRole, socialSecondary, capacity.strength])
 }
