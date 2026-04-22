@@ -20,7 +20,7 @@ export default function TraumaDisplay({ type, trauma, noTrauma, rollUnderTrauma 
             {showTrauma &&
                 <div className="trauma-pair-shell">
                     <div>
-                        <p>Trauma (</p> <Icon iconName="downArrow" color='black' tooltip={tooltip} /><p>)</p>
+                        <p>{type === 'Bonfire' ? 'Trauma' : 'ToP'} (</p> <Icon iconName="downArrow" color='black' tooltip={tooltip} /><p>)</p>
                     </div>
                     <p>{traumaString}</p>
                 </div>
