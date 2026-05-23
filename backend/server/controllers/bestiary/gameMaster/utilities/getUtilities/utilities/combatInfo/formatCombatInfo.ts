@@ -9,6 +9,7 @@ import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/co
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
+import { canonicalizeSpecialCombatText } from "@bestiary/common/utilities/formatting/formatting"
 
 export default function formatCombatInfo(
     limitNotes: string,
@@ -42,8 +43,8 @@ export default function formatCombatInfo(
         combatEpValue: calculateSecondaryRoleEffect(baseEpValue, combatSecondary),
         combatRawEpValue: baseEpValue,
         epValueIndex,
-        attackInfo: attackInfo ?? '',
-        defenseInfo: defenseInfo ?? '',
+        attackInfo: canonicalizeSpecialCombatText(attackInfo),
+        defenseInfo: canonicalizeSpecialCombatText(defenseInfo),
         initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
         attacks: [],
         defenses: [],
