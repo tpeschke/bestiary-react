@@ -463,6 +463,18 @@ FROM role_seed
 JOIN bbindividualbeast b ON b.hash = role_seed.beast_hash
 ON CONFLICT DO NOTHING;
 
+WITH default_role_seed (seed_hash, default_role_id) AS (
+    VALUES
+    ('ashenwyrm-001', 'ashenwyrm-brood-scorcher'),
+    ('boggart-thornback-001', 'boggart-briar-slinger'),
+    ('cinderstag-001', 'cinderstag-grove-warden')
+)
+UPDATE bbindividualbeast
+SET defaultrole = default_role_seed.default_role_id
+FROM default_role_seed
+WHERE bbindividualbeast.hash = default_role_seed.seed_hash
+AND (bbindividualbeast.defaultrole IS NULL OR bbindividualbeast.defaultrole = '');
+
 WITH attack_seed (seed_hash, role_hash, display_index, situation, reference) AS (
     VALUES
     ('ashenwyrm-001', NULL, 0, 'At Range', 'Magma Spit: spits molten slag that leaves burning ground; on a Trauma Check, the target takes +2 Pos pressure and its armor gains 1 Wear.'),
