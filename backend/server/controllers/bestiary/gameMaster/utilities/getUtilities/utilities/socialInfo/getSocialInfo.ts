@@ -8,6 +8,7 @@ import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
+import { buildSystemSpecificInfo } from "../../../formatUtilities/getSystemSpecificTerminologies"
 
 export default function formatSocialInfo(
     socialRole: string,
@@ -41,8 +42,8 @@ export default function formatSocialInfo(
             strength: capacityStrength
         },
         baseConvictionRank: 0,
-        attackInfo: attackInfo ?? '',
-        defenseInfo: defenseInfo ?? '',
+        attackInfo: buildSystemSpecificInfo(attackInfo),
+        defenseInfo: buildSystemSpecificInfo(defenseInfo),
         conflicts: {
             socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
             convictions: [],

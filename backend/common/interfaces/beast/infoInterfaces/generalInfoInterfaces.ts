@@ -24,6 +24,9 @@ export interface SaveObject {
     rank: string
 }
 
+export type SystemInfoArray = [string, undefined, string]
+export type SystemInfoValue = SystemInfoArray | string | null | undefined
+
 export interface Scenario {
     id: number,
     beastid: number,

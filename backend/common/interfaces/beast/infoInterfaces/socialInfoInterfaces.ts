@@ -1,5 +1,6 @@
 import { Strength } from "../../calculationInterfaces"
 import { SystemOption } from "../beast"
+import { SystemInfoArray } from "./generalInfoInterfaces"
 
 export default interface SocialInfo {
     type: SystemOption,
@@ -15,8 +16,8 @@ export default interface SocialInfo {
         strength: Strength
     },
     baseConvictionRank: number,
-    attackInfo: string,
-    defenseInfo: string,
+    attackInfo: SystemInfoArray,
+    defenseInfo: SystemInfoArray,
     archetypeInfo: ArchetypeInfo,
     conflicts: ConflictObject,
 }
