@@ -74,9 +74,11 @@ export default function getUpdateCombatInfoFunctions(
         },
         updateNonRoleInfo: (key: string, value: any) => {
             if (beast) {
+                const nextValue = key === 'defenseInfo' ? updateBonfireSystemInfo(beast.beastInfo.combatInfo.defenseInfo, value) : value
+
                 let modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
-                    [key]: value
+                    [key]: nextValue
                 }
     
                 if (key === 'combatSkulls' && typeof value === 'number') {
