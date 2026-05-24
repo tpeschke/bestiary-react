@@ -8,7 +8,7 @@ import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Icon from '../../../../../../../../../../components/icon/Icon'
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
+import { hasSystemInfoContent } from "../../../../../../../utilities/getSystemInfo"
 
 interface Props {
     skillInfo: SkillInfo

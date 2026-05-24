@@ -9,7 +9,7 @@ import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBon
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
-import { getSystemInfoText } from "@bestiary/common/utilities/get/getSystemInfo";
+import { getSystemInfoText } from "../../../utilities/getSystemInfo";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo

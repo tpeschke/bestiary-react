@@ -36,8 +36,6 @@ import getGenericSkillSuites from "./utilities/skillInfo/utilities/getSkillSuite
 import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
 import getSystemString from "@bestiary/common/utilities/get/getSystemString";
-import { getSystemInfoText } from "@bestiary/common/utilities/get/getSystemInfo";
-import { buildSystemSpecificInfo } from "../formatUtilities/getSystemSpecificTerminologies"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -166,13 +164,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             const isABeast = types.find((type: BeastType): boolean => type.typeid === 5)
             if (isABeast) {
                 const beastBonus = "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotinoal State gain is halved (rounded up).</p>"
-                const systemBeastBonus = buildSystemSpecificInfo(beastBonus)
-
-                beast.socialInfo.defenseInfo = [
-                    getSystemInfoText(beast.socialInfo.defenseInfo, 'Bonfire') + systemBeastBonus[0],
-                    undefined,
-                    getSystemInfoText(beast.socialInfo.defenseInfo, 'HackMaster') + systemBeastBonus[2]
-                ]
+                beast.socialInfo.defenseInfo += beastBonus
             }
 
             beast.linkedInfo.types = types

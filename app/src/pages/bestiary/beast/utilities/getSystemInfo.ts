@@ -1,6 +1,6 @@
-import { SystemOption } from "../../interfaces/beast/beast"
-import { SystemInfoValue } from "../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { BONFIRE, DND, HACKMASTER } from "./getSystemString"
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
+import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { BONFIRE, DND, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString"
 
 type SystemInfoPreference = 0 | 1 | 2 | SystemOption | undefined
 
@@ -20,18 +20,6 @@ export function getBonfireSystemInfo(info: SystemInfoValue): string {
 
 export function hasSystemInfoContent(info: SystemInfoValue, system?: SystemInfoPreference): boolean {
     return getSystemInfoText(info, system).trim().length > 0
-}
-
-export function updateBonfireSystemInfo(info: SystemInfoValue, value: string): SystemInfoValue {
-    if (!Array.isArray(info)) {
-        return value
-    }
-
-    return [
-        value,
-        info[DND],
-        info[HACKMASTER]
-    ]
 }
 
 function getSystemIndex(system?: SystemInfoPreference): 0 | 1 | 2 {

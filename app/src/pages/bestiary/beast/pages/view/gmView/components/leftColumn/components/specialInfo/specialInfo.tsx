@@ -2,7 +2,7 @@ import Body from "../../../../../../../components/UI/body/Body";
 import HTMLDisplay from "../../../../../../../components/UI/htmlDisplay/htmlDisplay";
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
-import { getSystemInfoText } from "@bestiary/common/utilities/get/getSystemInfo";
+import { getSystemInfoText } from "../../../../../../../utilities/getSystemInfo";
 
 interface Props {
     info?: SystemInfoValue,

@@ -1,7 +1,7 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
+import { hasSystemInfoContent } from "../../../../../../../../../utilities/getSystemInfo"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import DefenseStats from "./components/DefenseStats"
 

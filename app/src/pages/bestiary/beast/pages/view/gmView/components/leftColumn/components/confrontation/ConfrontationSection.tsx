@@ -6,7 +6,7 @@ import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CapacityDisplay from "./components/CapacityDisplay"
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
+import { hasSystemInfoContent } from "../../../../../../../utilities/getSystemInfo"
 
 interface Props {
     socialInfo: SocialInfo

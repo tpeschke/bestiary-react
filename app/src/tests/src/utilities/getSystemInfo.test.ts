@@ -1,4 +1,4 @@
-import { getBonfireSystemInfo, getSystemInfoText, hasSystemInfoContent, updateBonfireSystemInfo } from "@bestiary/common/utilities/get/getSystemInfo"
+import { getBonfireSystemInfo, getSystemInfoText, hasSystemInfoContent } from "../../../pages/bestiary/beast/utilities/getSystemInfo"
 import { SystemInfoArray } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 describe('getSystemInfoText', () => {
@@ -30,12 +30,10 @@ describe('getSystemInfoText', () => {
 })
 
 describe('system info helpers', () => {
-    test('reads and updates the canonical Bonfire slot', () => {
+    test('reads the canonical Bonfire slot', () => {
         const info: SystemInfoArray = ['<p>Old</p>', undefined, '<p>Old HackMaster</p>']
-        const updatedInfo = updateBonfireSystemInfo(info, '<p>New</p>') as SystemInfoArray
 
-        expect(getBonfireSystemInfo(updatedInfo)).toBe('<p>New</p>')
-        expect(getSystemInfoText(updatedInfo, 2)).toBe('<p>Old HackMaster</p>')
+        expect(getBonfireSystemInfo(info)).toBe('<p>Old</p>')
     })
 
     test('detects content after resolving the selected system', () => {

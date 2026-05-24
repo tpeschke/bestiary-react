@@ -5,7 +5,7 @@ import ListItem from '@tiptap/extension-list-item'
 import MenuBar from "../../../../../../../components/textEditor/menuBar"
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { getBonfireSystemInfo } from "@bestiary/common/utilities/get/getSystemInfo"
+import { getBonfireSystemInfo } from "../../../../../../../utilities/getSystemInfo"
 
 interface Props {
     defenseInfo: SystemInfoValue,

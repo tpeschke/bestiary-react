@@ -1,7 +1,6 @@
 import { Strength } from "../../calculationInterfaces"
 import { DiceOptions, SystemOption } from "../beast"
 import { Spell } from "./castingInfo"
-import { SystemInfoValue } from "./generalInfoInterfaces"
 
 export interface BasicCombatInfo {
     combatRole: string,
@@ -12,8 +11,8 @@ export interface BasicCombatInfo {
     combatRawEpValue: number,
     epValueIndex: number,
 
-    attackInfo: SystemInfoValue,
-    defenseInfo: SystemInfoValue,
+    attackInfo: string,
+    defenseInfo: string,
 }
 
 export type SpecialCombatInfo = [string, undefined, string]
