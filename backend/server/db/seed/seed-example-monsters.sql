@@ -1,6 +1,8 @@
 -- 5 Example Monsters for Bonfire Bestiary development
 -- Run: psql -U bestiary -d bestiary -f backend/server/db/seed/seed-example-monsters.sql
 
+BEGIN;
+
 INSERT INTO bbindividualbeast (name, intro, habitat, ecology, senses, diet, size, patreon, canplayerview, rarity, role, secondaryrole, socialrole, skillrole, plural, tactics, sp_atk, sp_def, atk_conf, def_conf, atk_skill, def_skill, combatskulls, socialskulls, skillskulls, combatpoints, socialpoints, skillpoints, hash)
 VALUES
 (
@@ -104,3 +106,79 @@ VALUES
     'ironhide-troll-001'
 )
 ON CONFLICT DO NOTHING;
+
+WITH attack_seed (seed_hash, display_index, situation, reference) AS (
+    VALUES
+    ('ashenwyrm-001', 0, 'At Range', 'Magma Spit: spits molten slag that leaves burning ground; on a Trauma Check, the target takes +2 Pos pressure and its armor gains 1 Wear.'),
+    ('boggart-thornback-001', 0, 'From Concealment', 'Thorn Volley: launches a spray of barbed thorns; on a Trauma Check, barbs twist deeper and add X Wear to shields.'),
+    ('cinderstag-001', 0, 'Defending the Grove', 'Ember Charge: rushes with burning antlers; on a Trauma Check, the target is Trauma''d by ancestral fire.'),
+    ('gloomweaver-001', 0, 'In Darkness', 'Shadow Bite: bites from a pool of shadow, reducing the target''s darkvision range; on a Trauma Check, the bite also drains Vitality.'),
+    ('ironhide-troll-001', 0, 'At Range', 'Boulder Hurl: throws a massive stone; on a Trauma Check, targets are knocked prone and gain Fatigue.')
+)
+INSERT INTO bbattacks (index, reference, tactic, situation, roleid, beastid)
+SELECT
+    attack_seed.display_index,
+    attack_seed.reference,
+    NULL,
+    attack_seed.situation,
+    NULL,
+    bbindividualbeast.id
+FROM attack_seed
+JOIN bbindividualbeast ON bbindividualbeast.hash = attack_seed.seed_hash
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM bbattacks
+    WHERE bbattacks.beastid = bbindividualbeast.id
+    AND bbattacks.reference = attack_seed.reference
+);
+
+WITH defense_seed (seed_hash, display_index, defense_name, info, swarmbonus, armor, shield, eua, addsizemod, tdr) AS (
+    VALUES
+    ('ashenwyrm-001', 0, 'Obsidian Scales', '<p>Heat Shimmer: when the Ashenwyrm Parries an attack, the attacker suffers Fatigue and Stress from the furnace glare.</p>', false, '', '', false, true, false),
+    ('boggart-thornback-001', 0, 'Briar Armor', '<p>Briar Armor: when the Boggart Parries an attack, brambles snag the weapon and inflict 1 Wear.</p>', false, '', '', false, true, false),
+    ('cinderstag-001', 0, 'Ashen Ward', '<p>Ashen Ward: allies within 15ft gain Vitality against flame and reduce incoming Wear by 1.</p>', false, '', '', false, true, false),
+    ('gloomweaver-001', 0, 'Light Eater', '<p>Light Eater: can suppress magical and mundane light within 30ft, gaining Recovery when it Parries an attack in darkness.</p>', false, '', '', false, true, false),
+    ('ironhide-troll-001', 0, 'Iron Skin', '<p>Iron Skin: reduces all physical damage by a flat amount; weapons gain 1 Wear when the Troll Parries an attack.</p>', false, '', '', false, true, true)
+),
+missing_defense_seed AS (
+    SELECT
+        defense_seed.*,
+        bbindividualbeast.id AS beastid
+    FROM defense_seed
+    JOIN bbindividualbeast ON bbindividualbeast.hash = defense_seed.seed_hash
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM bbdefenses
+        WHERE bbdefenses.beastid = bbindividualbeast.id
+        AND bbdefenses.name = defense_seed.defense_name
+    )
+),
+inserted_combat_stats AS (
+    INSERT INTO bbcombatstats (
+        beastid, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+        weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, alldefense,
+        allaround, armorandshields, unarmored, attack, isspecial, eua, addsizemod, weapon, shield,
+        armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses, weapontype,
+        rangedistance, swarmbonus, adjustment, tdr, info
+    )
+    SELECT
+        beastid, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, 'no', eua, addsizemod, '', shield,
+        armor, defense_name, NULL, NULL, NULL, NULL, true, 'm',
+        NULL, swarmbonus, 0, tdr, info
+    FROM missing_defense_seed
+    RETURNING id, beastid, weaponname
+)
+INSERT INTO bbdefenses (oldid, beastid, index, name)
+SELECT
+    inserted_combat_stats.id,
+    inserted_combat_stats.beastid,
+    missing_defense_seed.display_index,
+    missing_defense_seed.defense_name
+FROM inserted_combat_stats
+JOIN missing_defense_seed
+    ON missing_defense_seed.beastid = inserted_combat_stats.beastid
+    AND missing_defense_seed.defense_name = inserted_combat_stats.weaponname;
+
+COMMIT;
