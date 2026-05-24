@@ -1,7 +1,7 @@
 -- 5 Example Monsters for Bonfire Bestiary development
 -- Run: psql -U bestiary -d bestiary -f backend/server/db/seed/seed-example-monsters.sql
 
-INSERT INTO bbindividualbeast (name, intro, habitat, ecology, senses, diet, size, patreon, canplayerview, rarity, role, secondaryrole, socialrole, skillrole, plural, tactics, sp_atk, sp_def, combatskulls, socialskulls, skillskulls, combatpoints, socialpoints, skillpoints, hash)
+INSERT INTO bbindividualbeast (name, intro, habitat, ecology, senses, diet, size, patreon, canplayerview, rarity, role, secondaryrole, socialrole, skillrole, plural, tactics, sp_atk, sp_def, atk_conf, def_conf, atk_skill, def_skill, combatskulls, socialskulls, skillskulls, combatpoints, socialpoints, skillpoints, hash)
 VALUES
 (
     'Ashenwyrm',
@@ -14,8 +14,12 @@ VALUES
     'Striker', 'Controller', 'Intimidator', 'Ambusher',
     'Ashenwyrms',
     '<p>Opens with a burrowing ambush, erupting from below to scatter enemies. Focuses fire breath on clustered foes, then coils around isolated targets.</p>',
-    '<p>Magma Spit: Ranged attack that leaves burning patches on the ground.</p>',
-    '<p>Heat Shimmer: Attacks against the Ashenwyrm have disadvantage when it stands on heated ground.</p>',
+    '<p>Magma Spit: Ranged attack that leaves burning patches on the ground; On a Trauma Check, the target takes +2 Pos pressure and its armor gains 1 Wear.</p>',
+    '<p>Heat Shimmer: When the Ashenwyrm Parries an attack, the attacker suffers Fatigue And Stress from the furnace glare.</p>',
+    '<p>Smoldering Ultimatum: In a Confrontation, invokes volcanic Mem to apply Stress to a foe that refuses to back down.</p>',
+    '<p>Obsidian Poise: On Trauma Check language or threats, the Ashenwyrm turns fear into +2 Pos for its next reply.</p>',
+    '<p>Faultline Pursuit: During a Challenge, rolls dX! as tremors split the route; failures add X Wear to exposed gear.</p>',
+    '<p>Lava Tube Recovery: Burns Endurance to clear Fatigue and gain Recovery before continuing the Challenge.</p>',
     5, 3, 4, 12, 6, 8,
     'ashenwyrm-001'
 ),
@@ -30,8 +34,12 @@ VALUES
     'Skirmisher', 'Lurker', 'Trickster', 'Trapper',
     'Boggarts',
     '<p>Uses guerrilla tactics--hit and run from concealment. Launches thorn volleys then retreats into difficult terrain where larger foes cannot follow.</p>',
-    '<p>Thorn Volley: Launches a spray of barbed thorns in a cone.</p>',
-    '<p>Briar Armor: Melee attackers take piercing damage when they hit the Boggart.</p>',
+    '<p>Thorn Volley: Launches a spray of barbed thorns; On Trauma Check, barbs twist deeper and add X Wear to shields.</p>',
+    '<p>Briar Armor: When the Boggart Parries an attack, brambles snag the weapon and inflict 1 Wear.</p>',
+    '<p>Needling Taunt: In a Confrontation, mocks a target until Stress and Fatigue make retreat tempting.</p>',
+    '<p>Mud-Slick Deflection: Spend Mem to ignore the first +2 Pos gained against it in a Confrontation.</p>',
+    '<p>Snare Path: During a Challenge, hidden loops force dX! checks or drain Endurance.</p>',
+    '<p>Bogbound Recovery: Uses reed beds for Recovery, removing Fatigue after a failed Challenge defense.</p>',
     2, 2, 3, 4, 3, 6,
     'boggart-thornback-001'
 ),
@@ -46,8 +54,12 @@ VALUES
     'Defender', 'Leader', 'Guardian', 'Sentinel',
     'Cinderstags',
     '<p>Prefers to warn intruders away with displays of flame before resorting to violence. Charges with burning antlers and uses hooves to create walls of fire between threats and the forest.</p>',
-    '<p>Ember Charge: A rushing antler attack that ignites the target.</p>',
-    '<p>Ashen Ward: Allies within 15ft gain resistance to fire damage.</p>',
+    '<p>Ember Charge: A rushing antler attack that ignites the target; On a Trauma Check, the target is Trauma''d by ancestral fire.</p>',
+    '<p>Ashen Ward: Allies within 15ft gain Vitality against flame and reduce incoming Wear by 1.</p>',
+    '<p>Guardian Rebuke: In a Confrontation, demands trespassers withdraw and adds +2 Pos when defending regrowth.</p>',
+    '<p>Quiet Resolve: Converts Stress into calm Mem, blunting hostile Confrontation attacks.</p>',
+    '<p>Rootfire Trail: During a Challenge, creates burning guide marks that grant Recovery to allies who keep pace.</p>',
+    '<p>Last Grove Stand: Spends Endurance to absorb Fatigue for a companion during Challenge defense.</p>',
     4, 4, 3, 8, 8, 5,
     'cinderstag-001'
 ),
@@ -62,8 +74,12 @@ VALUES
     'Lurker', 'Controller', 'Deceiver', 'Ambusher',
     'Gloomweavers',
     '<p>Extinguishes light sources first, then attacks from darkness. Wraps shadow webs around isolated targets to restrain and drain them. Retreats if exposed to bright light.</p>',
-    '<p>Shadow Bite: Melee attack that reduces the target''s darkvision range.</p>',
-    '<p>Light Eater: Can suppress magical and mundane light within 30ft as a reaction.</p>',
+    '<p>Shadow Bite: Melee attack that reduces the target''s darkvision range; On Trauma Check, the bite also drains Vitality.</p>',
+    '<p>Light Eater: Can suppress magical and mundane light within 30ft, gaining Recovery when it Parries an attack in darkness.</p>',
+    '<p>Whisper Web: In a Confrontation, threads stolen secrets through Mem to impose Stress.</p>',
+    '<p>Blank Face: Takes +2 Pos on defense when Confrontation pressure relies on fear or shame.</p>',
+    '<p>Null-Lantern Maze: During a Challenge, rolls dX! for false exits that add Fatigue to pursuers.</p>',
+    '<p>Silken Shelter: Converts X Wear on its webbing into Endurance for Challenge defense.</p>',
     3, 2, 4, 6, 4, 8,
     'gloomweaver-001'
 ),
@@ -78,8 +94,12 @@ VALUES
     'Brute', 'Defender', 'Bully', 'Enforcer',
     'Ironhide Trolls',
     '<p>Stands its ground and absorbs punishment. Uses the terrain to funnel enemies into melee range. Throws boulders at distant foes, then closes to crush them.</p>',
-    '<p>Boulder Hurl: Ranged attack with a massive thrown stone.</p>',
-    '<p>Iron Skin: Reduces all physical damage by a flat amount. Immune to critical hits from slashing weapons.</p>',
+    '<p>Boulder Hurl: Ranged attack with a massive thrown stone; On Trauma Check, targets are knocked prone and gain Fatigue.</p>',
+    '<p>Iron Skin: Reduces all physical damage by a flat amount; weapons gain 1 Wear when the Troll Parries an attack.</p>',
+    '<p>Toll Demand: In a Confrontation, threatens the road with +2 Pos unless travelers pay tribute.</p>',
+    '<p>Stony Silence: Ignores Stress from insults and spends Mem to hold its ground.</p>',
+    '<p>Pass Breaker: During a Challenge, its thrown rubble creates X Wear on carts and climbing tools.</p>',
+    '<p>Mountain Endurance: Uses huge Vitality and Endurance to turn Fatigue into slow Recovery.</p>',
     6, 3, 2, 14, 5, 4,
     'ironhide-troll-001'
 )
