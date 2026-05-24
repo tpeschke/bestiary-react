@@ -7,19 +7,19 @@ import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
-import CombatInfo, { BonfireCombatInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { BonfireCombatInfo, HackMasterCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 
 interface Props {
-    combatInfo: CombatInfo,
+    combatInfo: SpecificCombatInfo,
     size: Size
 }
 
 export default function CombatSection({ combatInfo, size }: Props) {
     if (combatInfo.type === "Bonfire") {
-        return <BonfireCombatInfoDisplay combatInfo={combatInfo} size={size} />
+        return <BonfireCombatInfoDisplay combatInfo={combatInfo as BonfireCombatInfo} size={size} />
     } else if (combatInfo.type === 'HackMaster') {
-        return <HackMasterCombatInfoDisplay combatInfo={combatInfo} size={size} />
+        return <HackMasterCombatInfoDisplay combatInfo={combatInfo as HackMasterCombatInfo} size={size} />
     }
 
     return <></>
@@ -70,8 +70,8 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
-            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} system={type} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} system={type} />
             <Movement movements={movements} />
         </>
     )
@@ -127,8 +127,8 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
-            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} system={type} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} system={type} />
             <Movement movements={movements} />
         </>
     )

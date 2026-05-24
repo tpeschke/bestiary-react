@@ -1,4 +1,4 @@
-import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
+import { NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import getSkullNumber from "../getSkulls";
 import calculateStress from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress";
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
@@ -18,7 +18,7 @@ export default function formatSkillInfo(
     attackInfo: string,
     defenseInfo: string,
     stressThresholdStrength: Strength
-): SkillInfo {
+): NonspecificSkillInfo {
     skillSkulls = skillSkulls ?? getSkullNumber(skillPoints)
     const skullIndex = getSkullIndex(skillSkulls)
 

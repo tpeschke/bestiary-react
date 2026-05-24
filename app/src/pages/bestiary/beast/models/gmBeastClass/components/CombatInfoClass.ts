@@ -1,6 +1,6 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import CombatInfo, { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { BonfireRole, HackMasterRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterAttackInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
@@ -9,17 +9,18 @@ import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBon
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
+import { BONFIRE } from "@bestiary/common/utilities/get/getSystemString";
 
 export default class CombatInfoClass {
-    private entryCombatInfo: CombatInfo
+    private entryCombatInfo: NonspecificCombatInfo
     public selectedSystem: SystemOption
 
-    constructor(combatInfo: CombatInfo, system: SystemOption) {
+    constructor(combatInfo: NonspecificCombatInfo, system: SystemOption) {
         this.entryCombatInfo = combatInfo
         this.selectedSystem = system
     }
 
-    get rawCombatInfo(): CombatInfo {
+    get rawCombatInfo(): NonspecificCombatInfo {
         return this.entryCombatInfo
     }
 
@@ -31,7 +32,7 @@ export default class CombatInfoClass {
         }
     }
 
-    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): CombatInfo {
+    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): SpecificCombatInfo {
         if (this.selectedSystem === 'Bonfire') {
             return this.getBonfireCombatInfo(size, roleID, selectedRole as BonfireRole, selectedModifier, spells)
         } else {
@@ -50,7 +51,9 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
-        let { attackInfo, defenseInfo } = this.entryCombatInfo
+        let attackInfo = this.entryCombatInfo.attackInfo[BONFIRE]
+        let defenseInfo = this.entryCombatInfo.defenseInfo[BONFIRE]
+
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
             if (attack) { attackInfo += attack }
@@ -63,7 +66,8 @@ export default class CombatInfoClass {
             combatRole, combatSecondary,
             combatSkulls: skulls,
             skullIndex,
-            attackInfo, defenseInfo,
+            attackInfo, 
+            defenseInfo,
             initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
             vitalityInfo: {
                 ...vitalityInfo,
@@ -90,7 +94,8 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
-        let { attackInfo, defenseInfo } = this.entryCombatInfo
+        let attackInfo = this.entryCombatInfo.attackInfo[BONFIRE]
+        let defenseInfo = this.entryCombatInfo.defenseInfo[BONFIRE]
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
             if (attack) { attackInfo += attack }
@@ -104,7 +109,8 @@ export default class CombatInfoClass {
             combatEpValue: epValue,
             combatRawEpValue: rawEpValue,
             epValueIndex: epValueIndex,
-            attackInfo, defenseInfo,
+            attackInfo, 
+            defenseInfo,
             initiative: getInitiative(combatRole, epValueIndex, 'HackMaster'),
             vitalityInfo: {
                 ...vitalityInfo,

@@ -1,7 +1,7 @@
 import query from "../../../../../../../db/database";
-import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
+import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
 
-export default async function updateBasicSocialInfo(beastID: number, socialInfo: SocialInfo) {
+export default async function updateBasicSocialInfo(beastID: number, socialInfo: NonspecificSocialInfo) {
     const sqlQuery = `update bbIndividualBeast
     set socialSkulls = $2, socialEpValue = $3, socialRole = $4, socialSecondary = $5, capacity = $6
     where id = $1`
