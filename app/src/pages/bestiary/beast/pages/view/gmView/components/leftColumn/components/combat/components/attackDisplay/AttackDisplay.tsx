@@ -1,26 +1,25 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import { AttackInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import AttackStats from "./components/AttackStats"
 import ReferenceView from "./components/ReferenceView"
 import SpellReferenceView from "./components/SpellReferenceView"
 
 interface Props {
-    attackInfo: SystemInfoValue,
+    attackInfo: string,
     attacks: AttackInfo[],
     system: SystemOption
 }
 
 export default function AttackDisplay({ attackInfo, attacks, system }: Props) {
-    const showSection = hasSystemInfoContent(attackInfo, system) || attacks.length > 0
+    const showSection = !!attackInfo || attacks.length > 0
     return (
         <>
             {showSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={attackInfo} system={system} />
+                    <SpecialInfo info={attackInfo} />
                     {attacks.map((attack, index) => {
                         if (attack.infoType === 'weapon') {
                             return <AttackStats key={index} attackStat={attack} />

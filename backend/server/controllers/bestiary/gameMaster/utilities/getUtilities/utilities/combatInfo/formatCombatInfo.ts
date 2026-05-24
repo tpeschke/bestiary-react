@@ -1,4 +1,4 @@
-import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { NonspecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullNumber from "../getSkulls"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
@@ -28,7 +28,7 @@ export default function formatCombatInfo(
     isIncorporeal: boolean,
     weaponBreakageVitality: boolean,
     size: Size
-): CombatInfo {
+): NonspecificCombatInfo {
     combatSkulls = combatSkulls ?? getSkullNumber(combatPoints)
     const skullIndex = getSkullIndex(combatSkulls)
 
@@ -36,8 +36,10 @@ export default function formatCombatInfo(
     const epValueIndex = getEPIndex(baseEpValue)
 
     return {
-        type: 'Bonfire',
-        combatRole, combatSecondary, limitNotes,
+        type: "Bonfire",
+        combatRole, 
+        combatSecondary, 
+        limitNotes,
         combatSkulls,
         skullIndex,
         combatEpValue: calculateSecondaryRoleEffect(baseEpValue, combatSecondary),

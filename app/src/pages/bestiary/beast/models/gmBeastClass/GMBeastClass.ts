@@ -3,8 +3,8 @@ import LootInfo from "../../interfaces/infoInterfaces/lootInfoInterfaces";
 import PlayerSpecificInfo from "../../interfaces/infoInterfaces/playerSpecificInfoInterfaces";
 import { BeastInfo } from "../../interfaces/viewInterfaces";
 
-import SocialInfo, { Conflict } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
-import SkillInfo from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
+import { Conflict, NonspecificSocialInfo, SpecificSocialInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
+import { NonspecificSkillInfo, SpecificSkillInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
 import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress'
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
@@ -16,7 +16,6 @@ import alertInfo from "../../../../../components/alert/alerts";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
 import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
 import CombatInfoClass from "./components/CombatInfoClass";
-import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
 import getSkills from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkills";
@@ -24,12 +23,13 @@ import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel";
-import getSystemString from "@bestiary/common/utilities/get/getSystemString";
+import getSystemString, { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString";
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import getPhysicalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getPhysicalSave";
 import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getMentalSave";
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
 import { getRarity } from "@bestiary/common/utilities/get/getRarity"
+import { SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -47,8 +47,8 @@ export default class GMBeastClass {
     private entryLinkedInfo: LinkedInfo
     private entryRoleInfo: RoleInfo
     private entryCombatInfo: CombatInfoClass
-    private entrySkillInfo: SkillInfo
-    private entrySocialInfo: SocialInfo
+    private entrySkillInfo: NonspecificSkillInfo
+    private entrySocialInfo: NonspecificSocialInfo
     private entryLootInfo: LootInfo
 
     private castingTypeInfo: CastingClass
@@ -202,7 +202,7 @@ export default class GMBeastClass {
         return this.entryImageInfo
     }
 
-    get socialInfo(): SocialInfo {
+    get socialInfo(): SpecificSocialInfo {
         if (this.system === 'HackMaster') {
             return this.getHackMasterSocialInfo()
         }
@@ -210,7 +210,7 @@ export default class GMBeastClass {
         return this.getBonfireSocialInfo()
     }
 
-    private getBonfireSocialInfo(): SocialInfo {
+    private getBonfireSocialInfo(): SpecificSocialInfo {
         const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
@@ -220,21 +220,31 @@ export default class GMBeastClass {
 
             const roleSelected = this.isRoleSelected()
 
-            const socialRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRole : role
-            const socialSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSecondary : secondary
+            const socialRole = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialRole : role
+            const socialSecondary = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialSecondary : secondary
 
-            const capacity = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
+            const capacity = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
 
-            const socialSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
-            const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.selectedModifier
+            const socialSkulls = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
+            const skullIndex = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.selectedModifier
 
-            const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
-            const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
+            const hasArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
+            const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
 
+            let attackInfo = this.entrySocialInfo.attackInfo[BONFIRE]
+            let defenseInfo = this.entrySocialInfo.defenseInfo[BONFIRE]
+
+            if (roleSelected) {
+                const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo
+                if (attack) { attackInfo += attack }
+                if (defense) { defenseInfo += defense }
+            }
             return {
                 ...this.entrySocialInfo,
                 type: 'Bonfire',
                 socialRole, socialSecondary,
+                attackInfo,
+                defenseInfo,
                 socialSkulls,
                 capacity: {
                     threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacity.strength, 'Bonfire'),
@@ -259,7 +269,7 @@ export default class GMBeastClass {
         return this.socialInfo
     }
 
-    private getHackMasterSocialInfo(): SocialInfo {
+    private getHackMasterSocialInfo(): SpecificSocialInfo {
         const { conflicts, socialRole: role, socialSecondary: secondary, archetypeInfo, socialEpValue: mainEpValue, socialRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, capacity: mainCapacity } = this.entrySocialInfo
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
 
@@ -281,9 +291,20 @@ export default class GMBeastClass {
             const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
 
+            let attackInfo = this.entrySocialInfo.attackInfo[HACKMASTER]
+            let defenseInfo = this.entrySocialInfo.defenseInfo[HACKMASTER]
+
+            if (roleSelected) {
+                const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo
+                if (attack) { attackInfo += attack }
+                if (defense) { defenseInfo += defense }
+            }
+
             return {
                 ...this.entrySocialInfo,
                 type: 'HackMaster',
+                attackInfo,
+                defenseInfo,
                 socialRole, socialSecondary,
                 socialEpValue: epValue,
                 socialRawEpValue: rawEpValue,
@@ -323,7 +344,7 @@ export default class GMBeastClass {
         }
     }
 
-    get skillInfo(): SkillInfo {
+    get skillInfo(): SpecificSkillInfo {
         if (this.system === 'HackMaster') {
             return this.getHackMasterSkillInfo()
         }
@@ -331,11 +352,11 @@ export default class GMBeastClass {
         return this.getBonfireSkillInfo()
     }
 
-    get bonfireSkillInfo(): SkillInfo {
+    get bonfireSkillInfo(): SpecificSkillInfo {
         return this.getBonfireSkillInfo()
     }
 
-    private getBonfireSkillInfo(): SkillInfo {
+    private getBonfireSkillInfo(): SpecificSkillInfo {
         const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index, stress, skills: mainSkills } = this.entrySkillInfo
 
         const roleSelected = this.isRoleSelected()
@@ -348,9 +369,20 @@ export default class GMBeastClass {
 
         const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
 
+        let attackInfo = this.entrySkillInfo.attackInfo[BONFIRE]
+        let defenseInfo = this.entrySkillInfo.defenseInfo[BONFIRE]
+
+        if (roleSelected) {
+            const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo
+            if (attack) { attackInfo += attack }
+            if (defense) { defenseInfo += defense }
+        }
+
         return {
             ...this.entrySkillInfo,
             type: 'Bonfire',
+            attackInfo,
+            defenseInfo,
             stress: {
                 threshold: calculateStress(skillSecondary, skullIndex, stress.strength),
                 strength: stress.strength,
@@ -361,7 +393,7 @@ export default class GMBeastClass {
         }
     }
 
-    private getHackMasterSkillInfo(): SkillInfo {
+    private getHackMasterSkillInfo(): SpecificSkillInfo {
         const { skillRole: role, skillSecondary: secondary, stress, skills: mainSkills, skillEpValue: mainEpValue, skillRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex } = this.entrySkillInfo
 
         const roleSelected = this.isRoleSelected()
@@ -375,22 +407,33 @@ export default class GMBeastClass {
 
         const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
 
+        let attackInfo = this.entrySkillInfo.attackInfo[HACKMASTER]
+        let defenseInfo = this.entrySkillInfo.defenseInfo[HACKMASTER]
+
+        if (roleSelected) {
+            const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo
+            if (attack) { attackInfo += attack }
+            if (defense) { defenseInfo += defense }
+        }
+
         return {
             ...this.entrySkillInfo,
             type: 'HackMaster',
+            attackInfo,
+            defenseInfo,
             stress: {
                 threshold: calculateStress(skillSecondary, epValueIndex, stress.strength),
                 strength: stress.strength,
                 defenseNFleeDice: getDefenseNFlee(skillRole, epValueIndex)
             },
-            skillRole, skillSecondary, 
-            skillEpValue: epValue, 
+            skillRole, skillSecondary,
+            skillEpValue: epValue,
             skillRawEpValue: rawEpValue, epValueIndex,
             skills: getSkills(skillRole, epValueIndex, skills?.everythingElseStrength, skills, 'HackMaster')
         }
     }
 
-    get combatInfo(): CombatInfo {
+    get combatInfo(): SpecificCombatInfo {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
         const selectedRole: Role = this.entryRoleInfo.roles[this.selectRoleIndex]
 

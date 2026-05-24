@@ -1,22 +1,17 @@
 import Body from "../../../../../../../components/UI/body/Body";
 import HTMLDisplay from "../../../../../../../components/UI/htmlDisplay/htmlDisplay";
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
-import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
-import { getSystemInfoText } from "@bestiary/common/utilities/get/getSystemInfo";
 
 interface Props {
-    info?: SystemInfoValue,
-    system?: SystemOption
+    info?: string,
 }
 
-export default function SpecialInfo({ info, system }: Props) {
-    const html = getSystemInfoText(info, system)
-
+export default function SpecialInfo({ info }: Props) {
     return (
         <>
-            {html ?
+            {info ?
                 <Body>
-                    <HTMLDisplay html={html} />
+                    <HTMLDisplay html={info} />
                 </Body>
                 :
                 <></>

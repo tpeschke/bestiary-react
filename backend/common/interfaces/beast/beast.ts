@@ -1,14 +1,14 @@
-import CombatInfo from './infoInterfaces/combatInfoInterfaces'
 import GeneralInfo from './infoInterfaces/generalInfoInterfaces'
-import SkillInfo from './infoInterfaces/skillInfoInterfaces'
+import { NonspecificSkillInfo } from './infoInterfaces/skillInfoInterfaces'
 import ImageInfo from './infoInterfaces/ImageInfoInterfaces'
 import LinkedInfo from './infoInterfaces/linkedInfoInterfaces'
 import RoleInfo from './infoInterfaces/roleInfoInterfaces'
 import LootInfo from './infoInterfaces/lootInfoInterfaces'
 import CastingInfo from './infoInterfaces/castingInfo'
-import SocialInfo from './infoInterfaces/socialInfoInterfaces'
+import { NonspecificSocialInfo } from './infoInterfaces/socialInfoInterfaces'
 import PlayerSpecificInfo from './infoInterfaces/playerSpecificInfoInterfaces'
 import { Access } from '../../utilities/get/getAccessLevel'
+import { NonspecificCombatInfo } from './infoInterfaces/combatInfoInterfaces'
 
 export interface Beast {
     id: number,
@@ -20,9 +20,9 @@ export interface Beast {
     imageInfo: ImageInfo,
     linkedInfo: LinkedInfo,
     roleInfo: RoleInfo,
-    combatInfo: CombatInfo,
-    skillInfo: SkillInfo,
-    socialInfo: SocialInfo,
+    combatInfo: NonspecificCombatInfo,
+    skillInfo: NonspecificSkillInfo,
+    socialInfo: NonspecificSocialInfo,
     lootInfo: LootInfo,
     castingInfo: CastingInfo
 }

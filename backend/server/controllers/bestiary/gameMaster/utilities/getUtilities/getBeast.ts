@@ -35,8 +35,7 @@ import getStrategicOptions from "./utilities/combatInfo/getStrategicOptions"
 import getGenericSkillSuites from "./utilities/skillInfo/utilities/getSkillSuites"
 import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
-import getSystemString from "@bestiary/common/utilities/get/getSystemString";
-import { getSystemInfoText } from "@bestiary/common/utilities/get/getSystemInfo";
+import getSystemString, { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString";
 import { buildSystemSpecificInfo } from "../formatUtilities/getSystemSpecificTerminologies"
 
 interface GetBeastOptions {
@@ -50,11 +49,11 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { isEditing, userID, gearCache, systemPreference } = options
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
-    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail, 
-        imagesource, rolenameorder, defaultrole, sp_atk, sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary, 
-        notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole, 
-        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes, 
-        hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength, 
+    const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail,
+        imagesource, rolenameorder, defaultrole, sp_atk, sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
+        notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
+        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes,
+        hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength,
         capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
     } = unsortedBeastInfo
 
@@ -124,11 +123,11 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         socialInfo: formatSocialInfo(
-            socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, socialepvalue, hasarchetypes, hasmonsterarchetypes, 
+            socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, socialepvalue, hasarchetypes, hasmonsterarchetypes,
             capacityStrength
         ),
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_def, notrauma, knockback, 
+            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_def, notrauma, knockback,
             singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(
@@ -169,9 +168,9 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
                 const systemBeastBonus = buildSystemSpecificInfo(beastBonus)
 
                 beast.socialInfo.defenseInfo = [
-                    getSystemInfoText(beast.socialInfo.defenseInfo, 'Bonfire') + systemBeastBonus[0],
+                    beast.socialInfo.defenseInfo[BONFIRE] + systemBeastBonus[0],
                     undefined,
-                    getSystemInfoText(beast.socialInfo.defenseInfo, 'HackMaster') + systemBeastBonus[2]
+                    beast.socialInfo.defenseInfo[HACKMASTER] + systemBeastBonus[2]
                 ]
             }
 
@@ -200,7 +199,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
                 ...archetypeInfo
             }
         }),
-        
+
         getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma),
         getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots),
 
@@ -215,7 +214,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         getCarriedScrolls(beast.id).then((scrolls: Scroll[]) => beast.lootInfo.carriedLoot = { ...beast.lootInfo.carriedLoot, scrolls }),
 
         getCasting(beast.id).then((casting: Casting) => beast.castingInfo.casting = casting),
-        getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells),        
+        getSpells(beast.id).then((spells: Spell[]) => beast.castingInfo.spells = spells),
     ]
 
     if (userID) {

@@ -5,11 +5,11 @@ import PlayerSpecificInfo from "./infoInterfaces/playerSpecificInfoInterfaces"
 import { Access } from "@bestiary/common/utilities/get/getAccessLevel"
 
 import RoleInfo from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces'
-import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
 import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
-import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { NonspecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 
@@ -31,9 +31,9 @@ export interface BeastInfo {
     imageInfo: ImageInfo,
     linkedInfo: LinkedInfo,
     roleInfo: RoleInfo,
-    combatInfo: CombatInfo,
-    skillInfo: SkillInfo,
-    socialInfo: SocialInfo,
+    combatInfo: NonspecificCombatInfo,
+    skillInfo: NonspecificSkillInfo,
+    socialInfo: NonspecificSocialInfo,
     lootInfo: LootInfo,
     castingInfo: CastingInfo,
 }

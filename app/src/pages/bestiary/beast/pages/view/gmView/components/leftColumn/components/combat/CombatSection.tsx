@@ -7,11 +7,11 @@ import CombatSubtitle from "./components/combatSubtitle/CombatSubtitle"
 import LocationVitalities from "./components/locationalVitalities/LocationalVitalities"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
-import CombatInfo, { BonfireCombatInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { BonfireCombatInfo, HackMasterCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
 
 interface Props {
-    combatInfo: CombatInfo,
+    combatInfo: SpecificCombatInfo,
     size: Size
 }
 

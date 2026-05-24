@@ -5,13 +5,12 @@ import SkillsDisplay from "./components/SkillsDisplay"
 import SpecialInfo from "../specialInfo/specialInfo"
 import ObstaclesDisplay from "./components/Obstacles/ObstaclesDisplay"
 import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
-import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { SpecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Icon from '../../../../../../../../../../components/icon/Icon'
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 
 interface Props {
-    skillInfo: SkillInfo
+    skillInfo: SpecificSkillInfo
 }
 
 export default function SkillSection({ skillInfo }: Props) {
@@ -21,8 +20,8 @@ export default function SkillSection({ skillInfo }: Props) {
     const { defense, flee } = defenseNFleeDice
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
-    const showDefenseSection = hasSystemInfoContent(defenseInfo, type)
-    const showAttackSection = hasSystemInfoContent(attackInfo, type)
+    const showDefenseSection = !!defenseInfo
+    const showAttackSection = !!attackInfo
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
@@ -49,13 +48,13 @@ export default function SkillSection({ skillInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} system={type} />
+                    <SpecialInfo info={defenseInfo} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={attackInfo} system={type} />
+                    <SpecialInfo info={attackInfo} />
                 </>
             }
             {showSkillSection &&

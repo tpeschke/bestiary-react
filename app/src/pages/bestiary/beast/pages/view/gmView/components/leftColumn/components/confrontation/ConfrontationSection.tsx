@@ -1,22 +1,19 @@
-import { useEffect, useState } from "react"
-
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import SpecialInfo from "../specialInfo/specialInfo"
 import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
-import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { SpecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CapacityDisplay from "./components/CapacityDisplay"
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 
 interface Props {
-    socialInfo: SocialInfo
+    socialInfo: SpecificSocialInfo
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
     const {type, socialRole, socialSkulls, socialRawEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
 
-    const showDefenseSection = hasSystemInfoContent(defenseInfo, type)
-    const showAttackSection = hasSystemInfoContent(attackInfo, type)
+    const showDefenseSection = !!defenseInfo
+    const showAttackSection = !!attackInfo
 
     if (socialRole === 'No Personality') {
         return <RoleTitle title={type === 'Bonfire' ? 'Confrontation' : 'Social'} hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
@@ -32,13 +29,13 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} system={type} />
+                    <SpecialInfo info={defenseInfo} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={attackInfo} system={type} />
+                    <SpecialInfo info={attackInfo} />
                 </>
             }
             {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}

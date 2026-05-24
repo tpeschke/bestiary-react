@@ -1,10 +1,10 @@
 import Icon from '../../../../../../../../../components/icon/Icon'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import './SkillEdit.css'
-import SkillInfo, { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { NonspecificSkillInfo, Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 interface Props {
-    skillInfo: SkillInfo,
+    skillInfo: NonspecificSkillInfo,
     updateSkillInfo: UpdateFunction
 }
 

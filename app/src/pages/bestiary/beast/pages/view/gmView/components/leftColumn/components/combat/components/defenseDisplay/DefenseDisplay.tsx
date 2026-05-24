@@ -1,19 +1,17 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import DefenseStats from "./components/DefenseStats"
 
 interface Props {
-    defenseInfo: SystemInfoValue,
+    defenseInfo: string,
     defenses: DefenseInfo[],
     system: SystemOption
 }
 
 export default function DefenseDisplay({ defenseInfo, defenses, system }: Props) {
     const hasDefenses = defenses.length > 0
-    const hasSpecialDefenses = hasSystemInfoContent(defenseInfo, system)
+    const hasSpecialDefenses = !!defenseInfo
 
     const showSection = hasSpecialDefenses || hasDefenses
 
@@ -27,7 +25,7 @@ export default function DefenseDisplay({ defenseInfo, defenses, system }: Props)
             {showSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} system={system} />
+                    <SpecialInfo info={defenseInfo} />
                     {defenses.map((defense, index) => <DefenseStats key={index} defenseStats={defense} showDefenseNameBanner={showDefenseNameBanner} />)}
                 </>
             }

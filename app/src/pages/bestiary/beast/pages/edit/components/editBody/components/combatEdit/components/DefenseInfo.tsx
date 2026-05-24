@@ -5,7 +5,6 @@ import ListItem from '@tiptap/extension-list-item'
 import MenuBar from "../../../../../../../components/textEditor/menuBar"
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { getBonfireSystemInfo } from "@bestiary/common/utilities/get/getSystemInfo"
 
 interface Props {
     defenseInfo: SystemInfoValue,
@@ -31,7 +30,7 @@ export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo }: Prop
     return (
         <>
             <h2>Appearance</h2>
-            <EditorProvider onBlur={({ editor }) => updateDefenseInfo('defenseInfo', editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={getBonfireSystemInfo(defenseInfo)}></EditorProvider>
+            <EditorProvider onBlur={({ editor }) => updateDefenseInfo('defenseInfo', editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={defenseInfo}></EditorProvider>
         </>
     )
 }

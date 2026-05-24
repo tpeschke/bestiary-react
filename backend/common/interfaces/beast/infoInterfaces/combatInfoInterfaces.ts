@@ -4,6 +4,7 @@ import { Spell } from "./castingInfo"
 import { SystemInfoValue } from "./generalInfoInterfaces"
 
 export interface BasicCombatInfo {
+    type: SystemOption,
     combatRole: string,
     combatSecondary: string,
     combatSkulls: number,
@@ -11,21 +12,30 @@ export interface BasicCombatInfo {
     combatEpValue: number,
     combatRawEpValue: number,
     epValueIndex: number,
-
-    attackInfo: SystemInfoValue,
-    defenseInfo: SystemInfoValue,
 }
 
-export type SpecialCombatInfo = [string, undefined, string]
-export type SpecialCombatInfoValue = SpecialCombatInfo | string | null | undefined
+export interface NonspecificCombatInfo extends BasicCombatInfo { 
+    attackInfo: SystemInfoValue,
+    defenseInfo: SystemInfoValue,
+    limitNotes: string,
+    initiative: string,
+    attacks: AttackInfo[],
+    defenses: DefenseInfo[],
+    movements: Movement[],
+    vitalityInfo: BonfireVitalityInfo,
+    strategiesNLimits?: StrategyNLimits[],
+    options: StrategicOptions
+}
 
-type CombatInfo = {
-    type: SystemOption,
-} & (HackMasterCombatInfo | BonfireCombatInfo)
+export interface SpecificCombatInfo extends BasicCombatInfo {
+    attackInfo: string,
+    defenseInfo: string,
+    limitNotes: string,
+    strategiesNLimits?: StrategyNLimits[],
+    options: StrategicOptions
+}
 
-export default CombatInfo
-
-export interface HackMasterCombatInfo extends BasicCombatInfo {
+export interface HackMasterCombatInfo extends SpecificCombatInfo {
     type: 'HackMaster',
     vitalityInfo: HackMasterVitalityInfo,
     initiative: string,
@@ -37,16 +47,13 @@ export interface HackMasterCombatInfo extends BasicCombatInfo {
     options: StrategicOptions
 }
 
-export interface BonfireCombatInfo extends BasicCombatInfo {
+export interface BonfireCombatInfo extends SpecificCombatInfo {
     type: 'Bonfire',
     vitalityInfo: BonfireVitalityInfo,
     initiative: string,
     attacks: AttackInfo[],
     defenses: BonfireDefenseInfo[],
     movements: Movement[],
-    limitNotes: string,
-    strategiesNLimits?: StrategyNLimits[],
-    options: StrategicOptions
 }
 
 export interface ProcessedWeapon {

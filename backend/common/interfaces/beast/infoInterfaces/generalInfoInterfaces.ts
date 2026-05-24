@@ -25,7 +25,7 @@ export interface SaveObject {
 }
 
 export type SystemInfoArray = [string, undefined, string]
-export type SystemInfoValue = SystemInfoArray | string | null | undefined
+export type SystemInfoValue = SystemInfoArray | string
 
 export interface Scenario {
     id: number,

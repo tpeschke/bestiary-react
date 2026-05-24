@@ -1,6 +1,5 @@
 import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, RoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
-import { updateBonfireSystemInfo } from "@bestiary/common/utilities/get/getSystemInfo"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
@@ -53,7 +52,7 @@ export default function getUpdateCombatInfoFunctions(
 
                 updateBeastInfo(modifiedBeastInfo)
             } else if (beast) {
-                const nextValue = key === 'defenseInfo' ? updateBonfireSystemInfo(beast.beastInfo.combatInfo.defenseInfo, value) : value
+                const nextValue = key === 'defenseInfo' ? [value, beast.beastInfo.combatInfo.defenseInfo[1], beast.beastInfo.combatInfo.defenseInfo[2]] : value
 
                 let modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
@@ -74,7 +73,7 @@ export default function getUpdateCombatInfoFunctions(
         },
         updateNonRoleInfo: (key: string, value: any) => {
             if (beast) {
-                const nextValue = key === 'defenseInfo' ? updateBonfireSystemInfo(beast.beastInfo.combatInfo.defenseInfo, value) : value
+                const nextValue = key === 'defenseInfo' ? [value, beast.beastInfo.combatInfo.defenseInfo[1], beast.beastInfo.combatInfo.defenseInfo[2]] : value
 
                 let modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,

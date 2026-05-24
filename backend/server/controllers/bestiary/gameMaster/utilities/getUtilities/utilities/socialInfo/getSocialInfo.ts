@@ -1,4 +1,4 @@
-import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
@@ -21,7 +21,7 @@ export default function formatSocialInfo(
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean,
     capacityStrength: Strength
-): SocialInfo {
+): NonspecificSocialInfo {
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
 
