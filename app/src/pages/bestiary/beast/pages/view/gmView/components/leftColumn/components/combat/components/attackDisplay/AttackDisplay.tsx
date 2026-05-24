@@ -6,11 +6,11 @@ import SpellReferenceView from "./components/SpellReferenceView"
 
 interface Props {
     attackInfo: string,
-    attacks: AttackInfo[]
+    attacks: AttackInfo[],
 }
 
 export default function AttackDisplay({ attackInfo, attacks }: Props) {
-    const showSection = attackInfo || attacks.length > 0
+    const showSection = !!attackInfo || attacks.length > 0
     return (
         <>
             {showSection &&

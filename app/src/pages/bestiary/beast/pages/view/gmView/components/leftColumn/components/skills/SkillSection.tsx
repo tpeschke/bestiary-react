@@ -5,12 +5,12 @@ import SkillsDisplay from "./components/SkillsDisplay"
 import SpecialInfo from "../specialInfo/specialInfo"
 import ObstaclesDisplay from "./components/Obstacles/ObstaclesDisplay"
 import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
-import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { SpecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Icon from '../../../../../../../../../../components/icon/Icon'
 
 interface Props {
-    skillInfo: SkillInfo
+    skillInfo: SpecificSkillInfo
 }
 
 export default function SkillSection({ skillInfo }: Props) {
@@ -20,8 +20,8 @@ export default function SkillSection({ skillInfo }: Props) {
     const { defense, flee } = defenseNFleeDice
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
-    const showDefenseSection = defenseInfo && defenseInfo !== ''
-    const showAttackSection = attackInfo && attackInfo !== ''
+    const showDefenseSection = !!defenseInfo
+    const showAttackSection = !!attackInfo
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 

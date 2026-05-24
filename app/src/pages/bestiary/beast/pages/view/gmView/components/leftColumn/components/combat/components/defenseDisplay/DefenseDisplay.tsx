@@ -1,10 +1,11 @@
+import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import DefenseStats from "./components/DefenseStats"
 
 interface Props {
     defenseInfo: string,
-    defenses: DefenseInfo[]
+    defenses: DefenseInfo[],
 }
 
 export default function DefenseDisplay({ defenseInfo, defenses }: Props) {

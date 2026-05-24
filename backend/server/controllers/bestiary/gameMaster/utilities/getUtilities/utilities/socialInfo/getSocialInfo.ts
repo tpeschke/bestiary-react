@@ -1,4 +1,4 @@
-import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
@@ -8,6 +8,7 @@ import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
+import { buildSystemSpecificInfo } from "../../../formatUtilities/getSystemSpecificTerminologies"
 
 export default function formatSocialInfo(
     socialRole: string,
@@ -20,7 +21,7 @@ export default function formatSocialInfo(
     hasArchetypes: boolean,
     hasMonsterArchetypes: boolean,
     capacityStrength: Strength
-): SocialInfo {
+): NonspecificSocialInfo {
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
     const skullIndex = getSkullIndex(socialSkulls)
 
@@ -41,8 +42,8 @@ export default function formatSocialInfo(
             strength: capacityStrength
         },
         baseConvictionRank: 0,
-        attackInfo: attackInfo ?? '',
-        defenseInfo: defenseInfo ?? '',
+        attackInfo: buildSystemSpecificInfo(attackInfo),
+        defenseInfo: buildSystemSpecificInfo(defenseInfo),
         conflicts: {
             socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
             convictions: [],

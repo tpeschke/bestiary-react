@@ -4,9 +4,10 @@ import TextStyle from '@tiptap/extension-text-style'
 import ListItem from '@tiptap/extension-list-item'
 import MenuBar from "../../../../../../../components/textEditor/menuBar"
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
+import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 
 interface Props {
-    defenseInfo: string,
+    defenseInfo: SystemInfoValue,
     updateDefenseInfo: UpdateFunction
 }
 

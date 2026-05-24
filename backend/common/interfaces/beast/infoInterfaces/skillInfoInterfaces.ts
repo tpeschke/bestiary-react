@@ -1,8 +1,9 @@
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces";
 import { Obstacle, Challenge } from "../../obstacles/obstacleCatalog"
 import { DiceOptions, SystemOption } from "../beast";
+import { SystemInfoArray } from "./generalInfoInterfaces";
 
-export default interface SkillInfo {
+interface BasicSkillInfo {
     type: SystemOption,
     skillRole: string,
     skillSecondary: string,
@@ -19,11 +20,19 @@ export default interface SkillInfo {
             flee: DiceOptions
         },
     },
-    attackInfo: string,
-    defenseInfo: string,
     skills?: SkillObject,
     obstacles: Obstacle[],
     challenges: Challenge[],
+}
+
+export interface NonspecificSkillInfo extends BasicSkillInfo {
+    attackInfo: SystemInfoArray,
+    defenseInfo: SystemInfoArray,
+}
+
+export interface SpecificSkillInfo extends BasicSkillInfo {
+    attackInfo: string,
+    defenseInfo: string,
 }
 
 export interface SkillObject {
