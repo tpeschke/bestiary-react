@@ -9,6 +9,7 @@ import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBon
 import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/calculateRollUnderTrauma"
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
+import { getSpecialCombatInfo } from "@bestiary/common/utilities/get/getSpecialCombatInfo";
 
 export default class CombatInfoClass {
     private entryCombatInfo: CombatInfo
@@ -50,7 +51,8 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
-        let { attackInfo, defenseInfo } = this.entryCombatInfo
+        let attackInfo = getSpecialCombatInfo(this.entryCombatInfo.attackInfo, this.selectedSystem)
+        let defenseInfo = getSpecialCombatInfo(this.entryCombatInfo.defenseInfo, this.selectedSystem)
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
             if (attack) { attackInfo += attack }
@@ -90,7 +92,8 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
-        let { attackInfo, defenseInfo } = this.entryCombatInfo
+        let attackInfo = getSpecialCombatInfo(this.entryCombatInfo.attackInfo, this.selectedSystem)
+        let defenseInfo = getSpecialCombatInfo(this.entryCombatInfo.defenseInfo, this.selectedSystem)
         if (selectedRole) {
             const { attack, defense } = selectedRole.combatInfo
             if (attack) { attackInfo += attack }

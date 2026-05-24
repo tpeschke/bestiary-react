@@ -1,10 +1,11 @@
 import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, RoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
 import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
+import { buildSpecialCombatInfo } from "@bestiary/common/utilities/get/getSpecialCombatInfo"
 
 export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
@@ -25,7 +26,7 @@ export default function getUpdateCombatInfoFunctions(
     return {
         updateCombatInfo: (key: string, value: any) => {
             if (beast && beast.selectedRole) {
-                let modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo = {
+                const modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo = {
                     ...beast.selectedRole.combatInfo,
                     [key]: value
                 }
@@ -52,9 +53,10 @@ export default function getUpdateCombatInfoFunctions(
 
                 updateBeastInfo(modifiedBeastInfo)
             } else if (beast) {
-                let modifiedCombatInfo = {
+                const modifiedValue = getCombatInfoValue(key, value)
+                const modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
-                    [key]: value
+                    [key]: modifiedValue
                 }
 
                 if (key === 'combatSkulls' && typeof value === 'number') {
@@ -71,9 +73,10 @@ export default function getUpdateCombatInfoFunctions(
         },
         updateNonRoleInfo: (key: string, value: any) => {
             if (beast) {
-                let modifiedCombatInfo = {
+                const modifiedValue = getCombatInfoValue(key, value)
+                const modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
-                    [key]: value
+                    [key]: modifiedValue
                 }
     
                 if (key === 'combatSkulls' && typeof value === 'number') {
@@ -228,4 +231,18 @@ export default function getUpdateCombatInfoFunctions(
             }
         }
     }
+}
+
+function getCombatInfoValue(key: string, value: unknown) {
+    if (key === 'attackInfo' || key === 'defenseInfo') {
+        if (Array.isArray(value)) {
+            return value
+        }
+
+        if (typeof value === 'string' || value == null) {
+            return buildSpecialCombatInfo(value)
+        }
+    }
+
+    return value
 }

@@ -11,9 +11,12 @@ export interface BasicCombatInfo {
     combatRawEpValue: number,
     epValueIndex: number,
 
-    attackInfo: string,
-    defenseInfo: string,
+    attackInfo: SpecialCombatInfoValue,
+    defenseInfo: SpecialCombatInfoValue,
 }
+
+export type SpecialCombatInfo = [string, undefined, string]
+export type SpecialCombatInfoValue = SpecialCombatInfo | string | null | undefined
 
 type CombatInfo = {
     type: SystemOption,
