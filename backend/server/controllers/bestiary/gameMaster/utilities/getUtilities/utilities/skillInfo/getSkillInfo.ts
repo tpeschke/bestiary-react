@@ -1,4 +1,4 @@
-import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
+import { NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import getSkullNumber from "../getSkulls";
 import calculateStress from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress";
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex";
@@ -7,6 +7,7 @@ import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex";
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect";
+import { buildSystemSpecificInfo } from "../../../formatUtilities/getSystemSpecificTerminologies";
 
 export default function formatSkillInfo(
     skillRole: string,
@@ -17,7 +18,7 @@ export default function formatSkillInfo(
     attackInfo: string,
     defenseInfo: string,
     stressThresholdStrength: Strength
-): SkillInfo {
+): NonspecificSkillInfo {
     skillSkulls = skillSkulls ?? getSkullNumber(skillPoints)
     const skullIndex = getSkullIndex(skillSkulls)
 
@@ -31,8 +32,8 @@ export default function formatSkillInfo(
         skillEpValue: calculateSecondaryRoleEffect(baseEpValue, skillSecondary),
         skillRawEpValue: baseEpValue,
         epValueIndex,
-        attackInfo: attackInfo ?? '',
-        defenseInfo: defenseInfo ?? '',
+        attackInfo: buildSystemSpecificInfo(attackInfo),
+        defenseInfo: buildSystemSpecificInfo(defenseInfo),
         stress: {
             threshold: calculateStress(skillSecondary, skullIndex, stressThresholdStrength),
             strength: stressThresholdStrength,
