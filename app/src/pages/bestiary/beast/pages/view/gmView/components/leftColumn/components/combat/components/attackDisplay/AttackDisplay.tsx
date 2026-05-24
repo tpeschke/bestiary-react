@@ -1,6 +1,4 @@
-import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import { AttackInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import SpecialInfo from "../../../specialInfo/specialInfo"
 import AttackStats from "./components/AttackStats"
 import ReferenceView from "./components/ReferenceView"
@@ -9,10 +7,9 @@ import SpellReferenceView from "./components/SpellReferenceView"
 interface Props {
     attackInfo: string,
     attacks: AttackInfo[],
-    system: SystemOption
 }
 
-export default function AttackDisplay({ attackInfo, attacks, system }: Props) {
+export default function AttackDisplay({ attackInfo, attacks }: Props) {
     const showSection = !!attackInfo || attacks.length > 0
     return (
         <>
