@@ -70,8 +70,8 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
-            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} system={type} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} system={type} />
             <Movement movements={movements} />
         </>
     )
@@ -127,8 +127,8 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
-            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} system={type} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} system={type} />
             <Movement movements={movements} />
         </>
     )

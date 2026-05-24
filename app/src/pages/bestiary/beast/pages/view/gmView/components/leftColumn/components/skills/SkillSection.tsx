@@ -8,6 +8,7 @@ import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 import SkillInfo from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Icon from '../../../../../../../../../../components/icon/Icon'
+import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 
 interface Props {
     skillInfo: SkillInfo
@@ -20,8 +21,8 @@ export default function SkillSection({ skillInfo }: Props) {
     const { defense, flee } = defenseNFleeDice
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
-    const showDefenseSection = defenseInfo && defenseInfo !== ''
-    const showAttackSection = attackInfo && attackInfo !== ''
+    const showDefenseSection = hasSystemInfoContent(defenseInfo, type)
+    const showAttackSection = hasSystemInfoContent(attackInfo, type)
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
@@ -48,13 +49,13 @@ export default function SkillSection({ skillInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} />
+                    <SpecialInfo info={defenseInfo} system={type} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={attackInfo} />
+                    <SpecialInfo info={attackInfo} system={type} />
                 </>
             }
             {showSkillSection &&

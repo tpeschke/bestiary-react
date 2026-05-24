@@ -6,6 +6,7 @@ import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 import SocialInfo from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CapacityDisplay from "./components/CapacityDisplay"
+import { hasSystemInfoContent } from "@bestiary/common/utilities/get/getSystemInfo"
 
 interface Props {
     socialInfo: SocialInfo
@@ -14,8 +15,8 @@ interface Props {
 export default function ConfrontationSection({ socialInfo }: Props) {
     const {type, socialRole, socialSkulls, socialRawEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
 
-    const showDefenseSection = !!(defenseInfo && defenseInfo !== '')
-    const showAttackSection = !!(attackInfo && attackInfo !== '')
+    const showDefenseSection = hasSystemInfoContent(defenseInfo, type)
+    const showAttackSection = hasSystemInfoContent(attackInfo, type)
 
     if (socialRole === 'No Personality') {
         return <RoleTitle title={type === 'Bonfire' ? 'Confrontation' : 'Social'} hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
@@ -31,13 +32,13 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} />
+                    <SpecialInfo info={defenseInfo} system={type} />
                 </>
             }
             {showAttackSection &&
                 <>
                     <h3>Attack Info</h3>
-                    <SpecialInfo info={attackInfo} />
+                    <SpecialInfo info={attackInfo} system={type} />
                 </>
             }
             {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}

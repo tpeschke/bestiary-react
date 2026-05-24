@@ -1,4 +1,5 @@
 import CombatInfo from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { getBonfireSystemInfo } from "@bestiary/common/utilities/get/getSystemInfo";
 import query from "../../../../../../../db/database";
 
 export default async function updateBasicCombatInfo(beastID: number, combatInfo: CombatInfo) {
@@ -8,5 +9,5 @@ export default async function updateBasicCombatInfo(beastID: number, combatInfo:
 
     const { combatSkulls, combatRawEpValue, combatRole, combatSecondary, limitNotes, defenseInfo } = combatInfo
 
-    return query(sqlQuery, [beastID, combatSkulls, combatRawEpValue, combatRole, combatSecondary, limitNotes, defenseInfo[0]])
+    return query(sqlQuery, [beastID, combatSkulls, combatRawEpValue, combatRole, combatSecondary, limitNotes, getBonfireSystemInfo(defenseInfo)])
 }
