@@ -17,9 +17,9 @@ interface Props {
 
 export default function CombatSection({ combatInfo, size }: Props) {
     if (combatInfo.type === "Bonfire") {
-        return <BonfireCombatInfoDisplay combatInfo={combatInfo} size={size} />
+        return <BonfireCombatInfoDisplay combatInfo={combatInfo as BonfireCombatInfo} size={size} />
     } else if (combatInfo.type === 'HackMaster') {
-        return <HackMasterCombatInfoDisplay combatInfo={combatInfo} size={size} />
+        return <HackMasterCombatInfoDisplay combatInfo={combatInfo as HackMasterCombatInfo} size={size} />
     }
 
     return <></>

@@ -30,6 +30,8 @@ export interface NonspecificCombatInfo extends BasicCombatInfo {
 export interface SpecificCombatInfo extends BasicCombatInfo {
     attackInfo: string,
     defenseInfo: string,
+    attacks: AttackInfo[],
+    defenses: HackMasterDefenseInfo[] | BonfireDefenseInfo[],
     limitNotes: string,
     strategiesNLimits?: StrategyNLimits[],
     options: StrategicOptions
@@ -39,7 +41,6 @@ export interface HackMasterCombatInfo extends SpecificCombatInfo {
     type: 'HackMaster',
     vitalityInfo: HackMasterVitalityInfo,
     initiative: string,
-    attacks: AttackInfo[],
     defenses: HackMasterDefenseInfo[],
     movements: Movement[],
     limitNotes: string,
@@ -51,7 +52,6 @@ export interface BonfireCombatInfo extends SpecificCombatInfo {
     type: 'Bonfire',
     vitalityInfo: BonfireVitalityInfo,
     initiative: string,
-    attacks: AttackInfo[],
     defenses: BonfireDefenseInfo[],
     movements: Movement[],
 }

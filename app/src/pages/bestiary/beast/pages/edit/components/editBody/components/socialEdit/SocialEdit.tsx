@@ -1,9 +1,9 @@
 import { UpdateSocialInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateSocialInfo'
 import './SocialEdit.css'
-import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { SpecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
 interface Props {
-    socialInfo: NonspecificSocialInfo,
+    socialInfo: SpecificSocialInfo,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject
 }
 
