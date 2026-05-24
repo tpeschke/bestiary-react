@@ -9,7 +9,6 @@ import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalIn
 import { PairIconSettings } from "../../../../../../../components/UI/pair/Pair"
 import CombatInfo, { BonfireCombatInfo, HackMasterCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../components/icon/Icon"
-import { getSpecialCombatInfo } from "@bestiary/common/utilities/get/getSpecialCombatInfo"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -71,8 +70,8 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={getSpecialCombatInfo(defenseInfo, type)} />
-            <AttackDisplay attacks={attacks} attackInfo={getSpecialCombatInfo(attackInfo, type)} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
             <Movement movements={movements} />
         </>
     )
@@ -128,8 +127,8 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
-            <DefenseDisplay defenses={defenses} defenseInfo={getSpecialCombatInfo(defenseInfo, type)} />
-            <AttackDisplay attacks={attacks} attackInfo={getSpecialCombatInfo(attackInfo, type)} />
+            <DefenseDisplay defenses={defenses} defenseInfo={defenseInfo} />
+            <AttackDisplay attacks={attacks} attackInfo={attackInfo} />
             <Movement movements={movements} />
         </>
     )

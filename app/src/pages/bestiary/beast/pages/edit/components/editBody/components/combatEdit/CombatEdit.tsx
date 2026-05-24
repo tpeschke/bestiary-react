@@ -5,7 +5,6 @@ import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/updateU
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
 import Body from "../../../../../../components/UI/body/Body"
 import DefenseInfoEdit from "./components/DefenseInfo"
-import { getSpecialCombatInfo } from "@bestiary/common/utilities/get/getSpecialCombatInfo"
 
 interface Props {
     combatInfo: CombatInfo,
@@ -19,7 +18,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
         updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackInfo, updateDefenseInfo, removeAttack,
         updateNonRoleInfo
     } = updateCombatInfoFunctions
-    const { attacks, defenses, defenseInfo, type } = combatInfo
+    const { attacks, defenses, defenseInfo } = combatInfo
 
     return (
         <>
@@ -34,7 +33,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
             />
             <Body>
                 <h2 className="border">Defense Info</h2>
-                <DefenseInfoEdit defenseInfo={getSpecialCombatInfo(defenseInfo, type)} updateDefenseInfo={updateNonRoleInfo} />
+                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} />
             </Body>
             <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} />
         </>

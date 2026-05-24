@@ -11,8 +11,8 @@ export interface BasicCombatInfo {
     combatRawEpValue: number,
     epValueIndex: number,
 
-    attackInfo: SpecialCombatInfoValue,
-    defenseInfo: SpecialCombatInfoValue,
+    attackInfo: string,
+    defenseInfo: string,
 }
 
 export type SpecialCombatInfo = [string, undefined, string]
