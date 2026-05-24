@@ -1,5 +1,5 @@
 // @ts-ignore
-import { Pool } from 'pg'
+import { Pool, QueryResult } from 'pg'
 import { databaseCredentials } from '../server-config'
 
 import { Error } from '../interfaces/apiInterfaces'
@@ -9,7 +9,8 @@ const pool = new Pool(databaseCredentials)
 type Params = string | number | boolean | null | undefined | (number | undefined)[]
 
 export default async function query(text: string, params?: Params[] | Params): Promise<any[]> {
-    let result = []
+    let result: void | QueryResult<any>;
+
     if (Array.isArray(params)) {
         result = await pool.query(text, params).catch(logError(text, params))
     } else if (!params) {
