@@ -11,7 +11,7 @@ import HTMLDisplay from '../UI/htmlDisplay/htmlDisplay'
 import { Notes } from '@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces'
 
 interface Props {
-  content: Notes,
+  content: Notes | string,
   captureCallBack?: (value: string) => void,
   readOnly?: boolean
 }
@@ -35,9 +35,9 @@ export default function TextEditor({ content, captureCallBack = ()=>{}, readOnly
   return (
     <>
       {readOnly ?
-        <HTMLDisplay html={content.notes} />
+        <HTMLDisplay html={typeof content === 'string' ? content : content.notes} />
         :
-        <EditorProvider onBlur={({ editor }) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={content.notes}></EditorProvider>
+        <EditorProvider onBlur={({ editor }) => captureCallBack(editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={typeof content === 'string' ? content : content.notes}></EditorProvider>
       }
     </>
   )
