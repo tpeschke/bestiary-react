@@ -62,7 +62,7 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
             <div className="pair-shell heading three">
                 <h3>Hit Points</h3>
                 <p>
-                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defenseTotal}</span>
+                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy becomes defensive and fleeing is free."><Icon iconName="fear" color='blue' /> {defenseTotal}</span>
                     <span> / </span>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {fleeTotal}</span>
                 </p>
@@ -118,11 +118,6 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />
             <div className="pair-shell heading three">
                 <h3>Damage Threshold</h3>
-                <p>
-                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
-                    <span> / </span>
-                    <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
-                </p>
                 <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
