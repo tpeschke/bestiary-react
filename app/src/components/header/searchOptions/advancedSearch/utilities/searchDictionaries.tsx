@@ -254,7 +254,7 @@ export const confrontationPrimaryDictionary: SearchObject[] = [
     { id: 1, value: 'Advocate' },
     { id: 2, value: 'Bully' },
     { id: 3, value: 'Charmer' },
-    { id: 4, value: 'Empath' },
+    { id: 4, value: 'Demagogue' },
     { id: 5, value: 'Enabler' },
     { id: 6, value: 'Instructor' },
     { id: 7, value: 'Obdurate' },

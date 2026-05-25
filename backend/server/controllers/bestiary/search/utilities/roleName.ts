@@ -6,7 +6,7 @@ export function getSocialRoleName(roleID: string | number): string {
         'Advocate',
         'Bully',
         'Charmer',
-        'Empath',
+        'Demagogue',
         'Enabler',
         'Instructor',
         'Obdurate',

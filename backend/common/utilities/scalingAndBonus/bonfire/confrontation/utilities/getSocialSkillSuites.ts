@@ -7,7 +7,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
     switch (role) {
         case 'Advocate':
             return {
-                empathize: calculateDescriptionRank(skullIndex + 3, system),
+                inspire: calculateDescriptionRank(skullIndex + 3, system),
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
                 lecture: calculateDescriptionRank(skullIndex - 2, system),
                 tempt: calculateDescriptionRank(skullIndex - 1, system),
@@ -18,7 +18,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Bully':
             return {
-                empathize: calculateDescriptionRank(skullIndex - 1, system),
+                inspire: calculateDescriptionRank(skullIndex - 1, system),
                 intimidate: calculateDescriptionRank(skullIndex + 3, system),
                 lecture: calculateDescriptionRank(skullIndex - 3, system),
                 tempt: calculateDescriptionRank(skullIndex - 2, system),
@@ -29,7 +29,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Charmer':
             return {
-                empathize: calculateDescriptionRank(skullIndex + 2, system),
+                inspire: calculateDescriptionRank(skullIndex + 2, system),
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
                 lecture: calculateDescriptionRank(skullIndex - 2, system),
                 tempt: calculateDescriptionRank(skullIndex + 3, system),
@@ -38,9 +38,9 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                     rank: calculateConvictionRank(skullIndex, role)
                 }
             }
-        case 'Empath':
+        case 'Demagogue':
             return {
-                empathize: calculateDescriptionRank(skullIndex + 3, system),
+                inspire: calculateDescriptionRank(skullIndex + 3, system),
                 intimidate: calculateDescriptionRank(skullIndex, system),
                 lecture: calculateDescriptionRank(skullIndex - 1, system),
                 tempt: calculateDescriptionRank(skullIndex + 1, system),
@@ -51,7 +51,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Enabler':
             return {
-                empathize: calculateDescriptionRank(skullIndex + 1, system),
+                inspire: calculateDescriptionRank(skullIndex + 1, system),
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
                 lecture: calculateDescriptionRank(skullIndex - 2, system),
                 tempt: calculateDescriptionRank(skullIndex + 3, system),
@@ -62,7 +62,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Instructor':
             return {
-                empathize: calculateDescriptionRank(skullIndex - 2, system),
+                inspire: calculateDescriptionRank(skullIndex - 2, system),
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
                 lecture: calculateDescriptionRank(skullIndex + 3, system),
                 tempt: calculateDescriptionRank(skullIndex - 3, system),
@@ -73,7 +73,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Obdurate':
             return {
-                empathize: calculateDescriptionRank(skullIndex - 3, system),
+                inspire: calculateDescriptionRank(skullIndex - 3, system),
                 intimidate: calculateDescriptionRank(skullIndex + 1, system),
                 lecture: calculateDescriptionRank(skullIndex + 2, system),
                 tempt: calculateDescriptionRank(skullIndex - 2, system),
@@ -84,7 +84,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Zealot':
             return {
-                empathize: calculateDescriptionRank(skullIndex - 2, system),
+                inspire: calculateDescriptionRank(skullIndex - 2, system),
                 intimidate: calculateDescriptionRank(skullIndex + 2, system),
                 lecture: calculateDescriptionRank(skullIndex - 1, system),
                 tempt: calculateDescriptionRank(skullIndex, system),
@@ -95,7 +95,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         default:
             return {
-                empathize: calculateDescriptionRank(skullIndex, system),
+                inspire: calculateDescriptionRank(skullIndex, system),
                 intimidate: calculateDescriptionRank(skullIndex, system),
                 lecture: calculateDescriptionRank(skullIndex, system),
                 tempt: calculateDescriptionRank(skullIndex, system),

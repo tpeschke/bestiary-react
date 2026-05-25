@@ -385,7 +385,7 @@ WITH role_seed (
         null,
         null,
         null,
-        'Empath',
+        'Demagogue',
         8,
         'Athlete',
         9,

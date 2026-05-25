@@ -11,7 +11,7 @@ interface Props {
 
 export default function CharacteristicsDisplay({ characteristicInfo, type }: Props) {
     const { socialSkillSuites, burdens, relationships, flaws } = characteristicInfo
-    const { preferredEmotions, empathize, intimidate, lecture, tempt } = socialSkillSuites
+    const { preferredEmotions, inspire, intimidate, lecture, tempt } = socialSkillSuites
 
     const hasRelationships = relationships.length > 0
     const hasFlaws = flaws.length > 0
@@ -32,7 +32,7 @@ export default function CharacteristicsDisplay({ characteristicInfo, type }: Pro
                 <h3>Social Skill Suites</h3>
                 <Body>
                     <div className="conviction-shell">
-                        <Pair title="Empathize" info={empathize + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Inspire" info={inspire + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                         <Pair title="Intimidate" info={intimidate + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                         <Pair title="Lecture" info={lecture + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                         <Pair title="Tempt" info={tempt + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />

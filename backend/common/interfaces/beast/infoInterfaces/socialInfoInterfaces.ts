@@ -39,7 +39,7 @@ export interface ConflictObject {
 }
 
 export interface SocialSkillSuitesObject {
-    empathize: number,
+    inspire: number,
     intimidate: number,
     lecture: number,
     tempt: number,

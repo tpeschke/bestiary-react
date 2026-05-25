@@ -15,7 +15,7 @@ function getRoleIndexModifier(role: string): number {
             return 2
         case 'Charmer':
             return -1
-        case 'Empath':
+        case 'Demagogue':
             return -3
         case 'Enabler':
             return 2

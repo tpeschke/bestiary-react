@@ -12,7 +12,7 @@ export default function SocialRoleSelect({ updateSocialInfo, primaryRole, second
         'Advocate',
         'Bully',
         'Charmer',
-        'Empath',
+        'Demagogue',
         'Enabler',
         'Instructor',
         'Obdurate',

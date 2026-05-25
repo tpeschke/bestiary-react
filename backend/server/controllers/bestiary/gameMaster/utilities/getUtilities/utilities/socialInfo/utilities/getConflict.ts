@@ -15,7 +15,7 @@ export async function getConflict(beastId: number, isEditing: boolean, socialSku
 
 async function populateNonEditingCharacteristics(beastId: number, socialSkullIndex: number, role: string) {
     let conflict: ConflictObject = { socialSkillSuites: {
-        empathize: 0,
+        inspire: 0,
         intimidate: 0,
         lecture: 0,
         tempt: 0,
