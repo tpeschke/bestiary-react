@@ -122,7 +122,7 @@ export default class GMBeastClass {
             roleInfo: this.entryRoleInfo,
             combatInfo: this.entryCombatInfo.rawCombatInfo,
             skillInfo: this.entrySkillInfo,
-            socialInfo: this.entrySocialInfo,
+            socialInfo: this.rawSocialInfo,
             lootInfo: this.entryLootInfo,
             castingInfo: {
                 casting: {

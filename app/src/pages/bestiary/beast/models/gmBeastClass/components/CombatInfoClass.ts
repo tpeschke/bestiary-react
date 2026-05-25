@@ -9,7 +9,7 @@ import calculateRollUnderTrauma from "@bestiary/common/utilities/scalingAndBonus
 import getBonfireDefenseNFlee, { getHackMasterDefenseNFlee } from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee";
 import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
 import { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString";
-import { NonspecificRoleInfo, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 
 export default class CombatInfoClass {
     private entryCombatInfo: NonspecificCombatInfo
@@ -50,7 +50,7 @@ export default class CombatInfoClass {
         const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
-
+        
         let attackInfo = this.entryCombatInfo.attackInfo[BONFIRE]
         let defenseInfo = this.entryCombatInfo.defenseInfo[BONFIRE]
 

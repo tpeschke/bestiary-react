@@ -13,7 +13,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
     const {type, socialRole, socialSkulls, socialRawEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
 
     const showDefenseSection = !!defenseInfo
-    const showAttackSection = !!attackInfo
+    const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     if (socialRole === 'No Personality') {
         return <RoleTitle title={type === 'Bonfire' ? 'Confrontation' : 'Social'} hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
