@@ -239,6 +239,7 @@ export default class GMBeastClass {
                 if (attack) { attackInfo += attack[BONFIRE] }
                 if (defense) { defenseInfo += defense[BONFIRE] }
             }
+
             return {
                 ...this.entrySocialInfo,
                 type: 'Bonfire',
@@ -250,14 +251,14 @@ export default class GMBeastClass {
                     threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacity.strength, 'Bonfire'),
                     strength: capacity.strength
                 },
-                baseConvictionRank: calculateRankForCharacteristic('Convictions', skullIndex, role),
+                baseConvictionRank: calculateRankForCharacteristic('Convictions', skullIndex, socialRole),
                 archetypeInfo: {
                     ...archetypeInfo,
                     hasArchetypes, hasMonsterArchetypes,
                     baseRank: getBaseSocialRank(skullIndex)
                 },
                 conflicts: {
-                    socialSkillSuites: getSocialSkillSuites(role, skullIndex),
+                    socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
                     convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, socialRole), []),
                     relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
@@ -320,7 +321,7 @@ export default class GMBeastClass {
                     baseRank: getBaseSocialRank(epValueIndex)
                 },
                 conflicts: {
-                    socialSkillSuites: getSocialSkillSuites(role, epValueIndex, 'HackMaster'),
+                    socialSkillSuites: getSocialSkillSuites(socialRole, epValueIndex, 'HackMaster'),
                     convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', epValueIndex, roleID, socialRole), []),
                     relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', epValueIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
