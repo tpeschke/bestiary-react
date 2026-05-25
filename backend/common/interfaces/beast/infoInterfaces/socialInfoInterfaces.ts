@@ -39,10 +39,10 @@ export interface ConflictObject {
 }
 
 export interface SocialSkillSuitesObject {
+    influence: number,
+    inform: number,
     inspire: number,
     intimidate: number,
-    lecture: number,
-    tempt: number,
     preferredEmotions: {
         emotions: string[],
         rank: number

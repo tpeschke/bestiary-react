@@ -7,10 +7,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
     switch (role) {
         case 'Advocate':
             return {
+                influence: calculateDescriptionRank(skullIndex - 1, system),
+                inform: calculateDescriptionRank(skullIndex - 2, system),
                 inspire: calculateDescriptionRank(skullIndex + 3, system),
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
-                lecture: calculateDescriptionRank(skullIndex - 2, system),
-                tempt: calculateDescriptionRank(skullIndex - 1, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -18,10 +18,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Bully':
             return {
+                influence: calculateDescriptionRank(skullIndex - 2, system),
+                inform: calculateDescriptionRank(skullIndex - 3, system),
                 inspire: calculateDescriptionRank(skullIndex - 1, system),
                 intimidate: calculateDescriptionRank(skullIndex + 3, system),
-                lecture: calculateDescriptionRank(skullIndex - 3, system),
-                tempt: calculateDescriptionRank(skullIndex - 2, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -29,10 +29,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Charmer':
             return {
+                influence: calculateDescriptionRank(skullIndex + 3, system),
+                inform: calculateDescriptionRank(skullIndex - 2, system),
                 inspire: calculateDescriptionRank(skullIndex + 2, system),
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
-                lecture: calculateDescriptionRank(skullIndex - 2, system),
-                tempt: calculateDescriptionRank(skullIndex + 3, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -40,10 +40,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Demagogue':
             return {
+                influence: calculateDescriptionRank(skullIndex + 1, system),
+                inform: calculateDescriptionRank(skullIndex - 1, system),
                 inspire: calculateDescriptionRank(skullIndex + 3, system),
                 intimidate: calculateDescriptionRank(skullIndex, system),
-                lecture: calculateDescriptionRank(skullIndex - 1, system),
-                tempt: calculateDescriptionRank(skullIndex + 1, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -51,10 +51,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Enabler':
             return {
+                influence: calculateDescriptionRank(skullIndex + 3, system),
+                inform: calculateDescriptionRank(skullIndex - 2, system),
                 inspire: calculateDescriptionRank(skullIndex + 1, system),
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
-                lecture: calculateDescriptionRank(skullIndex - 2, system),
-                tempt: calculateDescriptionRank(skullIndex + 3, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -62,10 +62,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Instructor':
             return {
+                influence: calculateDescriptionRank(skullIndex - 3, system),
+                inform: calculateDescriptionRank(skullIndex + 3, system),
                 inspire: calculateDescriptionRank(skullIndex - 2, system),
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
-                lecture: calculateDescriptionRank(skullIndex + 3, system),
-                tempt: calculateDescriptionRank(skullIndex - 3, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -73,10 +73,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Obdurate':
             return {
+                influence: calculateDescriptionRank(skullIndex - 2, system),
+                inform: calculateDescriptionRank(skullIndex + 2, system),
                 inspire: calculateDescriptionRank(skullIndex - 3, system),
                 intimidate: calculateDescriptionRank(skullIndex + 1, system),
-                lecture: calculateDescriptionRank(skullIndex + 2, system),
-                tempt: calculateDescriptionRank(skullIndex - 2, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -84,10 +84,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         case 'Zealot':
             return {
+                influence: calculateDescriptionRank(skullIndex, system),
+                inform: calculateDescriptionRank(skullIndex - 1, system),
                 inspire: calculateDescriptionRank(skullIndex - 2, system),
                 intimidate: calculateDescriptionRank(skullIndex + 2, system),
-                lecture: calculateDescriptionRank(skullIndex - 1, system),
-                tempt: calculateDescriptionRank(skullIndex, system),
                 preferredEmotions: {
                     emotions: ["Fear", "Disgust"],
                     rank: calculateConvictionRank(skullIndex, role)
@@ -95,10 +95,10 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
             }
         default:
             return {
+                influence: calculateDescriptionRank(skullIndex, system),
+                inform: calculateDescriptionRank(skullIndex, system),
                 inspire: calculateDescriptionRank(skullIndex, system),
                 intimidate: calculateDescriptionRank(skullIndex, system),
-                lecture: calculateDescriptionRank(skullIndex, system),
-                tempt: calculateDescriptionRank(skullIndex, system),
                 preferredEmotions: { emotions: [], rank: calculateConvictionRank(skullIndex, role) }
             }
     }
