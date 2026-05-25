@@ -44,7 +44,7 @@ export default function EditBody({
     const [tabIndex, setTabIndex] = useState(1)
 
     const { 
-        id, generalInfo, combatInfo, bonfireSkillInfo: skillInfo, socialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, generalInfo, combatInfo, bonfireSkillInfo: skillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
@@ -76,10 +76,10 @@ export default function EditBody({
                     <>
                         <h1>Confrontation</h1>
                         <div className='role-and-skull-shell'>
-                            <SocialRoleSelect updateSocialInfo={updateSocialInfo} primaryRole={socialInfo.socialRole} secondaryRole={socialInfo.socialSecondary} />
-                            <SkullSelection skullKeyValue='socialSkulls' epKeyValue='socialRawEpValue' currentSkullValue={socialInfo.socialSkulls} currentEPValue={socialInfo.socialRawEpValue} updateSkull={updateSocialInfo} />
+                            <SocialRoleSelect updateSocialInfo={updateSocialInfo} primaryRole={rawSocialInfo.socialRole} secondaryRole={rawSocialInfo.socialSecondary} />
+                            <SkullSelection skullKeyValue='socialSkulls' epKeyValue='socialRawEpValue' currentSkullValue={rawSocialInfo.socialSkulls} currentEPValue={rawSocialInfo.socialRawEpValue} updateSkull={updateSocialInfo} />
                         </div>
-                        <SocialEdit socialInfo={socialInfo} updateSocialInfoFunctions={updateSocialInfoFunctions} />
+                        <SocialEdit socialInfo={rawSocialInfo} updateSocialInfoFunctions={updateSocialInfoFunctions} />
                     </>
                 }
                 {tabIndex === 2 &&

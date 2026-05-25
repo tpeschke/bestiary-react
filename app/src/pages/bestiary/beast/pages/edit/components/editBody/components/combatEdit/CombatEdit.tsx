@@ -33,7 +33,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
             />
             <Body>
                 <h2 className="border">Defense Info</h2>
-                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} />
+                <DefenseInfoEdit defenseInfo={[defenseInfo, undefined, '']} updateDefenseInfo={updateNonRoleInfo} />
             </Body>
             <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} />
         </>

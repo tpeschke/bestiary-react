@@ -1,14 +1,15 @@
 import { UpdateSocialInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateSocialInfo'
+import SocialAttackInfoEdit from './info/SocialAttackInfoEdit'
 import './SocialEdit.css'
-import { SpecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
+import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
 interface Props {
-    socialInfo: SpecificSocialInfo,
+    socialInfo: NonspecificSocialInfo,
     updateSocialInfoFunctions: UpdateSocialInfoFunctionsObject
 }
 
 export default function SocialEdit({ socialInfo, updateSocialInfoFunctions }: Props) {
-    const { capacity } = socialInfo
+    const { capacity, attackInfo } = socialInfo
     const { updateSocialInfo } = updateSocialInfoFunctions
 
     const updateCapacity = () => {
@@ -25,6 +26,8 @@ export default function SocialEdit({ socialInfo, updateSocialInfoFunctions }: Pr
                 <input type="checkbox" onChange={updateCapacity} checked={capacity.strength === 'x'} />
                 <p>No Capacity</p>
             </span>
+
+            <SocialAttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSocialInfo} />
         </div>
     )
 }

@@ -210,6 +210,10 @@ export default class GMBeastClass {
         return this.getBonfireSocialInfo()
     }
 
+    get rawSocialInfo(): NonspecificSocialInfo {
+       return this.entrySocialInfo 
+    }
+
     private getBonfireSocialInfo(): SpecificSocialInfo {
         const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
         const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
