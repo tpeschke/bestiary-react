@@ -36,7 +36,7 @@ import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/sk
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
 import getSystemString, { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString";
 import { buildSystemSpecificInfo } from "../formatUtilities/getSystemSpecificTerminologies"
-import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
 interface GetBeastOptions {
     isEditing: boolean,

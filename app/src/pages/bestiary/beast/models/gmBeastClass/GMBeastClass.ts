@@ -5,7 +5,6 @@ import { BeastInfo } from "../../interfaces/viewInterfaces";
 
 import { Conflict, NonspecificSocialInfo, SpecificSocialInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import { NonspecificSkillInfo, SpecificSkillInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
-import RoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/calculateStress'
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
@@ -30,6 +29,7 @@ import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
 import { getRarity } from "@bestiary/common/utilities/get/getRarity"
 import { SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import GeneralRoleInfo, { NonspecificRoleInfo, Role, SpecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -45,7 +45,7 @@ export default class GMBeastClass {
     private entryPlayerSpecificInfo: PlayerSpecificInfo
     private entryImageInfo: ImageInfo
     private entryLinkedInfo: LinkedInfo
-    private entryRoleInfo: RoleInfo
+    private entryRoleInfo: GeneralRoleInfo
     private entryCombatInfo: CombatInfoClass
     private entrySkillInfo: NonspecificSkillInfo
     private entrySocialInfo: NonspecificSocialInfo
@@ -101,7 +101,7 @@ export default class GMBeastClass {
         return modifier
     }
 
-    public getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
+    public getRoleIndex = (roles: NonspecificRoleInfo[], defaultRole: string, roleFromParam: string | null) => {
         if (roleFromParam) {
             return roles.findIndex(role => roleFromParam === role.id)
         }
@@ -236,8 +236,8 @@ export default class GMBeastClass {
 
             if (roleSelected) {
                 const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo
-                if (attack) { attackInfo += attack }
-                if (defense) { defenseInfo += defense }
+                if (attack) { attackInfo += attack[BONFIRE] }
+                if (defense) { defenseInfo += defense[BONFIRE] }
             }
             return {
                 ...this.entrySocialInfo,
@@ -296,8 +296,8 @@ export default class GMBeastClass {
 
             if (roleSelected) {
                 const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo
-                if (attack) { attackInfo += attack }
-                if (defense) { defenseInfo += defense }
+                if (attack) { attackInfo += attack[HACKMASTER] }
+                if (defense) { defenseInfo += defense[HACKMASTER] }
             }
 
             return {
@@ -374,8 +374,8 @@ export default class GMBeastClass {
 
         if (roleSelected) {
             const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo
-            if (attack) { attackInfo += attack }
-            if (defense) { defenseInfo += defense }
+            if (attack) { attackInfo += attack[BONFIRE] }
+            if (defense) { defenseInfo += defense[BONFIRE] }
         }
 
         return {
@@ -412,8 +412,8 @@ export default class GMBeastClass {
 
         if (roleSelected) {
             const { attackInfo: attack, defenseInfo: defense } = this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo
-            if (attack) { attackInfo += attack }
-            if (defense) { defenseInfo += defense }
+            if (attack) { attackInfo += attack[HACKMASTER] }
+            if (defense) { defenseInfo += defense[HACKMASTER] }
         }
 
         return {
@@ -435,7 +435,7 @@ export default class GMBeastClass {
 
     get combatInfo(): SpecificCombatInfo {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
-        const selectedRole: Role = this.entryRoleInfo.roles[this.selectRoleIndex]
+        const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
 
         return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier, this.spells)
     }
@@ -473,7 +473,7 @@ export default class GMBeastClass {
         return null
     }
 
-    get roleInfo(): RoleInfo {
+    get roleInfo(): GeneralRoleInfo {
         return this.entryRoleInfo
     }
 

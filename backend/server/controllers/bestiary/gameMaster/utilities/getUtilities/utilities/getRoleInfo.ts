@@ -1,5 +1,4 @@
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { NonspecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
@@ -15,6 +14,7 @@ import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
 import { buildSystemSpecificInfo } from "../../formatUtilities/getSystemSpecificTerminologies"
+import { NonspecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
 export interface UnsortedRole {
     id: string,
@@ -128,8 +128,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
         },
         skillInfo: {
             skillRole, skillSecondary, skillSkulls,
-            attackInfo: attack_skill,
-            defenseInfo: defense_skill,
+            attackInfo: buildSystemSpecificInfo(attack_skill),
+            defenseInfo: buildSystemSpecificInfo(defense_skill),
             skullIndex: skillSkullIndex,
             skillEpValue: calculateSecondaryRoleEffect(baseSkillEpValue, skillSecondary),
             skillRawEpValue: baseSkillEpValue,
@@ -141,7 +141,9 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
             skills: await getGenericSkillSuites(beastid, id, skillRole, skillSkullIndex, everythingElseStrength)
         },
         socialInfo: {
-            socialRole, socialSecondary, attackInfo, defenseInfo,
+            socialRole, socialSecondary, 
+            attackInfo: buildSystemSpecificInfo(attackInfo), 
+            defenseInfo: buildSystemSpecificInfo(defenseInfo), 
             socialSkulls,
             skullIndex: socialSkullIndex,
             socialEpValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
