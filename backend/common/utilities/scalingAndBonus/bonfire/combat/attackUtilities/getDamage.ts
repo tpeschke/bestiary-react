@@ -68,7 +68,7 @@ function getRoleIndexModifier(isRanged: boolean, role: string): number {
 
 function getCrushingDamage(roleIndexModifier: number, skullIndex: number) {
     const crushingDictionary = [
-        '1d6!', 'd6!+1', 'd8!', 'd8!+1', '1d10!', '1d10!+1', '1d12!', '1d12!+1', 'd20!', 'd20!+1', 'd20!+2', 'd20!+3', 'd20!+4', 'd20!+5', 'd20!+6', 'd20!+7', 'd20!+8', 'd20!+9', 'd20!+9', 'd20!+10', 'd20!+11', 'd20!+12', 'd20!+13'
+        '1d6!', 'd6!+1', 'd8!', 'd8!+1', '1d10!', '1d10!+1', '1d12!', '1d12!+1', '1d12!+2', '1d12!+3', '1d12!+4', '1d20!', 'd20!+1', 'd20!+2', 'd20!+3', 'd20!+4', 'd20!+5', 'd20!+6', 'd20!+7', 'd20!+8', 'd20!+9', 'd20!+10', 'd20!+11'
     ]
 
     return getItemBySkullIndex(skullIndex, roleIndexModifier, crushingDictionary)
@@ -84,7 +84,7 @@ function getPiercingStabbyDamage(roleIndexModifier: number, skullIndex: number) 
 
 function getPiercingPokeyDamage(roleIndexModifier: number, skullIndex: number) {
     const piercingDictionary = [
-        '1d4!', '1d4!', '1d6!', '1d6!+1d4!', '2d6!', '2d6!+1d4!', '3d6!', '3d6!+1d4!', '4d6!', '4d6!+1d4!', '5d6!', '5d6!+1d4!', '6d6!', '7d6!', '7d6!+1d4!', '8d6!', '8d6!+1d4!', '9d6!', '9d6!+1d4!', '10d6!', '10d6!+1d4!', '11d6!', '11d6!+1d4!'
+        '1d4!', '1d4!', '1d6!', '1d6!+1d4!', '2d6!', '2d6!+1d4!', '3d6!', '3d6!+1d4!', '4d6!', '4d6!+1d4!', '5d6!', '5d6!+1d4!', '6d6!', '6d6!+1d4!', '7d6!', '7d6!+1d4!', '8d6!', '8d6!+1d4!', '9d6!', '9d6!+1d4!', '10d6!', '10d6!+1d4!', '11d6!'
     ]
 
     return getItemBySkullIndex(skullIndex, roleIndexModifier, piercingDictionary)
@@ -100,7 +100,7 @@ function getPiercingGougeyDamage(roleIndexModifier: number, skullIndex: number) 
 
 function getSlashingDamage(roleIndexModifier: number, skullIndex: number) {
     const slashingDictionary = [
-        '2d4!', '2d4!+1d2!', '3d4!', '3d4!+1d2!', '4d4!', '4d4!+1d2!', '5d4!', '5d4!+1d2!', '6d4!', '6d4!+1d2!', '7d4!', '7d4!+1d2!', '8d4!', '9d4!', '9d4!+1d2!', '10d4!', '10d4!+1d2!', '11d4!', '11d4!+1d2!', '12d4!', '12d4!+1d2!', '13d4!', '13d4!+1d2!'
+        '2d4!', '2d4!+1d2!', '3d4!', '3d4!+1d2!', '4d4!', '4d4!+1d2!', '5d4!', '5d4!+1d2!', '6d4!', '6d4!+1d2!', '7d4!', '7d4!+1d2!', '8d4!', '8d4!+1d2!', '9d4!', '9d4!+1d2!', '10d4!', '10d4!+1d2!', '11d4!', '11d4!+1d2!', '12d4!', '12d4!+1d2!', '13d4!'
     ]
 
     return getItemBySkullIndex(skullIndex, roleIndexModifier, slashingDictionary)

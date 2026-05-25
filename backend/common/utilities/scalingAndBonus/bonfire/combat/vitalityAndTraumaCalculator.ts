@@ -59,7 +59,7 @@ export default function calculateVitalityAndTrauma(
 }
 
 function getBonfireBaseVitality(skullIndex: number, role: string, weaponBreakageVitality: boolean): number {
-    const normalVitalityDictionary = [1, 2, 4, 6, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152]
+    const normalVitalityDictionary = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
     const weaponBreakageVitalityDictionary = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8]
 
     const vitalityDictionary = weaponBreakageVitality ? weaponBreakageVitalityDictionary : normalVitalityDictionary
