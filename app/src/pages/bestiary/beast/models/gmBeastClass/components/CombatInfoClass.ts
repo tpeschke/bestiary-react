@@ -1,6 +1,6 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterAttackInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
@@ -41,7 +41,7 @@ export default class CombatInfoClass {
     }
 
     private getBonfireCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): BonfireCombatInfo {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as BonfireCombatInfo
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
@@ -77,13 +77,13 @@ export default class CombatInfoClass {
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells, 'Bonfire'), []),
-            defenses: defenses.reduce(this.adjustBonfireDefenseInfo(skullIndex, roleID, combatRole, size), []),
+            defenses: (defenses as BonfireDefenseInfo[]).reduce(this.adjustBonfireDefenseInfo(skullIndex, roleID, combatRole, size), [] as BonfireDefenseInfo[]),
             movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
         }
     }
 
     private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): HackMasterCombatInfo {
-        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatEpValue: mainEpValue, combatRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo as HackMasterCombatInfo
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatEpValue: mainEpValue, combatRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
@@ -121,7 +121,7 @@ export default class CombatInfoClass {
                 defenseNFleeDice: getHackMasterDefenseNFlee(combatRole, epValueIndex)
             },
             attacks: attacks.reduce(this.adjustAttackInfo(epValueIndex, roleID, combatRole, size, spells, 'HackMaster'), []),
-            defenses: defenses.reduce(this.adjustHackMasterDefenseInfo(epValueIndex, roleID, combatRole, size), []),
+            defenses: (defenses as HackMasterDefenseInfo[]).reduce(this.adjustHackMasterDefenseInfo(epValueIndex, roleID, combatRole, size), [] as HackMasterDefenseInfo[]),
             movements: movements.reduce(this.adjustMovementInfo(epValueIndex, roleID, combatRole), [])
         }
     }
