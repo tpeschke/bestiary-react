@@ -4,7 +4,6 @@ import CombatSection from "./components/combat/CombatSection"
 import RoleSelect from "./components/roleSelect/RoleSelect"
 import RatingModifierDisplay from "./components/RatingModifier/RatingModifierDisplay"
 import { SaveObject, Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import RoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import FullImage from "../../../../../components/UI/fullImage/fullImage"
 import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction } from "../../../../../hooks/beastHooks"
 import ImageInfo from "../../../../../interfaces/infoInterfaces/ImageInfoInterfaces"
@@ -16,6 +15,7 @@ import StrategicOptionsDisplay from "./components/StrategiesNLimits/StrategicOpt
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
 import Saves from "./components/saves/Saves"
 import { SpecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import GeneralRoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
 interface Props {
     beastId: number,
@@ -25,7 +25,7 @@ interface Props {
     skillInfo: SpecificSkillInfo,
     combatInfo: SpecificCombatInfo,
     size: Size,
-    roleInfo: RoleInfo,
+    roleInfo: GeneralRoleInfo,
     selectedRoleIndex: number
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,

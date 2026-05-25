@@ -1,7 +1,8 @@
-import { RoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { UpdateFunction } from "./interfaces/updateInterfaces"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
+import { AllRoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/socialInfoInterfaces"
 
 export type UpdateSocialInfoFunctionsObject = {
     updateSocialInfo: UpdateFunction
@@ -13,7 +14,7 @@ export default function getUpdateSocialInfoFunctions(
     return {
         updateSocialInfo: (key: string, value: string | number) => {
             if (beast && beast.selectedRole) {
-                let modifiedRoleSocialInfo: RoleSocialInfo = {
+                let modifiedRoleSocialInfo: AllRoleSocialInfo = {
                     ...beast.selectedRole.socialInfo,
                     [key]: value
                 }
@@ -33,7 +34,7 @@ export default function getUpdateSocialInfoFunctions(
                     socialInfo: modifiedSocialInfo,
                     roleInfo: {
                         ...beast.beastInfo.roleInfo,
-                        roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
+                        roles: beast.beastInfo.roleInfo.roles.map((role: Role, index: number) => {
                             if (index === beast.selectedRoleIndex) {
                                 return {
                                     ...role,

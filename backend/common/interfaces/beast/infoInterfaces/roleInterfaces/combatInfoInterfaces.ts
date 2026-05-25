@@ -12,6 +12,8 @@ export interface BasicRoleCombatInfo {
     initiative: string,
 }
 
+export type AllRoleCombatInfo = NonspecificRoleCombatInfo | SpecificRoleCombatInfo
+
 export interface NonspecificRoleCombatInfo extends BasicRoleCombatInfo {
     attackInfo: SystemInfoValue,
     defenseInfo: SystemInfoValue,

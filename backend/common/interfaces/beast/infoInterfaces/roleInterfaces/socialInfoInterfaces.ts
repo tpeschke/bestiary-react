@@ -17,6 +17,8 @@ export interface BasicRoleSocialInfo {
     hasmonsterarchetypes: boolean,
 }
 
+export type AllRoleSocialInfo = NonspecificRoleSocialInfo | SpecificRoleSocialInfo
+
 export interface NonspecificRoleSocialInfo extends BasicRoleSocialInfo {
     attackInfo: SystemInfoValue,
     defenseInfo: SystemInfoValue,

@@ -1,7 +1,7 @@
-import RoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
+import GeneralRoleInfo from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 import updateRoles from "./utilities/utilities/updateRoles";
 
-export default async function updateRoleInfo(beastID: number, roleInfo: RoleInfo) {
+export default async function updateRoleInfo(beastID: number, roleInfo: GeneralRoleInfo) {
     const { roles } = roleInfo
     
     let promiseArray: Promise<any>[] = [

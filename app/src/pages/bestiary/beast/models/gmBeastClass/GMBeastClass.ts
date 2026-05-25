@@ -101,7 +101,7 @@ export default class GMBeastClass {
         return modifier
     }
 
-    public getRoleIndex = (roles: NonspecificRoleInfo[], defaultRole: string, roleFromParam: string | null) => {
+    public getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
         if (roleFromParam) {
             return roles.findIndex(role => roleFromParam === role.id)
         }

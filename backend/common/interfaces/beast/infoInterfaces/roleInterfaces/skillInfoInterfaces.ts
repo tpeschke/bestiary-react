@@ -17,6 +17,8 @@ export interface BasicRoleSkillInfo {
     skills: SkillObject,
 }
 
+export type AllRoleSkillInfo = NonspecificRoleSkillInfo | SpecificRoleSkillInfo
+
 export interface NonspecificRoleSkillInfo extends BasicRoleSkillInfo {
     attackInfo: SystemInfoValue,
     defenseInfo: SystemInfoValue,

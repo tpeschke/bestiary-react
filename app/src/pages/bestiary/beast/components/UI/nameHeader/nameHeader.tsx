@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import Icon from '../../../../../../components/icon/Icon'
 import { imageBase, imageURL } from '../../../../../../frontend-config';
-import { RoleNameOrderOptions } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 import { UpdateFavoriteFunction } from '../../../hooks/beastHooks';
 import { useDispatch } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../../../../../../redux/slices/bestiary/catalogSlice';
+import { RoleNameOrderOptions } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces';
 
 interface Props {
     name: string,

@@ -1,12 +1,15 @@
 import './RoleSelect.css'
 
 import { useEffect, useState } from 'react';
-import RoleInfo, { Role, RoleSocialInfo, RoleSkillInfo, RoleCombatInfo, BonfireRole, HackMasterRole } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces';
 import QuickLink from '../../../../../../../components/QuickLink';
 import { UpdateSelectedRoleFunction } from '../../../../../../../hooks/beastHooks';
+import GeneralRoleInfo, { Role } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces';
+import { AllRoleSocialInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/socialInfoInterfaces';
+import { AllRoleSkillInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/skillInfoInterfaces';
+import { AllRoleCombatInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/combatInfoInterfaces';
 
 interface Props {
-    roleInfo: RoleInfo,
+    roleInfo: GeneralRoleInfo,
     updateSelectedRole: UpdateSelectedRoleFunction,
     selectedRoleIndex: number,
     copyQuickLink?: Function,
@@ -92,7 +95,7 @@ function getSelectedRole(roles: (Role)[], selectedRoleIndex: number) {
     }
 }
 
-function formatRoleName(socialInfo: RoleSocialInfo, skillInfo: RoleSkillInfo, combatInfo: RoleCombatInfo): string {
+function formatRoleName(socialInfo: AllRoleSocialInfo, skillInfo: AllRoleSkillInfo, combatInfo: AllRoleCombatInfo): string {
     const { socialRole, socialSecondary } = socialInfo
     const { skillRole, skillSecondary } = skillInfo
     const { combatRole, combatSecondary } = combatInfo

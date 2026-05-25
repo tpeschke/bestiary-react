@@ -4,11 +4,11 @@ import { Scenario, Folklore, TablesObject } from "@bestiary/common/interfaces/be
 import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Variant, LocationObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
 import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces";
-import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces";
 import { Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces";
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces";
 import { Obstacle, Challenge } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import { SpecificLoot, Loot } from "../lootInterfaces";
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 
 export interface upsertParameters {
     roles: Role[],

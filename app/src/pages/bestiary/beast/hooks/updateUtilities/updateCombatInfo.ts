@@ -1,10 +1,11 @@
 import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, RoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
 import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
+import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, NonspecificRoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/combatInfoInterfaces"
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
 export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
@@ -25,7 +26,7 @@ export default function getUpdateCombatInfoFunctions(
     return {
         updateCombatInfo: (key: string, value: any) => {
             if (beast && beast.selectedRole) {
-                let modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo = {
+                let modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo | NonspecificRoleCombatInfo = {
                     ...beast.selectedRole.combatInfo,
                     [key]: value
                 }
@@ -38,7 +39,7 @@ export default function getUpdateCombatInfoFunctions(
                     ...beast.beastInfo,
                     roleInfo: {
                         ...beast.beastInfo.roleInfo,
-                        roles: beast.beastInfo.roleInfo.roles.map((role, index) => {
+                        roles: beast.beastInfo.roleInfo.roles.map((role: Role, index: number) => {
                             if (index === beast.selectedRoleIndex) {
                                 return {
                                     ...role,
