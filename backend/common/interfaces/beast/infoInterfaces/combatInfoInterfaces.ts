@@ -14,7 +14,7 @@ export interface BasicCombatInfo {
     epValueIndex: number,
 }
 
-export interface NonspecificCombatInfo extends BasicCombatInfo { 
+export interface NonspecificCombatInfo extends BasicCombatInfo {
     attackInfo: SystemInfoValue,
     defenseInfo: SystemInfoValue,
     limitNotes: string,
@@ -78,7 +78,7 @@ export type SizeCategories = 'S' | 'M' | 'L'
 export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
-export type AttackInfo = AttackReference | WeaponInfo | SpellReference
+export type AttackInfo = AttackReference | AllSpecificWeaponInfo | SpellReference
 
 export interface AttackReference {
     system: SystemOption,
@@ -101,32 +101,32 @@ export interface SpellReference {
     spellInfo?: Spell
 }
 
-export type WeaponInfo = BonfireWeaponInfo | HackMasterWeaponInfo
+export type AllSpecificWeaponInfo = BonfireWeaponInfo | HackMasterWeaponInfo
 
-export interface BonfireWeaponInfo {
-    system: 'Bonfire',
-    infoType: 'weapon',
+export interface BasicWeaponInfo {
     id?: number,
     oldID: number,
     situation: string | undefined,
     tactic: string | undefined,
     beastId: number,
-    roleid?: string,
-    info: string,
     name: string,
     chosenName: string,
-    weapon: string,
-    weaponName: string,
     swarmbonus: boolean,
     measure: number,
     attack: string,
     damage: string,
+    system: SystemOption,
+    infoType: 'weapon',
+    roleid?: string,
+    weapon: string,
+    weaponName: string,
     damageType: DamageType,
     recovery: number,
     rangeIncrement: string,
     isSpecial: IsSpecial,
     overAllIndex: number,
     weaponInfo: ProcessedWeapon,
+    info: SystemInfoValue,
     scalingInfo: {
         swarmbonus: boolean,
         name: string,
@@ -137,39 +137,13 @@ export interface BonfireWeaponInfo {
     }
 }
 
-export interface HackMasterWeaponInfo {
+export interface BonfireWeaponInfo extends BasicWeaponInfo {
+    system: 'Bonfire',
+}
+
+export interface HackMasterWeaponInfo extends BasicWeaponInfo {
     system: 'HackMaster',
-    infoType: 'weapon',
-    id?: number,
-    oldID: number,
-    situation: string | undefined,
-    tactic: string | undefined,
-    beastId: number,
-    roleid?: string,
-    info: string,
-    name: string,
-    chosenName: string,
-    weapon: string,
-    weaponName: string,
-    swarmbonus: boolean,
-    measure: number,
-    attack: string,
-    damage: string,
-    shieldDamage: string,
-    damageType: DamageType,
-    recovery: number,
-    rangeIncrement: string,
-    isSpecial: IsSpecial,
-    overAllIndex: number,
-    weaponInfo: ProcessedWeapon,
-    scalingInfo: {
-        swarmbonus: boolean,
-        name: string,
-        weapon: string,
-        damageType: DamageType,
-        weapontype: Type,
-        addsizemod: boolean
-    }
+    shieldDamage: string
 }
 
 export type DefenseInfo = BonfireDefenseInfo | HackMasterDefenseInfo
@@ -180,7 +154,7 @@ export interface BonfireDefenseInfo {
     beastid: number,
     roleid: string,
     system: SystemOption,
-    info: string,
+    info: SystemInfoValue,
     name: string,
     chosenName: string,
     defensename?: string,
@@ -212,7 +186,7 @@ export interface HackMasterDefenseInfo {
     beastid: number,
     roleid: string,
     system: SystemOption,
-    info: string,
+    info: SystemInfoValue,
     name: string,
     chosenName: string,
     defensename?: string,

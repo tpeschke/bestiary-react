@@ -2,6 +2,7 @@ import { BonfireDefenseInfo, DefenseInfo, HackMasterDefenseInfo } from '@bestiar
 import Icon from '../../../../../../../../../../../../../components/icon/Icon'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import './DefenseStats.css'
+import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
     defenseStats: DefenseInfo,
@@ -28,7 +29,7 @@ function BonfireDefenseStat(defenseStats: BonfireDefenseInfo, nameToShow: string
     return (
         <div className={`defense-stats-shell ${nameToShow === '' && showDefenseNameBanner ? 'top-border' : ''}`}>
             {showDefenseNameBanner && nameToShow && <h6>{nameToShow}</h6>}
-            {info && <HTMLDisplay html={info} />}
+            {info && <HTMLDisplay html={info[BONFIRE]} />}
             <div className='defense-stats-inner-shell'>
                 <div>
                     <p>Def</p>
@@ -65,7 +66,7 @@ function HackMasterDefenseStat(defenseStats: HackMasterDefenseInfo, nameToShow: 
     return (
         <div className={`defense-stats-shell ${nameToShow === '' && showDefenseNameBanner ? 'top-border' : ''}`}>
             {showDefenseNameBanner && nameToShow && <h6>{nameToShow}</h6>}
-            {info && <HTMLDisplay html={info} />}
+            {info && <HTMLDisplay html={info[HACKMASTER]} />}
             <div className='defense-stats-inner-shell'>
                 <div>
                     <p>Def</p>

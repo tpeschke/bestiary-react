@@ -1,13 +1,14 @@
-import { BonfireWeaponInfo, HackMasterWeaponInfo, WeaponInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { BonfireWeaponInfo, HackMasterWeaponInfo, BasicWeaponInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Body from '../../../../../../../../../../components/UI/body/Body'
 import HTMLDisplay from '../../../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import { getTacticInfo } from '../../../../../../../../../../utilities/tacticOptions'
 import { situationTooltip, bonfireTacticTooltip, hackMasterTacticTooltip } from '../utilities/situationTooltip'
 import './AttackStats.css'
 import Icon from '../../../../../../../../../../../../../components/icon/Icon'
+import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
-    attackStat: WeaponInfo
+    attackStat: BasicWeaponInfo
 }
 
 export default function AttackStats({ attackStat }: Props) {
@@ -26,7 +27,7 @@ function bonfireAttackDisplay(attackStat: BonfireWeaponInfo) {
     return (
         <div className='attack-stats-shell'>
             <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
-            {info && <HTMLDisplay html={info} />}
+            {info && <HTMLDisplay html={info[BONFIRE]} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>
                     <div>
@@ -72,7 +73,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
     return (
         <div className='attack-stats-shell'>
             <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
-            {info && <HTMLDisplay html={info} />}
+            {info && <HTMLDisplay html={info[HACKMASTER]} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>
                     <div>

@@ -1,4 +1,4 @@
-import { AttackInfo, AttackReference, SpellReference, WeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackInfo, AttackReference, SpellReference, AllSpecificWeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import query from "../../../../../../../db/database"
 import { addReferenceToDB, addSpellReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateSpellReferenceInfo, updateWeaponInfo } from "../../../../../../../db/beast/attacks"
 
@@ -20,7 +20,7 @@ export default async function updateAttacks(beastID: number, attacks: AttackInfo
     return Promise.all(promiseArray)
 }
 
-async function upsertWeaponAttack(attack: WeaponInfo, beastID: number) {
+async function upsertWeaponAttack(attack: AllSpecificWeaponInfo, beastID: number) {
     const { overAllIndex, oldID, id, situation, tactic, roleid, damageType } = attack
     if (id) {
         return query(updateWeaponInfo, [id, oldID, overAllIndex, situation, tactic, damageType, beastID])
