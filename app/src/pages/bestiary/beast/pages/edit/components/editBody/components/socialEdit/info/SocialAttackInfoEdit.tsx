@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: Props) {
-    const updateDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
+    const updateAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
                 return value
@@ -26,11 +26,11 @@ export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: P
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>
-                    <TextEditor content={attackInfo[BONFIRE]} captureCallBack={(value) => updateDefenseInfoForSystem(BONFIRE, value)} />
+                    <TextEditor content={attackInfo[BONFIRE]} captureCallBack={(value) => updateAttackInfoForSystem(BONFIRE, value)} />
                 </div>
                 <div>
                     <h3>HackMaster</h3>
-                    <TextEditor content={attackInfo[HACKMASTER]} captureCallBack={(value) => updateDefenseInfoForSystem(HACKMASTER, value)} />
+                    <TextEditor content={attackInfo[HACKMASTER]} captureCallBack={(value) => updateAttackInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
         </>
