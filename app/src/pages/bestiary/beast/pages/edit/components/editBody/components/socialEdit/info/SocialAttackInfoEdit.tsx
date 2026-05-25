@@ -41,7 +41,7 @@ export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: P
 
     return (
         <>
-            <h2>Defense Info</h2>
+            <h2>Attack Info</h2>
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>

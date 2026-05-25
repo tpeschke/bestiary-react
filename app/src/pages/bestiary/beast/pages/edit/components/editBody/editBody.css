@@ -10,6 +10,10 @@
     padding-bottom: 15px;
 }
 
+.edit-body-shell h2 {
+    margin-top: 15px;
+}
+
 .edit-body-shell .edit-body-display select {
     margin-top: 15px;
 }
@@ -30,4 +34,8 @@
 
 .edit-body-display .info-by-system-shell {
     display: flex;
+}
+
+.edit-body-display .info-by-system-shell>div {
+    width: 50%;
 }

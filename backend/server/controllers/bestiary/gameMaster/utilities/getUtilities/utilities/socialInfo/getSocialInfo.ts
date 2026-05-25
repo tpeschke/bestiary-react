@@ -13,7 +13,8 @@ import { buildSystemSpecificInfo } from "../../../formatUtilities/getSystemSpeci
 export default function formatSocialInfo(
     socialRole: string,
     socialSecondary: string,
-    attackInfo: string | null,
+    attackInfo_bonfire: string | null,
+    attackInfo_hm: string | null,
     defenseInfo: string | null,
     socialPoints: number,
     socialSkulls: number,
@@ -42,7 +43,7 @@ export default function formatSocialInfo(
             strength: capacityStrength
         },
         baseConvictionRank: 0,
-        attackInfo: buildSystemSpecificInfo(attackInfo),
+        attackInfo: attackInfo_hm ? [attackInfo_bonfire ?? '', undefined, attackInfo_hm] : buildSystemSpecificInfo(attackInfo_bonfire),
         defenseInfo: buildSystemSpecificInfo(defenseInfo),
         conflicts: {
             socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),

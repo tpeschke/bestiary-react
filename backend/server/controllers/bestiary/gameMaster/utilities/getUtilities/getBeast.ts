@@ -52,7 +52,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail,
         imagesource, rolenameorder, defaultrole, sp_atk, sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
         notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
-        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, def_conf, hasarchetypes,
+        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, atk_conf_hm, 
+        def_conf, hasarchetypes,
         hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength,
         capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
     } = unsortedBeastInfo
@@ -124,7 +125,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         socialInfo: formatSocialInfo(
-            socialrole, socialsecondary, atk_conf, def_conf, socialpoints, socialskulls, socialepvalue, hasarchetypes, hasmonsterarchetypes,
+            socialrole, socialsecondary, atk_conf, atk_conf_hm, def_conf, socialpoints, socialskulls, socialepvalue, hasarchetypes, hasmonsterarchetypes,
             capacityStrength
         ),
         combatInfo: formatCombatInfo(
