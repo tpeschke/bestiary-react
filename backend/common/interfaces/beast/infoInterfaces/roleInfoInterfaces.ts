@@ -1,30 +1,37 @@
 import { Strength } from "../../calculationInterfaces";
 import { BonfireVitalityInfo, HackMasterVitalityInfo } from "./combatInfoInterfaces";
-import { Size } from "./generalInfoInterfaces";
+import { Size, SystemInfoValue } from "./generalInfoInterfaces";
 import { SkillObject } from "./skillInfoInterfaces";
 
 export type RoleNameOrderOptions = '1' | '2' | '3' | null
 
-export default interface RoleInfo {
+export default interface GeneralRoleInfo {
+    id: string,
     rolenameorder: RoleNameOrderOptions,
     defaultrole: string,
     roles: Role[],
 }
 
-export interface BasicRole {
+export type SpecificRoleInfo = BonfireRole | HackMasterRole
+
+export type Role = SpecificRoleInfo | NonspecificRoleInfo
+
+export interface BasicRoleInfo {
     id: string,
     generalInfo: RoleGeneralInfo,
     skillInfo: RoleSkillInfo,
     socialInfo: RoleSocialInfo
 }
 
-export type Role = BonfireRole | HackMasterRole
+export interface NonspecificRoleInfo extends BasicRoleInfo {
+    combatInfo: NonspecificRoleCombatInfo
+}
 
-export interface BonfireRole extends BasicRole {
+export interface BonfireRole extends BasicRoleInfo {
     combatInfo: BonfireRoleCombatInfo,
 }
 
-export interface HackMasterRole extends BasicRole {
+export interface HackMasterRole extends BasicRoleInfo {
     combatInfo: HackMasterRoleCombatInfo,
 }
 
@@ -34,7 +41,7 @@ export interface RoleGeneralInfo {
     hash: string,
 }
 
-export type RoleCombatInfo = {
+export interface BasicRoleCombatInfo {
     combatRole: string,
     combatSecondary: string,
     combatSkulls: number,
@@ -42,17 +49,26 @@ export type RoleCombatInfo = {
     combatEpValue: number,
     combatRawEpValue: number,
     epValueIndex: number,
-    attack: string,
-    defense: string,
     initiative: string,
 }
 
-export interface BonfireRoleCombatInfo extends RoleCombatInfo {
+export interface NonspecificRoleCombatInfo extends BasicRoleCombatInfo {
+    attackInfo: SystemInfoValue,
+    defenseInfo: SystemInfoValue,
     vitalityInfo: BonfireVitalityInfo
 }
 
-export interface HackMasterRoleCombatInfo extends RoleCombatInfo {
-    vitalityInfo: HackMasterVitalityInfo
+export interface SpecificRoleCombatInfo extends BasicRoleCombatInfo {
+    attackInfo: string,
+    defenseInfo: string,
+}
+
+export interface BonfireRoleCombatInfo extends SpecificRoleCombatInfo {
+    vitalityInfo: BonfireVitalityInfo,
+}
+
+export interface HackMasterRoleCombatInfo extends SpecificRoleCombatInfo {
+    vitalityInfo: HackMasterVitalityInfo,
 }
 
 export interface RoleSkillInfo {

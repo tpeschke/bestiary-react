@@ -1,5 +1,5 @@
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { BonfireRole, Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
+import { NonspecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
@@ -14,6 +14,7 @@ import getGenericSkillSuites from "./skillInfo/utilities/getSkillSuites"
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue"
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
+import { buildSystemSpecificInfo } from "../../formatUtilities/getSystemSpecificTerminologies"
 
 export interface UnsortedRole {
     id: string,
@@ -60,7 +61,7 @@ export interface UnsortedRole {
     everythingelsestrength: Strength
 }
 
-export async function getRoles(beastId: number, beastName: string): Promise<Role[]> {
+export async function getRoles(beastId: number, beastName: string): Promise<NonspecificRoleInfo[]> {
     const roles: UnsortedRole[] = await query(getMonsterRoleInfo, beastId)
 
     if (beastName.includes('Template')) {
@@ -70,7 +71,7 @@ export async function getRoles(beastId: number, beastName: string): Promise<Role
     return Promise.all(roles.map(formatUnsortedRoles))
 }
 
-async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireRole> {
+async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<NonspecificRoleInfo> {
     const {
         id, beastid, name, role: combatRole, combatpoints: combatPoints, size, hash, attack, defense, secondaryrole: combatSecondary,
         knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
@@ -105,7 +106,9 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<BonfireR
             name, size, hash
         },
         combatInfo: {
-            attack, defense, combatRole, combatSecondary,
+            attackInfo: buildSystemSpecificInfo(attack), 
+            defenseInfo: buildSystemSpecificInfo(defense), 
+            combatRole, combatSecondary,
             combatSkulls,
             skullIndex: combatSkullIndex,
             combatEpValue: calculateSecondaryRoleEffect(baseCombatEpValue, combatSecondary),

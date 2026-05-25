@@ -6,7 +6,6 @@ import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/I
 import { Variant, LocationObject, BeastType, ClimateObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { Pleroma } from "@bestiary/common/interfaces/beast/infoInterfaces/lootInfoInterfaces"
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
-import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { CalculateCombatStatsReturn } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../interfaces/bestiary/lootInterfaces"
@@ -37,6 +36,7 @@ import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/sk
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
 import getSystemString, { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString";
 import { buildSystemSpecificInfo } from "../formatUtilities/getSystemSpecificTerminologies"
+import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInfoInterfaces"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -119,6 +119,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             },
         },
         roleInfo: {
+            id: '0',
             rolenameorder, defaultrole,
             roles: []
         },
