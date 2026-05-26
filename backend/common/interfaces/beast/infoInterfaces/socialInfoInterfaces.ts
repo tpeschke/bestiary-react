@@ -15,6 +15,7 @@ export interface BasicSocialInfo {
         threshold: number[] | null,
         strength: Strength
     },
+    isBeast?: boolean,
     baseConvictionRank: number,
     archetypeInfo: ArchetypeInfo,
     conflicts: ConflictObject,

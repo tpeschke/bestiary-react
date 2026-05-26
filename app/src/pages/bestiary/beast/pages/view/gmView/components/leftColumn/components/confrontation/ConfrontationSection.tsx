@@ -10,9 +10,18 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const {type, socialRole, socialSkulls, socialRawEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity } = socialInfo
+    const { type, socialRole, socialSkulls, socialRawEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity, isBeast } = socialInfo
 
-    const showDefenseSection = !!defenseInfo
+    function getBeastBonus() {
+        if (type === 'Bonfire' && isBeast) {
+            return "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotional State gain is halved (rounded up).</p>"
+        }
+        return null
+    }
+
+    const beastBonus = getBeastBonus()
+
+    const showDefenseSection = !!defenseInfo || beastBonus
     const showAttackSection = !!attackInfo
 
     if (socialRole === 'No Personality') {
@@ -29,7 +38,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} />
+                    <SpecialInfo info={defenseInfo + (beastBonus ?? '')} />
                 </>
             }
             {showAttackSection &&
@@ -39,7 +48,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 </>
             }
             {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}
-            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls}/>
+            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} />
             <CharacteristicsDisplay characteristicInfo={conflicts} type={type} />
         </>
     )

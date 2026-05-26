@@ -1,5 +1,6 @@
 import { UpdateSocialInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateSocialInfo'
 import SocialAttackInfoEdit from './info/SocialAttackInfoEdit'
+import SocialDefenseInfoEdit from './info/SocialDefenseInfoEdit'
 import './SocialEdit.css'
 import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export default function SocialEdit({ socialInfo, updateSocialInfoFunctions }: Props) {
-    const { capacity, attackInfo } = socialInfo
+    const { capacity, attackInfo, defenseInfo } = socialInfo
     const { updateSocialInfo } = updateSocialInfoFunctions
 
     const updateCapacity = () => {
@@ -28,6 +29,7 @@ export default function SocialEdit({ socialInfo, updateSocialInfoFunctions }: Pr
             </span>
 
             <SocialAttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSocialInfo} />
+            <SocialDefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSocialInfo} />
         </div>
     )
 }
