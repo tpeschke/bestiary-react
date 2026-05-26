@@ -7,7 +7,7 @@ interface Props {
     defenseInfo: SystemInfoValue,
     roleDefenseInfo?: SystemInfoValue,
     updateDefenseInfo: UpdateFunction,
-    updateCombatInfo: UpdateFunction,
+    updateCombatInfo?: UpdateFunction,
     noHeader?: Boolean
 }
 
@@ -31,7 +31,9 @@ export default function DefenseInfoEdit({ defenseInfo, roleDefenseInfo, updateDe
             return info
         })
 
-        updateCombatInfo('defenseInfo', newInfo)
+        if (updateCombatInfo) {
+            updateCombatInfo('defenseInfo', newInfo)
+        }
     }
 
     return (
