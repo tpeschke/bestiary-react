@@ -4,33 +4,33 @@ import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterface
 import TextEditor from "../../../../../../../components/textEditor/textEditor"
 
 interface Props {
-    attackInfo: SystemInfoValue,
-    updateAttackInfo: UpdateFunction
+    defenseInfo: SystemInfoValue,
+    updateDefenseInfo: UpdateFunction
 }
 
-export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: Props) {
-    const updateAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
-        const newInfo = attackInfo.map((info: string | undefined, index: number) => {
+export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo }: Props) {
+    const updateDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
+        const newInfo = defenseInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
                 return value
             }
             return info
         })
 
-        updateAttackInfo('attackInfo', newInfo)
+        updateDefenseInfo('defenseInfo', newInfo)
     }
 
     return (
         <>
-            <h2>Attack Info</h2>
+            <h2>Defense Info</h2>
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>
-                    <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateAttackInfoForSystem(BONFIRE, value)} />
+                    <TextEditor content={defenseInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(BONFIRE, value)} />
                 </div>
                 <div>
                     <h3>HackMaster</h3>
-                    <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateAttackInfoForSystem(HACKMASTER, value)} />
+                    <TextEditor content={defenseInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
         </>

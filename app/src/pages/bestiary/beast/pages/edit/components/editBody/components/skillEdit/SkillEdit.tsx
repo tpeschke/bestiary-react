@@ -1,7 +1,7 @@
 import Icon from '../../../../../../../../../components/icon/Icon'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
-import SkillAttackInfoEdit from './info/SkillAttackInfoEdit'
-import SkillDefenseInfoEdit from './info/SkillDefenseInfoEdit'
+import AttackInfoEdit from '../components/info/AttackInfoEdit'
+import DefenseInfoEdit from '../components/info/DefenseInfoEdit'
 import './SkillEdit.css'
 import { Skill, NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
@@ -78,8 +78,8 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
                 </button>
             </span>
 
-            <SkillAttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSkillInfo} />
-            <SkillDefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSkillInfo} />
+            <AttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSkillInfo} />
+            <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSkillInfo} />
         </div>
     )
 }

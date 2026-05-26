@@ -8,8 +8,8 @@ interface Props {
     updateAttackInfo: UpdateFunction
 }
 
-export default function SkillAttackInfoEdit({ attackInfo, updateAttackInfo }: Props) {
-    const updateSkillInfoForSystem = (system: 0 | 1 | 2, value: string) => {
+export default function AttackInfoEdit({ attackInfo, updateAttackInfo }: Props) {
+    const updateInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
                 return value
@@ -26,11 +26,11 @@ export default function SkillAttackInfoEdit({ attackInfo, updateAttackInfo }: Pr
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>
-                    <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateSkillInfoForSystem(BONFIRE, value)} />
+                    <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateInfoForSystem(BONFIRE, value)} />
                 </div>
                 <div>
                     <h3>HackMaster</h3>
-                    <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateSkillInfoForSystem(HACKMASTER, value)} />
+                    <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
         </>
