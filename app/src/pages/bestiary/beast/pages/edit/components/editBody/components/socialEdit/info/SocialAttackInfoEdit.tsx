@@ -12,6 +12,9 @@ export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: P
     const updateAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
+                if (value === '<p></p>') {
+                    return null
+                }
                 return value
             }
             return info
@@ -26,11 +29,11 @@ export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: P
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>
-                    <TextEditor content={attackInfo[BONFIRE]} captureCallBack={(value) => updateAttackInfoForSystem(BONFIRE, value)} />
+                    <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateAttackInfoForSystem(BONFIRE, value)} />
                 </div>
                 <div>
                     <h3>HackMaster</h3>
-                    <TextEditor content={attackInfo[HACKMASTER]} captureCallBack={(value) => updateAttackInfoForSystem(HACKMASTER, value)} />
+                    <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateAttackInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
         </>
