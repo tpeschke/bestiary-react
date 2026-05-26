@@ -1,6 +1,6 @@
-import { AttackInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackStats } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 
-export function shiftAttackOrder(overAllIndex: number, overAllIndexToMoveTo: number, rawAttacks: AttackInfo[]) {
+export function shiftAttackOrder(overAllIndex: number, overAllIndexToMoveTo: number, rawAttacks: AttackStats[]) {
     const attackToMove = { ...rawAttacks[overAllIndex] }
     if (overAllIndex < overAllIndexToMoveTo) {
         // down
@@ -11,8 +11,8 @@ export function shiftAttackOrder(overAllIndex: number, overAllIndexToMoveTo: num
     }
 }
 
-function resortAttacksDown(attackToMove: AttackInfo, overAllIndex: number, overAllIndexToMoveTo: number) {
-    return (attacks: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
+function resortAttacksDown(attackToMove: AttackStats, overAllIndex: number, overAllIndexToMoveTo: number) {
+    return (attacks: AttackStats[], attack: AttackStats): AttackStats[] => {
         const originalOverAllIndex = attack.overAllIndex
         if (originalOverAllIndex !== overAllIndex) {
             attacks.push({
@@ -31,8 +31,8 @@ function resortAttacksDown(attackToMove: AttackInfo, overAllIndex: number, overA
     }
 }
 
-function resortAttacksUp(attackToMove: AttackInfo, overAllIndex: number, overAllIndexToMoveTo: number) {
-    return (attacks: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
+function resortAttacksUp(attackToMove: AttackStats, overAllIndex: number, overAllIndexToMoveTo: number) {
+    return (attacks: AttackStats[], attack: AttackStats): AttackStats[] => {
         const originalOverAllIndex = attack.overAllIndex
         if (originalOverAllIndex === overAllIndexToMoveTo) {
             attacks.push({

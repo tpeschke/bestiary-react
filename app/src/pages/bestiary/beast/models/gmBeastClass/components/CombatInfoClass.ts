@@ -1,6 +1,6 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import { LocationVitality, AttackInfo, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { LocationVitality, AttackStats, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterAttackInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
@@ -157,7 +157,7 @@ export default class CombatInfoClass {
     }
 
     private adjustAttackInfo = (skulls: number, roleID: string | null, role: string, size: Size, spells: Spell[], system: SystemOption) => {
-        return (attackInfo: AttackInfo[], attack: AttackInfo): AttackInfo[] => {
+        return (attackInfo: AttackStats[], attack: AttackStats): AttackStats[] => {
             if (!roleID || attack.roleid === roleID) {
                 if (attack.infoType === 'weapon' && system === 'HackMaster') {
                     attackInfo.push({

@@ -1,5 +1,5 @@
 import { Size } from "../../../../interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import { AttackInfo, BonfireDefenseInfo, BonfireWeaponInfo, HackMasterWeaponInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackStats, BonfireDefenseInfo, BonfireWeaponInfo, HackMasterWeaponInfo } from "../../../../interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { getDefenseName } from "../../../formatting/formatting"
 import calculateAndFormatBonfireAttackInfo, { calculateAndFormatHackMasterAttackInfo } from "./attackCalculator"
 import getDefense from "./defenseUtilities/getDefense"
@@ -10,7 +10,7 @@ import { calculateParryDR } from "./defenseUtilities/getParryDR"
 import { calculateDR, calculateHackMasterDR, getHackMasterShieldDR } from "./defenseUtilities/getDR"
 
 export interface CalculateCombatStatsReturn {
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
     defenses: BonfireDefenseInfo[]
 }
 

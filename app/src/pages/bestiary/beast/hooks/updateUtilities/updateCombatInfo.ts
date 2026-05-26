@@ -1,9 +1,9 @@
-import { AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackStats, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
-import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
+import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
 import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, NonspecificRoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/combatInfoInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
@@ -11,9 +11,9 @@ export type UpdateCombatInfoFunctionsObject = {
     updateCombatInfo: UpdateFunction,
     updateNonRoleInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: UpdateAttackDefenseInfoFunction,
+    updateAttackStats: UpdateAttackDefenseStatsFunction,
     addAttack: AddAttackFunction,
-    updateDefenseInfo: UpdateAttackDefenseInfoFunction,
+    updateDefenseInfo: UpdateAttackDefenseStatsFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
     removeAttack: RemoveCombatFunction
@@ -89,15 +89,15 @@ export default function getUpdateCombatInfoFunctions(
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
-        updateAttackInfo: (key: string, value: string, overAllIndex: number) => {
+        updateAttackStats: (key: string, value: string, overAllIndex: number) => {
             if (beast) {
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     combatInfo: {
                         ...beast.beastInfo.combatInfo,
-                        attacks: beast.beastInfo.combatInfo.attacks.map((attack: AttackInfo, index: number) => {
+                        attacks: beast.beastInfo.combatInfo.attacks.map((attack: AttackStats, index: number) => {
                             if (index == overAllIndex) {
-                                const valueToChangeTo = value === attack[key as keyof AttackInfo] ? null : value
+                                const valueToChangeTo = value === attack[key as keyof AttackStats] ? null : value
                                 return {
                                     ...attack,
                                     [key]: valueToChangeTo
@@ -112,7 +112,7 @@ export default function getUpdateCombatInfoFunctions(
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
-        addAttack: (newAttack: AttackInfo) => {
+        addAttack: (newAttack: AttackStats) => {
             if (beast) {
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
@@ -134,7 +134,7 @@ export default function getUpdateCombatInfoFunctions(
         },
         removeAttack: (indexToRemove: number) => {
             if (beast) {
-                const attacks = beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackInfo[], attack: AttackInfo) => {
+                const attacks = beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackStats[], attack: AttackStats) => {
                     if (attack.overAllIndex !== indexToRemove) {
                         attacks.push({
                             ...attack,

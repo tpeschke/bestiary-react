@@ -1,11 +1,11 @@
-import { RawCombatStat, AttackInfo, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { RawCombatStat, AttackStats, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { buildSystemSpecificInfo } from "../../../../../formatUtilities/getSystemSpecificTerminologies"
 
 interface CalculateCombatStatsReturn {
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
     defenses: BonfireDefenseInfo[]
 }
 
@@ -16,7 +16,7 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
     }
 }
 
-function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): AttackInfo[] {
+function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): AttackStats[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,

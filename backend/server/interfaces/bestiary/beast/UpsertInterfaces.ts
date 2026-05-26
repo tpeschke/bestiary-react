@@ -1,5 +1,5 @@
 import { Casting, Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
-import { Movement, LocationVitality, AttackInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { Movement, LocationVitality, AttackStats, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { Scenario, Folklore, TablesObject } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { ArtistObject } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces";
 import { BeastType, ClimateObject, Variant, LocationObject } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces";
@@ -33,6 +33,6 @@ export interface upsertParameters {
     tables: TablesObject,
     lairLoot: Loot,
     carriedLoot: Loot,
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
     defenses: DefenseInfo[]
 }

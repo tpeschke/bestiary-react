@@ -1,11 +1,11 @@
-import { RawCombatStat, AttackInfo, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { RawCombatStat, AttackStats, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { CalculateCombatStatsReturn, calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 
 export default function calculateCombatStats(combatStats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): CalculateCombatStatsReturn {
     let defenses: BonfireDefenseInfo[] = []
-    let attacks: AttackInfo[] = []
+    let attacks: AttackStats[] = []
     combatStats.forEach(stats => {
         calculateSingleCombatInfo(stats, defenses, attacks, size, skullIndex, mainRole, gearCache)
     })
@@ -16,7 +16,7 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
     }
 }
 
-function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackInfo[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
+function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackStats[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, eua, isspecial: isSpecial,
         slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, weapontype
     } = stats

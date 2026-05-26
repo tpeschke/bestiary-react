@@ -1,10 +1,8 @@
-import { NonspecificCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { NonspecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import AttacksEditDisplay from "./components/AttacksEditDisplay/AttacksEditDisplay"
 import DefenseEditDisplay from "./components/DefenseEditDisplay/DefenseEditDisplay"
 import { UpdateCombatInfoFunctionsObject } from "../../../../../../hooks/updateUtilities/updateCombatInfo"
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo"
-import Body from "../../../../../../components/UI/body/Body"
-import DefenseInfoEdit from "../components/info/DefenseInfoEdit"
 
 interface Props {
     combatInfo: NonspecificCombatInfo,
@@ -15,7 +13,7 @@ interface Props {
 
 export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, combatRoleType, spells }: Props) {
     const {
-        updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackInfo, updateDefenseInfo, removeAttack,
+        updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackStats, updateDefenseInfo, removeAttack,
         updateNonRoleInfo
     } = updateCombatInfoFunctions
     const { attacks, defenses, attackInfo, defenseInfo } = combatInfo
@@ -26,7 +24,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
                 attacks={attacks}
                 updateAttackOrder={updateAttackOrder}
                 addAttack={addAttack}
-                updateAttackStats={updateAttackInfo}
+                updateAttackStats={updateAttackStats}
                 combatRoleType={combatRoleType}
                 removeAttack={removeAttack}
                 spells={spells}
