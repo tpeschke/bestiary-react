@@ -1,10 +1,12 @@
 import Icon from '../../../../../../../../../components/icon/Icon'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import SkillAttackInfoEdit from './info/SkillAttackInfoEdit'
+import SkillDefenseInfoEdit from './info/SkillDefenseInfoEdit'
 import './SkillEdit.css'
-import { SpecificSkillInfo, Skill } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { Skill, NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 
 interface Props {
-    skillInfo: SpecificSkillInfo,
+    skillInfo: NonspecificSkillInfo,
     updateSkillInfo: UpdateFunction
 }
 
@@ -13,7 +15,7 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
         return <></>
     }
 
-    const { skills } = skillInfo
+    const { skills, attackInfo, defenseInfo } = skillInfo
     const { preferred, weakness, everythingElse, everythingElseStrength } = skills
 
     const updateSkillSuite = (key: 'preferred' | 'weakness', indexToChange: number, value: string) => {
@@ -75,6 +77,9 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
                     {everythingElseStrength === 'x' ? 'U' : everythingElse}
                 </button>
             </span>
+
+            <SkillAttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSkillInfo} />
+            <SkillDefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSkillInfo} />
         </div>
     )
 }

@@ -51,7 +51,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail,
         imagesource, rolenameorder, defaultrole, sp_atk, sp_def, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
         notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
-        skillsecondary, skillpoints, atk_skill, def_skill, socialrole, socialsecondary, socialpoints, atk_conf, atk_conf_hm,
+        skillsecondary, skillpoints, atk_skill, atk_skill_hm, def_skill, def_skill_hm, socialrole, socialsecondary, socialpoints, atk_conf, atk_conf_hm,
         def_conf, def_conf_hm, hasarchetypes,
         hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength,
         capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
@@ -124,7 +124,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             roles: []
         },
         socialInfo: formatSocialInfo(
-            socialrole, socialsecondary, atk_conf, atk_conf_hm, def_conf, def_conf_hm, socialpoints, socialskulls, 
+            socialrole, socialsecondary, atk_conf, atk_conf_hm, def_conf, def_conf_hm, socialpoints, socialskulls,
             socialepvalue, hasarchetypes, hasmonsterarchetypes, capacityStrength
         ),
         combatInfo: formatCombatInfo(
@@ -132,7 +132,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(
-            skillrole, skillsecondary, skillpoints, skillskulls, skillepvalue, atk_skill, def_skill, stressThresholdStrength
+            skillrole, skillsecondary, skillpoints, skillskulls, skillepvalue, atk_skill, atk_skill_hm, def_skill, def_skill_hm,
+            stressThresholdStrength
         ),
         lootInfo: {
             lootnotes,

@@ -15,14 +15,16 @@ export default function formatSkillInfo(
     skillPoints: number,
     skillSkulls: number,
     skillEpValue: number,
-    attackInfo: string,
-    defenseInfo: string,
+    attackInfo_bonfire: string,
+    attackInfo_hm: string,
+    defenseInfo_bonfire: string,
+    defenseInfo_hm: string,
     stressThresholdStrength: Strength
 ): NonspecificSkillInfo {
     skillSkulls = skillSkulls ?? getSkullNumber(skillPoints)
     const skullIndex = getSkullIndex(skillSkulls)
 
-    const baseEpValue =  skillEpValue ?? getBaseEPValue(skillSkulls)
+    const baseEpValue = skillEpValue ?? getBaseEPValue(skillSkulls)
     const epValueIndex = getEPIndex(baseEpValue)
 
     return {
@@ -32,8 +34,8 @@ export default function formatSkillInfo(
         skillEpValue: calculateSecondaryRoleEffect(baseEpValue, skillSecondary),
         skillRawEpValue: baseEpValue,
         epValueIndex,
-        attackInfo: buildSystemSpecificInfo(attackInfo),
-        defenseInfo: buildSystemSpecificInfo(defenseInfo),
+        attackInfo: attackInfo_hm ? [attackInfo_bonfire ?? '', undefined, attackInfo_hm] : buildSystemSpecificInfo(attackInfo_bonfire),
+        defenseInfo: defenseInfo_hm ? [defenseInfo_bonfire ?? '', undefined, defenseInfo_hm] : buildSystemSpecificInfo(defenseInfo_bonfire),
         stress: {
             threshold: calculateStress(skillSecondary, skullIndex, stressThresholdStrength),
             strength: stressThresholdStrength,

@@ -357,6 +357,10 @@ export default class GMBeastClass {
         return this.getBonfireSkillInfo()
     }
 
+    get rawSkillInfo(): NonspecificSkillInfo {
+        return this.entrySkillInfo
+    }
+
     get bonfireSkillInfo(): SpecificSkillInfo {
         return this.getBonfireSkillInfo()
     }

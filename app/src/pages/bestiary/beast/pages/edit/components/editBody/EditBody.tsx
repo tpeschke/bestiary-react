@@ -41,10 +41,10 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(1)
+    const [tabIndex, setTabIndex] = useState(3)
 
     const { 
-        id, generalInfo, combatInfo, bonfireSkillInfo: skillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, generalInfo, combatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
     const { name } = generalInfo
     const { strategiesNLimits, limitNotes, options } = combatInfo
@@ -96,10 +96,10 @@ export default function EditBody({
                     <>
                         <h1>Challenge</h1>
                         <div className='role-and-skull-shell'>
-                            <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={skillInfo.skillRole} secondaryRole={skillInfo.skillSecondary} />
-                            <SkullSelection skullKeyValue='skillSkulls' epKeyValue='skillRawEpValue' currentSkullValue={skillInfo.skillSkulls} currentEPValue={skillInfo.skillRawEpValue} updateSkull={updateSkillInfo} />
+                            <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={rawSkillInfo.skillRole} secondaryRole={rawSkillInfo.skillSecondary} />
+                            <SkullSelection skullKeyValue='skillSkulls' epKeyValue='skillRawEpValue' currentSkullValue={rawSkillInfo.skillSkulls} currentEPValue={rawSkillInfo.skillRawEpValue} updateSkull={updateSkillInfo} />
                         </div>
-                        <SkillEdit skillInfo={skillInfo} updateSkillInfo={updateSkillInfo} />
+                        <SkillEdit skillInfo={rawSkillInfo} updateSkillInfo={updateSkillInfo} />
                     </>
                 }
                 {tabIndex === 4 &&

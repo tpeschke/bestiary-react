@@ -20,8 +20,11 @@ export default function SkillSection({ skillInfo }: Props) {
     const { defense, flee } = defenseNFleeDice
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
-    const showDefenseSection = !!defenseInfo
-    const showAttackSection = !!attackInfo
+
+    // if HM info is null, the code uses the Bonfire info to generate it
+    // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
+    const showDefenseSection = !!defenseInfo && defenseInfo !== '<p></p>'
+    const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
