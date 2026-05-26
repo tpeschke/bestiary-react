@@ -14,9 +14,9 @@ interface Props {
 export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, combatRoleType, spells }: Props) {
     const {
         updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackStats, updateDefenseInfo, removeAttack,
-        updateNonRoleInfo
+        updateNonRoleInfo, updateCombatInfo
     } = updateCombatInfoFunctions
-    const { attacks, defenses, attackInfo, defenseInfo } = combatInfo
+    const { attacks, defenses, attackInfo, defenseInfo, roleDefenseInfo } = combatInfo
 
     return (
         <>
@@ -31,7 +31,16 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
                 attackInfo={attackInfo}
                 updateNonRoleInfo={updateNonRoleInfo}
             />
-            <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} defenseInfo={defenseInfo} updateNonRoleInfo={updateNonRoleInfo} />
+            <DefenseEditDisplay 
+                defenses={defenses} 
+                updateDefenseOrder={updateDefenseOrder} 
+                removeDefense={removeDefense} 
+                updateDefenseInfo={updateDefenseInfo} 
+                defenseInfo={defenseInfo}
+                roleDefenseInfo={roleDefenseInfo} 
+                updateNonRoleInfo={updateNonRoleInfo}
+                updateCombatInfo={updateCombatInfo}
+                 />
         </>
     )
 }

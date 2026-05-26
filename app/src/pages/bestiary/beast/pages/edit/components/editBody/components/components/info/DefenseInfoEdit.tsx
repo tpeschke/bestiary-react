@@ -5,11 +5,13 @@ import TextEditor from "../../../../../../../components/textEditor/textEditor"
 
 interface Props {
     defenseInfo: SystemInfoValue,
+    roleDefenseInfo?: SystemInfoValue,
     updateDefenseInfo: UpdateFunction,
+    updateCombatInfo: UpdateFunction,
     noHeader?: Boolean
 }
 
-export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo, noHeader = false }: Props) {
+export default function DefenseInfoEdit({ defenseInfo, roleDefenseInfo, updateDefenseInfo, updateCombatInfo, noHeader = false }: Props) {
     const updateDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = defenseInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
@@ -19,6 +21,17 @@ export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo, noHead
         })
 
         updateDefenseInfo('defenseInfo', newInfo)
+    }
+
+    const updateRoleDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
+        const newInfo = defenseInfo.map((info: string | undefined, index: number) => {
+            if (system === index) {
+                return value
+            }
+            return info
+        })
+
+        updateCombatInfo('defenseInfo', newInfo)
     }
 
     return (
@@ -34,6 +47,14 @@ export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo, noHead
                     <TextEditor content={defenseInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
+            {roleDefenseInfo && <div className="info-by-system-shell">
+                <div>
+                    <TextEditor content={roleDefenseInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateRoleDefenseInfoForSystem(BONFIRE, value)} />
+                </div>
+                <div>
+                    <TextEditor content={roleDefenseInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateRoleDefenseInfoForSystem(HACKMASTER, value)} />
+                </div>
+            </div>}
         </>
     )
 }

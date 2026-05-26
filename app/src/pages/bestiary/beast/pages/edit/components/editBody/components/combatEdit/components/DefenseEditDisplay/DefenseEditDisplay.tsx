@@ -10,19 +10,37 @@ import { SystemInfoValue } from '@bestiary/common/interfaces/beast/infoInterface
 interface Props {
     defenses: DefenseInfo[],
     defenseInfo: SystemInfoValue,
+    roleDefenseInfo?: SystemInfoValue,
     updateNonRoleInfo: UpdateFunction,
+    updateCombatInfo: UpdateFunction,
     updateDefenseInfo: UpdateAttackDefenseStatsFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
 }
 
-export default function DefenseEditDisplay({ defenses, defenseInfo, updateNonRoleInfo, updateDefenseOrder, removeDefense, updateDefenseInfo }: Props) {
+export default function DefenseEditDisplay({
+    defenses,
+    defenseInfo,
+    roleDefenseInfo,
+    updateNonRoleInfo,
+    updateCombatInfo,
+    updateDefenseOrder,
+    removeDefense,
+    updateDefenseInfo
+}: Props) {
     return (
         <Body>
             <h2 className="border">Defenses</h2>
 
-            <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} noHeader={true} />
+            <DefenseInfoEdit
+                defenseInfo={defenseInfo}
+                roleDefenseInfo={roleDefenseInfo}
+                updateDefenseInfo={updateNonRoleInfo}
+                updateCombatInfo={updateCombatInfo}
+                noHeader={true}
+            />
             <br />
+
             <div className="defense-edit-header">
                 <div></div>
                 <p>Name</p>

@@ -17,6 +17,7 @@ export interface BasicCombatInfo {
 export interface NonspecificCombatInfo extends BasicCombatInfo {
     attackInfo: SystemInfoValue,
     defenseInfo: SystemInfoValue,
+    roleDefenseInfo?: SystemInfoValue,
     limitNotes: string,
     initiative: string,
     attacks: AttackStats[],

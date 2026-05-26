@@ -10,25 +10,25 @@ export interface BasicRoleCombatInfo {
     combatRawEpValue: number,
     epValueIndex: number,
     initiative: string,
+    vitalityInfo: BonfireVitalityInfo | HackMasterVitalityInfo
 }
 
-export type AllRoleCombatInfo = NonspecificRoleCombatInfo | SpecificRoleCombatInfo
+export type AllRoleCombatInfo = NonspecificRoleCombatInfo
 
 export interface NonspecificRoleCombatInfo extends BasicRoleCombatInfo {
     attackInfo: SystemInfoValue,
-    defenseInfo: SystemInfoValue,
-    vitalityInfo: BonfireVitalityInfo
+    defenseInfo: SystemInfoValue
 }
 
-export interface SpecificRoleCombatInfo extends BasicRoleCombatInfo {
-    attackInfo: string,
-    defenseInfo: string,
-}
+// export interface SpecificRoleCombatInfo extends BasicRoleCombatInfo {
+//     attackInfo: string,
+//     defenseInfo: string,
+// }
 
-export interface BonfireRoleCombatInfo extends SpecificRoleCombatInfo {
+export interface BonfireRoleCombatInfo extends NonspecificRoleCombatInfo {
     vitalityInfo: BonfireVitalityInfo,
 }
 
-export interface HackMasterRoleCombatInfo extends SpecificRoleCombatInfo {
+export interface HackMasterRoleCombatInfo extends NonspecificRoleCombatInfo {
     vitalityInfo: HackMasterVitalityInfo,
 }

@@ -1,7 +1,7 @@
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import { LocationVitality, AttackStats, Movement, BonfireCombatInfo, HackMasterCombatInfo, VitalityInfo, BonfireDefenseInfo, HackMasterDefenseInfo, NonspecificCombatInfo, SpecificCombatInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
-import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { Size, SystemInfoArray } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo, calculateHackMasterAttackInfo, calculateHackMasterDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation";
 import calculateMovement from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/movement";
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
@@ -35,10 +35,20 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
+        let roleDefenseInfo: SystemInfoArray | undefined = undefined;
+
+        if (selectedRole) {
+            const { defenseInfo: roleDefense } = selectedRole.combatInfo
+            if (roleDefense) { roleDefenseInfo = roleDefense }
+        }
+
         return {
             ...this.entryCombatInfo,
             combatRole, combatSecondary,
             combatSkulls: skulls,
+            attackInfo: this.entryCombatInfo.attackInfo,
+            defenseInfo: this.entryCombatInfo.defenseInfo,
+            roleDefenseInfo,
             skullIndex,
             initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
             vitalityInfo: {
