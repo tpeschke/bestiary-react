@@ -12,9 +12,6 @@ export default function SocialAttackInfoEdit({ attackInfo, updateAttackInfo }: P
     const updateAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
-                if (value === '<p></p>') {
-                    return null
-                }
                 return value
             }
             return info

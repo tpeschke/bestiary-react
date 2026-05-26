@@ -15,7 +15,8 @@ export default function formatSocialInfo(
     socialSecondary: string,
     attackInfo_bonfire: string | null,
     attackInfo_hm: string | null,
-    defenseInfo: string | null,
+    defenseInfo_bonfire: string | null,
+    defenseInfo_hm: string | null,
     socialPoints: number,
     socialSkulls: number,
     socialEpValue: number,
@@ -44,7 +45,7 @@ export default function formatSocialInfo(
         },
         baseConvictionRank: 0,
         attackInfo: attackInfo_hm ? [attackInfo_bonfire ?? '', undefined, attackInfo_hm] : buildSystemSpecificInfo(attackInfo_bonfire),
-        defenseInfo: buildSystemSpecificInfo(defenseInfo),
+        defenseInfo: defenseInfo_hm ? [defenseInfo_bonfire ?? '', undefined, defenseInfo_hm] : buildSystemSpecificInfo(defenseInfo_bonfire),
         conflicts: {
             socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
             convictions: [],

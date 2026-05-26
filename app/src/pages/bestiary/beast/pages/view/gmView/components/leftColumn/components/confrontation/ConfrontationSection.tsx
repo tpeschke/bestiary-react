@@ -21,8 +21,10 @@ export default function ConfrontationSection({ socialInfo }: Props) {
 
     const beastBonus = getBeastBonus()
 
-    const showDefenseSection = !!defenseInfo || beastBonus
-    const showAttackSection = !!attackInfo
+    // if HM info is null, the code uses the Bonfire info to generate it
+    // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
+    const showDefenseSection = (!!defenseInfo && defenseInfo !== '<p></p>') || beastBonus
+    const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     if (socialRole === 'No Personality') {
         return <RoleTitle title={type === 'Bonfire' ? 'Confrontation' : 'Social'} hasBottomBorder={true} skulls={socialSkulls} role={socialRole} />
