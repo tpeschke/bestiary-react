@@ -19,7 +19,7 @@ export interface NonspecificCombatInfo extends BasicCombatInfo {
     defenseInfo: SystemInfoValue,
     limitNotes: string,
     initiative: string,
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
     defenses: DefenseInfo[],
     movements: Movement[],
     vitalityInfo: BonfireVitalityInfo,
@@ -30,7 +30,7 @@ export interface NonspecificCombatInfo extends BasicCombatInfo {
 export interface SpecificCombatInfo extends BasicCombatInfo {
     attackInfo: string,
     defenseInfo: string,
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
     defenses: HackMasterDefenseInfo[] | BonfireDefenseInfo[],
     limitNotes: string,
     strategiesNLimits?: StrategyNLimits[],
@@ -78,7 +78,7 @@ export type SizeCategories = 'S' | 'M' | 'L'
 export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
-export type AttackInfo = AttackReference | AllSpecificWeaponInfo | SpellReference
+export type AttackStats = AttackReference | AllSpecificWeaponInfo | SpellReference
 
 export interface AttackReference {
     system: SystemOption,

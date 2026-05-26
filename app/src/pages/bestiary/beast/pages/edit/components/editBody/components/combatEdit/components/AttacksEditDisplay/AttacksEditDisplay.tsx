@@ -1,18 +1,22 @@
-import { AttackInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
+import { AttackStats } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import Icon from '../../../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../../../components/UI/body/Body'
 import './AttacksEditDisplay.css'
 import AttackSingleEdit from './components/AttackSingleEdit'
 import MoveOrderButton from './components/MoveOrderButton'
 import ReferenceEdit from './components/ReferenceEdit'
-import { UpdateOrderFunction, UpdateAttackDefenseInfoFunction, AddAttackFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction, UpdateFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import SpellEdit from './components/SpellEdit'
 import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
+import AttackInfoEdit from '../../../components/info/AttackInfoEdit'
+import { SystemInfoValue } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {
-    attacks: AttackInfo[],
+    attacks: AttackStats[],
+    attackInfo: SystemInfoValue,
+    updateNonRoleInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
-    updateAttackInfo: UpdateAttackDefenseInfoFunction,
+    updateAttackStats: UpdateAttackDefenseStatsFunction,
     addAttack: AddAttackFunction,
     removeAttack: RemoveCombatFunction,
     combatRoleType: string | null,
@@ -20,19 +24,19 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({
-    attacks, updateAttackOrder, updateAttackInfo, addAttack, removeAttack, combatRoleType, spells
+    attacks, updateAttackOrder, attackInfo, updateNonRoleInfo, updateAttackStats, addAttack, removeAttack, combatRoleType, spells
 }: Props) {
 
     function getCorrectAttackEditOption(
-        attackInfo: AttackInfo,
-        updateAttackInfo: UpdateAttackDefenseInfoFunction,
+        attackInfo: AttackStats,
+        updateAttackStats: UpdateAttackDefenseStatsFunction,
         combatRoleType: string | null
     ) {
         if (attackInfo.infoType === 'weapon') {
             return (
                 <AttackSingleEdit
                     attackInfo={attackInfo}
-                    updateAttackInfo={updateAttackInfo}
+                    updateAttackStats={updateAttackStats}
                     combatRoleType={combatRoleType}
                     removeAttack={removeAttack}
                 />
@@ -41,7 +45,7 @@ export default function AttacksEditDisplay({
             return (
                 <ReferenceEdit
                     attackReference={attackInfo}
-                    updateAttackInfo={updateAttackInfo}
+                    updateAttackStats={updateAttackStats}
                     combatRoleType={combatRoleType}
                     removeAttack={removeAttack}
                 />
@@ -50,7 +54,7 @@ export default function AttacksEditDisplay({
             return (
                 <SpellEdit
                     spellReference={attackInfo}
-                    updateAttackInfo={updateAttackInfo}
+                    updateAttackStats={updateAttackStats}
                     combatRoleType={combatRoleType}
                     removeAttack={removeAttack}
                     spells={spells}
@@ -61,19 +65,27 @@ export default function AttacksEditDisplay({
 
     return (
         <Body>
-            <>
-                <h2 className="border">Attacks</h2>
-                <div className='attack-edit-header'>
-                    <div></div>
-                    <p>Name</p>
-                    <p>Weapon</p>
-                    <p className='input-header'>Damage Type</p>
-                    <p className='input-header'>Situation</p>
-                    <p className='input-header'>Reference</p>
-                    <p className='input-header'>Tactic</p>
-                </div>
+            <h2 className="border">Attacks</h2>
 
-                {attacks.map((attack: AttackInfo, index: number) => {
+            <AttackInfoEdit
+                attackInfo={attackInfo}
+                updateAttackInfo={updateNonRoleInfo}
+                noHeader={true}
+            />
+            <br/>
+            
+            <div className='attack-edit-header'>
+                <div></div>
+                <p>Name</p>
+                <p>Weapon</p>
+                <p className='input-header'>Damage Type</p>
+                <p className='input-header'>Situation</p>
+                <p className='input-header'>Reference</p>
+                <p className='input-header'>Tactic</p>
+            </div>
+
+            <>
+                {attacks.map((attack: AttackStats, index: number) => {
                     const nextUp = attacks[index - 1]?.overAllIndex
                     const nextDown = attacks[index + 1]?.overAllIndex
 
@@ -81,16 +93,16 @@ export default function AttacksEditDisplay({
                         <div key={index} className='attack-edit-shell'>
                             {MoveOrderButton(index > 0, 'up', updateAttackOrder, attack.overAllIndex, nextUp)}
                             {MoveOrderButton(index < attacks.length - 1, 'down', updateAttackOrder, attack.overAllIndex, nextDown)}
-                            {getCorrectAttackEditOption(attack, updateAttackInfo, combatRoleType)}
+                            {getCorrectAttackEditOption(attack, updateAttackStats, combatRoleType)}
                         </div>
                     )
                 })}
-
-                <div className='add-attack-button-shell'>
-                    <button onClick={_ => addAttack({ infoType: 'reference', system: 'Bonfire', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
-                    <button onClick={_ => addAttack({ infoType: 'spell', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Spell</button>
-                </div>
             </>
+
+            <div className='add-attack-button-shell'>
+                <button onClick={_ => addAttack({ infoType: 'reference', system: 'Bonfire', reference: '', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Reference</button>
+                <button onClick={_ => addAttack({ infoType: 'spell', overAllIndex: 0 })}><Icon iconName='plus' color='black' /> Spell</button>
+            </div>
         </Body>
     )
 }

@@ -3,19 +3,19 @@ import { AttackReference } from '@bestiary/common/interfaces/beast/infoInterface
 import getSituationOptions from './utilities/situationOptions'
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 import Icon from '../../../../../../../../../../../../components/icon/Icon'
-import { UpdateAttackDefenseInfoFunction, RemoveCombatFunction } from '../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { UpdateAttackDefenseStatsFunction, RemoveCombatFunction } from '../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 
 interface Props {
     attackReference: AttackReference,
     combatRoleType: string | null,
-    updateAttackInfo: UpdateAttackDefenseInfoFunction,
+    updateAttackStats: UpdateAttackDefenseStatsFunction,
     removeAttack: RemoveCombatFunction
 }
 
 export default function ReferenceEdit({ 
     attackReference, 
     combatRoleType, 
-    updateAttackInfo,
+    updateAttackStats,
     removeAttack 
 }: Props) {
     const { reference, overAllIndex, situation, tactic } = attackReference
@@ -30,7 +30,7 @@ export default function ReferenceEdit({
                     isSearchable
                     value={{ value: situation, label: situation }}
                     options={getSituationOptions(combatRoleType)}
-                    onChange={(event: any) => updateAttackInfo('situation', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('situation', event.value, overAllIndex)}
                 />
             </div>
             <div className='attack-edit-select-shell'>
@@ -38,7 +38,7 @@ export default function ReferenceEdit({
                     isSearchable
                     value={{ value: reference, label: reference }}
                     options={getSituationOptions(combatRoleType)}
-                    onChange={(event: any) => updateAttackInfo('reference', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('reference', event.value, overAllIndex)}
                 />
             </div>
             <div className='attack-edit-select-shell'>
@@ -46,7 +46,7 @@ export default function ReferenceEdit({
                     isSearchable
                     value={{ value: tactic, label: tactic }}
                     options={getTacticOptionsForEdit()}
-                    onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('tactic', event.value, overAllIndex)}
                 />
             </div>
             <button className="orange" onClick={_ => removeAttack(overAllIndex)}>

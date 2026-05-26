@@ -23,7 +23,7 @@ export default function DefenseInfoEdit({ defenseInfo, updateDefenseInfo, noHead
 
     return (
         <>
-            {noHeader && <h2 className="border">Defense Info</h2>}
+            {!noHeader && <h2 className="border">Defense Info</h2>}
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>

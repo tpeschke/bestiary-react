@@ -4,18 +4,18 @@ import getSituationOptions from "./utilities/situationOptions"
 import { getTacticOptionsForEdit } from '../../../../../../../../../utilities/tacticOptions'
 import Icon from '../../../../../../../../../../../../components/icon/Icon'
 import getDamageTypeOptions, { getDamageTypeLabel, getDamageTypeValue } from './utilities/damageTypeOptions'
-import { UpdateAttackDefenseInfoFunction, RemoveCombatFunction } from '../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { UpdateAttackDefenseStatsFunction, RemoveCombatFunction } from '../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 
 interface Props {
     attackInfo: AllSpecificWeaponInfo,
-    updateAttackInfo: UpdateAttackDefenseInfoFunction
+    updateAttackStats: UpdateAttackDefenseStatsFunction
     combatRoleType: string | null,
     removeAttack: RemoveCombatFunction
 }
 
 export default function AttackSingleEdit({
     attackInfo,
-    updateAttackInfo,
+    updateAttackStats,
     combatRoleType,
     removeAttack
 }: Props) {
@@ -30,7 +30,7 @@ export default function AttackSingleEdit({
                     isSearchable
                     value={{label: getDamageTypeLabel(damageType), value: getDamageTypeValue(damageType)}}
                     options={getDamageTypeOptions()}
-                    onChange={(event: any) => updateAttackInfo('damageType', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('damageType', event.value, overAllIndex)}
                 />
             </div>
             <div className='attack-edit-select-shell'>
@@ -38,7 +38,7 @@ export default function AttackSingleEdit({
                     isSearchable
                     value={{ value: situation, label: situation }}
                     options={getSituationOptions(combatRoleType)}
-                    onChange={(event: any) => updateAttackInfo('situation', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('situation', event.value, overAllIndex)}
                 />
             </div>
             <p className='input-header'></p>
@@ -47,7 +47,7 @@ export default function AttackSingleEdit({
                     isSearchable
                     value={{ value: tactic, label: tactic }}
                     options={getTacticOptionsForEdit()}
-                    onChange={(event: any) => updateAttackInfo('tactic', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('tactic', event.value, overAllIndex)}
                 />
             </div>
             <button className="orange" onClick={_ => removeAttack(overAllIndex)}>

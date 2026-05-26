@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import { SpellReference } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import Icon from "../../../../../../../../../../../../components/icon/Icon"
-import { UpdateAttackDefenseInfoFunction, RemoveCombatFunction } from "../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
+import { UpdateAttackDefenseStatsFunction, RemoveCombatFunction } from "../../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 import getSituationOptions from "./utilities/situationOptions"
 import getSpellOptions from './utilities/spellOptions'
 import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
@@ -9,12 +9,12 @@ import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingI
 interface Props {
     spellReference: SpellReference,
     combatRoleType: string | null,
-    updateAttackInfo: UpdateAttackDefenseInfoFunction,
+    updateAttackStats: UpdateAttackDefenseStatsFunction,
     removeAttack: RemoveCombatFunction,
     spells: Spell[]
 }
 
-export default function SpellEdit({ spellReference, combatRoleType, updateAttackInfo, removeAttack, spells }: Props) {
+export default function SpellEdit({ spellReference, combatRoleType, updateAttackStats, removeAttack, spells }: Props) {
     const { spellid, overAllIndex, situation } = spellReference
 
     return (
@@ -25,7 +25,7 @@ export default function SpellEdit({ spellReference, combatRoleType, updateAttack
                     isSearchable
                     value={{ value: spellid, label: spells.filter(spell => spellid === spell.id)[0]?.name }}
                     options={getSpellOptions(spells)}
-                    onChange={(event: any) => updateAttackInfo('spellid', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('spellid', event.value, overAllIndex)}
                 />
             </div>
             <p className='input-header'></p>
@@ -34,7 +34,7 @@ export default function SpellEdit({ spellReference, combatRoleType, updateAttack
                     isSearchable
                     value={{ value: situation, label: situation }}
                     options={getSituationOptions(combatRoleType)}
-                    onChange={(event: any) => updateAttackInfo('situation', event.value, overAllIndex)}
+                    onChange={(event: any) => updateAttackStats('situation', event.value, overAllIndex)}
                 />
             </div>
             <p className='input-header'></p>

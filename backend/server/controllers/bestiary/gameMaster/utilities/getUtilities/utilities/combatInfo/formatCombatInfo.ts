@@ -3,7 +3,7 @@ import getSkullNumber from "../getSkulls"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import calculateKnockBack from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/knockBackCalculator"
-import { Size, SystemInfoArray } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import calculateVitalityAndTrauma from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/vitalityAndTraumaCalculator"
 import getInitiative from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/getInitiative"
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"
@@ -18,7 +18,8 @@ export default function formatCombatInfo(
     combatSkulls: number,
     combatEpValue: number,
     combatPoints: number,
-    attackInfo: string,
+    attackInfo_bonfire: string,
+    attackInfo_hm: string,
     defenseInfo_bonfire: string,
     defenseInfo_hm: string,
     noTrauma: boolean,
@@ -46,7 +47,7 @@ export default function formatCombatInfo(
         combatEpValue: calculateSecondaryRoleEffect(baseEpValue, combatSecondary),
         combatRawEpValue: baseEpValue,
         epValueIndex,
-        attackInfo: buildSystemSpecificInfo(attackInfo) as SystemInfoArray & string,
+        attackInfo: attackInfo_hm ? [attackInfo_bonfire ?? '', undefined, attackInfo_hm] : buildSystemSpecificInfo(attackInfo_bonfire),
         defenseInfo: defenseInfo_hm ? [defenseInfo_bonfire ?? '', undefined, defenseInfo_hm] : buildSystemSpecificInfo(defenseInfo_bonfire),
         initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
         attacks: [],

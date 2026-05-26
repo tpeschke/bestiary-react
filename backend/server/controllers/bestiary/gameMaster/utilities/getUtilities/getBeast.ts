@@ -49,7 +49,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
     const [unsortedBeastInfo] = await query(getBasicMonsterInfo, beastId)
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail,
-        imagesource, rolenameorder, defaultrole, sp_atk, sp_def, sp_def_hm, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
+        imagesource, rolenameorder, defaultrole, sp_atk, sp_atk_hm, sp_def, sp_def_hm, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
         notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
         skillsecondary, skillpoints, atk_skill, atk_skill_hm, def_skill, def_skill_hm, socialrole, socialsecondary, socialpoints, 
         atk_conf, atk_conf_hm,  def_conf, def_conf_hm, hasarchetypes,
@@ -128,7 +128,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             socialepvalue, hasarchetypes, hasmonsterarchetypes, capacityStrength
         ),
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_def, sp_def_hm, notrauma, knockback,
+            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_atk_hm, 
+            sp_def, sp_def_hm, notrauma, knockback,
             singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
         skillInfo: formatSkillInfo(

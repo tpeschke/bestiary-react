@@ -3,24 +3,31 @@ import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/co
 import Icon from "../../../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../../components/UI/body/Body"
 import MoveOrderButton from "../AttacksEditDisplay/components/MoveOrderButton"
-import { UpdateAttackDefenseInfoFunction, UpdateOrderFunction, RemoveCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { UpdateAttackDefenseStatsFunction, UpdateOrderFunction, RemoveCombatFunction, UpdateFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import DefenseInfoEdit from '../../../components/info/DefenseInfoEdit'
+import { SystemInfoValue } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
 interface Props {
     defenses: DefenseInfo[],
-    updateDefenseInfo: UpdateAttackDefenseInfoFunction,
+    defenseInfo: SystemInfoValue,
+    updateNonRoleInfo: UpdateFunction,
+    updateDefenseInfo: UpdateAttackDefenseStatsFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
 }
 
-export default function DefenseEditDisplay({ defenses, updateDefenseOrder, removeDefense, updateDefenseInfo }: Props) {
+export default function DefenseEditDisplay({ defenses, defenseInfo, updateNonRoleInfo, updateDefenseOrder, removeDefense, updateDefenseInfo }: Props) {
     return (
         <Body>
+            <h2 className="border">Defenses</h2>
+
+            <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} noHeader={true} />
+            <br />
+            <div className="defense-edit-header">
+                <div></div>
+                <p>Name</p>
+            </div>
             <>
-                <h2 className="border">Defenses</h2>
-                <div className="defense-edit-header">
-                    <div></div>
-                    <p>Name</p>
-                </div>
                 {defenses.map((attack: DefenseInfo, index: number) => {
                     const nextUp = defenses[index - 1]?.overAllIndex
                     const nextDown = defenses[index + 1]?.overAllIndex
@@ -39,7 +46,7 @@ function DefenseEdit(
     nextDown: number,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
-    updateDefenseInfo: UpdateAttackDefenseInfoFunction
+    updateDefenseInfo: UpdateAttackDefenseStatsFunction
 ) {
     return (
         <div key={index} className="defense-edit-row">

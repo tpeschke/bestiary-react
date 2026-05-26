@@ -5,10 +5,11 @@ import TextEditor from "../../../../../../../components/textEditor/textEditor"
 
 interface Props {
     attackInfo: SystemInfoValue,
-    updateAttackInfo: UpdateFunction
+    updateAttackInfo: UpdateFunction,
+    noHeader?: Boolean
 }
 
-export default function AttackInfoEdit({ attackInfo, updateAttackInfo }: Props) {
+export default function AttackInfoEdit({ attackInfo, updateAttackInfo, noHeader = false }: Props) {
     const updateInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
@@ -22,7 +23,7 @@ export default function AttackInfoEdit({ attackInfo, updateAttackInfo }: Props) 
 
     return (
         <>
-            <h2 className="border">Attack Info</h2>
+            {!noHeader && <h2 className="border">Attack Info</h2>}
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>

@@ -18,7 +18,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
         updateAttackOrder, addAttack, updateDefenseOrder, removeDefense, updateAttackInfo, updateDefenseInfo, removeAttack,
         updateNonRoleInfo
     } = updateCombatInfoFunctions
-    const { attacks, defenses, defenseInfo } = combatInfo
+    const { attacks, defenses, attackInfo, defenseInfo } = combatInfo
 
     return (
         <>
@@ -26,16 +26,14 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
                 attacks={attacks}
                 updateAttackOrder={updateAttackOrder}
                 addAttack={addAttack}
-                updateAttackInfo={updateAttackInfo}
+                updateAttackStats={updateAttackInfo}
                 combatRoleType={combatRoleType}
                 removeAttack={removeAttack}
                 spells={spells}
+                attackInfo={attackInfo}
+                updateNonRoleInfo={updateNonRoleInfo}
             />
-            <Body>
-                <h2 className="border">Defense Info</h2>
-                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateNonRoleInfo} />
-            </Body>
-            <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} />
+            <DefenseEditDisplay defenses={defenses} updateDefenseOrder={updateDefenseOrder} removeDefense={removeDefense} updateDefenseInfo={updateDefenseInfo} defenseInfo={defenseInfo} updateNonRoleInfo={updateNonRoleInfo} />
         </>
     )
 }
