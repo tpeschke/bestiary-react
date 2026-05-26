@@ -22,7 +22,7 @@ export default function AttackInfoEdit({ attackInfo, updateAttackInfo }: Props) 
 
     return (
         <>
-            <h2>Attack Info</h2>
+            <h2 className="border">Attack Info</h2>
             <div className="info-by-system-shell">
                 <div>
                     <h3>Bonfire</h3>

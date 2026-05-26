@@ -41,13 +41,13 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(3)
+    const [tabIndex, setTabIndex] = useState(2)
 
     const { 
-        id, generalInfo, combatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, generalInfo, rawCombatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
     const { name } = generalInfo
-    const { strategiesNLimits, limitNotes, options } = combatInfo
+    const { strategiesNLimits, limitNotes, options } = rawCombatInfo
 
     const { updateSocialInfo } = updateSocialInfoFunctions
     const { updateCombatInfo, updateNonRoleInfo } = updateCombatInfoFunctions
@@ -86,10 +86,10 @@ export default function EditBody({
                     <>
                         <h1>Combat</h1>
                         <div className='role-and-skull-shell'>
-                            <CombatRoleSelect updateCombatInfo={updateCombatInfo} primaryRole={combatInfo.combatRole} secondaryRole={combatInfo.combatSecondary} />
-                            <SkullSelection skullKeyValue='combatSkulls' epKeyValue='combatRawEpValue' currentSkullValue={combatInfo.combatSkulls} currentEPValue={combatInfo.combatRawEpValue} updateSkull={updateCombatInfo} />
+                            <CombatRoleSelect updateCombatInfo={updateCombatInfo} primaryRole={rawCombatInfo.combatRole} secondaryRole={rawCombatInfo.combatSecondary} />
+                            <SkullSelection skullKeyValue='combatSkulls' epKeyValue='combatRawEpValue' currentSkullValue={rawCombatInfo.combatSkulls} currentEPValue={rawCombatInfo.combatRawEpValue} updateSkull={updateCombatInfo} />
                         </div>
-                        <CombatEdit combatInfo={combatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} spells={spells} />
+                        <CombatEdit combatInfo={rawCombatInfo} updateCombatInfoFunctions={updateCombatInfoFunctions} combatRoleType={combatRoleType} spells={spells} />
                     </>
                 }
                 {tabIndex === 3 &&

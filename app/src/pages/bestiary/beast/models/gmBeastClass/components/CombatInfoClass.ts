@@ -24,6 +24,36 @@ export default class CombatInfoClass {
         return this.entryCombatInfo
     }
 
+    public rawCombatInfoByRole(size: Size, roleID: string | null, selectedRole: Role | null, spells: Spell[]): NonspecificCombatInfo {
+        const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatSkulls, skullIndex: combatSkullIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
+
+        const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
+        const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
+
+        const skulls = (selectedRole ? selectedRole.combatInfo.combatSkulls : combatSkulls)
+        const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex)
+
+        const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
+
+        return {
+            ...this.entryCombatInfo,
+            combatRole, combatSecondary,
+            combatSkulls: skulls,
+            skullIndex,
+            initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
+            vitalityInfo: {
+                ...vitalityInfo,
+                rollUnderTrauma: calculateRollUnderTrauma(skullIndex, 'Bonfire'),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, 'Bonfire'),
+                locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
+                defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
+            },
+            attacks: attacks.reduce(this.adjustAttackInfo(skullIndex, roleID, combatRole, size, spells, 'Bonfire'), []),
+            defenses: (defenses as BonfireDefenseInfo[]).reduce(this.adjustBonfireDefenseInfo(skullIndex, roleID, combatRole, size), [] as BonfireDefenseInfo[]),
+            movements: movements.reduce(this.adjustMovementInfo(skullIndex, roleID, combatRole), [])
+        }
+    }
+
     get combatSkulls(): number {
         if (this.entryCombatInfo.type === 'Bonfire') {
             return this.entryCombatInfo.combatSkulls
@@ -50,7 +80,7 @@ export default class CombatInfoClass {
         const skullIndex = (selectedRole ? selectedRole.combatInfo.skullIndex : combatSkullIndex) + selectedModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
-        
+
         let attackInfo = this.entryCombatInfo.attackInfo[BONFIRE]
         let defenseInfo = this.entryCombatInfo.defenseInfo[BONFIRE]
 
@@ -66,7 +96,7 @@ export default class CombatInfoClass {
             combatRole, combatSecondary,
             combatSkulls: skulls,
             skullIndex,
-            attackInfo, 
+            attackInfo,
             defenseInfo,
             initiative: getInitiative(combatRole, skullIndex, 'Bonfire'),
             vitalityInfo: {
@@ -110,7 +140,7 @@ export default class CombatInfoClass {
             combatEpValue: epValue,
             combatRawEpValue: rawEpValue,
             epValueIndex: epValueIndex,
-            attackInfo, 
+            attackInfo,
             defenseInfo,
             initiative: getInitiative(combatRole, epValueIndex, 'HackMaster'),
             vitalityInfo: {

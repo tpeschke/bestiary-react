@@ -1,4 +1,5 @@
 import Icon from '../../../../../../../../../components/icon/Icon'
+import Body from '../../../../../../components/UI/body/Body'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import AttackInfoEdit from '../components/info/AttackInfoEdit'
 import DefenseInfoEdit from '../components/info/DefenseInfoEdit'
@@ -78,8 +79,10 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
                 </button>
             </span>
 
-            <AttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSkillInfo} />
-            <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSkillInfo} />
+            <Body>
+                <AttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSkillInfo} />
+                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSkillInfo} />
+            </Body>
         </div>
     )
 }

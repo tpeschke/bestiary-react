@@ -53,11 +53,9 @@ export default function getUpdateCombatInfoFunctions(
 
                 updateBeastInfo(modifiedBeastInfo)
             } else if (beast) {
-                const nextValue = key === 'defenseInfo' ? [value, beast.beastInfo.combatInfo.defenseInfo[1], beast.beastInfo.combatInfo.defenseInfo[2]] : value
-
                 let modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
-                    [key]: nextValue
+                    [key]: value
                 }
 
                 if (key === 'combatSkulls' && typeof value === 'number') {
@@ -74,11 +72,9 @@ export default function getUpdateCombatInfoFunctions(
         },
         updateNonRoleInfo: (key: string, value: any) => {
             if (beast) {
-                const nextValue = key === 'defenseInfo' ? [value, beast.beastInfo.combatInfo.defenseInfo[1], beast.beastInfo.combatInfo.defenseInfo[2]] : value
-
                 let modifiedCombatInfo = {
                     ...beast.beastInfo.combatInfo,
-                    [key]: nextValue
+                    [key]: value
                 }
     
                 if (key === 'combatSkulls' && typeof value === 'number') {

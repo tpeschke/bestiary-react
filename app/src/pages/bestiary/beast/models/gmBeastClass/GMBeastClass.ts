@@ -28,7 +28,7 @@ import getPhysicalSave from "@bestiary/common/utilities/scalingAndBonus/hackMast
 import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getMentalSave";
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
 import { getRarity } from "@bestiary/common/utilities/get/getRarity"
-import { SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
+import { NonspecificCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import GeneralRoleInfo, { NonspecificRoleInfo, Role, SpecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
@@ -447,6 +447,13 @@ export default class GMBeastClass {
         const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
 
         return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier, this.spells)
+    }
+
+    get rawCombatInfo(): NonspecificCombatInfo {
+        const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
+        const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
+
+        return this.entryCombatInfo.rawCombatInfoByRole(this.generalInfo.size, roleID, selectedRole, this.spells)
     }
 
     get linkedInfo(): LinkedInfo {

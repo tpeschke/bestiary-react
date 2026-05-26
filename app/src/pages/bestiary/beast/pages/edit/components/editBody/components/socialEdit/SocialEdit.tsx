@@ -1,6 +1,7 @@
+import Body from '../../../../../../components/UI/body/Body'
 import { UpdateSocialInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateSocialInfo'
-import DefenseInfoEdit from '../combatEdit/components/DefenseInfo'
 import AttackInfoEdit from '../components/info/AttackInfoEdit'
+import DefenseInfoEdit from '../components/info/DefenseInfoEdit'
 import './SocialEdit.css'
 import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 
@@ -28,8 +29,10 @@ export default function SocialEdit({ socialInfo, updateSocialInfoFunctions }: Pr
                 <p>No Capacity</p>
             </span>
 
-            <AttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSocialInfo} />
-            <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSocialInfo} />
+            <Body>
+                <AttackInfoEdit attackInfo={attackInfo} updateAttackInfo={updateSocialInfo} />
+                <DefenseInfoEdit defenseInfo={defenseInfo} updateDefenseInfo={updateSocialInfo} />
+            </Body>
         </div>
     )
 }
