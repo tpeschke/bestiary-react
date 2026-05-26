@@ -25,6 +25,7 @@ export interface UnsortedRole {
     hash: string,
     vitality: string,
     attack: string,
+    attack_hm: string,
     defense: string,
     defense_hm: string,
     notrauma: boolean,
@@ -75,7 +76,7 @@ export async function getRoles(beastId: number, beastName: string): Promise<Nons
 async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<NonspecificRoleInfo> {
     const {
         id, beastid, name, role: combatRole, combatpoints: combatPoints, size, hash, 
-        attack: combatAttack_bonfire, defense: combatDefense_bonfire, defense_hm: combatDefense_hm,
+        attack: combatAttack_bonfire, attack_hm: combatAttack_hm, defense: combatDefense_bonfire, defense_hm: combatDefense_hm,
         secondaryrole: combatSecondary,
         knockback, singledievitality: singleDieVitality, noknockback: noKnockback, rollundertrauma: rollUnderTrauma,
         isincorporeal: isIncorporeal, weaponbreakagevitality: weaponBreakageVitality, skillpoints: skillPoints, skillrole: skillRole,
@@ -109,7 +110,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
             name, size, hash
         },
         combatInfo: {
-            attackInfo: buildSystemSpecificInfo(combatAttack_bonfire), 
+            attackInfo: combatAttack_hm ? [combatAttack_bonfire, undefined, combatAttack_hm] : buildSystemSpecificInfo(combatAttack_bonfire), 
             defenseInfo: combatDefense_hm ? [combatDefense_bonfire, undefined, combatDefense_hm] : buildSystemSpecificInfo(combatDefense_bonfire), 
             combatRole, combatSecondary,
             combatSkulls,

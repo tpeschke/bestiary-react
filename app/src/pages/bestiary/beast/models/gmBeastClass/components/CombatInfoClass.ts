@@ -35,11 +35,13 @@ export default class CombatInfoClass {
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 
-        let roleDefenseInfo: SystemInfoArray | undefined = undefined;
+        let roleDefenseInfo: SystemInfoArray | undefined;
+        let roleAttackInfo: SystemInfoArray | undefined;
 
         if (selectedRole) {
-            const { defenseInfo: roleDefense } = selectedRole.combatInfo
+            const { defenseInfo: roleDefense, attackInfo: roleAttack } = selectedRole.combatInfo
             if (roleDefense) { roleDefenseInfo = roleDefense }
+            if (roleAttack) { roleAttackInfo = roleAttack }
         }
 
         return {

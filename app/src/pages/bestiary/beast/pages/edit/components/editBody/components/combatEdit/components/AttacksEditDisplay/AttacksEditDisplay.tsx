@@ -14,6 +14,7 @@ import { SystemInfoValue } from '@bestiary/common/interfaces/beast/infoInterface
 interface Props {
     attacks: AttackStats[],
     attackInfo: SystemInfoValue,
+    roleAttackInfo?: SystemInfoValue,
     updateNonRoleInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
     updateAttackStats: UpdateAttackDefenseStatsFunction,
@@ -24,7 +25,7 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({
-    attacks, updateAttackOrder, attackInfo, updateNonRoleInfo, updateAttackStats, addAttack, removeAttack, combatRoleType, spells
+    attacks, updateAttackOrder, attackInfo, roleAttackInfo, updateNonRoleInfo, updateAttackStats, addAttack, removeAttack, combatRoleType, spells
 }: Props) {
 
     function getCorrectAttackEditOption(
@@ -69,6 +70,7 @@ export default function AttacksEditDisplay({
 
             <AttackInfoEdit
                 attackInfo={attackInfo}
+                roleAttackInfo={roleAttackInfo}
                 updateAttackInfo={updateNonRoleInfo}
                 noHeader={true}
             />
