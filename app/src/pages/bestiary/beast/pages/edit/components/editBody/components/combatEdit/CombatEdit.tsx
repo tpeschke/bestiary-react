@@ -31,6 +31,7 @@ export default function CombatEdit({ combatInfo, updateCombatInfoFunctions, comb
                 attackInfo={attackInfo}
                 roleAttackInfo={roleAttackInfo}
                 updateNonRoleInfo={updateNonRoleInfo}
+                updateCombatInfo={updateCombatInfo}
             />
             <DefenseEditDisplay 
                 defenses={defenses} 

@@ -24,36 +24,38 @@ export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttac
     }
 
     const updateRoleAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
-        const newInfo = attackInfo.map((info: string | undefined, index: number) => {
-            if (system === index) {
-                return value
-            }
-            return info
-        })
+        if (roleAttackInfo) {
+            const newInfo = roleAttackInfo.map((info: string | undefined, index: number) => {
+                if (system === index) {
+                    return value
+                }
+                return info
+            })
 
-        if (updateCombatInfo) {
-            updateCombatInfo('attackInfo', newInfo)
+            if (updateCombatInfo) {
+                updateCombatInfo('attackInfo', newInfo)
+            }
         }
     }
 
     return (
         <>
             {!noHeader && <h2 className="border">Attack Info</h2>}
-            <div className="info-by-system-shell">
+            <div className="info-by-system-shell" key={attackInfo[BONFIRE] + 'BONFIRE'}>
                 <div>
                     <h3>Bonfire</h3>
                     <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateInfoForSystem(BONFIRE, value)} />
                 </div>
-                <div>
+                <div key={attackInfo[HACKMASTER] + 'HACKMASTER'}>
                     <h3>HackMaster</h3>
                     <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
             {roleAttackInfo && <div className="info-by-system-shell">
-                <div>
+                <div key={roleAttackInfo[BONFIRE] + 'BONFIRE'}>
                     <TextEditor content={roleAttackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateRoleAttackInfoForSystem(BONFIRE, value)} />
                 </div>
-                <div>
+                <div key={roleAttackInfo[HACKMASTER] + 'HACKMASTER'}>
                     <TextEditor content={roleAttackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateRoleAttackInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>}

@@ -15,6 +15,7 @@ interface Props {
     attacks: AttackStats[],
     attackInfo: SystemInfoValue,
     roleAttackInfo?: SystemInfoValue,
+    updateCombatInfo: UpdateFunction,
     updateNonRoleInfo: UpdateFunction,
     updateAttackOrder: UpdateOrderFunction,
     updateAttackStats: UpdateAttackDefenseStatsFunction,
@@ -25,7 +26,7 @@ interface Props {
 }
 
 export default function AttacksEditDisplay({
-    attacks, updateAttackOrder, attackInfo, roleAttackInfo, updateNonRoleInfo, updateAttackStats, addAttack, removeAttack, combatRoleType, spells
+    attacks, updateAttackOrder, attackInfo, roleAttackInfo, updateCombatInfo, updateNonRoleInfo, updateAttackStats, addAttack, removeAttack, combatRoleType, spells
 }: Props) {
 
     function getCorrectAttackEditOption(
@@ -71,6 +72,7 @@ export default function AttacksEditDisplay({
             <AttackInfoEdit
                 attackInfo={attackInfo}
                 roleAttackInfo={roleAttackInfo}
+                updateCombatInfo={updateCombatInfo}
                 updateAttackInfo={updateNonRoleInfo}
                 noHeader={true}
             />

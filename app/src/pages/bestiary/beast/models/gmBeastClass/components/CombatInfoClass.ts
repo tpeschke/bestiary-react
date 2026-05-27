@@ -40,8 +40,8 @@ export default class CombatInfoClass {
 
         if (selectedRole) {
             const { defenseInfo: roleDefense, attackInfo: roleAttack } = selectedRole.combatInfo
-            if (roleDefense) { roleDefenseInfo = roleDefense }
             if (roleAttack) { roleAttackInfo = roleAttack }
+            if (roleDefense) { roleDefenseInfo = roleDefense }
         }
 
         return {
@@ -49,6 +49,7 @@ export default class CombatInfoClass {
             combatRole, combatSecondary,
             combatSkulls: skulls,
             attackInfo: this.entryCombatInfo.attackInfo,
+            roleAttackInfo,
             defenseInfo: this.entryCombatInfo.defenseInfo,
             roleDefenseInfo,
             skullIndex,

@@ -73,7 +73,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
     return (
         <div className='attack-stats-shell'>
             <span data-tooltip-id="my-tooltip" data-tooltip-content={situationTooltip}><h6>{situation}</h6> <p>{name ? name : weaponName ? weaponName : 'Default Attack'}</p></span>
-            {info[HACKMASTER] && <HTMLDisplay html={info[HACKMASTER]} />}
+            {(info && info[HACKMASTER]) && <HTMLDisplay html={info[HACKMASTER]} />}
             <div className='attack-stats-inner-shell'>
                 <div className='attack-stats-left'>
                     <div>

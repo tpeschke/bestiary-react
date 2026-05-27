@@ -9,7 +9,7 @@ export default async function updateBasicRoleCombatInfo(beastID: number, roleID:
         where beastId = $1 and id = $2`
 
         const { combatSkulls, combatRawEpValue, combatRole, combatSecondary, attackInfo, defenseInfo } = roleInfo
-
+console.log(attackInfo[BONFIRE])
         return query(sqlQuery, [
                 beastID, roleID, combatSkulls, combatRawEpValue, combatRole, combatSecondary,
                 attackInfo[BONFIRE], attackInfo[HACKMASTER], defenseInfo[BONFIRE], defenseInfo[HACKMASTER]
