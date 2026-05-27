@@ -27,6 +27,7 @@ const hackMasterTextReplacements: Replacement[] = [
     [/\bMem\b/gi, 'Int'],
     [/\+2 Pos\b/gi, '+4'],
     [/\bd([0-9X]+)!/gi, 'd$1p'],
+    [/\b([0-9X]+)d([0-9X]+)!/gi, '$1d$2p'],
     [/\b([+-]?\d+)\s+Wear\b/gi, (_match, wear) => `-${wear.replace(/^[+-]/, '')}`],
     [/\bWear\b/gi, 'Penalty'],
     [/\bRecovery\b/gi, 'Speed'],
