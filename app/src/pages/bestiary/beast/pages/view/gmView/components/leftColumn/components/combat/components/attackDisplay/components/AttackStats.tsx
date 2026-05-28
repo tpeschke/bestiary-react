@@ -99,7 +99,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
                 </div>
                 <div>
                     <p>Damage</p>
-                    <p>{damage} (<em data-tooltip-id="my-tooltip" data-tooltip-content={'Shield Damage'}><Icon iconName='shield-exclaim' color='dark-gray' /> {shieldDamage}</em>)</p>
+                    <p>{damage} {damage !== '*' && <em data-tooltip-id="my-tooltip" data-tooltip-content={'Shield Damage'}>(<Icon iconName='shield-exclaim' color='dark-gray' /> {shieldDamage})</em>}</p>
                 </div>
             </div>
             {tactic &&
