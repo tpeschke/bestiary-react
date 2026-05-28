@@ -29,7 +29,7 @@ import getMentalSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster
 import getDodgeSave from "@bestiary/common/utilities/scalingAndBonus/hackMaster/saves/getDodgeSave";
 import { getRarity } from "@bestiary/common/utilities/get/getRarity"
 import { NonspecificCombatInfo, SpecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
-import GeneralRoleInfo, { NonspecificRoleInfo, Role, SpecificRoleInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
+import GeneralRoleInfo, { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces";
 
 interface ModifierIndexDictionaryObject {
     [key: string]: number
@@ -85,20 +85,29 @@ export default class GMBeastClass {
         this.selectRoleIndex = this.getRoleIndex(roleInfo.roles, roleInfo.defaultrole, roleId)
     }
 
-    public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
-        if (modifierFromParam) {
-            const modifierIndexDictionary: ModifierIndexDictionaryObject = {
-                'NONE': 0,
-                'UNIQUE': 5,
-                'GREATER': 10,
-                'DREAD': 15,
-                'THE': 20
-            }
+    private modifierIndexDictionary: ModifierIndexDictionaryObject = {
+        'NONE': 0,
+        'UNIQUE': 5,
+        'GREATER': 10,
+        'DREAD': 15,
+        'THE': 20
+    }
 
-            return modifierIndexDictionary[modifierFromParam.toUpperCase()]
+    public getSelectedModifier = (modifier: number = 0, modifierFromParam: string | null): number => {
+        if (modifierFromParam && this.modifierIndexDictionary[modifierFromParam.toUpperCase()]) {
+            return this.modifierIndexDictionary[modifierFromParam.toUpperCase()]
+        } else if (modifierFromParam) {
+            return +modifierFromParam
         }
 
         return modifier
+    }
+
+    get specialModifier(): number {
+        if (this.system === 'HackMaster') {
+            return this.selectedModifier + 3
+        }
+        return this.selectedModifier
     }
 
     public getRoleIndex = (roles: Role[], defaultRole: string, roleFromParam: string | null) => {
@@ -145,7 +154,7 @@ export default class GMBeastClass {
         const { combatSkulls } = this.entryCombatInfo
         const { skillSkulls } = this.entrySkillInfo
         const { socialSkulls } = this.entrySocialInfo
-        return Math.max(combatSkulls + this.selectedModifier, skillSkulls + this.selectedModifier, socialSkulls + this.selectedModifier)
+        return Math.max(combatSkulls + this.specialModifier, skillSkulls + this.specialModifier, socialSkulls + this.specialModifier)
     }
 
     get selfDoubtDie(): string {
@@ -164,7 +173,7 @@ export default class GMBeastClass {
         if (this.system === 'HackMaster') {
             const { epValueIndex: mainEpValueIndex } = this.entrySocialInfo
             const roleSelected = this.isRoleSelected()
-            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.selectedModifier
+            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
 
             return [{
                 label: 'Physical',
@@ -211,7 +220,7 @@ export default class GMBeastClass {
     }
 
     get rawSocialInfo(): NonspecificSocialInfo {
-       return this.entrySocialInfo 
+        return this.entrySocialInfo
     }
 
     private getBonfireSocialInfo(): SpecificSocialInfo {
@@ -229,8 +238,8 @@ export default class GMBeastClass {
 
             const capacity = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
 
-            const socialSkulls = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.selectedModifier
-            const skullIndex = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.selectedModifier
+            const socialSkulls = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.specialModifier
+            const skullIndex = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.specialModifier
 
             const hasArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
@@ -289,9 +298,9 @@ export default class GMBeastClass {
 
             const capacity = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
 
-            const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValue : mainEpValue) + this.selectedModifier
+            const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValue : mainEpValue) + this.specialModifier
             const rawEpValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRawEpValue : mainRawEpValue)
-            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.selectedModifier
+            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
 
             const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
             const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
@@ -373,8 +382,8 @@ export default class GMBeastClass {
         const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
         const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
 
-        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSkulls : skulls) + this.selectedModifier
-        const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skullIndex : index) + this.selectedModifier
+        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSkulls : skulls) + this.specialModifier
+        const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skullIndex : index) + this.specialModifier
 
         const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
 
@@ -410,9 +419,9 @@ export default class GMBeastClass {
         const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
         const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
 
-        const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValue : mainEpValue) + this.selectedModifier
+        const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValue : mainEpValue) + this.specialModifier
         const rawEpValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRawEpValue : mainRawEpValue)
-        const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.epValueIndex : mainEpValueIndex) + this.selectedModifier
+        const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
 
         const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
 
@@ -446,7 +455,7 @@ export default class GMBeastClass {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
         const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
 
-        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.selectedModifier, this.spells)
+        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.specialModifier, this.spells)
     }
 
     get rawCombatInfo(): NonspecificCombatInfo {
@@ -566,7 +575,7 @@ export default class GMBeastClass {
     }
 
     private getQuickLinkParams = (): any => {
-        const selectedRoleId: string = this.roleInfo.roles[this.selectRoleIndex].id
+        const selectedRoleId: string = this.roleInfo.roles[this.selectRoleIndex]?.id
 
         if (selectedRoleId && this.selectedModifier) {
             return {
