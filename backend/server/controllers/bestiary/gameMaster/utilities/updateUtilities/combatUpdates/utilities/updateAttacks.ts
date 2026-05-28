@@ -1,6 +1,7 @@
 import { AttackStats, AttackReference, SpellReference, AllSpecificWeaponInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import query from "../../../../../../../db/database"
 import { addReferenceToDB, addSpellReferenceToDB, addWeaponToDB, removeMissingAttackIDsFromDB, updateReferenceInfo, updateSpellReferenceInfo, updateWeaponInfo } from "../../../../../../../db/beast/attacks"
+import { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemString"
 
 export default async function updateAttacks(beastID: number, attacks: AttackStats[]) {
     let promiseArray: any[] = []
@@ -21,11 +22,18 @@ export default async function updateAttacks(beastID: number, attacks: AttackStat
 }
 
 async function upsertWeaponAttack(attack: AllSpecificWeaponInfo, beastID: number) {
-    const { overAllIndex, oldID, id, situation, tactic, roleid, damageType } = attack
+    const { overAllIndex, oldID, id, situation, tactic, roleid, damageType, info } = attack
+    console.log(info)
     if (id) {
-        return query(updateWeaponInfo, [id, oldID, overAllIndex, situation, tactic, damageType, beastID])
+        return query(updateWeaponInfo, [
+            id, oldID, overAllIndex, situation, tactic, damageType, beastID,
+            info[BONFIRE], info[HACKMASTER]
+        ])
     } else {
-        return query(addWeaponToDB, [oldID, overAllIndex, situation, tactic, roleid, damageType, beastID])
+        return query(addWeaponToDB, [
+            oldID, overAllIndex, situation, tactic, roleid, damageType, beastID,
+            info[BONFIRE], info[HACKMASTER]
+        ])
     }
 }
 

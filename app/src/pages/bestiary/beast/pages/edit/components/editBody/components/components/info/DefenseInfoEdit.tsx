@@ -12,6 +12,7 @@ interface Props {
 }
 
 export default function DefenseInfoEdit({ defenseInfo, roleDefenseInfo, updateDefenseInfo, updateCombatInfo, noHeader = false }: Props) {
+    
     const updateDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = defenseInfo.map((info: string | undefined, index: number) => {
             if (system === index) {

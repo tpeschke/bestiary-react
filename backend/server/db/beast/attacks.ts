@@ -3,12 +3,13 @@ export const getMonsterAttacks = `select
 	coalesce(c.roleid, a.roleid),
 	r.combatpoints, r.role, 
 	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
+	a.info as attackinfo, a.info_hm as attackinfo_hm,
 	index
 from bbcombatstats c
 left join bbroles r on r.id = c.roleid
 right join bbattacks a on a.oldid = c.id
 where c.beastid = $1 or a.beastid = $1
-order by index;`
+order by index`
 
 export const removeMissingAttackIDsFromDB = `delete from bbattacks
 where oldid in (
@@ -18,11 +19,16 @@ where oldid in (
 and not (id = any($2));`
 
 export const updateWeaponInfo = `update bbattacks
-set oldid = $2, index = $3, situation = $4, tactic = $5, damageType = $6, beastid = $7
+set oldid = $2, index = $3, situation = $4, tactic = $5, damageType = $6, beastid = $7,
+	info = $8, info_hm = $9
 where id = $1`
 
-export const addWeaponToDB = `insert into bbattacks (oldid, index, situation, tactic, roleid, damageType, beastid)
-values ($1, $2, $3, $4, $5, $6, $7)`
+export const addWeaponToDB = `insert into bbattacks 
+(
+	oldid, index, situation, tactic, roleid, damageType, beastid,
+	info, info_hm
+)
+values ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
 
 export const updateReferenceInfo = `update bbattacks
 set index = $2, reference = $3, tactic = $4, situation = $5, beastid = $6

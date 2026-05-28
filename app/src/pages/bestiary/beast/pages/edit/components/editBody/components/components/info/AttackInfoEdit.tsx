@@ -6,12 +6,14 @@ import TextEditor from "../../../../../../../components/textEditor/textEditor"
 interface Props {
     attackInfo: SystemInfoValue,
     roleAttackInfo?: SystemInfoValue,
+    statKey?: string,
     updateAttackInfo: UpdateFunction,
     updateCombatInfo?: UpdateFunction,
     noHeader?: Boolean
 }
 
-export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttackInfo, updateCombatInfo, noHeader = false }: Props) {
+export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttackInfo, updateCombatInfo, statKey = 'attackInfo', noHeader = false }: Props) {
+
     const updateInfoForSystem = (system: 0 | 1 | 2, value: string) => {
         const newInfo = attackInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
@@ -20,7 +22,7 @@ export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttac
             return info
         })
 
-        updateAttackInfo('attackInfo', newInfo)
+        updateAttackInfo(statKey, newInfo)
     }
 
     const updateRoleAttackInfoForSystem = (system: 0 | 1 | 2, value: string) => {
@@ -33,7 +35,7 @@ export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttac
             })
 
             if (updateCombatInfo) {
-                updateCombatInfo('attackInfo', newInfo)
+                updateCombatInfo(statKey, newInfo)
             }
         }
     }

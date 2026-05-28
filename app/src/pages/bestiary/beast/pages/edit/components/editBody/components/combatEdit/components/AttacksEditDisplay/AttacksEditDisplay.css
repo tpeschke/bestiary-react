@@ -1,6 +1,26 @@
+.attack-edit-shell button {
+    margin-top: 3px;
+}
+
+.attack-edit-shell button:last-child {
+    margin-top: 0;
+}
+
+.attack-edit-row-shell .attack-edit-row.info-edit, .attack-edit-row-shell:hover .attack-edit-row.info-edit-helper {
+    display: none;
+}
+
+.attack-edit-row-shell:hover .attack-edit-row.info-edit, .attack-edit-row-shell .attack-edit-row.info-edit-helper {
+    display: unset;
+}
+
+.attack-edit-row-shell .attack-edit-row.info-edit-helper {
+    margin-left: 35px;
+}
+
 .attack-edit-shell {
     display: flex;
-    align-items: center;
+    align-items: start;
 }
 
 .attack-edit-select-shell {

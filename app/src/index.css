@@ -240,6 +240,13 @@ strong {
 	text-transform: uppercase;
 }
 
+em {
+	font-family: "Source Sans 3", sans-serif;
+	font-size: 13px;
+	min-height: 1px;
+	line-height: 1.2;
+}
+
 a,
 .fake-link {
 	text-decoration: none;

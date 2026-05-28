@@ -256,7 +256,10 @@ export interface RawCombatStat {
     swarmbonus: boolean,
     adjustment: number,
     tdr: boolean,
-    info: string,
+    info: string | null,
+    info_hm: string | null,
+    attackinfo: string | null,
+    attackinfo_hm: string | null,
     spellid: string
 }
 

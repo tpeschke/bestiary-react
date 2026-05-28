@@ -3,3 +3,6 @@
     margin-bottom: 5px;
 }
 
+.ProseMirror p:last-child {
+    margin-bottom: 0;
+}

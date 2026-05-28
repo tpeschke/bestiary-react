@@ -1,5 +1,5 @@
 import { RawCombatStat, AttackStats, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { Size, SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { buildSystemSpecificInfo } from "../../../../../formatUtilities/getSystemSpecificTerminologies"
@@ -18,13 +18,23 @@ export default function calculateAttacksAndDefenses(attackStats: RawCombatStat[]
 
 function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: string, size: Size, gearCache: any | undefined): AttackStats[] {
     return stats.map((stat, index) => {
-        const { id, beastid, roleid, info, swarmbonus, weaponname: chosenName, weapon, isspecial: isSpecial,
-            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, situation,
+        const { id, beastid, roleid, info: info_bonfire, info_hm, attackinfo, attackinfo_hm, swarmbonus, weaponname: chosenName,
+            weapon, isspecial: isSpecial,
+            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID,
+            attackid, situation,
             tactic, reference, attackrole, weapontype, damagetype, addsizemod, spellid
         } = stat
 
         const roleToUse = role ? role : mainRole
         const damageType = damagetype ?? getDamageType(slashingDamage, crushingDamage, piercingDamage)
+
+        let info: SystemInfoValue;
+
+        if (attackinfo) {
+            info = attackinfo_hm ? [attackinfo, undefined, attackinfo_hm] : buildSystemSpecificInfo(attackinfo)
+        } else {
+            info = info_hm ? [info_bonfire ?? '', undefined, info_hm ?? ''] : buildSystemSpecificInfo(info_bonfire)
+        }
 
         if (reference) {
             return {
@@ -46,10 +56,10 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
         } else {
             return {
                 ...calculateBonfireAttackInfo(
-                    { beastid, roleid, info, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
+                    { beastid, roleid, info_bonfire, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
                     skullIndex, roleToUse, addsizemod, size, gearCache
                 ),
-                info: buildSystemSpecificInfo(info),
+                info,
                 situation, tactic,
                 oldID: id ?? oldID,
                 overAllIndex: index,
