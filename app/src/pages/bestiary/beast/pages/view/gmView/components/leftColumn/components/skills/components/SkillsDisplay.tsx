@@ -14,13 +14,15 @@ export default function SkillsDisplay({ skills, type }: Props) {
 
     const { preferred, weakness, everythingElse, everythingElseStrength } = skills
 
+    const untrainedDisplay = type === 'Bonfire' ? 'U' : 'Auto Fail' 
+
     return (
         <div className={preferred || weakness ? "skill-object-shell" : ''}>
             <div className="skill-object">
                 {preferred && displaySkillArray(preferred, type)}
                 {weakness && displaySkillArray(weakness, type)}
             </div>
-            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? 'U' : everythingElse + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
+            <Pair title={`Everything${preferred || weakness ? ' Else' : ''}`} info={everythingElseStrength ? untrainedDisplay : everythingElse + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
         </div>
     )
 }
