@@ -106,7 +106,6 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
                     axios.get(beastURL + '/' + beastId).then(({ data }) => {
                         if (data.generalInfo) {
                             document.title = `${data.generalInfo.name} - Bonfire Bestiary`
-                            console.log(modifier)
                             setBeast(new GMBeastClass(data, roleId, modifier, systemPreference))
                             dispatch(cacheMonster({
                                 id: data.id,
