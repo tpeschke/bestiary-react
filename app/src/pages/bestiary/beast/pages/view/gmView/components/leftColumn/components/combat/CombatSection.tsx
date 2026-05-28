@@ -27,7 +27,7 @@ export default function CombatSection({ combatInfo, size }: Props) {
 
 function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMasterCombatInfo, size: Size }) {
     const {
-        combatRole, combatRawEpValue, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
+        combatRole, combatEpValue, attackInfo, defenseInfo, combatSecondary, vitalityInfo, movements, attacks,
         defenses, initiative, type
     } = combatInfo
 
@@ -58,7 +58,7 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
 
     return (
         <>
-            <RoleTitle title='Combat' epValue={combatRawEpValue} role={combatRole} secondaryRole={combatSecondary} />
+            <RoleTitle title='Combat' epValue={combatEpValue} role={combatRole} secondaryRole={combatSecondary} />
             <div className="pair-shell heading three">
                 <h3>Hit Points</h3>
                 <p>
@@ -95,8 +95,6 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
         vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
         isIncorporeal, defenseNFleeDice
     } = vitalityInfo
-
-    const { defense, flee } = defenseNFleeDice
 
     const traumaInfo = {
         trauma,

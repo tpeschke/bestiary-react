@@ -75,11 +75,11 @@ export default class CombatInfoClass {
         }
     }
 
-    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): SpecificCombatInfo {
+    public combatInfo(size: Size, roleID: string | null, selectedRole: Role | null, specialModifier: number, spells: Spell[]): SpecificCombatInfo {
         if (this.selectedSystem === 'Bonfire') {
-            return this.getBonfireCombatInfo(size, roleID, selectedRole, selectedModifier, spells)
+            return this.getBonfireCombatInfo(size, roleID, selectedRole, specialModifier, spells)
         } else {
-            return this.getHackMasterCombatInfo(size, roleID, selectedRole, selectedModifier, spells)
+            return this.getHackMasterCombatInfo(size, roleID, selectedRole, specialModifier, spells)
         }
     }
 
@@ -125,15 +125,17 @@ export default class CombatInfoClass {
         }
     }
 
-    private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, selectedModifier: number, spells: Spell[]): HackMasterCombatInfo {
+    private getHackMasterCombatInfo(size: Size, roleID: string | null, selectedRole: Role | null, specialModifier: number, spells: Spell[]): HackMasterCombatInfo {
         const { attacks, defenses, movements, combatRole: role, combatSecondary: secondary, combatEpValue: mainEpValue, combatRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, vitalityInfo: mainVitalityInfo } = this.entryCombatInfo
 
         const combatRole = selectedRole ? selectedRole.combatInfo.combatRole : role
         const combatSecondary = selectedRole ? selectedRole.combatInfo.combatSecondary : secondary
 
-        const epValue = (selectedRole ? selectedRole.combatInfo.combatEpValue : mainEpValue) + selectedModifier
+        const epPercentIncrease = (specialModifier / 10) + 1
+
+        const epValue = +((selectedRole ? selectedRole.combatInfo.combatEpValue : mainEpValue) * epPercentIncrease).toFixed(0)
         const rawEpValue = (selectedRole ? selectedRole.combatInfo.combatRawEpValue : mainRawEpValue)
-        const epValueIndex = (selectedRole ? selectedRole.combatInfo.epValueIndex : mainEpValueIndex) + selectedModifier
+        const epValueIndex = (selectedRole ? selectedRole.combatInfo.epValueIndex : mainEpValueIndex) + specialModifier
 
         const vitalityInfo = selectedRole ? this.populateVitalityInfo(mainVitalityInfo, selectedRole.combatInfo.vitalityInfo) : mainVitalityInfo
 

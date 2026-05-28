@@ -105,7 +105,7 @@ export default class GMBeastClass {
 
     get specialModifier(): number {
         if (this.system === 'HackMaster') {
-            return this.selectedModifier + 3
+            return this.selectedModifier * 3
         }
         return this.selectedModifier
     }
@@ -173,7 +173,7 @@ export default class GMBeastClass {
         if (this.system === 'HackMaster') {
             const { epValueIndex: mainEpValueIndex } = this.entrySocialInfo
             const roleSelected = this.isRoleSelected()
-            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
+            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.selectedModifier
 
             return [{
                 label: 'Physical',
@@ -298,7 +298,9 @@ export default class GMBeastClass {
 
             const capacity = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.capacity : mainCapacity
 
-            const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValue : mainEpValue) + this.specialModifier
+            const epPercentIncrease = (this.specialModifier / 10) + 1
+
+            const epValue = +((roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValue : mainEpValue) * epPercentIncrease).toFixed(0)
             const rawEpValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRawEpValue : mainRawEpValue)
             const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
 
@@ -419,7 +421,9 @@ export default class GMBeastClass {
         const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
         const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
 
-        const epValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValue : mainEpValue) + this.specialModifier
+        const epPercentIncrease = (this.specialModifier / 10) + 1
+
+        const epValue = +((roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillEpValue : mainEpValue) * epPercentIncrease).toFixed(0)
         const rawEpValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRawEpValue : mainRawEpValue)
         const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
 
