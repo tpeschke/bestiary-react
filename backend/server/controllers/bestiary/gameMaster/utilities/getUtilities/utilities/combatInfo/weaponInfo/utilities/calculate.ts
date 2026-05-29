@@ -22,7 +22,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID,
             attackid, situation,
-            tactic, reference, attackrole, weapontype, damagetype, addsizemod, spellid
+            tactic, reference, attackrole, weapontype: weaponType, damagetype, addsizemod, spellid
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -56,7 +56,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
         } else {
             return {
                 ...calculateBonfireAttackInfo(
-                    { beastid, roleid, info_bonfire, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weapontype },
+                    { beastid, roleid, info_bonfire, swarmbonus, name: chosenName, weapon, isSpecial, damageType, weaponType },
                     skullIndex, roleToUse, addsizemod, size, gearCache
                 ),
                 info,
@@ -66,7 +66,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 id: attackid,
                 type: 'Bonfire',
                 infoType: 'weapon',
-                scalingInfo: { swarmbonus, name: chosenName, weapon, weapontype, damageType, addsizemod }
+                scalingInfo: { swarmbonus, name: chosenName, weapon, weaponType, damageType, addsizemod }
             }
         }
     })

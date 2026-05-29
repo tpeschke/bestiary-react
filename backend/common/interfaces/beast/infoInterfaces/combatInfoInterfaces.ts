@@ -134,7 +134,7 @@ export interface BasicWeaponInfo {
         name: string,
         weapon: string,
         damageType: DamageType,
-        weapontype: Type,
+        weaponType: Type,
         addsizemod: boolean
     }
 }
