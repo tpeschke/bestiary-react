@@ -13,7 +13,7 @@ export default function calculateVitalityAndTrauma(
     skullIndex: number,
     weaponBreakageVitality: boolean,
     singleDieVitality: boolean,
-    size: Size,
+    size: Size = 'Fine',
     system: SystemOption
 ): VitalityAndTrauma {
     if (singleDieVitality && system === 'Bonfire') {
@@ -42,7 +42,7 @@ export default function calculateVitalityAndTrauma(
             'Colossal': 40
         }
 
-        const vitality = calculateSecondaryRoleEffect(getHackMasterBaseVitality(skullIndex, role), secondaryRole) + sizeModifierDictionary[size]
+        const vitality = calculateSecondaryRoleEffect(getHackMasterBaseVitality(skullIndex, role), secondaryRole) + (sizeModifierDictionary[size] ?? 0)
 
         return {
             vitality,
@@ -76,8 +76,7 @@ function getBonfireBaseVitality(skullIndex: number, role: string, weaponBreakage
 }
 
 function getHackMasterBaseVitality(skullIndex: number, role: string): number {
-    const vitalityDictionary = [1, 1, 2, 2, 3, 5, 10, 14, 19, 24, 29, 34, 38, 43, 48, 53, 58, 63, 67, 72, 77, 82, 87, 91, 96, 101, 106, 111, 115, 120, 125, 130, 135, 139, 144, 149, 154, 159, 163, 168, 173
-    ]
+    const vitalityDictionary = [1, 1, 2, 2, 3, 5, 10, 14, 19, 24, 29, 34, 38, 43, 48, 53, 58, 63, 67, 72, 77, 82, 87, 91, 96, 101, 106, 111, 115, 120, 125, 130, 135, 139, 144, 149, 154, 159, 163, 168, 173]
 
     const roleIndexModifier = getRoleIndexModifier(role)
     const modifiedIndex = skullIndex + roleIndexModifier
@@ -88,6 +87,7 @@ function getHackMasterBaseVitality(skullIndex: number, role: string): number {
     if (modifiedIndex > vitalityDictionary.length) {
         return vitalityDictionary[vitalityDictionary.length - 1]
     }
+
     return vitalityDictionary[modifiedIndex]
 }
 
