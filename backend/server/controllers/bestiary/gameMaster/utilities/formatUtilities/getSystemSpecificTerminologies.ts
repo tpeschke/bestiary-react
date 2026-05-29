@@ -8,11 +8,27 @@ export function buildSystemSpecificInfo(info: string | null | undefined): System
     return [
         bonfireInfo,
         undefined,
-        getHackMasterTerminology(bonfireInfo)
+        replaceTerminology(hackMasterInfoTextReplacements, bonfireInfo)
     ]
 }
 
-const hackMasterTextReplacements: Replacement[] = [
+export function buildSystemSpecificAppearance(appearance: string | null | undefined): SystemInfoArray {
+        const bonfireAppearance = appearance ?? ''
+
+    return [
+        bonfireAppearance,
+        undefined,
+        replaceTerminology(hackMasterAppearanceTextReplacements, bonfireAppearance)
+    ]
+}
+
+const hackMasterAppearanceTextReplacements: Replacement[] = [
+    [/ \-([0-9X]+)/gi, (_, bonus) => ` -${+bonus * 5}%`],
+    [/ \+([0-9X]+)/gi, (_, bonus) => ` +${+bonus * 5}%`],
+    [/ ([0-9X]+)L/g, (_, carry) => ` ${+carry * 3}lb`]
+]
+
+const hackMasterInfoTextReplacements: Replacement[] = [
     [/\bOn a Trauma Check\b/gi, "When ToP'd"],
     [/\bOn Trauma Check\b/gi, "When ToP'd"],
     [/\bTrauma[\u2019']d\b/gi, "ToP'd"],
@@ -33,8 +49,8 @@ const hackMasterTextReplacements: Replacement[] = [
     [/\bRecovery\b/gi, 'Speed'],
 ]
 
-export function getHackMasterTerminology(info: string): string {
-    return hackMasterTextReplacements.reduce((updatedInfo, [pattern, replacement]) => {
+export function replaceTerminology(replacements: Replacement[], info: string): string {
+    return replacements.reduce((updatedInfo, [pattern, replacement]) => {
         if (typeof replacement === 'function') {
             return updatedInfo.replace(pattern, replacement)
         }

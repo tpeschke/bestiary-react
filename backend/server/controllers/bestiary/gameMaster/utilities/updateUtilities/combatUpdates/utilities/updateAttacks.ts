@@ -23,7 +23,6 @@ export default async function updateAttacks(beastID: number, attacks: AttackStat
 
 async function upsertWeaponAttack(attack: AllSpecificWeaponInfo, beastID: number) {
     const { overAllIndex, oldID, id, situation, tactic, roleid, damageType, info } = attack
-    console.log(info)
     if (id) {
         return query(updateWeaponInfo, [
             id, oldID, overAllIndex, situation, tactic, damageType, beastID,

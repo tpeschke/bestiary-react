@@ -1,4 +1,4 @@
-import GeneralInfo from './infoInterfaces/generalInfoInterfaces'
+import { NonspecificGeneralInfo } from './infoInterfaces/generalInfoInterfaces'
 import { NonspecificSkillInfo } from './infoInterfaces/skillInfoInterfaces'
 import ImageInfo from './infoInterfaces/ImageInfoInterfaces'
 import LinkedInfo from './infoInterfaces/linkedInfoInterfaces'
@@ -16,7 +16,7 @@ export interface Beast {
     playerInfo: PlayerSpecificInfo,
     canplayerview: boolean,
     system: SystemOption,
-    generalInfo: GeneralInfo,
+    generalInfo: NonspecificGeneralInfo,
     imageInfo: ImageInfo,
     linkedInfo: LinkedInfo,
     roleInfo: RoleInfo,

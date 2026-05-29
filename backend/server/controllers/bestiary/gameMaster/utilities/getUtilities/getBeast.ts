@@ -36,6 +36,7 @@ import { SkillObject } from "@bestiary/common/interfaces/beast/infoInterfaces/sk
 import { getEntryAccessLevel } from "@bestiary/common/utilities/get/getAccessLevel"
 import getSystemString from "@bestiary/common/utilities/get/getSystemString";
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
+import { buildSystemSpecificAppearance } from "../formatUtilities/getSystemSpecificTerminologies"
 
 interface GetBeastOptions {
     isEditing: boolean,
@@ -68,7 +69,8 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             }
         },
         generalInfo: {
-            name, plural, intro, habitat, appearance, senses, diet, meta, size,
+            name, plural, intro, habitat, senses, diet, meta, size,
+            appearance: buildSystemSpecificAppearance(appearance), 
             rarity: getRarity(rarity, 'Bonfire'),
             scenarios: [],
             folklores: [],

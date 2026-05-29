@@ -1,13 +1,12 @@
 export type Size = 'Fine' | 'Diminutive' | 'Tiny' | 'Small' | 'Medium' | 'Large' | 'Huge' | 'Giant' | 'Enormous' | 'Colossal'
 
-export default interface GeneralInfo {
+interface BasicGeneralInfo {
     name: string,
     canEdit: boolean,
     beastOwnerId: number,
     plural: string,
     intro: string,
     habitat: string,
-    appearance: string,
     scenarios: Scenario[],
     folklores: Folklore[],
     senses: string,
@@ -17,6 +16,14 @@ export default interface GeneralInfo {
     rarity: Rarity,
     tables: TablesObject,
     palette: Palette
+}
+
+export interface SpecificGeneralInfo extends BasicGeneralInfo {
+    appearance: string
+}
+
+export interface NonspecificGeneralInfo extends BasicGeneralInfo {
+    appearance: SystemInfoArray
 }
 
 export interface SaveObject {

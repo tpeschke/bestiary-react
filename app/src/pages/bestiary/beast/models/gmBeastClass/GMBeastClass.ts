@@ -9,7 +9,7 @@ import calculateStress from '@bestiary/common/utilities/scalingAndBonus/bonfire/
 import { calculateRankForCharacteristic, CharacteristicWithRanks } from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/calculateRankForCharacteristic"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 
-import GeneralInfo, { SaveObject } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
+import { NonspecificGeneralInfo, SaveObject, SpecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces";
 import { createSearchParams } from "react-router-dom";
 import alertInfo from "../../../../../components/alert/alerts";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
@@ -41,7 +41,7 @@ export default class GMBeastClass {
     private canplayerview: boolean
     public system: SystemOption
 
-    private entryGeneralInfo: GeneralInfo
+    private entryGeneralInfo: NonspecificGeneralInfo
     private entryPlayerSpecificInfo: PlayerSpecificInfo
     private entryImageInfo: ImageInfo
     private entryLinkedInfo: LinkedInfo
@@ -190,8 +190,8 @@ export default class GMBeastClass {
         return null
     }
 
-    get generalInfo(): GeneralInfo {
-        const { size: mainSize, rarity: baseRarity } = this.entryGeneralInfo
+    get generalInfo(): SpecificGeneralInfo {
+        const { size: mainSize, rarity: baseRarity, appearance } = this.entryGeneralInfo
 
         const roleSelected = this.isRoleSelected()
 
@@ -202,6 +202,7 @@ export default class GMBeastClass {
         return {
             ...this.entryGeneralInfo,
             rarity,
+            appearance: this.system === 'Bonfire' ? appearance[BONFIRE] : appearance[HACKMASTER],
             // a Role's size can be null, in which case, it defaults to the default size, so this is what this is doing
             size: size ?? mainSize
         }
