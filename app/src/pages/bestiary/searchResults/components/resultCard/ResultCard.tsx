@@ -7,22 +7,37 @@ import { imageBase } from '../../../../../frontend-config'
 import HTMLDisplay from '../../../../bestiary/beast/components/UI/htmlDisplay/htmlDisplay'
 import Pair, { PairIconSettings } from '../../../../bestiary/beast/components/UI/pair/Pair'
 import TileIcon from '../../../../bestiary/catalog/components/tile/components/TileIcon'
+import { useSelector } from 'react-redux'
+import { getSystemPreference } from '../../../../../redux/slices/userSlice'
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
     searchResult: SearchResult
 }
 
 export default function ResultCard({ searchResult }: Props) {
-    const { id, name, thumbnail, intro, rarity, size, mincombat, maxcombat, minskill, maxskill, minsocial, maxsocial, canplayerview, patreon } = searchResult
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+
+    const { id, name, thumbnail, intro, rarity, size,
+        mincombatskull, maxcombatskull, minskillskull, maxskillskull, minsocialskull, maxsocialskull,
+        mincombatep, maxcombatep, minskillep, maxskillep, minsocialep, maxsocialep,
+        canplayerview, patreon } = searchResult
 
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
         currentTarget.src = ImageNotFound
     }
 
-    const skullIconFormat: PairIconSettings = {
+    const isBonfire = systemPreference === BONFIRE
+
+    const skullIconFormat: PairIconSettings | null = isBonfire ? {
         iconName: 'skull'
-    }
+    } : null
+
+    const confrontationOrSocial = isBonfire ? 'Confrontation' : 'Social'
+    const socialEPSkull = isBonfire ? formatSkullRating(minsocialskull, maxsocialskull) : formatEPs(minsocialep, maxsocialep)
+    const combatEPSkull = isBonfire ? formatSkullRating(mincombatskull, maxcombatskull) : formatEPs(mincombatep, maxcombatep)
+    const skillEPSkull = isBonfire ? formatSkullRating(minskillskull, maxskillskull) : formatEPs(minskillep, maxskillep)
 
     return (
         <Link to={`/beast/${id}`} className='card-background result-card'>
@@ -39,9 +54,9 @@ export default function ResultCard({ searchResult }: Props) {
                         <HTMLDisplay html={intro} />
                     </div>
                     <div className='misc-info-shell'>
-                        <Pair title='Confrontation' info={formatSkullRating(minsocial, maxsocial)} format={{ position: 'opposite' }} icon={skullIconFormat} />
-                        <Pair title='Combat' info={formatSkullRating(mincombat, maxcombat)} format={{ position: 'opposite' }} icon={skullIconFormat} />
-                        <Pair title='Skill' info={formatSkullRating(minskill, maxskill)} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        <Pair title={confrontationOrSocial} info={socialEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        <Pair title='Combat' info={combatEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        <Pair title='Skill' info={skillEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
                         {size && <Pair title='Size' info={size} format={{ position: 'opposite' }} />}
                         <Pair title='Rarity' info={rarity.rarityName} format={{ position: 'opposite' }} />
                     </div>
@@ -56,6 +71,14 @@ function formatSkullRating(min: number, max: number): string {
         return `${getSkullNumber(min)}`
     } else {
         return `${getSkullNumber(min)} - ${getSkullNumber(max)}`
+    }
+}
+
+function formatEPs(min: number, max: number): string {
+    if (min === max) {
+        return `${min} EPs`
+    } else {
+        return `${min} - ${max} EPs`
     }
 }
 

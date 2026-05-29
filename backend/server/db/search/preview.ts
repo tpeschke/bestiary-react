@@ -1,4 +1,6 @@
-export const getGMPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, mincombat, maxcombat, minsocial, maxsocial, minskill, maxskill, b.hash,
+export const getGMPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, b.hash,
+	mincombatskull, maxcombatskull, minsocialskull, maxsocialskull, minskillskull, maxskillskull,
+	mincombatep, maxcombatep, minsocialep, maxsocialep, minskillep, maxskillep,
 	CASE WHEN (sp_atk is not null or attack is not null) THEN true ELSE false END as hasCombatAttack, 
 	CASE WHEN (sp_def is not null or defense is not null) THEN true ELSE false END as hasCombatDefense,
 	CASE WHEN (atk_skill is not null or attack_skill is not null) THEN true ELSE false END as hasSkillAttack, 
@@ -6,9 +8,12 @@ export const getGMPreview = `select b.id, b.name, intro, patreon, rarity, b.size
 	CASE WHEN (atk_conf is not null or attack_conf is not null) THEN true ELSE false END as hasConfAttack, 
 	CASE WHEN (def_conf is not null or defense_conf is not null) THEN true ELSE false END as hasConfDefense
 from bbindividualbeast b
-join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
-					min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
-					min(skillSkulls) as minskill, max(skillSkulls) as maxskill
+join (	select id, 	min(combatSkulls) as mincombatskull, max(combatSkulls) as maxcombatskull, 
+					min(socialSkulls) as minsocialskull, max(socialSkulls) as maxsocialskull, 
+					min(skillSkulls) as minskillskull, max(skillSkulls) as maxskillskull,
+					min(combatEpValue) as mincombatep, max(combatEpValue) as maxcombatep, 
+					min(socialEpValue) as minsocialep, max(socialEpValue) as maxsocialep, 
+					min(skillEpValue) as minskillep, max(skillEpValue) as maxskillep
 		from bbindividualbeast b
 		where b.socialSkulls >= 0 and NOT EXISTS (	SELECT 1 
                    									FROM   bbroles r 
@@ -16,22 +21,27 @@ join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcomba
                   									group by b.id)
 		group by b.id
 		union
-		select beastid as id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
-								min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
-								min(skillSkulls) as minskill, max(skillSkulls) as maxskill
+		select beastid as id, 	min(combatSkulls) as mincombatskull, max(combatSkulls) as maxcombatskull, 
+								min(socialSkulls) as minsocialskull, max(socialSkulls) as maxsocialskull, 
+								min(skillSkulls) as minskillskull, max(skillSkulls) as maxskillskull,
+								min(combatEpValue) as mincombatep, max(combatEpValue) as maxcombatep, 
+								min(socialEpValue) as minsocialep, max(socialEpValue) as maxsocialep, 
+								min(skillEpValue) as minskillep, max(skillEpValue) as maxskillep
 		from bbroles r
-		where r.socialSkulls >= 0
+		where r.socialSkulls >= $2
 		group by r.beastid
 	) t on t.id = b.id
 left join bbroles r on r.beastid = b.id
 where 
-	b.id = $1 
+	b.id = $1
 	and patreon < 20 
-	and (userid is null or userid = $2)
+	and (userid is null or userid = 1)
 	and notUpdating is false
 order by b.name`
 
-export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, mincombat, maxcombat, minsocial, maxsocial, minskill, maxskill,
+export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, 
+	mincombatskull, maxcombatskull, minsocialskull, maxsocialskull, minskillskull, maxskillskull,
+	mincombatep, maxcombatep, minsocialep, maxsocialep, minskillep, maxskillep,
 	CASE WHEN (sp_atk is not null or attack is not null) THEN true ELSE false END as hasCombatAttack, 
 	CASE WHEN (sp_def is not null or defense is not null) THEN true ELSE false END as hasCombatDefense,
 	CASE WHEN (atk_skill is not null or attack_skill is not null) THEN true ELSE false END as hasSkillAttack, 
@@ -39,9 +49,12 @@ export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.
 	CASE WHEN (atk_conf is not null or attack_conf is not null) THEN true ELSE false END as hasConfAttack, 
 	CASE WHEN (def_conf is not null or defense_conf is not null) THEN true ELSE false END as hasConfDefense
 from bbindividualbeast b
-join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
-					min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
-					min(skillSkulls) as minskill, max(skillSkulls) as maxskill
+join (	select id, 	min(combatSkulls) as mincombatskull, max(combatSkulls) as maxcombatskull, 
+					min(socialSkulls) as minsocialskull, max(socialSkulls) as maxsocialskull, 
+					min(skillSkulls) as minskillskull, max(skillSkulls) as maxskillskull,
+					min(combatEpValue) as mincombatep, max(combatEpValue) as maxcombatep, 
+					min(socialEpValue) as minsocialep, max(socialEpValue) as maxsocialep, 
+					min(skillEpValue) as minskillep, max(skillEpValue) as maxskillep
 		from bbindividualbeast b
 		where b.socialSkulls >= 0 and NOT EXISTS (	SELECT 1 
                    									FROM   bbroles r 
@@ -49,11 +62,14 @@ join (	select id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcomba
                   									group by b.id)
 		group by b.id
 		union
-		select beastid as id, 	min(combatSkulls) as mincombat, max(combatSkulls) as maxcombat, 
-								min(socialSkulls) as minsocial, max(socialSkulls) as maxsocial, 
-								min(skillSkulls) as minskill, max(skillSkulls) as maxskill
+		select beastid as id, 	min(combatSkulls) as mincombatskull, max(combatSkulls) as maxcombatskull, 
+								min(socialSkulls) as minsocialskull, max(socialSkulls) as maxsocialskull, 
+								min(skillSkulls) as minskillskull, max(skillSkulls) as maxskillskull,
+								min(combatEpValue) as mincombatep, max(combatEpValue) as maxcombatep, 
+								min(socialEpValue) as minsocialep, max(socialEpValue) as maxsocialep, 
+								min(skillEpValue) as minskillep, max(skillEpValue) as maxskillep
 		from bbroles r
-		where r.socialSkulls >= 0
+		where r.socialSkulls >= $2
 		group by r.beastid
 	) t on t.id = b.id
 left join bbroles r on r.beastid = b.id
