@@ -5,7 +5,7 @@ import { SortingDirection, SortingOptionAlphabetical, SortingOptions } from "../
 export type ResultSortingFunction = (a: SearchResult, b: SearchResult) => number
 
 export default function sortResults(sortingMethod: SortingOptions, sortingDirection: SortingDirection): ResultSortingFunction {
-    if (['maxcombat', 'maxsocial', 'maxskill'].includes(sortingMethod)) {
+    if (['maxcombatskull', 'maxsocialskull', 'maxskillskull', 'maxcombatep', 'maxsocialep', 'maxskillep'].includes(sortingMethod)) {
         return sortByNumber(sortingMethod, sortingDirection)
     } else if (sortingMethod === 'name') {
         return sortByAlphabet(sortingMethod, sortingDirection)

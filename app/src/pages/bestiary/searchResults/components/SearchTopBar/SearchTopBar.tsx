@@ -21,6 +21,8 @@ export default function SearchTopBar({ searchResults, navigateToRandomResult, so
     const navigate = useNavigate()
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
 
+    const isBonfire = systemPreference === BONFIRE 
+
     const getRandomResultTooltip = 'Go to a random result in this list'
     const linkTooltip = 'Copy a link to these search parameters that goes directly to a random result in this list'
 
@@ -41,11 +43,11 @@ export default function SearchTopBar({ searchResults, navigateToRandomResult, so
             <div className='result-sort-shell'>
                 {formatSortingOption(handleSortingClick, 'name', 'Name', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'alpha')}
                 <p>|</p>
-                {formatSortingOption(handleSortingClick, 'maxsocial', systemPreference === BONFIRE ? 'Confrontation' : 'Social', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
+                {formatSortingOption(handleSortingClick, isBonfire ? 'maxsocialskull' : 'maxsocialep', isBonfire ? 'Confrontation' : 'Social', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
                 <p>|</p>
-                {formatSortingOption(handleSortingClick, 'maxcombat', 'Combat', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
+                {formatSortingOption(handleSortingClick, isBonfire ? 'maxcombatskull' : 'maxcombatep', 'Combat', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
                 <p>|</p>
-                {formatSortingOption(handleSortingClick, 'maxskill', 'Skill', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
+                {formatSortingOption(handleSortingClick, isBonfire ? 'maxskillskull' : 'maxskillep', 'Skill', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'number')}
                 <p>|</p>
                 {formatSortingOption(handleSortingClick, 'rarity', 'Rarity', sortingMethodInfo.sortingMethod, sortingDirectionInfo.sortingDirection, 'alpha')}
                 <p>|</p>

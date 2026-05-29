@@ -8,7 +8,11 @@ import { searchURL } from "../../../frontend-config";
 
 export type NavigateToRandomResultFunction = (searchResults: SearchResult[], navigate: NavigateFunction) => void
 
-export type SortingOptions = SortingOptionAlphabetical | SortingOptionRarity | 'maxcombat' | 'maxsocial' | 'maxskill' | 'size'
+export type SortingOptions = SortingOptionAlphabetical | SortingOptionRarity | skullOptions | epOptions | 'size'
+
+type skullOptions = 'maxcombatskull' | 'maxsocialskull' | 'maxskillskull'
+type epOptions = 'maxcombatep' | 'maxsocialep' | 'maxskillep'
+
 export type SortingOptionRarity = 'rarity'
 export type SortingOptionAlphabetical = 'name'
 export type SortingDirection = 'asc' | 'dsc'
