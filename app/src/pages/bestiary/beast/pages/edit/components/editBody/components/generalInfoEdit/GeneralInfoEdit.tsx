@@ -1,13 +1,14 @@
-import GeneralInfo from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
+import { SpecificGeneralInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 import './GeneralInfoEdit.css'
 import { UpdateGeneralInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateGeneralInfo'
 import LinkedInfo from '@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces'
 import PaletteDisplay from './components/Palette'
 import TypeEdit from './components/TypeEdit'
 import AppearanceEdit from './components/Appearance'
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
-    generalInfo: GeneralInfo,
+    generalInfo: SpecificGeneralInfo,
     updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
     linkedInfo: LinkedInfo
 }

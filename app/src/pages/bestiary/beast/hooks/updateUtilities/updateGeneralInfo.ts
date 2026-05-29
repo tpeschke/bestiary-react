@@ -1,4 +1,4 @@
-import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { NonspecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { UpdateArrayFunction, UpdateFunction } from "./interfaces/updateInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
@@ -28,7 +28,7 @@ export default function getUpdateGeneralInfoFunctions(
         },
         updatePaletteInfo: (key: string, value: string | number) => {
             if (beast) {
-                let modifiedGeneralInfo: GeneralInfo = {
+                let modifiedGeneralInfo: NonspecificGeneralInfo = {
                     ...beast.beastInfo.generalInfo,
                     palette: {
                         ...beast.beastInfo.generalInfo.palette,

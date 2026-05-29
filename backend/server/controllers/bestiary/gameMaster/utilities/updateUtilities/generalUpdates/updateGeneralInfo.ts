@@ -1,8 +1,8 @@
-import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { NonspecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import updatePalette from "./utilities/updatePalette"
 import updateBasicGeneralInfo from "./utilities/updateBasicGeneralInfo"
 
-export default async function updateGeneralInfo(beastID: number, generalInfo: GeneralInfo) {
+export default async function updateGeneralInfo(beastID: number, generalInfo: NonspecificGeneralInfo) {
     const { palette } = generalInfo
 
     let promiseArray: Promise<any>[] = [

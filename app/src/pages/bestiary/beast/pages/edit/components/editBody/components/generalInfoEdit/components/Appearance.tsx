@@ -1,9 +1,10 @@
-import { EditorProvider, extensions } from "@tiptap/react"
+import { EditorProvider } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import TextStyle from '@tiptap/extension-text-style'
 import ListItem from '@tiptap/extension-list-item'
 import MenuBar from "../../../../../../../components/textEditor/menuBar"
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
+import { HACKMASTER } from "@bestiary/common/utilities/get/getSystemString"
 
 interface Props {
     appearance: string,
@@ -29,7 +30,7 @@ export default function AppearanceEdit({ appearance, updateGeneralInfo }: Props)
     return (
         <>
             <h2>Appearance</h2>
-            <EditorProvider onBlur={({ editor }) => updateGeneralInfo('appearance', editor.getHTML())} slotBefore={<MenuBar />} extensions={extensions} content={appearance}></EditorProvider>
+            <EditorProvider onBlur={({ editor }) => updateGeneralInfo('appearance', [editor.getHTML(), undefined, appearance[HACKMASTER]])} slotBefore={<MenuBar />} extensions={extensions} content={appearance}></EditorProvider>
         </>
     )
 }

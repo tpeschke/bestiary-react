@@ -6,7 +6,7 @@ import { Access } from "@bestiary/common/utilities/get/getAccessLevel"
 
 import { NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces"
-import GeneralInfo from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
+import { NonspecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import { NonspecificCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
@@ -26,7 +26,7 @@ export interface BeastInfo {
     canplayerview: boolean,
     system: SystemOption,
     roleModifier: number,
-    generalInfo: GeneralInfo,
+    generalInfo: NonspecificGeneralInfo,
     playerInfo: PlayerSpecificInfo,
     imageInfo: ImageInfo,
     linkedInfo: LinkedInfo,
