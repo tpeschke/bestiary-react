@@ -19,6 +19,14 @@ union
 select beastid as id from bbroles r
 where r.skillskulls >= $1`
 
+export const searchMinChallengeEP = `select id from bbindividualbeast b
+where b.skillepvalue >= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.skillepvalue >= $1`
+
 export const searchMaxChallengeRating = `select id from bbindividualbeast b
 where b.skillskulls <= $1 and NOT EXISTS (	SELECT 1 
                    							FROM   bbroles r 
@@ -26,6 +34,14 @@ where b.skillskulls <= $1 and NOT EXISTS (	SELECT 1
 union
 select beastid as id from bbroles r
 where r.skillskulls <= $1`
+
+export const searchMaxChallengeEP = `select id from bbindividualbeast b
+where b.skillepvalue <= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.skillepvalue <= $1`
 
 export const searchMinCombatRating = `select id from bbindividualbeast b
 where b.combatskulls >= $1 and NOT EXISTS (	SELECT 1 
@@ -35,6 +51,13 @@ union
 select beastid as id from bbroles r
 where r.combatskulls >= $1`
 
+export const searchMinCombatEP = `where b.combatepvalue >= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.combatepvalue >= $1`
+
 export const searchMaxCombatRating = `select id from bbindividualbeast b
 where b.combatskulls <= $1 and NOT EXISTS (	SELECT 1 
                    							FROM   bbroles r 
@@ -42,6 +65,14 @@ where b.combatskulls <= $1 and NOT EXISTS (	SELECT 1
 union
 select beastid as id from bbroles r
 where r.combatskulls <= $1`
+
+export const searchMaxCombatEP = `select id from bbindividualbeast b
+where b.combatepvalue <= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.combatepvalue <= $1`
 
 export const searchMinConfrontationRating = `select id from bbindividualbeast b
 where b.socialskulls >= $1 and NOT EXISTS (	SELECT 1 
@@ -51,6 +82,14 @@ union
 select beastid as id from bbroles r
 where r.socialskulls >= $1`
 
+export const searchMinConfrontationEP = `select id from bbindividualbeast b
+where b.socialepvalue >= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.socialepvalue >= $1`
+
 export const searchMaxConfrontationRating = `select id from bbindividualbeast b
 where b.socialskulls <= $1 and NOT EXISTS (	SELECT 1 
                    							FROM   bbroles r 
@@ -58,6 +97,14 @@ where b.socialskulls <= $1 and NOT EXISTS (	SELECT 1
 union
 select beastid as id from bbroles r
 where r.socialskulls <= $1`
+
+export const searchMaxConfrontationEP = `select id from bbindividualbeast b
+where b.socialepvalue <= $1 and NOT EXISTS (	SELECT 1 
+                   							FROM   bbroles r 
+                  							WHERE  b.id = r.beastid)
+union
+select beastid as id from bbroles r
+where r.socialepvalue <= $1`
 
 export const searchName = `select b.id from bbindividualbeast b
 join (select id, concat_ws(' ', parts[2], parts[1]) as searchablename

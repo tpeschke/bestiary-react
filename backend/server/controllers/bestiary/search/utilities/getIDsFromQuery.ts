@@ -1,6 +1,6 @@
 import { User } from "@bestiary/common/interfaces/userInterfaces";
 import query from "../../../../db/database";
-import { searchAccess, searchBody, searchChallengeRoles, searchClimate, searchCombatRoles, searchConfrontationRoles, searchMaxChallengeRating, searchMaxCombatRating, searchMaxConfrontationRating, searchMinChallengeRating, searchMinCombatRating, searchName, searchNotes, searchPlayerCanView, searchRarity, searchSize, searchTypes } from "../../../../db/search/queryParams";
+import { searchAccess, searchBody, searchChallengeRoles, searchClimate, searchCombatRoles, searchConfrontationRoles, searchMaxChallengeEP, searchMaxChallengeRating, searchMaxCombatEP, searchMaxCombatRating, searchMaxConfrontationEP, searchMaxConfrontationRating, searchMinChallengeEP, searchMinChallengeRating, searchMinCombatEP, searchMinCombatRating, searchMinConfrontationEP, searchMinConfrontationRating, searchName, searchNotes, searchPlayerCanView, searchRarity, searchSize, searchTypes } from "../../../../db/search/queryParams";
 import { SearchQuery, SearchReturn } from "../search";
 import { getCombatRoleName, getSkillRoleName, getSocialRoleName } from "./roleName";
 
@@ -18,27 +18,39 @@ export default async function getIDsFromQuery(searchQuery: SearchQuery, user: Us
             case "minCombatRate":
                 idArray.push(query(searchMinCombatRating, searchQuery.minCombatRate))
                 break;
-            // minCombatEPs
+            case "minCombatEPs":
+                idArray.push(query(searchMinCombatEP, searchQuery.minCombatEPs))
+                break;
             case "maxCombatRate":
                 idArray.push(query(searchMaxCombatRating, searchQuery.maxCombatRate))
                 break;
-            // maxCombatEPs
+            case "maxCombatEPs":
+                idArray.push(query(searchMaxCombatEP, searchQuery.maxCombatEPs))
+                break;
             case "minChallengeRate":
                 idArray.push(query(searchMinChallengeRating, searchQuery.minChallengeRate))
                 break;
-            // minChallengeEP
+            case "minChallengeEPs":
+                idArray.push(query(searchMinChallengeEP, searchQuery.minChallengeEPs))
+                break;
             case "maxChallengeRate":
                 idArray.push(query(searchMaxChallengeRating, searchQuery.maxChallengeRate))
                 break;
-            // maxChallengeEP
-            case "minConfrontationRate":
-                idArray.push(query(searchMinCombatRating, searchQuery.minConfrontationRate))
+            case "maxChallengeEPs":
+                idArray.push(query(searchMaxChallengeEP, searchQuery.maxChallengeEPs))
                 break;
-            // minSocialEPs
+            case "minConfrontationRate":
+                idArray.push(query(searchMinConfrontationRating, searchQuery.minConfrontationRate))
+                break;
+            case "minSocialEPs":
+                idArray.push(query(searchMinConfrontationEP, searchQuery.minSocialEPs))
+                break;
             case "maxConfrontationRate":
                 idArray.push(query(searchMaxConfrontationRating, searchQuery.maxConfrontationRate))
                 break;
-            // maxSocialEPs
+            case "maxSocialEPs":
+                idArray.push(query(searchMaxConfrontationEP, searchQuery.maxSocialEPs))
+                break;
             case "size":
                 idArray.push(query(searchSize, searchQuery.size))
                 break;

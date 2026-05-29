@@ -19,9 +19,9 @@ export interface QueryBasicParamsObject {
     maxCombatRate?: string,
     maxCombatEPs?: string
     minChallengeRate?: string,
-    minChallengeEP?: string,
+    minChallengeEPs?: string,
     maxChallengeRate?: string,
-    maxChallengeEP?: string,
+    maxChallengeEPs?: string,
     anyAccess?: string,
     personalNotes?: string,
 }

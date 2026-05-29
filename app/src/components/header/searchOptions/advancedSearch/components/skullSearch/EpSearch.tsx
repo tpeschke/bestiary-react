@@ -25,9 +25,9 @@ export default function EpSearch({ stopPropagationAndCaptureQuery }: Props) {
 
             <div className='rating-shell'>
                 <p>Skill EPs</p>
-                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minChallengeEP' dictionary={epSearchDictionary} />
+                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='minChallengeEPs' dictionary={epSearchDictionary} />
                 <p>-</p>
-                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxChallengeEP' dictionary={epSearchDictionary} />
+                <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} param='maxChallengeEPs' dictionary={epSearchDictionary} />
             </div>
         </div>
     )
