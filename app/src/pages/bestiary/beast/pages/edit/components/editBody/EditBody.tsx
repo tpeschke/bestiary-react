@@ -41,7 +41,7 @@ export default function EditBody({
     updateCombatInfoFunctions,
     updateSkillInfoFunctions
 }: Props) {
-    const [tabIndex, setTabIndex] = useState(2)
+    const [tabIndex, setTabIndex] = useState(0)
 
     const { 
         id, generalInfo, rawCombatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
