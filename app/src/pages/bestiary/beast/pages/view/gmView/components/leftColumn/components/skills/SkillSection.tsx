@@ -16,8 +16,7 @@ interface Props {
 export default function SkillSection({ skillInfo }: Props) {
     const { type, skillRole, skillSkulls, skillEpValue, skills, attackInfo, defenseInfo, skillSecondary, stress, obstacles, challenges } = skillInfo
 
-    const { threshold, defenseNFleeDice } = stress
-    const { defense, flee } = defenseNFleeDice
+    const { threshold } = stress
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
 
@@ -40,11 +39,6 @@ export default function SkillSection({ skillInfo }: Props) {
             {showThreshold && (
                 <div className={"pair-shell heading three" + (hasBottomBorder ? " noBorder" : "")}>
                     <h3>Stress Threshold</h3>
-                    <p>
-                        <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy becomes defensive and fleeing is free."><Icon iconName="shield" color='blue' /> {defense}</span>
-                        <span> / </span>
-                        <span data-tooltip-id="my-tooltip" data-tooltip-content="At this dice size, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {flee}</span>
-                    </p>
                     <p>{threshold}</p>
                 </div>
             )}
