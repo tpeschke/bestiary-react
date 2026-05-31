@@ -18,7 +18,7 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
 
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackStats[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, eua, isspecial: isSpecial,
-        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, weapontype
+        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, weapontype: weaponType
     } = stats
 
     const roleToUse = role ?? mainRole
@@ -51,7 +51,7 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
             overAllIndex: attacks.length,
             id: attackid,
             infoType: 'weapon',
-            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType, weapontype, addsizemod }
+            scalingInfo: { swarmbonus, name: chosenName, weapon, damageType, weaponType, addsizemod }
         })
     }
 }

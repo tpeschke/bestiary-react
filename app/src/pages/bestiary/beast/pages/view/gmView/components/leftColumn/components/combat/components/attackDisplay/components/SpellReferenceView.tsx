@@ -5,12 +5,16 @@ import { situationTooltip } from "../utilities/situationTooltip"
 import Icon from "../../../../../../../../../../../../../components/icon/Icon"
 import { Tooltip } from "react-tooltip"
 import SpellDisplay from "../../../../../../weirdshaping/components/spells/spell/SpellDisplay"
+import { useSelector } from "react-redux"
+import { getSystemPreference } from "../../../../../../../../../../../../../redux/slices/userSlice"
 
 interface Props {
     spellReferenceInfo: SpellReference
 }
 
 export default function SpellReferenceView({ spellReferenceInfo }: Props) {
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    
     const { situation, spellInfo } = spellReferenceInfo
 
     if (!spellInfo) { return <></> }
@@ -24,7 +28,7 @@ export default function SpellReferenceView({ spellReferenceInfo }: Props) {
                 </Body>
             </div>
             <Tooltip id={`${spellInfo.id}-spell-attack-tooltip`} className="spell-display-tooltip">
-                <SpellDisplay spell={spellInfo} />
+                <SpellDisplay spell={spellInfo} systemPreference={systemPreference} />
             </Tooltip>
         </>
     )
