@@ -1,7 +1,7 @@
 import query from '../../../db/database';
 import { getNumberOfMonstersWeighted } from '../../../db/encounter/number';
 import { BasicParamsRequest, Response } from '../../../interfaces/apiInterfaces'
-import { Complication, Encounter, Reaction, SignObject } from "@bestiary/common/interfaces/encounterInterfaces"
+import { ArchetypeInfo, Complication, Encounter, Reaction, SignObject } from "@bestiary/common/interfaces/encounterInterfaces"
 import { checkForContentTypeBeforeSending } from '../../../utilities/sendingFunctions';
 import getBattlefieldAndPattern from './utilities/battlefield';
 import getComplications from './utilities/complication';
@@ -13,6 +13,7 @@ import getSigns from './utilities/sign';
 import getReaction from './utilities/reaction/get';
 import getTime from './utilities/time';
 import getVerb from './utilities/verb';
+import { getArchetypes } from './utilities/archetype';
 
 interface NumbersReturn {
     numbers: string,
@@ -29,8 +30,7 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
     promiseArray.push(getReaction(beastId).then((reaction: Reaction) => encounterObject.reaction = reaction))
     promiseArray.push(getSigns(beastId).then((signs: SignObject) => encounterObject.signs = signs))
     promiseArray.push(getComplications(beastId).then((complications: Complication[]) => encounterObject.complications = complications))
-
-    // TODO: get archetype info
+    promiseArray.push(getArchetypes(beastId).then((archetypeInfo: ArchetypeInfo | undefined) => encounterObject.archetypeInfo = archetypeInfo))
 
     encounterObject.time = getTime()
     encounterObject.objectives = getObjectives()

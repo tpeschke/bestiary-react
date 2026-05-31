@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import Icon from '../../../../../../../../../../components/icon/Icon';
 import Loading, { SetLoadingFunction } from '../../../../../../../../../../components/loading/Loading';
 import Body from '../../../../../../../components/UI/body/Body';
+import ArchetypeDisplay from './components/ArchetypeDisplay';
 
 interface Props {
 }
@@ -43,7 +44,7 @@ function EncounterShell({ setLoading }: Props) {
     }, [setLoading, encounterInfo])
 
     if (encounterInfo) {
-        const { signs, group, objectives, verb, noun, reaction, time, battlefield, complications } = encounterInfo
+        const { signs, group, objectives, verb, noun, reaction, time, battlefield, complications, archetypeInfo } = encounterInfo
 
         return (
             <>
@@ -53,9 +54,9 @@ function EncounterShell({ setLoading }: Props) {
                             <div className='encounter-display-shell'>
                                 <SignDisplay signInfo={signs} />
                                 <NumberAppearingDisplay groupInfo={group} />
-                                
-                                {/* TODO: Display Archetype Info */}
 
+                                <ArchetypeDisplay archetypeInfo={archetypeInfo} />
+                                
                                 <ObjectivesDisplay objectives={objectives} />
                                 <VerbNounDisplay verb={verb} noun={noun} />
                                 <div className="pair-shell encounter-display-pair">

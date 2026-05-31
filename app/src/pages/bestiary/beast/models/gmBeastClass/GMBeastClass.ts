@@ -242,8 +242,7 @@ export default class GMBeastClass {
     }
 
     private getBonfireSocialInfo(): SpecificSocialInfo {
-        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, archetypeInfo, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
-        const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
+        const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
 
         if (conflicts) {
             const { convictions, relationships, flaws, burdens } = conflicts
@@ -258,9 +257,6 @@ export default class GMBeastClass {
 
             const socialSkulls = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.socialSkulls : skulls) + this.specialModifier
             const skullIndex = (roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.skullIndex : mainSkullIndex) + this.specialModifier
-
-            const hasArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
-            const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo?.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
 
             let attackInfo = this.entrySocialInfo.attackInfo[BONFIRE]
             let defenseInfo = this.entrySocialInfo.defenseInfo[BONFIRE]
@@ -283,11 +279,6 @@ export default class GMBeastClass {
                     strength: capacity.strength
                 },
                 baseConvictionRank: calculateRankForCharacteristic('Convictions', skullIndex, socialRole),
-                archetypeInfo: {
-                    ...archetypeInfo,
-                    hasArchetypes, hasMonsterArchetypes,
-                    baseRank: getBaseSocialRank(skullIndex)
-                },
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
                     convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, socialRole), []),
@@ -302,8 +293,7 @@ export default class GMBeastClass {
     }
 
     private getHackMasterSocialInfo(): SpecificSocialInfo {
-        const { conflicts, socialRole: role, socialSecondary: secondary, archetypeInfo, socialEpValue: mainEpValue, socialRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, capacity: mainCapacity } = this.entrySocialInfo
-        const { hasArchetypes: mainHasArchetypes, hasMonsterArchetypes: mainHasMonsterarchetypes } = archetypeInfo
+        const { conflicts, socialRole: role, socialSecondary: secondary, socialEpValue: mainEpValue, socialRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, capacity: mainCapacity } = this.entrySocialInfo
 
         if (conflicts) {
             const { convictions, relationships, flaws, burdens } = conflicts
@@ -321,9 +311,6 @@ export default class GMBeastClass {
             const epValue = +((roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialEpValue : mainEpValue) * epPercentIncrease).toFixed(0)
             const rawEpValue = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.socialRawEpValue : mainRawEpValue)
             const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.specialModifier
-
-            const hasArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasarchetypes : mainHasArchetypes
-            const hasMonsterArchetypes = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.hasmonsterarchetypes : mainHasMonsterarchetypes
 
             let attackInfo = this.entrySocialInfo.attackInfo[HACKMASTER]
             let defenseInfo = this.entrySocialInfo.defenseInfo[HACKMASTER]
@@ -348,11 +335,6 @@ export default class GMBeastClass {
                     strength: capacity.strength
                 },
                 baseConvictionRank: 0,
-                archetypeInfo: {
-                    ...archetypeInfo,
-                    hasArchetypes, hasMonsterArchetypes,
-                    baseRank: getBaseSocialRank(epValueIndex)
-                },
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, epValueIndex, 'HackMaster'),
                     convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', epValueIndex, roleID, socialRole), []),

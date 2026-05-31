@@ -12,12 +12,7 @@ export interface Encounter {
     archetypeInfo?: ArchetypeInfo
 }
 
-export interface ArchetypeInfo {
-    hasArchetypes: boolean,
-    hasMonsterArchetypes: boolean,
-    normalArchetypes?: NormalArchetypeObject,
-    monsterArchetypes?: MonsterArchetypeObject
-}
+export type ArchetypeInfo = MonsterArchetypeObject | NormalArchetypeObject
 
 interface ArchetypeObject {
     type: 'monster' | 'normal'
