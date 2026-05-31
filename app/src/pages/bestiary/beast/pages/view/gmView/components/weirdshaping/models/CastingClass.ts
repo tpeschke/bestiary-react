@@ -62,11 +62,14 @@ export default class CastingClass {
     }
 
     private getInitialCastingType(defaultType: undefined | number): number {
-        if (!defaultType && defaultType !== 0) {
+        if (this.filteredCastingTypes.length === 0) {return 0}
+
+        if (!defaultType && defaultType !== 0 && this.filteredCastingTypes.length > 0) {
             const filteredIndex = Math.floor(Math.random() * this.filteredCastingTypes.length)
             return this.filteredCastingTypes[filteredIndex].value
         }
-        return defaultType
+
+        return defaultType ?? 0
     }
 
 }
