@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function AttackDisplay({ attackInfo, attacks }: Props) {
-    const showSection = !!attackInfo || attacks.length > 0
+    const showSection = (!!attackInfo && attackInfo !== '<p></p>') || attacks.length > 0
     return (
         <>
             {showSection &&

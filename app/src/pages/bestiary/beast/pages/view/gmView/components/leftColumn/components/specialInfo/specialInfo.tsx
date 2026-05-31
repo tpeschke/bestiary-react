@@ -8,7 +8,7 @@ interface Props {
 export default function SpecialInfo({ info }: Props) {
     return (
         <>
-            {info ?
+            {(info && info !== '<p></p>') ?
                 <Body>
                     <HTMLDisplay html={info} />
                 </Body>

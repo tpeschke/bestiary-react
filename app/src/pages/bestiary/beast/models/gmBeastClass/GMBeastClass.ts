@@ -369,7 +369,28 @@ export default class GMBeastClass {
     }
 
     get rawSkillInfo(): NonspecificSkillInfo {
-        return this.entrySkillInfo
+        const { skillRole: role, skillSecondary: secondary, skillSkulls: skulls, skullIndex: index, stress, skills: mainSkills } = this.entrySkillInfo
+
+        const roleSelected = this.isRoleSelected()
+
+        const skillRole = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillRole : role
+        const skillSecondary = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSecondary : secondary
+
+        const skillSkulls = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skillSkulls : skulls) + this.specialModifier
+        const skullIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skullIndex : index) + this.specialModifier
+
+        const skills = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.skills : mainSkills
+
+        return {
+            ...this.entrySkillInfo,
+            stress: {
+                threshold: calculateStress(skillSecondary, skullIndex, stress.strength),
+                strength: stress.strength,
+                defenseNFleeDice: getDefenseNFlee(skillRole, skullIndex)
+            },
+            skillRole, skillSecondary, skillSkulls, skullIndex,
+            skills: getSkills(skillRole, skullIndex, skills?.everythingElseStrength, skills)
+        }
     }
 
     get bonfireSkillInfo(): SpecificSkillInfo {

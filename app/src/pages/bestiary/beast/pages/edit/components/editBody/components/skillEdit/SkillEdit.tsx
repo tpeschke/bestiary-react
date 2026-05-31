@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Icon from '../../../../../../../../../components/icon/Icon'
 import Body from '../../../../../../components/UI/body/Body'
 import { UpdateFunction } from '../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
@@ -8,10 +9,11 @@ import { Skill, NonspecificSkillInfo } from "@bestiary/common/interfaces/beast/i
 
 interface Props {
     skillInfo: NonspecificSkillInfo,
-    updateSkillInfo: UpdateFunction
+    updateSkillInfo: UpdateFunction,
+    roleID?: string
 }
 
-export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
+export default function SkillEdit({ skillInfo, updateSkillInfo, roleID = '' }: Props) {
     if (!skillInfo.skills) {
         return <></>
     }
@@ -67,10 +69,10 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
     return (
         <div className="skill-edit-body">
             <h2>Preferred</h2>
-            {preferred?.map(formatSkillRow('preferred', updateSkillSuite, removeSkillSuite))}
+            {preferred?.map(formatSkillRow('preferred', updateSkillSuite, removeSkillSuite, roleID))}
 
             <h2>Weak</h2>
-            {weakness?.map(formatSkillRow('weakness', updateSkillSuite, removeSkillSuite))}
+            {weakness?.map(formatSkillRow('weakness', updateSkillSuite, removeSkillSuite, roleID))}
 
             <h2>Everything Else</h2>
             <span className='everything-else-shell'>
@@ -90,7 +92,7 @@ export default function SkillEdit({ skillInfo, updateSkillInfo }: Props) {
 type UpdateSkillSuite = (key: 'preferred' | 'weakness', indexToChange: number, value: string) => void
 type RemoveSkillSuite = (key: 'preferred' | 'weakness', indexToRemove: number) => void
 
-function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateSkillSuite, removeSkillSuite: RemoveSkillSuite) {
+function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateSkillSuite, removeSkillSuite: RemoveSkillSuite, roleID: string) {
     return ({ skill, rank }: Skill, index: number) => {
         const skillSuites = ['Athletics', 'Lore', 'Strategy', 'Streetwise', 'Survival', 'Trades', 'Weirdcraft']
 
@@ -105,7 +107,7 @@ function formatSkillRow(key: 'preferred' | 'weakness', updateSkillSuite: UpdateS
         }
 
         return (
-            <span key={index}>
+            <span key={index + roleID}>
                 <select value={skill} onChange={event => updateSkillSuite(key, index, event.target.value)}>
                     {skillSuites.map(suite => <option key={suite} value={suite}>{suite} ({suiteStatDictionary[suite]})</option>)}
                 </select>

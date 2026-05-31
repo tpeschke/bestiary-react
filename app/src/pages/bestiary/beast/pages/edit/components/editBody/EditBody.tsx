@@ -55,6 +55,8 @@ export default function EditBody({
 
     const [randomEncounterInfo, setRandomEncounterInfo] = useState<EditEncounter | null>(null)
 
+    const roleID = roleInfo?.roles[selectedRoleIndex].id
+
     return (
         <div className="edit-body-shell">
             <NameHeader name={`Edit ${name}`} />
@@ -99,7 +101,7 @@ export default function EditBody({
                             <SkillRoleSelect updateSkillInfo={updateSkillInfo} primaryRole={rawSkillInfo.skillRole} secondaryRole={rawSkillInfo.skillSecondary} />
                             <SkullSelection skullKeyValue='skillSkulls' epKeyValue='skillRawEpValue' currentSkullValue={rawSkillInfo.skillSkulls} currentEPValue={rawSkillInfo.skillRawEpValue} updateSkull={updateSkillInfo} />
                         </div>
-                        <SkillEdit skillInfo={rawSkillInfo} updateSkillInfo={updateSkillInfo} />
+                        <SkillEdit skillInfo={rawSkillInfo} updateSkillInfo={updateSkillInfo} roleID={roleID} />
                     </>
                 }
                 {tabIndex === 4 &&
