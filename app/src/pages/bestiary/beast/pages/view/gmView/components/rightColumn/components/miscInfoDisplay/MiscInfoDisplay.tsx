@@ -13,12 +13,11 @@ interface Props {
 export interface MiscInfo {
     senses: string,
     diet: string,
-    rarity: Rarity,
     climates: Climate[]
 }
 
 export default function MiscInfoDisplay({ miscInfo }: Props) {
-    const { senses, diet, rarity, climates } = miscInfo
+    const { senses, diet, climates } = miscInfo
 
     const showSenses = senses && senses !== ''
     const showDiet = diet && diet !== ''
@@ -31,20 +30,9 @@ export default function MiscInfoDisplay({ miscInfo }: Props) {
                 <div>
                     {showSenses && <Pair title='Senses' info={senses} />}
                     {showDiet && <Pair title='Diet' info={diet} />}
-                    <Pair title='Rarity' info={formatRarityString(rarity)} />
                     {showClimates && <ClimatesDisplay climates={climates} />}
                 </div>
             </Body>
         </div>
     )
-}
-
-function formatRarityString({ rarityName, difficulty}: Rarity): string {
-    let rarityString = rarityName
-
-    if (difficulty) {
-        rarityString += ` (${difficulty})`
-    }
-
-    return rarityString
 }

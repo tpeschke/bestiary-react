@@ -19,7 +19,7 @@ import PlayerDisplayInfo from './components/playerInfo/PlayerDisplayInfo';
 import { Notes } from '@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces';
 import { SetPlayerNotes } from '../../../../../components/notes/notesDisplay';
 import PaletteInfoDisplay from './components/palette/PaletteInfoDisplay';
-import { Palette } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces';
+import { Palette, Rarity } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces';
 
 interface Props {
     intro: string
@@ -36,10 +36,11 @@ interface Props {
     lootInfo: LootInfo,
     maxPoints: number,
     notes: Notes,
-    updateNotes: SetPlayerNotes
+    updateNotes: SetPlayerNotes,
+    rarity: Rarity
 }
 
-export default function RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes }: Props) {
+export default function RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes, rarity }: Props) {
     const showIntroSection = intro && intro !== ''
 
     return (
@@ -53,11 +54,11 @@ export default function RightColumn({ appearance, intro, palette, habitat, folkl
 
             }
             <InfoDisplay section="Appearance" info={appearance} />
-            <CommonFolklore folklores={folklores} />
+            <CommonFolklore folklores={folklores} rarity={rarity} />
             <HabitatDisplay info={habitat} scenarios={scenarios} />
             <PaletteInfoDisplay palette={palette} />
             <EncounterDisplay />
-            <LootDisplay lootInfo={lootInfo} rarity={miscInfo.rarity} maxPoints={maxPoints} />
+            <LootDisplay lootInfo={lootInfo} rarity={rarity} maxPoints={maxPoints} />
             <MiscInfoDisplay miscInfo={miscInfo} />
             <TypesDisplay types={types} />
             <VariantsDisplay variantsInfo={variants} />

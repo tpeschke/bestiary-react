@@ -32,7 +32,6 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
     const miscInfo: MiscInfo = {
         senses,
         diet,
-        rarity,
         climates: climates.beast
     }
 
@@ -45,7 +44,10 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
                     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie,
                     system, saves
                 })}
-                RightColumn={RightColumn({ appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, lootInfo, maxPoints, notes, updateNotes })}
+                RightColumn={RightColumn({ 
+                    appearance, intro, palette, habitat, folklores, scenarios, types, miscInfo, variants, meta, locationsInfo, 
+                    lootInfo, maxPoints, notes, updateNotes, rarity
+                })}
             />
             <Weirdshaping castingTypes={castingInfo} spells={spells} />
             <CanEditButton canEdit={canEdit} beastID={id} />
