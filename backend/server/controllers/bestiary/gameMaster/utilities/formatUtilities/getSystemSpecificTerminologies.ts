@@ -25,7 +25,8 @@ export function buildSystemSpecificAppearance(appearance: string | null | undefi
 const hackMasterAppearanceTextReplacements: Replacement[] = [
     [/ \-([0-9X]+)/gi, (_, bonus) => ` -${+bonus * 5}%`],
     [/ \+([0-9X]+)/gi, (_, bonus) => ` +${+bonus * 5}%`],
-    [/ ([0-9X]+)L/g, (_, carry) => ` ${+carry * 3}lb`]
+    [/ ([0-9X]+)L/g, (_, carry) => ` ${+carry * 3}lb`],
+    [/ Weirding/g, "Casting"],
 ]
 
 const hackMasterInfoTextReplacements: Replacement[] = [

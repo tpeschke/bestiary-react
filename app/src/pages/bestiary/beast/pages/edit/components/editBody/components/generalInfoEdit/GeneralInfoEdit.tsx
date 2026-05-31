@@ -1,4 +1,4 @@
-import { SpecificGeneralInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
+import { NonspecificGeneralInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 import './GeneralInfoEdit.css'
 import { UpdateGeneralInfoFunctionsObject } from '../../../../../../hooks/updateUtilities/updateGeneralInfo'
 import LinkedInfo from '@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces'
@@ -8,7 +8,7 @@ import AppearanceEdit from './components/Appearance'
 import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
-    generalInfo: SpecificGeneralInfo,
+    generalInfo: NonspecificGeneralInfo,
     updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
     linkedInfo: LinkedInfo
 }
@@ -21,7 +21,7 @@ export default function GeneralInfoEdit({ generalInfo, updateGeneralInfoFunction
 
     return (
         <div className="main-info-edit">
-            <AppearanceEdit updateGeneralInfo={updateGeneralInfo} appearance={appearance} />
+            <AppearanceEdit updateGeneralInfo={updateGeneralInfo} appearance={appearance[BONFIRE]} />
             <TypeEdit types={types} updateLinkedInfo={updateLinkedInfo} />
             <PaletteDisplay palette={palette} updatePaletteInfo={updatePaletteInfo} />
         </div>

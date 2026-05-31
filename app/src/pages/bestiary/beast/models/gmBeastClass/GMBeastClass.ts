@@ -208,6 +208,23 @@ export default class GMBeastClass {
         }
     }
 
+    get rawGeneralInfo(): NonspecificGeneralInfo {
+        const { size: mainSize, rarity: baseRarity, appearance } = this.entryGeneralInfo
+
+        const roleSelected = this.isRoleSelected()
+
+        const size = roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].generalInfo.size : mainSize
+
+        const rarity = getRarity(baseRarity.rarityId, this.system)
+
+        return {
+            ...this.entryGeneralInfo,
+            rarity,
+            // a Role's size can be null, in which case, it defaults to the default size, so this is what this is doing
+            size: size ?? mainSize
+        }
+    }
+
     get imageInfo(): ImageInfo {
         return this.entryImageInfo
     }

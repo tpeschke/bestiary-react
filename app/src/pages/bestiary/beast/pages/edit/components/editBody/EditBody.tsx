@@ -44,9 +44,9 @@ export default function EditBody({
     const [tabIndex, setTabIndex] = useState(0)
 
     const { 
-        id, generalInfo, rawCombatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, rawGeneralInfo, rawCombatInfo, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
-    const { name } = generalInfo
+    const { name } = rawGeneralInfo
     const { strategiesNLimits, limitNotes, options } = rawCombatInfo
 
     const { updateSocialInfo } = updateSocialInfoFunctions
@@ -66,7 +66,7 @@ export default function EditBody({
                     <>
                         <h1>Main Info</h1>
                         <GeneralInfoEdit 
-                            generalInfo={generalInfo} 
+                            generalInfo={rawGeneralInfo} 
                             updateGeneralInfoFunctions={updateGeneralInfoFunctions} 
                             linkedInfo={linkedInfo}
                         />
