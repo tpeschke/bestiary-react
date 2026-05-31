@@ -74,7 +74,7 @@ const ENCHANTED_ITEM = 'Enchanted Item'
 
 const complicationArray = [RIVAL, WOUNDED, TRAPPED, INSANE, LOST, DISEASED, TIME_LIMIT, BACK_UP_COMING, POWERFUL_CASTER, INFIGHTING, ROLL_AN_ADDITIONAL_TIME, LARGE, UNLIKELY_ALLIES, ENCHANTED_ITEM]
 
-async function getRival(beastId: number, type: string): Promise<RivalComplication> {
+async function getRival(beastId: number, type: 'Rival' | 'Unlikely Allies'): Promise<RivalComplication> {
     const [rival]: Rival[] = await query(getRivalForEncounter, beastId)
     console.log(rival)
     if (rival) {

@@ -1,5 +1,5 @@
+import { EditReaction } from "@bestiary/common/interfaces/encounterInterfaces"
 import query from "../../../../../../../db/database"
-import { EditReaction } from "../../../../../../../interfaces/bestiary/encounterInterfaces"
 
 const updateReactionInfo = `update bbReaction set temperament = $2 where beastID = $1`
 

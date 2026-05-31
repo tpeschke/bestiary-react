@@ -19,8 +19,8 @@ import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
 import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/strategicOptions';
 import SocialEdit from './components/socialEdit/SocialEdit';
 import EditRandomEncounters from '../editRandomEncounters/EditRandomEncounters';
-import { EditEncounter } from '../../../view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces';
 import SkillEdit from './components/skillEdit/SkillEdit';
+import { EditEncounter } from '@bestiary/common/interfaces/encounterInterfaces';
 
 interface Props {
     beast: GMBeastClass,

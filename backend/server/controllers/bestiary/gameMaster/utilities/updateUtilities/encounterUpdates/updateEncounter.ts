@@ -1,4 +1,4 @@
-import { EditEncounter } from "../../../../../../interfaces/bestiary/encounterInterfaces";
+import { EditEncounter } from "@bestiary/common/interfaces/encounterInterfaces";
 import updateReaction from "./utilities/updateReaction";
 
 export default function updateEncounter(randomEncounterInfo: EditEncounter | null) {

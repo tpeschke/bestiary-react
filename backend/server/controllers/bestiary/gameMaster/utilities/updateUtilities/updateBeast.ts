@@ -10,9 +10,9 @@ import updateSocialInfo from "./socialUpdates/updateSocialInfo";
 import updateSkillInfo from "./skillUpdates/updateSkillInfo";
 import updateRoleInfo from "./roleUpdates/updateRoleInfo";
 import updateGeneralInfo from "./generalUpdates/updateGeneralInfo";
-import { EditEncounter } from "../../../../../interfaces/bestiary/encounterInterfaces";
 import updateEncounter from "./encounterUpdates/updateEncounter";
 import updateLinkedInfo from "./linkedUpdates/updateLinkedInfo";
+import { EditEncounter } from "@bestiary/common/interfaces/encounterInterfaces";
 
 interface BeastRequest extends Request {
     body: {

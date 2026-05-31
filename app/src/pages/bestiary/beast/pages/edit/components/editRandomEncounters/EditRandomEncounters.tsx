@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { EditEncounter } from '../../../view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces'
 import './EditRandomEncounters.css'
 import axios from 'axios'
 import { editEncounterURL } from '../../../../../../../frontend-config'
+import { EditEncounter, ReactionTemperamentOptions } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
     beastID: number,
@@ -22,7 +22,7 @@ export default function EditRandomEncounters({ beastID, randomEncounterInfo, set
 
     const temperaments = ["Friendly", "Neutral", "Hostile", "Unpredictable"]
 
-    const updateSelect = (value: string) => {
+    const updateSelect = (value: ReactionTemperamentOptions) => {
         if (randomEncounterInfo) {
             const newEncounter: EditEncounter = {
                 ...randomEncounterInfo,

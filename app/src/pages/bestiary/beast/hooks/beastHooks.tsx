@@ -20,7 +20,7 @@ import getUpdateSocialInfoFunctions, { UpdateSocialInfoFunctionsObject } from ".
 import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from "./updateUtilities/updateCombatInfo";
 import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
 import getUpdateGeneralInfoFunctions, { UpdateGeneralInfoFunctionsObject } from "./updateUtilities/updateGeneralInfo";
-import { EditEncounter } from "../pages/view/gmView/components/rightColumn/components/encounterDisplay/interfaces/EncounterInterfaces";
+import { EditEncounter } from "@bestiary/common/interfaces/encounterInterfaces";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void

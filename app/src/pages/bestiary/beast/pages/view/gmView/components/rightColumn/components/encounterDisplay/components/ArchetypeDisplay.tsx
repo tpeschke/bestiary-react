@@ -1,9 +1,4 @@
-import './ArchetypeDisplay.css'
 import Icon, { IconName } from '../../../../../../../../../../../components/icon/Icon';
-import Body from '../../../../../../../../components/UI/body/Body';
-import Pair from '../../../../../../../../components/UI/pair/Pair';
-
-import { useEffect, useState } from 'react';
 import { ArchetypeInfo } from '@bestiary/common/interfaces/encounterInterfaces';
 
 interface Props {
