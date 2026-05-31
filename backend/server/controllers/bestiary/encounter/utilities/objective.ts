@@ -1,5 +1,5 @@
-import { ObjectiveObject } from "../../../../interfaces/bestiary/encounterInterfaces"
 
+import { ObjectiveObject } from "@bestiary/common/interfaces/encounterInterfaces"
 import { grabRandomElementFromArray } from "../../../../utilities/array"
 
 export default function getObjectives(): ObjectiveObject {

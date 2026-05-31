@@ -1,11 +1,12 @@
 import '../EncounterDisplay.css'
 
 interface Props {
-    verb: string,
-    noun: string
+    verb?: string,
+    noun?: string
 }
 
 export default function VerbNounDisplay({ verb, noun }: Props) {
+    if (!verb || !noun) { return <></> }
 
     return (
         <div className='pair-shell'>

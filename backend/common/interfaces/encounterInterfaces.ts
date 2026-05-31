@@ -8,7 +8,31 @@ export interface Encounter {
     battlefield?: BattlefieldObject,
     noun?: string,
     milesFromLair?: number,
-    group?: GroupInfo
+    group?: GroupInfo,
+    archetypeInfo?: ArchetypeInfo
+}
+
+export interface ArchetypeInfo {
+    hasArchetypes: boolean,
+    hasMonsterArchetypes: boolean,
+    normalArchetypes?: NormalArchetypeObject,
+    monsterArchetypes?: MonsterArchetypeObject
+}
+
+interface ArchetypeObject {
+    type: 'monster' | 'normal'
+}
+
+export interface MonsterArchetypeObject extends ArchetypeObject {
+    type: 'monster',
+    archetype: string[]
+}
+
+export interface NormalArchetypeObject extends ArchetypeObject {
+    type: 'normal'
+    archetype: string,
+    deviation: boolean,
+    reverse: boolean
 }
 
 export interface EditEncounter {
@@ -65,13 +89,13 @@ export interface Sign {
 
 export interface VerbObject {
     beastVerbs: Verb[],
-    allVerbs: Verb[] 
+    allVerbs: Verb[]
 }
 
 export interface Verb {
-    verb: string, 
-    id: number, 
-    beastid: number, 
+    verb: string,
+    id: number,
+    beastid: number,
 }
 
 export interface NounObject {
@@ -80,9 +104,9 @@ export interface NounObject {
 }
 
 export interface Noun {
-    noun: string, 
-    id: number, 
-    beastid: number, 
+    noun: string,
+    id: number,
+    beastid: number,
 }
 
 export interface BattlefieldObject {
@@ -113,29 +137,33 @@ export interface BaseComplication {
 }
 
 export interface RivalComplication extends BaseComplication {
+    type: 'Rival' | 'Unlikely Allies',
     actors: Rival
 }
 
 export interface WoundedComplication extends BaseComplication {
+    type: 'Wounded',
     byWhom: Rival,
     amount: string
 }
 
-export  interface LostComplication extends BaseComplication {
+export interface LostComplication extends BaseComplication {
+    type: 'Lost',
     distance: string
 }
 
 export interface BackUp {
-    rank: string, 
-    name: string, 
-    plural: string, 
+    rank: string,
+    name: string,
+    plural: string,
     id: number
 }
 
 export interface BackUpComplication extends BaseComplication {
+    type: 'Back Up Coming',
     id: number
-    rank: string, 
-    name: string, 
+    rank: string,
+    name: string,
     plural: string,
     rankPlural: string,
     time: string

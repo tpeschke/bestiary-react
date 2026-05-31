@@ -1,13 +1,14 @@
+import { Reaction } from '@bestiary/common/interfaces/encounterInterfaces'
 import Icon from '../../../../../../../../../../../components/icon/Icon'
 import '../EncounterDisplay.css'
 
-import { Reaction } from '../interfaces/EncounterInterfaces'
-
 interface Props {
-    reactionInfo: Reaction
+    reactionInfo?: Reaction
 }
 
 export default function ReactionDisplay({ reactionInfo }: Props) {
+    if (!reactionInfo) { return <></> }
+
     const { temperament, result } = reactionInfo
 
     return (

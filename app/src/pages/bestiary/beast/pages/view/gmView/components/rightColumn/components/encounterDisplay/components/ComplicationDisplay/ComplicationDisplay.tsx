@@ -1,19 +1,19 @@
 import './ComplicationDisplay.css'
 
-import { Complication } from '../../interfaces/EncounterInterfaces'
 import BackUpComplicationDisplay from './components/BackUpComplication'
 import BaseComplicationDisplay from './components/BaseComplication'
 import LostComplicationDisplay from './components/LostComplication'
 import RivalComplicationDisplay from './components/RivalComplication'
 import WoundedComplicationDisplay from './components/WoundedComplication'
 import EnchantedItemComplicationDisplay from './components/EnchantedItemComplication'
+import { BackUpComplication, BaseComplication, LostComplication, RivalComplication, WoundedComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
-    complications: Complication[]
+    complications?: BaseComplication[]
 }
 
 export default function ComplicationDisplay({ complications }: Props) {
-    if (complications.length === 0) { return <></>}
+    if (!complications || complications.length === 0) { return <></>}
 
     return (
         <div className='complications-shell'>
@@ -26,7 +26,7 @@ export default function ComplicationDisplay({ complications }: Props) {
 }
 
 interface ComplicationProps {
-    complication: Complication
+    complication: BaseComplication
 }
 
 function GetComplicationComponent({ complication }: ComplicationProps) {
@@ -34,16 +34,16 @@ function GetComplicationComponent({ complication }: ComplicationProps) {
     switch (complication.type) {
         case RIVAL:
         case UNLIKELY_ALLIES:
-            complicationInnards = <RivalComplicationDisplay info={complication} />
+            complicationInnards = <RivalComplicationDisplay info={complication as RivalComplication} />
             break
         case WOUNDED:
-            complicationInnards = <WoundedComplicationDisplay info={complication} />
+            complicationInnards = <WoundedComplicationDisplay info={complication as WoundedComplication} />
             break
         case LOST:
-            complicationInnards = <LostComplicationDisplay info={complication} />
+            complicationInnards = <LostComplicationDisplay info={complication as LostComplication} />
             break
         case BACK_UP_COMING:
-            complicationInnards = <BackUpComplicationDisplay info={complication} />
+            complicationInnards = <BackUpComplicationDisplay info={complication as BackUpComplication} />
             break
         case ENCHANTED_ITEM:
             complicationInnards = <EnchantedItemComplicationDisplay info={complication} />

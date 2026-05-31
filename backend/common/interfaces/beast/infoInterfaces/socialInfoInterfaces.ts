@@ -17,7 +17,6 @@ export interface BasicSocialInfo {
     },
     isBeast?: boolean,
     baseConvictionRank: number,
-    archetypeInfo: ArchetypeInfo,
     conflicts: ConflictObject,
 }
 
@@ -60,28 +59,4 @@ export interface Conflict {
     strength: Strength,
     adjustment: number,
     deleted?: boolean
-}
-
-export interface ArchetypeInfo {
-    hasArchetypes: boolean,
-    hasMonsterArchetypes: boolean,
-    baseRank: number,
-    normalArchetypes?: NormalArchetypeObject,
-    monsterArchetypes?: MonsterArchetypeObject
-}
-
-interface ArchetypeObject {
-    type: 'monster' | 'normal'
-}
-
-export interface MonsterArchetypeObject extends ArchetypeObject {
-    type: 'monster',
-    archetype: string[]
-}
-
-export interface NormalArchetypeObject extends ArchetypeObject {
-    type: 'normal'
-    archetype: string,
-    deviation: boolean,
-    reverse: boolean
 }

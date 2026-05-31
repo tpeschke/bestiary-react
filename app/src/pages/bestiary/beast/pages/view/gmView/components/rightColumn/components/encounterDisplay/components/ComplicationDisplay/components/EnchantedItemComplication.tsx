@@ -1,7 +1,7 @@
 import '../ComplicationDisplay.css'
 
-import { BaseComplication } from '../../../interfaces/EncounterInterfaces'
 import { enchantedItemPage } from '../../../../../../../../../../../../../frontend-config'
+import { BaseComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
     info: BaseComplication

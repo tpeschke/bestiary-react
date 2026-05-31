@@ -1,4 +1,4 @@
-import { LostComplication } from '../../../interfaces/EncounterInterfaces'
+import { LostComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 import '../ComplicationDisplay.css'
 
 interface Props {

@@ -1,14 +1,15 @@
 import Icon from "../../../../../../../../../../../components/icon/Icon"
 import Table, { TableObject } from "../../../../../../../../../../../components/table/Table"
 import "../EncounterDisplay.css"
-
-import { SignObject } from "../interfaces/EncounterInterfaces"
+import { SignObject } from "@bestiary/common/interfaces/encounterInterfaces"
 
 interface Props {
-    signInfo: SignObject
+    signInfo?: SignObject
 }
 
 export default function SignDisplay({ signInfo }: Props) {
+    if (!signInfo) { return <></> }
+    
     const { beastSign, allSigns } = signInfo
 
     const allSignsTable: TableObject = {
@@ -18,7 +19,7 @@ export default function SignDisplay({ signInfo }: Props) {
     }
 
     const htmlTooltip = {
-        component: Table({table: allSignsTable, textAlign: "second-column-center"}),
+        component: Table({ table: allSignsTable, textAlign: "second-column-center" }),
         id: 'sign-table'
     }
 

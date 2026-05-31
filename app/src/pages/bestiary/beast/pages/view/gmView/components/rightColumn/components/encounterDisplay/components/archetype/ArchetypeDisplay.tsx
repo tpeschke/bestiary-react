@@ -1,10 +1,10 @@
 import './ArchetypeDisplay.css'
-import { ArchetypeInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces';
 import Icon, { IconName } from '../../../../../../../../../../../../components/icon/Icon';
 import Body from '../../../../../../../../../components/UI/body/Body';
 import Pair from '../../../../../../../../../components/UI/pair/Pair';
 
 import { useEffect, useState } from 'react';
+import { ArchetypeInfo } from '@bestiary/common/interfaces/encounterInterfaces';
 
 interface Props {
     archetypeInfo: ArchetypeInfo,
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function ArchetypeDisplay({ archetypeInfo }: Props) {
-    const { hasArchetypes, hasMonsterArchetypes, normalArchetypes, monsterArchetypes, baseRank } = archetypeInfo
+    const { hasArchetypes, hasMonsterArchetypes, normalArchetypes, monsterArchetypes } = archetypeInfo
 
     const [currentHasMonsterArchetype, setCurrentHasMonsterArchetypes] = useState(false)
     const [currentHasArchetype, setCurrentHasArchetypes] = useState(false)
@@ -51,13 +51,12 @@ export default function ArchetypeDisplay({ archetypeInfo }: Props) {
                                     <div>
                                         {monsterArchetypes?.archetype.map((archetype, index) => <p key={index}>{archetype}</p>)}
                                     </div>
-                                    <p>{baseRank}</p>
                                 </div>
                             }
                             {(hasArchetypes && normalArchetypes) &&
                                 <span>
                                     {tooltip && <Icon iconName={iconName} margin='right' float='left' tooltip={tooltip} />}
-                                    <Pair title={normalArchetypes?.archetype} info={baseRank} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
+                                    <Pair title={normalArchetypes?.archetype} format={{ title: 'none', position: 'opposite', titleJustified: 'left' }} />
                                 </span>
                             }
                         </>

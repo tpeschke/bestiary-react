@@ -1,12 +1,13 @@
+import { GroupInfo, RoleNumbers } from '@bestiary/common/interfaces/encounterInterfaces'
 import '../EncounterDisplay.css'
 
-import { GroupInfo, RoleNumbers } from '../interfaces/EncounterInterfaces'
-
 interface Props {
-    groupInfo: GroupInfo
+    groupInfo?: GroupInfo
 }
 
 export default function NumberAppearingDisplay({ groupInfo }: Props) {
+    if (!groupInfo) { return <></> }
+
     const { label, roleNumbers } = groupInfo
 
     function formatNumberAppearing(roles: RoleNumbers) {
@@ -19,7 +20,7 @@ export default function NumberAppearingDisplay({ groupInfo }: Props) {
                 return totalString + ', and ' + roleString
             } else if (index > 0) {
                 return totalString + ', ' + roleString
-            }  
+            }
             return totalString += ` ${number} ${roleName}`
         }, '')
     }

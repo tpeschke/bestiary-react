@@ -20,7 +20,6 @@ import getMovement from "./utilities/combatInfo/weaponInfo/utilities/getMovement
 import query from "../../../../../db/database"
 import { getBasicMonsterInfo } from "../../../../../db/beast/basicSQL"
 import formatSocialInfo from "./utilities/socialInfo/getSocialInfo"
-import { getArchetypes, GetArchetypesReturn } from "./utilities/socialInfo/utilities/getArchetypes"
 import { getConflict } from "./utilities/socialInfo/utilities/getConflict"
 import { getChallenges } from "./utilities/skillInfo/utilities/getChallenges"
 import { getObstacles } from "./utilities/skillInfo/utilities/getObstacles"
@@ -53,9 +52,9 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         imagesource, rolenameorder, defaultrole, sp_atk, sp_atk_hm, sp_def, sp_def_hm, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
         notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
         skillsecondary, skillpoints, atk_skill, atk_skill_hm, def_skill, def_skill_hm, socialrole, socialsecondary, socialpoints, 
-        atk_conf, atk_conf_hm,  def_conf, def_conf_hm, hasarchetypes,
-        hasmonsterarchetypes, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, mental: stressThresholdStrength,
-        capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
+        atk_conf, atk_conf_hm,  def_conf, def_conf_hm, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, 
+        mental: stressThresholdStrength, capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, 
+        combatepvalue, skillepvalue
     } = unsortedBeastInfo
 
     let beast: Beast = {
@@ -127,7 +126,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         },
         socialInfo: formatSocialInfo(
             socialrole, socialsecondary, atk_conf, atk_conf_hm, def_conf, def_conf_hm, socialpoints, socialskulls,
-            socialepvalue, hasarchetypes, hasmonsterarchetypes, capacityStrength
+            socialepvalue, capacityStrength
         ),
         combatInfo: formatCombatInfo(
             tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_atk_hm, 
@@ -187,12 +186,6 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         getObstacles(beast.id).then((obstacles: Obstacle[]) => beast.skillInfo.obstacles = obstacles),
 
         getConflict(beast.id, isEditing, beast.socialInfo.skullIndex, beast.socialInfo.socialRole).then((conflicts: ConflictObject) => beast.socialInfo.conflicts = conflicts),
-        getArchetypes(isEditing).then((archetypeInfo: GetArchetypesReturn) => {
-            beast.socialInfo.archetypeInfo = {
-                ...beast.socialInfo.archetypeInfo,
-                ...archetypeInfo
-            }
-        }),
 
         getPleroma(beast.id).then((pleroma: Pleroma[]) => beast.lootInfo.pleroma = pleroma),
         getSpecificLoots(beast.id).then((specificLoots: SpecificLoot[]) => beast.lootInfo.specificLoots = specificLoots),

@@ -1,4 +1,4 @@
-import { WoundedComplication } from '../../../interfaces/EncounterInterfaces'
+import { WoundedComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 import '../ComplicationDisplay.css'
 
 interface Props {

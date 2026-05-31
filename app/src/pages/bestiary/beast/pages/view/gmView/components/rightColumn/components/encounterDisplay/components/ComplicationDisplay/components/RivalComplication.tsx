@@ -1,7 +1,7 @@
 import '../ComplicationDisplay.css'
 
-import { RivalComplication } from '../../../interfaces/EncounterInterfaces'
 import { beastPage } from '../../../../../../../../../../../../../frontend-config'
+import { RivalComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
     info: RivalComplication

@@ -1,6 +1,6 @@
+import { Sign, SignObject } from "@bestiary/common/interfaces/encounterInterfaces"
 import query from "../../../../db/database"
 import { getAllSignsOrderedByWeight, getWeightedSign } from "../../../../db/encounter/sign"
-import { Sign, SignObject } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 export default async function getSigns(beastId: number): Promise<SignObject> {
     const [beastSign]: Sign[] = await query(getWeightedSign, beastId)

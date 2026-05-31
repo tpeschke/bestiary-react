@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { Encounter } from "@bestiary/common/interfaces/encounterInterfaces"
 import axios from "axios";
-
-import { Encounter } from "../interfaces/EncounterInterfaces";
 import alertInfo from "../../../../../../../../../../../components/alert/alerts";
 import { encounterURL } from "../../../../../../../../../../../frontend-config";
 

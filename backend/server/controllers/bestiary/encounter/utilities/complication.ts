@@ -1,6 +1,6 @@
+import { BackUp, BackUpComplication, Complication, LostComplication, Rival, RivalComplication, WoundedComplication } from "@bestiary/common/interfaces/encounterInterfaces";
 import query from "../../../../db/database";
 import { getEncounterBackUp, getRivalForEncounter } from "../../../../db/encounter/complication";
-import { Complication, RivalComplication, Rival, WoundedComplication, LostComplication, BackUp, BackUpComplication } from "../../../../interfaces/bestiary/encounterInterfaces";
 import { grabRandomElementFromArray } from "../../../../utilities/array";
 import rollDice from "../../../../utilities/diceRoller";
 

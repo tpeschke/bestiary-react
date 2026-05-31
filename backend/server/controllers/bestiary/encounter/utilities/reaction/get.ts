@@ -1,5 +1,5 @@
+import { Reaction, ReactionTemperamentOptions } from "@bestiary/common/interfaces/encounterInterfaces"
 import query from "../../../../../db/database"
-import { Reaction, ReactionTemperamentOptions } from "../../../../../interfaces/bestiary/encounterInterfaces"
 import rollDice from "../../../../../utilities/diceRoller"
 
 const getReactionInfo = `select *, '' as result from bbReaction where beastID = $1`

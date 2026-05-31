@@ -1,6 +1,6 @@
+import { Verb } from '@bestiary/common/interfaces/encounterInterfaces'
 import query from '../../../../db/database'
 import { getWeightedVerb } from '../../../../db/encounter/verb'
-import { Verb } from "../../../../interfaces/bestiary/encounterInterfaces"
 
 export default async function getVerb(beastId: number): Promise<string> {
     const [verb]: Verb[] = await query(getWeightedVerb, beastId)

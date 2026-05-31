@@ -1,5 +1,5 @@
-import { BattlefieldObject } from "../../../../interfaces/bestiary/encounterInterfaces"
 
+import { BattlefieldObject } from "@bestiary/common/interfaces/encounterInterfaces"
 import { grabRandomElementFromArray } from "../../../../utilities/array"
 
 export default function getBattlefieldAndPattern(): BattlefieldObject {

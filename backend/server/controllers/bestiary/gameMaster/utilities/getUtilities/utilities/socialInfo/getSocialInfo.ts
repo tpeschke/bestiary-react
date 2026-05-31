@@ -2,7 +2,6 @@ import { NonspecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInt
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getSkullNumber from "../getSkulls"
-import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 import { Strength } from "@bestiary/common/interfaces/calculationInterfaces"
 import calculateSecondaryRoleEffect from "@bestiary/common/utilities/scalingAndBonus/calculateSecondaryRoleEffect"
@@ -20,8 +19,6 @@ export default function formatSocialInfo(
     socialPoints: number,
     socialSkulls: number,
     socialEpValue: number,
-    hasArchetypes: boolean,
-    hasMonsterArchetypes: boolean,
     capacityStrength: Strength
 ): NonspecificSocialInfo {
     socialSkulls = socialSkulls ?? getSkullNumber(socialPoints)
@@ -52,10 +49,6 @@ export default function formatSocialInfo(
             relationships: [],
             flaws: [],
             burdens: []
-        },
-        archetypeInfo: {
-            hasArchetypes, hasMonsterArchetypes,
-            baseRank: getBaseSocialRank(skullIndex)
         }
     }
 }

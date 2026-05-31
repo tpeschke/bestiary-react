@@ -1,5 +1,4 @@
 import './EncounterDisplay.css'
-
 import NumberAppearingDisplay from "./components/NumberAppearingDisplay";
 import ObjectivesDisplay from "./components/ObjectiveDisplay";
 import SignDisplay from "./components/SignDisplay";
@@ -48,12 +47,15 @@ function EncounterShell({ setLoading }: Props) {
 
         return (
             <>
-                {signs.beastSign?.sign ?
+                {signs?.beastSign?.sign ?
                     <>
                         <Body>
                             <div className='encounter-display-shell'>
                                 <SignDisplay signInfo={signs} />
                                 <NumberAppearingDisplay groupInfo={group} />
+                                
+                                {/* TODO: Display Archetype Info */}
+
                                 <ObjectivesDisplay objectives={objectives} />
                                 <VerbNounDisplay verb={verb} noun={noun} />
                                 <div className="pair-shell encounter-display-pair">

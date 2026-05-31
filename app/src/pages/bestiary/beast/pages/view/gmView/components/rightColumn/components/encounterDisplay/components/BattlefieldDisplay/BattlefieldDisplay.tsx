@@ -1,9 +1,6 @@
 import '../../EncounterDisplay.css'
 
-import { BattlefieldObject } from '../../interfaces/EncounterInterfaces'
-
 import explanation from '../../../../../../../../../../../../assets/images/encounterDesign/battlefieldPatterns/explanation.jpg'
-
 import alley from '../../../../../../../../../../../../assets/images/encounterDesign/battlefieldPatterns/alley.jpg'
 import dangerWall from '../../../../../../../../../../../../assets/images/encounterDesign/battlefieldPatterns/dangerWall.jpg'
 import divide from '../../../../../../../../../../../../assets/images/encounterDesign/battlefieldPatterns/divide.jpg'
@@ -18,12 +15,15 @@ import pincer from '../../../../../../../../../../../../assets/images/encounterD
 import uphill from '../../../../../../../../../../../../assets/images/encounterDesign/battlefieldPatterns/uphill.jpg'
 import Dictionary from '../../../../../../../../../../../../interfaces/dictionaryInterfaces'
 import Icon from '../../../../../../../../../../../../components/icon/Icon'
+import { BattlefieldObject } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
-    battlefieldInfo: BattlefieldObject
+    battlefieldInfo?: BattlefieldObject
 }
 
 export default function BattlefieldDisplay({ battlefieldInfo }: Props) {
+    if (!battlefieldInfo) { return <></> }
+    
     const { battlefield, pattern } = battlefieldInfo
 
     const encounterBuildingLink = "https://bestiary.stone-fish.com/encounters/combats"

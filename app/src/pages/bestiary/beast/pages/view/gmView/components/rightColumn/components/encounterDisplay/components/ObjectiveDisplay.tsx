@@ -1,11 +1,13 @@
+import { ObjectiveObject } from '@bestiary/common/interfaces/encounterInterfaces'
 import '../EncounterDisplay.css'
-import { ObjectiveObject } from '../interfaces/EncounterInterfaces'
 
 interface Props {
-    objectives: ObjectiveObject
+    objectives?: ObjectiveObject
 }
 
 export default function ObjectivesDisplay({ objectives }: Props) {
+    if (!objectives) { return <></> }
+
     const { player, enemy } = objectives
     return (
         <div className='objectives-shell'>

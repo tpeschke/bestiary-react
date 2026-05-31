@@ -1,6 +1,5 @@
 import RoleTitle from "../../../roleTitle/RoleTitle"
 import SpecialInfo from "../specialInfo/specialInfo"
-import ArchetypeDisplay from "./components/archetype/ArchetypeDisplay"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 import { SpecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CapacityDisplay from "./components/CapacityDisplay"
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const { type, socialRole, socialSkulls, socialEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, archetypeInfo, capacity, isBeast } = socialInfo
+    const { type, socialRole, socialSkulls, socialEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, capacity, isBeast } = socialInfo
 
     function getBeastBonus() {
         if (type === 'Bonfire' && isBeast) {
@@ -50,7 +49,6 @@ export default function ConfrontationSection({ socialInfo }: Props) {
                 </>
             }
             {capacity.threshold && <CapacityDisplay capacity={capacity.threshold} />}
-            <ArchetypeDisplay archetypeInfo={archetypeInfo} points={socialSkulls} />
             <CharacteristicsDisplay characteristicInfo={conflicts} type={type} />
         </>
     )

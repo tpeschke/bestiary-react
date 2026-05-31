@@ -1,7 +1,7 @@
 import '../ComplicationDisplay.css'
 
-import { BackUpComplication } from '../../../interfaces/EncounterInterfaces'
 import { beastPage } from '../../../../../../../../../../../../../frontend-config'
+import { BackUpComplication } from '@bestiary/common/interfaces/encounterInterfaces'
 
 interface Props {
     info: BackUpComplication

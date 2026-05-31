@@ -1,7 +1,6 @@
+import { GroupInfo, RoleNumbers } from "@bestiary/common/interfaces/encounterInterfaces"
 import query from "../../../../db/database"
 import { getGroupByID, getWeightedGroupLabel } from "../../../../db/encounter/group"
-import { GroupInfo, RoleNumbers } from "../../../../interfaces/bestiary/encounterInterfaces"
-
 import { grabRandomElementFromArrayWithIndex } from "../../../../utilities/array"
 import rollDice from "../../../../utilities/diceRoller"
 
