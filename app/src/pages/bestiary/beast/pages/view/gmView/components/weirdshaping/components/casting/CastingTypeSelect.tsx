@@ -8,10 +8,11 @@ import CastingRules from './CastingRules'
 import Body from '../../../../../../../components/UI/body/Body'
 
 interface Props {
-    castingTypes: CastingClass
+    castingTypes: CastingClass,
+    systemPreference: 0 | 1 | 2 | undefined
 }
 
-export default function CastingTypeSelect({ castingTypes }: Props) {
+export default function CastingTypeSelect({ castingTypes, systemPreference }: Props) {
     const [selected, setSelected] = useState<number>()
     const [showExplanation, setShowExplanation] = useState(false)
 
@@ -35,17 +36,15 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
                 <div className={showExplanation ? 'casting-explanation-shell' : 'displayNone'}>
                     <h3>How To Use</h3>
                     <Body>
-                        <>
-                            <p className='bottom-margin'>These rules are to add variation and mimic different types of casting - giving an approximation of their strengths and weaknesses that players can use and plan around.</p>
-                            <p className='bottom-margin'>Some casting types will give points. If you get points, you can add it to Range, Interval, or Effect - anywhere there’s a static number.</p>
-                            <p>For the most part, this is just a simple addition (1 Hour becomes 2 Hours, a +1 becomes a +2).</p>
-                        </>
+                        <p className='bottom-margin'>These rules are to add variation and mimic different types of casting - giving an approximation of their strengths and weaknesses that players can use and plan around.</p>
+                        <p className='bottom-margin'>Some casting types will give points. If you get points, you can add it to Range, Interval, or Effect - anywhere there’s a static number.</p>
+                        <p>For the most part, this is just a simple addition (1 Hour becomes 2 Hours, a +1 becomes a +2).</p>
                     </Body>
                 </div>
                 {selected &&
                     <div className='casting-info-shell'>
                         <Body>
-                            <CastingRules index={selected} spellnumberdie={castingTypes.getSpellNumberDie} />
+                            <CastingRules index={selected} spellNumberDie={castingTypes.getSpellNumberDie} systemPreference={systemPreference} />
                         </Body>
                     </div>
                 }

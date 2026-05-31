@@ -21,7 +21,7 @@ export default function Weirdshaping({ castingTypes, spells }: Props) {
             {spells?.length > 0 && (
                 <>
                     <h2 className='border'>{systemPreference === BONFIRE ? 'Weirdshaping' : 'Spell Casting'}</h2>
-                    <CastingTypeSelect castingTypes={castingTypes} />
+                    <CastingTypeSelect castingTypes={castingTypes} systemPreference={systemPreference} />
                     <SpellsDisplay spells={spells} systemPreference={systemPreference} />
                 </>
             )}
