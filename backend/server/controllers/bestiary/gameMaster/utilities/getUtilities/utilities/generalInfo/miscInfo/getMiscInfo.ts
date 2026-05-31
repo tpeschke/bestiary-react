@@ -170,11 +170,13 @@ export async function getCasting(beastId: number): Promise<Casting> {
     }
 
     if (casting) {
-        const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype, beastid } = casting
+        const { augur, wild, vancian, manifesting, commanding, bloodpact, spellnumberdie, defaulttype: defaultTypeString, beastid } = casting
+
+        const defaulttype = defaultTypeIndexDictionary[defaultTypeString];
 
         return {
             spellnumberdie, beastid,
-            defaulttype: defaultTypeIndexDictionary[defaulttype],
+            defaulttype,
             castingTypesArray: [augur, wild, vancian, manifesting, commanding, bloodpact]
         }
     }

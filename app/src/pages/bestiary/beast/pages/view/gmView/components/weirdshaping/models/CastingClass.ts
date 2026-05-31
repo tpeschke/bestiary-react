@@ -10,7 +10,7 @@ const castingTypeDictionary = ['Augury', 'Wild Magic', 'Vancian', 'Manifesting',
 export default class CastingClass {
     private castingTypesArray: boolean[] = []
     private filteredCastingTypes: CastingDisplayType[] = []
-    private defaulttype: number | null = null
+    private defaulttype: number | undefined;
 
     private spellnumberdie: string = ''
 
@@ -25,7 +25,7 @@ export default class CastingClass {
             this.defaulttype = defaulttype
     
             this.filteredCastingTypes = this.filterCastingTypes()
-            this.initialSelected = this.getInitialCastingType()
+            this.initialSelected = this.getInitialCastingType(defaulttype)
         }
     }
 
@@ -37,7 +37,7 @@ export default class CastingClass {
         return this.filteredCastingTypes
     }
 
-    get getDefaultType(): number | null {
+    get getDefaultType(): number | undefined {
         return this.defaulttype
     }
 
@@ -61,11 +61,12 @@ export default class CastingClass {
         }, []);
     }
 
-    private getInitialCastingType(): number {
-        if (this.defaulttype === null) {
-            return Math.floor(Math.random() * this.filteredCastingTypes.length)
+    private getInitialCastingType(defaultType: undefined | number): number {
+        if (!defaultType && defaultType !== 0) {
+            const filteredIndex = Math.floor(Math.random() * this.filteredCastingTypes.length)
+            return this.filteredCastingTypes[filteredIndex].value
         }
-        return this.defaulttype
+        return defaultType
     }
 
 }

@@ -19,7 +19,7 @@ export default function CastingTypeSelect({ castingTypes }: Props) {
         if (!selected) {
             setSelected(castingTypes.getInitialSelected)
         }
-    }, [])
+    }, [castingTypes])
 
     return (
         <Body>

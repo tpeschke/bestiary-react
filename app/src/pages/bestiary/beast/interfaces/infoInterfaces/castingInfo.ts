@@ -8,6 +8,6 @@ export default interface CastingInfo {
 export interface Casting {
     castingTypesArray: boolean[],
     spellnumberdie: string,
-    defaulttype: number | null,
+    defaulttype?: number,
     beastid: number
 }
