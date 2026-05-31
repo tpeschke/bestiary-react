@@ -23,6 +23,7 @@ import { getMonsterScenarios } from "../../../../../../../../db/beast/scenario"
 import { getMonsterFolklore } from "../../../../../../../../db/beast/folklore"
 import { User } from "@bestiary/common/interfaces/userInterfaces"
 import getAccessLevel, { Access, GM } from "@bestiary/common/utilities/get/getAccessLevel"
+import { buildSystemSpecificInfo } from "../../../../formatUtilities/getSystemSpecificTerminologies"
 
 export function hasAppropriatePatreonLevel(user: User | null | undefined, beastPatron: Access, canPlayerView: boolean): Access {
     const accessLevel = getAccessLevel(user)
@@ -187,5 +188,12 @@ export async function getCasting(beastId: number): Promise<Casting> {
 }
 
 export async function getSpells(beastId: number): Promise<Spell[]> {
-    return query(getMonsterSpells, beastId)
+    const spells = await query(getMonsterSpells, beastId)
+
+    return spells.map(spell => {
+        return {
+            ...spell,
+            effect: buildSystemSpecificInfo(spell.effect)
+        }
+    })
 }

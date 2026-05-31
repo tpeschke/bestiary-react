@@ -1,3 +1,4 @@
+import { SystemInfoArray } from "./generalInfoInterfaces"
 
 export default interface CastingInfo {
     casting: Casting,
@@ -19,7 +20,7 @@ export interface Spell {
     shape: string,
     range: string,
     interval: string,
-    effect: string,
+    effect: SystemInfoArray,
     beastid: number,
     allroles: boolean,
     roleid: string,

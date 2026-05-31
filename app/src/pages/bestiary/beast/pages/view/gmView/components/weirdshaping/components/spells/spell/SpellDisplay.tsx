@@ -1,15 +1,24 @@
 import './SpellDisplay.css'
-
 import HTMLDisplay from '../../../../../../../../components/UI/htmlDisplay/htmlDisplay'
 import Icon from '../../../../../../../../../../../components/icon/Icon'
 import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingInfo'
+import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
-    spell: Spell
+    spell: Spell,
+    systemPreference: 0 | 1 | 2 | undefined
 }
 
-export default function SpellDisplay({ spell }: Props) {
+export default function SpellDisplay({ spell, systemPreference }: Props) {
+    if (systemPreference === HACKMASTER) {
+        return displayHackMasterSpell(spell)
+    }
+    return displayBonfireSpell(spell)
+}
+
+function displayBonfireSpell(spell: Spell) {
     const { name, shape, origin, range, resist, interval, effect } = spell
+
     return (
         <div className='spell-display-shell'>
             <h4>{name}</h4>
@@ -34,12 +43,48 @@ export default function SpellDisplay({ spell }: Props) {
                 <p>{interval}</p>
             </div>
             <strong>Effect</strong>
-            <HTMLDisplay html={effect} />
+            <HTMLDisplay html={effect[BONFIRE]} />
         </div>
     )
 }
 
-const shapeTooltips: {[key: string]: string} = {
+function displayHackMasterSpell(spell: Spell) {
+    const { name, shape, origin, range, resist, interval, effect } = spell
+
+    return (
+        <div className='spell-display-shell'>
+            <h4>{name}</h4>
+            <div className='spell-stat-effect'>
+                <strong>Casting Time</strong>
+                <p>See Casting Type</p>
+            </div>
+            <div className='spell-stat-effect'>
+                <strong>Origin</strong>
+                <p>{origin} <Icon iconName='info' tooltip={originTooltips[origin]} /></p>
+            </div>
+            <div className='spell-stat-effect'>
+                <strong>Range</strong>
+                <p>{range}</p>
+            </div>
+            <div className='spell-stat-effect'>
+                <strong>Area of Effect</strong>
+                <p>{shape} <Icon iconName='info' tooltip={shapeTooltips[shape]} /></p>
+            </div>
+            <div className='spell-stat-effect'>
+                <strong>Duration</strong>
+                <p>{interval}</p>
+            </div>
+            <div className='spell-stat-effect'>
+                <strong>Saving Throw</strong>
+                <p>{resist}</p>
+            </div>
+            <br/>
+            <HTMLDisplay html={effect[HACKMASTER]} />
+        </div>
+    )
+}
+
+const shapeTooltips: { [key: string]: string } = {
     Circle: "It extends from the Origin with a Radius equal to the Base Range of the Effect. Anyone within the Circle is affected by the spell. \n If it deals damage or inflicts Stress, this occurs on the Interval or if a person enters/re-enters the shape. \n If not cast far enough away, this could also include the weird-adept.",
     Chain: "The weird-adept casts the spell and it chooses 1 viable, random target within the Range of the Spell. After half the spell’s Interval, it then leaps to the next. Anyone hit by the spell suffers its Effects for the entire time the spell is cast. \n People may be hit multiple times, which simply counts as the spell Stacking on them, but the weird-adept may try and redirect the spell, causing it to skip over a person, but they take Stress equal to the number of times they’ve done so.",
     Cone: "The Cone starts with its tip at the Origin and then extends in a 45-degree arch from it up to the spell’s Range. Anyone within the Cone is affected by the spell. If it deals damage or inflicts Stress, this occurs on the Interval or if a person enters/re-enters the shape. \n The Cone can also be moved and shifted, rotating around its Origin, moving a facing every 3 seconds.",
@@ -50,7 +95,7 @@ const shapeTooltips: {[key: string]: string} = {
     Personal: "This makes the Shape of a spell just a single individual. Starting at a point within the Origin, it effects the first viable target (deteremined by the Effect Rudiment) and then stops. The spell continues to affect that person after that point, wherever they move."
 }
 
-const originTooltips: {[key: string]: string} = {
+const originTooltips: { [key: string]: string } = {
     Aura: "This makes it so the Origin starts at the weird-adept (and any equipment he carries) and then extends out from them, moving as they move.",
     Touch: "This makes it so the Origin starts at whatever the weird-adept touches and then extends from there. \n If the target is trying to resist being touched, the weird-adept needs to make an Unarmed attack against them: the weird-adept is considered armed.",
     Near: "This makes the Origin of the spell from the Effect's Base Range to up to double the Effect’s Base Range. This never affects the caster.",
