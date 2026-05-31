@@ -26,7 +26,7 @@ interface Props {
 export default function BattlefieldDisplay({ battlefieldInfo }: Props) {
     const { battlefield, pattern } = battlefieldInfo
 
-    const gmgLink = "https://docs.google.com/document/d/12YPhpdKB1L4KJYAlG3Jpz2jlRnaXtPTh-Os-z3ABMRs/edit?usp=drive_link"
+    const encounterBuildingLink = "https://bestiary.stone-fish.com/encounters/combats"
 
     const htmlTooltip = {
         component: getImage(pattern),
@@ -35,7 +35,7 @@ export default function BattlefieldDisplay({ battlefieldInfo }: Props) {
 
     return (
         <div className='pair-shell secondary-div'>
-            <h3>Battlefield / Pattern <a href={gmgLink} target="_blank"><Icon iconName='link' tooltip='This links to the GMG where Patterns are discussed (Step 4.3).' /></a></h3>
+            <h3>Battlefield / Pattern <a href={encounterBuildingLink} target="_blank"><Icon iconName='link' tooltip='This links to Step 4.4 in the Combat Encounter Guidelines where Patterns are discussed.' /></a></h3>
             <div><p>{battlefield} / {pattern}</p> <Icon iconName='image' htmlTooltip={htmlTooltip} /></div>
         </div>
     )
