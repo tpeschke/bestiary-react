@@ -19,25 +19,29 @@ export default function SkillSection({ skillInfo }: Props) {
     const { threshold } = stress
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
+    
+    const showThreshold = threshold && type === 'Bonfire'
 
     // if HM info is null, the code uses the Bonfire info to generate it
     // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
     const showDefenseSection = !!defenseInfo && defenseInfo !== '<p></p>'
     const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
-    const hasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
+    const showObstacles = obstacles.length > 0
+    const showChallenges = challenges.length > 0
 
-    const showThreshold = threshold && type === 'Bonfire'
+    const hasBottomBorder = !(showThreshold || showSkillSection || showDefenseSection || showAttackSection || showObstacles || showChallenges)
+    const thresholdHasBottomBorder: boolean = !(showSkillSection || showDefenseSection || showAttackSection)
 
     return (
         <>
             {type === 'Bonfire' ?
-                <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} />
+                <RoleTitle title="Skills" skulls={skillSkulls} role={skillRole} secondaryRole={skillSecondary} hasBottomBorder={hasBottomBorder} />
                 :
-                <RoleTitle title="Skills" epValue={skillEpValue} role={skillRole} secondaryRole={skillSecondary} />
+                <RoleTitle title="Skills" epValue={skillEpValue} role={skillRole} secondaryRole={skillSecondary} hasBottomBorder={hasBottomBorder} />
             }
             {showThreshold && (
-                <div className={"pair-shell heading three" + (hasBottomBorder ? " noBorder" : "")}>
+                <div className={"pair-shell heading three" + (thresholdHasBottomBorder ? " noBorder" : "")}>
                     <h3>Stress Threshold</h3>
                     <p>{threshold}</p>
                 </div>
@@ -62,8 +66,8 @@ export default function SkillSection({ skillInfo }: Props) {
                     </Body>
                 </>
             }
-            {obstacles.length > 0 && <ObstaclesDisplay obstacles={obstacles} />}
-            {challenges.length > 0 && <ChallengesDisplay challenges={challenges} />}
+            {showObstacles && <ObstaclesDisplay obstacles={obstacles} />}
+            {showChallenges && <ChallengesDisplay challenges={challenges} />}
         </>
     )
 }
