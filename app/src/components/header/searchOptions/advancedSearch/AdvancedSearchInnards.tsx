@@ -10,7 +10,7 @@ import TypeSearch from './components/drawers/TypeSearch'
 import SearchStatusHook from '../../../../hooks/SearchStatusHook'
 import Drawer from '../../../drawers/components/Drawer'
 import { useSelector } from 'react-redux'
-import { getSystemPreference } from '../../../../redux/slices/userSlice'
+import { getSystemPreference, getUserPatreon } from '../../../../redux/slices/userSlice'
 import SkullSearch from './components/skullSearch/SkullSearch'
 import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString'
 import EpSearch from './components/skullSearch/EpSearch'
@@ -32,6 +32,7 @@ interface Props {
 
 export default function AdvancedSearchInnards({ captureQuery, captureQueryArray }: Props) {
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    const isPlayer = useSelector(getUserPatreon) === 'Player'
     
     const { isOnSearch } = SearchStatusHook()
 
@@ -64,8 +65,8 @@ export default function AdvancedSearchInnards({ captureQuery, captureQueryArray 
                 <SearchSelect stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} label='Access' param='access' dictionary={accessSearchDictionary} />
             </div>
 
-            {systemPreference === BONFIRE && <SkullSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
-            {systemPreference === HACKMASTER && <EpSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
+            {(systemPreference === BONFIRE && !isPlayer) && <SkullSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
+            {(systemPreference === HACKMASTER && !isPlayer) && <EpSearch stopPropagationAndCaptureQuery={stopPropagationAndCaptureQuery} />}
 
             <Checkbox label='Anyone Can View?' onClick={stopPropagationAndCaptureQueryFromCheckBox('anyAccess')} />
             <Checkbox label='Has Personal Notes?' onClick={stopPropagationAndCaptureQueryFromCheckBox('personalNotes')} />

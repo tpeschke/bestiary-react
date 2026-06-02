@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 export default function AccountInfoIcon() {
     const systemPreference = useSelector(getSystemPreference)
     const accessLevel = useSelector(getUserPatreon)
+    
     const dispatch = useDispatch()
 
     const setSystemPreference = (preference: 0 | 1 | 2) => {

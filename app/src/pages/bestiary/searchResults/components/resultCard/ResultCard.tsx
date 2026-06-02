@@ -54,9 +54,9 @@ export default function ResultCard({ searchResult }: Props) {
                         <HTMLDisplay html={intro} />
                     </div>
                     <div className='misc-info-shell'>
-                        <Pair title={confrontationOrSocial} info={socialEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
-                        <Pair title='Combat' info={combatEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
-                        <Pair title='Skill' info={skillEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />
+                        {socialEPSkull && <Pair title={confrontationOrSocial} info={socialEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />}
+                        {combatEPSkull && <Pair title='Combat' info={combatEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />}
+                        {skillEPSkull && <Pair title='Skill' info={skillEPSkull} format={{ position: 'opposite' }} icon={skullIconFormat} />}
                         {size && <Pair title='Size' info={size} format={{ position: 'opposite' }} />}
                         <Pair title='Rarity' info={rarity.rarityName} format={{ position: 'opposite' }} />
                     </div>
@@ -66,17 +66,21 @@ export default function ResultCard({ searchResult }: Props) {
     )
 }
 
-function formatSkullRating(min: number, max: number): string {
-    if (min === max) {
+function formatSkullRating(min: number | undefined, max: number | undefined): string {
+    if (min && max && min === max) {
         return `${getSkullNumber(min)}`
+    } else if (!min || !max) {
+        return ''
     } else {
         return `${getSkullNumber(min)} - ${getSkullNumber(max)}`
     }
 }
 
-function formatEPs(min: number, max: number): string {
-    if (min === max) {
+function formatEPs(min: number | undefined, max: number | undefined): string {
+    if (min && max && min === max) {
         return `${min} EPs`
+    } else if (!min || !max) {
+        return ''
     } else {
         return `${min} - ${max} EPs`
     }

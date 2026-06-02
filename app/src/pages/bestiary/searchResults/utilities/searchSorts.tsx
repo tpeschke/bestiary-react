@@ -40,15 +40,15 @@ function sortByRarity(sortingDirection: SortingDirection): ResultSortingFunction
 function sortByNumber(sortingMethod: SortingOptions, sortingDirection: SortingDirection): ResultSortingFunction {
     return (a: SearchResult, b: SearchResult): number => {
         if (sortingDirection === 'dsc') {
-            if (a[sortingMethod] < b[sortingMethod]) {
+            if (a[sortingMethod] && b[sortingMethod] && a[sortingMethod] < b[sortingMethod]) {
                 return -1;
-            } else if (a[sortingMethod] > b[sortingMethod]) {
+            } else if (a[sortingMethod] && b[sortingMethod] && a[sortingMethod] > b[sortingMethod]) {
                 return 1;
             }
         } else {
-            if (a[sortingMethod] < b[sortingMethod]) {
+            if (a[sortingMethod] && b[sortingMethod] && a[sortingMethod] < b[sortingMethod]) {
                 return 1;
-            } else if (a[sortingMethod] > b[sortingMethod]) {
+            } else if (a[sortingMethod] && b[sortingMethod] && a[sortingMethod] > b[sortingMethod]) {
                 return -1;
             }
         }
