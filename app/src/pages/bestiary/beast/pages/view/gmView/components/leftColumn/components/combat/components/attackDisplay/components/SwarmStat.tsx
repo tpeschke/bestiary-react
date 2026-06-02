@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function SwarmStat({ swarmStat }: Props) {
-    const { name, damage } = swarmStat
+    const { system, name, damage } = swarmStat
 
     return (
         <div className='attack-stats-shell'>
@@ -16,11 +16,11 @@ export default function SwarmStat({ swarmStat }: Props) {
                 <div className='swarm-stats'>
                     <div>
                         <p>Atk</p>
-                        <p>+1 Pos</p>
+                        <p>{system === 'Bonfire' ? '+1 Pos' : '+2'}</p>
                     </div>
                     <div>
                         <p>Def</p>
-                        <p>-1 Pos</p>
+                        <p>{system === 'Bonfire' ? '-1 Pos' : '+1'}</p>
                     </div>
                     <div data-tooltip-id="my-tooltip" data-tooltip-content="On an attack, this damage is dealt, regardless of whether the attack hits or not.">
                         <p>Auto Damage</p>
