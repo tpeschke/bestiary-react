@@ -1,7 +1,42 @@
 import { SystemOption } from "../../../../interfaces/beast/beast"
-import { SkillObject } from "../../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
+import { Skill, SkillObject } from "../../../../interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import { Strength } from "../../../../interfaces/calculationInterfaces"
 import getSkillRank from "./getSkillRank"
+
+export function filterDuplicateSkills(skills: SkillObject): SkillObject {
+    if (skills?.preferred && skills?.weakness) {
+        const seen = new Set<string>();
+
+        const slots: Array<{ key: "preferred" | "weakness"; index: 0 | 1 }> = [
+            { key: "preferred", index: 0 },
+            { key: "weakness", index: 1 },
+            { key: "preferred", index: 1 },
+            { key: "weakness", index: 0 },
+        ];
+
+        const result: { preferred: Skill[], weakness: Skill[] } = {
+            preferred: [],
+            weakness: [],
+        };
+
+        for (const { key, index } of slots) {
+            if (skills[key]) {
+                const item = skills[key][index];
+                if (!seen.has(item.skill)) {
+                    seen.add(item.skill);
+                    result[key][index] = item;
+                }
+            }
+        }
+
+        return {
+            ...skills,
+            ...result
+        };
+    }
+
+    return skills
+}
 
 export default function getSkills(role: string, skullIndex: number, everythingElseStrength: Strength = null, skillObject?: SkillObject, system: SystemOption = 'Bonfire'): SkillObject {
     const calcPreferredRankDictionary = [
@@ -15,6 +50,7 @@ export default function getSkills(role: string, skullIndex: number, everythingEl
     ]
 
     const everythingElse = getSkillRank(skullIndex, system)
+
     if (skillObject) {
         return {
             ...skillObject,
