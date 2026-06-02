@@ -93,7 +93,6 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
             const modifier = searchParams.get("modifier")
 
             getBeastFromCache(beastId, roleId, modifier).then(beast => {
-                console.log("From Cache ", beast)
                 if (beast && beast.generalInfo) {
                     const returnedBeast = new GMBeastClass(beast, roleId, modifier, systemPreference)
                     document.title = `${returnedBeast.generalInfo.name} - Bonfire Bestiary`
