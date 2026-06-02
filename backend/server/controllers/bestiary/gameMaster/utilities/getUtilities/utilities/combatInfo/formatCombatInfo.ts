@@ -55,6 +55,7 @@ export default function formatCombatInfo(
         movements: [],
         vitalityInfo: {
             noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
+            isSwarm: false,
             knockback: calculateKnockBack(knockback, size),
             ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
             locationalVitalities: [],

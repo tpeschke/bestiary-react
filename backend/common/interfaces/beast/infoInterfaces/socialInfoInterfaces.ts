@@ -16,6 +16,7 @@ export interface BasicSocialInfo {
         strength: Strength
     },
     isBeast?: boolean,
+    isSwarm: boolean,
     baseConvictionRank: number,
     conflicts: ConflictObject,
 }

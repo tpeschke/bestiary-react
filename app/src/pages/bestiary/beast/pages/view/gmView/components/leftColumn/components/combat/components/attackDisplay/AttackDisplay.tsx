@@ -3,6 +3,7 @@ import SpecialInfo from "../../../specialInfo/specialInfo"
 import AttackStatsDisplay from "./components/AttackStats"
 import ReferenceView from "./components/ReferenceView"
 import SpellReferenceView from "./components/SpellReferenceView"
+import SwarmStatDisplay from "./components/SwarmStat"
 
 interface Props {
     attackInfo: string,
@@ -20,6 +21,8 @@ export default function AttackDisplay({ attackInfo, attacks }: Props) {
                     {attacks.map((attack, index) => {
                         if (attack.infoType === 'weapon') {
                             return <AttackStatsDisplay key={index} attackStat={attack} />
+                        } else if (attack.infoType === 'swarm') {
+                            return <SwarmStatDisplay key={index} swarmStat={attack} />
                         } else if (attack.infoType === 'reference') {
                             return <ReferenceView key={index} referenceInfo={attack} />
                         } else if (attack.infoType === 'spell') {

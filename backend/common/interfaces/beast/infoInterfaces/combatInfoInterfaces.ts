@@ -77,10 +77,10 @@ export interface DamageInfo {
 
 export type SizeCategories = 'S' | 'M' | 'L'
 
-export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp'
+export type DamageType = 'P' | 'C' | 'S' | 'Ps' | 'Pg' | 'Pp' | 'Swarm'
 export type IsSpecial = 'yes' | 'no' | 'kinda'
 
-export type AttackStats = AttackReference | AllSpecificWeaponInfo | SpellReference
+export type AttackStats = AttackReference | SwarmReference | AllSpecificWeaponInfo | SpellReference
 
 export interface AttackReference {
     system: SystemOption,
@@ -101,6 +101,19 @@ export interface SpellReference {
     overAllIndex: number,
     roleid?: string,
     spellInfo?: Spell
+}
+
+export interface SwarmReference {
+    system: SystemOption,
+    infoType: 'swarm',
+    id?: number,
+    oldID: number,
+    beastId: number,
+    roleid?: string,
+    name: string,
+    swarmbonus: boolean,
+    damage: string,
+    overAllIndex: number,
 }
 
 export type AllSpecificWeaponInfo = BonfireWeaponInfo | HackMasterWeaponInfo
@@ -303,7 +316,8 @@ export interface VitalityInfo {
     noKnockback: boolean,
     rollUnderTrauma: number,
     isIncorporeal: boolean,
-    weaponBreakageVitality: boolean
+    weaponBreakageVitality: boolean,
+    isSwarm: boolean
 }
 
 export interface BonfireVitalityInfo extends VitalityInfo {

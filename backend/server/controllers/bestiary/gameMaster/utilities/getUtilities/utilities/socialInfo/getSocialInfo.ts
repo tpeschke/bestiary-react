@@ -35,6 +35,7 @@ export default function formatSocialInfo(
         socialEpValue: calculateSecondaryRoleEffect(baseSocialEpValue, socialSecondary),
         socialRawEpValue: baseSocialEpValue,
         epValueIndex,
+        isSwarm: false,
         capacity:
         {
             threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacityStrength),

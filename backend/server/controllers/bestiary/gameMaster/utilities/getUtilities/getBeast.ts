@@ -51,9 +51,9 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
     const { id, patreon, canplayerview, name, plural, intro, habitat, ecology: appearance, senses, diet, meta, size, rarity, thumbnail,
         imagesource, rolenameorder, defaultrole, sp_atk, sp_atk_hm, sp_def, sp_def_hm, tactics, combatpoints, role: combatrole, secondaryrole: combatsecondary,
         notrauma, knockback, singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, skillrole,
-        skillsecondary, skillpoints, atk_skill, atk_skill_hm, def_skill, def_skill_hm, socialrole, socialsecondary, socialpoints, 
-        atk_conf, atk_conf_hm,  def_conf, def_conf_hm, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls, 
-        mental: stressThresholdStrength, capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue, 
+        skillsecondary, skillpoints, atk_skill, atk_skill_hm, def_skill, def_skill_hm, socialrole, socialsecondary, socialpoints,
+        atk_conf, atk_conf_hm, def_conf, def_conf_hm, lootnotes, userid: beastOwnerId, combatskulls, socialskulls, skillskulls,
+        mental: stressThresholdStrength, capacity: capacityStrength, everythingelsestrength: everythingElseStrength, socialepvalue,
         combatepvalue, skillepvalue
     } = unsortedBeastInfo
 
@@ -69,7 +69,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         },
         generalInfo: {
             name, plural, intro, habitat, senses, diet, meta, size,
-            appearance: buildSystemSpecificAppearance(appearance), 
+            appearance: buildSystemSpecificAppearance(appearance),
             rarity: getRarity(rarity, 'Bonfire'),
             scenarios: [],
             folklores: [],
@@ -129,7 +129,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
             socialepvalue, capacityStrength
         ),
         combatInfo: formatCombatInfo(
-            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_atk_hm, 
+            tactics, combatrole, combatsecondary, combatskulls, combatepvalue, combatpoints, sp_atk, sp_atk_hm,
             sp_def, sp_def_hm, notrauma, knockback,
             singledievitality, noknockback, rollundertrauma, isincorporeal, weaponbreakagevitality, size
         ),
@@ -173,7 +173,14 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
 
         getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles),
 
-        getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }),
+        getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => {
+            const isSwarm = !!attackAndDefenses.attacks.find(attackInfo => {
+                return attackInfo.infoType === 'swarm'
+            })
+            beast.combatInfo.vitalityInfo.isSwarm = isSwarm
+            beast.socialInfo.isSwarm = isSwarm
+            beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }
+        }),
 
         getMovement(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole).then((movements: Movement[]) => beast.combatInfo.movements = movements),
         getStrategiesNLimits(beast.id).then((strategiesNLimits: StrategyNLimits[]) => beast.combatInfo.strategiesNLimits = strategiesNLimits),

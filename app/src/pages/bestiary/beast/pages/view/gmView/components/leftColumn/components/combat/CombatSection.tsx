@@ -33,7 +33,7 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
 
     const {
         vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
-        isIncorporeal, defenseNFleeDice
+        isIncorporeal, defenseNFleeDice, isSwarm
     } = vitalityInfo
 
     const { defense, flee } = defenseNFleeDice
@@ -51,7 +51,7 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
         size
     }
 
-    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
+    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal, isSwarm)
 
     const defenseTotal = getTotal(vitality, defense, Math.floor)
     const fleeTotal = getTotal(vitality, flee, Math.ceil)
@@ -93,7 +93,7 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
 
     const {
         vitality, rollUnderTrauma, noTrauma, trauma, knockback, noKnockback, locationalVitalities, weaponBreakageVitality,
-        isIncorporeal, defenseNFleeDice
+        isIncorporeal, isSwarm
     } = vitalityInfo
 
     const traumaInfo = {
@@ -109,7 +109,7 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
         size
     }
 
-    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal)
+    const vitalityIconSetting: (PairIconSettings | null) = getVitalityIconSetting(weaponBreakageVitality, isIncorporeal, isSwarm)
 
     return (
         <>
@@ -127,7 +127,7 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
     )
 }
 
-function getVitalityIconSetting(weaponBreakageVitality: boolean, isIncorporeal: boolean): PairIconSettings | null {
+function getVitalityIconSetting(weaponBreakageVitality: boolean, isIncorporeal: boolean, isSwarm: boolean): PairIconSettings | null {
     if (weaponBreakageVitality) {
         return {
             iconName: 'crack',
@@ -138,6 +138,11 @@ function getVitalityIconSetting(weaponBreakageVitality: boolean, isIncorporeal: 
         return {
             iconName: 'ghost',
             tooltip: 'This creature takes no damage from any source except those specifically called out'
+        }
+    } else if (isSwarm) {
+        return {
+            iconName: 'locust',
+            tooltip: "This creature is a swarm; It doesn't increase its Damage Die.\nInstead it receives a cumulative -1 Atk & +1 Def Pos. At H1, the swarm dissolves."
         }
     }
     return null

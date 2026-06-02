@@ -7,6 +7,10 @@ export default function getDamage(isSpecial: IsSpecial, isRanged: boolean, damag
 
     const roleIndexModifier = getRoleIndexModifier(isRanged, role)
 
+    if (damageType === 'Swarm') {
+        return getSwarmDamage(roleIndexModifier, skullIndex)
+    }
+
     if (system === 'HackMaster') {
         return getHackMasterDamage(roleIndexModifier, skullIndex) + (isSpecial === 'kinda' ? '*' : '')
     }
@@ -104,6 +108,14 @@ function getSlashingDamage(roleIndexModifier: number, skullIndex: number) {
     ]
 
     return getItemBySkullIndex(skullIndex, roleIndexModifier, slashingDictionary)
+}
+
+function getSwarmDamage(roleIndexModifier: number, skullIndex: number) {
+    const swarmDictionary = [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'
+    ]
+
+    return getItemBySkullIndex(skullIndex, roleIndexModifier, swarmDictionary)
 }
 
 function getHackMasterDamage(roleIndexModifier: number, skullIndex: number) {

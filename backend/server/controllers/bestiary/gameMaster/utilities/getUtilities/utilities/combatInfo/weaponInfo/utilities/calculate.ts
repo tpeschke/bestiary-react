@@ -1,8 +1,9 @@
-import { RawCombatStat, AttackStats, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { RawCombatStat, AttackStats, BonfireDefenseInfo, AttackReference, SpellReference, BonfireWeaponInfo, SwarmReference } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size, SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
 import { buildSystemSpecificInfo } from "../../../../../formatUtilities/getSystemSpecificTerminologies"
+import getDamage from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/attackUtilities/getDamage"
 
 interface CalculateCombatStatsReturn {
     attacks: AttackStats[],
@@ -44,7 +45,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 overAllIndex: index,
                 roleid: roleid ?? attackrole,
                 tactic, reference, situation
-            }
+            } as AttackReference
         } else if (spellid) {
             return {
                 id: attackid,
@@ -52,7 +53,20 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 overAllIndex: index,
                 roleid: roleid ?? attackrole,
                 spellid, situation,
-            }
+            } as SpellReference
+        } else if (chosenName.substring(0, 11) === "Swarm Bonus") {
+            return {
+                system: "Bonfire",
+                infoType: 'swarm',
+                id: attackid,
+                oldID: id ?? oldID,
+                beastId: beastid,
+                roleid,
+                name: chosenName,
+                swarmbonus,
+                damage: getDamage('no', false, 'Swarm', roleToUse, skullIndex, 'Bonfire'),
+                overAllIndex: index
+            } as SwarmReference
         } else {
             return {
                 ...calculateBonfireAttackInfo(
@@ -67,7 +81,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 type: 'Bonfire',
                 infoType: 'weapon',
                 scalingInfo: { swarmbonus, name: chosenName, weapon, weaponType, damageType, addsizemod }
-            }
+            } as BonfireWeaponInfo
         }
     })
 }

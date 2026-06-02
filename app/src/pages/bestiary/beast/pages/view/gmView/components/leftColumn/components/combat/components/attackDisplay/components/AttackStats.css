@@ -22,12 +22,33 @@
     justify-content: space-evenly;
 }
 
+.swarm-stats {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.swarm-stats>div {
+    display: flex;
+    justify-content: center;
+    min-width: 33%
+}
+
+.swarm-stats>div>p {
+    min-width: 33%;
+    padding: 0 5px;
+}
+
+.swarm-stats>div>p:first-child {
+    text-align: right;
+}
+
 .attack-stats-shell>div>div {
     width: 66%;
 }
 
 .attack-stats-shell>div>div:last-child {
-    width: 33%;
+    width: 100%;
 }
 
 .attack-stats-left>div>div {

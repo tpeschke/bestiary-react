@@ -120,6 +120,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
             epValueIndex: combatEpValueIndex,
             vitalityInfo: {
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
+                isSwarm: false,
                 knockback: calculateKnockBack(knockback, size),
                 ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
                 locationalVitalities: [],

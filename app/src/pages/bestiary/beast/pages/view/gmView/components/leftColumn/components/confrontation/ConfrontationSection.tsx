@@ -9,20 +9,29 @@ interface Props {
 }
 
 export default function ConfrontationSection({ socialInfo }: Props) {
-    const { type, socialRole, socialSkulls, socialEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, capacity, isBeast } = socialInfo
+    const { type, socialRole, socialSkulls, socialEpValue, conflicts, attackInfo, defenseInfo, socialSecondary, capacity, isBeast, isSwarm } = socialInfo
 
     function getBeastBonus() {
         if (type === 'Bonfire' && isBeast) {
-            return "<p>When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotional State gain is halved (rounded up).</p>"
+            return "<p><strong>Bestial</strong> When this creature gains a negative Emotional State, it doubles its current Rank in that Emotional State and doubles the Rank it's gaining. Any positive Emotional State gain is halved (rounded up).</p>"
         }
         return null
     }
 
     const beastBonus = getBeastBonus()
 
+    function getSwarmBonus() {
+        if (type === 'Bonfire' && isSwarm) {
+            return '<p><strong>Swarm</strong> This creature never benefits from the Persuading a Group bonus.</p>'
+        }
+        return null
+    }
+
+    const swarmBonus = getSwarmBonus()
+
     // if HM info is null, the code uses the Bonfire info to generate it
     // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
-    const showDefenseSection = (!!defenseInfo && defenseInfo !== '<p></p>') || beastBonus
+    const showDefenseSection = (!!defenseInfo && defenseInfo !== '<p></p>') || beastBonus || swarmBonus
     const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     if (socialRole === 'No Personality') {
@@ -39,7 +48,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo + (beastBonus ?? '')} />
+                    <SpecialInfo info={defenseInfo + (beastBonus ?? '') + (swarmBonus ?? '')} />
                 </>
             }
             {showAttackSection &&
