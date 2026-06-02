@@ -20,7 +20,7 @@ export function filterDuplicateSkills(skills: SkillObject): SkillObject {
         };
 
         for (const { key, index } of slots) {
-            if (skills[key]) {
+            if (skills[key] && skills[key][index]) {
                 const item = skills[key][index];
                 if (!seen.has(item.skill)) {
                     seen.add(item.skill);
