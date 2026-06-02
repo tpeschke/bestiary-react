@@ -483,13 +483,17 @@ export default class GMBeastClass {
         return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.specialModifier, this.spells)
     }
 
-    get rawCombatInfo(): NonspecificCombatInfo {
+    get rawCombatInfoByRole(): NonspecificCombatInfo {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
         const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
 
         return this.entryCombatInfo.rawCombatInfoByRole(this.generalInfo.size, roleID, selectedRole, this.spells)
     }
 
+    get rawCombatInfo(): NonspecificCombatInfo {
+        return this.entryCombatInfo.rawCombatInfo
+    }
+  
     get linkedInfo(): LinkedInfo {
         return this.entryLinkedInfo
     }

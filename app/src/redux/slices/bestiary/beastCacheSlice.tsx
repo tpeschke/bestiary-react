@@ -1,7 +1,6 @@
-import GMBeastClass from '../../../pages/bestiary/beast/models/gmBeastClass/GMBeastClass'
-
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { BeastInfo } from '../../../pages/bestiary/beast/interfaces/viewInterfaces'
 
 interface sliceState {
   cache: BeastCache
@@ -13,7 +12,7 @@ interface BeastCache {
 
 interface BeastCacheObject {
     id: number,
-    beastInfo: Promise<GMBeastClass>
+    beastInfo: Promise<BeastInfo>
   }
 
 const initialState: sliceState = {

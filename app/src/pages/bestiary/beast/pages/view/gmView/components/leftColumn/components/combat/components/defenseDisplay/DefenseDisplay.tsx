@@ -10,7 +10,7 @@ interface Props {
 
 export default function DefenseDisplay({ defenseInfo, defenses }: Props) {
     const hasDefenses = defenses.length > 0
-    const hasSpecialDefenses = !!defenseInfo
+    const hasSpecialDefenses = !!defenseInfo && defenseInfo !== '<p></p>'
 
     const showSection = hasSpecialDefenses || hasDefenses
 
