@@ -51,7 +51,7 @@ function bonfireAttackDisplay(attackStat: BonfireWeaponInfo) {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className='attack-stats-right'>
                     <p>Damage</p>
                     <p>{damage}</p>
                 </div>
@@ -97,7 +97,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className='attack-stats-right'>
                     <p>Damage</p>
                     <p>{damage} {damage !== '*' && <em data-tooltip-id="my-tooltip" data-tooltip-content={'Shield Damage'}>(<Icon iconName='shield-exclaim' color='dark-gray' /> {shieldDamage})</em>}</p>
                 </div>

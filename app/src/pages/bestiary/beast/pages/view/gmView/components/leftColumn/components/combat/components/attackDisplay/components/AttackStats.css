@@ -43,18 +43,25 @@
     text-align: right;
 }
 
-.attack-stats-shell>div>div {
+.swarm-stat-shell>div>div {
     width: 66%;
 }
 
-.attack-stats-shell>div>div:last-child {
+.swarm-stat-shell>div>div:last-child {
     width: 100%;
+}
+
+.attack-stats-left {
+    width: 66%;
+}
+
+.attack-stats-right {
+    width: 33%;
 }
 
 .attack-stats-left>div>div {
     display: flex;
     justify-content: space-evenly;
-    width: 33%;
 }
 
 .attack-stats-left>div>div p {
