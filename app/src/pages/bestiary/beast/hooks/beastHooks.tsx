@@ -21,7 +21,6 @@ import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from ".
 import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
 import getUpdateGeneralInfoFunctions, { UpdateGeneralInfoFunctionsObject } from "./updateUtilities/updateGeneralInfo";
 import { EditEncounter } from "@bestiary/common/interfaces/encounterInterfaces";
-import { Beast } from "@bestiary/common/interfaces/beast/beast";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -75,12 +74,12 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     const beastCache = useSelector((state: any) => state.beastCache.cache)
 
-    const updateBeastInfo = (modifiedBeastInfo: GMBeastClass) => {
+    const updateBeastInfo = (modifiedBeastInfo: BeastInfo) => {
         dispatch(cacheMonster({
             id: modifiedBeastInfo.id,
-            beastInfo: new Promise((resolve) => { resolve(modifiedBeastInfo.beastInfo)})
+            beastInfo: new Promise((resolve) => { resolve(modifiedBeastInfo)})
         }))
-        setBeast(new GMBeastClass(modifiedBeastInfo.beastInfo, null, null, systemPreference))
+        setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
     }
 
     useEffect(() => {

@@ -54,7 +54,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 roleid: roleid ?? attackrole,
                 spellid, situation,
             } as SpellReference
-        } else if (chosenName.substring(0, 11) === "Swarm Bonus") {
+        } else if (chosenName && chosenName.substring(0, 11) === "Swarm Bonus") {
             return {
                 system: "Bonfire",
                 infoType: 'swarm',

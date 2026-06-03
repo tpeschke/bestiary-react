@@ -7,7 +7,7 @@ export const getMonsterAttacks = `select
 	index
 from bbcombatstats c
 left join bbroles r on r.id = c.roleid
-right join bbattacks a on a.oldid = c.id
+full join bbattacks a on a.oldid = c.id
 where c.beastid = $1 or a.beastid = $1
 order by index`
 
