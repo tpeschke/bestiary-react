@@ -31,7 +31,7 @@ export default function AccountInfoIcon() {
                     </Link>
                 </li>
                 <p>System Preference</p>
-                <li onClick={_ => setSystemPreference(1)}>{systemPreference === 1 && <Icon iconName='check' margin='right' />} 5.5e</li>
+                {/* <li onClick={_ => setSystemPreference(1)}>{systemPreference === 1 && <Icon iconName='check' margin='right' />} 5.5e</li> */}
                 <li onClick={_ => setSystemPreference(2)}>{systemPreference === 2 && <Icon iconName='check' margin='right' />} HackMaster</li>
                 <li onClick={_ => setSystemPreference(0)}>{systemPreference === 0 && <Icon iconName='check' margin='right' />} Bonfire</li>
                 <li className='top-border'>
