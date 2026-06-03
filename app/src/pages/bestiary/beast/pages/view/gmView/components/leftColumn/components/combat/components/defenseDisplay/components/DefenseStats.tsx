@@ -55,13 +55,13 @@ function BonfireDefenseStat(defenseStats: BonfireDefenseInfo, nameToShow: string
 }
 
 function HackMasterDefenseStat(defenseStats: HackMasterDefenseInfo, nameToShow: string, tooltip: string, showDefenseNameBanner: boolean) {
-    const { shield, defense, shieldCover, dr, info, tdr, parryDR } = defenseStats
-
+    const { shield, defense, shieldCover, dr, info, tdr, parryDR, eua } = defenseStats
+    
     const hasShield = !!shield
-
-    const shieldDR = hasShield ? `(${parryDR})` : ''
-
+    const shieldDR = hasShield ? `(Shield: ${parryDR})` : ''
     const shieldTooltip = hasShield ? 'd20p' : 'd20p-4'
+
+    const euaInfo = eua ? '(Slashing: 1/2 Dam; Piercing: 0 Dam)' : ''
 
     return (
         <div className={`defense-stats-shell ${nameToShow === '' && showDefenseNameBanner ? 'top-border' : ''}`}>
@@ -78,7 +78,7 @@ function HackMasterDefenseStat(defenseStats: HackMasterDefenseInfo, nameToShow: 
                 </div>}
                 <div>
                     <p>DR</p>
-                    <p>{dr} {shieldDR} {tdr && <Icon iconName='wall' color='black' tooltip={tooltip} />}</p>
+                    <p>{dr} {shieldDR} {euaInfo} {tdr && <Icon iconName='wall' color='black' tooltip={tooltip} />}</p>
                 </div>
             </div>
         </div>
