@@ -1,5 +1,6 @@
 import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import query from "../../../db/database"
+import { BONFIRE } from "@bestiary/common/utilities/get/getSystemString"
 
 const addSkullSQL = `insert into obBase (name, skull, prompt, difficulty, time, threshold, failure, success, notes, stringid)
 values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`
@@ -13,8 +14,8 @@ export default async function updateBasicObstacleInfo(obstacleId: number, obstac
     const { name, skull, prompt, difficulty, time, threshold, failure, success, notes, stringid } = obstacle
 
     if (obstacleId === 0) {
-        return query(addSkullSQL, [name, skull, prompt, difficulty, time, threshold, failure, success, notes, stringid])
+        return query(addSkullSQL, [name, skull, prompt, difficulty[BONFIRE], time, threshold, failure[BONFIRE], success[BONFIRE], notes, stringid])
     } else {
-        return query(updateSkullSQL, [obstacleId, name, skull, prompt, difficulty, time, threshold, failure, success, notes, stringid])
+        return query(updateSkullSQL, [obstacleId, name, skull, prompt, difficulty[BONFIRE], time, threshold, failure[BONFIRE], success[BONFIRE], notes, stringid])
     }
 }

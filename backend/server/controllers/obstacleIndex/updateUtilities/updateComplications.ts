@@ -1,5 +1,6 @@
 import { Complication } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import query from "../../../db/database";
+import { BONFIRE } from "@bestiary/common/utilities/get/getSystemString";
 
 const addComplicationsSQL = `insert into obComplications (stringId, name, index, body)
 values ($1, $2, $3, $4)`
@@ -12,9 +13,9 @@ export default async function updateComplications(stringId: string, complication
     if (complications) {
         return Promise.all(complications.map(({id, body}, index) => {
             if (id === 0) {
-                return query(addComplicationsSQL, [stringId, `${index + 1}`, index, body])
+                return query(addComplicationsSQL, [stringId, `${index + 1}`, index, body[BONFIRE]])
             }
-            return query(updateComplicationsSQL, [stringId, id, `${index + 1}`, index, body])
+            return query(updateComplicationsSQL, [stringId, id, `${index + 1}`, index, body[BONFIRE]])
         }))
     }
 

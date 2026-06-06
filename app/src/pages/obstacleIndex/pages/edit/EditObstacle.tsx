@@ -8,6 +8,8 @@ import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import NameHeader from "../../../bestiary/beast/components/UI/nameHeader/nameHeader"
 import SkullSelection from "../../../bestiary/beast/pages/edit/components/editBody/components/SkullSelection"
 import { showPendingAlert } from '../../../../components/alert/alerts'
+import { SystemInfoArray } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
+import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 
 interface Props {
     setLoading?: SetLoadingFunction
@@ -50,7 +52,7 @@ export default function EditObstacle({ setLoading }: Props) {
                     if (index === complication.index) {
                         return {
                             ...complication,
-                            body: value
+                            body: [value, undefined, ''] as SystemInfoArray
                         }
                     }
                     return complication
@@ -191,7 +193,7 @@ export default function EditObstacle({ setLoading }: Props) {
                             </div>
                             <div>
                                 <h2>Difficulty</h2>
-                                <textarea value={obstacle.difficulty} onChange={event => updateObstacleValue('difficulty', event.target.value)} />
+                                <textarea value={obstacle.difficulty[BONFIRE]} onChange={event => updateObstacleValue('difficulty', event.target.value)} />
                             </div>
                             <div>
                                 <h2>Time</h2>
@@ -208,7 +210,7 @@ export default function EditObstacle({ setLoading }: Props) {
                                     return (
                                         <div key={index}>
                                             <p>{index + 1}</p>
-                                            <input onChange={event => updateObstacleComplications(index, event.target.value)} value={body} />
+                                            <input onChange={event => updateObstacleComplications(index, event.target.value)} value={body[BONFIRE]} />
                                         </div>
                                     )
                                 })}
@@ -235,11 +237,11 @@ export default function EditObstacle({ setLoading }: Props) {
                             </div>
                             <div>
                                 <h2>Failure</h2>
-                                <input value={obstacle.failure} onChange={event => updateObstacleValue('failure', event.target.value)} />
+                                <input value={obstacle.failure[BONFIRE]} onChange={event => updateObstacleValue('failure', event.target.value)} />
                             </div>
                             <div>
                                 <h2>Success</h2>
-                                <input value={obstacle.success} onChange={event => updateObstacleValue('success', event.target.value)} />
+                                <input value={obstacle.success[BONFIRE]} onChange={event => updateObstacleValue('success', event.target.value)} />
                             </div>
                             {/* Pair Two Table */}
                             <div>
