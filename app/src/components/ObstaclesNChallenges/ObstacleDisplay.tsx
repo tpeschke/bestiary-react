@@ -12,6 +12,7 @@ import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaste
 import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString';
 import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
 import getBaseSkillRank from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkillRank';
+import Variants from './components/Variants';
 
 interface Props {
     obstacle: Obstacle | null,
@@ -186,24 +187,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </tr>
                     )}
 
-                    {(!hideVariants && skullVariants.length > 0) && (
-                        <>
-                            <tr className='standard-row'>
-                                <td colSpan={2}><strong>Variants</strong></td>
-                            </tr>
-                            {skullVariants.map(({ skullValue, body }: SkullVariant, index) => {
-                                return (
-                                    <tr key={index} className='standard-row complication-row'>
-                                        <td>{skullValue} <Icon iconName='skull' /></td>
-                                        <td>{body}</td>
-                                    </tr>
-                                )
-                            })}
-                            <tr>
-                                <td colSpan={2} className='italic'>These are suggestions; variations within variations exist that might further modify the Skull value of an Obstacle.</td>
-                            </tr>
-                        </>
-                    )}
+                    <Variants hideVariants={hideVariants} skullVariants={skullVariants} systemPreference={systemPreference} />
                 </tbody>
             </table>
             {!hideCustomizations && <button onClick={copyQuickLink}><Icon iconName='link' /></button>}
