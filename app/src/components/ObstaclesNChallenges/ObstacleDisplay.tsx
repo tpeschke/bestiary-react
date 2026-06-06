@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { getSystemPreference } from '../../redux/slices/userSlice';
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString';
+import getEPIndex from "@bestiary/common/utilities/scalingAndBonus/getEPIndex"
+import getBaseSkillRank from '@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkillRank';
 
 interface Props {
     obstacle: Obstacle | null,
@@ -32,6 +34,8 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
     ep = modifiedSkull || modifiedSkull === 0 ? getBaseEPValue(modifiedSkull) : ep
+
+    const epValueIndex = getEPIndex(ep)
 
     const updateSkull = (key: string, value: any) => {
         const newObstacleToShow = {
@@ -85,6 +89,15 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
         return [...Array(skulls).keys()].map((_, index: number, array: number[]) => <Icon key={index} iconName="skull" iconSize='h2' color={array.length >= 7 ? 'red' : 'white'} />)
     }
 
+    function formatDifficulty() {
+        if (difficulty !== 'Universal' && systemPreference === BONFIRE) {
+            return getDifficultyBySkullValue(skull) + '\n'
+        } else if  (difficulty !== 'Universal' && systemPreference === HACKMASTER) {
+            return getBaseSkillRank(epValueIndex, 'HackMaster') + '%'
+        }
+        return  ''
+    }
+
     return (
         <div className="obstacle-shell" onClick={event => event.stopPropagation()}>
             <table>
@@ -113,7 +126,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                             <strong>Difficulty</strong>
                         </td>
                         <td>
-                            {difficulty !== 'Universal' ? getDifficultyBySkullValue(skull) + '\n' : ''}
+                            {formatDifficulty()}
                             {difficulty}
                         </td>
                     </tr>
