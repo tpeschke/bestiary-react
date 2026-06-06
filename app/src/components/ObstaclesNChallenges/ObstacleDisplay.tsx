@@ -29,14 +29,16 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
-    const { id, name, prompt, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
+    const { id, name, difficulty, prompt, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
 
-    let { skull, ep } = obstacleToShow
+    let { skull, ep,  } = obstacleToShow
 
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
     ep = modifiedSkull || modifiedSkull === 0 ? getBaseEPValue(modifiedSkull) : ep
 
     const epValueIndex = getEPIndex(ep)
+
+    const difficultyToShow = difficulty[systemPreference]
 
     const promptTooltip = systemPreference === BONFIRE ?
         "When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position.\nIf they do something that doesn't, -2 Position"
@@ -95,10 +97,10 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
     }
 
     function formatDifficulty() {
-        if (difficulty !== 'Universal' && systemPreference === BONFIRE) {
+        if (difficultyToShow !== 'Universal' && systemPreference === BONFIRE) {
             return getDifficultyBySkullValue(skull) + '\n'
-        } else if (difficulty !== 'Universal' && systemPreference === HACKMASTER) {
-            return getBaseSkillRank(epValueIndex, 'HackMaster') + '%'
+        } else if (difficultyToShow !== 'Universal' && systemPreference === HACKMASTER) {
+            return getBaseSkillRank(epValueIndex, 'HackMaster') + '%\n'
         }
         return ''
     }
@@ -132,7 +134,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </td>
                         <td>
                             {formatDifficulty()}
-                            {difficulty}
+                            {difficultyToShow}
                         </td>
                     </tr>
                     {time && <tr className='standard-row'>

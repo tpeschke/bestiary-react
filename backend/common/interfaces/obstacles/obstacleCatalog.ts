@@ -55,7 +55,7 @@ export interface Obstacle {
     skull: number,
     ep: number,
     prompt: string | null,
-    difficulty: string,
+    difficulty: SystemInfoArray,
     notes: string,
     complicationsingle: SystemInfoArray,
     information: string,

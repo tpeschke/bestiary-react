@@ -23,15 +23,19 @@ export function buildSystemSpecificAppearance(appearance: string | null | undefi
 }
 
 const hackMasterAppearanceTextReplacements: Replacement[] = [
-    [/ \-([0-9X]+)/gi, (_, bonus) => ` -${+bonus * 5}%`],
-    [/ \+([0-9X]+)/gi, (_, bonus) => ` +${+bonus * 5}%`],
+    [/\+1 (Depression|Disgust|Fury|Joy|Surprise|Terror)/gi, 'Gain $1'],
+    [/\-([0-9X]+)/gi, (_, bonus) => `-${+bonus * 5}%`],
+    [/\+([0-9X]+)/gi, (_, bonus) => `+${+bonus * 5}%`],
     [/ ([0-9X]+)L/g, (_, carry) => ` ${+carry * 3}lb`],
     [/ Weirding/g, "Casting"],
     [/\bStress\b/gi, 'Damage'],
     [/\bd([0-9X]+)!/gi, 'd$1p'],
+    [/\b([0-9X]+)d([0-9X]+)!/gi, '$1d$2p'],
     [/\+([0-9])\s+Wear\b/gi, "-$1 Penalty"],
     [/\-2 Atk & Def Position\b/gi, '-4 Atk & Def'],
     [/\-1 Position to next Check\b/gi, '-10% to next Check'],
+    [/\-1 Position on next Check\b/gi, '-10% to next Check'],
+    [/Conf\b/gi, 'Social'],
 ]
 
 const hackMasterInfoTextReplacements: Replacement[] = [

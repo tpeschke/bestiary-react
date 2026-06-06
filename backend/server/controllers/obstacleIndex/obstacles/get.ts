@@ -30,32 +30,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         let [rawObstacle] = await query(getObstacles, obstacleId) as RawObstacle[]
 
         if (rawObstacle) {
-            const {id, beastid, obstacleid, name, skull, prompt, difficulty, notes, complicationsingle, failure, information, success, threshold, time, type, stringid} = rawObstacle
-
-            let obstacle: Obstacle = {
-                id, beastid, obstacleid, name, skull, prompt, difficulty, notes, information, threshold, time, type, stringid,
-                ep: getBaseEPValue(skull),
-                failure: buildSystemSpecificAppearance(failure),
-                success: buildSystemSpecificAppearance(success),
-                complicationsingle: buildSystemSpecificAppearance(complicationsingle),
-            }
-
-            await Promise.all([
-                query(getObstacleComplications, obstacle.stringid).then((returnedComplications: RawComplication[]) => {
-                    obstacle.complications = returnedComplications.map(complication => {
-                        return {
-                            ...complication,
-                            body: buildSystemSpecificAppearance(complication.body)
-                        }
-                    })
-                }),
-                query(getSkullVariants, obstacle.stringid).then((returnedSkullVariants: any) => obstacle.skullVariants = returnedSkullVariants.map((variant: any) => ({
-                    ...variant,
-                    skullValue: variant.skullvalue
-                }))),
-                query(getObstaclePairs, [obstacle.stringid, 'pairone']).then((returnedPairs: any) => obstacle.pairsOne = returnedPairs),
-                query(getObstaclePairs, [obstacle.stringid, 'pairotwo']).then((returnedPairs: any) => obstacle.pairsTwo = returnedPairs)
-            ])
+            const obstacle = await formatRawObstacle(rawObstacle)
 
             checkForContentTypeBeforeSending(response, obstacle)
         } else {
@@ -69,7 +44,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             skull: 0,
             ep: 10,
             prompt: null,
-            difficulty: '',
+            difficulty: ['', undefined, ''],
             notes: '',
             complicationsingle: ['', undefined, ''],
             failure: ['', undefined, ''],
@@ -83,4 +58,36 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
 
         checkForContentTypeBeforeSending(response, newObstacle)
     }
+}
+
+export async function formatRawObstacle(rawObstacle: RawObstacle): Promise<Obstacle> {
+    const { id, beastid, obstacleid, name, skull, prompt, difficulty, notes, complicationsingle, failure, information, success, threshold, time, type, stringid } = rawObstacle
+
+    let obstacle: Obstacle = {
+        id, beastid, obstacleid, name, skull, prompt, notes, information, threshold, time, type, stringid,
+        difficulty: buildSystemSpecificAppearance(difficulty),
+        ep: getBaseEPValue(skull),
+        failure: buildSystemSpecificAppearance(failure),
+        success: buildSystemSpecificAppearance(success),
+        complicationsingle: buildSystemSpecificAppearance(complicationsingle),
+    }
+
+    await Promise.all([
+        query(getObstacleComplications, obstacle.stringid).then((returnedComplications: RawComplication[]) => {
+            obstacle.complications = returnedComplications.map(complication => {
+                return {
+                    ...complication,
+                    body: buildSystemSpecificAppearance(complication.body)
+                }
+            })
+        }),
+        query(getSkullVariants, obstacle.stringid).then((returnedSkullVariants: any) => obstacle.skullVariants = returnedSkullVariants.map((variant: any) => ({
+            ...variant,
+            skullValue: variant.skullvalue
+        }))),
+        query(getObstaclePairs, [obstacle.stringid, 'pairone']).then((returnedPairs: any) => obstacle.pairsOne = returnedPairs),
+        query(getObstaclePairs, [obstacle.stringid, 'pairotwo']).then((returnedPairs: any) => obstacle.pairsTwo = returnedPairs)
+    ])
+
+    return obstacle
 }
