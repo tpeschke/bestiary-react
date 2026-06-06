@@ -27,6 +27,11 @@ const hackMasterAppearanceTextReplacements: Replacement[] = [
     [/ \+([0-9X]+)/gi, (_, bonus) => ` +${+bonus * 5}%`],
     [/ ([0-9X]+)L/g, (_, carry) => ` ${+carry * 3}lb`],
     [/ Weirding/g, "Casting"],
+    [/\bStress\b/gi, 'Damage'],
+    [/\bd([0-9X]+)!/gi, 'd$1p'],
+    [/\+([0-9])\s+Wear\b/gi, "-$1 Penalty"],
+    [/\-2 Atk & Def Position\b/gi, '-4 Atk & Def'],
+    [/\-1 Position to next Check\b/gi, '-10% to next Check'],
 ]
 
 const hackMasterInfoTextReplacements: Replacement[] = [
@@ -36,7 +41,7 @@ const hackMasterInfoTextReplacements: Replacement[] = [
     [/\bTrauma\b/gi, 'ToP'],
     [/\bVitality\b/gi, 'HP'],
     [/\bAnd Stress\b/gi, ''],
-    [/\bStress\b/gi, 'HP'],
+    [/\bStress\b/gi, 'Damage'],
     [/\bFatigue\b/gi, 'Damage'],
     [/\bEndurance\b/gi, 'HP'],
     [/\bParries an attack\b/gi, 'dodges an attack by 5 or more'],

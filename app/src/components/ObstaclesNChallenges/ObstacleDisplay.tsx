@@ -157,7 +157,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                                 return (
                                     <tr key={index} className='standard-row complication-row'>
                                         <td>{index + 1}</td>
-                                        <td>{body}</td>
+                                        <td>{body[systemPreference]}</td>
                                     </tr>
                                 )
                             })}
@@ -165,11 +165,11 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                     )}
                     {failure && <tr className='standard-row'>
                         <td><strong>Failure</strong></td>
-                        <td>{failure}</td>
+                        <td>{failure[systemPreference]}</td>
                     </tr>}
                     {success && <tr className='standard-row'>
                         <td><strong>Success</strong></td>
-                        <td>{success}</td>
+                        <td>{success[systemPreference]}</td>
                     </tr>}
                     {pairsOne && (
                         pairsOne.map(({ name, body }: Pair, index) => {

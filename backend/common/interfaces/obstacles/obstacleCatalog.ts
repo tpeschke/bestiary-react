@@ -47,7 +47,6 @@ export interface RawObstacle {
     stringid: string,
 }
 
-
 export interface Obstacle {
     id: number,
     beastid?: number,
@@ -59,9 +58,9 @@ export interface Obstacle {
     difficulty: string,
     notes: string,
     complicationsingle: SystemInfoArray,
-    failure: string,
     information: string,
-    success: string,
+    failure: SystemInfoArray,
+    success: SystemInfoArray,
     threshold: string,
     time: string,
     type: string,
@@ -72,9 +71,17 @@ export interface Obstacle {
     skullVariants?: SkullVariant[]
 }
 
-export interface Complication {
+export interface RawComplication {
     name: string,
     body: string,
+    index: number,
+    stringid: string,
+    id: number
+}
+
+export interface Complication {
+    name: string,
+    body: SystemInfoArray,
     index: number,
     stringid: string,
     id: number

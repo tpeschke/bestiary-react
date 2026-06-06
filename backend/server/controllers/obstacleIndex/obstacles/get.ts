@@ -2,12 +2,12 @@ import query from "../../../db/database";
 import { Response, Request } from "../../../interfaces/apiInterfaces"
 import { getSkullVariants } from "../../../db/skill/obstacle";
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
-import { Obstacle, RawObstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
+import { Obstacle, RawComplication, RawObstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import makeID from "../../../utilities/makeID";
 import { getObstacleComplications, getObstaclePairs } from "../../../db/skill/challenge";
 import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel";
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
-import { buildSystemSpecificInfo } from "../../bestiary/gameMaster/utilities/formatUtilities/getSystemSpecificTerminologies";
+import { buildSystemSpecificAppearance } from "../../bestiary/gameMaster/utilities/formatUtilities/getSystemSpecificTerminologies";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -33,13 +33,22 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             const {id, beastid, obstacleid, name, skull, prompt, difficulty, notes, complicationsingle, failure, information, success, threshold, time, type, stringid} = rawObstacle
 
             let obstacle: Obstacle = {
-                id, beastid, obstacleid, name, skull, prompt, difficulty, notes, failure, information, success, threshold, time, type, stringid,
+                id, beastid, obstacleid, name, skull, prompt, difficulty, notes, information, threshold, time, type, stringid,
                 ep: getBaseEPValue(skull),
-                complicationsingle: buildSystemSpecificInfo(complicationsingle),
+                failure: buildSystemSpecificAppearance(failure),
+                success: buildSystemSpecificAppearance(success),
+                complicationsingle: buildSystemSpecificAppearance(complicationsingle),
             }
 
             await Promise.all([
-                query(getObstacleComplications, obstacle.stringid).then((returnedComplications: any) => obstacle.complications = returnedComplications),
+                query(getObstacleComplications, obstacle.stringid).then((returnedComplications: RawComplication[]) => {
+                    obstacle.complications = returnedComplications.map(complication => {
+                        return {
+                            ...complication,
+                            body: buildSystemSpecificAppearance(complication.body)
+                        }
+                    })
+                }),
                 query(getSkullVariants, obstacle.stringid).then((returnedSkullVariants: any) => obstacle.skullVariants = returnedSkullVariants.map((variant: any) => ({
                     ...variant,
                     skullValue: variant.skullvalue
@@ -63,9 +72,9 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             difficulty: '',
             notes: '',
             complicationsingle: ['', undefined, ''],
-            failure: '',
+            failure: ['', undefined, ''],
+            success: ['', undefined, ''],
             information: '',
-            success: '',
             threshold: '',
             time: '',
             type: 'obstacle',
