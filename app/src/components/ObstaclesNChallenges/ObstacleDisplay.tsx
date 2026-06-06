@@ -38,6 +38,10 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const epValueIndex = getEPIndex(ep)
 
+    const promptTooltip = systemPreference === BONFIRE ?
+        "When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position.\nIf they do something that doesn't, -2 Position"
+        : "When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +15% to their Check.\nIf they do something that doesn't, -15%";
+
     const updateSkull = (key: string, value: any) => {
         const newObstacleToShow = {
             ...obstacleToShow,
@@ -93,10 +97,10 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
     function formatDifficulty() {
         if (difficulty !== 'Universal' && systemPreference === BONFIRE) {
             return getDifficultyBySkullValue(skull) + '\n'
-        } else if  (difficulty !== 'Universal' && systemPreference === HACKMASTER) {
+        } else if (difficulty !== 'Universal' && systemPreference === HACKMASTER) {
             return getBaseSkillRank(epValueIndex, 'HackMaster') + '%'
         }
-        return  ''
+        return ''
     }
 
     return (
@@ -119,7 +123,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </td>
                     </tr>}
                     {prompt && <tr className='standard-row'>
-                        <td><strong>Prompt <Icon iconName='info' tooltip="When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position\nIf they do something that doesn't, -2 Position" /></strong></td>
+                        <td><strong>Prompt <Icon iconName='info' tooltip={promptTooltip} /></strong></td>
                         <td>{prompt}</td>
                     </tr>}
                     <tr className='standard-row'>
