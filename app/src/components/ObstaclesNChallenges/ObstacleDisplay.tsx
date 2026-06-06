@@ -6,6 +6,10 @@ import { Obstacle, Pair, Complication, SkullVariant } from '@bestiary/common/int
 import SkullSelection from '../../pages/bestiary/beast/pages/edit/components/editBody/components/SkullSelection';
 import { useState } from 'react';
 import alertInfo from '../alert/alerts';
+import { useSelector } from 'react-redux';
+import { getSystemPreference } from '../../redux/slices/userSlice';
+import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
+import { BONFIRE, HACKMASTER } from '@bestiary/common/utilities/get/getSystemString';
 
 interface Props {
     obstacle: Obstacle | null,
@@ -18,12 +22,16 @@ interface Props {
 export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false, hideVariants = false }: Props) {
     if (!obstacle) { return <></> }
 
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
     const { id, name, prompt, difficulty, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
 
-    let { skull } = obstacleToShow
+    let { skull, ep } = obstacleToShow
+
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
+    ep = modifiedSkull || modifiedSkull === 0 ? getBaseEPValue(modifiedSkull) : ep
 
     const updateSkull = (key: string, value: any) => {
         const newObstacleToShow = {
@@ -88,7 +96,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                 <tbody>
                     {!hideCustomizations && <tr className='standard-row'>
                         <td colSpan={2}>
-                            <SkullSelection currentSkullValue={skull} updateSkull={updateSkull} skullKeyValue='skull' />
+                            <SkullSelection currentSkullValue={systemPreference === BONFIRE ? skull : undefined} currentEPValue={systemPreference === HACKMASTER ? ep : undefined} updateSkull={updateSkull} skullKeyValue='skull' epKeyValue='ep' />
                         </td>
                     </tr>}
                     {hideCustomizations && <tr className='standard-row'>
@@ -97,7 +105,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </td>
                     </tr>}
                     {prompt && <tr className='standard-row'>
-                        <td><strong>Prompt <Icon iconName='info' tooltip="When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position\nIf they do something that doesn't, -2 Position"/></strong></td>
+                        <td><strong>Prompt <Icon iconName='info' tooltip="When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position\nIf they do something that doesn't, -2 Position" /></strong></td>
                         <td>{prompt}</td>
                     </tr>}
                     <tr className='standard-row'>

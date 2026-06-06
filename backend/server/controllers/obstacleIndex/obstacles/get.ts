@@ -6,6 +6,7 @@ import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog"
 import makeID from "../../../utilities/makeID";
 import { getObstacleComplications, getObstaclePairs } from "../../../db/skill/challenge";
 import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel";
+import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -28,6 +29,8 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         let [obstacle] = await query(getObstacles, obstacleId) as Obstacle[]
 
         if (obstacle) {
+            obstacle.ep = getBaseEPValue(obstacle.skull)
+
             await Promise.all([
                 query(getObstacleComplications, obstacle.stringid).then((returnedComplications: any) => obstacle.complications = returnedComplications),
                 query(getSkullVariants, obstacle.stringid).then((returnedSkullVariants: any) => obstacle.skullVariants = returnedSkullVariants.map((variant: any) => ({
@@ -48,6 +51,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             obstacleid: 0,
             name: 'New Obstacle',
             skull: 0,
+            ep: 10,
             prompt: null,
             difficulty: '',
             notes: '',

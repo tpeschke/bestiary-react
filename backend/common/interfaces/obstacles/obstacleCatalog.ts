@@ -32,6 +32,7 @@ export interface Obstacle {
     obstacleid: number,
     name: string,
     skull: number,
+    ep: number,
     prompt: string | null,
     difficulty: string,
     notes: string,

@@ -1,14 +1,14 @@
 import { UpdateFunction } from "../../../../../hooks/updateUtilities/interfaces/updateInterfaces"
 
 interface Props {
-    currentSkullValue: number,
+    currentSkullValue?: number,
     currentEPValue?: number,
     updateSkull: UpdateFunction,
-    skullKeyValue: string,
+    skullKeyValue?: string,
     epKeyValue?: string
 }
 
-export default function SkullSelection({ currentSkullValue = 1, currentEPValue, updateSkull, skullKeyValue, epKeyValue }: Props) {
+export default function SkullSelection({ currentSkullValue, currentEPValue, updateSkull, skullKeyValue, epKeyValue }: Props) {
     const skullArray = [
         ' ',                // Untrained
         '💀',               // Novice
@@ -69,7 +69,7 @@ export default function SkullSelection({ currentSkullValue = 1, currentEPValue, 
     ]
 
     const epArray = [
-        ...epArrayBySkull[currentSkullValue],
+        ...epArrayBySkull[currentSkullValue ? currentSkullValue : 0],
         10,
         35,
         70,
@@ -101,35 +101,23 @@ export default function SkullSelection({ currentSkullValue = 1, currentEPValue, 
         3555
     ]
 
-    if (!currentEPValue || !epKeyValue) {
-        return (
-            <select
-                onClick={event => event.stopPropagation()}
-                onChange={event => updateSkull(skullKeyValue, +event.target.value)}
-                value={currentSkullValue}
-            >
-                {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
-            </select>
-        )
-    }
-
     return (
         <div>
-            <select
+            {(currentSkullValue && skullKeyValue) && <select
                 onClick={event => event.stopPropagation()}
                 onChange={event => updateSkull(skullKeyValue, +event.target.value)}
                 value={currentSkullValue}
             >
                 {skullArray.map((skull, index) => <option key={index} value={index}>{skull}</option>)}
-            </select>
+            </select>}
 
-            <select
+            {(currentEPValue && epKeyValue) && <select
                 onClick={event => event.stopPropagation()}
                 onChange={event => updateSkull(epKeyValue, +event.target.value)}
                 value={currentEPValue}
             >
                 {epArray.map((ep, index) => <option key={index} value={ep}>{ep}</option>)}
-            </select>
+            </select>}
         </div>
     )
 }
