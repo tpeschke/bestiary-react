@@ -26,6 +26,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
     if (!obstacle) { return <></> }
 
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2
+    const isBonfire = systemPreference === BONFIRE
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
@@ -40,7 +41,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const difficultyToShow = difficulty[systemPreference]
 
-    const promptTooltip = systemPreference === BONFIRE ?
+    const promptTooltip = isBonfire ?
         "When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +2 Position.\nIf they do something that doesn't, -2 Position"
         : "When the players trigger this trap, read out the prompt and give them 1 second to respond\nIf they do something that helps, they gain +15% to their Check.\nIf they do something that doesn't, -15%";
 
@@ -97,9 +98,9 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
     }
 
     function formatDifficulty() {
-        if (difficultyToShow !== 'Universal' && systemPreference === BONFIRE) {
+        if (difficultyToShow !== 'Universal' && isBonfire) {
             return getDifficultyBySkullValue(skull) + '\n'
-        } else if (difficultyToShow !== 'Universal' && systemPreference === HACKMASTER) {
+        } else if (difficultyToShow !== 'Universal' && !isBonfire) {
             return getBaseSkillRank(epValueIndex, 'HackMaster') + '%\n'
         }
         return ''
@@ -116,7 +117,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                 <tbody>
                     {!hideCustomizations && <tr className='standard-row'>
                         <td colSpan={2}>
-                            <SkullSelection currentSkullValue={systemPreference === BONFIRE ? skull : undefined} currentEPValue={systemPreference === HACKMASTER ? ep : undefined} updateSkull={updateSkull} skullKeyValue='skull' epKeyValue='ep' />
+                            <SkullSelection currentSkullValue={isBonfire ? skull : undefined} currentEPValue={!isBonfire ? ep : undefined} updateSkull={updateSkull} skullKeyValue='skull' epKeyValue='ep' />
                         </td>
                     </tr>}
                     {hideCustomizations && <tr className='standard-row'>
@@ -143,17 +144,17 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                     </tr>}
                     {/* Pair Two */}
                     {threshold && <tr className='standard-row'>
-                        <td><strong>Ease</strong></td>
+                        <td><strong>Ease {!isBonfire && <Icon iconName='info' tooltip={"This is number of failed attempts the PCs get against this Obstacle"} />}</strong></td>
                         <td>{threshold}</td>
                     </tr>}
                     {(complicationsingle || complications.length === 1) && <tr className='standard-row'>
-                        <td><strong>Complication</strong></td>
+                        <td><strong>Complication {!isBonfire && <Icon iconName='info' tooltip={"This is a bad thing that happens on a regular failed Check before the Ease is hit"} />}</strong></td>
                         <td>{complicationsingle ? complicationsingle[systemPreference] : complications[0].body}</td>
                     </tr>}
                     {complications.length > 1 && (
                         <>
                             <tr className='standard-row'>
-                                <td colSpan={2}><strong>Complications</strong></td>
+                                <td colSpan={2}><strong>Complications {!isBonfire && <Icon iconName='info' tooltip={"These are bad things that happens on a regular failed Check before the Ease is hit. Roll or select 1."} />}</strong></td>
                             </tr>
                             {complications.map(({ body }: Complication, index) => {
                                 return (
@@ -166,7 +167,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                         </>
                     )}
                     {failure && <tr className='standard-row'>
-                        <td><strong>Failure</strong></td>
+                        <td><strong>Failure {!isBonfire && <Icon iconName='info' tooltip={"When the number of failed Checks by the PCs is greater than the Ease, this Failure happens."} />}</strong></td>
                         <td>{failure[systemPreference]}</td>
                     </tr>}
                     {success && <tr className='standard-row'>
