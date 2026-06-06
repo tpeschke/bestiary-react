@@ -12,7 +12,7 @@ export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
         [0, 1, 5, 10, 15, 15]
     ]
 
-    const numberConvictionReputation = [
+    const numberDescriptionReputation = [
         [2, 1],
         [2, 1],
         [3, 2],
@@ -33,7 +33,7 @@ export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
                     <tr>
                         <th>Skull Rating</th>
                         <th>Suite</th>
-                        <th>Conviction</th>
+                        <th>Description</th>
                         <th>Relationship</th>
                         <th>Reputation</th>
                     </tr>
@@ -47,12 +47,12 @@ export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
                         <td>0</td>
                     </tr>
                     {ranksForSkulls.map((ranks, index) => {
-                        const [suite, conviction, relationship, reputation] = ranks
+                        const [suite, description, relationship, reputation] = ranks
                         return (
                             <tr key={index}>
                                 <th>{formatSkulls(index + 1)}</th>
                                 <td>{suite}</td>
-                                <td>{conviction}</td>
+                                <td>{description}</td>
                                 <td>{relationship}</td>
                                 <td>{reputation}</td>
                             </tr>
@@ -63,10 +63,10 @@ export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
 
             <h1>Social Skill Suites</h1>
             <p>You’ll want a strong Suite and a weak Suite. Count the strong Suite at +2 Ranks and the weak Suite as -2 Ranks. The other 2 Suites will use the base Rank.</p>
-            <h2>Descriptions</h2>
-            <p>You might also include a few specific Descriptions (generally 1 - 3 for a basic NPC). These should provide a bonus equal to half the base Suite’s Rank or +1, whichever is higher.</p>
-            <h1>Convictions</h1>
-            <p>Refer to the following table for the baseline Convictions an NPC will have.</p>
+            <h2>Convictions</h2>
+            <p>You might also include a few specific Convictions (generally 1 - 3 for a basic NPC). These should provide a bonus equal to half the base Suite’s Rank or +1, whichever is higher.</p>
+            <h1>Descriptions</h1>
+            <p>Refer to the following table for the baseline Descriptions an NPC will have.</p>
             <p>Especially smart NPCs will have 2 more Convictions than average; dumb NPCs, -1 (minimum 0).</p>
 
             <table className="float-right">

@@ -42,7 +42,7 @@ export default function LeftColumn({
     beastId, beastName, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex, system, saves,
     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie 
 }: Props) {
-        const { baseConvictionRank } = socialInfo
+        const { baseDescriptionRank } = socialInfo
 
     return (
         <>
@@ -55,7 +55,7 @@ export default function LeftColumn({
             <CombatSection combatInfo={combatInfo} size={size} />
             <RatingModifierDisplay updateRoleModifier={updateRoleModifier} modifierIndex={modifierIndex} copyQuickLink={copyQuickLink} hasModifier={hasModifier} />
             <StrategiesNLimits strategiesNLimits={combatInfo.strategiesNLimits} limitNotes={combatInfo.limitNotes} />
-            <StrategicOptionsDisplay options={combatInfo.options} skillSkulls={skillInfo.skillSkulls} baseConvictionRank={baseConvictionRank} />
+            <StrategicOptionsDisplay options={combatInfo.options} skillSkulls={skillInfo.skillSkulls} baseDescriptionRank={baseDescriptionRank} />
         </>
     )
 }

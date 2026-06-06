@@ -4,14 +4,14 @@
     justify-content: space-between;
 }
 
-.characteristic-info-shell .conviction-shell {
+.characteristic-info-shell .description-shell {
     display: flex;
 }
 
-.characteristic-info-shell .conviction-shell .pair-shell {
+.characteristic-info-shell .description-shell .pair-shell {
     width: 100%;
 }
 
-.characteristic-info-shell .conviction-shell .pair-shell p:last-child {
+.characteristic-info-shell .description-shell .pair-shell p:last-child {
     text-align: center;
 }

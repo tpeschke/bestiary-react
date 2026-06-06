@@ -41,12 +41,12 @@ export default function formatSocialInfo(
             threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacityStrength),
             strength: capacityStrength
         },
-        baseConvictionRank: 0,
+        baseDescriptionRank: 0,
         attackInfo: attackInfo_hm ? [attackInfo_bonfire ?? '', undefined, attackInfo_hm] : buildSystemSpecificInfo(attackInfo_bonfire),
         defenseInfo: defenseInfo_hm ? [defenseInfo_bonfire ?? '', undefined, defenseInfo_hm] : buildSystemSpecificInfo(defenseInfo_bonfire),
         conflicts: {
             socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
-            convictions: [],
+            descriptions: [],
             relationships: [],
             flaws: [],
             burdens: []

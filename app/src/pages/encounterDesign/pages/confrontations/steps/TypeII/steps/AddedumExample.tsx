@@ -30,7 +30,7 @@ export default function AddendumExample({ encounterTerm }: { encounterTerm: stri
             <p>“No, you won’t be getting paid for the job but the church will be grateful so you’ll increase their Relationship towards you which you can use for free healing and discounts to good in the town since they’re very powerful”.</p>
             <h2>Social Skill Suites</h2>
             <p>This is the same as the original example.</p>
-            <h2>Convictions</h2>
+            <h2>Descriptions</h2>
             <p>This is the same as the original example.</p>
             <h2>Relationships</h2>
             <p>This is the same as the original example.</p>

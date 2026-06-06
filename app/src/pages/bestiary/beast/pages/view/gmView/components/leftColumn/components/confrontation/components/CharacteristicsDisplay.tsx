@@ -31,7 +31,7 @@ export default function CharacteristicsDisplay({ characteristicInfo, type }: Pro
             <div className='characteristic-info-shell'>
                 <h3>Social Skill Suites</h3>
                 <Body>
-                    <div className="conviction-shell">
+                    <div className="description-shell">
                         <Pair title="Influence" info={influence + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                         <Pair title="Inform" info={inform + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
                         <Pair title="Inspire" info={inspire + (type === 'HackMaster' ? '%' : '')} format={{ title: 'none' }} />
@@ -42,7 +42,7 @@ export default function CharacteristicsDisplay({ characteristicInfo, type }: Pro
             <div className='characteristic-info-shell'>
                 <h3 data-tooltip-id="my-tooltip" data-tooltip-content={type !== 'Bonfire' ? "When inflicting the first Emotion or defending against the second Emotion, the Check is made with Advantage." : undefined}>Preferred Emotions</h3>
                 <Body>
-                    <div className="conviction-shell">
+                    <div className="description-shell">
                         {preferredEmotions.emotions.map((emotion, index) => <Pair tooltip="Attack / Defense" key={index} title={`${emotion} / ${emotionPairsDictionary[emotion]}`} info={type === 'HackMaster' ? '' : preferredEmotions.rank} format={{ title: 'none' }} />)}
                     </div>
                 </Body>

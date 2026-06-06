@@ -23,13 +23,13 @@ async function populateNonEditingCharacteristics(beastId: number, socialSkullInd
             emotions: [],
             rank: 0
         }
-    }, convictions: [], relationships: [], flaws: [], burdens: [] }
+    }, descriptions: [], relationships: [], flaws: [], burdens: [] }
     
     const characteristics: UnformatedConflict[] = await query(getMonsterCharacteristics, beastId)
 
     characteristics.forEach((characteristic: UnformatedConflict) => {
         if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
-            conflict.convictions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
+            conflict.descriptions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         } else if (characteristic.type === 'd') {
             conflict.relationships.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         } else if (characteristic.type === 'f') {
@@ -37,12 +37,12 @@ async function populateNonEditingCharacteristics(beastId: number, socialSkullInd
         } else if (characteristic.type === 'b') {
             conflict.burdens.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         } else if (characteristic.type === 'h') {
-            // conflict.descriptions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
+            // conflict.convictions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         }
     })
 
-    // conflict.descriptions = conflict.descriptions.sort(sortByRank)
-    conflict.convictions = conflict.convictions.sort(sortByRank)
+    // conflict.convictions = conflict.convictions.sort(sortByRank)
+    conflict.descriptions = conflict.descriptions.sort(sortByRank)
     conflict.flaws = conflict.flaws.sort(sortOutAnyToTheBottom)
     conflict.burdens = conflict.burdens.sort(sortOutAnyToTheBottom)
 

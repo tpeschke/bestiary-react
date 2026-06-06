@@ -21,9 +21,9 @@ export function formatCharacteristics(skullIndex: number, characteristic: Unform
     const { id, beastid, trait, socialroleid: socialRoleID, allroles: allRoles, type, strength, adjustment } = characteristic
 
     const typeDictionary: any = {
-        'h': 'Descriptions',
-        't': 'Convictions',
-        'c': 'Convictions', 
+        'h': 'convictions',
+        't': 'descriptions',
+        'c': 'descriptions', 
         'd': 'Relationships'
     }
 

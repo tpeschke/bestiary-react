@@ -17,7 +17,7 @@ export interface BasicSocialInfo {
     },
     isBeast?: boolean,
     isSwarm: boolean,
-    baseConvictionRank: number,
+    baseDescriptionRank: number,
     conflicts: ConflictObject,
 }
 
@@ -33,7 +33,7 @@ export interface SpecificSocialInfo extends BasicSocialInfo {
 
 export interface ConflictObject {
     socialSkillSuites: SocialSkillSuitesObject,
-    convictions: Conflict[],
+    descriptions: Conflict[],
     relationships: Conflict[],
     flaws: Conflict[],
     burdens: Conflict[]

@@ -245,7 +245,7 @@ export default class GMBeastClass {
         const { conflicts, socialRole: role, socialSecondary: secondary, socialSkulls: skulls, skullIndex: mainSkullIndex, capacity: mainCapacity } = this.entrySocialInfo
 
         if (conflicts) {
-            const { convictions, relationships, flaws, burdens } = conflicts
+            const { descriptions, relationships, flaws, burdens } = conflicts
             const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
             const roleSelected = this.isRoleSelected()
@@ -278,10 +278,10 @@ export default class GMBeastClass {
                     threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacity.strength, 'Bonfire'),
                     strength: capacity.strength
                 },
-                baseConvictionRank: calculateRankForCharacteristic('Convictions', skullIndex, socialRole),
+                baseDescriptionRank: calculateRankForCharacteristic('Descriptions', skullIndex, socialRole),
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
-                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', skullIndex, roleID, socialRole), []),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, socialRole), []),
                     relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
                     burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)
@@ -296,7 +296,7 @@ export default class GMBeastClass {
         const { conflicts, socialRole: role, socialSecondary: secondary, socialEpValue: mainEpValue, socialRawEpValue: mainRawEpValue, epValueIndex: mainEpValueIndex, capacity: mainCapacity } = this.entrySocialInfo
 
         if (conflicts) {
-            const { convictions, relationships, flaws, burdens } = conflicts
+            const { descriptions, relationships, flaws, burdens } = conflicts
             const roleID = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
 
             const roleSelected = this.isRoleSelected()
@@ -334,10 +334,10 @@ export default class GMBeastClass {
                     threshold: getCapacity(epValueIndex, socialRole, socialSecondary, capacity.strength, 'HackMaster'),
                     strength: capacity.strength
                 },
-                baseConvictionRank: 0,
+                baseDescriptionRank: 0,
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, epValueIndex, 'HackMaster'),
-                    convictions: convictions.reduce(this.adjustCharacteristicRank('Convictions', epValueIndex, roleID, socialRole), []),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', epValueIndex, roleID, socialRole), []),
                     relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', epValueIndex, roleID, socialRole), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
                     burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)

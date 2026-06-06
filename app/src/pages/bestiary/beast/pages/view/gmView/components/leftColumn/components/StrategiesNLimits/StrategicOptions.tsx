@@ -17,10 +17,10 @@ import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString';
 interface Props {
     options: StrategicOptions,
     skillSkulls: number,
-    baseConvictionRank: number
+    baseDescriptionRank: number
 }
 
-export default function StrategicOptionsDisplay({ options, skillSkulls, baseConvictionRank }: Props) {
+export default function StrategicOptionsDisplay({ options, skillSkulls, baseDescriptionRank }: Props) {
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
 
     const { obstacles, customs, other } = options
@@ -74,7 +74,7 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseConv
                 <>
                     <span>
                         <h3>Customs <Icon iconName='info' tooltip='Customs are a way to inflict Emotions on an enemy group (via the Atk Emotion) or themselves (via the Def Emotion)' /></h3>
-                        {systemPreference === BONFIRE && <p>Rank {baseConvictionRank}</p>}
+                        {systemPreference === BONFIRE && <p>Rank {baseDescriptionRank}</p>}
                     </span>
                     <div>
                         {customs.map(({ id, label, attack, defense }) => {

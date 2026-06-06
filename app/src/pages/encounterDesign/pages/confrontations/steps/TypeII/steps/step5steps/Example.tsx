@@ -35,9 +35,9 @@ export default function Example() {
             <p><strong>Yes And</strong> The captain will provide a Safehouse, for free, and talk to the smith, providing them a discount when repairing their gear.</p>
             <h1>Social Skill Suites</h1>
             <p>The captain has a base Rank of 4. We’ll say he’s good at Intimidation (giving him a Rank 6 in that) but bad at Lecturing (giving him a Rank 2 in that).</p>
-            <p>We probably want to give him at least 2 Descriptions: Imposing and Methodical - both under Intimidation.</p>
+            <p>We'll give him 2 Convictions. I’m going to give him something related to his job (“I’m the shield of this village” in Intimidation) and something related to the world in general (“Outsiders are untrustworthy”, also in Intimidation).</p>
             <h1>Convictions</h1>
-            <p>He’s got 2 Convictions, both with a base Rank of 2. I’m going to give him something related to his job (“I’m the shield of this village”) and something related to the world in general (“Outsiders are untrustworthy”).</p>
+            <p>We probably want to give him at least 2 Descriptions: Imposing and Methodical. Both have a base Rank of 2</p>
             <h1>Relationships</h1>
             <p>His base Relationship Rank is 1. I’m going to give him one relating to a specific person in the village because it gives players something to use if they look for it. The easiest would be that he’s in love with the smith.</p>
             <h1>Reputations</h1>
