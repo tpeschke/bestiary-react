@@ -1,3 +1,5 @@
+import { SystemInfoArray } from "../beast/infoInterfaces/generalInfoInterfaces";
+
 export interface ObstacleTile {
     obstacleid: number | null;
     challengeid: number | null;
@@ -26,6 +28,26 @@ interface ObstacleNameObject {
     [key: string]: Obstacle
 }
 
+export interface RawObstacle {
+    id: number,
+    beastid?: number,
+    obstacleid: number,
+    name: string,
+    skull: number,
+    prompt: string | null,
+    difficulty: string,
+    notes: string,
+    complicationsingle: string,
+    failure: string,
+    information: string,
+    success: string,
+    threshold: string,
+    time: string,
+    type: string,
+    stringid: string,
+}
+
+
 export interface Obstacle {
     id: number,
     beastid?: number,
@@ -36,7 +58,7 @@ export interface Obstacle {
     prompt: string | null,
     difficulty: string,
     notes: string,
-    complicationsingle: string,
+    complicationsingle: SystemInfoArray,
     failure: string,
     information: string,
     success: string,

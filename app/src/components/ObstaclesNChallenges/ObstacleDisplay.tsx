@@ -25,7 +25,7 @@ interface Props {
 export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hideCustomizations = false, hideVariants = false }: Props) {
     if (!obstacle) { return <></> }
 
-    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
+    const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2
 
     const [obstacleToShow, setObstacleToShow] = useState(obstacle)
 
@@ -146,7 +146,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                     </tr>}
                     {(complicationsingle || complications.length === 1) && <tr className='standard-row'>
                         <td><strong>Complication</strong></td>
-                        <td>{complicationsingle ? complicationsingle : complications[0].body}</td>
+                        <td>{complicationsingle ? complicationsingle[systemPreference] : complications[0].body}</td>
                     </tr>}
                     {complications.length > 1 && (
                         <>

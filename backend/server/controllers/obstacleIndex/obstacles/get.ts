@@ -2,11 +2,12 @@ import query from "../../../db/database";
 import { Response, Request } from "../../../interfaces/apiInterfaces"
 import { getSkullVariants } from "../../../db/skill/obstacle";
 import { checkForContentTypeBeforeSending, sendErrorForwardNoFile } from "../../../utilities/sendingFunctions";
-import { Obstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
+import { Obstacle, RawObstacle } from "@bestiary/common/interfaces/obstacles/obstacleCatalog";
 import makeID from "../../../utilities/makeID";
 import { getObstacleComplications, getObstaclePairs } from "../../../db/skill/challenge";
 import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel";
 import getBaseEPValue from "@bestiary/common/utilities/scalingAndBonus/hackMaster/getEPValue";
+import { buildSystemSpecificInfo } from "../../bestiary/gameMaster/utilities/formatUtilities/getSystemSpecificTerminologies";
 
 const sendErrorForward = sendErrorForwardNoFile('Single Obstacle by ID')
 
@@ -26,10 +27,16 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
         checkForContentTypeBeforeSending(response, { color: 'red', type: 'message', message: 'You Need to Upgrade Your Ko-Fi to View Obstacles' })
     } else if (obstacleId > 0) {
 
-        let [obstacle] = await query(getObstacles, obstacleId) as Obstacle[]
+        let [rawObstacle] = await query(getObstacles, obstacleId) as RawObstacle[]
 
-        if (obstacle) {
-            obstacle.ep = getBaseEPValue(obstacle.skull)
+        if (rawObstacle) {
+            const {id, beastid, obstacleid, name, skull, prompt, difficulty, notes, complicationsingle, failure, information, success, threshold, time, type, stringid} = rawObstacle
+
+            let obstacle: Obstacle = {
+                id, beastid, obstacleid, name, skull, prompt, difficulty, notes, failure, information, success, threshold, time, type, stringid,
+                ep: getBaseEPValue(skull),
+                complicationsingle: buildSystemSpecificInfo(complicationsingle),
+            }
 
             await Promise.all([
                 query(getObstacleComplications, obstacle.stringid).then((returnedComplications: any) => obstacle.complications = returnedComplications),
@@ -55,7 +62,7 @@ export async function getObstaclesById(request: GetRequest, response: Response) 
             prompt: null,
             difficulty: '',
             notes: '',
-            complicationsingle: '',
+            complicationsingle: ['', undefined, ''],
             failure: '',
             information: '',
             success: '',
