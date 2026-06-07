@@ -14,7 +14,7 @@ export default function SearchSelect({ stopPropagationAndCaptureQuery, param, la
         <div>
             {label && <label>{label}</label>}
             <select onChange={event => stopPropagationAndCaptureQuery(param, event)}>
-                <option value='none'>I Don't Care</option>
+                <option value='none'>Any</option>
                 {dictionary.map((value: SearchObject | string, index: number) => {
                     if (typeof value === 'string') {
                         return <option key={index} value={value}>{value}</option>
