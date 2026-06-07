@@ -59,10 +59,12 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
 
     const chaosNDiminishTooltip = 'Chaos and Diminish limits are explained in R.2 on the SRD.'
 
-    const chaosTooltip = isBonfire ? chaosNDiminishTooltip : 'This is the number of enemies that need to be killed to trigger a Diminish Check.'
-    const diminishTooltip = isBonfire ? chaosNDiminishTooltip : 'This is the chance of the Diminish Check being successful.'
+    const groupTooltip = 'These are the collective nouns for the various group sizes that this enemy comes in.'
 
-    const strategiesTooltip = 'This is the base number of Strategies that this group can employ in response to the players\'s actions. See below for options.'
+    const chaosTooltip = isBonfire ? chaosNDiminishTooltip : 'This is the number of enemies that need to be killed to trigger a Diminish Check.'
+    const diminishTooltip = isBonfire ? chaosNDiminishTooltip : 'If a Diminish Check is triggered, roll a d100; if the result is under the percentage for that group, the group Diminishes; it shrinks one size (going up a step on this table).\nIf it would go off the table, the group entirely disbands.'
+
+    const strategiesTooltip = 'This is the base number of Strategies that this group can employ in response to the players\'s actions. See the Obstacles, Customs, and Other Options sections below for options.'
     const baselineStrategiesTooltip = 'This is base number of Strategies that this group has already employed in / near their base of operations.'
     const treasureTooltip = 'See the Treasure page (via the chest icon in the header) for more info\n(or just click since this is a link to it).'
 
@@ -79,7 +81,7 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
                 <table className="light-weight-table">
                     <thead>
                         <tr>
-                            <th>Group</th>
+                            <th data-tooltip-id="my-tooltip" data-tooltip-content={groupTooltip} className="center-text">Group</th>
                             <th data-tooltip-id="my-tooltip" data-tooltip-content={chaosTooltip} className="center-text">
                                 {isBonfire ? (
                                     <a href="https://bonfire.stone-fish.com/rules/2#gm-during-rests" target="_blank">
