@@ -32,7 +32,7 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
 
     const { id, name, difficulty, prompt, time, threshold, complicationsingle, complications = [], skullVariants = [], failure, success, information, notes, pairsOne } = obstacleToShow;
 
-    let { skull, ep,  } = obstacleToShow
+    let { skull, ep, } = obstacleToShow
 
     skull = modifiedSkull || modifiedSkull === 0 ? modifiedSkull : skull
     ep = modifiedSkull || modifiedSkull === 0 ? getBaseEPValue(modifiedSkull) : ep
@@ -122,7 +122,13 @@ export default function ObstacleDisplay({ obstacle, lowerText, modifiedSkull, hi
                     </tr>}
                     {hideCustomizations && <tr className='standard-row'>
                         <td colSpan={2}>
-                            {formatSkullsForDisplay(skull)}
+                            {isBonfire ? (
+                                formatSkullsForDisplay(skull)
+                            ) : (
+                                <>
+                                    {ep} EPs
+                                </>
+                            )}
                         </td>
                     </tr>}
                     {prompt && <tr className='standard-row'>
