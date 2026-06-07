@@ -2,7 +2,7 @@ import { ConflictObject } from "@bestiary/common/interfaces/beast/infoInterfaces
 import { getCharacteristicsForEdit, getMonsterCharacteristics } from "../../../../../../../../db/beast/conflict"
 import query from "../../../../../../../../db/database"
 import { sortByRank, sortOutAnyToTheBottom } from "../../../../../../../../utilities/sorts"
-import { UnformatedConflict, formatCharacteristics } from "./formatCharacteristics"
+import { UnformattedConflict, formatCharacteristics } from "./formatCharacteristics"
 
 export async function getConflict(beastId: number, isEditing: boolean, socialSkullIndex: number, role: string): Promise<ConflictObject> {
     // TODO EDIT
@@ -25,9 +25,9 @@ async function populateNonEditingCharacteristics(beastId: number, socialSkullInd
         }
     }, descriptions: [], relationships: [], flaws: [], burdens: [] }
     
-    const characteristics: UnformatedConflict[] = await query(getMonsterCharacteristics, beastId)
+    const characteristics: UnformattedConflict[] = await query(getMonsterCharacteristics, beastId)
 
-    characteristics.forEach((characteristic: UnformatedConflict) => {
+    characteristics.forEach((characteristic: UnformattedConflict) => {
         if (characteristic.type === 't' || characteristic.type === 'c' || !characteristic.type) {
             conflict.descriptions.push(formatCharacteristics(socialSkullIndex, characteristic, role))
         } else if (characteristic.type === 'd') {

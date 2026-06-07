@@ -277,11 +277,11 @@ export default class GMBeastClass {
                     threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacity.strength, 'Bonfire'),
                     strength: capacity.strength
                 },
-                baseDescriptionRank: calculateRankForCharacteristic('Descriptions', skullIndex, socialRole),
+                baseDescriptionRank: calculateRankForCharacteristic('Descriptions', skullIndex, socialRole, "Bonfire"),
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, skullIndex),
-                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, socialRole), []),
-                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole), []),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', skullIndex, roleID, socialRole, 'Bonfire'), []),
+                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', skullIndex, roleID, socialRole, 'Bonfire'), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
                     burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)
                 }
@@ -336,8 +336,8 @@ export default class GMBeastClass {
                 baseDescriptionRank: 0,
                 conflicts: {
                     socialSkillSuites: getSocialSkillSuites(socialRole, epValueIndex, 'HackMaster'),
-                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', epValueIndex, roleID, socialRole), []),
-                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', epValueIndex, roleID, socialRole), []),
+                    descriptions: descriptions.reduce(this.adjustCharacteristicRank('Descriptions', epValueIndex, roleID, socialRole, 'HackMaster'), []),
+                    relationships: relationships.reduce(this.adjustCharacteristicRank('Relationships', epValueIndex, roleID, socialRole, 'HackMaster'), []),
                     flaws: flaws.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles),
                     burdens: burdens.filter((info: Conflict) => !info.socialRoleID || info.socialRoleID === roleID || info.allRoles)
                 }
@@ -347,12 +347,12 @@ export default class GMBeastClass {
         return this.socialInfo
     }
 
-    private adjustCharacteristicRank = (type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string) => {
+    private adjustCharacteristicRank = (type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string, system: SystemOption) => {
         return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
             if (!characteristic.socialRoleID || characteristic.socialRoleID === roleID || characteristic.allRoles) {
                 characteristics.push({
                     ...characteristic,
-                    rank: calculateRankForCharacteristic(type, skullIndex, role)
+                    rank: calculateRankForCharacteristic(type, skullIndex, role, system)
                 })
             }
             return characteristics
