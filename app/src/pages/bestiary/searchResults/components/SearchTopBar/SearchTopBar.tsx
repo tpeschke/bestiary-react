@@ -19,8 +19,8 @@ type IconSortTypes = 'alpha' | 'number'
 
 export default function SearchTopBar({ searchResults, navigateToRandomResult, sortingMethodInfo, sortingDirectionInfo }: Props) {
     const navigate = useNavigate()
+    
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
-
     const isBonfire = systemPreference === BONFIRE 
 
     const getRandomResultTooltip = 'Go to a random result in this list'

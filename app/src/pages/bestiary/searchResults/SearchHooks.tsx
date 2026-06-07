@@ -58,7 +58,7 @@ export default function SearchHooks(): Return {
                 }
             })
         } else if (!searchParams.toString()) {
-            sortAndSetResults([])
+            navigate(`/`)
         }
     }, [searchParams]);
 
