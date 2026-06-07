@@ -1,5 +1,5 @@
 export const createUser = `insert into usersAuth (username, auth0, system, tooltip)
-values ($1, $2, 1, '1')
+values ($1, $2, 2, '1')
 RETURNING *;`
 
 export const findUser = `select * 
