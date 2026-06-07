@@ -4,17 +4,15 @@ import calculateSecondaryRoleEffect from "../../calculateSecondaryRoleEffect"
 import getModBySkullIndex from "../../getModBySkullIndex"
 
 const bonfireCapacityDictionary = [3, 3, 4, 4, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14]
-const hackMasterCapacityDictionary = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9]
 
 export default function getCapacity(skullIndex: number = 0, role: string, secondaryRole: string | null, capacity: Strength, system: SystemOption = 'Bonfire'): number[] | null {
-    if (capacity === 'x') {
+    if (capacity === 'x' || system === 'HackMaster') {
         return null
     }
 
-    const capacityDictionary = system === 'Bonfire' ? bonfireCapacityDictionary : hackMasterCapacityDictionary
     const roleIndexModifier = getRoleIndexModifier(role)
 
-    const baseCapacity = calculateSecondaryRoleEffect(getModBySkullIndex(skullIndex, roleIndexModifier, capacityDictionary), secondaryRole)
+    const baseCapacity = calculateSecondaryRoleEffect(getModBySkullIndex(skullIndex, roleIndexModifier, bonfireCapacityDictionary), secondaryRole)
 
     const no = Math.floor(baseCapacity * 0.1)
     const noBut = Math.ceil(baseCapacity * 0.5)

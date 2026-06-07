@@ -16,7 +16,6 @@ import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSp
 import CastingClass from "../../pages/view/gmView/components/weirdshaping/models/CastingClass";
 import CombatInfoClass from "./components/CombatInfoClass";
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
-import getBaseSocialRank from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getBaseSocialRank"
 import getSkills, { filterDuplicateSkills } from "@bestiary/common/utilities/scalingAndBonus/bonfire/skill/getSkills";
 import { Spell } from "@bestiary/common/interfaces/beast/infoInterfaces/castingInfo";
 import getDefenseNFlee from "@bestiary/common/utilities/scalingAndBonus/bonfire/getDefenseNFlee"

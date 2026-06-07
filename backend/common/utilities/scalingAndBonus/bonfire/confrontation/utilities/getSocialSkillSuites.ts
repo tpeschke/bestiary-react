@@ -12,7 +12,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Bully':
@@ -23,7 +23,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex + 3, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Charmer':
@@ -34,7 +34,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex - 3, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Demagogue':
@@ -45,7 +45,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Enabler':
@@ -56,7 +56,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
                 preferredEmotions: {
                     emotions: ["Joy", "Anger"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Instructor':
@@ -67,7 +67,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex - 1, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Obdurate':
@@ -78,7 +78,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex + 1, system),
                 preferredEmotions: {
                     emotions: ["Depression", "Surprise"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         case 'Zealot':
@@ -89,7 +89,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 intimidate: calculateDescriptionRank(skullIndex + 2, system),
                 preferredEmotions: {
                     emotions: ["Fear", "Disgust"],
-                    rank: calculateDescriptionRank(skullIndex, role)
+                    rank: calculateDescriptionRank(skullIndex, system)
                 }
             }
         default:
@@ -98,7 +98,7 @@ export default function getSocialSkillSuites(role: string, skullIndex: number, s
                 inform: calculateDescriptionRank(skullIndex, system),
                 inspire: calculateDescriptionRank(skullIndex, system),
                 intimidate: calculateDescriptionRank(skullIndex, system),
-                preferredEmotions: { emotions: [], rank: calculateDescriptionRank(skullIndex, role) }
+                preferredEmotions: { emotions: [], rank: calculateDescriptionRank(skullIndex, system) }
             }
     }
 }
