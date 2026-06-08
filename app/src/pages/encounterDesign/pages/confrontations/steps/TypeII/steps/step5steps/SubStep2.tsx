@@ -102,34 +102,7 @@ export default function SubStep2({ encounterTerm }: { encounterTerm: string }) {
             <p>Only unique NPCs should have Reputations; weirdos, lieutenants, bosses, captains, etc.</p>
             <p>Refer to the following table to determine the number:</p>
             <h1>Other Stats</h1>
-            <p>Finally, you might sketch out other applicable stats. Temperaments for NPCs are the obvious one but you might also include a few other Skills if the NPC is good at Lecturing.</p>
-            <p><strong>For Temperaments</strong>, if you’ve already made the NPC, they should already be defined. Otherwise, you can roll random on the following table:</p>
-
-            <table>
-                <tbody>
-                    <tr>
-                        <td>1 - 2</td>
-                        <td>Very Low</td>
-                    </tr>
-                    <tr>
-                        <td>3 - 4</td>
-                        <td>Low</td>
-                    </tr>
-                    <tr>
-                        <td>5 - 6</td>
-                        <td>Medium</td>
-                    </tr>
-                    <tr>
-                        <td>7 - 8</td>
-                        <td>High</td>
-                    </tr>
-                    <tr>
-                        <td>9 - 10</td>
-                        <td>Very High</td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <p>Finally, you might sketch out other applicable stats. You might also include a few other Skills if the NPC is good at Lecturing.</p>
             <p><strong>For Skills</strong>, you can use the Suite Ranks column, although you might adjust the Skull Rating to reflect the NPC’s Skill Skull Rating.</p>
         </div>
     )

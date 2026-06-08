@@ -43,8 +43,7 @@ export default function Example() {
             <h1>Reputations</h1>
             <p>The captain is a unique NPC so he’s going to get 1 Reputation at Rank 4. Based on what we know of him, it’ll probably be something along the lines of “Does his job”.</p>
             <h1>Other Stats</h1>
-            <p>I’m going to roll randomly for his Temperaments except Work-ethic because I think we’ve defined somebody who has a decently high one.</p>
-            <p>Additionally, I’d probably give him some Combat Skills but I’ll give him a 2 Skull Combat Rating to represent the fact that he grew up on the borderland so he’s tougher than your average guard.</p>
+            <p>I’d probably give him some Combat Skills but I’ll give him a 2 Skull Combat Rating to represent the fact that he grew up on the borderland so he’s tougher than your average guard.</p>
         </div>
     )
 }
