@@ -90,119 +90,91 @@ export const skullSearchDictionary: SearchObject[] = [
 export const epSearchDictionary: SearchObject[] = [
     {
         value: 10,
-        id: 10
-    },
-    {
+        id: 10,
+    }, {
         value: 35,
-        id: 35
-    },
-    {
+        id: 35,
+    }, {
         value: 70,
-        id: 70
-    },
-    {
-        value: 140,
-        id: 140
-    },
-    {
-        value: 280,
-        id: 280
-    },
-    {
-        value: 560,
-        id: 560
-    },
-    {
-        value: 765,
-        id: 765
-    },
-    {
-        value: 890,
-        id: 890
-    },
-    {
-        value: 1015,
-        id: 1015
-    },
-    {
-        value: 1145,
-        id: 1145
-    },
-    {
-        value: 1270,
-        id: 1270
-    },
-    {
-        value: 1400,
-        id: 1400
-    },
-    {
-        value: 1525,
-        id: 1525
-    },
-    {
-        value: 1650,
-        id: 1650
-    },
-    {
-        value: 1780,
-        id: 1780
-    },
-    {
-        value: 1905,
-        id: 1905
-    },
-    {
-        value: 2035,
-        id: 2035
-    },
-    {
-        value: 2160,
-        id: 2160
-    },
-    {
-        value: 2285,
-        id: 2285
-    },
-    {
-        value: 2415,
-        id: 2415
-    },
-    {
-        value: 2540,
-        id: 2540
-    },
-    {
-        value: 2665,
-        id: 2665
-    },
-    {
-        value: 2795,
-        id: 2795
-    },
-    {
-        value: 2920,
-        id: 2920
-    },
-    {
-        value: 3050,
-        id: 3050
-    },
-    {
-        value: 3175,
-        id: 3175
-    },
-    {
-        value: 3300,
-        id: 3300
-    },
-    {
-        value: 3430,
-        id: 3430
-    },
-    {
-        value: 3555,
-        id: 3555
+        id: 70,
+    }, {
+        value: 135,
+        id: 135,
+    }, {
+        value: 170,
+        id: 170,
+    }, {
+        value: 200,
+        id: 200,
+    }, {
+        value: 245,
+        id: 245,
+    }, {
+        value: 295,
+        id: 295,
+    }, {
+        value: 350,
+        id: 350,
+    }, {
+        value: 420,
+        id: 420,
+    }, {
+        value: 495,
+        id: 495,
+    }, {
+        value: 575,
+        id: 575,
+    }, {
+        value: 675,
+        id: 675,
+    }, {
+        value: 795,
+        id: 795,
+    }, {
+        value: 925,
+        id: 925,
+    }, {
+        value: 1075,
+        id: 1075,
+    }, {
+        value: 1245,
+        id: 1245,
+    }, {
+        value: 1425,
+        id: 1425,
+    }, {
+        value: 1625,
+        id: 1625,
+    }, {
+        value: 1845,
+        id: 1845,
+    }, {
+        value: 2075,
+        id: 2075,
+    }, {
+        value: 2325,
+        id: 2325,
+    }, {
+        value: 2595,
+        id: 2595,
+    }, {
+        value: 2880,
+        id: 2880,
+    }, {
+        value: 3180,
+        id: 3180,
+    }, {
+        value: 3500,
+        id: 3500,
+    }, {
+        value: 3835,
+        id: 3835,
+    }, {
+        value: 4185,
+        id: 4185,
+    }, {
+        value: 4555,
+        id: 4555
     }
 ]
 
