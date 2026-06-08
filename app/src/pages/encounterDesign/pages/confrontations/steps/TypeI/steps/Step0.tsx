@@ -1,8 +1,8 @@
-export default function Step0({ encounterTerm }: { encounterTerm: string }) {
+export default function Step0() {
     return (
         <div>
-            <p>Oftentimes the Emotions inflicted by Type I [encounterTerm]s are not used by the thing that inflicted them but are leveraged later by something else.</p>
-            <p>Spending time in the tavern inflicts At Peace but the tavern itself isn’t typing to get a specific action. More likely, the players will use that Emotion later while relaxing to destress.</p>
+            <p>Oftentimes the Emotions inflicted by Type I Confrontations are not used by the thing that inflicted them but are leveraged later by something else.</p>
+            <p>Spending time in the tavern inflicts At Peace but the tavern itself isn’t typing to get a specific action. More likely, the players will use that Emotion later while relaxing to de-stress.</p>
             <br />
             <p>Still, it’s not impossible that the force inflicting the Emotion also wants something, like a magical item that tempts the players to use it because using it makes it stronger. In that case, it does have a desired action but you can’t debate with it like it’s a person.</p>
             <br />

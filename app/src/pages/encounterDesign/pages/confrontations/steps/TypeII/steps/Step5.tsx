@@ -3,7 +3,7 @@ import Example from "./step5steps/Example"
 import SubStep1 from "./step5steps/SubStep1"
 import SubStep2 from "./step5steps/SubStep2"
 
-export default function Step5({ encounterTerm }: { encounterTerm: string }) {
+export default function Step5() {
     const steps = [
         {
             label: "Step 5.1: Set Capacity",
@@ -11,7 +11,7 @@ export default function Step5({ encounterTerm }: { encounterTerm: string }) {
         },
         {
             label: "Step 5.2: Set Base Ranks",
-            child: <SubStep2 encounterTerm={encounterTerm} />
+            child: <SubStep2 />
         },
         {
             label: "Example",

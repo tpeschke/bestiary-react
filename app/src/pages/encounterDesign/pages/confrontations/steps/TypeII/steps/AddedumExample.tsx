@@ -1,7 +1,7 @@
-export default function AddendumExample({ encounterTerm }: { encounterTerm: string }) {
+export default function AddendumExample() {
     return (
         <div className="italic">
-            <p>Now let’s sketch out a {encounterTerm} where the players are the defenders.</p>
+            <p>Now let’s sketch out a Confrontation where the players are the defenders.</p>
             <h1>Step 1: Determine Desired Action</h1>
             <p>The local church wants the players to clear the catacombs of the undead that have recently awoken.</p>
             <h1>Step 2: Determine Emotion(s)</h1>
@@ -26,7 +26,7 @@ export default function AddendumExample({ encounterTerm }: { encounterTerm: stri
             <p><strong>Yes But</strong> The characters will do the job but they get to keep what they find in the catacombs</p>
             <p><strong>Yes And</strong> the characters will do the job and they’ll help repair the church.</p>
             <br />
-            <p>Now, just because the characters are not getting monetary reward doesn’t mean there won’t be kickbacks for helping the church and you might present these to the players as part of the {encounterTerm}:</p>
+            <p>Now, just because the characters are not getting monetary reward doesn’t mean there won’t be kickbacks for helping the church and you might present these to the players as part of the Confrontation:</p>
             <p>“No, you won’t be getting paid for the job but the church will be grateful so you’ll increase their Relationship towards you which you can use for free healing and discounts to good in the town since they’re very powerful”.</p>
             <h2>Social Skill Suites</h2>
             <p>This is the same as the original example.</p>

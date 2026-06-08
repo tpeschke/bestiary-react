@@ -5,11 +5,11 @@ import MappedDrawers from "../../../../utilities/MappedDrawers";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
 
-export default function TypeI({ encounterTerm }: { encounterTerm: string }) {
+export default function TypeI() {
     const steps = [
         {
             label: "(Optional) Step 0: Determine Desired Action",
-            child: <Step0 encounterTerm={encounterTerm} />
+            child: <Step0 />
         },
         {
             label: "Step 1: Determine Emotion(s)",

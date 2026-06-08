@@ -1,4 +1,4 @@
-export default function Step3({ encounterTerm }: { encounterTerm: string }) {
+export default function Step3() {
     return (
         <div>
             <p>We need to answer these questions:</p>
@@ -10,10 +10,10 @@ export default function Step3({ encounterTerm }: { encounterTerm: string }) {
             <br />
             <p>For each answer, you want to also answer “why?” as it gives the players something to discover and strategize around. Do this even if you answered ‘yes’ to a question because then you know a bit more about the character and you can change things later in a believable way.</p>
             <br />
-            <p>Answering “Yes” to both questions is valid and guarantees the {encounterTerm} will happen; Answering “No” to both doesn’t mean a {encounterTerm} is completely off the table - it just means that the players will have to work harder for it.</p>
+            <p>Answering “Yes” to both questions is valid and guarantees the Confrontation will happen; Answering “No” to both doesn’t mean a Confrontation is completely off the table - it just means that the players will have to work harder for it.</p>
             <p>While answering “Yes” to one and “No” to the other sits in the center.</p>
             <h1>Checking in with the Players</h1>
-            <p>If the players are the intended targets of the {encounterTerm}, reach out to your players and have them answer those two questions for their characters.</p>
+            <p>If the players are the intended targets of the Confrontation, reach out to your players and have them answer those two questions for their characters.</p>
             <p>If they answer “no” to one, ask them what might make their character change their mind.</p>
             <br />
             <p>If an NPC is trying to convince them in a way that wouldn’t work, have them attempt the original way first before trying a different tact. It’ll make the players feel like their character’s personality made a difference and that the world is a living place. The NPC can later adapt to a more successful tact later.</p>

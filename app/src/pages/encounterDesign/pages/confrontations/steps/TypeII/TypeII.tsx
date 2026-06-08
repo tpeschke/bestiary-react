@@ -7,23 +7,23 @@ import Step3 from "./steps/Step3";
 import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
 
-export default function TypeII({ encounterTerm }: { encounterTerm: string }) {
+export default function TypeII() {
     const steps = [
         {
             label: "Introduction",
-            child: <Introduction encounterTerm={encounterTerm} />
+            child: <Introduction />
         },
         {
             label: "Step 1: Determine Desired Action",
-            child: <Step1 encounterTerm={encounterTerm} />
+            child: <Step1 />
         },
         {
             label: "Step 2: Determine Emotion(s)",
-            child: <Step2 encounterTerm={encounterTerm} />
+            child: <Step2 />
         },
         {
             label: "Step 3: Willingness & Ability",
-            child: <Step3 encounterTerm={encounterTerm} />
+            child: <Step3 />
         },
         {
             label: "Step 4: Set Skull",
@@ -31,11 +31,11 @@ export default function TypeII({ encounterTerm }: { encounterTerm: string }) {
         },
         {
             label: "Step 5: Set Ranks",
-            child: <Step5 encounterTerm={encounterTerm} />
+            child: <Step5 />
         },
         {
             label: "Addendum: Player Defender Examples",
-            child: <AddendumExample encounterTerm={encounterTerm} />
+            child: <AddendumExample />
         }
     ]
 
