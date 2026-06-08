@@ -13,6 +13,7 @@ import obstacleCatalogHook from '../../../../../../../../../obstacleIndex/hooks/
 import { getSystemPreference } from '../../../../../../../../../../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString';
+import { Link } from 'react-router-dom';
 
 interface Props {
     options: StrategicOptions,
@@ -58,10 +59,12 @@ export default function StrategicOptionsDisplay({ options, skillSkulls, baseDesc
                             if (!obstacle.obstaclename) return <p key={obstacle.id}>{obstacle.label}</p>
 
                             return (
-                                <Fragment key={obstacle.id}>
-                                    <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                                <Fragment key={obstacle.obstacleid}>
+                                    <Link to={`/obstacles/${obstacle.obstacleid}`} target='_blank'>
+                                        <button onMouseOver={_ => showPopup(obstacle)} onMouseOut={_ => setObstacleInTooltip(null)} data-tooltip-id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>{obstacle.label ? obstacle.label : obstacle.obstaclename}</button>
+                                    </Link>
                                     <Tooltip id={`${obstacle.obstacleid}-strategic-obstacle-tooltip`}>
-                                        {obstacleInTooltip ? <ObstacleDisplay obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
+                                        {obstacleInTooltip ? <ObstacleDisplay lowerText='Click the button to be taken to the Obstacle' obstacle={obstacleInTooltip} modifiedSkull={skillSkulls} hideCustomizations={true} hideVariants={true} /> : <LoadingIndicator stylings='' secondary={true} />}
                                     </Tooltip>
                                 </Fragment>
                             )

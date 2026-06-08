@@ -45,12 +45,21 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
             if (label && obstacles[label]) {
                 node.setAttribute("data-tooltip-id", `${name}-obstacle-tooltip`)
                 node.addEventListener('mouseover', showPopup(label));
+                node.addEventListener('click', openNewTab(label));
             }
         })
     }
 
     function showPopup(obstacleName: string) {
         return (_: any) => setObstacleInTooltip(obstacles[obstacleName])
+    }
+
+    function openNewTab(obstacleName: string) {
+        return (_: any) => {
+            if (obstacles[obstacleName]) {
+                window.open(`/obstacles/${obstacles[obstacleName].id}`)
+            }
+        }
     }
 
     return (
@@ -70,7 +79,7 @@ export function ChallengeDisplay({ challenge, index, title }: Props) {
                 <HTMLDisplay html={notes} />
             </div>}
             <Tooltip id={`${name}-obstacle-tooltip`}>
-                <ObstacleDisplay obstacle={obstacleInTooltip} hideCustomizations={true} />
+                <ObstacleDisplay obstacle={obstacleInTooltip} hideCustomizations={true} lowerText='Click the button to be taken to the Obstacle' />
             </Tooltip>
         </>
     )
