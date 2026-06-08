@@ -1,6 +1,7 @@
 import "./RoleTitle.css"
 
 import Icon from "../../../../../../../../components/icon/Icon";
+import { Link } from "react-router-dom";
 
 interface Props {
     title: string,
@@ -8,10 +9,11 @@ interface Props {
     epValue?: number,
     role?: string,
     secondaryRole?: string,
-    hasBottomBorder?: boolean
+    hasBottomBorder?: boolean,
+    linkURL?: string
 }
 
-export default function RoleTitle({ title, skulls, epValue, role, secondaryRole, hasBottomBorder }: Props) {
+export default function RoleTitle({ title, skulls, epValue, role, secondaryRole, hasBottomBorder, linkURL }: Props) {
     const showRightSide = (skulls || skulls === 0 || epValue) && role
 
     let shellClass = 'role-shell'
@@ -57,7 +59,14 @@ export default function RoleTitle({ title, skulls, epValue, role, secondaryRole,
 
     return (
         <div className={shellClass}>
-            <h2>{title}</h2>
+            {linkURL ? (
+                <Link to={linkURL} target="_blank">
+                    <h2>{title}</h2>
+                    <Icon iconName="go-to" color="gray" iconSize='small' margin="left" />
+                </Link>
+            ) : (
+                <h2>{title}</h2>
+            )}
             {showRightSide &&
                 <div className="skull-frame">
                     <p><span data-tooltip-id="my-tooltip" data-tooltip-content={secondaryTooltip}>{secondaryRole ? `${secondaryRole} ` : ''} </span>{role} </p>

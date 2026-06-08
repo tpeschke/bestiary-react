@@ -3,7 +3,7 @@ import './Icon.css'
 import { JSX, MouseEventHandler } from 'react'
 import { Tooltip } from 'react-tooltip'
 
-export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'no-shield' | 'shield-exclaim' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit' | 'run' | 'user' | 'check' | 'Ko-fi' | 'Discord' | 'hamburger' | 'fear' | 'locust'
+export type IconName = 'plus' | 'minus' | 'eye' | 'd20' | 'info' | 'bulletList' | 'numberedList' | 'backward' | 'forward' | 'skull' | 'skull-outline' | 'downArrow' | 'down' | 'up' | 'redo' | 'table' | 'image' | 'link' | 'go-to' | 'obstacle' | 'copy' | 'deviation' | 'reversal' | 'download' | 'star' | 'star-hollow' | 'magnifying-glass' | 'dice' | 'direction-alphabet-z' | 'direction-alphabet-a' | 'direction-number-9' | 'direction-number-1' | 'log-in' | 'log-out' | 'wall' | 'shield' | 'no-shield' | 'shield-exclaim' | 'ghost' | 'trash' | 'crack' | 'brush-hammer' | 'theater-masks' | 'crossed-swords' | 'brains' | 'treasure' | 'book' | 'monster' | 'warning' | 'chart' | 'edit' | 'run' | 'user' | 'check' | 'Ko-fi' | 'Discord' | 'hamburger' | 'fear' | 'locust'
 
 type Color = null | 'black' | 'white' | 'orange' | 'red' | 'yellow' | 'gray' | 'dark-gray' | 'blue'
 
@@ -85,6 +85,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break
         case 'link':
             styling = "fa-solid fa-link"
+            break
+        case 'go-to':
+            styling = "fa-solid fa-arrow-up-right-from-square"
             break
         case 'obstacle':
             styling = "fa-solid fa-triangle-exclamation"
@@ -240,6 +243,9 @@ export default function Icon({ iconName, tooltip, color, iconSize, margin, htmlT
             break;
         case 'h2':
             styling += ' h2-size'
+            break;
+        case 'small':
+            styling += ' p-size'
             break;
     }
 

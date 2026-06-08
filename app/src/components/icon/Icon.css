@@ -47,6 +47,10 @@ i {
     font-size: 18px;
 }
 
+.p-size {
+    font-size: 12px !important;
+}
+
 .margin-left {
     margin-left: 5px;
 }

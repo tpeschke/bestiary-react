@@ -7,9 +7,15 @@
     padding: 5px;
 }
 
-.role-shell h2, .role-shell p {
+.role-shell h2,
+.role-shell p {
     color: white;
     line-height: unset;
+}
+
+.role-shell a {
+    display: flex;
+    align-items: end;
 }
 
 .role-shell i {

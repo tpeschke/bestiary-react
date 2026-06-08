@@ -43,7 +43,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {type === 'Bonfire' ?
                 <RoleTitle title='Confrontation' skulls={socialSkulls} role={socialRole} secondaryRole={socialSecondary} />
                 :
-                <RoleTitle title="Social" epValue={socialEpValue} role={socialRole} secondaryRole={socialSecondary} />
+                <RoleTitle title="Social" epValue={socialEpValue} role={socialRole} secondaryRole={socialSecondary} linkURL="/encounters/confrontations" />
             }
             {showDefenseSection &&
                 <>
