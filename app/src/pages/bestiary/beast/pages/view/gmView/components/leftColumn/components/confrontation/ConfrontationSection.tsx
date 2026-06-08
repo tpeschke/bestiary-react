@@ -3,6 +3,9 @@ import SpecialInfo from "../specialInfo/specialInfo"
 import CharacteristicsDisplay from "./components/CharacteristicsDisplay"
 import { SpecificSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces"
 import CapacityDisplay from "./components/CapacityDisplay"
+import getLesserInfo from "../utilities/getLesserInfo"
+import getEliteInfo from "../utilities/getEliteInfo"
+import getSoloInfo from "../utilities/getSoloInfo"
 
 interface Props {
     socialInfo: SpecificSocialInfo
@@ -29,9 +32,13 @@ export default function ConfrontationSection({ socialInfo }: Props) {
 
     const swarmBonus = getSwarmBonus()
 
+    const lesserBonus = getLesserInfo(socialSecondary, type)
+    const eliteBonus = getEliteInfo(socialSecondary, type)
+    const soloBonus = getSoloInfo(socialSecondary, type)
+
     // if HM info is null, the code uses the Bonfire info to generate it
     // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
-    const showDefenseSection = (!!defenseInfo && defenseInfo !== '<p></p>') || beastBonus || swarmBonus
+    const showDefenseSection = (!!defenseInfo && defenseInfo !== '<p></p>') || beastBonus || swarmBonus || lesserBonus || eliteBonus || soloBonus
     const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     if (socialRole === 'No Personality') {
@@ -48,7 +55,7 @@ export default function ConfrontationSection({ socialInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo + (beastBonus ?? '') + (swarmBonus ?? '')} />
+                    <SpecialInfo info={defenseInfo + (lesserBonus ?? '') + (eliteBonus ?? '') + (soloBonus ?? '') + (beastBonus ?? '') + (swarmBonus ?? '')} />
                 </>
             }
             {showAttackSection &&

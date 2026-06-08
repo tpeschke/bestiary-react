@@ -8,6 +8,9 @@ import ChallengesDisplay from "./components/Challenges/ChallengesDisplay"
 import { SpecificSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces"
 import Body from "../../../../../../../components/UI/body/Body"
 import Icon from '../../../../../../../../../../components/icon/Icon'
+import getEliteInfo from '../utilities/getEliteInfo'
+import getLesserInfo from '../utilities/getLesserInfo'
+import getSoloInfo from '../utilities/getSoloInfo'
 
 interface Props {
     skillInfo: SpecificSkillInfo
@@ -19,12 +22,16 @@ export default function SkillSection({ skillInfo }: Props) {
     const { threshold } = stress
 
     const showSkillSection = skills?.preferred || skills?.weakness || skills?.everythingElseStrength !== 'x'
-    
+
     const showThreshold = threshold && type === 'Bonfire'
+
+    const lesserBonus = getLesserInfo(skillSecondary, type)
+    const eliteBonus = getEliteInfo(skillSecondary, type)
+    const soloBonus = getSoloInfo(skillSecondary, type)
 
     // if HM info is null, the code uses the Bonfire info to generate it
     // So if we want Bonfire info but not HM info, we need to leave a placeholder, hence to '<p></p>'
-    const showDefenseSection = !!defenseInfo && defenseInfo !== '<p></p>'
+    const showDefenseSection = !!defenseInfo && defenseInfo !== '<p></p>' || lesserBonus || eliteBonus || soloBonus
     const showAttackSection = !!attackInfo && attackInfo !== '<p></p>'
 
     const showObstacles = obstacles.length > 0
@@ -49,7 +56,7 @@ export default function SkillSection({ skillInfo }: Props) {
             {showDefenseSection &&
                 <>
                     <h3>Defense Info</h3>
-                    <SpecialInfo info={defenseInfo} />
+                    <SpecialInfo info={defenseInfo + (lesserBonus ?? '') + (eliteBonus ?? '') + (soloBonus ?? '')} />
                 </>
             }
             {showAttackSection &&
