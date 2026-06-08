@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { getSystemPreference } from '../../../../redux/slices/userSlice'
 import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 import Basic from './steps/HackMaster/Basic/Basic'
+import Advanced from './steps/HackMaster/Advanced/Advanced'
 
 export default function ConfrontationsEncounterDesign() {
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
@@ -55,13 +56,16 @@ function getBonfireVersion() {
 function getHackMasterVersion() {
     return (
         <div className='card-background'>
-            <TopHeader name={`Social`} />
+            <TopHeader name={`Social Encounters`} />
             <p>This framework is meant to give you, the GM, a scaffolding to give social interactions more of a bite (and more of an influence on the rest of the game).</p>
             <p>A basic set up is given if you want to have it play only a minor role (and have it resolve quicker) and an advanced set up is given if you want something a bit more hefty. The advanced set up is built on the basic set up so you can shift between them when ready.</p>
             <br/>
             <Drawers>
                 <Drawer label='Basic'>
                     <Basic />
+                </Drawer>
+                <Drawer label='Advanced'>
+                    <Advanced />
                 </Drawer>
             </Drawers>
         </div>
