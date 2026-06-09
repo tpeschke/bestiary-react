@@ -1,0 +1,17 @@
+.image-update-shell {
+    display: flex;
+}
+
+.image-update-shell img {
+    max-width: 300px;
+}
+
+.image-update-shell>div {
+    margin-right: 5px
+}
+
+.image-update-shell .catalog-preview {
+    margin-top: 15px;
+    display: flex;
+    align-items: flex-start;
+}

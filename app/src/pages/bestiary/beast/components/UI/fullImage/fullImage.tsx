@@ -11,18 +11,19 @@ interface Props {
     imageParam: number,
     altText?: string,
     artistInfo?: ArtistInfo
-    roleID?: string | null
+    roleID?: string | null,
+    addTimeStamp?: boolean
 }
 
-export default function FullImage({ imageParam, altText, artistInfo, roleID = '' }: Props) {
+export default function FullImage({ imageParam, altText, artistInfo, roleID = '', addTimeStamp }: Props) {
     const [hasRoleArt, setHasRoleArt] = useState(false)
 
     const link = artistInfo?.link
     const tooltip = artistInfo?.tooltip
     const artist = artistInfo?.artist
 
-    const roleImage = imageBase + imageParam + roleID
-    const normalImage = imageBase + imageParam
+    const roleImage = imageBase + imageParam + roleID + (addTimeStamp ? `?t=${Date.now()}` : '')
+    const normalImage = imageBase + imageParam + (addTimeStamp ? `?t=${Date.now()}` : '')
     const notFoundImage = ImageNotFound
 
     useEffect(() => {

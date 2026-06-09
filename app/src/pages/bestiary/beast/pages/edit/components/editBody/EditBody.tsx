@@ -43,7 +43,7 @@ export default function EditBody({
 }: Props) {
     const [tabIndex, setTabIndex] = useState(0)
 
-    const { 
+    const {
         id, rawGeneralInfo, rawCombatInfoByRole, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
     } = beast
     const { name } = rawGeneralInfo
@@ -57,6 +57,12 @@ export default function EditBody({
 
     const roleID = roleInfo?.roles[selectedRoleIndex]?.id
 
+    const imageInfo = {
+        beastID: id,
+        roleID,
+        hasRoles: roleInfo?.roles.length > 0
+    }
+
     return (
         <div className="edit-body-shell">
             <NameHeader name={`Edit ${name}`} />
@@ -67,9 +73,10 @@ export default function EditBody({
                 {tabIndex === 0 &&
                     <>
                         <h1>Main Info</h1>
-                        <GeneralInfoEdit 
-                            generalInfo={rawGeneralInfo} 
-                            updateGeneralInfoFunctions={updateGeneralInfoFunctions} 
+                        <GeneralInfoEdit
+                            imageInfo={imageInfo}
+                            generalInfo={rawGeneralInfo}
+                            updateGeneralInfoFunctions={updateGeneralInfoFunctions}
                             linkedInfo={linkedInfo}
                         />
                     </>
