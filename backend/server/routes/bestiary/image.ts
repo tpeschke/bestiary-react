@@ -4,8 +4,8 @@ import { Request, Response, Error } from '../../interfaces/apiInterfaces'
 import { amazonImageBucket } from '../../server-config'
 import axios from 'axios'
 import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
-import { isOwner } from '../../utilities/ownerAccess'
 import uploadMain from '../../controllers/bestiary/image/main'
+import { isOwnerMiddleware } from '../../utilities/ownerAccess'
 
 const imageRoutes = express.Router()
 
@@ -28,18 +28,11 @@ interface UploadImageRequest extends Request {
     file: any,
 }
 
-imageRoutes.post('/update/:beastID', async (request: UploadImageRequest, response: Response) => {
-    const { user } = request
-    if (isOwner(user?.id)) {
-        uploadMain.array('image', 1), (request: UploadImageRequest, response: Response) => {
-            if (!request.file) {
-                response.send({ message: 'Wrong file type, only upload JPEG and/or PNG', color: 'red' })
-            } else {
-                response.send({ image: request.file })
-            }
-        }
+imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image', 1), (request: UploadImageRequest, response: Response) => {
+    if (!request.file) {
+        response.send({ message: 'Wrong file type, only upload JPEG and/or PNG', color: 'red' })
     } else {
-        checkForContentTypeBeforeSending(response, { color: 'red', message: "You don't own this entry so can't edit it", type: 'message' })
+        response.send({ image: request.file })
     }
 })
 

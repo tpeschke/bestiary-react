@@ -3,6 +3,7 @@ import FullImage from '../../../../../../../../components/UI/fullImage/fullImage
 import './ImageUpdate.css'
 import ImageNotFound from '../../../../../../../../../../../assets/images/404.png'
 import axios from 'axios'
+import { useState } from 'react'
 
 interface Props {
     beastID: number,
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
+    const [timeStamp, setTimeStamp] = useState(Date.now())
+
     const roleImage = imageBase + beastID + roleID + '-token'
     const normalImage = imageBase + beastID + '-token'
     const notFoundImage = ImageNotFound
@@ -34,14 +37,27 @@ export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
         }
     }
 
-    function onMainImagePicked(event: any): void {
+    async function onMainImagePicked(event: any): Promise<void> {
         const files = (event?.target as HTMLInputElement).files
         if (files) {
             const [FILE] = files;
             const imageForm = new FormData();
             imageForm.append('image', FILE);
 
-            axios.post(imageURL + 'update/' + beastID, { imageForm })
+            await axios.post(imageURL + 'update/' + beastID, imageForm)
+            setTimeStamp(Date.now())
+        }
+    }
+
+    async function onTokenImagePicked(event: any): Promise<void> {
+        const files = (event?.target as HTMLInputElement).files
+        if (files) {
+            const [FILE] = files;
+            const imageForm = new FormData();
+            imageForm.append('image', FILE);
+
+            axios.post(imageURL + 'update/' + beastID + '-token', imageForm)
+            setTimeStamp(Date.now())
         }
     }
 
@@ -50,13 +66,8 @@ export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
             <div>
                 <h2>Main Image</h2>
 
-                <FullImage imageParam={beastID} addTimeStamp={true} />
-                <div>
-                    <label data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit">
-                        <i className="fa fa-cloud-upload"></i> Upload Image
-                    </label>
-                    <input id="file-upload" type="file" onChange={onMainImagePicked} />
-                </div>
+                <FullImage imageParam={beastID} timeStamp={timeStamp} />
+                <input id="file-upload" type="file" onChange={onMainImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
 
                 <div className='catalog-preview'>
                     {/* change catalog image position */}
@@ -68,21 +79,26 @@ export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
                         <img src={thumbnailImageBase + 'thumbnail-' + beastID} style={{ 'objectPosition': 'top' }} onError={handleCatalogImageError}></img>
                     </div>
                 </div>
+
+                <div className='catalog-preview'>
+                    <div>
+                        <h3>Token</h3>
+                        <input id="file-upload" type="file" onChange={onTokenImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
+                    </div>
+
+                    <img src={imageBase + beastID + '-token' + `?t=${timeStamp}`} alt={'token'} onError={handleImageError}></img>
+                </div>
             </div>
             <div>
                 {hasRoles && (
                     <>
                         <h3>Role Image</h3>
-                        <FullImage imageParam={beastID} roleID={roleID} addTimeStamp={true} />
+                        <FullImage imageParam={beastID} roleID={roleID} timeStamp={timeStamp} />
                         {/* upload image */}
                     </>
                 )}
             </div>
-            <div>
-                <h2>Token</h2>
-                <img src={hasRoles ? roleImage : normalImage} alt={'token'} onError={handleImageError}></img>
-                <button>Upload Token Image</button>
-            </div>
+
         </div>
     )
 }
