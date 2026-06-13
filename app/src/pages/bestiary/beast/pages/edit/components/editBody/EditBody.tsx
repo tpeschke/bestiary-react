@@ -15,7 +15,7 @@ import CombatRoleSelect from './components/combatEdit/CombatRoleSelect';
 import SkillRoleSelect from './components/skillEdit/SkillRoleSelect';
 import StrategyEdit from './components/strategyTab/strategyEdit/StrategyEdit';
 import { UpdateGeneralInfoFunctionsObject } from '../../../../hooks/updateUtilities/updateGeneralInfo';
-import GeneralInfoEdit from './components/generalInfoEdit/GeneralInfoEdit';
+import GeneralInfoEdit, { EditImageInfo } from './components/generalInfoEdit/GeneralInfoEdit';
 import StrategicOptionsDisplay from './components/strategyTab/strategicOptions/strategicOptions';
 import SocialEdit from './components/socialEdit/SocialEdit';
 import EditRandomEncounters from '../editRandomEncounters/EditRandomEncounters';
@@ -44,7 +44,8 @@ export default function EditBody({
     const [tabIndex, setTabIndex] = useState(0)
 
     const {
-        id, rawGeneralInfo, rawCombatInfoByRole, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells, linkedInfo
+        id, rawGeneralInfo, rawCombatInfoByRole, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells,
+        linkedInfo, imageInfo
     } = beast
     const { name } = rawGeneralInfo
     const { strategiesNLimits, limitNotes, options } = rawCombatInfoByRole
@@ -57,7 +58,8 @@ export default function EditBody({
 
     const roleID = roleInfo?.roles[selectedRoleIndex]?.id
 
-    const imageInfo = {
+    const editImageInfo: EditImageInfo = {
+        ...imageInfo,
         beastID: id,
         roleID,
         hasRoles: roleInfo?.roles.length > 0
@@ -74,7 +76,7 @@ export default function EditBody({
                     <>
                         <h1>Main Info</h1>
                         <GeneralInfoEdit
-                            imageInfo={imageInfo}
+                            imageInfo={editImageInfo}
                             generalInfo={rawGeneralInfo}
                             updateGeneralInfoFunctions={updateGeneralInfoFunctions}
                             linkedInfo={linkedInfo}

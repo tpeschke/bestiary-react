@@ -2,11 +2,13 @@ import { NonspecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoIn
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { UpdateArrayFunction, UpdateFunction } from "./interfaces/updateInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
+import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces"
 
 export type UpdateGeneralInfoFunctionsObject = {
     updatePaletteInfo: UpdateFunction,
     updateGeneralInfo: UpdateFunction,
     updateLinkedInfo: UpdateArrayFunction
+    updateImageInfo: UpdateFunction
 }
 
 export default function getUpdateGeneralInfoFunctions(
@@ -54,6 +56,21 @@ export default function getUpdateGeneralInfoFunctions(
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     linkedInfo: modifiedLinkedInfo
+                }
+
+                updateBeastInfo(modifiedBeastInfo)
+            }
+        },
+        updateImageInfo: (key: string, value: any[]) => {
+            if (beast) {
+                let modifiedImageInfo: ImageInfo = {
+                    ...beast.imageInfo,
+                    [key]: value
+                }
+
+                const modifiedBeastInfo: any = {
+                    ...beast.beastInfo,
+                    imageInfo: modifiedImageInfo
                 }
 
                 updateBeastInfo(modifiedBeastInfo)

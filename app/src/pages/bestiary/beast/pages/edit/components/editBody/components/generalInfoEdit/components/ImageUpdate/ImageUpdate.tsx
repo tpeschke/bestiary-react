@@ -4,15 +4,22 @@ import './ImageUpdate.css'
 import ImageNotFound from '../../../../../../../../../../../assets/images/404.png'
 import axios from 'axios'
 import { useState } from 'react'
+import { UpdateFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 
 interface Props {
     beastID: number,
     roleID: string,
-    hasRoles: boolean
+    hasRoles: boolean,
+    thumbnail?: string,
+    updateImageInfo: UpdateFunction
 }
 
-export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
+export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, updateImageInfo }: Props) {
     const [timeStamp, setTimeStamp] = useState(Date.now())
+
+    const objectPositionOptions = [
+        'top left', 'top center', 'top right', 'center left', 'center center', 'center right', 'bottom left', 'bottom center', 'bottom right'
+    ]
 
     const roleImage = imageBase + beastID + roleID + '-token'
     const normalImage = imageBase + beastID + '-token'
@@ -70,13 +77,12 @@ export default function ImageUpdate({ beastID, roleID, hasRoles }: Props) {
                 <input id="file-upload" type="file" onChange={onMainImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
 
                 <div className='catalog-preview'>
-                    {/* change catalog image position */}
-                    <button>Placeholder</button>
-
+                    <select value={thumbnail} onChange={event => updateImageInfo('thumbnail', event.target.value)}>
+                        {objectPositionOptions.map(position => <option value={position} key={position}>{position}</option>)}
+                    </select>
 
                     <div className='image-frame'>
-                        {/* objectPosition needs to be positioned */}
-                        <img src={thumbnailImageBase + 'thumbnail-' + beastID} style={{ 'objectPosition': 'top' }} onError={handleCatalogImageError}></img>
+                        <img src={thumbnailImageBase + 'thumbnail-' + beastID} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleCatalogImageError}></img>
                     </div>
                 </div>
 

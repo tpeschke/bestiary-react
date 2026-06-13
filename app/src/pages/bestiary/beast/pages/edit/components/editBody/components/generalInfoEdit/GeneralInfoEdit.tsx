@@ -8,28 +8,28 @@ import AppearanceEdit from './components/Appearance'
 import { BONFIRE } from '@bestiary/common/utilities/get/getSystemString'
 import ImageUpdate from './components/ImageUpdate/ImageUpdate'
 
-export interface ImageInfo {
+export interface EditImageInfo {
     beastID: number,
     roleID: string,
     hasRoles: boolean
 }
 
 interface Props {
-    imageInfo: ImageInfo
+    imageInfo: EditImageInfo
     generalInfo: NonspecificGeneralInfo,
     updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
     linkedInfo: LinkedInfo
 }
 
 export default function GeneralInfoEdit({ imageInfo, generalInfo, updateGeneralInfoFunctions, linkedInfo }: Props) {
-    const { updateGeneralInfo, updatePaletteInfo, updateLinkedInfo } = updateGeneralInfoFunctions
+    const { updateGeneralInfo, updatePaletteInfo, updateLinkedInfo, updateImageInfo } = updateGeneralInfoFunctions
     const { palette, appearance } = generalInfo
 
     const { types } = linkedInfo
 
     return (
         <div className="main-info-edit">
-            <ImageUpdate {...imageInfo} />
+            <ImageUpdate {...imageInfo} updateImageInfo={updateImageInfo} />
             <AppearanceEdit updateGeneralInfo={updateGeneralInfo} appearance={appearance[BONFIRE]} />
             <TypeEdit types={types} updateLinkedInfo={updateLinkedInfo} />
             <PaletteDisplay palette={palette} updatePaletteInfo={updatePaletteInfo} />

@@ -1,5 +1,5 @@
 export default interface ImageInfo {
-    thumbnail: string,
+    thumbnail?: string,
     imagesource: number,
     artistInfo: ArtistObject,
 }
