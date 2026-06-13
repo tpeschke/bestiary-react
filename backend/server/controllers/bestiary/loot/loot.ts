@@ -24,7 +24,7 @@ interface LootBody {
     lairLoot?: LootObject
 }
 
-export default async function getLoot(request: LootRequest, response: Response) {
+export default async function getLoot(request: LootRequest | any, response: Response) {
     const { timesToRoll, loot, maxPoints } = request.body
     const { carriedLoot, lairLoot } = loot
 

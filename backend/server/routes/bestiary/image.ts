@@ -15,7 +15,7 @@ interface ImageRequest extends Request {
     }
 }
 
-imageRoutes.get('/:imageSlug', async (request: ImageRequest, response: Response) => {
+imageRoutes.get('/:imageSlug', async (request: ImageRequest | any, response: Response) => {
     const { imageSlug } = request.params
     const imageResult = await axios.get(amazonImageBucket + imageSlug).catch((error: Error) => error)
 
@@ -28,7 +28,7 @@ interface UploadImageRequest extends Request {
     file: any,
 }
 
-imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image', 1), (request: UploadImageRequest, response: Response) => {
+imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image', 1), (request: UploadImageRequest | any, response: Response) => {
     if (!request.file) {
         response.send({ message: 'Wrong file type, only upload JPEG and/or PNG', color: 'red' })
     } else {

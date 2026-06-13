@@ -21,7 +21,7 @@ interface BeastRequest extends Request {
     }
 }
 
-export async function updateBeast(request: BeastRequest, response: Response) {
+export async function updateBeast(request: BeastRequest | any, response: Response) {
     const { body, user } = request
     const { beastInfo: beast, randomEncounterInfo } = body
     const { id: beastID, combatInfo, socialInfo, skillInfo, roleInfo, generalInfo, linkedInfo } = beast

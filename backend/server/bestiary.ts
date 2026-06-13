@@ -97,7 +97,7 @@ app.use('/api/challenge', challengeRoutes)
 // ================================== \\
 
 app.use(express.static(__dirname + `/../../app/dist`));
-app.get('/*', (_: Request, response: Response) => {
+app.get('/*', (_: Request | any, response: Response) => {
     response.sendFile(path.join(__dirname + '/../../app/dist/index.html'))
 })
 

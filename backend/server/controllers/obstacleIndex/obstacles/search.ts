@@ -15,7 +15,7 @@ where Upper(body) like Upper(( '%' || $1 || '%' )) or Upper(name) like Upper(( '
 group by b.id
 order by name;`
 
-export async function searchObstacle(request: GetRequest, response: Response) {
+export async function searchObstacle(request: GetRequest | any, response: Response) {
     const patreon = getAccessLevel(request.user)
     const searchString = request.params.searchString
 

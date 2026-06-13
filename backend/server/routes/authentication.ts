@@ -18,7 +18,7 @@ export default function authRoutesWithoutPassword(passport: any) {
         successRedirect: `/`
     }));
 
-    authRoutes.get('/signOut', (request: LogOutRequest, response: LogOutResponse, next: Function) => {
+    authRoutes.get('/signOut', (request: LogOutRequest | any, response: LogOutResponse, next: Function) => {
         request.logOut((error: Error) => {
             if (error) { return next(error); }
             response.redirect('/');

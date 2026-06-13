@@ -29,7 +29,7 @@ interface ownerAuthBody {
     beastId: number
 }
 
-async function checkIfGameMaster(request: gmAuthRequest, response: Response) {
+async function checkIfGameMaster(request: gmAuthRequest | any, response: Response) {
     const { user, body, params } = request
     const beastId = body.beastId ?? +params.beastId
 

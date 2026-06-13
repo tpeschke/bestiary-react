@@ -39,7 +39,7 @@ export interface SearchReturn {
     id: number
 }
 
-export default async function search(request: SearchRequest, response: Response) {
+export default async function search(request: SearchRequest | any, response: Response) {
     const idArray = await getIDsFromQuery(request.query, request.user)
     const flattenedIDArray = flattenIDArray(idArray)
     const populatedArray = await getBeastPreviews(flattenedIDArray, request.user)

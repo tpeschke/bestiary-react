@@ -20,7 +20,7 @@ interface NumbersReturn {
     miles: string
 }
 
-export default async function getRandomEncounter(request: BasicParamsRequest, response: Response) {
+export default async function getRandomEncounter(request: BasicParamsRequest | any, response: Response) {
     let promiseArray: any[] = []
     let encounterObject: Encounter = {}
     const beastId = +request.params.beastId
@@ -53,7 +53,7 @@ export default async function getRandomEncounter(request: BasicParamsRequest, re
     })
 }
 
-export async function getEditRandomEncounter(request: BasicParamsRequest, response: Response) {
+export async function getEditRandomEncounter(request: BasicParamsRequest | any, response: Response) {
     const beastId = +request.params.beastId
 
     let editEncounter: any = {

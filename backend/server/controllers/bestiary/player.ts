@@ -10,7 +10,7 @@ import { getArtistInfo } from "./gameMaster/utilities/getUtilities/utilities/gen
 
 const sendErrorForward = sendErrorForwardNoFile('player controller')
 
-export async function getPlayerVersionOfBeast(request: BasicParamsRequest, response: Response) {
+export async function getPlayerVersionOfBeast(request: BasicParamsRequest | any, response: Response) {
     const beastId: number = +request.params.beastId
     const { user } = request
     const patreon = getAccessLevel(user)
@@ -45,7 +45,7 @@ interface Body {
     }
 }
 
-export async function addPlayerNotes(request: NoteRequest, response: Response) {
+export async function addPlayerNotes(request: NoteRequest | any, response: Response) {
     const { user } = request
     const { beastId, notes } = request.body
 
@@ -79,7 +79,7 @@ interface Body {
     newStatus: boolean
 }
 
-export async function updateFavoriteStatus(request: FavoriteRequest, response: Response) {
+export async function updateFavoriteStatus(request: FavoriteRequest | any, response: Response) {
     const userID = request.user?.id
     const { beastID, newStatus } = request.body
 

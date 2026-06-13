@@ -45,7 +45,7 @@ where
 )
 order by name asc`
 
-export async function searchCatalog(request: SearchRequest, response: Response) {
+export async function searchCatalog(request: SearchRequest | any, response: Response) {
     const { keyword, type } = request.query
 
     if (!keyword) {

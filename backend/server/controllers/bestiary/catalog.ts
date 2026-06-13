@@ -16,7 +16,7 @@ interface Catalog {
 let catalogCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
 let newCache: Catalog = { freeBeasts: [], templates: [], catalogItems: [], favorites: [] }
 
-export async function getCatalog(request: Request, response: Response) {
+export async function getCatalog(request: Request | any, response: Response) {
     if (request.user?.id) {
         const { id: userID } = request.user
         const favorites = await getFavorites(userID)

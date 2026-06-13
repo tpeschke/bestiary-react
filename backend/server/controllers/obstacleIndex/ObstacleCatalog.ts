@@ -11,7 +11,7 @@ import updateSkullVariants from "./updateUtilities/updateSkullVariants"
 let catalogCache: ObstacleTile[][] = []
 let newCache: ObstacleTile[][] = []
 
-export async function getObstacleCatalog(_: Request, response: Response) {
+export async function getObstacleCatalog(_: Request | any, response: Response) {
     checkForContentTypeBeforeSending(response, catalogCache)
 }
 
@@ -52,7 +52,7 @@ interface saveRequest extends Request {
     body: Obstacle
 }
 
-export async function saveObstacle(request: saveRequest, response: Response) {
+export async function saveObstacle(request: saveRequest | any, response: Response) {
     const { user } = request
     let { body: obstacle } = request
 

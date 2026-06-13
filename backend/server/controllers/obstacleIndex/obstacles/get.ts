@@ -19,7 +19,7 @@ interface GetRequest extends Request {
 
 const getObstacles = `select * from obBase b where id = $1`
 
-export async function getObstaclesById(request: GetRequest, response: Response) {
+export async function getObstaclesById(request: GetRequest | any, response: Response) {
     const patreon = getAccessLevel(request.user)
     const obstacleId = +request.params.obstacleId
 

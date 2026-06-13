@@ -11,7 +11,7 @@ interface GetRandomQuery {
     listId: string
 }
 
-export async function getRandomMonsterFromList(request: GetRandomRequest, response: Response) {
+export async function getRandomMonsterFromList(request: GetRandomRequest | any, response: Response) {
     const { listId } = request.params
 
     const [randomBeast] = await query(getRandomMonsterEntryFromList, listId)

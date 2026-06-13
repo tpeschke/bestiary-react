@@ -10,7 +10,7 @@ import { kofiVerificationToken } from '../server-config'
 
 const sendErrorForward = sendErrorForwardNoFile('access controller')
 
-export async function checkIfLoggedIn(request: Request, response: Response) {
+export async function checkIfLoggedIn(request: Request | any, response: Response) {
     checkForContentTypeBeforeSending(response, {
         isUserLoggedIn: request.user && request.user.id,
         patreon: request.user?.patreon ? request.user.patreon : 0,
@@ -26,7 +26,7 @@ interface BeastAccessRequest extends Request {
     }
 }
 
-export async function checkIfPlayerView(request: BeastAccessRequest, response: Response) {
+export async function checkIfPlayerView(request: BeastAccessRequest | any, response: Response) {
     const beastId: number = +request.params.beastId
     const userId = request.user?.id
     const patreon = getAccessLevel(request.user)
@@ -39,7 +39,7 @@ export async function checkIfPlayerView(request: BeastAccessRequest, response: R
     checkForContentTypeBeforeSending(response, body)
 }
 
-export async function canEditMonster(request: BeastAccessRequest, response: Response) {
+export async function canEditMonster(request: BeastAccessRequest | any, response: Response) {
     const { user } = request
 
     if (user) {
@@ -50,7 +50,7 @@ export async function canEditMonster(request: BeastAccessRequest, response: Resp
     }
 }
 
-async function checkIfUserHasPermissions(_: Request, response: Response, beastId: number, user: User) {
+async function checkIfUserHasPermissions(_: Request | any, response: Response, beastId: number, user: User) {
     const [{ userid: beastOwnerId }] = await query(checkIfUserCanEditMonster, beastId)
     const { id, patreon = 0 } = user
     const patreonAccess = getAccessLevel(user)
@@ -84,7 +84,7 @@ interface PlayerPreference extends Request {
     }
 }
 
-export async function updatePlayerPreference(request: PlayerPreference, response: Response) {
+export async function updatePlayerPreference(request: PlayerPreference | any, response: Response) {
     const preference: number = +request.params.preference
     const userId = request.user?.id
 
@@ -103,7 +103,7 @@ interface KofiRequest extends Request {
     }
 }
 
-export async function updateKofiInfo(request: KofiRequest, response: Response) {
+export async function updateKofiInfo(request: KofiRequest | any, response: Response) {
     const { verification_token, from_name, type, tier_name } = request.body.data
     if (verification_token === kofiVerificationToken) {
         if (type === 'Subscription' && tier_name === 'Game Master') {

@@ -15,7 +15,7 @@ const updateChallengeSQL = `update obChallenges c
 set flowchart = $2
 where id = $1`
 
-export default async function updateChallenge(request: ChallengeRequest, response: Response) {
+export default async function updateChallenge(request: ChallengeRequest | any, response: Response) {
     const { body, user } = request
     const { challengeInfo } = body
 

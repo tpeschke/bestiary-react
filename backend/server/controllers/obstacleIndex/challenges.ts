@@ -19,7 +19,7 @@ export interface GetChallengeRequest extends Request {
     }
 }
 
-export default async function getChallengesByID(request: GetChallengeRequest, response: Response) {
+export default async function getChallengesByID(request: GetChallengeRequest | any, response: Response) {
     const patreon = getAccessLevel(request.user)
 
     if (patreon === PLAYER) {
