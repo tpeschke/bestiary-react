@@ -1,6 +1,8 @@
 -- 5 Example Monsters for Bonfire Bestiary development
 -- Run: psql -U bestiary -d bestiary -f backend/server/db/seed/seed-example-monsters.sql
 
+BEGIN;
+
 INSERT INTO bbindividualbeast (name, intro, habitat, ecology, senses, diet, size, patreon, canplayerview, rarity, role, secondaryrole, socialrole, skillrole, plural, tactics, sp_atk, sp_def, atk_conf, def_conf, atk_skill, def_skill, combatskulls, socialskulls, skillskulls, combatpoints, socialpoints, skillpoints, hash)
 VALUES
 (
@@ -460,3 +462,117 @@ SELECT role_seed.id, b.id, role_seed.vitality, role_seed.hash, role_seed.name, r
 FROM role_seed
 JOIN bbindividualbeast b ON b.hash = role_seed.beast_hash
 ON CONFLICT DO NOTHING;
+
+WITH default_role_seed (seed_hash, default_role_id) AS (
+    VALUES
+    ('ashenwyrm-001', 'ashenwyrm-brood-scorcher'),
+    ('boggart-thornback-001', 'boggart-briar-slinger'),
+    ('cinderstag-001', 'cinderstag-grove-warden')
+)
+UPDATE bbindividualbeast
+SET defaultrole = default_role_seed.default_role_id
+FROM default_role_seed
+WHERE bbindividualbeast.hash = default_role_seed.seed_hash
+AND (bbindividualbeast.defaultrole IS NULL OR bbindividualbeast.defaultrole = '');
+
+WITH attack_seed (seed_hash, role_hash, display_index, situation, reference) AS (
+    VALUES
+    ('ashenwyrm-001', NULL, 0, 'At Range', 'Magma Spit: spits molten slag that leaves burning ground; on a Trauma Check, the target takes +2 Pos pressure and its armor gains 1 Wear.'),
+    ('ashenwyrm-001', NULL, 1, 'In Melee', 'Ember Coil: wraps an isolated target in superheated scales, forcing them to spend position escaping the burn.'),
+    ('boggart-thornback-001', NULL, 0, 'From Concealment', 'Thorn Volley: launches a spray of barbed thorns; on a Trauma Check, barbs twist deeper and add X Wear to shields.'),
+    ('boggart-thornback-001', NULL, 1, 'In the Mire', 'Mud Hook: drags ankles and pack straps through sucking mud, costing Endurance before the boggart slips away.'),
+    ('cinderstag-001', NULL, 0, 'Defending the Grove', 'Ember Charge: rushes with burning antlers; on a Trauma Check, the target is Trauma''d by ancestral fire.'),
+    ('cinderstag-001', NULL, 1, 'Protecting Allies', 'Hoof-Flare: stamps a crescent of pale fire that drives foes back from injured companions.'),
+    ('gloomweaver-001', NULL, 0, 'In Darkness', 'Shadow Bite: bites from a pool of shadow, reducing the target''s darkvision range; on a Trauma Check, the bite also drains Vitality.'),
+    ('gloomweaver-001', NULL, 1, 'From Webbing', 'Umbral Snare: lashes with shadow silk that pins light sources and adds Fatigue to anyone tearing free.'),
+    ('ironhide-troll-001', NULL, 0, 'At Range', 'Boulder Hurl: throws a massive stone; on a Trauma Check, targets are knocked prone and gain Fatigue.'),
+    ('ironhide-troll-001', NULL, 1, 'In Melee', 'Plate-Fist Smash: hammers armor and shields with stone-hard knuckles, adding 1 Wear on a hard impact.'),
+    ('ashenwyrm-001', 'ashenwyrm-brood-scorcher-001', 0, 'At Range', 'Blistering Lance: fires a narrow jet of white-hot slag; on a Trauma Check, armor gains 1 Wear.'),
+    ('ashenwyrm-001', 'ashenwyrm-brood-scorcher-001', 1, 'When Pressed', 'Ashen Backdraft: vents a cone of hot ash behind itself to punish pursuit and cover a retreat.'),
+    ('ashenwyrm-001', 'ashenwyrm-caldera-sentinel-001', 0, 'Holding Ground', 'Obsidian Sweep: knocks nearby foes away with a crystal-studded tail; shields gain 1 Wear.'),
+    ('ashenwyrm-001', 'ashenwyrm-caldera-sentinel-001', 1, 'At a Chokepoint', 'Basalt Crush: pins a foe against stone with its shoulder, trading speed for brutal control.'),
+    ('ashenwyrm-001', 'ashenwyrm-ember-hatchling-001', 0, 'Skirmishing', 'Spark Snap: darts in with a burning bite, then slips behind loose stone.'),
+    ('ashenwyrm-001', 'ashenwyrm-ember-hatchling-001', 1, 'Under Cover', 'Cinder Spit: spits a small ember into exposed gear, creating distraction before it flees.'),
+    ('boggart-thornback-001', 'boggart-briar-slinger-001', 0, 'At Range', 'Hooked Thorn: pins sleeves, straps, and exposed gear; on a Trauma Check, the target gains Fatigue.'),
+    ('boggart-thornback-001', 'boggart-briar-slinger-001', 1, 'From Hiding', 'Needle Rain: shakes a thicket loose, peppering a clustered group before ducking under roots.'),
+    ('boggart-thornback-001', 'boggart-mire-rake-001', 0, 'Skirmishing', 'Mud Slash: opens shallow cuts with a thorn knife and retreats into sucking ground.'),
+    ('boggart-thornback-001', 'boggart-mire-rake-001', 1, 'When Pursued', 'Bog Trip: hooks a boot from below the waterline and turns a chase into a scramble.'),
+    ('boggart-thornback-001', 'boggart-thorn-nest-elder-001', 0, 'Defending the Nest', 'Snarl of Canes: turns the nest wall into a lashing barrier of green wood.'),
+    ('boggart-thornback-001', 'boggart-thorn-nest-elder-001', 1, 'At Close Range', 'Root-Crook Jab: drives a hooked staff into straps and joints, opening allies to strike.'),
+    ('cinderstag-001', 'cinderstag-grove-warden-001', 0, 'Defending the Grove', 'Antler Gate: interposes burning antlers to stop a charge cold.'),
+    ('cinderstag-001', 'cinderstag-grove-warden-001', 1, 'Shielding Saplings', 'Ward Hoof: stamps a bright warning sigil that punishes foes who cross it.'),
+    ('cinderstag-001', 'cinderstag-ember-courser-001', 0, 'Charging', 'Dawn Charge: crosses open ground in a flare of pale fire, scattering unsteady foes.'),
+    ('cinderstag-001', 'cinderstag-ember-courser-001', 1, 'Circling Back', 'Smoke-Kick: wheels through warm ash, blinding a pursuer before breaking away.'),
+    ('cinderstag-001', 'cinderstag-ash-sapling-001', 0, 'Skirmishing', 'Flicker Kick: strikes with a quick hoof and bounds behind older guardians.'),
+    ('cinderstag-001', 'cinderstag-ash-sapling-001', 1, 'Fleeing Danger', 'Kindling Leap: springs over low flame and clips a foe that hesitates at the edge.')
+)
+INSERT INTO bbattacks (index, reference, tactic, situation, roleid, beastid)
+SELECT
+    attack_seed.display_index,
+    attack_seed.reference,
+    NULL,
+    attack_seed.situation,
+    role_match.id,
+    beast.id
+FROM attack_seed
+JOIN bbindividualbeast beast ON beast.hash = attack_seed.seed_hash
+LEFT JOIN bbroles role_match ON role_match.hash = attack_seed.role_hash
+WHERE (attack_seed.role_hash IS NULL OR role_match.id IS NOT NULL)
+AND NOT EXISTS (
+    SELECT 1
+    FROM bbattacks
+    WHERE bbattacks.beastid = beast.id
+    AND (bbattacks.roleid = role_match.id OR (bbattacks.roleid IS NULL AND role_match.id IS NULL))
+    AND bbattacks.reference = attack_seed.reference
+);
+
+WITH defense_seed (seed_hash, display_index, defense_name, info, swarmbonus, armor, shield, eua, addsizemod, tdr) AS (
+    VALUES
+    ('ashenwyrm-001', 0, 'Obsidian Scales', '<p>Heat Shimmer: when the Ashenwyrm Parries an attack, the attacker suffers Fatigue and Stress from the furnace glare.</p>', false, '', '', false, true, false),
+    ('boggart-thornback-001', 0, 'Briar Armor', '<p>Briar Armor: when the Boggart Parries an attack, brambles snag the weapon and inflict 1 Wear.</p>', false, '', '', false, true, false),
+    ('cinderstag-001', 0, 'Ashen Ward', '<p>Ashen Ward: allies within 15ft gain Vitality against flame and reduce incoming Wear by 1.</p>', false, '', '', false, true, false),
+    ('gloomweaver-001', 0, 'Light Eater', '<p>Light Eater: can suppress magical and mundane light within 30ft, gaining Recovery when it Parries an attack in darkness.</p>', false, '', '', false, true, false),
+    ('ironhide-troll-001', 0, 'Iron Skin', '<p>Iron Skin: reduces all physical damage by a flat amount; weapons gain 1 Wear when the Troll Parries an attack.</p>', false, '', '', false, true, true)
+),
+missing_defense_seed AS (
+    SELECT
+        defense_seed.*,
+        bbindividualbeast.id AS beastid
+    FROM defense_seed
+    JOIN bbindividualbeast ON bbindividualbeast.hash = defense_seed.seed_hash
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM bbdefenses
+        WHERE bbdefenses.beastid = bbindividualbeast.id
+        AND bbdefenses.name = defense_seed.defense_name
+    )
+),
+inserted_combat_stats AS (
+    INSERT INTO bbcombatstats (
+        beastid, roleid, piercingweapons, slashingweapons, crushingweapons, weaponsmallslashing,
+        weaponsmallcrushing, weaponsmallpiercing, andslashing, andcrushing, flanks, alldefense,
+        allaround, armorandshields, unarmored, attack, isspecial, eua, addsizemod, weapon, shield,
+        armor, weaponname, rangeddefense, initiative, measure, recovery, showonlydefenses, weapontype,
+        rangedistance, swarmbonus, adjustment, tdr, info
+    )
+    SELECT
+        beastid, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, 'no', eua, addsizemod, '', shield,
+        armor, defense_name, NULL, NULL, NULL, NULL, true, 'm',
+        NULL, swarmbonus, 0, tdr, info
+    FROM missing_defense_seed
+    RETURNING id, beastid, weaponname
+)
+INSERT INTO bbdefenses (oldid, beastid, index, name)
+SELECT
+    inserted_combat_stats.id,
+    inserted_combat_stats.beastid,
+    missing_defense_seed.display_index,
+    missing_defense_seed.defense_name
+FROM inserted_combat_stats
+JOIN missing_defense_seed
+    ON missing_defense_seed.beastid = inserted_combat_stats.beastid
+    AND missing_defense_seed.defense_name = inserted_combat_stats.weaponname;
+
+COMMIT;
