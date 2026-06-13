@@ -40,26 +40,46 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
         currentTarget.src = thumbnailImageBase + 'thumbnail-' + beastID + `?t=${timeStamp}`
     }
 
-    async function onMainImagePicked(event: any): Promise<void> {
+    function getImageForm(event: any) {
         const files = (event?.target as HTMLInputElement).files
+
         if (files) {
             const [FILE] = files;
             const imageForm = new FormData();
             imageForm.append('image', FILE);
+            return imageForm
+        }
+        return null
+    }
 
+    async function onMainImagePicked(event: any): Promise<void> {
+        const imageForm = getImageForm(event)
+        if (imageForm) {
             await axios.post(imageURL + 'update/' + beastID, imageForm)
             setTimeStamp(Date.now())
         }
     }
 
     async function onTokenImagePicked(event: any): Promise<void> {
-        const files = (event?.target as HTMLInputElement).files
-        if (files) {
-            const [FILE] = files;
-            const imageForm = new FormData();
-            imageForm.append('image', FILE);
-
+        const imageForm = getImageForm(event)
+        if (imageForm) {
             axios.post(imageURL + 'update/' + beastID + '-token', imageForm)
+            setTimeStamp(Date.now())
+        }
+    }
+
+    async function onRoleImagePicked(event: any): Promise<void> {
+        const imageForm = getImageForm(event)
+        if (imageForm) {
+            axios.post(imageURL + 'update/' + beastID + roleID, imageForm)
+            setTimeStamp(Date.now())
+        }
+    }
+
+    async function onRoleTokenImagePicked(event: any): Promise<void> {
+        const imageForm = getImageForm(event)
+        if (imageForm) {
+            axios.post(imageURL + 'update/' + beastID + roleID + '-token', imageForm)
             setTimeStamp(Date.now())
         }
     }
@@ -73,6 +93,15 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
                 <input id="file-upload" type="file" onChange={onMainImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
 
                 <div className='catalog-preview'>
+                    <div>
+                        <h3>Token</h3>
+                        <input id="file-upload" type="file" onChange={onTokenImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
+                    </div>
+
+                    <img src={imageBase + beastID + '-token' + `?t=${timeStamp}`} alt={'token'}></img>
+                </div>
+
+                <div className='catalog-preview'>
                     <select value={thumbnail} onChange={event => updateImageInfo('thumbnail', event.target.value)}>
                         {objectPositionOptions.map(position => <option value={position} key={position}>{position}</option>)}
                     </select>
@@ -81,22 +110,22 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
                         <img key={timeStamp} src={thumbnailImageBase + 'thumbnail-' + beastID + `?t=${timeStamp}`} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleCatalogImageError}></img>
                     </div>
                 </div>
-
-                <div className='catalog-preview'>
-                    <div>
-                        <h3>Token</h3>
-                        <input id="file-upload" type="file" onChange={onTokenImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
-                    </div>
-
-                    <img src={imageBase + beastID + '-token' + `?t=${timeStamp}`} alt={'token'} onError={handleImageError}></img>
-                </div>
             </div>
             <div>
                 {hasRoles && (
                     <>
                         <h3>Role Image</h3>
                         <FullImage imageParam={beastID} roleID={roleID} timeStamp={timeStamp} />
-                        {/* upload image */}
+                        <input id="file-upload" type="file" onChange={onRoleImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
+                        
+                        <div className='catalog-preview'>
+                            <div>
+                                <h3>Role Token</h3>
+                                <input id="file-upload" type="file" onChange={onRoleTokenImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
+                            </div>
+
+                            <img src={imageBase + beastID + roleID + '-token' + `?t=${timeStamp}`} alt={'token'}></img>
+                        </div>
                     </>
                 )}
             </div>
