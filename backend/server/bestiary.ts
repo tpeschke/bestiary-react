@@ -107,12 +107,12 @@ app.listen(server, async () => {
     const gearCache = await collectGearCache()
     app.set('gearCache', gearCache)
 
-    // collectCatalog()
-    // if (collectMonsterCacheOn) {
-    //     collectMonsterCache(gearCache)
-    // }
+    collectCatalog()
+    if (collectMonsterCacheOn) {
+        collectMonsterCache(gearCache)
+    }
 
-    // collectObstacleCatalog()
+    collectObstacleCatalog()
 
     console.log(`Sing to me a sweet song of forgetfulness and I'll die on your shore ${server}`)
 })
