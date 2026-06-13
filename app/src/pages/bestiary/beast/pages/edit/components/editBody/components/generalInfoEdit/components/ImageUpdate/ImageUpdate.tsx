@@ -37,11 +37,7 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
 
     function handleCatalogImageError({ currentTarget }: any) {
         currentTarget.onerror = null
-        if (currentTarget.src === thumbnailImageBase + 'thumbnail-' + beastID) {
-            currentTarget.src = imageBase + beastID
-        } else {
-            currentTarget.src = ImageNotFound
-        }
+        currentTarget.src = thumbnailImageBase + 'thumbnail-' + beastID + `?t=${timeStamp}`
     }
 
     async function onMainImagePicked(event: any): Promise<void> {
@@ -82,7 +78,7 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
                     </select>
 
                     <div className='image-frame'>
-                        <img src={thumbnailImageBase + 'thumbnail-' + beastID} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleCatalogImageError}></img>
+                        <img key={timeStamp} src={thumbnailImageBase + 'thumbnail-' + beastID + `?t=${timeStamp}`} style={{ 'objectPosition': thumbnail ?? 'top' }} onError={handleCatalogImageError}></img>
                     </div>
                 </div>
 
