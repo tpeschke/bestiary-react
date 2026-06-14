@@ -5,6 +5,7 @@ import axios from "axios";
 import Icon from "../../../../../../../../../../../components/icon/Icon";
 import { obstacleSearchByNameURL } from "../../../../../../../../../../../frontend-config";
 import { UpdateFunction } from "../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces";
+import Autocomplete from "../../../../../../../../../../../components/autocomplete/Autocomplete";
 
 interface Props {
     options: StrategicOptions,
@@ -68,7 +69,7 @@ export default function AddStrategicObstaclesDisplay({ options, updateCombatInfo
         <>
             <h3>Obstacles</h3>
             <ul>
-                {obstacles.map(({label, id, obstacleid, obstaclename}) => {
+                {obstacles.map(({ label, id, obstacleid, obstaclename }) => {
                     return <li key={(label ?? '') + id + obstacleid}>{label} {obstaclename && `(${obstaclename})`}</li>
                 })}
             </ul>
@@ -77,7 +78,14 @@ export default function AddStrategicObstaclesDisplay({ options, updateCombatInfo
                     ...newObstacle,
                     label: event.target.value
                 })} />
-                <ComboBox onSelect={option => addObstacleInfo(option)} onChange={event => searchObstacleOptions(event.target.value)} placeholder="Obstacle Name" options={obstacleOptions.map(option => option.obstaclename)} enableAutocomplete />
+
+                <Autocomplete
+                    onSelect={option => addObstacleInfo(option)}
+                    onChange={event => searchObstacleOptions(event.target.value)}
+                    placeholder="Obstacle Name"
+                    options={obstacleOptions.map(option => option.obstaclename)}
+                />
+
                 <button onClick={addObstacle}><Icon iconName='plus' tooltip='Add Obstacle' /></button>
             </span>
         </>

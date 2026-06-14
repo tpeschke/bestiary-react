@@ -38,12 +38,8 @@
 }
 
 .role-select-shell .role-options button:disabled {
-    background: #795548;
-    color: #f3f3f3
-}
-
-.role-select-shell .role-options button:disabled span {
-    color: #f3f3f3
+    background: #f3f3f3;
+    color: black
 }
 
 @media (max-width: 500px) {

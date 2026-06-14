@@ -1,16 +1,19 @@
 import { SearchResult } from "@bestiary/common/interfaces/search"
 import query from "../../../../db/database"
-import { getGMPreview, getPlayerPreview } from "../../../../db/search/preview"
+import { getGMPreview, getOwnerPreview, getPlayerPreview } from "../../../../db/search/preview"
 import { User } from "@bestiary/common/interfaces/userInterfaces"
 import getAccessLevel, { PLAYER } from "@bestiary/common/utilities/get/getAccessLevel"
 import { getRarity } from "@bestiary/common/utilities/get/getRarity"
+import { isOwner } from "../../../../utilities/ownerAccess"
 
 export default async function getBeastPreviews(flattenedIDArray: number[], user: User | null | undefined): Promise<SearchResult[]> {
     const patreon = getAccessLevel(user)
     let promiseArray: Promise<SearchResult | null>[] = []
 
     flattenedIDArray.slice(0, 25).forEach(async (beastID) => {
-        if (patreon !== PLAYER) {
+        if (isOwner(user?.id)) {
+            promiseArray.push(query(getOwnerPreview, [beastID, user?.id]).then(formatResult))
+        } else if (patreon !== PLAYER) {
             promiseArray.push(query(getGMPreview, [beastID, user?.id]).then(formatResult))
         } else {
             promiseArray.push(query(getPlayerPreview, beastID).then(formatResult))

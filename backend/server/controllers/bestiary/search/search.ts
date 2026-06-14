@@ -43,6 +43,6 @@ export default async function search(request: SearchRequest | any, response: Res
     const idArray = await getIDsFromQuery(request.query, request.user)
     const flattenedIDArray = flattenIDArray(idArray)
     const populatedArray = await getBeastPreviews(flattenedIDArray, request.user)
-    
+
     checkForContentTypeBeforeSending(response, populatedArray)
 }

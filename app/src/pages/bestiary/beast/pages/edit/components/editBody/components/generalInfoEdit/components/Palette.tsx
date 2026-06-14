@@ -2,9 +2,9 @@ import { Palette } from "@bestiary/common/interfaces/beast/infoInterfaces/genera
 import { UpdateFunction } from "../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces";
 import axios from "axios";
 import { useState } from "react";
-import ComboBox from "react-responsive-combo-box";
 import { Link } from "react-router-dom";
 import { searchURL } from "../../../../../../../../../../frontend-config";
+import Autocomplete from "../../../../../../../../../../components/autocomplete/Autocomplete";
 
 interface Props {
     palette: Palette,
@@ -77,12 +77,12 @@ export default function PaletteDisplay({ palette, updatePaletteInfo }: Props) {
                     return <Link key={`${allyid}${index}`} to={`/beast/${allyid}`} target='_blank'>{formatName(name, plural)}</Link>
                 })}
             </div>
-            <ComboBox
+
+            <Autocomplete
                 onSelect={option => updateCommonAllies(option)}
                 onChange={(event: any) => updateCommonAlliesOptions(event.target.value)}
                 placeholder="Entry Name"
                 options={entryOptions.map(option => option.name)}
-                enableAutocomplete
             />
         </>
     )
