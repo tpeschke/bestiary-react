@@ -1,6 +1,5 @@
 import { StrategicObstacles, StrategicOptions } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces";
 import { useState } from "react";
-import ComboBox from 'react-responsive-combo-box'
 import axios from "axios";
 import Icon from "../../../../../../../../../../../components/icon/Icon";
 import { obstacleSearchByNameURL } from "../../../../../../../../../../../frontend-config";
