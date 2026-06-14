@@ -114,7 +114,7 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
             <div>
                 {hasRoles && (
                     <>
-                        <h3>Role Image</h3>
+                        <h2>Role Image</h2>
                         <FullImage imageParam={beastID} roleID={roleID} timeStamp={timeStamp} />
                         <input id="file-upload" type="file" onChange={onRoleImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
                         
