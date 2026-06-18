@@ -37,7 +37,7 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
                 <ul className='account-options-dropdown'>
                     <li>
                         <Link to={isObstacleIndex ? "/" : "/obstacles"} className="nav-icon">
-                            <Icon iconName={isObstacleIndex ? 'monster' : 'book'}  margin='right' /> Go to {isObstacleIndex ? 'Bestiary' : 'Obstacle Index'}
+                            <Icon iconName={isObstacleIndex ? 'monster' : 'book'} margin='right' /> Go to {isObstacleIndex ? 'Bestiary' : 'Obstacle Index'}
                         </Link>
                     </li>
 
@@ -62,27 +62,29 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
                             <Icon iconName='treasure' margin='right' /> Treasure Hoards
                         </Link>
                     </li>
-                    <p>Kofi Subscription</p>
-                    <li>
-                        <Link to={'https://ko-fi.com/bonfirebestiary'} target='_blank'>
-                            <Icon iconName='Ko-fi' margin='right' /> {accessLevel}
-                        </Link>
-                    </li>
-                    <p>System Preference</p>
-                    <li onClick={_ => setSystemPreference(1)}>{systemPreference === 1 && <Icon iconName='check' margin='right' />} 5.5e</li>
-                    <li onClick={_ => setSystemPreference(2)}>{systemPreference === 2 && <Icon iconName='check' margin='right' />} HackMaster</li>
-                    <li onClick={_ => setSystemPreference(0)}>{systemPreference === 0 && <Icon iconName='check' margin='right' />} Bonfire</li>
-                    <li className='top-border'>
-                        <a href="https://discord.gg/gpzyunjGnr">
-                            <Icon iconName='Discord' margin='right' /> Bestiary Discord
-                        </a>
-                    </li>
                     {userIsLoggedIn ?
-                        <li className='top-border'>
-                            <a href={signOutURL}>
-                                <Icon iconName='log-out' margin='right' /> Log Out
-                            </a>
-                        </li>
+                        <>
+                            <p>Kofi Subscription</p>
+                            <li>
+                                <Link to={'https://ko-fi.com/bonfirebestiary'} target='_blank'>
+                                    <Icon iconName='Ko-fi' margin='right' /> {accessLevel}
+                                </Link>
+                            </li>
+                            <p>System Preference</p>
+                            <li onClick={_ => setSystemPreference(1)}>{systemPreference === 1 && <Icon iconName='check' margin='right' />} 5.5e</li>
+                            <li onClick={_ => setSystemPreference(2)}>{systemPreference === 2 && <Icon iconName='check' margin='right' />} HackMaster</li>
+                            <li onClick={_ => setSystemPreference(0)}>{systemPreference === 0 && <Icon iconName='check' margin='right' />} Bonfire</li>
+                            <li className='top-border'>
+                                <a href="https://discord.gg/gpzyunjGnr">
+                                    <Icon iconName='Discord' margin='right' /> Bestiary Discord
+                                </a>
+                            </li>
+                            <li className='top-border'>
+                                <a href={signOutURL}>
+                                    <Icon iconName='log-out' margin='right' /> Log Out
+                                </a>
+                            </li>
+                        </>
                         :
                         <li className='top-border'>
                             <a href={signInURL}>
