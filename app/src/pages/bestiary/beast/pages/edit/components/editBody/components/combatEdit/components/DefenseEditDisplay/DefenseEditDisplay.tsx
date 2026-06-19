@@ -3,7 +3,7 @@ import { DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/co
 import Icon from "../../../../../../../../../../../components/icon/Icon"
 import Body from "../../../../../../../../components/UI/body/Body"
 import MoveOrderButton from "../AttacksEditDisplay/components/MoveOrderButton"
-import { UpdateAttackDefenseStatsFunction, UpdateOrderFunction, RemoveCombatFunction, UpdateFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { UpdateAttackDefenseStatsFunction, UpdateOrderFunction, RemoveCombatFunction, UpdateFunction, AddCombatFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
 import DefenseInfoEdit from '../../../components/info/DefenseInfoEdit'
 import { SystemInfoValue } from '@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces'
 
@@ -16,6 +16,7 @@ interface Props {
     updateDefenseInfo: UpdateAttackDefenseStatsFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
+    addDefense: AddCombatFunction
 }
 
 export default function DefenseEditDisplay({
@@ -26,7 +27,8 @@ export default function DefenseEditDisplay({
     updateCombatInfo,
     updateDefenseOrder,
     removeDefense,
-    updateDefenseInfo
+    updateDefenseInfo,
+    addDefense
 }: Props) {
     return (
         <Body>
@@ -52,12 +54,17 @@ export default function DefenseEditDisplay({
                     return DefenseEdit(attack, index, defenses.length, nextUp, nextDown, updateDefenseOrder, removeDefense, updateDefenseInfo)
                 })}
             </>
+            <div className="defense-add-row">
+                <button onClick={_ => addDefense(defenses[defenses.length - 1])}>
+                    <Icon iconName='plus' /> Defense
+                </button>
+            </div>
         </Body>
     )
 }
 
 function DefenseEdit(
-    { overAllIndex, defensename }: DefenseInfo,
+    { overAllIndex, defensename, armor, shield }: DefenseInfo,
     index: number,
     arrayLength: number,
     nextUp: number,
@@ -67,13 +74,17 @@ function DefenseEdit(
     updateDefenseInfo: UpdateAttackDefenseStatsFunction
 ) {
     return (
-        <div key={index} className="defense-edit-row">
+        <div key={index} className="defense-edit-row-shell">
             {MoveOrderButton(index > 0, 'up', updateDefenseOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
-            <input value={defensename ? defensename : ''} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
-            <button className="orange" onClick={_ => removeDefense(overAllIndex)}>
-                <Icon iconName='trash' color='white' />
-            </button>
+            <div className='defense-edit-row'>
+                <input value={defensename ? defensename : ''} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
+                <p>{shield}</p>
+                <p>{armor}</p>
+                <button className="orange" onClick={_ => removeDefense(overAllIndex)}>
+                    <Icon iconName='trash' color='white' />
+                </button>
+            </div>
         </div>
     )
 }

@@ -34,7 +34,8 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
             ),
             system: 'Bonfire',
             overAllIndex: defenses.length,
-            oldID: id ?? oldID,
+            id,
+            oldID,
             scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, addsizemod }
         })
     }

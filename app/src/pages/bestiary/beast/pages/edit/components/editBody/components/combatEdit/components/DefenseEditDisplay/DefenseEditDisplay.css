@@ -11,6 +11,27 @@
     font-style: italic;
 }
 
-.defense-edit-row>input {
-    margin-right: 15px;
+.defense-edit-row-shell {
+    display: flex;
+}
+
+.defense-edit-row {
+    display: flex;
+    align-items: center;
+}
+
+.defense-edit-row>* {
+    margin-left: 15px;
+}
+
+.defense-edit-row>p {
+    min-width: 100px;
+}
+
+.defense-add-row {
+    margin-bottom: 30px;
+}
+
+.defense-add-row>button {
+    float: right;
 }

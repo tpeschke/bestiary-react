@@ -1,9 +1,9 @@
-import { AttackStats, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { AttackStats, BonfireDefenseInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
-import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction } from "./interfaces/updateInterfaces"
+import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction, AddCombatFunction } from "./interfaces/updateInterfaces"
 import { BonfireRoleCombatInfo, HackMasterRoleCombatInfo, NonspecificRoleCombatInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/combatInfoInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 
@@ -16,6 +16,7 @@ export type UpdateCombatInfoFunctionsObject = {
     updateDefenseInfo: UpdateAttackDefenseStatsFunction,
     updateDefenseOrder: UpdateOrderFunction,
     removeDefense: RemoveCombatFunction,
+    addDefense: AddCombatFunction,
     removeAttack: RemoveCombatFunction
 }
 
@@ -76,16 +77,16 @@ export default function getUpdateCombatInfoFunctions(
                     ...beast.beastInfo.combatInfo,
                     [key]: value
                 }
-    
+
                 if (key === 'combatSkulls' && typeof value === 'number') {
                     modifiedCombatInfo.skullIndex = getSkullIndex(value)
                 }
-    
+
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     combatInfo: modifiedCombatInfo
                 }
-    
+
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
@@ -128,7 +129,7 @@ export default function getUpdateCombatInfoFunctions(
                         ]
                     }
                 }
-            
+
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
@@ -222,6 +223,36 @@ export default function getUpdateCombatInfoFunctions(
                     combatInfo: {
                         ...beast.beastInfo.combatInfo,
                         defenses
+                    },
+                }
+
+                updateBeastInfo(modifiedBeastInfo)
+            }
+        },
+        addDefense: (defense: DefenseInfo | undefined) => {
+            if (beast) {
+                const newDefense: DefenseInfo = defense ? {
+                    ...defense,
+                    id: undefined,
+                    oldID: undefined,
+                    roleid: beast.selectedRoleID,
+                    overAllIndex: beast.beastInfo.combatInfo.defenses.length,
+                } : {
+                    ...beast.beastInfo.combatInfo.defenses[beast.beastInfo.combatInfo.defenses.length - 1],
+                    id: undefined,
+                    oldID: undefined,
+                    roleid: beast.selectedRoleID,
+                    overAllIndex: beast.beastInfo.combatInfo.defenses.length,
+                }
+
+                const modifiedBeastInfo: any = {
+                    ...beast.beastInfo,
+                    combatInfo: {
+                        ...beast.beastInfo.combatInfo,
+                        defenses: [
+                            ...beast.beastInfo.combatInfo.defenses,
+                            newDefense
+                        ]
                     },
                 }
 

@@ -10,7 +10,7 @@ import { getMonsterCombatStats } from "../../../../../../../../db/beast/combatSt
 
 export async function getCombatStats(beastId: number, skullIndex: number, role: string, size: Size, gearCache: any | undefined): Promise<CalculateCombatStatsReturn> {
     const defenses: RawCombatStat[] = await query(getMonsterDefenses, beastId)
-    
+
     if (defenses.length > 0) {
         const attacks: RawCombatStat[] = await query(getMonsterAttacks, beastId)
         return calculateAttacksAndDefenses(attacks, defenses, skullIndex, role, size, gearCache)

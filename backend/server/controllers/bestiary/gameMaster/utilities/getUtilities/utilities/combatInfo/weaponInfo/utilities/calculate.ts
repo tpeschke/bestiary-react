@@ -21,7 +21,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info: info_bonfire, info_hm, attackinfo, attackinfo_hm, swarmbonus, weaponname: chosenName,
             weapon, isspecial: isSpecial,
-            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID,
+            slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldid,
             attackid, situation,
             tactic, reference, attackrole, weapontype: weaponType, damagetype, addsizemod, spellid
         } = stat
@@ -59,7 +59,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 system: "Bonfire",
                 infoType: 'swarm',
                 id: attackid,
-                oldID: id ?? oldID,
+                oldID: id ?? oldid,
                 beastId: beastid,
                 roleid,
                 name: chosenName,
@@ -75,7 +75,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 ),
                 info,
                 situation, tactic,
-                oldID: id ?? oldID,
+                oldID: id ?? oldid,
                 overAllIndex: index,
                 id: attackid,
                 type: 'Bonfire',
@@ -89,7 +89,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
 function calculateDefenses(stats: RawCombatStat[], size: Size, skullIndex: number, mainRole: string): BonfireDefenseInfo[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, armor, shield, eua, role,
-            oldID, defenseid, defensename
+            oldid, defensename
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -101,9 +101,9 @@ function calculateDefenses(stats: RawCombatStat[], size: Size, skullIndex: numbe
             system: 'Bonfire',
             info: buildSystemSpecificInfo(info),
             overAllIndex: index,
-            oldID: id ? id : oldID,
+            oldID: oldid,
             defensename,
-            id: defenseid,
+            id,
             scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: defensename, addsizemod }
         }
     })

@@ -165,9 +165,9 @@ export type DefenseInfo = BonfireDefenseInfo | HackMasterDefenseInfo
 
 export interface BonfireDefenseInfo {
     id?: number,
-    oldID: number,
+    oldID?: number,
     beastid: number,
-    roleid: string,
+    roleid: string | null,
     system: 'Bonfire',
     info: SystemInfoValue,
     name: string,
@@ -198,8 +198,9 @@ export interface BonfireDefenseInfo {
 
 export interface HackMasterDefenseInfo {
     id?: number,
+    oldID?: number,
     beastid: number,
-    roleid: string,
+    roleid: string | null,
     system: 'HackMaster',
     info: SystemInfoValue,
     name: string,
@@ -227,7 +228,7 @@ export type Type = 'm' | 'r'
 
 export interface RawCombatStat {
     id: number,
-    oldID: number,
+    oldid: number,
     attackid?: number,
     defenseid?: number,
     reference?: string,
