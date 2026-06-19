@@ -7,14 +7,14 @@ export default async function updateDefense(beastID: number, defenses: DefenseIn
 
     await query(removeMissingDefenseIDsFromDB, [beastID, [0, ...defenses.map(defense => defense.id)]])
 
-    defenses.forEach(defense => {
+    defenses.forEach((defense, index) => {
         if (defense.system === 'Bonfire') {
-            const { overAllIndex, oldID, id, defensename, roleid } = defense as BonfireDefenseInfo
+            const { oldID, id, defensename, roleid } = defense as BonfireDefenseInfo
 
             if (id) {
-                promiseArray.push(query(updateDefenseInfo, [id, oldID, beastID, overAllIndex, defensename]))
+                promiseArray.push(query(updateDefenseInfo, [id, oldID, beastID, index, defensename]))
             } else {
-                promiseArray.push(query(addDefenseToDB, [oldID, beastID, overAllIndex, defensename, roleid]))
+                promiseArray.push(query(addDefenseToDB, [oldID, beastID, index, defensename, roleid]))
             }
         }
     })

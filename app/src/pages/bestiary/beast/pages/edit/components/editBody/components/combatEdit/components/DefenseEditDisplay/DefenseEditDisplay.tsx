@@ -64,7 +64,7 @@ export default function DefenseEditDisplay({
 }
 
 function DefenseEdit(
-    { overAllIndex, defensename, armor, shield }: DefenseInfo,
+    { id, overAllIndex, defensename, armor, shield }: DefenseInfo,
     index: number,
     arrayLength: number,
     nextUp: number,
@@ -78,6 +78,7 @@ function DefenseEdit(
             {MoveOrderButton(index > 0, 'up', updateDefenseOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
             <div className='defense-edit-row'>
+                <p>{id}</p>
                 <input value={defensename ? defensename : ''} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
                 <p>{shield}</p>
                 <p>{armor}</p>

@@ -201,7 +201,7 @@ export default function getUpdateCombatInfoFunctions(
                         defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.defenses)
                     }
                 }
-
+console.log(modifiedBeastInfo.combatInfo.defenses)
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
