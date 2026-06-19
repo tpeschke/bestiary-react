@@ -15,3 +15,11 @@
 .characteristic-info-shell .description-shell .pair-shell p:last-child {
     text-align: center;
 }
+
+.characteristic-info-shell .description-row {
+    width: calc(50% - 15px);
+    padding-right: 15px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}

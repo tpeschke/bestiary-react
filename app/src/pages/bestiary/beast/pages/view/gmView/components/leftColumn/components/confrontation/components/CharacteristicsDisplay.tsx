@@ -3,6 +3,7 @@ import CharacteristicsInfo from "./CharacteristicInfo"
 import Body from "../../../../../../../../components/UI/body/Body"
 import Pair from "../../../../../../../../components/UI/pair/Pair"
 import { SystemOption } from "@bestiary/common/interfaces/beast/beast"
+import getDefaultDescription from "./utilities/getDefaultDescription"
 
 interface Props {
     characteristicInfo: ConflictObject,
@@ -35,17 +36,27 @@ export default function CharacteristicsDisplay({ characteristicInfo, type }: Pro
                 <Body>
                     <div className="description-shell">
                         <Pair title="Influence" info={(isHackMaster && influence >= 0 ? '+' : '') + influence + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
-                        <Pair title="Inform" info={(isHackMaster && inform >= 0  ? '+' : '') + inform + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
-                        <Pair title="Inspire" info={(isHackMaster && inspire >= 0  ? '+' : '') + inspire + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
-                        <Pair title="Intimidate" info={(isHackMaster && intimidate >= 0  ? '+' : '') + intimidate + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Inform" info={(isHackMaster && inform >= 0 ? '+' : '') + inform + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Inspire" info={(isHackMaster && inspire >= 0 ? '+' : '') + inspire + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
+                        <Pair title="Intimidate" info={(isHackMaster && intimidate >= 0 ? '+' : '') + intimidate + (isHackMaster ? '%' : '')} format={{ title: 'none' }} />
                     </div>
                 </Body>
             </div>
             <div className='characteristic-info-shell'>
-                <h3 data-tooltip-id="my-tooltip" data-tooltip-content={type !== 'Bonfire' ? "When inflicting the first Emotion or defending against the second Emotion, the Check is made with Advantage." : undefined}>Preferred Emotions</h3>
+                <h3 data-tooltip-id="my-tooltip" data-tooltip-content={type !== 'Bonfire' ? "When inflicting the first Emotion or defending against the second Emotion, the Check is made with Advantage." : undefined}>Descriptions</h3>
                 <Body>
                     <div className="description-shell">
-                        {preferredEmotions.emotions.map((emotion, index) => <Pair tooltip="Attack / Defense" key={index} title={`${emotion} / ${emotionPairsDictionary[emotion]}`} info={isHackMaster ? '' : preferredEmotions.rank} format={{ title: 'none' }} />)}
+                        {preferredEmotions.emotions.map((emotion, index) => {
+                            const defenseEmotion = emotionPairsDictionary[emotion]
+                            const defaultDescription = getDefaultDescription(emotion, defenseEmotion)
+                            return (
+                                <div key={index} className="description-row">
+                                    <p>{defaultDescription}</p>
+                                    <p data-tooltip-id="my-tooltip" data-tooltip-content="Attack / Defense">{emotion} / {defenseEmotion}</p>
+                                    {!isHackMaster && <p>{preferredEmotions.rank}</p>}
+                                </div>
+                            )
+                        })}
                     </div>
                 </Body>
             </div>
