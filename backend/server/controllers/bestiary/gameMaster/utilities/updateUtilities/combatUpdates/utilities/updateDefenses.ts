@@ -9,12 +9,13 @@ export default async function updateDefense(beastID: number, defenses: DefenseIn
 
     defenses.forEach((defense, index) => {
         if (defense.system === 'Bonfire') {
-            const { oldID, id, defensename, roleid } = defense as BonfireDefenseInfo
+            const { oldID, id, defensename, roleid, scalingInfo } = defense as BonfireDefenseInfo
+            const { drAdjust } = scalingInfo
 
             if (id) {
-                promiseArray.push(query(updateDefenseInfo, [id, oldID, beastID, index, defensename]))
+                promiseArray.push(query(updateDefenseInfo, [id, oldID, beastID, index, defensename, drAdjust]))
             } else {
-                promiseArray.push(query(addDefenseToDB, [oldID, beastID, index, defensename, roleid]))
+                promiseArray.push(query(addDefenseToDB, [oldID, beastID, index, defensename, roleid, drAdjust]))
             }
         }
     })

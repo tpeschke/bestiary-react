@@ -89,22 +89,25 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
 function calculateDefenses(stats: RawCombatStat[], size: Size, skullIndex: number, mainRole: string): BonfireDefenseInfo[] {
     return stats.map((stat, index) => {
         const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, armor, shield, eua, role,
-            oldid, defensename
+            oldid, defensename, dradjust
         } = stat
 
         const roleToUse = role ? role : mainRole
 
         return {
             ...calculateBonfireDefenseInfo(
-                { beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, info },
-                skullIndex, roleToUse, addsizemod, size),
+                { beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: defensename, info, dradjust },
+                skullIndex, roleToUse, addsizemod, size, dradjust),
             system: 'Bonfire',
             info: buildSystemSpecificInfo(info),
             overAllIndex: index,
             oldID: oldid,
             defensename,
             id,
-            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: defensename, addsizemod }
+            scalingInfo: {
+                swarmbonus, armor, shield, eua, tdr, name: defensename, addsizemod,
+                drAdjust: dradjust
+            }
         }
     })
 }

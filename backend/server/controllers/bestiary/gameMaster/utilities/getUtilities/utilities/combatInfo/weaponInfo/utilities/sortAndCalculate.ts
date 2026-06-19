@@ -17,8 +17,9 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
 }
 
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackStats[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
-    const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, eua, isspecial: isSpecial,
-        slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldID, attackid, weapontype: weaponType
+    const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, 
+        eua, isspecial: isSpecial, slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, 
+        role, oldid: oldID, attackid, weapontype: weaponType, dradjust
     } = stats
 
     const roleToUse = role ?? mainRole
@@ -30,13 +31,15 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
                 {
                     id, beastid, roleid, swarmbonus, armor, shield, eua, tdr, name: chosenName, info
                 },
-                skullIndex, roleToUse, addsizemod, size
+                skullIndex, roleToUse, addsizemod, size, dradjust
             ),
             system: 'Bonfire',
             overAllIndex: defenses.length,
             id,
             oldID,
-            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, addsizemod }
+            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, addsizemod,
+                drAdjust: dradjust
+             }
         })
     }
 

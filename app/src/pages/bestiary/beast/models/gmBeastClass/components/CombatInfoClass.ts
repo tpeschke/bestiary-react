@@ -206,7 +206,7 @@ export default class CombatInfoClass {
             if (!roleID || defense.roleid === roleID) {
                 defenseInfo.push({
                     ...defense,
-                    ...calculateBonfireDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    ...calculateBonfireDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size, defense.scalingInfo.drAdjust),
                     system: 'Bonfire',
                     scalingInfo: defense.scalingInfo
                 })
@@ -220,7 +220,7 @@ export default class CombatInfoClass {
             if (!roleID || defense.roleid === roleID) {
                 defenseInfo.push({
                     ...defense,
-                    ...calculateHackMasterDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size),
+                    ...calculateHackMasterDefenseInfo(defense.scalingInfo, points, role, defense.scalingInfo.addsizemod, size, defense.scalingInfo.drAdjust),
                     system: 'HackMaster',
                     scalingInfo: defense.scalingInfo
                 })

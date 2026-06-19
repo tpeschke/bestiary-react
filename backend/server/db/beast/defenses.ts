@@ -1,5 +1,5 @@
 export const getMonsterDefenses = `select 
-	d.id, d.oldid, d.index, d.beastid,
+	d.id, d.oldid, d.index, d.beastid, d.dradjust,
 	d.name as defensename,
 	COALESCE(d.roleid, c.roleid) as roleid,
 	c.weapontype, c.isspecial, c.eua, c.addsizemod,
@@ -13,9 +13,9 @@ order by index`
 export const removeMissingDefenseIDsFromDB = `delete from bbdefenses
 where beastID = $1 and Not (id = any($2))`
 
-export const updateDefenseInfo = `update bbdefenses
-set oldid = $2, beastID = $3, index = $4, name = $5
+export const updateDefenseInfo = `update bbDefenses
+set oldID = $2, beastID = $3, index = $4, name = $5, drAdjust = $6
 where id = $1`
 
-export const addDefenseToDB = `insert into bbdefenses (oldid, beastid, index, name, roleid)
-values ($1, $2, $3, $4, $5)`
+export const addDefenseToDB = `insert into bbdefenses (oldid, beastid, index, name, roleid, drAdjust)
+values ($1, $2, $3, $4, $5, $6)`

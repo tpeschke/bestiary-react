@@ -1,18 +1,18 @@
 import getModBySkullIndex, { getItemBySkullIndex } from "../../../getModBySkullIndex"
 import formatDRString from "./formatDRString"
 
-export function calculateDR(role: string, skullIndex: number): string {
-    const staticDR = getStaticDR(role, skullIndex)
+export function calculateDR(role: string, skullIndex: number, drAdjust: number = 0): string {
+    const staticDR = getStaticDR(role, skullIndex, drAdjust)
     const slashDR = getSlashDR(role, skullIndex)
 
     return formatDRString(staticDR, slashDR)
 }
 
-export function calculateHackMasterDR(role: string, skullIndex: number): string {
+export function calculateHackMasterDR(role: string, skullIndex: number, drAdjust: number = 0): string {
     const drDictionary = [0, 0, 0, 0, 0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 42]
     const roleIndexModifier = getRoleIndexModifierStaticDR(role)
 
-    return `${getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary)}`
+    return `${getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary, drAdjust)}`
 }
 
 export function getHackMasterShieldDR(shield: string): string | undefined {
@@ -33,11 +33,11 @@ export function getHackMasterShieldDR(shield: string): string | undefined {
     return cover
 }
 
-function getStaticDR(role: string, skullIndex: number): number {
+function getStaticDR(role: string, skullIndex: number, drAdjust: number): number {
     const drDictionary = [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14]
     const roleIndexModifier = getRoleIndexModifierStaticDR(role)
 
-    return getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary)
+    return getModBySkullIndex(skullIndex, roleIndexModifier, drDictionary, drAdjust)
 }
 
 function getRoleIndexModifierStaticDR(role: string): number {

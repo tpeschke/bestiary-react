@@ -14,7 +14,9 @@ export interface CalculateCombatStatsReturn {
     defenses: BonfireDefenseInfo[]
 }
 
-export function calculateBonfireDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
+export function calculateBonfireDefenseInfo(
+    defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size, drAdjust: number
+) {
     const {
         beastid, roleid, swarmbonus, armor, shield, eua, tdr, name, info
     } = defenseInfo
@@ -28,11 +30,13 @@ export function calculateBonfireDefenseInfo(defenseInfo: any, skullIndex: number
         parry: getParry(role, skullIndex),
         cover: getCover(role, skullIndex),
         parryDR: calculateParryDR(role, skullIndex, eua),
-        dr: calculateDR(role, skullIndex)
+        dr: calculateDR(role, skullIndex, drAdjust)
     }
 }
 
-export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size) {
+export function calculateHackMasterDefenseInfo(
+    defenseInfo: any, skullIndex: number, role: string, addSizeMod: boolean, size: Size, drAdjust: number
+) {
     const {
         beastid, roleid, armor, shield, eua, tdr, name, info
     } = defenseInfo
@@ -43,7 +47,7 @@ export function calculateHackMasterDefenseInfo(defenseInfo: any, skullIndex: num
         chosenName: name,
         defense: getDefense(addSizeMod, size, role, skullIndex, 'HackMaster'),
         shieldCover: getHackMasterCover(shield),
-        dr: calculateHackMasterDR(role, skullIndex),
+        dr: calculateHackMasterDR(role, skullIndex, drAdjust * 2),
         parryDR: getHackMasterShieldDR(shield)
     }
 }

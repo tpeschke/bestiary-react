@@ -9,6 +9,8 @@
 
 .defense-edit-header>p {
     font-style: italic;
+    min-width: 100px;
+    margin-left: 15px;
 }
 
 .defense-edit-row-shell {
@@ -20,12 +22,9 @@
     align-items: center;
 }
 
-.defense-edit-row>* {
+.defense-edit-row>*:not(button) {
     margin-left: 15px;
-}
-
-.defense-edit-row>p {
-    min-width: 100px;
+    width: 100px;
 }
 
 .defense-add-row {

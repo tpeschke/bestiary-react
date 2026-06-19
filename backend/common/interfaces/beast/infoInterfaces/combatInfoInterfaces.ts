@@ -148,7 +148,7 @@ export interface BasicWeaponInfo {
         weapon: string,
         damageType: DamageType,
         weaponType: Type,
-        addsizemod: boolean
+        addsizemod: boolean,
     }
 }
 
@@ -188,11 +188,12 @@ export interface BonfireDefenseInfo {
     scalingInfo: {
         name: string | undefined,
         swarmbonus: boolean,
+        addsizemod: boolean
         eua: boolean,
         tdr: boolean,
         shield: string,
         armor: string,
-        addsizemod: boolean
+        drAdjust: number
     }
 }
 
@@ -220,7 +221,8 @@ export interface HackMasterDefenseInfo {
         eua: boolean,
         shield: string,
         armor: string,
-        addsizemod: boolean
+        addsizemod: boolean,
+        drAdjust: number
     }
 }
 
@@ -274,7 +276,8 @@ export interface RawCombatStat {
     info_hm: string | null,
     attackinfo: string | null,
     attackinfo_hm: string | null,
-    spellid: string
+    spellid: string,
+    dradjust: number
 }
 
 export interface Movement {

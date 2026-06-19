@@ -46,6 +46,10 @@ export default function DefenseEditDisplay({
             <div className="defense-edit-header">
                 <div></div>
                 <p>Name</p>
+                <p>Shield</p>
+                <p>Armor</p>
+                <p>DR</p>
+                <p> </p>
             </div>
             <>
                 {defenses.map((attack: DefenseInfo, index: number) => {
@@ -64,7 +68,7 @@ export default function DefenseEditDisplay({
 }
 
 function DefenseEdit(
-    { id, overAllIndex, defensename, armor, shield }: DefenseInfo,
+    { id, overAllIndex, defensename, armor, shield, dr, scalingInfo }: DefenseInfo,
     index: number,
     arrayLength: number,
     nextUp: number,
@@ -73,15 +77,18 @@ function DefenseEdit(
     removeDefense: RemoveCombatFunction,
     updateDefenseInfo: UpdateAttackDefenseStatsFunction
 ) {
+    const { drAdjust } = scalingInfo
+
     return (
         <div key={index} className="defense-edit-row-shell">
             {MoveOrderButton(index > 0, 'up', updateDefenseOrder, overAllIndex, nextUp)}
             {MoveOrderButton(index < arrayLength - 1, 'down', updateDefenseOrder, overAllIndex, nextDown)}
             <div className='defense-edit-row'>
-                <p>{id}</p>
                 <input value={defensename ? defensename : ''} onChange={event => updateDefenseInfo('defensename', event.target.value, overAllIndex)} />
                 <p>{shield}</p>
                 <p>{armor}</p>
+                <p>{dr}</p>
+                <input value={drAdjust} onChange={event => updateDefenseInfo('scalingInfo', {...scalingInfo, drAdjust: +event.target.value}, overAllIndex)} />
                 <button className="orange" onClick={_ => removeDefense(overAllIndex)}>
                     <Icon iconName='trash' color='white' />
                 </button>

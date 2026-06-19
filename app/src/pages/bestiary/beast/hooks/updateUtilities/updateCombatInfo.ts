@@ -169,23 +169,24 @@ export default function getUpdateCombatInfoFunctions(
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
-        updateDefenseInfo: (key: string, value: string, overAllIndex: number) => {
+        updateDefenseInfo: (key: string, value: any, overAllIndex: number) => {
             if (beast) {
+                const newDefense = {
+                    ...beast.beastInfo.combatInfo.defenses[overAllIndex],
+                    [key]: value
+                }
+
                 const modifiedBeastInfo: any = {
                     ...beast.beastInfo,
                     combatInfo: {
                         ...beast.beastInfo.combatInfo,
-                        defenses: beast.beastInfo.combatInfo.defenses.reduce((defenses: DefenseInfo[], defense: DefenseInfo, index: number) => {
+                        defenses: beast.beastInfo.combatInfo.defenses.map((defense: DefenseInfo, index: number) => {
                             if (index == overAllIndex) {
-                                defenses.push({
-                                    ...defense,
-                                    [key]: value
-                                })
+                                return newDefense
                             } else {
-                                defenses.push(defense)
+                                return defense
                             }
-                            return defenses
-                        }, [])
+                        })
                     }
                 }
 
@@ -201,7 +202,7 @@ export default function getUpdateCombatInfoFunctions(
                         defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.defenses)
                     }
                 }
-console.log(modifiedBeastInfo.combatInfo.defenses)
+                console.log(modifiedBeastInfo.combatInfo.defenses)
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
