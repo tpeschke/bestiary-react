@@ -170,19 +170,24 @@ export default class GMBeastClass {
 
     get saves(): [SaveObject, SaveObject, SaveObject] | null {
         if (this.system === 'HackMaster') {
-            const { epValueIndex: mainEpValueIndex } = this.entrySocialInfo
+            const { epValueIndex: mainSocialEpValueIndex } = this.entrySocialInfo
+            const { epValueIndex: mainSkillEpValueIndex } = this.entrySkillInfo
+            const { epValueIndex: mainCombatEpValueIndex } = this.entryCombatInfo.rawCombatInfo
+
             const roleSelected = this.isRoleSelected()
-            const epValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainEpValueIndex) + this.selectedModifier
+            const socialEpValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].socialInfo.epValueIndex : mainSocialEpValueIndex) + this.selectedModifier
+            const skillEpValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].skillInfo.epValueIndex : mainSkillEpValueIndex) + this.selectedModifier
+            const combatEpValueIndex = (roleSelected ? this.entryRoleInfo.roles[this.selectRoleIndex].combatInfo.epValueIndex : mainCombatEpValueIndex) + this.selectedModifier
 
             return [{
                 label: 'Physical',
-                rank: getPhysicalSave(epValueIndex)
+                rank: getPhysicalSave(combatEpValueIndex)
             }, {
                 label: 'Mental',
-                rank: getMentalSave(epValueIndex)
+                rank: getMentalSave(socialEpValueIndex)
             }, {
                 label: 'Dodge',
-                rank: getDodgeSave(epValueIndex)
+                rank: getDodgeSave(skillEpValueIndex)
             }]
         }
 
