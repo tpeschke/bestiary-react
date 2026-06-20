@@ -49,6 +49,6 @@ export default (attack: string, defense: string): string | undefined => {
             Surprise: "Grim"
         }
     };
-console.log(attack, defense)
+
     return defaultDescriptionDictionary[attack][defense]
 }

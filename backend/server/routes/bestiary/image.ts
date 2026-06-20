@@ -6,6 +6,7 @@ import axios from 'axios'
 import { checkForContentTypeBeforeSending } from '../../utilities/sendingFunctions'
 import uploadMain from '../../controllers/bestiary/image/main'
 import { isOwnerMiddleware } from '../../utilities/ownerAccess'
+import query from '../../db/database'
 
 const imageRoutes = express.Router()
 
@@ -28,10 +29,26 @@ interface UploadImageRequest extends Request {
     file: any,
 }
 
-imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image', 1), (request: UploadImageRequest | any, response: Response) => {
+const updateToGoran = `update bbBeastArtist b
+set artistID = 1
+where beastID = $1 and roleID is null`
+
+const tokenEnding = '-token'
+
+const deleteRoleSpecificArt = `delete from bbBeastArtist
+where beastID = $1 and roleID is not null`
+
+imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image', 1), async (request: UploadImageRequest | any, response: Response) => {
     if (!request.file) {
         response.send({ message: 'Wrong file type, only upload JPEG and/or PNG', color: 'red' })
     } else {
+        const { beastID } = request.params
+
+        if (typeof +beastID === 'number') {
+            await query(updateToGoran, +beastID)
+        } else if (beastID.subString(beastID.length - tokenEnding.length) !== tokenEnding) {
+            await query(deleteRoleSpecificArt, +beastID)
+        }
         response.send({ image: request.file })
     }
 })

@@ -1,39 +1,26 @@
 import { imageBase, imageURL, thumbnailImageBase } from '../../../../../../../../../../../frontend-config'
 import FullImage from '../../../../../../../../components/UI/fullImage/fullImage'
 import './ImageUpdate.css'
-import ImageNotFound from '../../../../../../../../../../../assets/images/404.png'
 import axios from 'axios'
 import { useState } from 'react'
 import { UpdateFunction } from '../../../../../../../../hooks/updateUtilities/interfaces/updateInterfaces'
+import { ArtistObject } from '../../../../../../../../interfaces/infoInterfaces/ImageInfoInterfaces'
 
 interface Props {
     beastID: number,
     roleID: string,
     hasRoles: boolean,
     thumbnail?: string,
+    artistInfo?: ArtistObject,
     updateImageInfo: UpdateFunction
 }
 
-export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, updateImageInfo }: Props) {
+export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, artistInfo, updateImageInfo }: Props) {
     const [timeStamp, setTimeStamp] = useState(Date.now())
 
     const objectPositionOptions = [
         'top left', 'top center', 'top right', 'center left', 'center center', 'center right', 'bottom left', 'bottom center', 'bottom right'
     ]
-
-    const roleImage = imageBase + beastID + roleID + '-token'
-    const normalImage = imageBase + beastID + '-token'
-    const notFoundImage = ImageNotFound
-
-    function handleImageError({ currentTarget }: any) {
-        currentTarget.onerror = null
-
-        if (currentTarget.src === roleImage) {
-            currentTarget.src = normalImage
-        } else if (currentTarget.src === normalImage) {
-            currentTarget.src = notFoundImage
-        }
-    }
 
     function handleCatalogImageError({ currentTarget }: any) {
         currentTarget.onerror = null
@@ -117,7 +104,7 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
                         <h2>Role Image</h2>
                         <FullImage imageParam={beastID} roleID={roleID} timeStamp={timeStamp} />
                         <input id="file-upload" type="file" onChange={onRoleImagePicked} data-tooltip-id="my-tooltip" data-tooltip-content="10 MB limit" />
-                        
+
                         <div className='catalog-preview'>
                             <div>
                                 <h3>Role Token</h3>
@@ -129,7 +116,6 @@ export default function ImageUpdate({ beastID, roleID, hasRoles, thumbnail, upda
                     </>
                 )}
             </div>
-
         </div>
     )
 }
