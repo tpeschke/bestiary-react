@@ -14,8 +14,16 @@ export default function calculateVitalityAndTrauma(
     weaponBreakageVitality: boolean,
     singleDieVitality: boolean,
     size: Size = 'Fine',
+    hasNoVitality: boolean,
     system: SystemOption
 ): VitalityAndTrauma {
+    if (hasNoVitality) {
+        return {
+            vitality: 0,
+            trauma: 0
+        }
+    }
+
     if (singleDieVitality && system === 'Bonfire') {
         return {
             vitality: 1,

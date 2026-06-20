@@ -57,7 +57,7 @@ export default class CombatInfoClass {
             vitalityInfo: {
                 ...vitalityInfo,
                 rollUnderTrauma: calculateRollUnderTrauma(skullIndex, 'Bonfire'),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, 'Bonfire'),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, vitalityInfo.hasNoVitality, 'Bonfire'),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
             },
@@ -115,7 +115,7 @@ export default class CombatInfoClass {
             vitalityInfo: {
                 ...vitalityInfo,
                 rollUnderTrauma: calculateRollUnderTrauma(skullIndex, 'Bonfire'),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, 'Bonfire'),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, vitalityInfo.hasNoVitality, 'Bonfire'),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getBonfireDefenseNFlee(combatRole, skullIndex)
             },
@@ -161,7 +161,7 @@ export default class CombatInfoClass {
             vitalityInfo: {
                 ...vitalityInfo,
                 rollUnderTrauma: calculateRollUnderTrauma(epValueIndex, 'HackMaster'),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, epValueIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, 'HackMaster'),
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, epValueIndex, vitalityInfo.weaponBreakageVitality, vitalityInfo.singleDieVitality, size, vitalityInfo.hasNoVitality, 'HackMaster'),
                 locationalVitalities: vitalityInfo.locationalVitalities.filter((info: LocationVitality) => !info.roleid || info.roleid === roleID || info.allroles),
                 defenseNFleeDice: getHackMasterDefenseNFlee(combatRole, epValueIndex)
             },
@@ -247,6 +247,7 @@ export default class CombatInfoClass {
         return {
             isSwarm: mainVitalityInfo.isSwarm,
             locationalVitalities: mainVitalityInfo.locationalVitalities,
+            hasNoVitality: this.getDefault<boolean>(roleVitalityInfo.hasNoVitality, mainVitalityInfo.hasNoVitality),
             noTrauma: this.getDefault<boolean>(roleVitalityInfo.noTrauma, mainVitalityInfo.noTrauma),
             knockback: this.getDefault<number>(roleVitalityInfo.knockback, mainVitalityInfo.knockback),
             singleDieVitality: this.getDefault<boolean>(roleVitalityInfo.singleDieVitality, mainVitalityInfo.singleDieVitality),

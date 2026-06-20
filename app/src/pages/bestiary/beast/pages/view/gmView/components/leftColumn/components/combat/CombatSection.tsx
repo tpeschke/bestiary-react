@@ -62,12 +62,16 @@ function HackMasterCombatInfoDisplay({ combatInfo, size }: { combatInfo: HackMas
             <RoleTitle title='Combat' epValue={combatEpValue} role={combatRole} secondaryRole={combatSecondary} />
             <div className="pair-shell heading three">
                 <h3>Hit Points</h3>
-                <p>
+                {!!(defenseTotal && fleeTotal) && <p>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy becomes defensive and fleeing is free."><Icon iconName="fear" color='blue' /> {defenseTotal}</span>
                     <span> / </span>
                     <span data-tooltip-id="my-tooltip" data-tooltip-content="At this damage, the enemy flees the battlefield."><Icon iconName="run" color='blue' /> {fleeTotal}</span>
-                </p>
-                <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                </p>}
+                {!!vitality ? (
+                    <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                ) : (
+                    <p>- {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                )}
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />
@@ -117,7 +121,11 @@ function BonfireCombatInfoDisplay({ combatInfo, size }: { combatInfo: BonfireCom
             <RoleTitle title='Combat' skulls={combatSkulls} role={combatRole} secondaryRole={combatSecondary} />
             <div className="pair-shell heading three">
                 <h3>Damage Threshold</h3>
-                <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                {!!vitality ? (
+                    <p>{vitality} {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                ): (
+                    <p>- {vitalityIconSetting && <Icon iconName={vitalityIconSetting.iconName} tooltip={vitalityIconSetting.tooltip} color='black' />}</p>
+                )}
             </div>
             <CombatSubtitle traumaInfo={traumaInfo} initiative={initiative} knockbackInfo={knockbackInfo} />
             <LocationVitalities locationalVitalities={locationalVitalities} />

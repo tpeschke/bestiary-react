@@ -11,7 +11,7 @@ interface Props {
 
 export default function TraumaDisplay({ type, trauma, noTrauma, rollUnderTrauma }: Props) {
     const traumaString = type === 'Bonfire' ? `${trauma} (${rollUnderTrauma} - w1)` : `${trauma} (${rollUnderTrauma})`
-    const showTrauma = !noTrauma && trauma
+    const showTrauma = !noTrauma && !!trauma
 
     const tooltip = type === 'Bonfire' ? "The result of this Check determines the number of seconds this enemy is Trauma'd for" : "This number represents what you have to roll under on the d20."
 

@@ -30,7 +30,7 @@ export default function CombatSubtitle({ traumaInfo, initiative, knockbackInfo }
     const { trauma, noTrauma, rollUnderTrauma, type } = traumaInfo
     const { knockback, noKnockback, size } = knockbackInfo
 
-    const showSection = trauma || noTrauma || knockback || size
+    const showSection = !!trauma || noTrauma || knockback || size
 
     return (
         <>

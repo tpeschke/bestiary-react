@@ -29,7 +29,8 @@ export default function formatCombatInfo(
     rollUnderTrauma: number,
     isIncorporeal: boolean,
     weaponBreakageVitality: boolean,
-    size: Size
+    size: Size,
+    hasNoVitality: boolean
 ): NonspecificCombatInfo {
     combatSkulls = combatSkulls ?? getSkullNumber(combatPoints)
     const skullIndex = getSkullIndex(combatSkulls)
@@ -56,8 +57,9 @@ export default function formatCombatInfo(
         vitalityInfo: {
             noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
             isSwarm: false,
+            hasNoVitality,
             knockback: calculateKnockBack(knockback, size),
-            ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
+            ...calculateVitalityAndTrauma(combatRole, combatSecondary, skullIndex, weaponBreakageVitality, singleDieVitality, size, hasNoVitality, 'Bonfire'),
             locationalVitalities: [],
             defenseNFleeDice: getDefenseNFlee(combatRole, skullIndex),
         },

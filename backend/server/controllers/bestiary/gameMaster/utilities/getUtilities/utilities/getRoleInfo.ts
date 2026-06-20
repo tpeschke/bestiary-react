@@ -83,7 +83,7 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
         attack_skill, defense_skill, skillsecondary: skillSecondary, socialpoints: socialPoints, socialrole: socialRole,
         socialsecondary: socialSecondary, attack_conf: attackInfo, defense_conf: defenseInfo, hasarchetypes, hasmonsterarchetypes,
         notrauma: noTrauma, socialskulls, combatskulls, skillskulls, capacity: capacityStrength, mental: stressThresholdStrength,
-        everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue
+        everythingelsestrength: everythingElseStrength, socialepvalue, combatepvalue, skillepvalue, largeweapons: vitalityScaling
     } = unsortedRole
 
     const socialSkulls = socialskulls ?? getSkullNumber(socialPoints)
@@ -104,6 +104,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
     const baseSkillEpValue = skillepvalue ?? getBaseEPValue(skillSkulls)
     const skillEpValueIndex = getEPIndex(baseSkillEpValue)
 
+    const hasNoVitality = vitalityScaling === 'x'
+
     return {
         id,
         generalInfo: {
@@ -122,7 +124,8 @@ async function formatUnsortedRoles(unsortedRole: UnsortedRole): Promise<Nonspeci
                 noTrauma, singleDieVitality, noKnockback, rollUnderTrauma, isIncorporeal, weaponBreakageVitality,
                 isSwarm: false,
                 knockback: calculateKnockBack(knockback, size),
-                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, size, 'Bonfire'),
+                hasNoVitality,
+                ...calculateVitalityAndTrauma(combatRole, combatSecondary, combatSkulls, weaponBreakageVitality, singleDieVitality, size, hasNoVitality, 'Bonfire'),
                 locationalVitalities: [],
                 defenseNFleeDice: {
                     defense: null,
