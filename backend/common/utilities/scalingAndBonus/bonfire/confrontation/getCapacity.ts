@@ -17,7 +17,7 @@ export default function getCapacity(skullIndex: number = 0, role: string, second
     const no = Math.floor(baseCapacity * 0.1)
     const noBut = Math.ceil(baseCapacity * 0.5)
     const yesBut = baseCapacity
-    const yes = Math.ceil(baseCapacity * 1.5)
+    const yes = Math.ceil(baseCapacity * 2)
 
     return [
         no,
