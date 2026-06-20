@@ -342,7 +342,8 @@ export interface HackMasterVitalityInfo extends VitalityInfo {
 export interface LocationVitality {
     id: number,
     location: string,
-    vitality: string | number,
+    hmVitality: string | number,
+    bonfireVitality: string | number,
     beastid: number,
     deleted: boolean,
     roleid: string,

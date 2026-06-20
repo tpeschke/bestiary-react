@@ -4,7 +4,6 @@ import { Folklore, Scenario } from "@bestiary/common/interfaces/beast/infoInterf
 import { ArtistObject, ArtistInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/ImageInfoInterfaces"
 import { BeastType, ClimateObject, Climate, Variant, LocationObject, Location } from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import { SpecificLoot, Loot, Alm, Item, Scroll } from "../../../../../../../../interfaces/bestiary/lootInterfaces"
-import rollDice from "../../../../../../../../utilities/diceRoller"
 import { isOwner } from "../../../../../../../../utilities/ownerAccess"
 import { objectifyItemArray } from "../../../../../../../../utilities/sorts"
 import query from "../../../../../../../../db/database"
@@ -140,10 +139,11 @@ export async function getCarriedScrolls(beastId: number): Promise<Scroll[]> {
 export async function getLocationalVitalities(beastId: number): Promise<LocationVitality[]> {
     const returnedVitalities = await query(getMonsterLocationalVitalities, beastId)
 
-    return returnedVitalities.map((vitality: LocationVitality) => {
+    return returnedVitalities.map((vitality) => {
         return {
             ...vitality,
-            vitality: rollDice(vitality.vitality)
+            hmVitality: vitality.vitality,
+            bonfireVitality: Math.ceil(vitality.vitality / 6)
         }
     })
 }
