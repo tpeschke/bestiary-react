@@ -5,18 +5,14 @@ export const getMonsterAttacks = `select
 	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
 	a.info as attackinfo, a.info_hm as attackinfo_hm,
 	index
-from bbcombatstats c
+from bbattacks a
+join bbcombatstats c on a.oldid = c.id
 left join bbroles r on r.id = c.roleid
-full join bbattacks a on a.oldid = c.id
 where c.beastid = $1 or a.beastid = $1
 order by index`
 
 export const removeMissingAttackIDsFromDB = `delete from bbattacks
-where oldid in (
-    select id from bbcombatstats
-    where beastid = $1
-)
-and not (id = any($2));`
+where beastid = $1 and not (id = any($2));`
 
 export const updateWeaponInfo = `update bbattacks
 set oldid = $2, index = $3, situation = $4, tactic = $5, damageType = $6, beastid = $7,
