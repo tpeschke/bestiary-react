@@ -6,42 +6,42 @@ export default (attack: string, defense: string): string | undefined => {
             Anger: "Detached",
             Joy: "Depressed",
             Surprise: "Jaded",
-            Terror: "Resigned"
+            Fear: "Resigned"
         },
         Disgust: {
             Disgust: "Gross",
             Anger: "Apathetic",
             Joy: "Self-flagellant",
             Surprise: "Cynic",
-            Terror: "Barbaric",
+            Fear: "Barbaric",
             Depression: "Hedonistic"
         },
         Anger: {
             Anger: "Infuriating",
             Joy: "Hurt",
             Surprise: "Cool",
-            Terror: "Self-righteous",
+            Fear: "Self-righteous",
             Depression: "Anger",
             Disgust: "Patronizing"
         },
         Joy: {
             Joy: "Self-sacrificing",
             Surprise: "Optimistic",
-            Terror: "Brave",
+            Fear: "Brave",
             Depression: "Grateful",
             Disgust: "Curious",
             Anger: "Accepting"
         },
         Surprise: {
             Surprise: "Expectant",
-            Terror: "Audacious",
+            Fear: "Audacious",
             Depression: "Wild",
             Disgust: "Depraved",
             Anger: "Irresponsible",
             Joy: "Heartless"
         },
-        Terror: {
-            Terror: "Terrifying",
+        Fear: {
+            Fear: "Terrifying",
             Depression: "Unhinged",
             Disgust: "Ruthless",
             Anger: "Calm",
@@ -49,6 +49,6 @@ export default (attack: string, defense: string): string | undefined => {
             Surprise: "Grim"
         }
     };
-
+console.log(attack, defense)
     return defaultDescriptionDictionary[attack][defense]
 }
