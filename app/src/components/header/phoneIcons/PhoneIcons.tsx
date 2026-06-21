@@ -75,7 +75,7 @@ export default function PhoneIcons({ userIsLoggedIn }: Props) {
                             <li onClick={_ => setSystemPreference(2)}>{systemPreference === 2 && <Icon iconName='check' margin='right' />} HackMaster</li>
                             <li onClick={_ => setSystemPreference(0)}>{systemPreference === 0 && <Icon iconName='check' margin='right' />} Bonfire</li>
                             <li className='top-border'>
-                                <a href="https://discord.gg/gpzyunjGnr">
+                                <a href="https://discord.gg/WgJWQ5hS">
                                     <Icon iconName='Discord' margin='right' /> Bestiary Discord
                                 </a>
                             </li>

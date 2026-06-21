@@ -5,7 +5,7 @@ export default function Footer() {
         <>
             <div className='footer-background'>
                 <div>
-                    <a href='https://discord.com/invite/G8GVTME' target='_blank'>Discord</a>
+                    <a href='https://discord.gg/WgJWQ5hS' target='_blank'>Discord</a>
                 </div>
                 <div>
                     <a href='https://bonfire.stone-fish.com/' target='_blank'>Bonfire SRD</a>

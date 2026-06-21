@@ -1,7 +1,7 @@
 .Name-Header {
     margin: -16px -16px 0;
     padding: 30px 31px;
-    background: #607d8b;
+    background: radial-gradient(circle, rgba(96, 125, 139, 1) 70%, rgba(81, 105, 117, 1) 100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
