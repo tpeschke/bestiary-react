@@ -245,7 +245,7 @@ export default class CombatInfoClass {
 
     private populateVitalityInfo = (mainVitalityInfo: VitalityInfo, roleVitalityInfo: VitalityInfo): VitalityInfo => {
         return {
-            isSwarm: mainVitalityInfo.isSwarm,
+            isSwarm: roleVitalityInfo.isSwarm,
             locationalVitalities: mainVitalityInfo.locationalVitalities,
             hasNoVitality: this.getDefault<boolean>(roleVitalityInfo.hasNoVitality, mainVitalityInfo.hasNoVitality),
             noTrauma: this.getDefault<boolean>(roleVitalityInfo.noTrauma, mainVitalityInfo.noTrauma),

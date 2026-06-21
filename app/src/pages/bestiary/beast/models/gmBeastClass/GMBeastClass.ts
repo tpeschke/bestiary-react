@@ -274,10 +274,10 @@ export default class GMBeastClass {
             return {
                 ...this.entrySocialInfo,
                 type: 'Bonfire',
-                socialRole, socialSecondary,
-                attackInfo,
-                defenseInfo,
-                socialSkulls,
+                socialRole, socialSecondary, attackInfo, defenseInfo, socialSkulls,
+                isSwarm: !!this.combatInfo.attacks.find(attackInfo => {
+                    return attackInfo.infoType === 'swarm'
+                }),
                 capacity: {
                     threshold: getCapacity(skullIndex, socialRole, socialSecondary, capacity.strength, 'Bonfire'),
                     strength: capacity.strength
@@ -484,7 +484,9 @@ export default class GMBeastClass {
         const roleID: string = this.beastInfo.roleInfo.roles[this.selectRoleIndex]?.id
         const selectedRole = this.entryRoleInfo.roles[this.selectRoleIndex]
 
-        return this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.specialModifier, this.spells)
+        let combatInfo = this.entryCombatInfo.combatInfo(this.generalInfo.size, roleID, selectedRole, this.specialModifier, this.spells) as unknown as NonspecificCombatInfo
+        combatInfo.vitalityInfo.isSwarm = !!combatInfo.attacks.find(attackInfo => attackInfo.infoType === 'swarm')
+        return combatInfo as unknown as SpecificCombatInfo
     }
 
     get rawCombatInfoByRole(): NonspecificCombatInfo {
@@ -497,7 +499,7 @@ export default class GMBeastClass {
     get rawCombatInfo(): NonspecificCombatInfo {
         return this.entryCombatInfo.rawCombatInfo
     }
-  
+
     get linkedInfo(): LinkedInfo {
         return this.entryLinkedInfo
     }

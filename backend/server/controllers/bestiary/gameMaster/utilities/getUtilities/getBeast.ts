@@ -174,9 +174,7 @@ export async function getGMVersionOfBeastFromDB(beastId: number, options: GetBea
         getRoles(beast.id, beast.generalInfo.name).then((roles: Role[]) => beast.roleInfo.roles = roles),
 
         getCombatStats(beast.id, beast.combatInfo.skullIndex, beast.combatInfo.combatRole, size, gearCache).then((attackAndDefenses: CalculateCombatStatsReturn) => {
-            const isSwarm = !!attackAndDefenses.attacks.find(attackInfo => {
-                return attackInfo.infoType === 'swarm'
-            })
+            const isSwarm = !!attackAndDefenses.attacks.find(attackInfo => attackInfo.infoType === 'swarm')
             beast.combatInfo.vitalityInfo.isSwarm = isSwarm
             beast.socialInfo.isSwarm = isSwarm
             beast.combatInfo = { ...beast.combatInfo, ...attackAndDefenses }
