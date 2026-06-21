@@ -4,7 +4,7 @@ import Row from "../row/Row"
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { beastURL } from "../../../../../frontend-config"
-import { cacheMonster } from "../../../../../redux/slices/bestiary/beastCacheSlice"
+import { cacheMonster } from "../../../../../redux/slices/bestiary/beastCache/beastCacheSlice"
 
 interface Props {
     userIsLoggedIn: boolean,

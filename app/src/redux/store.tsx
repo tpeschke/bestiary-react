@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import catalogReducer from './slices/bestiary/catalogSlice'
 import userReducer from './slices/userSlice'
-import beastCacheReducer from './slices/bestiary/beastCacheSlice'
+import beastCacheReducer from './slices/bestiary/beastCache/beastCacheSlice'
 import ObstacleCatalogReducer from './slices/obstacles/obstacleCatalog'
 
 export const store = configureStore({
