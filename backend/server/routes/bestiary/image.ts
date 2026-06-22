@@ -44,9 +44,9 @@ imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image'
     } else {
         const { beastID } = request.params
 
-        if (typeof +beastID === 'number') {
+        if (!isNaN(+beastID)) {
             await query(updateToGoran, +beastID)
-        } else if (beastID.subString(beastID.length - tokenEnding.length) !== tokenEnding) {
+        } else if (beastID.substring(beastID.length - tokenEnding.length) !== tokenEnding) {
             await query(deleteRoleSpecificArt, +beastID)
         }
         response.send({ image: request.file })
