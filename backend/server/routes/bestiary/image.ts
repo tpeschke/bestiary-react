@@ -33,8 +33,6 @@ const updateToGoran = `update bbBeastArtist b
 set artistID = 1
 where beastID = $1 and roleID is null`
 
-const tokenEnding = '-token'
-
 const deleteRoleSpecificArt = `delete from bbBeastArtist
 where beastID = $1 and roleID is not null`
 
@@ -46,9 +44,9 @@ imageRoutes.post('/update/:beastID', isOwnerMiddleware, uploadMain.array('image'
 
         if (!isNaN(+beastID)) {
             await query(updateToGoran, +beastID)
-        } else if (beastID.substring(beastID.length - tokenEnding.length) !== tokenEnding) {
             await query(deleteRoleSpecificArt, +beastID)
         }
+
         response.send({ image: request.file })
     }
 })
