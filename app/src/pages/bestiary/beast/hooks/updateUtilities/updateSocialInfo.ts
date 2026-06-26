@@ -1,6 +1,7 @@
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { UpdateFunction } from "./interfaces/updateInterfaces"
-import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { BeastInfo } from "../../interfaces/viewInterfaces"
+import { getSelectedRole, getSelectedRoleIndex } from "../../../../../redux/slices/bestiary/activeBeast/activeBeastSelectors"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 import { AllRoleSocialInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/socialInfoInterfaces"
 
@@ -9,18 +10,21 @@ export type UpdateSocialInfoFunctionsObject = {
 }
 
 export default function getUpdateSocialInfoFunctions(
-    beast: GMBeastClass | undefined, updateBeastInfo: Function
+    beastInfo: BeastInfo | undefined, roleId: string | null, updateBeastInfo: Function
 ): UpdateSocialInfoFunctionsObject {
+    const selectedRole = beastInfo ? getSelectedRole(beastInfo, roleId) : null
+    const selectedRoleIndex = beastInfo ? getSelectedRoleIndex(beastInfo, roleId) : -1
+
     return {
         updateSocialInfo: (key: string, value: string | number) => {
-            if (beast && beast.selectedRole) {
+            if (beastInfo && selectedRole) {
                 let modifiedRoleSocialInfo: AllRoleSocialInfo = {
-                    ...beast.selectedRole.socialInfo,
+                    ...selectedRole.socialInfo,
                     [key]: value
                 }
 
                 let modifiedSocialInfo = {
-                    ...beast.beastInfo.socialInfo,
+                    ...beastInfo.socialInfo,
                     [key]: value
                 }
 
@@ -30,12 +34,12 @@ export default function getUpdateSocialInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     socialInfo: modifiedSocialInfo,
                     roleInfo: {
-                        ...beast.beastInfo.roleInfo,
-                        roles: beast.beastInfo.roleInfo.roles.map((role: Role, index: number) => {
-                            if (index === beast.selectedRoleIndex) {
+                        ...beastInfo.roleInfo,
+                        roles: beastInfo.roleInfo.roles.map((role: Role, index: number) => {
+                            if (index === selectedRoleIndex) {
                                 return {
                                     ...role,
                                     socialInfo: modifiedRoleSocialInfo
@@ -47,9 +51,9 @@ export default function getUpdateSocialInfoFunctions(
                 }
 
                 updateBeastInfo(modifiedBeastInfo)
-            } else if (beast) {
+            } else if (beastInfo) {
                 let modifiedSocialInfo = {
-                    ...beast.beastInfo.socialInfo,
+                    ...beastInfo.socialInfo,
                     [key]: value
                 }
 
@@ -58,7 +62,7 @@ export default function getUpdateSocialInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     socialInfo: modifiedSocialInfo
                 }
 

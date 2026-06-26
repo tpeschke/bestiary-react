@@ -24,7 +24,7 @@ export default function View({ setLoading }: Props) {
 
     return (
         <div className='card-background'>
-            {beast && <GMView beast={beast} updateSelectedRole={updateSelectedRole} updateRoleModifier={updateRoleModifier} updateNotes={updateNotes} updateFavorite={updateFavorite} />}
+            {beast && <GMView updateSelectedRole={updateSelectedRole} updateRoleModifier={updateRoleModifier} updateNotes={updateNotes} updateFavorite={updateFavorite} />}
             {playerBeast && <PlayerView beast={playerBeast} />}
         </div>
     )

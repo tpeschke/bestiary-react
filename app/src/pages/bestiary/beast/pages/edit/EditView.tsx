@@ -27,7 +27,6 @@ export default function EditView({ setLoading }: Props) {
         <div className='card-background'>
             {beast &&
                 <EditBody
-                    beast={beast}
                     updateSelectedRole={updateSelectedRole}
                     saveBeast={saveBeast}
                     updateGeneralInfoFunctions={updateGeneralInfoFunctions}

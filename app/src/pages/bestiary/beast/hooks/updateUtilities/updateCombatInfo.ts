@@ -1,6 +1,7 @@
 import { AttackStats, BonfireDefenseInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { BeastInfo } from "../../interfaces/viewInterfaces"
+import { getSelectedRole, getSelectedRoleID, getSelectedRoleIndex } from "../../../../../redux/slices/bestiary/activeBeast/activeBeastSelectors"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
 import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction, AddCombatFunction } from "./interfaces/updateInterfaces"
@@ -21,14 +22,19 @@ export type UpdateCombatInfoFunctionsObject = {
 }
 
 export default function getUpdateCombatInfoFunctions(
-    beast: GMBeastClass | undefined,
+    beastInfo: BeastInfo | undefined,
+    roleId: string | null,
     updateBeastInfo: Function
 ): UpdateCombatInfoFunctionsObject {
+    const selectedRole = beastInfo ? getSelectedRole(beastInfo, roleId) : null
+    const selectedRoleIndex = beastInfo ? getSelectedRoleIndex(beastInfo, roleId) : -1
+    const selectedRoleID = beastInfo ? getSelectedRoleID(beastInfo, roleId) : null
+
     return {
         updateCombatInfo: (key: string, value: any) => {
-            if (beast && beast.selectedRole) {
+            if (beastInfo && selectedRole) {
                 let modifiedCombatInfo: BonfireRoleCombatInfo | HackMasterRoleCombatInfo | NonspecificRoleCombatInfo = {
-                    ...beast.selectedRole.combatInfo,
+                    ...selectedRole.combatInfo,
                     [key]: value
                 }
 
@@ -37,11 +43,11 @@ export default function getUpdateCombatInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     roleInfo: {
-                        ...beast.beastInfo.roleInfo,
-                        roles: beast.beastInfo.roleInfo.roles.map((role: Role, index: number) => {
-                            if (index === beast.selectedRoleIndex) {
+                        ...beastInfo.roleInfo,
+                        roles: beastInfo.roleInfo.roles.map((role: Role, index: number) => {
+                            if (index === selectedRoleIndex) {
                                 return {
                                     ...role,
                                     combatInfo: modifiedCombatInfo
@@ -53,9 +59,9 @@ export default function getUpdateCombatInfoFunctions(
                 }
 
                 updateBeastInfo(modifiedBeastInfo)
-            } else if (beast) {
+            } else if (beastInfo) {
                 let modifiedCombatInfo = {
-                    ...beast.beastInfo.combatInfo,
+                    ...beastInfo.combatInfo,
                     [key]: value
                 }
 
@@ -64,7 +70,7 @@ export default function getUpdateCombatInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: modifiedCombatInfo
                 }
 
@@ -72,9 +78,9 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         updateNonRoleInfo: (key: string, value: any) => {
-            if (beast) {
+            if (beastInfo) {
                 let modifiedCombatInfo = {
-                    ...beast.beastInfo.combatInfo,
+                    ...beastInfo.combatInfo,
                     [key]: value
                 }
 
@@ -83,7 +89,7 @@ export default function getUpdateCombatInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: modifiedCombatInfo
                 }
 
@@ -91,12 +97,12 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         updateAttackStats: (key: string, value: string, overAllIndex: number) => {
-            if (beast) {
+            if (beastInfo) {
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
-                        attacks: beast.beastInfo.combatInfo.attacks.map((attack: AttackStats, index: number) => {
+                        ...beastInfo.combatInfo,
+                        attacks: beastInfo.combatInfo.attacks.map((attack: AttackStats, index: number) => {
                             if (index == overAllIndex) {
                                 const valueToChangeTo = value === attack[key as keyof AttackStats] ? null : value
                                 return {
@@ -114,17 +120,17 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         addAttack: (newAttack: AttackStats) => {
-            if (beast) {
+            if (beastInfo) {
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
+                        ...beastInfo.combatInfo,
                         attacks: [
-                            ...beast.beastInfo.combatInfo.attacks,
+                            ...beastInfo.combatInfo.attacks,
                             {
                                 ...newAttack,
-                                roleid: beast.selectedRoleID,
-                                overAllIndex: beast.beastInfo.combatInfo.attacks.length
+                                roleid: selectedRoleID,
+                                overAllIndex: beastInfo.combatInfo.attacks.length
                             }
                         ]
                     }
@@ -134,8 +140,8 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         removeAttack: (indexToRemove: number) => {
-            if (beast) {
-                const attacks = beast.beastInfo.combatInfo.attacks.reduce((attacks: AttackStats[], attack: AttackStats) => {
+            if (beastInfo) {
+                const attacks = beastInfo.combatInfo.attacks.reduce((attacks: AttackStats[], attack: AttackStats) => {
                     if (attack.overAllIndex !== indexToRemove) {
                         attacks.push({
                             ...attack,
@@ -147,9 +153,9 @@ export default function getUpdateCombatInfoFunctions(
                 }, [])
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
+                        ...beastInfo.combatInfo,
                         attacks
                     },
                 }
@@ -157,12 +163,12 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         updateAttackOrder: (overAllIndex: number, overAllIndexToMoveTo: number) => {
-            if (beast) {
+            if (beastInfo) {
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
-                        attacks: shiftAttackOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.attacks)
+                        ...beastInfo.combatInfo,
+                        attacks: shiftAttackOrder(overAllIndex, overAllIndexToMoveTo, beastInfo.combatInfo.attacks)
                     }
                 }
 
@@ -170,17 +176,17 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         updateDefenseInfo: (key: string, value: any, overAllIndex: number) => {
-            if (beast) {
+            if (beastInfo) {
                 const newDefense = {
-                    ...beast.beastInfo.combatInfo.defenses[overAllIndex],
+                    ...beastInfo.combatInfo.defenses[overAllIndex],
                     [key]: value
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
-                        defenses: beast.beastInfo.combatInfo.defenses.map((defense: DefenseInfo, index: number) => {
+                        ...beastInfo.combatInfo,
+                        defenses: beastInfo.combatInfo.defenses.map((defense: DefenseInfo, index: number) => {
                             if (index == overAllIndex) {
                                 return newDefense
                             } else {
@@ -194,21 +200,20 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         updateDefenseOrder: (overAllIndex: number, overAllIndexToMoveTo: number) => {
-            if (beast) {
+            if (beastInfo) {
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
-                        defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beast.beastInfo.combatInfo.defenses)
+                        ...beastInfo.combatInfo,
+                        defenses: shiftDefenseOrder(overAllIndex, overAllIndexToMoveTo, beastInfo.combatInfo.defenses)
                     }
                 }
-                console.log(modifiedBeastInfo.combatInfo.defenses)
                 updateBeastInfo(modifiedBeastInfo)
             }
         },
         removeDefense: (indexToRemove: number) => {
-            if (beast) {
-                const defenses = beast.beastInfo.combatInfo.defenses.reduce((defenses: DefenseInfo[], defense: DefenseInfo) => {
+            if (beastInfo) {
+                const defenses = beastInfo.combatInfo.defenses.reduce((defenses: DefenseInfo[], defense: DefenseInfo) => {
                     if (defense.overAllIndex !== indexToRemove) {
                         defenses.push({
                             ...defense,
@@ -220,9 +225,9 @@ export default function getUpdateCombatInfoFunctions(
                 }, [])
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
+                        ...beastInfo.combatInfo,
                         defenses
                     },
                 }
@@ -231,27 +236,27 @@ export default function getUpdateCombatInfoFunctions(
             }
         },
         addDefense: (defense: DefenseInfo | undefined) => {
-            if (beast) {
+            if (beastInfo) {
                 const newDefense: DefenseInfo = defense ? {
                     ...defense,
                     id: undefined,
                     oldID: undefined,
-                    roleid: beast.selectedRoleID,
-                    overAllIndex: beast.beastInfo.combatInfo.defenses.length,
+                    roleid: selectedRoleID,
+                    overAllIndex: beastInfo.combatInfo.defenses.length,
                 } : {
-                    ...beast.beastInfo.combatInfo.defenses[beast.beastInfo.combatInfo.defenses.length - 1],
+                    ...beastInfo.combatInfo.defenses[beastInfo.combatInfo.defenses.length - 1],
                     id: undefined,
                     oldID: undefined,
-                    roleid: beast.selectedRoleID,
-                    overAllIndex: beast.beastInfo.combatInfo.defenses.length,
+                    roleid: selectedRoleID,
+                    overAllIndex: beastInfo.combatInfo.defenses.length,
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     combatInfo: {
-                        ...beast.beastInfo.combatInfo,
+                        ...beastInfo.combatInfo,
                         defenses: [
-                            ...beast.beastInfo.combatInfo.defenses,
+                            ...beastInfo.combatInfo.defenses,
                             newDefense
                         ]
                     },

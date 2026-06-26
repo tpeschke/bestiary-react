@@ -11,6 +11,7 @@ import { beastURL } from "../../../../frontend-config";
 import alertInfo, { showPendingAlert } from "../../../../components/alert/alerts";
 
 import { cacheMonster, removeMonsterFromCache } from "../../../../redux/slices/bestiary/beastCache/beastCacheSlice";
+import { setActiveBeast, clearActiveBeast } from "../../../../redux/slices/bestiary/activeBeast/activeBeastSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
@@ -68,6 +69,7 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     const [beast, setBeast] = useState<GMBeastClass>()
     const [playerBeast, setPlayerBeast] = useState<PlayerBeastClass>()
+    const [activeRoleId, setActiveRoleId] = useState<string | null>(null)
 
     const { beastId, param1, param2 } = useParams()
 
@@ -78,13 +80,32 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     const beastCache = useSelector((state: any) => state.beastCache.cache)
 
+    /**
+     * Builds the normalized `GMBeastClass`, stores it locally and publishes its
+     * `BeastInfo` (plus the ephemeral role selection) to the redux store so that
+     * the `activeBeast` selectors can derive the view models.
+     */
+    const applyBeast = (rawBeastInfo: BeastInfo, roleId: string | null, modifier: string | null): GMBeastClass => {
+        const gmBeast = new GMBeastClass(rawBeastInfo, modifier, systemPreference)
+        setBeast(gmBeast)
+        setActiveRoleId(roleId)
+        dispatch(setActiveBeast({ beastInfo: gmBeast.beastInfo, roleId }))
+        return gmBeast
+    }
+
     const updateBeastInfo = (modifiedBeastInfo: BeastInfo) => {
         dispatch(cacheMonster({
             id: modifiedBeastInfo.id,
             beastInfo: new Promise((resolve) => { resolve(modifiedBeastInfo) })
         }))
-        setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
+        applyBeast(modifiedBeastInfo, null, null)
     }
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearActiveBeast())
+        }
+    }, [])
 
     useEffect(() => {
         handleBackwardsCompatibilityWithOldUrl()
@@ -97,9 +118,8 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
             getBeastFromCache(beastId, roleId, modifier).then(beast => {
                 if (beast && beast.generalInfo) {
-                    const returnedBeast = new GMBeastClass(beast, roleId, modifier, systemPreference)
-                    document.title = `${returnedBeast.generalInfo.name} - Bonfire Bestiary`
-                    setBeast(returnedBeast)
+                    applyBeast(beast, roleId, modifier)
+                    document.title = `${beast.generalInfo.name} - Bonfire Bestiary`
                     scrollToTop()
                 } else if (beast) {
                     const returnedBeast = new PlayerBeastClass(beast)
@@ -110,7 +130,7 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
                     axios.get(beastURL + '/' + beastId).then(({ data }) => {
                         if (data.generalInfo) {
                             document.title = `${data.generalInfo.name} - Bonfire Bestiary`
-                            setBeast(new GMBeastClass(data, roleId, modifier, systemPreference))
+                            applyBeast(data, roleId, modifier)
                             dispatch(cacheMonster({
                                 id: data.id,
                                 beastInfo: data
@@ -135,26 +155,28 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     useEffect(() => {
         if (beast) {
-            const updatedBeast = new GMBeastClass(beast.beastInfo, null, null, systemPreference)
+            const updatedBeast = new GMBeastClass(beast.beastInfo, null, systemPreference)
             setBeast(updatedBeast)
+            setActiveRoleId(null)
+            dispatch(setActiveBeast({ beastInfo: updatedBeast.beastInfo, roleId: null }))
             dispatch(cacheMonster({
-                id: updatedBeast.id,
+                id: updatedBeast.beastInfo.id,
                 beastInfo: new Promise((resolve) => { resolve(beast.beastInfo) })
             }))
         }
     }, [systemPreference])
 
-    const [updateGeneralInfoFunctions, setUpdateGeneralInfoFunctions] = useState<UpdateGeneralInfoFunctionsObject>(getUpdateGeneralInfoFunctions(beast, updateBeastInfo))
-    const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
-    const [updateCombatInfoFunctions, setUpdateCombatInfoFunctions] = useState<UpdateCombatInfoFunctionsObject>(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
-    const [updateSkillInfoFunctions, setUpdateSkillInfoFunctions] = useState<UpdateSkillInfoFunctionsObject>(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
+    const [updateGeneralInfoFunctions, setUpdateGeneralInfoFunctions] = useState<UpdateGeneralInfoFunctionsObject>(getUpdateGeneralInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+    const [updateSocialInfoFunctions, setUpdateSocialInfoFunctions] = useState<UpdateSocialInfoFunctionsObject>(getUpdateSocialInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+    const [updateCombatInfoFunctions, setUpdateCombatInfoFunctions] = useState<UpdateCombatInfoFunctionsObject>(getUpdateCombatInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+    const [updateSkillInfoFunctions, setUpdateSkillInfoFunctions] = useState<UpdateSkillInfoFunctionsObject>(getUpdateSkillInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
 
     useEffect(() => {
-        setUpdateGeneralInfoFunctions(getUpdateGeneralInfoFunctions(beast, updateBeastInfo))
-        setUpdateSocialInfoFunctions(getUpdateSocialInfoFunctions(beast, updateBeastInfo))
-        setUpdateCombatInfoFunctions(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
-        setUpdateSkillInfoFunctions(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
-    }, [beast])
+        setUpdateGeneralInfoFunctions(getUpdateGeneralInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+        setUpdateSocialInfoFunctions(getUpdateSocialInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+        setUpdateCombatInfoFunctions(getUpdateCombatInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+        setUpdateSkillInfoFunctions(getUpdateSkillInfoFunctions(beast?.beastInfo, activeRoleId, updateBeastInfo))
+    }, [beast, activeRoleId])
 
     function handleBackwardsCompatibilityWithOldUrl() {
         let queryParams: any = {}
@@ -203,7 +225,7 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
                 }
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
+            applyBeast(modifiedBeastInfo, null, null)
         }
     }
 
@@ -216,31 +238,33 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
                 roleModifier: newRoleModifier
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
+            applyBeast(modifiedBeastInfo, null, null)
         }
     }
 
     const updateNotes = async (value: string): Promise<void> => {
         let notes: Notes = { notes: value }
 
-        if (beast && !beast?.notes.id) {
-            const id = await saveNotes(beast.id, notes)
+        const currentNotes = beast?.beastInfo.playerInfo.notes
+
+        if (beast && !currentNotes?.id) {
+            const id = await saveNotes(beast.beastInfo.id, notes)
             notes = { ...notes, id }
-        } else if (beast && value !== beast?.notes.notes) {
-            notes = { ...beast.notes, ...notes }
-            await saveNotes(beast.id, notes)
+        } else if (beast && value !== currentNotes?.notes) {
+            notes = { ...currentNotes, ...notes }
+            await saveNotes(beast.beastInfo.id, notes)
         }
 
         if (beast) {
             const modifiedBeastInfo: BeastInfo = {
                 ...beast.beastInfo,
                 playerInfo: {
-                    ...beast.playerInfo,
+                    ...beast.beastInfo.playerInfo,
                     notes
                 },
             }
 
-            setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
+            applyBeast(modifiedBeastInfo, null, null)
         }
     }
 
@@ -250,13 +274,13 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     const updateFavorite = async (): Promise<FavoriteReturn | null> => {
         if (beast) {
-            const favoriteReturn = await updateFavoriteStatus(beast.id, !beast.favorite)
+            const favoriteReturn = await updateFavoriteStatus(beast.beastInfo.id, !beast.beastInfo.playerInfo.favorite)
 
             const modifiedBeastInfo: any = {
                 ...beast.beastInfo,
                 playerInfo: {
-                    ...beast.playerInfo,
-                    favorite: !beast.favorite
+                    ...beast.beastInfo.playerInfo,
+                    favorite: !beast.beastInfo.playerInfo.favorite
                 },
             }
 
@@ -275,8 +299,8 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
                 if (data.color === 'red') {
                     navigate(`/`)
                 } else if (data.beastID) {
-                    dispatch(removeMonsterFromCache(beast.id))
-                    navigate(`/beast/${beast.id}`)
+                    dispatch(removeMonsterFromCache(beast.beastInfo.id))
+                    navigate(`/beast/${beast.beastInfo.id}`)
                     return { data: { color: 'green', type: 'message', message: 'Entry Saved' } }
                 }
 
