@@ -11,7 +11,6 @@ import { beastURL } from "../../../../frontend-config";
 import alertInfo, { showPendingAlert } from "../../../../components/alert/alerts";
 
 import { cacheMonster, removeMonsterFromCache } from "../../../../redux/slices/bestiary/beastCache/beastCacheSlice";
-import { setActiveBeast, clearActiveBeast } from "../../../../redux/slices/bestiary/activeBeast/activeBeastSlice";
 import { BeastInfo } from "../interfaces/viewInterfaces";
 import { savePlayerNotes, updateFavoriteStatus } from "./playerHooks";
 import { Notes } from "@bestiary/common/interfaces/beast/infoInterfaces/playerSpecificInfoInterfaces";
@@ -22,6 +21,7 @@ import getUpdateCombatInfoFunctions, { UpdateCombatInfoFunctionsObject } from ".
 import getUpdateSkillInfoFunctions, { UpdateSkillInfoFunctionsObject } from "./updateUtilities/updateSkillInfo";
 import getUpdateGeneralInfoFunctions, { UpdateGeneralInfoFunctionsObject } from "./updateUtilities/updateGeneralInfo";
 import { EditEncounter } from "@bestiary/common/interfaces/encounterInterfaces";
+import { EditViewModel, GmViewModel, selectEditView, selectGmView } from "./getUtilities/activeBeastSelectors";
 
 export type UpdateSelectedRoleFunction = (newRoleId: string) => void
 export type UpdateRoleModifierFunction = (newRoleModifier: number) => void
@@ -47,7 +47,8 @@ interface AddFavoriteReturn extends UpdateFavoriteReturnBase {
 export type FavoriteReturn = DeleteFavoriteReturn | AddFavoriteReturn
 
 interface Return {
-    beast?: GMBeastClass,
+    beast?: GmViewModel,
+    editBeast?: EditViewModel,
     playerBeast?: PlayerBeastClass,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
@@ -80,16 +81,10 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
 
     const beastCache = useSelector((state: any) => state.beastCache.cache)
 
-    /**
-     * Builds the normalized `GMBeastClass`, stores it locally and publishes its
-     * `BeastInfo` (plus the ephemeral role selection) to the redux store so that
-     * the `activeBeast` selectors can derive the view models.
-     */
     const applyBeast = (rawBeastInfo: BeastInfo, roleId: string | null, modifier: string | null): GMBeastClass => {
         const gmBeast = new GMBeastClass(rawBeastInfo, modifier, systemPreference)
         setBeast(gmBeast)
         setActiveRoleId(roleId)
-        dispatch(setActiveBeast({ beastInfo: gmBeast.beastInfo, roleId }))
         return gmBeast
     }
 
@@ -100,12 +95,6 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
         }))
         applyBeast(modifiedBeastInfo, null, null)
     }
-
-    useEffect(() => {
-        return () => {
-            dispatch(clearActiveBeast())
-        }
-    }, [])
 
     useEffect(() => {
         handleBackwardsCompatibilityWithOldUrl()
@@ -158,7 +147,6 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
             const updatedBeast = new GMBeastClass(beast.beastInfo, null, systemPreference)
             setBeast(updatedBeast)
             setActiveRoleId(null)
-            dispatch(setActiveBeast({ beastInfo: updatedBeast.beastInfo, roleId: null }))
             dispatch(cacheMonster({
                 id: updatedBeast.beastInfo.id,
                 beastInfo: new Promise((resolve) => { resolve(beast.beastInfo) })
@@ -310,7 +298,8 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
     }
 
     return {
-        beast,
+        beast: selectGmView(beast?.beastInfo, activeRoleId),
+        editBeast: selectEditView(beast?.beastInfo, activeRoleId),
         playerBeast,
         updateSelectedRole,
         updateRoleModifier,

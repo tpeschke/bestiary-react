@@ -1,10 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit'
+import { BeastInfo } from '../../interfaces/viewInterfaces'
 
-import { BeastInfo } from '../../../../pages/bestiary/beast/interfaces/viewInterfaces'
-import { ActiveBeastState } from './activeBeastInterfaces'
-
-import CombatInfoClass from '../../../../pages/bestiary/beast/models/gmBeastClass/components/CombatInfoClass'
-import CastingClass from '../../../../pages/bestiary/beast/pages/view/gmView/components/weirdshaping/models/CastingClass'
+import CombatInfoClass from '../../models/gmBeastClass/components/CombatInfoClass'
+import CastingClass from '../../pages/view/gmView/components/weirdshaping/models/CastingClass'
 
 import { Conflict, NonspecificSocialInfo, SpecificSocialInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/socialInfoInterfaces'
 import { NonspecificSkillInfo, SpecificSkillInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/skillInfoInterfaces'
@@ -24,15 +21,6 @@ import { getRarity } from '@bestiary/common/utilities/get/getRarity'
 import { NonspecificCombatInfo, SpecificCombatInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import { Role } from '@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces'
 import { SystemOption } from '@bestiary/common/interfaces/beast/beast'
-
-/**
- * All of the data-transformation logic that used to live in `GMBeastClass`.
- *
- * Each function is a pure transformation of the raw `BeastInfo` (plus the
- * ephemeral `roleId` coming from the URL). The memoized selectors at the bottom
- * read the active beast out of the redux store and produce the view models that
- * the GM view and the edit view consume.
- */
 
 function getRoleIndex(roles: Role[], defaultRole: string, roleId: string | null): number {
     if (roleId) {
@@ -493,9 +481,6 @@ export function getCombatRoleType(beastInfo: BeastInfo, roleId: string | null): 
     return getCombatInfo(beastInfo, roleId).combatRole
 }
 
-const selectActiveBeastInfo = (state: { activeBeast: ActiveBeastState }): BeastInfo | null => state.activeBeast.beastInfo
-const selectActiveRoleId = (state: { activeBeast: ActiveBeastState }): string | null => state.activeBeast.roleId
-
 export interface GmViewModel {
     id: number,
     generalInfo: SpecificGeneralInfo,
@@ -521,37 +506,34 @@ export interface GmViewModel {
     saves: [SaveObject, SaveObject, SaveObject] | null
 }
 
-export const selectGmView = createSelector(
-    [selectActiveBeastInfo, selectActiveRoleId],
-    (beastInfo, roleId): GmViewModel | null => {
-        if (!beastInfo) { return null }
+export const selectGmView = (beastInfo: BeastInfo | undefined, roleId: string | null): GmViewModel | undefined => {
+    if (!beastInfo) { return undefined }
 
-        return {
-            id: beastInfo.id ?? 0,
-            generalInfo: getGeneralInfo(beastInfo, roleId),
-            imageInfo: beastInfo.imageInfo,
-            socialInfo: getSocialInfo(beastInfo, roleId),
-            skillInfo: getSkillInfo(beastInfo, roleId),
-            combatInfo: getCombatInfo(beastInfo, roleId),
-            linkedInfo: beastInfo.linkedInfo,
-            lootInfo: beastInfo.lootInfo,
-            castingInfo: getCastingInfo(beastInfo),
-            spells: getSpells(beastInfo, roleId),
-            maxPoints: getMaxPoints(beastInfo),
-            roleInfo: beastInfo.roleInfo,
-            selectedRoleIndex: getSelectedRoleIndex(beastInfo, roleId),
-            modifierIndex: beastInfo.roleModifier,
-            hasModifier: !!beastInfo.roleModifier,
-            selectedRoleID: getSelectedRoleID(beastInfo, roleId),
-            roleName: getRoleName(beastInfo, roleId),
-            notes: beastInfo.playerInfo.notes,
-            favorite: beastInfo.playerInfo.favorite,
-            selfDoubtDie: getSelfDoubtDie(beastInfo),
-            system: beastInfo.system,
-            saves: getSaves(beastInfo, roleId)
-        }
+    return {
+        id: beastInfo.id ?? 0,
+        generalInfo: getGeneralInfo(beastInfo, roleId),
+        imageInfo: beastInfo.imageInfo,
+        socialInfo: getSocialInfo(beastInfo, roleId),
+        skillInfo: getSkillInfo(beastInfo, roleId),
+        combatInfo: getCombatInfo(beastInfo, roleId),
+        linkedInfo: beastInfo.linkedInfo,
+        lootInfo: beastInfo.lootInfo,
+        castingInfo: getCastingInfo(beastInfo),
+        spells: getSpells(beastInfo, roleId),
+        maxPoints: getMaxPoints(beastInfo),
+        roleInfo: beastInfo.roleInfo,
+        selectedRoleIndex: getSelectedRoleIndex(beastInfo, roleId),
+        modifierIndex: beastInfo.roleModifier,
+        hasModifier: !!beastInfo.roleModifier,
+        selectedRoleID: getSelectedRoleID(beastInfo, roleId),
+        roleName: getRoleName(beastInfo, roleId),
+        notes: beastInfo.playerInfo.notes,
+        favorite: beastInfo.playerInfo.favorite,
+        selfDoubtDie: getSelfDoubtDie(beastInfo),
+        system: beastInfo.system,
+        saves: getSaves(beastInfo, roleId)
     }
-)
+}
 
 export interface EditViewModel {
     id: number,
@@ -567,23 +549,20 @@ export interface EditViewModel {
     imageInfo: BeastInfo['imageInfo']
 }
 
-export const selectEditView = createSelector(
-    [selectActiveBeastInfo, selectActiveRoleId],
-    (beastInfo, roleId): EditViewModel | null => {
-        if (!beastInfo) { return null }
+export const selectEditView = (beastInfo: BeastInfo | undefined, roleId: string | null): EditViewModel | undefined => {
+    if (!beastInfo) { return undefined }
 
-        return {
-            id: beastInfo.id ?? 0,
-            rawGeneralInfo: getRawGeneralInfo(beastInfo, roleId),
-            rawCombatInfoByRole: getRawCombatInfoByRole(beastInfo, roleId),
-            rawSkillInfo: getRawSkillInfo(beastInfo, roleId),
-            rawSocialInfo: beastInfo.socialInfo,
-            roleInfo: beastInfo.roleInfo,
-            selectedRoleIndex: getSelectedRoleIndex(beastInfo, roleId),
-            combatRoleType: getCombatRoleType(beastInfo, roleId),
-            spells: getSpells(beastInfo, roleId),
-            linkedInfo: beastInfo.linkedInfo,
-            imageInfo: beastInfo.imageInfo
-        }
+    return {
+        id: beastInfo.id ?? 0,
+        rawGeneralInfo: getRawGeneralInfo(beastInfo, roleId),
+        rawCombatInfoByRole: getRawCombatInfoByRole(beastInfo, roleId),
+        rawSkillInfo: getRawSkillInfo(beastInfo, roleId),
+        rawSocialInfo: beastInfo.socialInfo,
+        roleInfo: beastInfo.roleInfo,
+        selectedRoleIndex: getSelectedRoleIndex(beastInfo, roleId),
+        combatRoleType: getCombatRoleType(beastInfo, roleId),
+        spells: getSpells(beastInfo, roleId),
+        linkedInfo: beastInfo.linkedInfo,
+        imageInfo: beastInfo.imageInfo
     }
-)
+}

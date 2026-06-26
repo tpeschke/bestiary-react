@@ -10,19 +10,18 @@ import { SetPlayerNotes } from "../../../components/notes/notesDisplay"
 import DoubleColumn from "../../../components/UI/doubleColumn/doubleColumn"
 import NameHeader from "../../../components/UI/nameHeader/nameHeader"
 import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction, UpdateFavoriteFunction } from "../../../hooks/beastHooks"
-import { selectGmView } from "../../../../../../redux/slices/bestiary/activeBeast/activeBeastSelectors"
 import copyBeastQuickLink from "../../../utilities/copyQuickLink"
+import { GmViewModel } from "../../../hooks/getUtilities/activeBeastSelectors"
 
 interface Props {
+    beast: GmViewModel,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
     updateFavorite: UpdateFavoriteFunction
 }
 
-export default function GMView({ updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
-    const beast = useSelector(selectGmView)
-
+export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
     if (!beast) { return null }
 
     const {

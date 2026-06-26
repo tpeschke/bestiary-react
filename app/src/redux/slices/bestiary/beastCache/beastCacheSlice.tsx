@@ -14,6 +14,8 @@ export const beastCacheSlice = createSlice({
   },
 })
 
-export const { cacheMonster, removeMonsterFromCache } = beastCacheSlice.actions
+export const { 
+  cacheMonster, removeMonsterFromCache,
+ } = beastCacheSlice.actions
 
 export default beastCacheSlice.reducer

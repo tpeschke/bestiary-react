@@ -1,7 +1,7 @@
 import { AttackStats, BonfireDefenseInfo, DefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { BeastInfo } from "../../interfaces/viewInterfaces"
-import { getSelectedRole, getSelectedRoleID, getSelectedRoleIndex } from "../../../../../redux/slices/bestiary/activeBeast/activeBeastSelectors"
+import { getSelectedRole, getSelectedRoleID, getSelectedRoleIndex } from "../getUtilities/activeBeastSelectors"
 import { shiftAttackOrder } from "./combatUtilities/updateAttacks"
 import { shiftDefenseOrder } from "./combatUtilities/updateDefenses"
 import { UpdateFunction, UpdateOrderFunction, UpdateAttackDefenseStatsFunction, AddAttackFunction, RemoveCombatFunction, AddCombatFunction } from "./interfaces/updateInterfaces"

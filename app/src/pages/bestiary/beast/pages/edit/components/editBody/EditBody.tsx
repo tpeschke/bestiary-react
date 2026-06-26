@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
 import { SaveBeastFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
-import { selectEditView } from "../../../../../../../redux/slices/bestiary/activeBeast/activeBeastSelectors";
+import { EditViewModel, selectEditView } from "../../../../hooks/getUtilities/activeBeastSelectors";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
 import CombatEdit from "./components/combatEdit/CombatEdit";
 import Tabs from "./components/tabs/TabsDisplay";
@@ -24,6 +24,7 @@ import SkillEdit from './components/skillEdit/SkillEdit';
 import { EditEncounter } from '@bestiary/common/interfaces/encounterInterfaces';
 
 interface Props {
+    beast: EditViewModel,
     updateSelectedRole: UpdateSelectedRoleFunction,
     saveBeast: SaveBeastFunction,
     updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
@@ -33,6 +34,7 @@ interface Props {
 }
 
 export default function EditBody({
+    beast,
     updateSelectedRole,
     saveBeast,
     updateGeneralInfoFunctions,
@@ -42,8 +44,6 @@ export default function EditBody({
 }: Props) {
     const [tabIndex, setTabIndex] = useState(2)
     const [randomEncounterInfo, setRandomEncounterInfo] = useState<EditEncounter | null>(null)
-
-    const beast = useSelector(selectEditView)
 
     if (!beast) { return null }
 
