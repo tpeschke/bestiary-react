@@ -1,8 +1,9 @@
 import './editBody.css'
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import NameHeader from "../../../../components/UI/nameHeader/nameHeader";
 import { SaveBeastFunction, UpdateSelectedRoleFunction } from "../../../../hooks/beastHooks";
-import GMBeastClass from "../../../../models/gmBeastClass/GMBeastClass";
+import { EditViewModel, selectEditView } from "../../../../hooks/getUtilities/activeBeastSelectors";
 import RoleSelect from "../../../view/gmView/components/leftColumn/components/roleSelect/RoleSelect";
 import CombatEdit from "./components/combatEdit/CombatEdit";
 import Tabs from "./components/tabs/TabsDisplay";
@@ -23,7 +24,7 @@ import SkillEdit from './components/skillEdit/SkillEdit';
 import { EditEncounter } from '@bestiary/common/interfaces/encounterInterfaces';
 
 interface Props {
-    beast: GMBeastClass,
+    beast: EditViewModel,
     updateSelectedRole: UpdateSelectedRoleFunction,
     saveBeast: SaveBeastFunction,
     updateGeneralInfoFunctions: UpdateGeneralInfoFunctionsObject,
@@ -42,6 +43,9 @@ export default function EditBody({
     updateSkillInfoFunctions
 }: Props) {
     const [tabIndex, setTabIndex] = useState(2)
+    const [randomEncounterInfo, setRandomEncounterInfo] = useState<EditEncounter | null>(null)
+
+    if (!beast) { return null }
 
     const {
         id, rawGeneralInfo, rawCombatInfoByRole, rawSkillInfo, rawSocialInfo, roleInfo, selectedRoleIndex, combatRoleType, spells,
@@ -53,8 +57,6 @@ export default function EditBody({
     const { updateSocialInfo } = updateSocialInfoFunctions
     const { updateCombatInfo, updateNonRoleInfo } = updateCombatInfoFunctions
     const { updateSkillInfo } = updateSkillInfoFunctions
-
-    const [randomEncounterInfo, setRandomEncounterInfo] = useState<EditEncounter | null>(null)
 
     const roleID = roleInfo?.roles[selectedRoleIndex]?.id
 

@@ -1,5 +1,6 @@
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
-import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { BeastInfo } from "../../interfaces/viewInterfaces"
+import { getSelectedRole, getSelectedRoleIndex } from "../getUtilities/activeBeastSelectors"
 import { UpdateFunction } from "./interfaces/updateInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 import { AllRoleSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/skillInfoInterfaces"
@@ -9,18 +10,21 @@ export type UpdateSkillInfoFunctionsObject = {
 }
 
 export default function getUpdateSkillInfoFunctions(
-    beast: GMBeastClass | undefined, updateBeastInfo: Function
+    beastInfo: BeastInfo | undefined, roleId: string | null, updateBeastInfo: Function
 ): UpdateSkillInfoFunctionsObject {
+    const selectedRole = beastInfo ? getSelectedRole(beastInfo, roleId) : null
+    const selectedRoleIndex = beastInfo ? getSelectedRoleIndex(beastInfo, roleId) : -1
+
     return {
         updateSkillInfo: (key: string, value: string | number) => {
-            if (beast && beast.selectedRole) {
+            if (beastInfo && selectedRole) {
                 let modifiedRoleSkillInfo: AllRoleSkillInfo = {
-                    ...beast.selectedRole.skillInfo,
+                    ...selectedRole.skillInfo,
                     [key]: value
                 }
 
                 let modifiedSkillInfo = {
-                    ...beast.beastInfo.skillInfo,
+                    ...beastInfo.skillInfo,
                     [key]: value
                 }
 
@@ -29,12 +33,12 @@ export default function getUpdateSkillInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     skillInfo: modifiedSkillInfo,
                     roleInfo: {
-                        ...beast.beastInfo.roleInfo,
-                        roles: beast.beastInfo.roleInfo.roles.map((role: Role, index: number) => {
-                            if (index === beast.selectedRoleIndex) {
+                        ...beastInfo.roleInfo,
+                        roles: beastInfo.roleInfo.roles.map((role: Role, index: number) => {
+                            if (index === selectedRoleIndex) {
                                 return {
                                     ...role,
                                     skillInfo: modifiedRoleSkillInfo
@@ -46,9 +50,9 @@ export default function getUpdateSkillInfoFunctions(
                 }
 
                 updateBeastInfo(modifiedBeastInfo)
-            } else if (beast) {
+            } else if (beastInfo) {
                 let modifiedSkillInfo = {
-                    ...beast.beastInfo.skillInfo,
+                    ...beastInfo.skillInfo,
                     [key]: value
                 }
 
@@ -57,7 +61,7 @@ export default function getUpdateSkillInfoFunctions(
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     skillInfo: modifiedSkillInfo
                 }
 

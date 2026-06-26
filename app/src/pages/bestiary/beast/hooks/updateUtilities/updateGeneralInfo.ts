@@ -1,5 +1,5 @@
 import { NonspecificGeneralInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
-import GMBeastClass from "../../models/gmBeastClass/GMBeastClass"
+import { BeastInfo } from "../../interfaces/viewInterfaces"
 import { UpdateArrayFunction, UpdateFunction } from "./interfaces/updateInterfaces"
 import LinkedInfo from "@bestiary/common/interfaces/beast/infoInterfaces/linkedInfoInterfaces"
 import ImageInfo from "../../interfaces/infoInterfaces/ImageInfoInterfaces"
@@ -12,15 +12,15 @@ export type UpdateGeneralInfoFunctionsObject = {
 }
 
 export default function getUpdateGeneralInfoFunctions(
-    beast: GMBeastClass | undefined, updateBeastInfo: Function
+    beastInfo: BeastInfo | undefined, _roleId: string | null, updateBeastInfo: Function
 ): UpdateGeneralInfoFunctionsObject {
     return {
         updateGeneralInfo: (key: string, value: string | number) => {
-            if (beast) {
+            if (beastInfo) {
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     generalInfo: {
-                        ...beast.beastInfo.generalInfo,
+                        ...beastInfo.generalInfo,
                         [key]: value
                     }
                 }
@@ -29,17 +29,17 @@ export default function getUpdateGeneralInfoFunctions(
             }
         },
         updatePaletteInfo: (key: string, value: string | number) => {
-            if (beast) {
+            if (beastInfo) {
                 let modifiedGeneralInfo: NonspecificGeneralInfo = {
-                    ...beast.beastInfo.generalInfo,
+                    ...beastInfo.generalInfo,
                     palette: {
-                        ...beast.beastInfo.generalInfo.palette,
+                        ...beastInfo.generalInfo.palette,
                         [key]: value
                     }
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     generalInfo: modifiedGeneralInfo
                 }
 
@@ -47,14 +47,14 @@ export default function getUpdateGeneralInfoFunctions(
             }
         },
         updateLinkedInfo: (key: string, value: any[]) => {
-            if (beast) {
+            if (beastInfo) {
                 let modifiedLinkedInfo: LinkedInfo = {
-                    ...beast.linkedInfo,
+                    ...beastInfo.linkedInfo,
                     [key]: value
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     linkedInfo: modifiedLinkedInfo
                 }
 
@@ -62,14 +62,14 @@ export default function getUpdateGeneralInfoFunctions(
             }
         },
         updateImageInfo: (key: string, value: any[]) => {
-            if (beast) {
+            if (beastInfo) {
                 let modifiedImageInfo: ImageInfo = {
-                    ...beast.imageInfo,
+                    ...beastInfo.imageInfo,
                     [key]: value
                 }
 
                 const modifiedBeastInfo: any = {
-                    ...beast.beastInfo,
+                    ...beastInfo,
                     imageInfo: modifiedImageInfo
                 }
 

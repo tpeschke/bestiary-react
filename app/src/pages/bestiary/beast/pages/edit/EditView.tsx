@@ -13,21 +13,21 @@ export default function EditView({ setLoading }: Props) {
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
 
     const {
-        beast, updateSelectedRole, saveBeast, updateGeneralInfoFunctions,
+        editBeast, updateSelectedRole, saveBeast, updateGeneralInfoFunctions,
         updateSocialInfoFunctions, updateCombatInfoFunctions, updateSkillInfoFunctions
     } = beastHooks(systemPreference);
 
     useEffect(() => {
         if (setLoading) {
-            setLoading(!!beast)
+            setLoading(!!editBeast)
         }
-    }, [beast])
+    }, [editBeast])
 
     return (
         <div className='card-background'>
-            {beast &&
+            {editBeast &&
                 <EditBody
-                    beast={beast}
+                    beast={editBeast}
                     updateSelectedRole={updateSelectedRole}
                     saveBeast={saveBeast}
                     updateGeneralInfoFunctions={updateGeneralInfoFunctions}

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux"
+
 import { MiscInfo } from "./components/rightColumn/components/miscInfoDisplay/MiscInfoDisplay"
 
 import RightColumn from "./components/rightColumn/RightColumn"
@@ -8,10 +10,11 @@ import { SetPlayerNotes } from "../../../components/notes/notesDisplay"
 import DoubleColumn from "../../../components/UI/doubleColumn/doubleColumn"
 import NameHeader from "../../../components/UI/nameHeader/nameHeader"
 import { UpdateSelectedRoleFunction, UpdateRoleModifierFunction, UpdateFavoriteFunction } from "../../../hooks/beastHooks"
-import GMBeastClass from "../../../models/gmBeastClass/GMBeastClass"
+import copyBeastQuickLink from "../../../utilities/copyQuickLink"
+import { GmViewModel } from "../../../hooks/getUtilities/activeBeastSelectors"
 
 interface Props {
-    beast: GMBeastClass,
+    beast: GmViewModel,
     updateSelectedRole: UpdateSelectedRoleFunction,
     updateRoleModifier: UpdateRoleModifierFunction,
     updateNotes: SetPlayerNotes,
@@ -19,15 +22,19 @@ interface Props {
 }
 
 export default function GMView({ beast, updateSelectedRole, updateRoleModifier, updateNotes, updateFavorite }: Props) {
-    const { 
+    if (!beast) { return null }
+
+    const {
         generalInfo, imageInfo, socialInfo, skillInfo, combatInfo, linkedInfo, lootInfo, castingInfo, spells, maxPoints, roleInfo,
-        selectedRoleIndex, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie,
+        selectedRoleIndex, modifierIndex, hasModifier, selectedRoleID, id, roleName, notes, favorite, selfDoubtDie,
         system, saves
     } = beast
     const { name, appearance, intro, habitat, palette, folklores, size, scenarios, senses, diet, rarity, meta, canEdit } = generalInfo
     const { types, climates, variants, locations } = linkedInfo
 
     const { beast: locationsInfo } = locations
+
+    const copyQuickLink = () => copyBeastQuickLink(selectedRoleID, modifierIndex)
 
     const miscInfo: MiscInfo = {
         senses,
@@ -40,7 +47,7 @@ export default function GMView({ beast, updateSelectedRole, updateRoleModifier, 
             <NameHeader name={name} beastID={id} roleID={selectedRoleID} roleName={roleName} roleNameOrder={roleInfo.rolenameorder} favorite={favorite} updateFavorite={updateFavorite} />
             <DoubleColumn
                 LeftColumn={LeftColumn({
-                    beastId: beast.id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
+                    beastId: id, beastName: name, imageInfo, socialInfo, skillInfo, combatInfo, size, roleInfo, selectedRoleIndex,
                     updateSelectedRole, updateRoleModifier, modifierIndex, copyQuickLink, hasModifier, selectedRoleID, selfDoubtDie,
                     system, saves
                 })}
