@@ -1,4 +1,4 @@
-import { RawCombatStat, AttackStats, BonfireDefenseInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { RawCombatStat, AttackStats, BonfireDefenseInfo, AttackReference, SpellReference } from "@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
 import { Size } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import { getDamageType } from "@bestiary/common/utilities/formatting/formatting"
 import { CalculateCombatStatsReturn, calculateBonfireAttackInfo, calculateBonfireDefenseInfo } from "@bestiary/common/utilities/scalingAndBonus/bonfire/combat/combatCalculation"
@@ -19,11 +19,33 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackStats[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
     const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, 
         eua, isspecial: isSpecial, slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, 
-        role, oldid: oldID, attackid, weapontype: weaponType, dradjust
+        role, oldid: oldID, attackid, weapontype: weaponType, dradjust,
+        reference, spellid, situation, tactic, attackrole
     } = stats
 
     const roleToUse = role ?? mainRole
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage)
+
+    if (reference) {
+        attacks.push({
+            id: attackid,
+            infoType: 'reference',
+            system: 'Bonfire',
+            overAllIndex: attacks.length,
+            roleid: roleid ?? attackrole,
+            tactic, reference, situation
+        } as AttackReference)
+        return
+    } else if (spellid) {
+        attacks.push({
+            id: attackid,
+            infoType: 'spell',
+            overAllIndex: attacks.length,
+            roleid: roleid ?? attackrole,
+            spellid, situation,
+        } as SpellReference)
+        return
+    }
 
     if (roleToUse) {
         defenses.push({
