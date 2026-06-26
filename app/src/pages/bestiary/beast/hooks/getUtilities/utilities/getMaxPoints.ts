@@ -1,9 +1,9 @@
 import { BeastInfo } from "../../../interfaces/viewInterfaces"
-import CombatInfoClass from "../../../models/gmBeastClass/components/CombatInfoClass"
+import { createCombatInfoObject, getCombatSkulls } from "../../../models/gmBeastClass/components/CombatInfo"
 import { getSpecialModifier } from "./getSpecialModifier"
 
 export function getMaxPoints(beastInfo: BeastInfo): number {
-    const { combatSkulls } = new CombatInfoClass(beastInfo.combatInfo, beastInfo.system)
+    const combatSkulls = getCombatSkulls(createCombatInfoObject(beastInfo.combatInfo, beastInfo.system))
     const { skillSkulls } = beastInfo.skillInfo
     const { socialSkulls } = beastInfo.socialInfo
     const specialModifier = getSpecialModifier(beastInfo)
