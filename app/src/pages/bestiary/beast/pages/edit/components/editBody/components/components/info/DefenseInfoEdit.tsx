@@ -3,18 +3,21 @@ import { BONFIRE, HACKMASTER } from "@bestiary/common/utilities/get/getSystemStr
 import { SystemInfoValue } from "@bestiary/common/interfaces/beast/infoInterfaces/generalInfoInterfaces"
 import TextEditor from "../../../../../../../components/textEditor/textEditor"
 
+const EMPTY_SYSTEM_INFO: SystemInfoValue = ['', undefined, '']
+
 interface Props {
-    defenseInfo: SystemInfoValue,
-    roleDefenseInfo?: SystemInfoValue,
+    defenseInfo: SystemInfoValue | null,
+    roleDefenseInfo?: SystemInfoValue | null,
     updateDefenseInfo: UpdateFunction,
     updateCombatInfo?: UpdateFunction,
     noHeader?: Boolean
 }
 
 export default function DefenseInfoEdit({ defenseInfo, roleDefenseInfo, updateDefenseInfo, updateCombatInfo, noHeader = false }: Props) {
+    const safeDefenseInfo = defenseInfo ?? EMPTY_SYSTEM_INFO
     
     const updateDefenseInfoForSystem = (system: 0 | 1 | 2, value: string) => {
-        const newInfo = defenseInfo.map((info: string | undefined, index: number) => {
+        const newInfo = safeDefenseInfo.map((info: string | undefined, index: number) => {
             if (system === index) {
                 return value
             }
@@ -42,14 +45,14 @@ export default function DefenseInfoEdit({ defenseInfo, roleDefenseInfo, updateDe
     return (
         <>
             {!noHeader && <h2 className="border">Defense Info</h2>}
-            <div className="info-by-system-shell" key={defenseInfo[BONFIRE] + 'BONFIRE'}>
+            <div className="info-by-system-shell" key={safeDefenseInfo[BONFIRE] + 'BONFIRE'}>
                 <div>
                     <h3>Bonfire</h3>
-                    <TextEditor content={defenseInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(BONFIRE, value)} />
+                    <TextEditor content={safeDefenseInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(BONFIRE, value)} />
                 </div>
-                <div key={defenseInfo[HACKMASTER] + 'HACKMASTER'}>
+                <div key={safeDefenseInfo[HACKMASTER] + 'HACKMASTER'}>
                     <h3>HackMaster</h3>
-                    <TextEditor content={defenseInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(HACKMASTER, value)} />
+                    <TextEditor content={safeDefenseInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateDefenseInfoForSystem(HACKMASTER, value)} />
                 </div>
             </div>
             {roleDefenseInfo && <div className="info-by-system-shell">
