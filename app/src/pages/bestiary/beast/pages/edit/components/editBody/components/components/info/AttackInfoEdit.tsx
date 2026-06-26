@@ -43,7 +43,7 @@ export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttac
     return (
         <>
             {!noHeader && <h2 className="border">Attack Info</h2>}
-            <div className="info-by-system-shell" key={attackInfo[BONFIRE] + 'BONFIRE'}>
+            {attackInfo && <div className="info-by-system-shell" key={attackInfo[BONFIRE] + 'BONFIRE'}>
                 <div>
                     <h3>Bonfire</h3>
                     <TextEditor content={attackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateInfoForSystem(BONFIRE, value)} />
@@ -52,7 +52,7 @@ export default function AttackInfoEdit({ attackInfo, roleAttackInfo, updateAttac
                     <h3>HackMaster</h3>
                     <TextEditor content={attackInfo[HACKMASTER] ?? ''} captureCallBack={(value) => updateInfoForSystem(HACKMASTER, value)} />
                 </div>
-            </div>
+            </div>}
             {roleAttackInfo && <div className="info-by-system-shell">
                 <div key={roleAttackInfo[BONFIRE] + 'BONFIRE'}>
                     <TextEditor content={roleAttackInfo[BONFIRE] ?? ''} captureCallBack={(value) => updateRoleAttackInfoForSystem(BONFIRE, value)} />

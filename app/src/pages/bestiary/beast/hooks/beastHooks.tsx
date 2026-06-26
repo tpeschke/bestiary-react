@@ -59,6 +59,10 @@ interface Return {
     saveBeast: SaveBeastFunction
 }
 
+function scrollToTop() {
+    window.scrollTo(0, 0)
+}
+
 export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Return {
     const [currentBeastId, setCurrentBeastId] = useState('0')
 
@@ -77,7 +81,7 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
     const updateBeastInfo = (modifiedBeastInfo: BeastInfo) => {
         dispatch(cacheMonster({
             id: modifiedBeastInfo.id,
-            beastInfo: new Promise((resolve) => { resolve(modifiedBeastInfo)})
+            beastInfo: new Promise((resolve) => { resolve(modifiedBeastInfo) })
         }))
         setBeast(new GMBeastClass(modifiedBeastInfo, null, null, systemPreference))
     }
@@ -135,7 +139,7 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
             setBeast(updatedBeast)
             dispatch(cacheMonster({
                 id: updatedBeast.id,
-                beastInfo: new Promise((resolve) => { resolve(beast.beastInfo)})
+                beastInfo: new Promise((resolve) => { resolve(beast.beastInfo) })
             }))
         }
     }, [systemPreference])
@@ -151,10 +155,6 @@ export default function beastHooks(systemPreference: 0 | 1 | 2 | undefined): Ret
         setUpdateCombatInfoFunctions(getUpdateCombatInfoFunctions(beast, updateBeastInfo))
         setUpdateSkillInfoFunctions(getUpdateSkillInfoFunctions(beast, updateBeastInfo))
     }, [beast])
-
-    function scrollToTop() {
-        window.scrollTo(0, 0)
-    }
 
     function handleBackwardsCompatibilityWithOldUrl() {
         let queryParams: any = {}

@@ -26,13 +26,13 @@ async function upsertWeaponAttack(attack: AllSpecificWeaponInfo, beastID: number
 
     if (id) {
         return query(updateWeaponInfo, [
-            id, oldID, overAllIndex, situation, tactic, damageType, beastID,
-            info[BONFIRE], info[HACKMASTER]
+            id, overAllIndex, situation, tactic, damageType, beastID,
+            info[BONFIRE] ?? '', info[HACKMASTER] ?? ''
         ])
     } else {
         return query(addWeaponToDB, [
             oldID, overAllIndex, situation, tactic, roleid, damageType, beastID,
-            info[BONFIRE], info[HACKMASTER]
+            info[BONFIRE] ?? '', info[HACKMASTER] ?? ''
         ])
     }
 }

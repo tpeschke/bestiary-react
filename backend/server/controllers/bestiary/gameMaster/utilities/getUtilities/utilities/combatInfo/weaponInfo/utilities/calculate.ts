@@ -22,7 +22,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
         const { id, beastid, roleid, info: info_bonfire, info_hm, attackinfo, attackinfo_hm, swarmbonus, weaponname: chosenName,
             weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldid,
-            attackid, situation,
+            situation,
             tactic, reference, attackrole, weapontype: weaponType, damagetype, addsizemod, spellid
         } = stat
 
@@ -39,7 +39,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
 
         if (reference) {
             return {
-                id: attackid,
+                id,
                 infoType: 'reference',
                 system: 'Bonfire',
                 overAllIndex: index,
@@ -48,7 +48,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             } as AttackReference
         } else if (spellid) {
             return {
-                id: attackid,
+                id,
                 infoType: 'spell',
                 overAllIndex: index,
                 roleid: roleid ?? attackrole,
@@ -58,7 +58,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             return {
                 system: "Bonfire",
                 infoType: 'swarm',
-                id: attackid,
+                id,
                 oldID: id ?? oldid,
                 beastId: beastid,
                 roleid,
@@ -77,7 +77,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 situation, tactic,
                 oldID: id ?? oldid,
                 overAllIndex: index,
-                id: attackid,
+                id,
                 type: 'Bonfire',
                 infoType: 'weapon',
                 scalingInfo: { swarmbonus, name: chosenName, weapon, weaponType, damageType, addsizemod }

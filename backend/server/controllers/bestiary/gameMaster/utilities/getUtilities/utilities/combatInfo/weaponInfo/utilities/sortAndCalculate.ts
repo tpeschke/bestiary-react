@@ -17,14 +17,14 @@ export default function calculateCombatStats(combatStats: RawCombatStat[], skull
 }
 
 function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefenseInfo[], attacks: AttackStats[], size: Size, skullIndex: number, mainRole: string, gearCache: any | undefined): void {
-    const { id, beastid, roleid, info, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon, 
-        eua, isspecial: isSpecial, slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, 
-        role, oldid: oldID, attackid, weapontype: weaponType, dradjust
+    const { id, beastid, roleid, addsizemod, tdr, swarmbonus, showonlydefenses, weaponname: chosenName, armor, shield, weapon,
+        eua, isspecial: isSpecial, slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage,
+        role, oldid: oldID, attackid, weapontype: weaponType, dradjust, info
     } = stats
 
     const roleToUse = role ?? mainRole
     const damageType = getDamageType(slashingDamage, crushingDamage, piercingDamage)
-
+    
     if (roleToUse) {
         defenses.push({
             ...calculateBonfireDefenseInfo(
@@ -37,9 +37,10 @@ function calculateSingleCombatInfo(stats: RawCombatStat, defenses: BonfireDefens
             overAllIndex: defenses.length,
             id,
             oldID,
-            scalingInfo: { swarmbonus, armor, shield, eua, tdr, name: chosenName, addsizemod,
+            scalingInfo: {
+                swarmbonus, armor, shield, eua, tdr, name: chosenName, addsizemod,
                 drAdjust: dradjust
-             }
+            }
         })
     }
 

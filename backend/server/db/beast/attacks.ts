@@ -1,22 +1,38 @@
 export const getMonsterAttacks = `select 
-	c.*,
-	coalesce(c.roleid, a.roleid),
+	a.id as id, a.oldid,
+	a.beastid,
+	coalesce(c.roleid, a.roleid) as attackrole,
+	eua, isspecial, addsizemod, weapon, shield, armor, weaponname,
+	swarmbonus, tdr, c.info,
 	r.combatpoints, r.role, 
-	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
+	a.situation, a.tactic, a.reference, a.damagetype, a.spellid,
 	a.info as attackinfo, a.info_hm as attackinfo_hm,
 	index
 from bbattacks a
-join bbcombatstats c on a.oldid = c.id
+left join bbcombatstats c on a.oldid = c.id
 left join bbroles r on r.id = c.roleid
-where c.beastid = $1 or a.beastid = $1
-order by index`
+where a.beastid = $1
+order by index;`
+
+// `select 
+// 	c.*,
+// 	coalesce(c.roleid, a.roleid),
+// 	r.combatpoints, r.role, 
+// 	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
+// 	a.info as attackinfo, a.info_hm as attackinfo_hm,
+// 	index
+// from bbattacks a
+// join bbcombatstats c on a.oldid = c.id
+// left join bbroles r on r.id = c.roleid
+// where c.beastid = $1 or a.beastid = $1
+// order by index`
 
 export const removeMissingAttackIDsFromDB = `delete from bbattacks
 where beastid = $1 and not (id = any($2));`
 
 export const updateWeaponInfo = `update bbattacks
-set oldid = $2, index = $3, situation = $4, tactic = $5, damageType = $6, beastid = $7,
-	info = $8, info_hm = $9
+set index = $2, situation = $3, tactic = $4, damageType = $5, beastid = $6,
+	info = $7, info_hm = $8
 where id = $1`
 
 export const addWeaponToDB = `insert into bbattacks 
