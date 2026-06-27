@@ -23,7 +23,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
             weapon, isspecial: isSpecial,
             slashingweapons: slashingDamage, crushingweapons: crushingDamage, piercingweapons: piercingDamage, role, oldid,
             situation,
-            tactic, reference, attackrole, weapontype: weaponType, damagetype, addsizemod, spellid
+            tactic, reference, weapontype: weaponType, damagetype, addsizemod, spellid
         } = stat
 
         const roleToUse = role ? role : mainRole
@@ -43,7 +43,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 infoType: 'reference',
                 system: 'Bonfire',
                 overAllIndex: index,
-                roleid: roleid ?? attackrole,
+                roleid,
                 tactic, reference, situation
             } as AttackReference
         } else if (spellid) {
@@ -51,7 +51,7 @@ function calculateAttacks(stats: RawCombatStat[], skullIndex: number, mainRole: 
                 id,
                 infoType: 'spell',
                 overAllIndex: index,
-                roleid: roleid ?? attackrole,
+                roleid,
                 spellid, situation,
             } as SpellReference
         } else if (chosenName && chosenName.substring(0, 11) === "Swarm Bonus") {

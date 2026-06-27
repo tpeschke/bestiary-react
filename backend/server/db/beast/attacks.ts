@@ -1,7 +1,7 @@
 export const getMonsterAttacks = `select 
 	a.id as id, a.oldid,
 	a.beastid,
-	coalesce(c.roleid, a.roleid) as attackrole,
+	coalesce(c.roleid, a.roleid) as roleid,
 	eua, isspecial, addsizemod, weapon, shield, armor, weaponname,
 	swarmbonus, tdr, c.info,
 	r.combatpoints, r.role, 
