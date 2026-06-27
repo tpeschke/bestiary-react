@@ -1,5 +1,6 @@
 import { BeastInfo } from "../../../../interfaces/viewInterfaces"
-import { createCombatInfoObject, getCombatSkulls } from "../../../../models/gmBeastClass/components/CombatInfo"
+import { createCombatInfoObject } from "../combatInfo/getCombatInfo"
+import { getCombatSkulls } from "../combatInfo/utilities/bonfireSpecific/getCombatSkulls"
 
 export function getSelfDoubtDie(beastInfo: BeastInfo): string {
     const combatSkulls = getCombatSkulls(createCombatInfoObject(beastInfo.combatInfo, beastInfo.system))

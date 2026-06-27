@@ -1,5 +1,6 @@
 import { BeastInfo } from "../../../interfaces/viewInterfaces"
-import { createCombatInfoObject, getCombatSkulls } from "../../../models/gmBeastClass/components/CombatInfo"
+import { createCombatInfoObject } from "./combatInfo/getCombatInfo"
+import { getCombatSkulls } from "./combatInfo/utilities/bonfireSpecific/getCombatSkulls"
 import { getSpecialModifier } from "./getSpecialModifier"
 
 export function getMaxPoints(beastInfo: BeastInfo): number {

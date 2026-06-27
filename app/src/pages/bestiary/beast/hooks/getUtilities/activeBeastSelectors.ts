@@ -9,7 +9,6 @@ import { Spell } from '@bestiary/common/interfaces/beast/infoInterfaces/castingI
 import { NonspecificCombatInfo, SpecificCombatInfo } from '@bestiary/common/interfaces/beast/infoInterfaces/combatInfoInterfaces'
 import { SystemOption } from '@bestiary/common/interfaces/beast/beast'
 import { getSelfDoubtDie } from './utilities/bonfireSpecific/getSelfDoubtDie'
-import { getCombatInfo, getRawCombatInfoByRole, getCombatRoleType } from './utilities/getCombatInfo'
 import { getGeneralInfo, getRawGeneralInfo } from './utilities/getGeneralInfo'
 import { getMaxPoints } from './utilities/getMaxPoints'
 import { getSelectedRoleIndex, getSelectedRoleID, getRoleName } from './utilities/getRoleInfo'
@@ -17,6 +16,9 @@ import { getSkillInfo, getRawSkillInfo } from './utilities/getSkillInfo'
 import { getSocialInfo } from './utilities/getSocialInfo'
 import { getCastingInfo, getSpells } from './utilities/getWeirdingInfo'
 import { getSaves } from './utilities/hackMasterSpecific/getSaves'
+import { formatSpecificCombatInfo } from './utilities/combatInfo/getCombatInfo'
+import { getRawCombatInfoByRole } from './utilities/combatInfo/utilities/getRawCombatInfoByRole'
+import { getCombatRoleType } from './utilities/combatInfo/utilities/getRole'
 
 export interface GmViewModel {
     id: number,
@@ -52,7 +54,7 @@ export const selectGmView = (beastInfo: BeastInfo | undefined, roleId: string | 
         imageInfo: beastInfo.imageInfo,
         socialInfo: getSocialInfo(beastInfo, roleId),
         skillInfo: getSkillInfo(beastInfo, roleId),
-        combatInfo: getCombatInfo(beastInfo, roleId),
+        combatInfo: formatSpecificCombatInfo(beastInfo, roleId),
         linkedInfo: beastInfo.linkedInfo,
         lootInfo: beastInfo.lootInfo,
         castingInfo: getCastingInfo(beastInfo),
