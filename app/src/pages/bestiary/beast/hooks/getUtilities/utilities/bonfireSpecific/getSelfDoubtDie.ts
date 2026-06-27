@@ -1,8 +1,9 @@
 import { BeastInfo } from "../../../../interfaces/viewInterfaces"
-import CombatInfoClass from "../../../../models/gmBeastClass/components/CombatInfoClass"
+import { createCombatInfoObject } from "../combatInfo/getCombatInfo"
+import { getCombatSkulls } from "../combatInfo/utilities/bonfireSpecific/getCombatSkulls"
 
 export function getSelfDoubtDie(beastInfo: BeastInfo): string {
-    const { combatSkulls } = new CombatInfoClass(beastInfo.combatInfo, beastInfo.system)
+    const combatSkulls = getCombatSkulls(createCombatInfoObject(beastInfo.combatInfo, beastInfo.system))
     const { skillSkulls } = beastInfo.skillInfo
     const { socialSkulls } = beastInfo.socialInfo
 

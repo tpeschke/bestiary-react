@@ -7,7 +7,7 @@ import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bon
 import { BeastInfo } from "../../../interfaces/viewInterfaces"
 import { getSelectedRoleIndex } from "./getRoleInfo"
 import { getSpecialModifier } from "./getSpecialModifier"
-import { getCombatInfo } from "./getCombatInfo"
+import { formatSpecificCombatInfo } from "./combatInfo/getCombatInfo"
 
 function adjustCharacteristicRank(type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string, system: SystemOption) {
     return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {
@@ -64,7 +64,7 @@ function getBonfireSocialInfo(beastInfo: BeastInfo, roleId: string | null): Spec
             ...entrySocialInfo,
             type: 'Bonfire',
             socialRole, socialSecondary, attackInfo, defenseInfo, socialSkulls,
-            isSwarm: !!getCombatInfo(beastInfo, roleId).attacks.find(attackInfo => {
+            isSwarm: !!formatSpecificCombatInfo(beastInfo, roleId).attacks.find(attackInfo => {
                 return attackInfo.infoType === 'swarm'
             }),
             capacity: {
