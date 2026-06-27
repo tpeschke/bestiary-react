@@ -1,9 +1,9 @@
-import { RawCombatStat } from "../../../../../backend/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
-import { Strength } from "../../../../../backend/common/interfaces/calculationInterfaces"
-import { getCombatStats } from "../../../../../backend/server/controllers/bestiary/gameMaster/utilities/getUtilities/utilities/combatInfo/weaponInfo/getCombatInfo"
-import { getMonsterAttacks } from "../../../../../backend/server/db/beast/attacks"
-import { getMonsterCombatStats } from "../../../../../backend/server/db/beast/combatStat"
-import { getMonsterDefenses } from "../../../../../backend/server/db/beast/defenses"
+import { RawCombatStat } from "../../../../backend/common/interfaces/beast/infoInterfaces/combatInfoInterfaces"
+import { Strength } from "../../../../backend/common/interfaces/calculationInterfaces"
+import { getCombatStats } from "../../../../backend/server/controllers/bestiary/gameMaster/utilities/getUtilities/utilities/combatInfo/weaponInfo/getCombatInfo"
+import { getMonsterAttacks } from "../../../../backend/server/db/beast/attacks"
+import { getMonsterCombatStats } from "../../../../backend/server/db/beast/combatStat"
+import { getMonsterDefenses } from "../../../../backend/server/db/beast/defenses"
 
 const strength: Strength = 'none'
 

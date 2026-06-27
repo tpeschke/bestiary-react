@@ -23,7 +23,7 @@ export async function getCombatStats(
     skullIndex: number,
     role: string,
     size: Size,
-    gearCache: any | undefined,
+    gearCache: unknown,
     combatInfoQuery: CombatInfoQuery = queryCombatInfo
 ): Promise<CalculateCombatStatsReturn> {
     const defenses: RawCombatStat[] = await combatInfoQuery(getMonsterDefenses, beastId)
