@@ -43,7 +43,7 @@ function bonfireAttackDisplay(attackStat: BonfireWeaponInfo) {
                     <div>
                         <div>
                             <p>Type</p>
-                            <p>{damageType}</p>
+                            <p>{damageType[0]}</p>
                         </div>
                         <div>
                             <p>Rec</p>
@@ -89,7 +89,7 @@ function hackMasterAttackDisplay(attackStat: HackMasterWeaponInfo) {
                     <div>
                         <div>
                             <p>Type</p>
-                            <p>{damageType}</p>
+                            <p>{damageType[0]}</p>
                         </div>
                         <div>
                             <p>Spd</p>
