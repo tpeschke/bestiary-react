@@ -5,9 +5,9 @@ import { CharacteristicWithRanks, calculateRankForCharacteristic } from "@bestia
 import getCapacity from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/getCapacity"
 import getSocialSkillSuites from "@bestiary/common/utilities/scalingAndBonus/bonfire/confrontation/utilities/getSocialSkillSuites"
 import { BeastInfo } from "../../../interfaces/viewInterfaces"
-import { getCombatInfo } from "../activeBeastSelectors"
 import { getSelectedRoleIndex } from "./getRoleInfo"
 import { getSpecialModifier } from "./getSpecialModifier"
+import { getCombatInfo } from "./getCombatInfo"
 
 function adjustCharacteristicRank(type: CharacteristicWithRanks, skullIndex: number, roleID: string, role: string, system: SystemOption) {
     return (characteristics: Conflict[], characteristic: Conflict): Conflict[] => {

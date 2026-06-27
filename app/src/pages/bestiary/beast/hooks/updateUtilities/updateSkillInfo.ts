@@ -1,9 +1,9 @@
 import getSkullIndex from "@bestiary/common/utilities/scalingAndBonus/getSkullIndex"
 import { BeastInfo } from "../../interfaces/viewInterfaces"
-import { getSelectedRole, getSelectedRoleIndex } from "../getUtilities/activeBeastSelectors"
 import { UpdateFunction } from "./interfaces/updateInterfaces"
 import { Role } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/roleInfoInterfaces"
 import { AllRoleSkillInfo } from "@bestiary/common/interfaces/beast/infoInterfaces/roleInterfaces/skillInfoInterfaces"
+import { getSelectedRole, getSelectedRoleIndex } from "../getUtilities/utilities/getRoleInfo"
 
 export type UpdateSkillInfoFunctionsObject = {
     updateSkillInfo: UpdateFunction
