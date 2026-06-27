@@ -1,7 +1,7 @@
 export const getMonsterAttacks = `select 
 	a.id as id, a.oldid,
 	a.beastid,
-	coalesce(c.roleid, a.roleid) as attackrole,
+	coalesce(c.roleid, a.roleid) as roleid,
 	eua, isspecial, addsizemod, weapon, shield, armor, weaponname,
 	swarmbonus, tdr, c.info,
 	r.combatpoints, r.role, 
@@ -13,19 +13,6 @@ left join bbcombatstats c on a.oldid = c.id
 left join bbroles r on r.id = c.roleid
 where a.beastid = $1
 order by index;`
-
-// `select 
-// 	c.*,
-// 	coalesce(c.roleid, a.roleid),
-// 	r.combatpoints, r.role, 
-// 	a.oldid, a.id as attackid, a.situation, a.tactic, a.reference, a.damagetype, a.roleid as attackrole, a.spellid,
-// 	a.info as attackinfo, a.info_hm as attackinfo_hm,
-// 	index
-// from bbattacks a
-// join bbcombatstats c on a.oldid = c.id
-// left join bbroles r on r.id = c.roleid
-// where c.beastid = $1 or a.beastid = $1
-// order by index`
 
 export const removeMissingAttackIDsFromDB = `delete from bbattacks
 where beastid = $1 and not (id = any($2));`
