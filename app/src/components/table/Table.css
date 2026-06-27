@@ -9,7 +9,7 @@ table.second-column-center td:nth-child(2) {
 }
 
 thead {
-    background: #795548;
+    background: radial-gradient(circle, rgba(121, 85, 72, 1) 70%, rgba(94, 66, 57, 1) 100%);
     text-align: left;
     color: white;
     font-family: 'oldClaude';
