@@ -105,12 +105,14 @@ export async function updateKofiInfo(request: KofiRequest | any, response: Respo
     const { verification_token, from_name, type, tier_name } = request.body
     if (verification_token === kofiVerificationToken) {
         if (type === 'Subscription' && tier_name === 'Game Master') {
-            query(updateKofiSQL, [from_name, 3])
+            await query(updateKofiSQL, [from_name, 3])
         } else if (type === 'Subscription' && tier_name === 'Early Access') {
-            query(updateKofiSQL, [from_name, 8])
+            await query(updateKofiSQL, [from_name, 8])
         } else if (type === 'Subscription') {
-            query(updateKofiSQL, [from_name, null])
+            await query(updateKofiSQL, [from_name, null])
         }
+
+        checkForContentTypeBeforeSending(response, { updated: true })
     } else {
         sendErrorForward('update kofi', { message: "Nice Try" }, response)
     }
