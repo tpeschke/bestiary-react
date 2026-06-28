@@ -11,9 +11,11 @@ export default function TileIcon({ canplayerview, patreon }: Props) {
 
     if (canplayerview) {
         return <Icon tooltip="Anyone can view this entry" iconName='eye' />
-    } else if (accessString === GM) {
-        return <Icon tooltip="This entry uses the Deluxe rules" iconName='plus' />
-    } else if (accessString === EARLY_ACCESS) {
+    } 
+    // else if (accessString === GM) {
+    //     return <Icon tooltip="This entry uses the Deluxe rules" iconName='plus' />
+    // } 
+    else if (accessString === EARLY_ACCESS) {
         return <Icon tooltip="Early Access" iconName='d20' />
     }
 

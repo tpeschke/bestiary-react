@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function Tile({ tile }: Props) {
-    const { id, thumbnail, name, canplayerview, patreon } = tile
+    const { id, thumbnail, name, canplayerview, patreon, roles } = tile
 
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
@@ -54,6 +54,7 @@ export default function Tile({ tile }: Props) {
                 </div>
                 <span className='name-frame'>
                     <h2>{name}</h2>
+                    {(roles && roles.length > 0) && <p>{roles.length} Roles</p>}
                 </span>
             </div>
         </Link>
