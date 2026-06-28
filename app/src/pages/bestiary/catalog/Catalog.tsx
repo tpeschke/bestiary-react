@@ -32,7 +32,7 @@ export default function Catalog({ setLoading }: Props) {
 
     return (
         <div className='card-background catalog'>
-            {usersPatreon >= EARLY_ACCESS && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Also Show'} Early Access</button>}
+            {usersPatreon === EARLY_ACCESS && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Also Show'} Early Access</button>}
             {!userIsLoggedIn && <Row catalogTiles={freeBeasts} title={'Free Entries'} />}
             <FavoritesDisplay userIsLoggedIn={userIsLoggedIn} favorites={favorites} />
             {showAll && <Row catalogTiles={templates} title={'Templates'} />}
