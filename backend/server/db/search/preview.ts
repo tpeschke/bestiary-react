@@ -33,7 +33,6 @@ join (	select id, 	min(combatSkulls) as mincombatskull, max(combatSkulls) as max
 left join bbroles r on r.beastid = b.id
 where 
 	b.id = $1
-	and patreon < 20 
 	and (userid is null or userid = $2)
 order by b.name`
 
