@@ -12,11 +12,11 @@ export default async function updateStrategiesNLimits(strategiesNLimits: Strateg
     values ( $1, $2, $3, $4, $5, $6, $7, $8 )`
 
     return Promise.all(
-        strategiesNLimits.map(({id, groupID, chaos, chaosNote, diminish, strategies, strategiesNote, baselineStrategies, treasure}) => {
+        strategiesNLimits.map(({id, groupID, chaos, chaosNote, cohesion, strategies, strategiesNote, baselineStrategies, treasure}) => {
             if (id) {
-                return query(updateSQLQuery, [id, chaos, chaosNote, diminish, strategies, strategiesNote, baselineStrategies, treasure])
+                return query(updateSQLQuery, [id, chaos, chaosNote, cohesion, strategies, strategiesNote, baselineStrategies, treasure])
             }
-            return query(addSQLQuery, [groupID, chaos, chaosNote, diminish, strategies, strategiesNote, baselineStrategies, treasure])
+            return query(addSQLQuery, [groupID, chaos, chaosNote, cohesion, strategies, strategiesNote, baselineStrategies, treasure])
         })
     )
 }

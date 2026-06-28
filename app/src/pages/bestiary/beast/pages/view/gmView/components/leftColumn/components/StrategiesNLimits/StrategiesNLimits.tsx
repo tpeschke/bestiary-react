@@ -15,29 +15,29 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
     const systemPreference = useSelector(getSystemPreference) as 0 | 1 | 2 | undefined
     const isBonfire = systemPreference === BONFIRE
 
-    function formatDiminish(diminish: number | null) {
+    function formatCohesion(cohesion: number | null) {
         if (systemPreference === HACKMASTER) {
-            return formatHackMasterDiminish(diminish)
+            return formatHackMasterCohesion(cohesion)
         }
 
-        return formatBonfireDiminish(diminish)
+        return formatBonfireCohesion(cohesion)
     }
 
-    function formatBonfireDiminish(diminish: number | null) {
-        if (!diminish) {
+    function formatBonfireCohesion(cohesion: number | null) {
+        if (!cohesion) {
             return '+0'
-        } else if (diminish > 0) {
-            return `+${diminish}`
+        } else if (cohesion > 0) {
+            return `+${cohesion}`
         }
-        return diminish
+        return cohesion
     }
 
-    function formatHackMasterDiminish(diminish: number | null) {
-        if (!diminish) {
+    function formatHackMasterCohesion(cohesion: number | null) {
+        if (!cohesion) {
             return '50%'
         }
 
-        const diminishPercentDictionary = [
+        const cohesionPercentDictionary = [
             '10%', // -3
             '35%', // -2
             '35%', // -1
@@ -47,7 +47,7 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
             '95%', // 3
         ]
 
-        return diminishPercentDictionary[diminish + 3]
+        return cohesionPercentDictionary[cohesion + 3]
     }
 
     function returnDashIfNull(value: number | string | null) {
@@ -57,12 +57,12 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
         return '-'
     }
 
-    const chaosNDiminishTooltip = 'Chaos and Diminish limits are explained in R.2 on the SRD.'
+    const chaosNCohesionTooltip = 'Chaos and Cohesion limits are explained in R.2 on the SRD.'
 
     const groupTooltip = 'These are the collective nouns for the various group sizes that this enemy comes in.'
 
-    const chaosTooltip = isBonfire ? chaosNDiminishTooltip : 'This is the number of enemies that need to be killed to trigger a Diminish Check.'
-    const diminishTooltip = isBonfire ? chaosNDiminishTooltip : 'If a Diminish Check is triggered, roll a d100; if the result is under the percentage for that group, the group Diminishes; it shrinks one size (going up a step on this table).\nIf it would go off the table, the group entirely disbands.'
+    const chaosTooltip = isBonfire ? chaosNCohesionTooltip : 'This is the number of enemies that need to be killed to trigger a Cohesion Check.'
+    const cohesionTooltip = isBonfire ? chaosNCohesionTooltip : 'If a Cohesion Check is triggered (See Chaos tooltip), roll a d100; if the result is over the percentage for that group, the group diminishes ; it shrinks one size (going up a step on this table).\nIf it would go off the table, the group entirely disbands.'
 
     const strategiesTooltip = 'This is the base number of Strategies that this group can employ in response to the players\'s actions. See the Obstacles, Customs, and Other Options sections below for options.'
     const baselineStrategiesTooltip = 'This is base number of Strategies that this group has already employed in / near their base of operations.'
@@ -91,13 +91,13 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
                                     'Chaos'
                                 )}
                             </th>
-                            <th data-tooltip-id="my-tooltip" data-tooltip-content={diminishTooltip} className="center-text">
+                            <th data-tooltip-id="my-tooltip" data-tooltip-content={cohesionTooltip} className="center-text">
                                 {isBonfire ? (
                                     <a href="https://bonfire.stone-fish.com/rules/2#gm-during-rests" target="_blank">
-                                        Diminish
+                                        Cohesion
                                     </a>
                                 ) : (
-                                    'Diminish'
+                                    'Cohesion'
                                 )}
                             </th>
                             <th data-tooltip-id="my-tooltip" data-tooltip-content={strategiesTooltip} className="center-text">Strategies</th>
@@ -110,12 +110,12 @@ export default function StrategiesNLimits({ strategiesNLimits, limitNotes }: Pro
                         </tr>
                     </thead>
                     <tbody>
-                        {strategiesNLimits && strategiesNLimits.map(({ group, chaos, chaosNote, diminish, strategies, strategiesNote, baselineStrategies, treasure }, index) => {
+                        {strategiesNLimits && strategiesNLimits.map(({ group, chaos, chaosNote, cohesion, strategies, strategiesNote, baselineStrategies, treasure }, index) => {
                             return (
                                 <tr key={index} >
                                     <td>{group}</td>
                                     <td className="center-text">{returnDashIfNull(chaos)}{chaosNote ? '*' : ''}</td>
-                                    <td className="center-text">{formatDiminish(diminish)}</td>
+                                    <td className="center-text">{formatCohesion(cohesion)}</td>
                                     <td className="center-text">{returnDashIfNull(strategies)}{strategiesNote ? chaosNote ? '**' : '*' : ''}</td>
                                     <td className="center-text">{returnDashIfNull(baselineStrategies)}</td>
                                     <td>{returnDashIfNull(treasure)}</td>

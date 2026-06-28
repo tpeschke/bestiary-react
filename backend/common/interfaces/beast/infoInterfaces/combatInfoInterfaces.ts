@@ -357,7 +357,7 @@ export interface StrategyNLimits {
     group: string,
     chaos: number | null,
     chaosNote: boolean,
-    diminish: number,
+    cohesion: number,
     strategies: string | null,
     strategiesNote: boolean,
     baselineStrategies: string | null

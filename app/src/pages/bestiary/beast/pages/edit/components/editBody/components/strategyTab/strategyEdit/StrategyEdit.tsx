@@ -71,7 +71,7 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limi
                         <th>Group</th>
                         <th className="center-text">Chaos</th>
                         <th className="center-text">Chaos Note?</th>
-                        <th className="center-text">Diminish</th>
+                        <th className="center-text">Cohesion</th>
                         <th className="center-text">Strategies</th>
                         <th className="center-text">Strategies Note?</th>
                         <th className="center-text">Baseline Strategies</th>
@@ -79,13 +79,13 @@ export default function StrategyEdit({ strategiesNLimits, updateCombatInfo, limi
                     </tr>
                 </thead>
                 <tbody>
-                    {strategiesNLimits && strategiesNLimits.map(({ group, chaos, chaosNote, diminish, strategies, strategiesNote, baselineStrategies, treasure }, index) => {
+                    {strategiesNLimits && strategiesNLimits.map(({ group, chaos, chaosNote, cohesion, strategies, strategiesNote, baselineStrategies, treasure }, index) => {
                         return (
                             <tr key={index} >
                                 <td>{group}</td>
                                 <td className="center-text"><input type="number" onChange={event => updateStrategies(index, 'chaos', +event.target.value)} value={chaos ?? 0} /></td>
                                 <td className="center-text"><input type="checkbox" defaultChecked={chaosNote} onClick={event => updateStrategiesOnClick(index, 'chaosNote', event)} /></td>
-                                <td className="center-text"><input type="number" onChange={event => updateStrategies(index, 'diminish', +event.target.value)} value={diminish ?? 0} /></td>
+                                <td className="center-text"><input type="number" onChange={event => updateStrategies(index, 'cohesion', +event.target.value)} value={cohesion ?? 0} /></td>
                                 <td className="center-text"><input onChange={event => updateStrategies(index, 'strategies', event.target.value)} value={strategies ?? ""} /></td>
                                 <td className="center-text"><input type="checkbox" defaultChecked={strategiesNote} onClick={event => updateStrategiesOnClick(index, 'strategiesNote', event)} /></td>
                                 <td className="center-text"><input onChange={event => updateStrategies(index, 'baselineStrategies', event.target.value)} value={baselineStrategies ?? ""} /></td>

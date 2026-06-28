@@ -9,9 +9,9 @@ order by weight desc`
 export default async function getStrategiesNLimits(beastID: number): Promise<StrategyNLimits[]> {
     const rawStrategies = await query(strategiesSQL, beastID)
 
-    return rawStrategies.map(({beastid, group, id, labelid, chaos, chaosnote, diminish, strategies, strategiesnote, baselinestrategies, treasure, notes}) => {
+    return rawStrategies.map(({beastid, group, id, labelid, chaos, chaosnote, diminish: cohesion, strategies, strategiesnote, baselinestrategies, treasure, notes}) => {
         return {
-            group, id, chaos, diminish, strategies, treasure, notes,
+            group, id, chaos, cohesion, strategies, treasure, notes,
             baselineStrategies: baselinestrategies,
             strategiesNote: strategiesnote,
             chaosNote: chaosnote,
