@@ -74,7 +74,6 @@ where
 	b.id = $1
 	and patreon < 20 
 	and (userid is null or userid = $2)
-	and notUpdating is false
 order by b.name`
 
 export const getPlayerPreview = `select b.id, b.name, intro, patreon, rarity, b.size, canplayerview, thumbnail, 
@@ -90,5 +89,4 @@ where
 	b.id = $1
 	and canplayerview = true 
 	and userid is null
-	and notUpdating is false
 order by b.name`

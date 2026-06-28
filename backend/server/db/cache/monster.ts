@@ -4,4 +4,4 @@ order by count desc
 limit $1;`
 
 export const getFreeAndUpdating = `select id as beastid from bbindividualbeast b 
-where canplayerview = true or notupdating = false`
+where canplayerview = true and patreon < 20`

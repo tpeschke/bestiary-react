@@ -2,5 +2,5 @@ export const getVariantInfo = `select bbvariants.id as id, bbindividualbeast.id 
 join bbvariants on bbvariants.variantid = bbindividualbeast.id
 where 
 	beastid = $1
-	and notupdating is false
+	and patreon < 20
 order by name`

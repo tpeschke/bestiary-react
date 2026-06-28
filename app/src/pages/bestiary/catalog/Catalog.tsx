@@ -18,7 +18,7 @@ interface Props {
 export default function Catalog({ setLoading }: Props) {
     document.title = 'Bonfire Bestiary'
     
-    const { templates, freeBeasts, catalogItems, updatingCatalogItems, favorites } = catalogItemStates()
+    const { templates, freeBeasts, AllCatalogItems, catalogItems, favorites } = catalogItemStates()
     const userIsLoggedIn = useSelector(isUserLoggedOn)
     const usersPatreon = useSelector(getUserPatreon)
 
@@ -32,11 +32,11 @@ export default function Catalog({ setLoading }: Props) {
 
     return (
         <div className='card-background catalog'>
+            {usersPatreon >= EARLY_ACCESS && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Also Show'} Early Access</button>}
             {!userIsLoggedIn && <Row catalogTiles={freeBeasts} title={'Free Entries'} />}
             <FavoritesDisplay userIsLoggedIn={userIsLoggedIn} favorites={favorites} />
             {showAll && <Row catalogTiles={templates} title={'Templates'} />}
-            <Rows catalogItems={showAll ? catalogItems : updatingCatalogItems} />
-            {usersPatreon >= EARLY_ACCESS && <button onClick={_ => setShowAll(!showAll)} className='orange'>{showAll ? 'Hide' : 'Show'} Entire Catalog</button>}
+            <Rows catalogItems={showAll ? AllCatalogItems : catalogItems} />
         </div>
     )
 }

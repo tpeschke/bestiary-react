@@ -15,7 +15,7 @@ export default function catalogItemStates() {
     const favorites: CatalogTile[] = useSelector((state: RootState) => state.catalog.favorites)
     
     const catalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.catalogItems)
-    const updatingCatalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.updatingCatalogItems)
+    const AllCatalogItems: CatalogTile[][] = useSelector((state: RootState) => state.catalog.AllCatalogItems)
 
     const dispatch = useDispatch()
 
@@ -31,7 +31,7 @@ export default function catalogItemStates() {
         templates,
         freeBeasts,
         catalogItems,
-        updatingCatalogItems,
+        AllCatalogItems,
         favorites
     }
 }

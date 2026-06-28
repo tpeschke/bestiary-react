@@ -2,9 +2,9 @@ import { Access } from "@bestiary/common/utilities/get/getAccessLevel"
 
 export interface CatalogState {
     catalogItems: CatalogTile[][],
+    AllCatalogItems: CatalogTile[][]
     templates: CatalogTile[],
     freeBeasts: CatalogTile[],
-    updatingCatalogItems: CatalogTile[][],
     favorites: CatalogTile[]
 }
 
@@ -14,6 +14,5 @@ export interface CatalogTile {
     thumbnail: string,
     roles: any[],
     canplayerview: boolean,
-    patreon: Access,
-    notupdating: boolean
+    patreon: number,
 }

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function Tile({ tile }: Props) {
-    const { id, thumbnail, name, canplayerview, patreon, notupdating } = tile
+    const { id, thumbnail, name, canplayerview, patreon } = tile
 
     function handleImageError({ currentTarget }: any) {
         currentTarget.onerror = null
@@ -43,10 +43,9 @@ export default function Tile({ tile }: Props) {
         }, 100))
     }
 
-    const tooltip = notupdating ? "This entry isn't being updated currently. If you need it, let Peschke know and he'll update it for you. \nYou can still view it." : null
     return (
         <Link to={`/beast/${id}`} onMouseEnter={_ => preloadEntryInfo(id)} onMouseLeave={_ => clearTimeout(timeOutID)}>
-            <div className={notupdating ? 'tile not-updating' : 'tile'} data-tooltip-id="my-tooltip" data-tooltip-content={tooltip}>
+            <div className={patreon === 20 ? 'tile early-access' : 'tile'}>
                 <div className='image-frame'>
                     <div className='icon-frame'>
                         <TileIcon canplayerview={canplayerview} patreon={patreon} />

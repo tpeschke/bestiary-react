@@ -5,9 +5,9 @@ import { CatalogState, CatalogTile } from '../../../pages/bestiary/catalog/catal
 
 const initialState: CatalogState = {
   catalogItems: [],
+  AllCatalogItems: [],
   templates: [],
   freeBeasts: [],
-  updatingCatalogItems: [],
   favorites: []
 }
 
@@ -17,12 +17,12 @@ export const catalogSlice = createSlice({
   reducers: {
     saveCatalog: (state: CatalogState, action: PayloadAction<CatalogState>) => {
       const { templates, freeBeasts, catalogItems, favorites } = action.payload
-      state.templates = templates
-      state.freeBeasts = freeBeasts
-      state.catalogItems = catalogItems
       state.favorites = favorites
-      state.updatingCatalogItems = catalogItems.map(row => {
-        return row.filter(item => !item.notupdating)
+      state.freeBeasts = freeBeasts
+      state.templates = templates
+      state.AllCatalogItems = catalogItems
+      state.catalogItems = catalogItems.map(row => {
+        return row.filter(item => item.patreon < 20)
       })
     },
     removeFromFavorites: (state: CatalogState, action: PayloadAction<any>) => {

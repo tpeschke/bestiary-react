@@ -14,7 +14,6 @@ export interface BeastTile {
     defaultrole: string | null,
     socialsecondary: string,
     skillsecondary: string,
-    notupdating: boolean,
     roles: Role[]
 }
 
