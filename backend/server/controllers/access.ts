@@ -98,13 +98,11 @@ set kofi = $2
 where userName = $1`
 
 interface KofiRequest extends Request {
-    body: {
-        data: KofiInfo,
-    }
+    body: KofiInfo
 }
 
 export async function updateKofiInfo(request: KofiRequest | any, response: Response) {
-    const { verification_token, from_name, type, tier_name } = request.body.data
+    const { verification_token, from_name, type, tier_name } = request.body
     if (verification_token === kofiVerificationToken) {
         if (type === 'Subscription' && tier_name === 'Game Master') {
             query(updateKofiSQL, [from_name, 3])
