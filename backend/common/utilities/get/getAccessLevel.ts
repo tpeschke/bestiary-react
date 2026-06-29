@@ -15,9 +15,9 @@ export default function getAccessLevel(user: User | null | undefined): Access {
 }
 
 function getAccessString(patreon: number = 0, koFi: number = 0): Access {
-    if (patreon >= 10 || koFi >= 7.99) {
+    if (patreon >= 10 || koFi >= 14.99) {
         return EARLY_ACCESS
-    } else if (patreon >= 5 || koFi >= 2.99) {
+    } else if (patreon >= 5 || koFi >= 4.99) {
         return GM
     }
 
