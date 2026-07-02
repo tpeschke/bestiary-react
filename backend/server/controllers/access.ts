@@ -95,21 +95,21 @@ export async function updatePlayerPreference(request: PlayerPreference | any, re
 
 const updateKofiSQL = `update usersAuth
 set kofi = $2
-where userName = $1`
+where email = $1`
 
 interface KofiRequest extends Request {
     body: KofiInfo
 }
 
 export async function updateKofiInfo(request: KofiRequest | any, response: Response) {
-    const { verification_token, from_name, type, tier_name } = request.body
+    const { verification_token, email, type, tier_name } = request.body
     if (verification_token === kofiVerificationToken) {
         if (type === 'Subscription' && tier_name === 'Game Master') {
-            await query(updateKofiSQL, [from_name, 3])
+            await query(updateKofiSQL, [email, 3])
         } else if (type === 'Subscription' && tier_name === 'Early Access') {
-            await query(updateKofiSQL, [from_name, 8])
+            await query(updateKofiSQL, [email, 8])
         } else if (type === 'Subscription') {
-            await query(updateKofiSQL, [from_name, null])
+            await query(updateKofiSQL, [email, null])
         }
 
         checkForContentTypeBeforeSending(response, { updated: true })
