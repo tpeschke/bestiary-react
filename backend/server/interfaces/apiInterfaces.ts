@@ -33,7 +33,8 @@ export interface Error {
 
 export interface Profile {
     displayName: string,
-    user_id: string
+    user_id: string,
+    emails: {value: string}[]
 }
 
 export interface KofiInfo {

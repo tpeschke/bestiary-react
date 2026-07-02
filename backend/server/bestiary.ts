@@ -32,12 +32,13 @@ import { collectCatalog } from './controllers/bestiary/catalog'
 import { collectMonsterCache } from './controllers/bestiary/monsterCache'
 import collectGearCache from './controllers/bestiary/gear/gear'
 import { Profile } from './interfaces/apiInterfaces'
-import { createUser, findSession, findUser } from './db/user/basicSQL'
+import { createUser, findSession, findUser, updateEmail } from './db/user/basicSQL'
 import query from './db/database'
 import obstaclesCatalog from './routes/obstacles/obstaclesCatalog'
 import { collectObstacleCatalog } from './controllers/obstacleIndex/ObstacleCatalog'
 import obstacleRoutes from './routes/obstacles/obstacles'
 import challengeRoutes from './routes/obstacles/challenges'
+import { User } from '@bestiary/common/interfaces/userInterfaces'
 
 const app = express()
 app.use(bodyParser.json({ limit: '10mb' }))
@@ -56,14 +57,19 @@ passport.use(new Auth0Strategy({
     clientID,
     clientSecret,
     callbackURL,
-    scope: 'openid profile'
+    scope: 'openid email profile'
 }, async (accessToken: string, refreshToken: string, extraParams: Object, profile: Profile, finishingCallback: Function) => {
     accessToken; refreshToken; extraParams;
-    const { displayName, user_id: userID } = profile;
-    const [user] = await query(findUser, userID)
+    const { displayName, user_id: userID, emails } = profile;
+
+    const [user]: User[] = await query(findUser, userID)
+
     if (!user) {
-         await query(createUser, [displayName, userID])
+         await query(createUser, [displayName, userID, emails[0].value])
+    } else if (user && !user.email && emails[0].value) {
+        await query(updateEmail, [user.id, emails[0].value])
     }
+
     return finishingCallback(null, user.id)
 }))
 
